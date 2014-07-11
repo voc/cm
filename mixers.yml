@@ -1,0 +1,4 @@
+---
+ - hosts: mixers
+   roles:
+     - common
