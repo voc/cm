@@ -5,6 +5,6 @@
  - include: user.yml user=voc
 
  - name: Add all SSH keys to voc user
-   authorized_key: user=voc manage_dir=true src="{{ item }}"
+   authorized_key: user=voc manage_dir=true key="{{ lookup('file', item) }}" state=present
    with_fileglob:
     - user/*/authorized_keys

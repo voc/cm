@@ -7,6 +7,6 @@
     - "user/{{ user }}/zshrc"
     - "user/default/zshrc"
  - name: add user's authorized_keys
-   authorized_key: user="{{ user }}" manage_dir=true src="{{ item }}"
+   authorized_key: user="{{ user }}" manage_dir=true key="{{ lookup('file', item) }}" state=present
    with_fileglob:
      - "user/{{ user }}/authorized_keys"
