@@ -3,6 +3,7 @@
  - include: packages.yml
  - include: sudo.yml
  - include: user.yml user=voc
+ - include: user.yml user=florolf
 
  - name: Add all SSH keys to voc user
    authorized_key: user=voc manage_dir=true key="{{ lookup('file', item) }}" state=present
