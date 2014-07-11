@@ -1,0 +1,51 @@
+source /etc/profile
+export EDITOR="vim"
+export PAGER="less"
+
+alias ls="ls --color=force"
+alias smv="rsync -avzP --remove-source-files"
+alias setwd='pwd > ~/.wd'
+alias cdwd='cd $(cat ~/.wd); export WD=$(cat ~/.wd)'
+
+mkcd() {
+	if [ -d $1 ]; then
+		echo "Already exists!"
+	fi
+
+	mkdir -p $1
+	cd $1
+}
+
+
+autoload -U compinit
+compinit
+
+zstyle ':completion:*'               menu select=5
+
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
+
+bindkey -e
+
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=1000000
+
+setopt appendhistory
+setopt inc_appendhistory #performance penalty?
+setopt extended_history #performance penalty?
+setopt hist_ignore_dups
+setopt prompt_subst
+
+setopt auto_pushd
+setopt correct
+setopt csh_junkie_history
+
+#RPS1='%(?..%? )%*'
+PS1='%n@%M:%~$ '
+
+alias cal="cal -m3"
+
+bindkey "\e[3~" delete-char
+bindkey "\e[8~" end-of-line
+bindkey "\e[7~" beginning-of-line
