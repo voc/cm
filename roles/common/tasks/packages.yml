@@ -22,3 +22,6 @@
       #    - ffmpeg-voc
     - mosh
     - runit
+
+ - name: vim is our editor
+   alternatives: name=editor path=/usr/bin/vim.basic
