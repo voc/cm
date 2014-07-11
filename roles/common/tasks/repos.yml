@@ -1,0 +1,21 @@
+---
+ - name: setup the VOC debian repo key
+   apt_key: data="{{ lookup('file', 'voc_repo.key') }}" state=present
+ 
+ - name: setup the VOC debian repo
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=present
+
+ - name: setup the DMO repo key
+   apt_key: data="{{ lookup('file', 'dmo_repo.key') }}" state=present
+
+ - name: setup the DMO repo
+   apt_repository: repo="deb http://www.deb-multimedia.org wheezy main non-free" state=present
+
+ - name: ensure that the debian keyrings are present
+   apt: name={{ item }} state=present
+   with_items:
+    - debian-keyring
+    - debian-archive-keyring
+ 
+ - name: setup the debian backports repo
+   apt_repository: repo="deb http://ftp.debian.org/debian/ wheezy-backports main"

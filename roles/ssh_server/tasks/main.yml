@@ -1,0 +1,6 @@
+---
+ - name: install openssh-server
+   apt: name=openssh-server state=present
+ 
+ - name: configure the ssh server
+   copy: dest=/etc/ssh/sshd_config src=sshd_config owner=root group=root mode=0644

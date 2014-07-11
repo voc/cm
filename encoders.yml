@@ -1,0 +1,5 @@
+---
+ - hosts: encoders
+   roles:
+     - common
+     - encoder

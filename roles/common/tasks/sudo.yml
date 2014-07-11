@@ -1,0 +1,6 @@
+---
+ - name: ensure sudo is installed
+   apt: name=sudo state=present
+
+ - name: allow sudo for users in the sudo group
+   lineinfile: "dest=/etc/sudoers state=present line='%sudo   ALL=(ALL:ALL) NOPASSWD: ALL'"

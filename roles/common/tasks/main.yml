@@ -1,0 +1,10 @@
+---
+ - include: repos.yml
+ - include: packages.yml
+ - include: sudo.yml
+ - include: user.yml user=voc
+
+ - name: Add all SSH keys to voc user
+   authorized_key: user=voc manage_dir=true src="{{ item }}"
+   with_fileglob:
+    - user/*/authorized_keys

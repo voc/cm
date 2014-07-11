@@ -1,0 +1,24 @@
+---
+ - name: install a default set of packages
+   apt: name={{ item }} state=present
+   with_items:
+    - zsh
+    - vim
+    - htop
+    - iftop
+    - tcpdump
+    - git
+    - mtr-tiny
+    - tmux
+    - iperf
+    - strace
+    - iotop
+    - screen
+    - build-essential
+    - gdb
+    - bwm-ng
+    - lldpd
+    - ffmpeg
+      #    - ffmpeg-voc
+    - mosh
+    - runit
