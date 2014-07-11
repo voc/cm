@@ -1,3 +1,4 @@
 ---
 dependencies:
   - { role: ssh_server }
+  - { role: munin_node }
