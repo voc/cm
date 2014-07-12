@@ -23,6 +23,7 @@
     - mosh
     - runit
     - molly-guard
+    - ncdu
 
  - name: vim is our editor
    alternatives: name=editor path=/usr/bin/vim.basic
