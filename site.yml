@@ -1,3 +1,4 @@
 ---
  - include: encoders.yml
  - include: mixers.yml
+ - include: basic.yml
