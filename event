@@ -8,5 +8,7 @@
 192.168.122.250
 
 [basic]
-# sun
-10.73.0.3
+node.lan.c3voc.de
+storage.lan.c3voc.de
+usa.lan.c3voc.de
+sun.lan.c3voc.de
