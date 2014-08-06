@@ -1,0 +1,9 @@
+---
+  # install general mixer packages
+  - name: install packages required to be a mixer
+    apt: name={{ item }} state=present
+    with_items:
+      - dwm-voc
+      - runit
+      - xserver-xorg
+      - x11-xserver-utils

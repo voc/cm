@@ -1,0 +1,15 @@
+---
+  # Install dvswitch package
+  - name: install dvswitch package
+    apt: name=dvswitch-voc state=latest
+
+  # Configure dvswitch to run it with runit
+  - name: create dvswitch runit directory
+    file: state=directory recurse=yes
+          dest=/home/mixer/services/dvswitch
+          owner=mixer group=mixer
+
+  - name: configure runit for dvswitch
+    copy: dest=/home/mixer/services/dvswitch/run
+          src=dvswitch/run
+          owner=mixer group=mixer mode=0755

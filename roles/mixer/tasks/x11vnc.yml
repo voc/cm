@@ -1,0 +1,13 @@
+---
+  - name: install x11vnc
+    apt: name=x11vnc state=present
+
+  - name: create /home/mixer/services/x11vnc directory
+    file: state=directory recurse=yes
+          dest=/home/mixer/services/x11vnc
+          owner=mixer group=mixer
+
+  - name: configure x11vnc runit file
+    copy: dest=/home/mixer/services/x11vnc/run
+          src=x11vnc/run
+          owner=mixer group=mixer mode=0755

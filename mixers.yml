@@ -1,6 +1,9 @@
 ---
- - hosts: mixers
-   roles:
-     - common
-     - mixers
-     - monitoring
+  - hosts: mixers
+    roles:
+      - common
+      - monitoring
+      - mixer
+
+    vars:
+      mixer_user_password: '$1$80Po7gYl$zOUjSt1SfgEyO.bvFOMWw/'
