@@ -4,7 +4,7 @@
 
   - name: configure the munin node
     copy: dest=/etc/munin/munin-node.conf
-          src=munin-node.conf
+          src=munin/munin-node.conf
           owner=root group=root mode=0644
     notify:
       - restart munin-node
@@ -16,7 +16,7 @@
 
   - name: add SSH key to munin-fetch user
     authorized_key: user=munin-fetch manage_dir=true state=present
-                    key="{{ lookup('file', 'authorized_keys') }}"
+                    key="{{ lookup('file', 'munin/authorized_keys') }}"
 
   - name: enable munin-node on boot
     service: name=munin-node enabled=yes state=started

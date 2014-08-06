@@ -1,0 +1,47 @@
+---
+  # Install packages
+  - name: install packages needed to monitor host
+    apt: name={{ item }} state=present
+    with_items:
+      - check-mk-agent
+      - nagios-plugins-basic
+
+  # Creating files
+  - name: create mrpe.cfg
+    copy: dest=/etc/check_mk/mrpe.cfg
+          content='# managed by ansible'
+          owner=root group=root mode=0644
+
+  - name: add check_recording script
+    copy: dest=/usr/local/bin/check_recording
+          src=check_mk/plugins/check_recording
+          owner=root group=root 0755
+
+  - name: add run-agent.sh script used as check-mk shell
+    copy: dest=/usr/lib/check_mk_agent/run-agent.sh
+          src=check_mk/run-agent.sh
+          owner=root group=root mode=0755
+
+  - name: add modified check_mk_agent binary
+    copy: dest=/usr/bin/check_mk_agent
+          src=check_mk/check_mk_agent force=yes
+          owner=root group=root mode=0755
+
+  # Adding content to files
+  - name: add check_recording script to mrpe.cfg
+    lineinfile: > dest=/etc/check_mk/mrpe.cfg state=present regexp='^RECORDING'
+                  line='RECORDING /usr/local/bin/check_recording /video'
+
+  - name: adding sudo permissions for check-mk user
+    lineinfile: > dest=/etc/sudoers state=present regexp='^check-mk'
+                  line='check-mk ALL=(ALL) NOPASSWD: /usr/bin/check_mk_agent'
+
+  # Manage users
+  - name: create check-mk user
+    user: name=check-mk groups=ssh
+          home=/usr/lib/check_mk_agent
+          shell=/usr/lib/check_mk_agent/run-agent.sh
+
+  - name: add SSH key to check-mk user
+    authorized_key: user=check-mk manage_dir=true state=present
+                    key="{{ lookup('file', 'check_mk/authorized_keys') }}"
