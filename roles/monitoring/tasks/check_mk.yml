@@ -7,9 +7,14 @@
       - nagios-plugins-basic
 
   # Creating files
+  - name: create /etc/check_mk directory
+    file: state=directory recurse=yes
+          dest=/etc/check_mk
+          owner=root group=root
+
   - name: create mrpe.cfg
     copy: dest=/etc/check_mk/mrpe.cfg
-          content='# managed by ansible'
+          content='# managed by ansible\n'
           owner=root group=root mode=0644
 
   - name: add check_recording script
@@ -29,12 +34,12 @@
 
   # Adding content to files
   - name: add check_recording script to mrpe.cfg
-    lineinfile: > dest=/etc/check_mk/mrpe.cfg state=present regexp='^RECORDING'
-                  line='RECORDING /usr/local/bin/check_recording /video'
+    lineinfile: dest=/etc/check_mk/mrpe.cfg state=present regexp='^RECORDING'
+                line='RECORDING /usr/local/bin/check_recording /video'
 
   - name: adding sudo permissions for check-mk user
-    lineinfile: > dest=/etc/sudoers state=present regexp='^check-mk'
-                  line='check-mk ALL=(ALL) NOPASSWD: /usr/bin/check_mk_agent'
+    lineinfile: "dest=/etc/sudoers state=present regexp='^check-mk'
+                line='check-mk ALL=(ALL) NOPASSWD: /usr/bin/check_mk_agent'"
 
   # Manage users
   - name: create check-mk user
