@@ -5,9 +5,9 @@
 
   # Adding content to files
   - name: enable syntax highlighting in vim
-    lineinfile: > dest=/etc/vim/vimrc state=present regexp='^syntax '
-                  line='syntax on'
+    lineinfile: dest=/etc/vim/vimrc state=present regexp='^syntax '
+                line='syntax on'
 
   - name: enable dark background in vim
-    lineinfile: > dest=/etc/vim/vimrc state=present regexp='^set background'
-                  line='set background=dark'
+    lineinfile: dest=/etc/vim/vimrc state=present regexp='^set background'
+                line='set background=dark'

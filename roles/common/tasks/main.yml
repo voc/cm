@@ -1,6 +1,7 @@
 ---
  - include: repos.yml
  - include: packages.yml
+ - include: vim.yml
  - include: sudo.yml
  - include: user.yml user=voc
  - include: user.yml user=andi
@@ -9,7 +10,7 @@
  - include: user.yml user=mazdermind
  - include: user.yml user=meise
 
- - name: Add all SSH keys to voc user
+ - name: add all SSH keys to voc user
    authorized_key: user=voc manage_dir=true key="{{ lookup('file', item) }}" state=present
    with_fileglob:
     - user/*/authorized_keys
