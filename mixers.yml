@@ -2,3 +2,5 @@
  - hosts: mixers
    roles:
      - common
+     - mixers
+     - monitoring
