@@ -26,6 +26,3 @@
     - ncdu
     - debian-goodies
     - apt-dater-host
-
- - name: vim is our editor
-   alternatives: name=editor path=/usr/bin/vim.basic
