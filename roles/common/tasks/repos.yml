@@ -1,7 +1,7 @@
 ---
  - name: setup the VOC debian repo key
    apt_key: data="{{ lookup('file', 'voc_repo.key') }}" state=present
- 
+
  - name: setup the VOC debian repo
    apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=present
 
@@ -16,6 +16,6 @@
    with_items:
     - debian-keyring
     - debian-archive-keyring
- 
+
  - name: setup the debian backports repo
    apt_repository: repo="deb http://ftp.debian.org/debian/ wheezy-backports main"

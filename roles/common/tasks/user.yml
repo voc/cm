@@ -1,16 +1,19 @@
 ---
  - name: create user "{{ user }}"
    user: name="{{ user }}" state=present shell=/bin/zsh groups="ssh,sudo"
+
  - name: install zshrc
    copy: dest="/home/{{ user }}/.zshrc" src="{{ item }}"
    with_first_found:
     - "user/{{ user }}/zshrc"
     - "user/default/zshrc"
+
  - name: install screenrc
    copy: dest="/home/{{ user }}/.screenrc" src="{{ item }}"
    with_first_found:
     - "user/{{ user }}/screenrc"
     - "user/default/screenrc"
+
  - name: add user's authorized_keys
    authorized_key: user="{{ user }}" manage_dir=true key="{{ lookup('file', item) }}" state=present
    with_fileglob:

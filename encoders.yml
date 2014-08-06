@@ -2,5 +2,5 @@
  - hosts: encoders
    roles:
      - common
-     - encoder
      - monitoring
+     - encoder
