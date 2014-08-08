@@ -3,6 +3,9 @@
   - include: packages.yml
   - include: vim.yml
   - include: sudo.yml
+  - include: grub.yml
+  - include: inittab.yml
+  # realize users
   - include: user.yml user=voc
   - include: user.yml user=andi
   - include: user.yml user=derpeter

@@ -1,0 +1,7 @@
+---
+    # Enable tty to be able to use libvirt console command
+  - name: enable tty for grub menu in virtual machines
+    lineinfile: "dest=/etc/inittab state=present
+                 regexp='^[#T]+0.23.respawn.*ttyS0.*$'
+                 line='T0:23:respawn:/sbin/getty -L ttyS0 9600 vt100'"
+    when: ansible_virtualization_role == 'guest'
