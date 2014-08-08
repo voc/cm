@@ -13,7 +13,7 @@
           owner=root group=root
 
   - name: create mrpe.cfg
-    copy: dest=/etc/check_mk/mrpe.cfg
+    copy: dest=/etc/check_mk/mrpe.cfg force=no
           content='# managed by ansible\n'
           owner=root group=root mode=0644
 
