@@ -1,0 +1,7 @@
+---
+  - name: configure public network interface
+    template: dest=/etc/network/interfaces state=present
+              src=network/network_interfaces
+    notify:
+      - down pbl
+      - up pbl

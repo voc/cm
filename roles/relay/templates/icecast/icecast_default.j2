@@ -1,0 +1,18 @@
+# Defaults for icecast2-beta initscript
+# sourced by /etc/init.d/icecast2-beta
+# installed at /etc/default/icecast2-beta by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+# Full path to the server configuration file
+CONFIGFILE="{{ icecast_config_file | default('/etc/icecast2-beta/icecast.xml') }}"
+
+# Name or ID of the user and group the daemon should run under
+USERID={{ icecast_user | default('icecast2-beta') }}
+GROUPID={{ icecast_group | default('icecast2-beta') }}
+
+# Edit /etc/icecast2-beta/icecast.xml and change at least the passwords.
+# Change this to true when done to enable the init.d script
+ENABLE={{ icecast | default(False) }}

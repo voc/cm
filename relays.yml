@@ -1,0 +1,11 @@
+---
+  - hosts: relays
+    roles:
+      - common
+      - monitoring
+      - relay
+    vars:
+      icecast_admin_password: 'Else8Reform=About=Hey9Harp7'
+      icecast_source_password: 'syria4muzzle6care'
+      icecast_relay_password: 'pastry$cease!Opera'
+      icecast_master_password: 'pastry$cease!Opera'

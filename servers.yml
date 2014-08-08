@@ -1,0 +1,6 @@
+---
+  - hosts: servers
+    roles:
+      - common
+      - monitoring
+      - { role: router, when: ansible_fqdn == 'router.lan.c3voc.de' }

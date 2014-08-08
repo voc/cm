@@ -1,0 +1,10 @@
+---
+  # Install packages needed for each relay
+  - name: install streaming relay dependencies
+    apt: name={{ item }}
+    with_items:
+      - oggfwd-voc
+
+  - include: nginx.yml
+  - include: icecast.yml
+  - include: sysctl.yml

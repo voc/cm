@@ -1,0 +1,25 @@
+---
+  - name: install icecast streaming server
+    apt: name=icecast2-beta state=latest
+
+  - name: configure the icecast streaming server
+    template: dest=/etc/icecast2-beta/icecast.xml
+              src=icecast/icecast.xml
+              owner=root group=root mode=0644
+    notify:
+      - restart icecast2-beta
+
+  - name: create default icecast2-beta config
+    template: dest=/etc/default/icecast2-beta
+              src=icecast/icecast_default
+              owner=root group=root mode=0644
+    notify:
+      - restart icecast2-beta
+
+  - name: enable icecast2-beta on boot
+    service: name=icecast2-beta enabled=yes state=started
+    when: icecast is defined and 'yes'
+
+  - name: disable icecast2-beta on boot
+    service: name=icecast2-beta enabled=no state=stopped
+    when: icecast is not defined or 'no'

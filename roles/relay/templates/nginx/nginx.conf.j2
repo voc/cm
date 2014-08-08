@@ -1,0 +1,157 @@
+user  www-data;
+
+# Specifies the value for maximum file descriptors that can be opened by this process.
+worker_rlimit_nofile 65536;
+# multiple worker
+worker_processes  2;
+
+# important for multi worker processes!!1!
+rtmp_auto_push on;
+
+error_log  /var/log/nginx/error.log;
+pid /var/run/nginx.pid;
+
+events {
+  worker_connections  2048;
+
+  # required by per_worker
+  accept_mutex off;
+}
+
+http {
+  types_hash_max_size 2048;
+
+  types {
+      application/vnd.apple.mpegurl m3u8;
+      video/mp2t ts;
+  }
+
+  include /etc/nginx/mime.types;
+
+  server {
+    listen [::]:80 default ipv6only=off;
+
+    # per-worker listener
+    # 1st worker will listen 8000
+    # 2nd worker will listen 8001
+    # 3rd worker will listen 8002
+    # 4th worker will listen 8003
+    # 5th worker will listen 8004
+    listen 9000 per_worker;
+
+    # sendfile() copies data between one file descriptor and another.
+    # Because this copying is done within the kernel, sendfile() is more
+    # efficient than the combination of read(2) and write(2), which would
+    # require transferring data to and from user space.
+    sendfile on;
+
+    root /srv/nginx/htdocs;
+    index index.html index.htm;
+
+    server_name localhost;
+
+    location / {
+      include /etc/nginx/mime.types;
+    }
+
+    location /tests {
+      include /etc/nginx/mime.types;
+      alias /srv/nginx/htdocs_tests;
+      autoindex on;
+    }
+
+    location /releases {
+      alias /srv/releases;
+      autoindex on;
+    }
+
+    location /releases/private {
+      alias /srv/releases/private;
+      auth_basic "Auf zum Atem!!1!";
+      auth_basic_user_file /etc/nginx/releases_htpasswd;
+      autoindex on;
+    }
+
+    # hls
+    location /hls {
+      types {
+        application/vnd.apple.mpegurl m3u8;
+        video/mp2t ts;
+      }
+
+      alias /tmp/hls;
+      autoindex on;
+    }
+
+    # stats
+    location /stats/rtmp {
+      rtmp_stat all;
+      access_log   off;
+
+      allow 127.0.0.1;
+      allow 195.54.164.160/29;
+      allow 188.40.235.220;
+      allow 151.217.21.0/24;
+      allow 141.24.40.0/26;
+      deny all;
+    }
+    location /stats/nginx {
+      stub_status on;
+      access_log   off;
+
+      allow 127.0.0.1;
+      allow 195.54.164.160/29;
+      allow 188.40.235.220;
+      allow 151.217.21.0/24;
+      allow 141.24.40.0/26;
+      deny all;
+    }
+  }
+}
+
+rtmp {
+  server {
+    listen 0.0.0.0:1935;
+
+    ping 30s;
+
+    # Disable audio until first video frame is sent.
+    wait_video on;
+    # Send NetStream.Publish.Start and NetStream.Publish.Stop to subscribers.
+    publish_notify on;
+
+    # Synchronize audio and video streams. If subscriber bandwidth is not
+    # enough to receive data at ublisher rate some frames are dropped by
+    # server. This leads to synchronization problem. When timestamp
+    # difference exceeds the value specified as sync argument an absolute
+    # frame is sent fixing that. Default is 300ms.
+    sync 10ms;
+
+    application stream {
+      # enable live streaming
+      live on;
+      meta copy;
+
+      access_log off;
+
+      hls off;
+      hls_path /tmp/hls;
+      hls_fragment 5s;
+      hls_playlist_length 120m;
+
+      allow publish 127.0.0.1;
+      allow publish ::1;
+      allow publish 195.54.164.160/29;
+      allow publish 10.73.0.0/16;
+      allow publish 151.217.21.0/24;
+      allow publish 194.95.66.251;
+      allow publish 212.71.215.33;
+      allow publish 85.212.45.29;
+      allow publish 80.153.23.35;
+      allow publish 192.108.72.98; # Fritz Studio IP
+      deny publish all;
+
+      allow play all;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+---
+  - name: setting sysctl conntrack timeouts
+    sysctl: name={{ item.name }} value={{ item.value }}
+            sysctl_set=yes state=present reload=yes
+    with_items:
+      - { name: 'net.netfilter.nf_conntrack_max', value: '131072' }
+      - { name: 'net.ipv4.netfilter.ip_conntrack_generic_timeout', value: '120' }
+      - { name: 'net.ipv4.netfilter.ip_conntrack_tcp_timeout_established', value: '54000' }
+      - { name: 'net.netfilter.nf_conntrack_tcp_timeout_time_wait', value: '30' }

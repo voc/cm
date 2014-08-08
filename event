@@ -9,19 +9,17 @@ mixer[1:4].lan.c3voc.de
 
 
 # Local RZ
-[server]
+[servers]
 node.lan.c3voc.de
 storage.lan.c3voc.de
 usa.lan.c3voc.de
 sun.lan.c3voc.de
+# VMs
+monitoring.lan.c3voc.de
+router.lan.c3voc.de router_pbl_ip= router_pbl_mask= router_pbl_gw=
 
 
 # Streaming server
 [relays]
-live.ber.c3voc.de icecast=True nginx=True
-live.dus.c3voc.de icecast=True nginx=True icecast_master_ip=195.54.164.164 icecast_master_password=
-
-[relays:vars]
-icecast_admin_password=
-icecast_source_password=
-icecast_relay_password=
+live.ber.c3voc.de vm=yes icecast=yes nginx=yes
+live.dus.c3voc.de vm=yes icecast=yes nginx=yes icecast_master_ip=195.54.164.164

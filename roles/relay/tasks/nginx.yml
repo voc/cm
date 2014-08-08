@@ -1,0 +1,10 @@
+---
+  - name: install nginx package
+    apt: name=nginx-rtmp state=latest
+
+  - name: configure nginx
+    template: dest=/etc/nginx/nginx.conf
+              src=nginx/nginx.conf.j2
+              mode=0644 owner=root group=root
+    notify:
+      - restart nginx-rtmp

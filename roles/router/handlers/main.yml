@@ -1,0 +1,11 @@
+---
+  # Up/ down public interface
+  - name: down pbl
+    command: ifdown pbl
+
+  - name: up pbl
+    command: ifup pbl
+
+  # Restart shorewall. Configuration is validated in template.
+  - name: restart shorewall
+    command: shorewall restart

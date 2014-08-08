@@ -3,3 +3,4 @@
   - include: encoders.yml
   - include: mixers.yml
   - include: relays.yml
+  - include: servers.yml
