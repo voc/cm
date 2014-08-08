@@ -1,16 +1,22 @@
 ---
- - include: repos.yml
- - include: packages.yml
- - include: vim.yml
- - include: sudo.yml
- - include: user.yml user=voc
- - include: user.yml user=andi
- - include: user.yml user=derpeter
- - include: user.yml user=florolf
- - include: user.yml user=mazdermind
- - include: user.yml user=meise
+  - include: repos.yml
+  - include: packages.yml
+  - include: vim.yml
+  - include: sudo.yml
+  - include: user.yml user=voc
+  - include: user.yml user=andi
+  - include: user.yml user=derpeter
+  - include: user.yml user=florolf
+  - include: user.yml user=mazdermind
+  - include: user.yml user=meise
 
- - name: add all SSH keys to voc user
-   authorized_key: user=voc manage_dir=true key="{{ lookup('file', item) }}" state=present
-   with_fileglob:
-    - user/*/authorized_keys
+  - name: add all SSH keys to voc user
+    authorized_key: user=voc manage_dir=true key="{{ lookup('file', item) }}" state=present
+    with_fileglob:
+      - user/*/authorized_keys
+
+  # Modify message of the day
+  - name: adding message of the day
+    template: dest=/etc/motd
+              src=motd/motd
+              owner=root group=root mode=0644
