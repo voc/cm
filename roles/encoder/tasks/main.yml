@@ -2,3 +2,4 @@
  - include: packages.yml
  - include: sysctl.yml
  - include: mdadm.yml
+ - include: acpi.yml

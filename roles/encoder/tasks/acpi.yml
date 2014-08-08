@@ -1,0 +1,6 @@
+---
+  # Prevent pressing power button
+  - name: disable power button
+    lineinfile: dest=/etc/acpi/powerbtn.sh
+                regexp='\/sbin\/shutdown\s-h\snow.*\"$' state=present
+                line='# /sbin/shutdown -h now "Power button pressed"'
