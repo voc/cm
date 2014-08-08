@@ -1,0 +1,5 @@
+---
+  - name: disable raid checks on the first sunday of the month
+    lineinfile: dest=/etc/cron.d/mdadm
+                regexp='.*57.*mdadm\/checkarray.*--quiet$' state=present
+                line="# 57 0 * * 0 root [ -x /usr/share/mdadm/checkarray ] && [ $(date +\%d) -le 7 ] && /usr/share/mdadm/checkarray --cron --all --quiet"
