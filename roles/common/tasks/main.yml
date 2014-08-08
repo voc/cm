@@ -5,7 +5,7 @@
   - include: sudo.yml
   - include: grub.yml
   - include: inittab.yml
-  # realize users
+  # realise users
   - include: user.yml user=voc
   - include: user.yml user=andi
   - include: user.yml user=derpeter
