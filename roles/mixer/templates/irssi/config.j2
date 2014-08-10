@@ -1,10 +1,3 @@
-{#
-  Extract room number from hostname.
-  We need the following hostname format: mixer1.
-#}
-
-{% set room_number = ansible_hostname | regex_replace('^.*(\d)$', '\\1') %}
-
 servers = (
   { address = "irc.yolo.pro"; chatnet = "hackint"; port = "6667"; autoconnect = "yes"; },
 );

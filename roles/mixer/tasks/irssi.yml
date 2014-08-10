@@ -1,11 +1,7 @@
 ---
-  # install packages needed for irssi
-  - name: install packages required by irssi
-    apt: name={{ item }} state=present
-    with_items:
-      - irssi
-      - xterm
+  # see packages.yml for irssi package installation
 
+  # irssi configuration
   # configure runit
   - name: create runit irssi directory
     file: state=directory recurse=yes

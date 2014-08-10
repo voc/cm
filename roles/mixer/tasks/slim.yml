@@ -1,7 +1,7 @@
 ---
-  - name: install slim package
-    apt: name=slim state=present
+  # see packages.yml for slim package installation
 
+  # slim configuration
   - name: configure /etc/slim.conf
     copy: dest=/etc/slim.conf force=yes
           src=slim/slim.conf

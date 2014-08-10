@@ -7,3 +7,8 @@
       - runit
       - xserver-xorg
       - x11-xserver-utils
+      - slim
+      - x11vnc
+      - irssi
+      - xterm
+      - dvswitch-voc

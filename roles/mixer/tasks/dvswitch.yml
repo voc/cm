@@ -1,9 +1,7 @@
 ---
-  # Install dvswitch package
-  - name: install dvswitch package
-    apt: name=dvswitch-voc state=latest
+  # see packages.yml for dvswitch package installation
 
-  # Configure dvswitch to run it with runit
+  # dvswitch configuration
   - name: create dvswitch runit directory
     file: state=directory recurse=yes
           dest=/home/mixer/services/dvswitch

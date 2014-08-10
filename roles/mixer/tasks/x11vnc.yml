@@ -1,7 +1,7 @@
 ---
-  - name: install x11vnc
-    apt: name=x11vnc state=present
+  # see packages.yml for x11vnc package installation
 
+  # x11vnc configuration
   - name: create /home/mixer/services/x11vnc directory
     file: state=directory recurse=yes
           dest=/home/mixer/services/x11vnc
