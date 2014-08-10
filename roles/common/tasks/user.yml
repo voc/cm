@@ -2,6 +2,11 @@
  - name: create user "{{ user }}"
    user: name="{{ user }}" state=present shell=/bin/zsh groups="ssh,sudo"
 
+ - name: setting voc password
+   user: name=voc
+         password={{ user_voc_password | default('$6$xQDo3Tyf$q8mxcBQTKmaGUA2cHuCS0QoeHSyYwESkyq/53OmEYLErMWF.CpS9Q3NzAoeB3zntZBpysfmEQ9r6sLjubLq5F1') }}
+   when: user == 'voc'
+
  - name: install zshrc
    copy: dest="/home/{{ user }}/.zshrc" src="{{ item }}"
    with_first_found:
