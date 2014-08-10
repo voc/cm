@@ -1,0 +1,19 @@
+---
+  # see packages.yml for dvsink package installation
+
+  # dvsink configuration
+  - name: create /video if not present
+    file: dest=/video state=directory
+
+  - name: create service directory for dvsink
+    file: dest=/etc/service/dvsink state=directory
+
+  - name: create dvsplit.pl
+    copy: dest=/usr/local/bin/dvsplit.pl
+          src=dvsink/dvsplit.pl
+          owner=root group=root mode=0755
+
+  - name: create runit dvsink file
+    template: dest=/etc/service/dvsink/run
+              src=dvsink/run.j2
+              owner=root group=root mode=0755

@@ -1,6 +1,9 @@
 ---
  - name: install additional packages for encoder role
-   apt: name={{ item }} state=present
+   apt: name={{ item }} state=latest
    with_items:
     - bmdtools
     - sdi-script
+    - nginx-rtmp
+    - dvsink-voc
+    - dvsource-voc

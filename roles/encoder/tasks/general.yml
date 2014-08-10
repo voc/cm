@@ -1,0 +1,39 @@
+---
+  - set_fact:
+      room_number: '{{ ansible_hostname | regex_replace("^.*(\d)$", "\\1") }}'
+
+  # Prevent pressing power button
+  - name: disable power button
+    lineinfile: dest=/etc/acpi/powerbtn-acpi-support.sh
+                regexp='.*shutdown.*-h.*now.*\"$'
+                line='# /sbin/shutdown -h now "Power button pressed"'
+
+  # mdadm
+  - name: disable raid checks on the first sunday of the month
+    lineinfile: dest=/etc/cron.d/mdadm create=yes
+                regexp='.*57.*mdadm\/checkarray.*--quiet$' state=present
+                line="# 57 0 * * 0 root [ -x /usr/share/mdadm/checkarray ] && [ $(date +\%d) -le 7 ] && /usr/share/mdadm/checkarray --cron --all --quiet"
+
+  # Setting sysctl settings
+  - name: setting swappines to 5
+    sysctl: name=vm.swappiness value=5
+            sysctl_set=yes state=present reload=yes
+
+  - name: disable IPv6 on all interfaces
+    sysctl: name=net.ipv6.conf.all.disable_ipv6 value=1
+            sysctl_set=yes state=present reload=yes
+
+  # Create common files and directories
+  - name: create /etc/service diretcory
+    file: dest=/etc/service state=directory
+          owner=root group=root mode=0755
+
+  - name: create common.sh
+    copy: src=common.sh
+          dest=/etc/service/common.sh
+          owner=root group=staff mode=0644
+
+  - name: create common.sh
+    copy: src=rc.local
+         dest=/etc/rc.local
+         owner=root group=staff mode=0755
