@@ -1,7 +1,7 @@
 ---
   - name: configure public network interface
-    template: dest=/etc/network/interfaces state=present
-              src=network/network_interfaces
+    template: dest=/etc/network/interfaces
+              src=network/network_interfaces.j2
     notify:
       - down pbl
       - up pbl
