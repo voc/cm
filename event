@@ -21,5 +21,6 @@ router.lan.c3voc.de router_pbl_ip= router_pbl_mask= router_pbl_gw=
 
 # Streaming server
 [relays]
-live.ber.c3voc.de vm=yes icecast=yes nginx=yes
-live.dus.c3voc.de vm=yes icecast=yes nginx=yes icecast_master_ip=195.54.164.164
+live.lan.c3voc.de nginx=yes
+live.ber.c3voc.de nginx=yes nginx_master_ip=h_brs_ip
+live.dus.c3voc.de nginx=yes nginx_master_ip=195.54.164.164

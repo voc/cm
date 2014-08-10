@@ -5,7 +5,40 @@
       - monitoring
       - relay
     vars:
-      icecast_admin_password: 'Else8Reform=About=Hey9Harp7'
+      # icecast
+      icecast_admin_password:  'Else8Reform=About=Hey9Harp7'
       icecast_source_password: 'syria4muzzle6care'
-      icecast_relay_password: 'pastry$cease!Opera'
+      icecast_relay_password:  'pastry$cease!Opera'
       icecast_master_password: 'pastry$cease!Opera'
+      # nginx
+      nginx_streaming_locations: {
+        "saal1_native_hq": "{{ nginx_master_ip | default('10.73.1.3') }}",
+        "saal2_native_hq": "{{ nginx_master_ip | default('10.73.2.3') }}",
+        "saal3_native_hq": "{{ nginx_master_ip | default('10.73.3.3') }}",
+        "saal4_native_hq": "{{ nginx_master_ip | default('10.73.4.3') }}",
+        "saal1_native_lq": "{{ nginx_master_ip | default('10.73.1.3') }}",
+        "saal2_native_lq": "{{ nginx_master_ip | default('10.73.2.3') }}",
+        "saal3_native_lq": "{{ nginx_master_ip | default('10.73.3.3') }}",
+        "saal4_native_lq": "{{ nginx_master_ip | default('10.73.4.3') }}"
+      }
+      # define push ips
+      nginx_ips_allow_to_push: [
+        "::1",
+        "127.0.0.1",
+        "195.54.164.160/29",
+        "10.73.0.0/16",
+        "151.217.21.0/24",
+        "194.95.66.251",
+        "212.71.215.33",
+        "85.212.45.29",
+        "80.153.23.35",
+        # Fritz Studio IP
+        "192.108.72.98"
+      ]
+
+      nginx_ips_allow_stats: [
+        "195.54.164.160/29",
+        "188.40.235.220",
+        "151.217.21.0/24",
+        "141.24.40.0/26"
+      ]

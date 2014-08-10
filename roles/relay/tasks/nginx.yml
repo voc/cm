@@ -7,4 +7,12 @@
               src=nginx/nginx.conf.j2
               mode=0644 owner=root group=root
     notify:
-      - restart nginx-rtmp
+      - restart nginx
+
+  - name: start nginx
+    service: name=nginx enabled=yes state=started
+    when: nginx == 'yes'
+
+  - name: stopp nginx
+    service: name=nginx enabled=no state=stopped
+    when: nginx != 'yes' or nginx is not defined

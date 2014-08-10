@@ -86,24 +86,20 @@ http {
     # stats
     location /stats/rtmp {
       rtmp_stat all;
-      access_log   off;
+      access_log off;
 
-      allow 127.0.0.1;
-      allow 195.54.164.160/29;
-      allow 188.40.235.220;
-      allow 151.217.21.0/24;
-      allow 141.24.40.0/26;
+      {% for ip in nginx_ips_allow_stats %}
+        allow {{ ip }};
+      {% endfor %}
       deny all;
     }
     location /stats/nginx {
       stub_status on;
       access_log   off;
 
-      allow 127.0.0.1;
-      allow 195.54.164.160/29;
-      allow 188.40.235.220;
-      allow 151.217.21.0/24;
-      allow 141.24.40.0/26;
+      {% for ip in nginx_ips_allow_stats %}
+        allow {{ ip }};
+      {% endfor %}
       deny all;
     }
   }
@@ -139,16 +135,13 @@ rtmp {
       hls_fragment 5s;
       hls_playlist_length 120m;
 
-      allow publish 127.0.0.1;
-      allow publish ::1;
-      allow publish 195.54.164.160/29;
-      allow publish 10.73.0.0/16;
-      allow publish 151.217.21.0/24;
-      allow publish 194.95.66.251;
-      allow publish 212.71.215.33;
-      allow publish 85.212.45.29;
-      allow publish 80.153.23.35;
-      allow publish 192.108.72.98; # Fritz Studio IP
+      {% for stream, ip in nginx_streaming_locations.iteritems() %}
+        pull rtmp://{{ ip }}:1935/stream/{{ stream }} name={{ stream }} static live=1;
+      {% endfor %}
+
+      {% for ip in nginx_ips_allow_to_push %}
+        allow publish {{ ip }};
+      {% endfor %}
       deny publish all;
 
       allow play all;

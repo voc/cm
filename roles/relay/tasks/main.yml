@@ -7,4 +7,3 @@
 
   - include: nginx.yml
   - include: icecast.yml
-  - include: sysctl.yml

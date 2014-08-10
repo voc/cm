@@ -15,4 +15,9 @@ GROUPID={{ icecast_group | default('icecast2-beta') }}
 
 # Edit /etc/icecast2-beta/icecast.xml and change at least the passwords.
 # Change this to true when done to enable the init.d script
-ENABLE={{ icecast | default(False) }}
+{% set icecast = icecast | default('no') %}
+{% if icecast == 'yes' %}
+ENABLE=True
+{% else %}
+ENABLE=False
+{% endif %}
