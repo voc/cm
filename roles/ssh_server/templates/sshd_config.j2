@@ -92,3 +92,8 @@ Match user check-mk
   X11Forwarding no
   ForceCommand /usr/lib/check_mk_agent/run-agent.sh
   AuthorizedKeysFile /usr/lib/check_mk_agent/.ssh/authorized_keys
+
+{% if ssh_allow_voc_password_login is defined and ssh_allow_voc_password_login == 'yes' %}
+Match Address 10.73.0.0/16
+  PasswordAuthentication yes
+{% endif %}
