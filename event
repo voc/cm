@@ -1,12 +1,28 @@
 # Hosts file
 
 # Lecture rooms
+[saal1]
+mixer1.lan.c3voc.de
+encoder1.lan.c3voc.de
+
+[saal2]
+mixer2.lan.c3voc.de
+encoder2.lan.c3voc.de
+
+[saal3]
+mixer3.lan.c3voc.de
+encoder3.lan.c3voc.de
+
+[saal4]
+mixer4.lan.c3voc.de
+encoder4.lan.c3voc.de
+
+# Host types
 [encoders]
 encoder[1:4].lan.c3voc.de
 
 [mixers]
 mixer[1:4].lan.c3voc.de
-
 
 # Local RZ
 [servers]
