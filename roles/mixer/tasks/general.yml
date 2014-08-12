@@ -1,7 +1,4 @@
 ---
-  - set_fact:
-      room_number: '{{ ansible_hostname | regex_replace("^.*(\d)$", "\\1") }}'
-
   # Create user
   - name: create mixer group
     group: name=mixer state=present

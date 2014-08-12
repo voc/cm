@@ -1,7 +1,4 @@
 ---
-  - set_fact:
-      room_number: '{{ ansible_hostname | regex_replace("^.*(\d)$", "\\1") }}'
-
   # Prevent pressing power button
   - name: disable power button
     lineinfile: dest=/etc/acpi/powerbtn-acpi-support.sh
