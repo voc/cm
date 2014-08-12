@@ -15,9 +15,9 @@
           owner=mixer group=mixer
 
   - name: create .xsession
-    copy: dest=/home/mixer/.xsession
-          src=user/.xsession
-          owner=mixer group=mixer mode=0755
+    template: dest=/home/mixer/.xsession
+              src=user/.xsession.j2
+              owner=mixer group=mixer mode=0755
 
   - name: create .Xresources
     copy: "dest=/home/mixer/.Xresources
