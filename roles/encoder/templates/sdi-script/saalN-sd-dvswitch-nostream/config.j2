@@ -10,7 +10,7 @@ CMD_CAPTURE="/bin/true"
 
 CMD_INTERMEDIATE="ffmpeg-voc -re -loop 1 -i '/opt/voc/share/nostream.png' \
 -c:v libx264 -aspect 16:9 \
--filter:v 'movie=/opt/voc/share/overlays/saal{{ room_number }}_sd.png [logo]; [in] [logo] overlay=0:0 [out]' \
+-filter:v 'movie=/opt/voc/share/overlay_sd.png [logo]; [in] [logo] overlay=0:0 [out]' \
 -map 0:0 -maxrate:v:0 1000k -bufsize:v:0 8192k -crf:0 18 -pix_fmt:0 yuv420p -profile:v:0 main -g:v:0 25 -preset:v:0 medium \
 -map 0:0 -maxrate:v:1 500k -bufsize:v:1 8192k -crf:1 21 -s:1 450x360 -pix_fmt:1 yuv420p -profile:v:1 baseline -g:v:1 25 -preset:v:1 medium \
  -f mpegts pipe: > ${PIPEPATH}/${PIPE_INTERMEDIATE}"
