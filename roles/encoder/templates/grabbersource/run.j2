@@ -3,4 +3,5 @@
 source ../common.sh
 
 # TODO: ffmpeg call should be checkt for actuality
+# FIXME: add pillarboxing config for 4x3-rooms
 exec ffmpeg -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} -s 720x576 -vf fps=fps=25 -r 25 -f lavfi -i aevalsrc=0 -target pal-dv -loglevel error -aspect 16:9 - | dvsource-file-voc -h "10.73.{{ room_number }}.1" -i 1 -p 2000 /dev/stdin
