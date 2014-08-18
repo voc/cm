@@ -1,0 +1,7 @@
+---
+  - name: install packages to be a router
+    apt: name={{ item }} state=present
+    with_items:
+      - shorewall
+      - shorewall6
+      - isc-dhcp-server
