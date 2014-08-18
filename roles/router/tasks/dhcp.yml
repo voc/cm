@@ -1,0 +1,10 @@
+---
+  # Configure DHCP-Server
+  - name: copy dhcpd config file
+    copy: src=dhcp/dhcpd.conf
+          dest=/etc/dhcp/dhcpd.conf
+          owner=root group=root mode=0644
+    notify: restart dhcpd
+
+  - name: start dhcp daemon
+    service: name=isc-dhcp-server enabled=yes state=started

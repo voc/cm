@@ -9,3 +9,7 @@
   # Restart shorewall. Configuration is validated in template.
   - name: restart shorewall
     command: shorewall restart
+
+  # Restart DHCP daemon
+  - name: restart dhcpd
+    service: name=isc-dhcp-server state=restarted
