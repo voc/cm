@@ -1,0 +1,14 @@
+---
+  - name: configure yate
+    template: dest=/etc/yate/regfile.conf
+              src=yate/regfile.conf.j2
+              owner=root group=root mode=0644
+    notify: reload yate
+
+  - name: enable yate start
+    lineinfile: dest=/etc/default/yate
+                regexp="^NO_START=\d$"
+                line="NO_START=0"
+
+  - name: start yate
+    service: name=yate enabled=yes state=started

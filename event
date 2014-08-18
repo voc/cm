@@ -33,6 +33,7 @@ sun.lan.c3voc.de
 # VMs
 monitoring.lan.c3voc.de
 router.lan.c3voc.de router_pbl_ip=194.95.66.38 router_pbl_mask=255.255.255.0 router_pbl_gw=194.95.66.1
+phony.lan.c3voc.de
 
 
 # Streaming server

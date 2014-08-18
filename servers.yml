@@ -4,3 +4,4 @@
       - common
       - monitoring
       - { role: router, when: ansible_fqdn == 'router.lan.c3voc.de' }
+      - { role: pbx, when: ansible_fqdn == 'phony.lan.c3voc.de' }
