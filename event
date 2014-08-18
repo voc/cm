@@ -17,6 +17,10 @@ encoder3.lan.c3voc.de
 mixer4.lan.c3voc.de
 encoder4.lan.c3voc.de
 
+[saal5]
+mixer5.lan.c3voc.de
+encoder5.lan.c3voc.de
+
 # Host types
 [encoders]
 encoder[1:4].lan.c3voc.de
