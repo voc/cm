@@ -1,5 +1,5 @@
 ---
-  - include: packages
+  - include: packages.yml
   - include: network_interfaces.yml
   - include: shorewall.yml
   - include: dhcp.yml

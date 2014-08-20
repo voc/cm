@@ -3,7 +3,7 @@
   # any change occur.
   - name: configure shorewall
     copy: dest=/etc/shorewall/{{ item }}
-          src=shorewall/{{ item }} validate='shorewall check'
+          src=shorewall/{{ item }}
     with_items:
       - rules
       - interfaces
