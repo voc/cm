@@ -7,8 +7,8 @@
 
   - name: enable yate start
     lineinfile: dest=/etc/default/yate
-                regexp="^NO_START=\d$"
+                regexp="^[#N]+O_START="
                 line="NO_START=0"
 
   - name: start yate
-    service: name=yate enabled=yes state=started
+    service: name=yate enabled=yes pattern=/usr/bin/yate state=started

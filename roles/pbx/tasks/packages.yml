@@ -1,5 +1,5 @@
 ---
   - name: install packages needed to be a pbx server
-  - apt: name={{ item }} state=present
+    apt: name={{ item }} state=present
     with_items:
       - yate
