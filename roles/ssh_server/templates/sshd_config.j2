@@ -71,6 +71,11 @@ TCPKeepAlive yes
 #MaxStartups 10:30:60
 #Banner /etc/issue.net
 
+# Allow client to pass locale environment variables
+AcceptEnv LANG
+AcceptEnv LC_*
+AcceptEnv GIT_AUTHOR_*
+
 Subsystem sftp /usr/lib/openssh/sftp-server
 
 # Set this to 'yes' to enable PAM authentication, account processing,
