@@ -23,10 +23,10 @@ encoder5.lan.c3voc.de
 
 # Host types
 [encoders]
-encoder[1:4].lan.c3voc.de
+encoder[1:5].lan.c3voc.de
 
 [mixers]
-mixer[1:4].lan.c3voc.de
+mixer[1:5].lan.c3voc.de
 
 # Local RZ
 [servers]
