@@ -2,5 +2,9 @@
 
 source ../common.sh
 
+{% if grabber_aspect == "16x9" %}
+exec ffmpeg -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} -target pal-dv -loglevel error -aspect 16:9 - | dvsource-file-voc -h "10.73.{{ room_number }}.1" -i 1 -p 2000 /dev/stdin
+{% else %}
 # FIXME: add pillarboxing config for 4x3-rooms
-exec ffmpeg -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} -target pal-dv -loglevel error -aspect {{ grabber_aspect }} - | dvsource-file-voc -h "10.73.{{ room_number }}.1" -i 1 -p 2000 /dev/stdin
+exec ffmpeg -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} -target pal-dv -loglevel error -aspect 16:9 - | dvsource-file-voc -h "10.73.{{ room_number }}.1" -i 1 -p 2000 /dev/stdin
+{% endif %}
