@@ -1,5 +1,5 @@
 ---
 # Event config
 event:
-    acronym: dummyconf23
-    name: Dummy-Conference 23
+    acronym: froscon2014
+    name: FrOSCon 2014
