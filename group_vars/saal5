@@ -2,3 +2,4 @@
 room_number: 5
 room_fahrplan_name: HS6
 grabber_aspect: 16x9
+grabbersource_url_path: stream.mjpeg
