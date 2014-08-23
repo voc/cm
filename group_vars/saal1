@@ -1,5 +1,5 @@
 ---
 room_number: 1
 room_fahrplan_name: HS1
-grabber_aspect: 16x9
+grabber_aspect: 4x3
 grabbersource_url_path: stream.mjpg
