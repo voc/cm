@@ -1,0 +1,10 @@
+---
+  # pausesource configuration
+  - name: create service directory for dvsink
+    file: dest=/etc/service/pausesource state=directory
+          owner=root group=root
+
+  - name: create runit grabbersource file
+    template: dest=/etc/service/pausesource/run
+              src=pausesource/run.j2
+              owner=root group=root mode=0755

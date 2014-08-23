@@ -5,4 +5,5 @@
  - include: sdi-script.yml
  - include: dvsink.yml
  - include: grabbersource.yml
+ - include: pausesource.yml
  - include: nginx.yml
