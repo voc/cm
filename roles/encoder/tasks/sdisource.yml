@@ -1,0 +1,17 @@
+---
+  # see packages.yml for sdisource package installation
+
+  # sdisource configuration
+  - name: create service directory for dvsink
+    file: dest=/etc/service/{{ item }} state=directory
+    with_items:
+      - sdisource-0
+      - sdisource-1
+
+  - name: create runit sdisource file for each schwarzemagie-capture card
+    template: dest=/etc/service/{{ item.name }}/run
+              src=sdisource/run.j2
+              owner=root group=root mode=0755
+    with_items:
+      - { id: 0, name: "sdisource-0" }
+      - { id: 1, name: "sdisource-1" }

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+source ../common.sh
+
+# sdi pal
+exec bmdcapture -C {{ item.id }} -m 2 -A 2 -V 4 -F nut -f pipe:1 | ffmpeg -i - -filter:v yadif -target pal-dv -loglevel error -aspect 16:9 -f dv - | dvsource-file-voc -h 10.73.{{ room_number }}.1 -i 2 -p 2000 /dev/stdin
+
+#sdi hd 1080
+#exec bmdcapture -C 0 -m 10 -A 2 -V 4 -F nut -f pipe:1 | ffmpeg -i - -filter:v yadif -target pal-dv -loglevel error -aspect 16:9 -f dv - | dvsource-file-voc -h 10.73.{{ room_number }}.1 -i 2 -p 2000 /dev/stdin

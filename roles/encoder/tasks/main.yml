@@ -2,6 +2,7 @@
  - include: general.yml
  - include: packages.yml
  - include: artwork.yml
+ - include: sdisource.yml
  - include: sdi-script.yml
  - include: dvsink.yml
  - include: grabbersource.yml
