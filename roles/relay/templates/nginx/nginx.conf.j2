@@ -88,19 +88,19 @@ http {
       rtmp_stat all;
       access_log off;
 
-      {% for ip in nginx_ips_allow_stats %}
-        allow {{ ip }};
-      {% endfor %}
-      deny all;
+  {% for ip in nginx_ips_allow_stats %}
+    allow {{ ip }};
+  {% endfor %}
+    deny all;
     }
     location /stats/nginx {
       stub_status on;
       access_log   off;
 
-      {% for ip in nginx_ips_allow_stats %}
-        allow {{ ip }};
-      {% endfor %}
-      deny all;
+  {% for ip in nginx_ips_allow_stats %}
+    allow {{ ip }};
+  {% endfor %}
+    deny all;
     }
   }
 }
@@ -130,19 +130,23 @@ rtmp {
 
       access_log off;
 
-      hls off;
-      hls_path /tmp/hls;
+  {% if nginx_hls_off is defined and 'yes' %}
+    hls off;
+  {% else %}
+    hls on;
+  {% endif %}
+    hls_path /tmp/hls;
       hls_fragment 5s;
       hls_playlist_length 120m;
 
-      {% for stream, ip in nginx_streaming_locations.iteritems() %}
-        pull rtmp://{{ ip }}:1935/stream/{{ stream }} name={{ stream }} static live=1;
-      {% endfor %}
+  {% for stream, ip in nginx_streaming_locations.iteritems() %}
+    pull rtmp://{{ ip }}:1935/stream/{{ stream }} name={{ stream }} static live=1;
+  {% endfor %}
 
-      {% for ip in nginx_ips_allow_to_push %}
-        allow publish {{ ip }};
-      {% endfor %}
-      deny publish all;
+  {% for ip in nginx_ips_allow_to_push %}
+    allow publish {{ ip }};
+  {% endfor %}
+    deny publish all;
 
       allow play all;
     }
