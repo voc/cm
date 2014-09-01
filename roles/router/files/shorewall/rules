@@ -16,8 +16,9 @@ SECTION NEW
 
 Ping(ACCEPT)    all             all
 ACCEPT          all             $FW             tcp     22
+ACCEPT          all             $FW             udp     60000:61000
 ACCEPT          int             $FW             udp,tcp 53
-ACCEPT          net             $FW             udp     60000:61000
+ACCEPT          int             $FW             udp     123
 
 DNAT            net             int:10.73.0.6:1935      tcp     1935    -       &pbl
 DNAT            net             int:10.73.0.10:5060     udp     15060   -       &pbl

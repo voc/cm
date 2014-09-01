@@ -1,0 +1,17 @@
+# $OpenBSD: ntpd.conf,v 1.7 2004/07/20 17:38:35 henning Exp $
+# sample ntpd configuration file, see ntpd.conf(5)
+
+# Addresses to listen on (ntpd does not listen by default)
+{% if 'router.lan.c3voc.de' in ansible_fqdn %}
+listen on {{ ansible_int.ipv4.address }}
+{% else %}
+#listen on 127.0.0.1
+{% endif %}
+
+{% if 'lan.c3voc.de' in ansible_domain and 'router.lan.c3voc.de' not in ansible_fqdn %}
+servers router.lan.c3voc.de weight 10
+{% endif %}
+servers 0.de.pool.ntp.org
+servers 1.de.pool.ntp.org
+servers 0.debian.pool.ntp.org
+servers 1.debian.pool.ntp.org

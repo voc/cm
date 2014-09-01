@@ -1,0 +1,25 @@
+---
+  - name: install openntpd
+    apt: name={{ item }} state=present
+    with_items:
+      - openntpd
+      - rdate
+      - ntpdate
+
+  - name: remove default ntp package
+    apt: name=ntp state=absent purge=yes
+
+  - name: configure openntpd
+    template: dest=/etc/openntpd/ntpd.conf
+              src=openntpd/ntpd.conf.j2
+              owner=root group=root mode=0644
+    notify: restart openntpd
+
+  - name: setting openntpd daemon options
+    lineinfile: "dest=/etc/default/openntpd
+                regexp='[D#]+AEMON_OPTS=.*'
+                line='DAEMON_OPTS=\"-s -f /etc/openntpd/ntpd.conf\"'"
+    notify: restart openntpd
+
+  - name: enable openntpd
+    service: name=openntpd enabled=yes state=started
