@@ -3,3 +3,15 @@ encoder
 
 * Notify (Restart bei Changes) auch fuer runsv und sdi-script bauen
 * Translated-Stream konfigurierbar machen
+
+mixer
+-----
+
+* noch nicht initial deployed
+
+server
+------
+
+* noch nicht initial deployed sind: storage, node, live
+* router: bind Konfiguration fehlt
+* relays: ausrollen des frontends fehlt noch
