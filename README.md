@@ -23,6 +23,12 @@ Basic `ansible` call to deploy new config to a specific host.
   ansible-playbook -u root -i event -l 192.168.122.1 site.yml
 ```
 
+Basic `ansible` call to deploy new config to a set of hosts on an event.
+
+```
+  ansible-playbook -u voc --sudo -i event -l saal1 site.yml
+```
+
 # Host notes
 
 ## router.lan.c3voc.de
