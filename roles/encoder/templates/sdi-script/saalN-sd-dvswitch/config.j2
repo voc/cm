@@ -16,6 +16,7 @@ CMD_INTERMEDIATE="ffmpeg -y -f dv -re -i ${PIPEPATH}/${PIPE_CAPTURE} -aspect 16:
 -ac 1 -c:a libfdk_aac -b:a 96k -ar 44100 \
 -map 0:1 -filter:a:0 pan=mono:c0=FL \
 -map 0:1 -filter:a:1 pan=mono:c0=FR \
+-map 0:1 \
 -y -f mpegts pipe: > ${PIPEPATH}/${PIPE_INTERMEDIATE}"
 
 CFG_SUPERTEE="supertee.ini"
