@@ -23,6 +23,22 @@ Basic `ansible` call to deploy new config to a specific host.
   ansible-playbook -u root -i event -l 192.168.122.1 site.yml
 ```
 
+# Host notes
+
+## router.lan.c3voc.de
+
+What you need:
+
+* install plain debian
+* setting hostname to `router.lan.c3voc.de`
+* make sure you have two network interfaces configured with names
+  `pbl` (public) and `int` (internal)
+* run ansible to deploy config
+
+# TODO
+
+Have a look into `TODO` file.
+
 # Docs
 
 * `ansible-doc -l` lists all available modules
