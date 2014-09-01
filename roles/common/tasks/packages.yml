@@ -26,3 +26,4 @@
     - ncdu
     - debian-goodies
     - apt-dater-host
+    - dnsutils
