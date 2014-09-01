@@ -20,7 +20,7 @@
   - name: add check_recording script
     copy: dest=/usr/local/bin/check_recording
           src=check_mk/plugins/check_recording
-          owner=root group=root 0755
+          owner=root group=root mode=0755
 
   - name: add run-agent.sh script used as check-mk shell
     copy: dest=/usr/lib/check_mk_agent/run-agent.sh
