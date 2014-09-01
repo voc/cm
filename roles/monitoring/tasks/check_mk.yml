@@ -21,6 +21,7 @@
     copy: dest=/usr/local/bin/check_recording
           src=check_mk/plugins/check_recording
           owner=root group=root mode=0755
+    when: ansible_hostname | match("encoder\d+")
 
   - name: add run-agent.sh script used as check-mk shell
     copy: dest=/usr/lib/check_mk_agent/run-agent.sh
@@ -36,6 +37,7 @@
   - name: add check_recording script to mrpe.cfg
     lineinfile: dest=/etc/check_mk/mrpe.cfg state=present regexp='^RECORDING'
                 line='RECORDING /usr/local/bin/check_recording /video'
+    when: ansible_hostname | match("encoder\d+")
 
   - name: adding sudo permissions for check-mk user
     lineinfile: "dest=/etc/sudoers state=present regexp='^check-mk'
@@ -50,3 +52,18 @@
   - name: add SSH key to check-mk user
     authorized_key: user=check-mk manage_dir=true state=present
                     key="{{ lookup('file', 'check_mk/authorized_keys') }}"
+
+
+  # TODO: snippet should be removed if everything is deployed ones
+  #       check_record script should be only deployed on encoder
+  - name: remove check_recording script from mrpe.cfg for non encoder
+    lineinfile: dest=/etc/check_mk/mrpe.cfg regexp='^RECORDING'
+                line='RECORDING /usr/local/bin/check_recording /video'
+                state=absent
+    when: not ansible_hostname | match("encoder\d+")
+
+  # TODO: snippet should be removed if everything is deployed ones
+  #       check_record script should be only deployed on encoder
+  - name: remove check_recording script on non encoder
+    file: dest=/usr/local/bin/check_recording state=absent
+    when: not ansible_hostname | match("encoder\d+")
