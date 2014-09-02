@@ -20,5 +20,6 @@ server
 
 * noch nicht initial deployed sind: storage, node, live
 * router: bind Konfiguration fehlt
+* router: synchronise lan.c3voc.de zone between router.lan and mngslave.dus.c3voc.de
 * relays: ausrollen des frontends fehlt noch
 * monitoring: munin-server
