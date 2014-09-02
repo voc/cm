@@ -1,18 +1,16 @@
 ---
   # Configure apache for icinga
-  - name: icinga apache include
+  - name: create icinga apache config file
     copy: dest=/etc/icinga/apache2.conf
           src=../../files/monitoring-server/apache2.conf
           owner=root group=root mode=0644
-    notify:
-      - reload apache
+    notify: reload apache
 
   - name: include icinga apache2.conf into apache
     file: state=link
           src=/etc/icinga/apache2.conf
           dest=/etc/apache2/conf.d/icinga.conf
-    notify:
-      - reload apache
+    notify: reload apache
 
   - name: add icingaadmin user
     lineinfile: "dest=/etc/icinga/htpasswd.users create=yes state=present
@@ -33,34 +31,29 @@
       - hostgroups_icinga.cfg
       - services_icinga.cfg
       - extinfo_icinga.cfg
-    notify:
-      - reload icinga
+    notify: reload icinga
 
   - name: remove localhost host
     file: path=/etc/icinga/objects/localhost_icinga.cfg state=absent
-    notify:
-      - reload icinga
+    notify: reload icinga
 
   - name: allow external cgi commands
     lineinfile: "dest=/etc/icinga/icinga.cfg
                 regexp='[#c]+heck_external_commands.*'
                 line='check_external_commands=1'"
-    notify:
-      - reload icinga
+    notify: reload icinga
 
   - name: change status update interval
     lineinfile: "dest=/etc/icinga/icinga.cfg
                 regexp='[#s]+tatus_update_interval.*'
                 line='status_update_interval=10'"
-    notify:
-      - reload icinga
+    notify: reload icinga
 
   - name: change refresh rate
     lineinfile: "dest=/etc/icinga/cgi.cfg
                 regexp='[#r]+efresh_rate.*'
                 line='refresh_rate=10'"
-    notify:
-      - reload icinga
+    notify: reload icinga
 
   - name: create nagios ssh directory
     file: dest=/var/lib/nagios/.ssh state=directory
@@ -94,8 +87,7 @@
     template: dest=/etc/default/nagircbot
               src=../../templates/monitoring-server/nagircbot.j2
               mode=0644 owner=root group=root
-    notify:
-      - restart nagircbot
+    notify: restart nagircbot
 
   - name: start nagircbot
     service: name=nagircbot state=started enabled=yes

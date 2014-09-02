@@ -6,7 +6,7 @@
       - apache2
       - icinga
       - icinga-doc
-      - munin
       - check-mk-server
       - check-mk-config-icinga
       - nagircbot
+      - munin

@@ -15,8 +15,7 @@
     copy: dest=/etc/check_mk/main.mk
           src=../../files/monitoring-server/main.mk
           owner=root group=root mode=0644
-    notify:
-      - reload check_mk
+    notify: reload check_mk
 
   - name: add SSH private key for nagios user
     copy: dest=/var/lib/icinga/id_rsa
