@@ -1,3 +1,10 @@
 ---
+  # all systems
   - include: munin_node.yml
-  - include: check_mk.yml
+  - include: check_mk-client/general.yml
+  # encoder
+  - include: check_mk-client/encoder.yml
+    when: ansible_hostname | match("encoder\d+")
+  # monitoring-Server
+  - include: monitoring-server/main.yml
+    when: ansible_fqdn == 'monitoring.lan.c3voc.de'

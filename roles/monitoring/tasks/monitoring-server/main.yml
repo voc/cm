@@ -1,0 +1,4 @@
+---
+  - include: packages.yml
+  - include: icinga.yml
+  - include: munin.yml

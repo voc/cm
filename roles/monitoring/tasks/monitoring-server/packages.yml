@@ -1,0 +1,8 @@
+---
+  # Install packages needed for a monitoring server
+  - name: install monitoring server packages
+    apt: name={{ item }} state=latest
+    with_items:
+      - icinga
+      - munin
+      - check-mk-config-icinga
