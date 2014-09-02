@@ -41,6 +41,11 @@ What you need:
   `pbl` (public) and `int` (internal)
 * run ansible to deploy config
 
+## monitoring.lan.c3voc.de
+
+You have to name the monitoring host `monitoring.lan.c3voc.de`. After
+deployment, you have to run `check_mk -I && check_mk -O` inventory each host.
+
 # TODO
 
 Have a look into `TODO` file.

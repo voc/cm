@@ -3,6 +3,10 @@
   - name: install monitoring server packages
     apt: name={{ item }} state=latest
     with_items:
+      - apache2
       - icinga
+      - icinga-doc
       - munin
+      - check-mk-server
       - check-mk-config-icinga
+      - nagircbot

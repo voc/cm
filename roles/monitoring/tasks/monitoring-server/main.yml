@@ -1,4 +1,5 @@
 ---
   - include: packages.yml
   - include: icinga.yml
+  - include: check_mk.yml
   - include: munin.yml

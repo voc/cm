@@ -1,3 +1,15 @@
 ---
   - name: restart munin-node
     service: name=munin-node state=restarted
+
+  - name: reload check_mk
+    command: check_mk -O
+
+  - name: reload apache
+    service: name=apache2 state=reloaded
+
+  - name: restart nagircbot
+    service: name=nagircbot state=restarted
+
+  - name: reload icinga
+    service: name=icinga state=reloaded

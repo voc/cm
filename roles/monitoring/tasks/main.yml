@@ -1,9 +1,8 @@
 ---
   # all systems
-  - include: munin_node.yml
-  - include: check_mk-client/general.yml
+  - include: monitoring-client/general.yml
   # encoder
-  - include: check_mk-client/encoder.yml
+  - include: monitoring-client/encoder.yml
     when: ansible_hostname | match("encoder\d+")
   # monitoring-Server
   - include: monitoring-server/main.yml
