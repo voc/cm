@@ -13,7 +13,7 @@
   # TODO: should be created more dynamically
   - name: configure check_mk
     copy: dest=/etc/check_mk/main.mk
-          src=../../files/monitoring-server/main.mk
+          src=../../files/monitoring-server/check_mk/main.mk
           owner=root group=root mode=0644
     notify: reload check_mk
 

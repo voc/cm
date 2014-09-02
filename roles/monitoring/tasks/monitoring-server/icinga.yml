@@ -2,7 +2,7 @@
   # Configure apache for icinga
   - name: create icinga apache config file
     copy: dest=/etc/icinga/apache2.conf
-          src=../../files/monitoring-server/apache2.conf
+          src=../../files/monitoring-server/icinga/apache2.conf
           owner=root group=root mode=0644
     notify: reload apache
 
