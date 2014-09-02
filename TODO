@@ -1,3 +1,9 @@
+general
+-------
+
+* /etc/ssh/ssh_known_host: should be created globally
+* grep for `TODO`
+
 encoder
 -------
 
@@ -15,3 +21,4 @@ server
 * noch nicht initial deployed sind: storage, node, live
 * router: bind Konfiguration fehlt
 * relays: ausrollen des frontends fehlt noch
+* monitoring: munin-server
