@@ -4,7 +4,7 @@
   ###########
   # Install packages
   - name: install packages needed to monitor host
-    apt: name={{ item }} state=present
+    apt: name={{ item }} state=latest
     with_items:
       - check-mk-agent
       - nagios-plugins-basic
@@ -56,8 +56,7 @@
     copy: dest=/etc/munin/munin-node.conf
           src=../../files/monitoring-client/munin/munin-node.conf
           owner=root group=root mode=0644
-    notify:
-      - restart munin-node
+    notify: restart munin-node
 
   - name: create munin-fetch user
     user: name=munin-fetch groups=ssh
