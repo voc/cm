@@ -21,4 +21,3 @@
     copy: dest=/var/lib/icinga/id_rsa
           src=../../files/monitoring-server/icinga_id_rsa
           owner=nagios group=nagios mode=0600
-    # usage: ssh -v -4 -l check-mk -i /var/lib/icinga/id_rsa subtitles.ber.c3voc.de
