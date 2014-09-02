@@ -5,3 +5,5 @@
       - shorewall
       - shorewall6
       - isc-dhcp-server
+      - bind9
+      - bind9utils

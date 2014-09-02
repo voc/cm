@@ -13,3 +13,6 @@
   # Restart DHCP daemon
   - name: restart dhcpd
     service: name=isc-dhcp-server state=restarted
+
+  - name: reload bind
+    service: name=bind9 state=reload

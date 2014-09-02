@@ -1,0 +1,69 @@
+$TTL 300
+$ORIGIN lan.c3voc.de.
+
+@       IN      SOA    lan.c3voc.de.       florolf.n621.de. (
+                     2014082000         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                          86400 )       ; Negative Cache TTL
+
+@       IN      NS      router
+
+; Raum 1
+mixer1		    IN      A       10.73.1.1
+grabber1	    IN      A       10.73.1.2
+encoder1    	IN      A       10.73.1.3
+switch1		    IN      A       10.73.1.253
+encoder1-amt	IN      A       10.73.1.243
+; Raum 2
+mixer2	     	IN      A       10.73.2.1
+grabber2	    IN      A       10.73.2.2
+encoder2      IN      A       10.73.2.3
+switch2       IN      A       10.73.2.253
+encoder2-amt	IN      A       10.73.2.243
+; Raum 3
+mixer3		    IN      A       10.73.3.1
+grabber3      IN      A       10.73.3.2
+encoder3      IN      A       10.73.3.3
+switch3       IN      A       10.73.3.253
+encoder3-amt	IN      A       10.73.3.243
+; Raum 4
+mixer4		    IN      A       10.73.4.1
+grabber4      IN      A       10.73.4.2
+encoder4      IN      A       10.73.4.3
+switch4       IN      A       10.73.4.253
+encoder4-amt	IN      A       10.73.4.243
+; Raum 5
+mixer5		    IN      A       10.73.5.1
+grabber5      IN      A       10.73.5.2
+encoder5      IN      A       10.73.5.3
+switch5       IN      A       10.73.5.253
+encoder5-amt	IN      A       10.73.5.243
+; Raum 6
+mixer6        IN      A       10.73.6.1
+grabber6      IN      A       10.73.6.2
+encoder6      IN      A       10.73.6.3
+switch6       IN      A       10.73.6.253
+encoder6-amt  IN      A       10.73.6.243
+; Raum 7
+mixer7        IN      A       10.73.7.1
+grabber7      IN      A       10.73.7.2
+encoder7      IN      A       10.73.7.3
+switch7       IN      A       10.73.7.253
+encoder7-amt	IN      A       10.73.7.243
+; RZ
+node          IN      A       10.73.0.1
+node-ipmi     IN      A       10.73.0.251
+storage       IN      A       10.73.0.2
+storage-ipmi	IN      A       10.73.0.252
+sun           IN      A       10.73.0.3
+sun-ipmi      IN      A       10.73.0.250
+usa           IN	    A       10.73.0.5
+usa-ipmi      IN	    A       10.73.0.249
+live          IN      A       10.73.0.6
+switchrz      IN	    A       y10.73.0.253
+router        IN      A       10.73.0.254
+monitoring    IN      A       10.73.0.8
+phony         IN      A       10.73.0.10
+rencoder      IN      A       10.73.100.200

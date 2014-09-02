@@ -1,0 +1,13 @@
+$TTL 300
+$ORIGIN tracker.fem-net.de.
+
+@       IN      SOA    tracker.fem-net.de.       florolf.n621.de. (
+                     2013122703         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                          86400 )       ; Negative Cache TTL
+	IN	NS router
+	IN	A 10.73.0.10
+
+router IN A 10.73.0.254

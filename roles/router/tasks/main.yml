@@ -3,3 +3,4 @@
   - include: network_interfaces.yml
   - include: shorewall.yml
   - include: dhcp.yml
+  - include: bind.yml
