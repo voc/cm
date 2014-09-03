@@ -89,5 +89,14 @@
               mode=0644 owner=root group=root
     notify: restart nagircbot
 
+  - name: put www-data into the nagios group
+    user: name=www-data
+          append=yes
+          groups=nagios
+
+  - name: grant www-data access nagios command interface
+    file: path=/var/lib/icinga/rw
+          mode=0750
+
   - name: start nagircbot
     service: name=nagircbot state=started enabled=yes
