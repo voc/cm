@@ -2,6 +2,6 @@
   - name: update grub
     command: /usr/sbin/update-grub
 
-  - name: restart openntpd
-    service: name=openntpd state=restarted
-             pattern=/usr/bin/ntpd
+  - name: restart ntpd
+    service: name=ntp state=restarted
+             pattern=/usr/sbin/ntpd
