@@ -1,6 +1,6 @@
 ---
  - name: create user "{{ user }}"
-   user: name="{{ user }}" state=present shell=/bin/zsh groups="ssh,sudo"
+   user: name="{{ user }}" state=present shell=/bin/zsh groups="ssh,sudo,adm"
 
  - name: install zshrc
    copy: dest="/home/{{ user }}/.zshrc" src="{{ item }}"
