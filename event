@@ -46,3 +46,12 @@ live.lan.c3voc.de nginx=yes nginx_hls_off=yes
 live.ber.c3voc.de nginx=yes nginx_hls_off=yes nginx_master_ip=194.95.66.38
 live.dus.c3voc.de nginx=yes nginx_master_ip=195.54.164.164
 cup.derpeter.net ansible_ssh_port=1022 nginx=yes nginx_master_ip=195.54.164.164
+
+[basic]
+mng.ber.c3voc.de
+node.ber.c3voc.de
+node.dus.c3voc.de
+tracker.c3voc.de
+live.dus.c3voc.de
+live.ber.c3voc.de
+mngslave.dus.c3voc.de
