@@ -39,7 +39,6 @@ monitoring.lan.c3voc.de
 router.lan.c3voc.de router_pbl_ip=194.95.66.38 router_pbl_mask=255.255.255.0 router_pbl_gw=194.95.66.1
 phony.lan.c3voc.de
 
-
 # Streaming server
 [relays]
 live.lan.c3voc.de nginx=yes nginx_hls_off=yes
@@ -48,6 +47,7 @@ live.dus.c3voc.de nginx=yes nginx_master_ip=195.54.164.164
 cup.derpeter.net ansible_ssh_port=1022 nginx=yes nginx_master_ip=195.54.164.164
 c3voc.mazdermind.de ansible_ssh_port=1022 nginx=yes nginx_master_ip=195.54.164.164
 
+# mainly remote server
 [basic]
 mng.ber.c3voc.de
 node.ber.c3voc.de
@@ -56,3 +56,4 @@ tracker.c3voc.de
 live.dus.c3voc.de
 live.ber.c3voc.de
 mngslave.dus.c3voc.de
+testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
