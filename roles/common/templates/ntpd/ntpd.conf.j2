@@ -18,10 +18,6 @@ filegen clockstats file clockstats type day enable
 # pool.ntp.org maps to about 1000 low-stratum NTP servers.  Your server will
 # pick a different set every time it starts up.  Please consider joining the
 # pool: <http://www.pool.ntp.org/join.html>
-server 0.debian.pool.ntp.org iburst
-server 1.debian.pool.ntp.org iburst
-server 2.debian.pool.ntp.org iburst
-server 3.debian.pool.ntp.org iburst
 {% if 'lan.c3voc.de' in ansible_domain and 'router.lan.c3voc.de' not in ansible_fqdn %}
 server router.lan.c3voc.de iburst
 {% endif %}
