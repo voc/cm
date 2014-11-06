@@ -137,6 +137,7 @@ rtmp {
   {% endif %}
     hls_path /tmp/hls;
       hls_fragment 5s;
+      hls_fragment_naming timestamp;
       hls_playlist_length 120m;
 
   {% for stream, ip in nginx_streaming_locations.iteritems() %}
