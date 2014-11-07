@@ -4,6 +4,7 @@
   - include: vim.yml
   - include: sudo.yml
   - include: grub.yml
+    when: grub != 'no'
   - include: ntp.yml
     when: ansible_virtualization_type != 'lxc'
   - include: inittab.yml
