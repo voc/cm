@@ -12,7 +12,7 @@
    apt_repository: repo="deb http://www.deb-multimedia.org wheezy main non-free" state=present
 
  - name: ensure that the debian keyrings are present
-   apt: name={{ item }} state=present
+   apt: name={{ item }} state=present update_cache=yes
    with_items:
     - debian-keyring
     - debian-archive-keyring

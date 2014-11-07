@@ -1,6 +1,6 @@
 ---
  - name: install a default set of packages
-   apt: name={{ item }} state=present
+   apt: name={{ item }} state=present update_cache=yes
    with_items:
     - zsh
     - vim
