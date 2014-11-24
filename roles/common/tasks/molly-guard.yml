@@ -1,0 +1,5 @@
+---
+  - name: configure molly-guard
+    copy: dest=/etc/molly-guard/rc
+          src=molly-guard/rc
+          user=root group=root mode=0644

@@ -8,6 +8,7 @@
   - include: ntp.yml
     when: ansible_virtualization_type != 'lxc'
   - include: inittab.yml
+  - include: molly-guard.yml
   # realise users
   - include: user.yml user=voc
   - include: user.yml user=andi
