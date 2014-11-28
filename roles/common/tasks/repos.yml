@@ -5,12 +5,6 @@
  - name: setup the VOC debian repo
    apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=present
 
- - name: setup the DMO repo key
-   apt_key: data="{{ lookup('file', 'dmo_repo.key') }}" state=present
-
- - name: setup the DMO repo
-   apt_repository: repo="deb http://www.deb-multimedia.org wheezy main non-free" state=present
-
  - name: ensure that the debian keyrings are present
    apt: name={{ item }} state=present update_cache=yes
    with_items:
