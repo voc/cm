@@ -5,5 +5,8 @@
     with_items:
       - oggfwd-voc
 
+  # - include: relay_register.yml
   - include: nginx.yml
   - include: icecast.yml
+  - include: iptables.yml
+  - include: sysctl.yml

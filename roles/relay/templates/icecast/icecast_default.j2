@@ -11,13 +11,13 @@ CONFIGFILE="{{ icecast_config_file | default('/etc/icecast2-beta/icecast.xml') }
 
 # Name or ID of the user and group the daemon should run under
 USERID={{ icecast_user | default('icecast2-beta') }}
-GROUPID={{ icecast_group | default('icecast2-beta') }}
+GROUPID={{ icecast_group | default('icecast-beta') }}
 
 # Edit /etc/icecast2-beta/icecast.xml and change at least the passwords.
 # Change this to true when done to enable the init.d script
 {% set icecast = icecast | default('no') %}
 {% if icecast == 'yes' %}
-ENABLE=True
+ENABLE=true
 {% else %}
-ENABLE=False
+ENABLE=false
 {% endif %}

@@ -2,6 +2,18 @@
   - name: install nginx package
     apt: name=nginx-rtmp state=latest
 
+  - name: added nginx htdocs and caching directories
+    file: "dest=/srv/nginx/{{ item }}
+          owner=www-data group=www-data
+          state=directory"
+    with_items:
+      - "htdocs"
+      - "cache/streaming_website/static"
+      - "cache/streaming_website/pages"
+      - "cache/hls"
+      - "cache/tmp"
+
+
   - name: configure nginx
     template: dest=/etc/nginx/nginx.conf
               src=nginx/nginx.conf.j2
@@ -11,8 +23,19 @@
 
   - name: start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx == 'yes'
+    when: nginx is defined and nginx == 'yes'
 
   - name: stopp nginx
     service: name=nginx enabled=no state=stopped
-    when: nginx != 'yes' or nginx is not defined
+    when: nginx is not defined or nginx != 'yes'
+
+  - name: copy nginx error pages
+    copy: dest=/srv/nginx/htdocs/{{ item }}
+          src=nginx/{{ item }}
+          owner=www-data group=root mode=0644
+    with_items:
+      - 50x.html
+
+  - name: remove access-log-truncating cronjob
+    file: dest=/etc/cron.hourly/truncate-nginx-accesslog
+          state=absent

@@ -3,7 +3,7 @@ user  www-data;
 # Specifies the value for maximum file descriptors that can be opened by this process.
 worker_rlimit_nofile 65536;
 # multiple worker
-worker_processes  2;
+worker_processes  {{ nginx_worker_processes | default('2') }};
 
 # important for multi worker processes!!1!
 rtmp_auto_push on;
@@ -21,12 +21,38 @@ events {
 http {
   types_hash_max_size 2048;
 
+  log_format ip '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+  access_log /var/log/nginx/access.log ip buffer=512k;
+
+  # mime-types
+  include /etc/nginx/mime.types;
+
   types {
       application/vnd.apple.mpegurl m3u8;
       video/mp2t ts;
   }
 
-  include /etc/nginx/mime.types;
+  proxy_temp_path /srv/nginx/cache/tmp;
+  proxy_cache_path /srv/nginx/cache/streaming_website/static
+                   keys_zone=streaming_website_static:64m
+                   loader_threshold=300 loader_files=200;
+
+  proxy_cache_path /srv/nginx/cache/streaming_website/pages
+                   keys_zone=streaming_website_pages:64m
+                   loader_threshold=300 loader_files=200;
+
+  proxy_cache_path /srv/nginx/cache/hls
+                   keys_zone=hls:64m
+                   loader_threshold=300 loader_files=200;
+
+  upstream streaming {
+    server {{ nginx_frontend_server }};
+    server {{ nginx_frontend_server_backup }} backup;
+  }
+
+  upstream hls {
+    server {{ nginx_hls_m3u8_master }};
+  }
 
   server {
     listen [::]:80 default ipv6only=off;
@@ -50,41 +76,77 @@ http {
 
     server_name localhost;
 
+    # disable directory listing
+    autoindex off;
+
+    error_page 404 = @404;
+    error_page 500 501 502 503 504 = @500;
+
+    location @500 {
+      try_files /50x.html =500;
+    }
+
+    location @404 {
+      try_files /404.php  =404;
+    }
+
     location / {
       include /etc/nginx/mime.types;
     }
 
-    location /tests {
-      include /etc/nginx/mime.types;
-      alias /srv/nginx/htdocs_tests;
-      autoindex on;
-    }
-
-    location /releases {
-      alias /srv/releases;
-      autoindex on;
-    }
-
-    location /releases/private {
-      alias /srv/releases/private;
-      auth_basic "Auf zum Atem!!1!";
-      auth_basic_user_file /etc/nginx/releases_htpasswd;
-      autoindex on;
+    location = /50x.html {
+      alias /srv/nginx/htdocs/50x.html;
     }
 
     # hls
-    location /hls {
+    location ~  ^/hls/local/(?<stream>.+)\.m3u8$ {
       types {
         application/vnd.apple.mpegurl m3u8;
         video/mp2t ts;
       }
 
-      alias /tmp/hls;
+      limit_rate 3m;
+
+      alias /tmp/hls/$stream.m3u8;
+      autoindex on;
+
+      add_header Cache-Control no-cache;
+    }
+
+    {% if nginx_hls_master is defined and nginx_hls_master == 'yes' %}
+    {% else %}
+    location ~  ^/hls/(?<stream>.+)\.m3u8$ {
+        proxy_intercept_errors on;
+        proxy_cache            hls;
+        proxy_set_header       Host $host;
+        proxy_set_header       X-Real-IP $remote_addr;
+        proxy_pass             http://hls/hls/$stream.m3u8;
+        proxy_cache_methods    GET HEAD;
+        proxy_cache_valid      200 302 2s;
+        proxy_cache_key        "$uri";
+        add_header X-Cache     "$upstream_cache_status edge";
+        add_header Cache-Control no-cache;
+
+        proxy_cache_lock       on;
+    }
+    {% endif %}
+
+    location ~ ^/hls {
+      types {
+        application/vnd.apple.mpegurl m3u8;
+        video/mp2t ts;
+      }
+
+    {% if nginx_hls_master is defined and nginx_hls_master != 'yes' %}
+      limit_rate 3m;
+    {% endif %}
+
+      root /tmp/;
       autoindex on;
     }
 
     # stats
-    location /stats/rtmp {
+    location ~ ^/stats/rtmp {
       rtmp_stat all;
       access_log off;
 
@@ -93,7 +155,7 @@ http {
   {% endfor %}
     deny all;
     }
-    location /stats/nginx {
+    location ~ ^/stats/nginx {
       stub_status on;
       access_log   off;
 
@@ -102,12 +164,46 @@ http {
   {% endfor %}
     deny all;
     }
+
+    # caching stuff
+    proxy_connect_timeout   10;
+    proxy_send_timeout      15;
+    proxy_read_timeout      20;
+
+    # caching static files or acces backend servers
+    location ~ ^(?<path>.+)(?<ext>\.(css|css.map|png|jpeg|jpg|js))$ {
+      proxy_intercept_errors on;
+      proxy_cache            streaming_website_static;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://streaming$path$ext;
+      # caching requested    files and pages
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 10m;
+      proxy_cache_key        "$uri";
+      add_header X-Cache     "$upstream_cache_status edge";
+    }
+
+    location ~ .* {
+      proxy_cache            streaming_website_pages;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://streaming$1;
+      # caching requested    files and pages
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 5m;
+      proxy_cache_key        "$uri";
+      add_header X-Cache     "$upstream_cache_status edge";
+    }
   }
 }
 
 rtmp {
+  log_format rtmp '"$remote_addr [$time_local] $command "$app" "$name" "$args" - $bytes_received $bytes_sent "$pageurl" "$flashver" "$swfurl" "$tcurl" ($session_readable_time)"';
+  access_log /var/log/nginx/rtmp_access.log rtmp;
+
   server {
-    listen 0.0.0.0:1935;
+    listen [::]:1935 ipv6only=off;
 
     ping 30s;
 
@@ -128,17 +224,29 @@ rtmp {
       live on;
       meta copy;
 
-      access_log off;
-
-  {% if nginx_hls_off is defined and 'yes' %}
-    hls off;
-  {% else %}
+  {% if nginx_hls_master is defined and nginx_hls_master == 'yes' %}
     hls on;
+  {% else %}
+   {% if (nginx_hls_off is defined and nginx_hls_off == 'yes') or (hidden is defined and hidden == 'yes') %}
+     hls off;
+   {% else %}
+     hls on;
+   {% endif %}
   {% endif %}
     hls_path /tmp/hls;
       hls_fragment 5s;
       hls_fragment_naming timestamp;
-      hls_playlist_length 120m;
+      hls_fragment_slicing aligned;
+      hls_playlist_length 20m;
+  {% if nginx_hls_master is defined and nginx_hls_master == 'yes' %}
+      hls_base_url http://hls.stream.c3voc.de/hls/;
+  {% else %}
+      hls_base_url http://{{ inventory_hostname }}/hls/;
+  {% endif %}
+
+      hls_variant _hd BANDWIDTH=2000000;
+      hls_variant _sd BANDWIDTH=1000000;
+      hls_variant _slides BANDWIDTH=100000;
 
   {% for stream, ip in nginx_streaming_locations.iteritems() %}
     pull rtmp://{{ ip }}:1935/stream/{{ stream }} name={{ stream }} static live=1;

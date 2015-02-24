@@ -17,9 +17,14 @@
       - restart icecast
 
   - name: enable icecast2-beta on boot
-    service: name=icecast2-beta enabled=yes state=started
+    service: name=icecast2-beta enabled=yes state=started pattern=/usr/bin/icecast2-beta
     when: icecast is defined and icecast == 'yes'
 
   - name: disable icecast2-beta on boot
     service: name=icecast2-beta enabled=no state=stopped pattern=/usr/bin/icecast2-beta
     when: icecast is not defined or icecast == 'no'
+
+  - name: create dump file directory for icecast
+    file: dest=/srv/icecastdumps state=directory
+          owner=icecast2-beta group=icecast-beta mode=0755
+    when: icecast_push_master is defined and icecast_push_master == 'yes'

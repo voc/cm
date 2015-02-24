@@ -1,0 +1,14 @@
+---
+  - name: create rc.local on master
+    template: dest=/etc/rc.local
+              src=rc.local/rc.local.master.j2
+              mode=0755 owner=root group=root
+    notify: reload rc.local
+    when: ansible_fqdn == 'live.lan.c3voc.de' or hidden is defined and hidden == 'yes'
+
+  - name: create rc.local on edge
+    template: dest=/etc/rc.local
+              src=rc.local/rc.local.edge.j2
+              mode=0755 owner=root group=root
+    notify: reload rc.local
+    when: ansible_fqdn != 'live.lan.c3voc.de' and (hidden is not defined or hidden != 'yes')
