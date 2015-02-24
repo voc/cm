@@ -12,6 +12,7 @@ monitoring:
   collectd_interval: 30
 
 trusted_ipv4_ips: {
+  "world TODO: remove me": '0.0.0.0/0',
   "voc internal #3500": '10.73.0.0/16',
   "voc public #2241":   '94.45.241.0/24',
   "voc 31c3 #2240":     '94.45.240.0/24',
@@ -28,6 +29,7 @@ trusted_ipv4_ips: {
 }
 
 trusted_ipv6_ips: {
+  "world TODO: remove me":         '::/0',
   "31c3 public #2241":  '2001:67c:20a1:2241::/64',
   "31c3 voc #2240":     '2001:67c:20a1:2240::/64',
   "voc berlin":   '2001:67c:20a0:e::/64',
