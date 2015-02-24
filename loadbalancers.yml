@@ -1,0 +1,7 @@
+---
+  - hosts: loadbalancers
+    roles:
+      - role: common
+        tags: common
+      - role: loadbalancer
+        tags: loadbalancer

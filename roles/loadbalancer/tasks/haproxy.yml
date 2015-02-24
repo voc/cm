@@ -1,0 +1,23 @@
+---
+  - name: install haproxy package
+    apt: name=haproxy state=latest
+    tags: install
+
+  - name: create haproxy chroot directory
+    file: dest=/usr/share/haproxy state=directory
+          mode=0750 owner=haproxy group=haproxy
+    tags: install
+
+  - name: create haproxy config
+    template: src=haproxy/haproxy.cfg.j2
+              dest=/etc/haproxy/haproxy.cfg
+              owner=root group=root mode=0640
+              validate='haproxy -f %s -c'
+    notify: reload haproxy
+    tags:
+      - install
+      - config
+
+  - name: autostart haproxy
+    service: name=haproxy state=started enabled=yes
+    tags: install

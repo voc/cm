@@ -1,0 +1,61 @@
+loadbalancer:
+  timeout_client:  30s
+  timeout_server:  10s
+  timeout_connect: 5s
+  check_interval:  5s
+  frontend:
+    match_path_ends:
+      hls_playlist: .m3u8
+      hls_fragment: .ts
+      icecast: .webm .opus .mp3 .ogg .ogv .oga
+    match_urls:
+      is_streaming_website:
+        - "streaming\\.media\\.ccc\\.de"
+        - "stream\\.www\\.c3voc\\.de"
+      is_cdn:
+        - "cdn\\.c3voc\\.de"
+    match_ip_networks:
+      is_local:
+        - "94.56.0.0/16"
+        - "20a1:3456::"
+  backends:
+    # define server for streaming frontend
+    streaming_website:
+      proxy: true
+      match:
+        - is_streaming_website
+      headers:
+        - 'http-request set-header X-Custom-Header %[url]'
+      servers:
+        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50 }
+
+    # default server
+    hls_fragment:
+      match:
+        - is_cdn
+        - hls_fragment
+      servers:
+        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50 }
+    hls_playlist:
+      match:
+        - is_cdn
+        - hls_playlist
+      servers:
+        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50 }
+    icecast:
+      match:
+        - is_cdn
+        - icecast
+      servers:
+        - { name: 'live.dus.c3voc.de', port: 8000, redir_path: 'http://live.dus.c3voc.de:8000', weight: 50 }
+
+    # local server
+    hls_playlist_local:
+      servers:
+        - { name: '172.0.23.42', port: 80, redir_path: 'http://172.0.23.42:80', weight: 50 }
+    hls_fragment_local:
+      servers:
+        - { name: '172.0.23.42', port: 80, redir_path: 'http://172.0.23.42:80', weight: 50 }
+    icecast_local:
+      servers:
+        - { name: '172.0.23.42', port: 8000, redir_path: 'http://172.0.23.42:8000', weight: 50 }

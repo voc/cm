@@ -4,3 +4,4 @@
   - include: mixers.yml
   - include: relays.yml
   - include: servers.yml
+  - include: loadbalancers.yml
