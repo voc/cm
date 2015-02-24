@@ -14,10 +14,7 @@ loadbalancer:
         - "stream\\.www\\.c3voc\\.de"
       is_cdn:
         - "cdn\\.c3voc\\.de"
-    match_ip_networks:
-      is_local:
-        - "94.56.0.0/16"
-        - "20a1:3456::"
+
   backends:
     # define server for streaming frontend
     streaming_website:
@@ -48,14 +45,3 @@ loadbalancer:
         - icecast
       servers:
         - { name: 'live.dus.c3voc.de', port: 8000, redir_path: 'http://live.dus.c3voc.de:8000', weight: 50 }
-
-    # local server
-    hls_playlist_local:
-      servers:
-        - { name: '172.0.23.42', port: 80, redir_path: 'http://172.0.23.42:80', weight: 50 }
-    hls_fragment_local:
-      servers:
-        - { name: '172.0.23.42', port: 80, redir_path: 'http://172.0.23.42:80', weight: 50 }
-    icecast_local:
-      servers:
-        - { name: '172.0.23.42', port: 8000, redir_path: 'http://172.0.23.42:8000', weight: 50 }
