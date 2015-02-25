@@ -1,12 +1,12 @@
 ---
 # Event config
 event:
-    acronym: CR209
-    name: Chaosradio 209
-    slogen: Open-Source-Finanzierung
-    formats:
-      hd: true
-      sd: true
+  acronym: CR209
+  name: Chaosradio 209
+  slogen: Open-Source-Finanzierung
+  formats:
+    hd: yes
+    sd: yes
 
 monitoring:
   collectd_server:
