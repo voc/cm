@@ -11,5 +11,11 @@
               mode=0644 owner=root group=root
     notify: reload php-fpm
 
+  - name: disable php version expose
+    lineinfile: dest=/etc/php5/fpm/php.ini
+                regexp="expose_php.*=.*"
+                line="expose_php = Off"
+    notify: reload php-fpm
+
   - name: start php-fpm
     service: name=php5-fpm enabled=yes state=started
