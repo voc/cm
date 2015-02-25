@@ -1,0 +1,5 @@
+---
+haproxy_bind_ipv4: 31.172.30.141
+haproxy_bind_ipv6: 2a01:a700:4633::141
+nginx_bind_ipv4: 31.172.30.138
+nginx_bind_ipv6: 2a01:a700:4633::138

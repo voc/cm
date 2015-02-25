@@ -4,62 +4,27 @@ icecast_admin_password:  'Else8Reform=About=Hey9Harp7'
 icecast_source_password: 'syria4muzzle6care'
 icecast_relay_password:  'pastry$cease!Opera'
 icecast_master_password: 'pastry$cease!Opera'
-icecast_admin_email:     '31c3-cdn@c3voc.de'
+icecast_admin_email:     'contact@c3voc.de'
 icecast_relay_on_demand: 0 # relay-on-demand triggers an icecast bug
 
 icecast_additional_mounts: [
-  { "mount-name": '/lounge.mp3',  "type": 'audio/mpeg', "username": 'source',  "password": 'flood9Fail9Donkey',    "stream-name": "{{ event.name }} - {{ event.slogen }} - Lounge",   "dump-file": "/srv/icecastdumps/31C3-lounge-%F_%H-%M-%S_%s.mp3" },
-  { "mount-name": '/ambient.mp3', "type": 'audio/mpeg', "username": 'source',  "password": 'Eaten2Region9beside',  "stream-name": "{{ event.name }} - {{ event.slogen }} - Ambient",  "dump-file": "/srv/icecastdumps/31C3-ambient-%F_%H-%M-%S_%s.mp3" }
+  # { "mount-name": '/lounge.mp3',  "type": 'audio/mpeg', "username": 'source',  "password": 'flood9Fail9Donkey',    "stream-name": "{{ event.name }} - {{ event.slogen }} - Lounge",   "dump-file": "/srv/icecastdumps/31C3-lounge-%F_%H-%M-%S_%s.mp3" },
 ]
 
 icecast_fix_mount_metadata: [
-  { "mount-name": "/example.opus", "type": "autio/ogg" },
-  { "mount-name": "/example.mp3",  "type": "audio/mpeg" },
+  # { "mount-name": "/example.opus", "type": "autio/ogg" },
+  # { "mount-name": "/example.mp3",  "type": "audio/mpeg" },
 ]
 
 icecast_static_streams_meta_data: [
-  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogen }} - Saal 1",       "stream-url": "http://streaming.media.ccc.de" },
-  { "saal": "s2", stream-name: "{{ event.name }} - {{ event.slogen }} - Saal 2",       "stream-url": "http://streaming.media.ccc.de" },
-  { "saal": "s3", stream-name: "{{ event.name }} - {{ event.slogen }} - Saal G",       "stream-url": "http://streaming.media.ccc.de" },
-  { "saal": "s4", stream-name: "{{ event.name }} - {{ event.slogen }} - Saal 6",       "stream-url": "http://streaming.media.ccc.de" },
-  { "saal": "s5", stream-name: "{{ event.name }} - {{ event.slogen }} - Sendezentrum", "stream-url": "http://streaming.media.ccc.de" },
+  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogen }}", "stream-url": "http://streaming.media.ccc.de" },
 ]
 
 # nginx
 nginx_worker_processes: 2
 nginx_streaming_locations: {
-  "s1_native_slides":  "{{ nginx_master_ip | default('10.73.1.3') }}",
-  "s2_native_slides":  "{{ nginx_master_ip | default('10.73.2.3') }}",
-  "s3_native_slides":  "{{ nginx_master_ip | default('10.73.3.3') }}",
-  "s4_native_slides":  "{{ nginx_master_ip | default('10.73.4.3') }}",
-
-  "s1_native_sd":  "{{ nginx_master_ip | default('10.73.1.3') }}",
-  "s2_native_sd":  "{{ nginx_master_ip | default('10.73.2.3') }}",
-  "s3_native_sd":  "{{ nginx_master_ip | default('10.73.3.3') }}",
-  "s4_native_sd":  "{{ nginx_master_ip | default('10.73.4.3') }}",
-
-  "s1_native_hd": "{{ nginx_master_ip | default('10.73.1.3') }}",
-  "s2_native_hd": "{{ nginx_master_ip | default('10.73.2.3') }}",
-  "s3_native_hd": "{{ nginx_master_ip | default('10.73.3.3') }}",
-  "s4_native_hd": "{{ nginx_master_ip | default('10.73.4.3') }}",
-
-  "s1_translated_slides":  "{{ nginx_master_ip | default('10.73.1.3') }}",
-  "s2_translated_slides":  "{{ nginx_master_ip | default('10.73.2.3') }}",
-  "s3_translated_slides":  "{{ nginx_master_ip | default('10.73.3.3') }}",
-  "s4_translated_slides":  "{{ nginx_master_ip | default('10.73.4.3') }}",
-
-  "s1_translated_hd": "{{ nginx_master_ip | default('10.73.1.3') }}",
-  "s2_translated_hd": "{{ nginx_master_ip | default('10.73.2.3') }}",
-  "s3_translated_hd": "{{ nginx_master_ip | default('10.73.3.3') }}",
-  "s4_translated_hd": "{{ nginx_master_ip | default('10.73.4.3') }}",
-
-  "s1_translated_sd": "{{ nginx_master_ip | default('10.73.1.3') }}",
-  "s2_translated_sd": "{{ nginx_master_ip | default('10.73.2.3') }}",
-  "s3_translated_sd": "{{ nginx_master_ip | default('10.73.3.3') }}",
-  "s4_translated_sd": "{{ nginx_master_ip | default('10.73.4.3') }}",
-
-  "s5_native_sd": "{{ nginx_master_ip | default('10.73.5.3') }}",
-  "s5_native_hd": "{{ nginx_master_ip | default('10.73.5.3') }}",
+  "s1_native_sd": "{{ nginx_master_ip | default('10.73.1.3') }}",
+  "s1_native_hd": "{{ nginx_master_ip | default('10.73.1.3') }}"
 }
 # define push ips
 nginx_ips_allow_to_push: [
@@ -75,9 +40,9 @@ nginx_ips_allow_stats: [
   "195.54.164.160/29",
   "10.73.0.0/16"
 ]
-# frontend server config
-nginx_frontend_server:        '31.172.30.138'
-nginx_frontend_server_backup: 'frontendbackup.31c3.c3voc.de'
+# frontend server
+nginx_frontend_server:
+  - '195.54.164.164'
 
-#FIXME: this should become live.31c3's IP
-nginx_hls_m3u8_master:        '94.45.240.3'
+nginx_hls_masters:
+  - '195.54.164.164'

@@ -1,8 +1,12 @@
 ---
 # Event config
 event:
-    acronym: froscon2014
-    name: FrOSCon 2014
+    acronym: CR209
+    name: Chaosradio 209
+    slogen: Open-Source-Finanzierung
+    formats:
+      hd: true
+      sd: true
 
 monitoring:
   collectd_server:
@@ -23,7 +27,6 @@ trusted_ipv4_ips: {
   "derpeter.net": '212.79.162.38',
   "n621.de":      '176.9.182.227',
   "ilmenau":      '141.24.40.0/26',
-  "relay1.as250.c3voc.de": "194.150.168.115",
   "derpeter.cup.c3voc.de": "5.45.111.82",
   # relays
 }
@@ -38,6 +41,5 @@ trusted_ipv6_ips: {
   "luusa.org":    '2a00:5ba0:8000:4:5054:ff:fe18:542f',
   "derpeter.net": '2001:4dd0:ff00:2a9::2',
   "n621.de":      '2a01:4f8:151:8ffd:2::1',
-  "relay1.as250.c3voc.de": "2001:4ce8:cfff:2115::",
   # relays
 }
