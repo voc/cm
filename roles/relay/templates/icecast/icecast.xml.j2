@@ -1,7 +1,7 @@
 <icecast>
     <hostname>{{ ansible_fqdn }}</hostname>
     <location>{{ icecast_location | default('voc') }}</location>
-    <admin>{{ icecast_admin_email | default('cdn@c3voc.de') }}</admin>
+    <admin>{{ icecast_admin_email | default('contact@c3voc.de') }}</admin>
 
     <limits>
         <clients>{{ icecast_client_limit | default('1000') }}</clients>
@@ -31,18 +31,17 @@
     </listen-socket>
 
     <!-- define master server to fetch from -->
-    {% if icecast_master_ip is defined %}
-<master-server>{{ icecast_master_ip }}</master-server>
+{% if icecast_master_ip is defined %}
+    <master-server>{{ icecast_master_ip }}</master-server>
     <master-server-port>{{ icecast_master_port | default('8000') }}</master-server-port>
     <master-update-interval>{{ icecast_master_update_interval | default('10') }}</master-update-interval>
     <master-password>{{ icecast_master_password }}</master-password>
     <relays-on-demand>{{ icecast_relay_on_demand | default('1') }}</relays-on-demand>
-    {% endif %}
+{% endif %}
 
-    {% if icecast_push_master is defined and icecast_push_master == 'yes' and icecast_additional_mounts is defined %}
-<!-- additional mount points with separate authentication -->
-    {% for mount in icecast_additional_mounts %}
-
+{% if icecast_push_master is defined and icecast_push_master == 'yes' and icecast_additional_mounts is defined %}
+    <!-- additional mount points with separate authentication -->
+{% for mount in icecast_additional_mounts %}
     <mount>
       <mount-name>{{ mount['mount-name'] }}</mount-name>
       <type>{{ mount['type'] }}</type>
@@ -51,19 +50,18 @@
       <hidden>0</hidden>
       <public>1</public>
       <stream-name>{{ mount['stream-name'] }}</stream-name>
-      {% if mount['dump-file'] is defined %}
+{% if mount['dump-file'] is defined %}
       <dump-file>{{ mount['dump-file'] }}</dump-file>
-      {% endif %}
+{% endif %}
     </mount>
-    {% endfor %}
-
+{% endfor %}
 
     <!-- adding static mountpoints for all planed rooms -->
-    {% for mount    in icecast_static_streams_meta_data %}
+{% for mount    in icecast_static_streams_meta_data %}
     <!-- {{ mount['saal'] }} - video -->
-    {% for language in ["native", "translated"]%}
-    {% for quality  in ["sd", "hd"]%}
-<mount>
+{% for language in ["native", "translated"]%}
+{% for quality  in ["sd", "hd"]%}
+    <mount>
       <mount-name>/{{ mount['saal'] }}_{{ language }}_{{ quality }}.webm</mount-name>
       <type>video/webm</type>
       <subtype>vp8/vorbis</subtype>
@@ -74,17 +72,17 @@
       <stream-url>{{ mount['stream-url'] }}</stream-url>
     </mount>
 
-    {% endfor %}
+{% endfor %}
 
     <!-- audio -->
-    {% for format in [{ "format": "mp3",  "type": "audio/mpeg" },
-                      { "format": "opus", "type": "audio/ogg",  "subtype": "opus" }] %}
+{% for format in [{ "format": "mp3",  "type": "audio/mpeg" },
+                  { "format": "opus", "type": "audio/ogg",  "subtype": "opus" }] %}
     <mount>
       <mount-name>/{{ mount['saal'] }}_{{ language }}.{{ format['format'] }}</mount-name>
       <type>{{ format['type']}}</type>
-      {% if format['subtype'] is defined %}
+{% if format['subtype'] is defined %}
       <subtype>{{ format['subtype']}}</subtype>
-      {% endif %}
+{% endif %}
       <hidden>0</hidden>
       <public>1</public>
       <stream-name>{{ mount['stream-name'] }}</stream-name>
@@ -92,21 +90,20 @@
       <stream-url>{{ mount['stream-url'] }}</stream-url>
     </mount>
 
-    {% endfor %}
-    {% endfor %}
-    {% endfor %}
-    {% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endif %}
 
     <!-- metadate fix for mount points -->
-    {% if icecast_push_master is defined and icecast_push_master == 'yes' and icecast_fix_mount_metadata is defined %}
-    {% for mount in icecast_fix_mount_metadata %}
-
+{% if icecast_push_master is defined and icecast_push_master == 'yes' and icecast_fix_mount_metadata is defined %}
+{% for mount in icecast_fix_mount_metadata %}
     <mount>
       <mount-name>{{ mount['mount-name'] }}</mount-name>
       <type>{{ mount['type'] }}</type>
     </mount>
-    {% endfor %}
-    {% endif %}
+{% endfor %}
+{% endif %}
 
     <!-- This flag turns on the icecast2 fileserver from which static files can be served. -->
     <fileserve>1</fileserve>
@@ -121,9 +118,9 @@
     </paths>
 
     <logging>
-      {% if icecast_access_log is defined %}
-<accesslog>{{ icecast_access_log | default('access.log') }}</accesslog>
-      {% endif %}
+{% if icecast_access_log is defined %}
+      <accesslog>{{ icecast_access_log | default('access.log') }}</accesslog>
+{% endif %}
 
       <errorlog>{{ icecast_error_log | default('error.log') }}</errorlog>
 
