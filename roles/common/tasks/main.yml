@@ -4,7 +4,6 @@
   - include: vim.yml
   - include: sudo.yml
   - include: grub.yml
-    when: grub != 'no'
   - include: ntp.yml
     when: ansible_virtualization_type != 'lxc'
   - include: inittab.yml
@@ -12,12 +11,14 @@
   # realise users
   - include: user.yml user=voc
   - include: user.yml user=andi
+  - include: user.yml user=anton
   - include: user.yml user=atze
   - include: user.yml user=derpeter
   - include: user.yml user=florob
   - include: user.yml user=florolf
   - include: user.yml user=mazdermind
   - include: user.yml user=meise
+  - include: user.yml user=bjoern
 
   - name: setting voc password
     user: name=voc
