@@ -41,14 +41,14 @@ phony.lan.c3voc.de
 
 # Streaming server
 [relays]
-live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes ansible_ssh_port=8000 ansible_ssh_host=localhost
+live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes ansible_ssh_port=8000 ansible_ssh_host=localhost
 
 # remote
 # master
-live.ber.c3voc.de   nginx=yes    nginx_hls_master=yes  nginx_frontend_master=yes  nginx_master_ip=80.153.23.35  icecast=yes
+live.ber.c3voc.de   nginx=yes    nginx_hls_master=yes  nginx_frontend_master=yes  nginx_master_ip=80.153.23.35  icecast=yes icecast_push_master=yes
 
 # slave
-live.dus.c3voc.de   nginx=yes       icecast=yes                        icecast_master_ip=195.54.164.164
+live.dus.c3voc.de   nginx=yes    icecast=yes                        icecast_master_ip=195.54.164.164
 
 
 [loadbalancers]

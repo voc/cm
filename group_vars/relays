@@ -17,7 +17,7 @@ icecast_fix_mount_metadata: [
 ]
 
 icecast_static_streams_meta_data: [
-  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogen }}", "stream-url": "http://streaming.media.ccc.de" },
+  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogen }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogen }} - CCCB - 26.02.2015" },
 ]
 
 # nginx
