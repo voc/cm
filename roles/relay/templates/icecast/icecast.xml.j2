@@ -4,7 +4,7 @@
     <admin>{{ icecast_admin_email | default('contact@c3voc.de') }}</admin>
 
     <limits>
-        <clients>{{ icecast_client_limit | default('1000') }}</clients>
+        <clients>{{ icecast_client_limit | default('4096') }}</clients>
         <sources>{{ icecast_source_limit | default('100')  }}</sources>
         <threadpool>{{ icecast_threadpool | default('5') }}</threadpool>
         <queue-size>{{ icecast_queue_size | default('2027520') }}</queue-size>
