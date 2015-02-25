@@ -2,7 +2,7 @@
   - hosts: mixers
     roles:
       - common
-      - monitoring
+      - monitoring-client
       - mixer
     vars:
       ssh_allow_voc_password_login: 'yes'

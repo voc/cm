@@ -1,0 +1,115 @@
+# Config file for collectd(1).
+#
+# Some plugins need additional configuration and are disabled by default.
+# Please read collectd.conf(5) for details.
+#
+# You should also read /usr/share/doc/collectd-core/README.Debian.plugins
+# before enabling any more plugins.
+
+Hostname "{{ inventory_hostname }}"
+Interval {{ monitoring.collectd_interval | default('30') }}
+
+LoadPlugin cpu
+LoadPlugin df
+LoadPlugin disk
+LoadPlugin interface
+LoadPlugin load
+LoadPlugin memory
+LoadPlugin network
+LoadPlugin swap
+LoadPlugin tcpconns
+<LoadPlugin perl>
+  Globals true
+</LoadPlugin>
+LoadPlugin "logfile"
+<Plugin "logfile">
+  LogLevel "info"
+  File "/var/log/collectd.log"
+  Timestamp true
+</Plugin>
+
+<Plugin interface>
+  # collect all interface data!!1!
+</Plugin>
+
+<Plugin network>
+  # client setup:
+{% for server_ip in monitoring.collectd_server %}
+  <Server "{{ server_ip }}" "{{ monitoring.collectd_port | default('25826') }}">
+    SecurityLevel Encrypt
+    Username "{{ monitoring.collectd_username }}"
+    Password "{{ monitoring.collectd_password }}"
+  </Server>
+{% endfor %}
+
+  MaxPacketSize 1024
+  TimeToLive 128
+</Plugin>
+
+<LoadPlugin perl>
+  Globals true
+</LoadPlugin>
+<Plugin perl>
+  IncludeDir "/opt/voc/collectd/plugins/"
+  BaseName "Collectd::Plugins"
+  # include nginx perl plugin
+{% if nginx is defined and nginx == 'yes' %}
+  LoadPlugin NginxRtmp
+{% endif %}
+  # include icecast perl plugin
+{% if icecast is defined and icecast == 'yes' %}
+  LoadPlugin Icecast2
+{% endif %}
+</Plugin>
+
+{% if nginx is defined and nginx == 'yes' %}
+LoadPlugin nginx
+<Plugin "nginx">
+  URL "http://127.0.0.1/stats/nginx"
+</Plugin>
+
+<LoadPlugin python>
+  Globals true
+</LoadPlugin>
+<Plugin python>
+  ModulePath "/opt/voc/collectd/plugins/"
+  LogTraces true
+  Import NginxHls
+</Plugin>
+{% endif %}
+
+{% if ansible_virtualization_role == 'host' and ansible_virtualization_type == 'kvm' %}
+LoadPlugin libvirt
+<Plugin "libvirt">
+  Connection "qemu:///system"
+  RefreshInterval 7200
+  HostnameFormat "uuid"
+</Plugin>
+{% endif %}
+
+{% if inventory_hostname == 'dnslb.dus.c3voc.de' or inventory_hostname == 'dnslb.fem.c3voc.de' %}
+LoadPlugin curl_json
+<Plugin curl_json>
+  <URL "http://127.0.0.1:3506/json">
+    Instance "gdnsd"
+    # stats
+    <Key "uptime">
+      Type "uptime"
+    </Key>
+    <Key "stats/*">
+      Type "gauge"
+    </Key>
+    # tcp
+    <Key "tcp/*">
+      Type "gauge"
+    </Key>
+    # udp
+    <Key "udp/*">
+      Type "gauge"
+    </Key>
+  </URL>
+</Plugin>
+{% endif %}
+
+Include "/etc/collectd/filters.conf"
+Include "/etc/collectd/thresholds.conf"

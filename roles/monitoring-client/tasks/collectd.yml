@@ -1,0 +1,35 @@
+---
+  ############
+  # collectd #
+  ############
+  - name: install collectd perl packages
+    apt: name={{ item }} state=latest
+    with_items:
+      - collectd
+      - liblwp-protocol-https-perl
+      - libxml-simple-perl
+
+  - name: create plugins directory
+    file: dest=/opt/voc/collectd/plugins/Collectd/Plugins
+          state=directory
+
+  - name: add icecast2 collectd plugin
+    template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/Icecast2.pm
+              src=collectd/plugins/Icecast2.pm
+    when: icecast is defined and icecast == 'yes'
+
+  - name: add nginx rtmp collectd plugin
+    template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/NginxRtmp.pm
+              src=collectd/plugins/NginxRtmp.pm
+    when: nginx is defined and nginx == 'yes'
+
+  - name: add nginx hls collectd plugin
+    template: dest=/opt/voc/collectd/plugins/NginxHls.py
+              src=collectd/plugins/NginxHls.py
+    when: nginx is defined and nginx == 'yes'
+
+  - name: install collectd config file
+    template: dest=/etc/collectd/collectd.conf
+              src=collectd/collectd.client.conf.j2
+              owner=root group=root mode=0640
+    notify: restart collectd

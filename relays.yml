@@ -2,7 +2,7 @@
   - hosts: relays
     roles:
       - common
-      - monitoring
+      - monitoring-client
       - relay
     vars:
       # icecast

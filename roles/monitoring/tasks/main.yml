@@ -1,9 +1,0 @@
----
-  # all systems
-  - include: monitoring-client/general.yml
-  # encoder
-  - include: monitoring-client/encoder.yml
-    when: ansible_hostname | match("encoder\d+")
-  # monitoring-Server
-  - include: monitoring-server/main.yml
-    when: ansible_fqdn == 'monitoring.lan.c3voc.de'

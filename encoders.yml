@@ -2,7 +2,7 @@
  - hosts: encoders
    roles:
      - common
-     - monitoring
+     - monitoring-client
      - encoder
    vars:
      ssh_allow_voc_password_login: 'yes'
