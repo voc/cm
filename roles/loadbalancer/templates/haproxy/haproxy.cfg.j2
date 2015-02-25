@@ -21,18 +21,18 @@ defaults
     timeout client  {{ loadbalancer.timeout_client | default() }}
 
 frontend icecast_and_nginx_hls
-{% if loadbalancer.frontend.ipv4 is defined and loadbalancer.frontend.ipv6 %}
-    bind {{ loadbalancer.frontend.ipv4 }}:80
-    bind {{ loadbalancer.frontend.ipv6 }}:80
+{% if haproxy_bind_ipv4 is defined and haproxy_bind_ipv6 is defined %}
+    bind {{ haproxy_bind_ipv4 }}:80
+    bind {{ haproxy_bind_ipv6 }}:80
 {% else %}
     bind :::80
 {% endif %}
     # tag request for the right destination server
 {% for acl_name, path_end in loadbalancer.frontend.match_path_ends.iteritems() %}
-    acl {{ acl_name }}  path_end        -i {{ path_end }}
+    acl {{ acl_name }}  path_end    -i {{ path_end }}
 {% endfor %}
 {% for acl_name, url_regexp in loadbalancer.frontend.match_urls.iteritems() %}
-    acl {{ acl_name }}  hdr_reg(host)      {{ url_regexp | join(' ') }}
+    acl {{ acl_name }}  hdr(host)   -i {{ url_regexp | join(' -i ') }}
 {% endfor %}
 {% for acl_name, networks in loadbalancer.frontend.match_ip_networks.iteritems() %}
     acl {{ acl_name }}  src                {{ networks | join(' ') }}
@@ -42,15 +42,20 @@ frontend icecast_and_nginx_hls
     http-request deny 	 unless {{ loadbalancer.frontend.match_path_ends.keys() | join(' or ') }}
 
 {% if loadbalancer.frontend.match_ip_networks.is_local is defined %}
+    # TODO: availability check is only possible with public ip addresses
+    #       configured on local relay, maybe it's a bad idea adall
     # is request coming from event location?
     # use local relays for hls fragments and icecast
     # check if we have to use backup backend
-    acl hls_fragment_local_unavailabe nbsrv(hls_fragment_local)  eq 0
-    acl icecast_local_unavailabe      nbsrv(icecast_local)       eq 0
-    use_backend hls_fragment          if is_local hls_fragment hls_fragment_local_unavailabe
-    use_backend icecast               if is_local icecast      icecast_local_unavailabe
+    # acl hls_fragment_local_unavailabe nbsrv(hls_fragment_local)  eq 0
+    # acl hls_playlist_local_unavailabe nbsrv(hls_playlist_local)  eq 0
+    # acl icecast_local_unavailabe      nbsrv(icecast_local)       eq 0
+    # use_backend hls_fragment          if is_local hls_fragment hls_fragment_local_unavailabe
+    # use_backend icecast               if is_local icecast      icecast_local_unavailabe
+
     # all local server available
     use_backend hls_fragment_local    if is_local hls_fragment
+    use_backend hls_playlist_local    if is_local hls_playlist
     use_backend icecast_local         if is_local icecast
 {% endif %}
 
@@ -64,18 +69,24 @@ frontend icecast_and_nginx_hls
 {% for name, backend in loadbalancer.backends.iteritems() %}
 backend {{ name }}
     balance roundrobin
+    option forwardfor
+{% if backend['headers'] is defined %}
+{% for header in backend['headers'] %}
+    {{header}}
+{% endfor %}
+{% endif%}
 {% for server in  backend['servers'] %}
 {% if backend['proxy'] is defined and backend['proxy'] == true %}
-    server {{ server['name'] }} {{ server['name'] }}:{{ server['port'] }} check weight {{ server['weight']}}
+    server {{ server['name'] }} {{ server['name'] }}:{{ server['port'] }} check weight {{ server['weight'] }}
 {% else %}
-    server {{ server['name'] }} {{ server['name'] }}:{{ server['port'] }} redir {{ server['redir_path'] }} check weight {{ server['weight']}}
+    server {{ server['name'] }} {{ server['name'] }}:{{ server['port'] }} redir {{ server['redir_path'] }} {{ server['check'] }} weight {{ server['weight']}}
 {% endif %}
 {% endfor %}
 
 {% endfor %}
 
 # enable statistics and basic admin support for localhost
-listen stats 127.0.0.1:9000
+listen stats 127.0.0.1:9100
     stats enable
     stats uri     /admin?stats
     stats refresh 10s

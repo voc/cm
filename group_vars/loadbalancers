@@ -10,11 +10,14 @@ loadbalancer:
       icecast: .webm .opus .mp3 .ogg .ogv .oga
     match_urls:
       is_streaming_website:
-        - "streaming\\.media\\.ccc\\.de"
-        - "stream\\.www\\.c3voc\\.de"
+        - "streaming.media.ccc.de"
+        - "www.stream.c3voc.de"
       is_cdn:
-        - "cdn\\.c3voc\\.de"
-
+        - "cdn.c3voc.de"
+    match_ip_networks:
+      is_local:
+        - 80.153.23.35
+        - "2a00:1328:e100:cc00::/56"
   backends:
     # define server for streaming frontend
     streaming_website:
@@ -24,7 +27,26 @@ loadbalancer:
       headers:
         - 'http-request set-header X-Custom-Header %[url]'
       servers:
-        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50 }
+        - { name: '31.172.30.141', port: 80, weight: 50 }
+    # local streaming server
+    hls_fragment_local:
+      match:
+        - is_local
+        - hls_fragment
+      servers:
+        - { name: 'live.lan.c3voc.de', port: 80, redir_path: 'http://172.23.42.104:80', weight: 50, check: "" }
+    hls_playlist_local:
+      match:
+        - is_local
+        - hls_playlist
+      servers:
+        - { name: 'live.lan.c3voc.de', port: 80, redir_path: 'http://172.23.42.104:80', weight: 50, check: "" }
+    icecast_local:
+      match:
+        - is_local
+        - icecast
+      servers:
+        - { name: 'live.lan.c3voc.de', port: 8000, redir_path: 'http://172.23.42.104:8000', weight: 50, check: "" }
 
     # default server
     hls_fragment:
@@ -32,16 +54,16 @@ loadbalancer:
         - is_cdn
         - hls_fragment
       servers:
-        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50 }
+        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50, check: "" }
     hls_playlist:
       match:
         - is_cdn
         - hls_playlist
       servers:
-        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50 }
+        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50, check: "" }
     icecast:
       match:
         - is_cdn
         - icecast
       servers:
-        - { name: 'live.dus.c3voc.de', port: 8000, redir_path: 'http://live.dus.c3voc.de:8000', weight: 50 }
+        - { name: 'live.dus.c3voc.de', port: 8000, redir_path: 'http://live.dus.c3voc.de:8000', weight: 50, check: "" }
