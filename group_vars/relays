@@ -41,8 +41,17 @@ nginx_ips_allow_stats: [
   "10.73.0.0/16"
 ]
 # frontend server
-nginx_frontend_server:
+nginx_frontend_masters:
   - '195.54.164.164'
 
 nginx_hls_masters:
   - '195.54.164.164'
+
+loadbalancer:
+  frontend:
+    match_urls:
+      is_streaming_website:
+        - streaming.media.ccc.de
+        - www.stream.c3voc.de
+      is_cdn:
+        - cdn.c3voc.de

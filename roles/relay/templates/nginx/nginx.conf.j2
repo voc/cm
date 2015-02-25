@@ -4,10 +4,6 @@ user  www-data;
 worker_rlimit_nofile 65536;
 # multiple worker
 worker_processes  {{ nginx_worker_processes | default('2') }};
-{% if nginx_hls_master is defined and nginx_hls_master == 'yes' %}
-# important for multi worker processes!!1!
-rtmp_auto_push on;
-{% endif %}
 
 error_log  /var/log/nginx/error.log;
 pid /var/run/nginx.pid;
@@ -23,7 +19,7 @@ http {
   types_hash_max_size 2048;
 
   log_format ip '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
-  access_log /var/log/nginx/access.log ip buffer=512k;
+  access_log /var/log/nginx/access.log ip;
 
   # mime-types
   include /etc/nginx/mime.types;
@@ -47,47 +43,69 @@ http {
              text/javascript
              application/json;
 
-  proxy_temp_path /srv/nginx/cache/tmp;
+  # sendfile() copies data between one file descriptor and another.
+  # Because this copying is done within the kernel, sendfile() is more
+  # efficient than the combination of read(2) and write(2), which would
+  # require transferring data to and from user space.
+  sendfile on;
 
-  proxy_cache_path /srv/nginx/cache/hls
-                   keys_zone=hls:100G
-                   loader_threshold=300 loader_files=1024;
-{% if nginx_frontend_master is defined and nginx_frontend_master == 'yes' %}
-  # create fcgi cache path
-  fastcgi_cache_path /srv/nginx/cache/streaming_fcgi
-                     levels=1:2 keys_zone=streaming_fcgi:32m inactive=60m;
-{% else %}
+  # disable directory listing
+  autoindex off;
+
+{% if nginx_frontend_master is not defined or nginx_frontend_master != 'yes' %}
+  # FRONTEND caching directories
   proxy_cache_path /srv/nginx/cache/streaming_website/static
-                   keys_zone=streaming_website_static:64m
+                   keys_zone=streaming_website_static:32m
+                   max_size=256m
                    loader_threshold=300 loader_files=200;
 
   proxy_cache_path /srv/nginx/cache/streaming_website/pages
-                   keys_zone=streaming_website_pages:64m
+                   keys_zone=streaming_website_pages:32m
+                   max_size=256m
                    loader_threshold=300 loader_files=200;
-{% endif %}
 
   upstream streaming_website {
-{% for server in nginx_frontend_server %}
+{% for server in nginx_frontend_masters %}
     server {{ server }};
 {% endfor %}
 {% if nginx_frontend_server_backup is defined%}
     server {{ nginx_frontend_server_backup }} backup;
 {% endif %}
   }
+{% else %}
+  # FASTCGI FRONTEND-MASTER directory
+  fastcgi_cache_path /srv/nginx/cache/streaming_fcgi
+                     levels=1:2 keys_zone=streaming_fcgi:32m inactive=60m;
+{% endif %}
+
+{% if nginx_hls_master is not defined or nginx_hls_master != 'yes' %}
+  # HLS slave caching directories
+  proxy_temp_path /srv/nginx/cache/tmp;
+
+  proxy_cache_path /srv/nginx/cache/hls
+                   keys_zone=hls:32m
+                   max_size=102400m
+                   loader_threshold=300 loader_files=1024;
 
   upstream hls {
 {% for server in nginx_hls_masters %}
     server {{ server }};
 {% endfor %}
   }
+{% endif %}
 
+  # DEFAULT vHOST for HLS
   server {
 {% if nginx_bind_ipv4 is defined and nginx_bind_ipv6 is defined%}
-    listen [{{ nginx_bind_ipv6 }}]:80 default ipv6only=off;
-    listen {{ nginx_bind_ipv4 }}:80 default;
+    listen [{{ nginx_bind_ipv6 }}]:80 default_server ipv6only=off;
+    listen {{ nginx_bind_ipv4 }}:80 default_server;
 {% else %}
-    listen [::]:80 default ipv6only=off;
+    listen [::]:80 default_server ipv6only=off;
 {% endif %}
+
+    server_name _;
+
+    root /var/www;
 
     # per-worker listener
     # 1st worker will listen 8000
@@ -95,43 +113,13 @@ http {
     # …
     listen 9000 per_worker;
 
-    # sendfile() copies data between one file descriptor and another.
-    # Because this copying is done within the kernel, sendfile() is more
-    # efficient than the combination of read(2) and write(2), which would
-    # require transferring data to and from user space.
-    sendfile on;
-
-    root /srv/nginx/htdocs;
-    index index.html index.htm;
-
-    server_name localhost;
-
-    # disable directory listing
-    autoindex off;
-
-    error_page 404 = @404;
-    error_page 500 501 502 503 504 = @500;
-
-    location @500 {
-      try_files /50x.html =500;
-    }
-
-    location @404 {
-      try_files /404.php  =404;
-    }
-
     location ~ /(\.ht|.*\.sh|\.git|.*.htaccess) {
         deny  all;
     }
 
-    location = /50x.html {
-      alias /srv/nginx/htdocs/50x.html;
-    }
-
-    # hls
 {% if nginx_hls_master is defined and nginx_hls_master == 'yes' %}
     location ~ ^/hls {
-      root /tmp/hls/;
+      root /tmp/;
       autoindex on;
     }
 {% else %}
@@ -162,7 +150,6 @@ http {
         proxy_cache_key        "$uri";
         proxy_cache_lock       on;
 
-        proxy_cache_lock       on;
         limit_rate 3m;
 
         # client caching
@@ -186,9 +173,9 @@ http {
       access_log   off;
 
 {% for ip in nginx_ips_allow_stats %}
-    allow {{ ip }};
+      allow {{ ip }};
 {% endfor %}
-    deny all;
+      deny all;
     }
 
 {% if nginx_frontend_master is defined and nginx_frontend_master == 'yes' %}
@@ -206,39 +193,46 @@ http {
     }
 {% endif %}
 
-    # caching stuff
-    proxy_connect_timeout   10;
-    proxy_send_timeout      15;
-    proxy_read_timeout      20;
+    location / {
+      deny all;
+    }
+  }
 
-{% if nginx_frontend_server is defined %}
-    # caching static files or acces backend servers
-    location ~ ^(?<path>.+)(?<ext>\.(css|css.map|png|jpeg|jpg|js))$ {
-      proxy_intercept_errors on;
-      proxy_cache            streaming_website_static;
-      proxy_set_header       Host $host;
-      proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://streaming_website$path$ext;
-      # caching requested    files and pages
-      proxy_cache_methods    GET HEAD;
-      proxy_cache_valid      200 302 10m;
-      proxy_cache_key        "$uri";
-      add_header X-Cache     "$upstream_cache_status edge";
+  # FRONTEND vHOST
+  server {
+{% if nginx_bind_ipv4 is defined and nginx_bind_ipv6 is defined%}
+    listen [{{ nginx_bind_ipv6 }}]:80;
+    listen {{ nginx_bind_ipv4 }}:80;
+{% else %}
+    listen [::]:80;
+{% endif %}
+
+    server_name {{ loadbalancer.frontend.match_urls.is_streaming_website | join(' ') }};
+
+    root /srv/nginx/htdocs;
+    index index.html index.htm;
+
+    error_page 404 = @404;
+    error_page 500 501 502 503 504 = @500;
+
+    location @500 {
+      try_files /50x.html =500;
     }
 
-    location ~ .* {
-      proxy_cache            streaming_website_pages;
-      proxy_set_header       Host $host;
-      proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://streaming$1;
-      # caching requested    files and pages
-      proxy_cache_methods    GET HEAD;
-      proxy_cache_valid      200 302 5m;
-      proxy_cache_key        "$uri";
-      add_header X-Cache     "$upstream_cache_status edge";
+    location @404 {
+      try_files /404.php  =404;
     }
-{% elseif nginx_frontend_master is defined and nginx_frontend_master == 'yes' %}
-    # Streaming website
+
+    location ~ /(\.ht|.*\.sh|\.git|.*.htaccess) {
+        deny  all;
+    }
+
+    location = /50x.html {
+      alias /srv/nginx/htdocs/50x.html;
+    }
+
+{% if nginx_frontend_master is defined and nginx_frontend_master == 'yes' %}
+    # FRONTEND MASTER
     # serve static files directly add client site caching expire times
     location ~* assets.+.(jpg|jpeg|gif|png|ico|ttf|svg|woff|swf)$ {
       expires 24h;
@@ -272,10 +266,44 @@ http {
     location / {
       rewrite /(.*) /index.php?route=$1 last;
     }
+{% else %}
+    # FRONTEND SLAVE
+    # caching static files or acces backend servers
+    location ~ ^(?<path>.+)(?<ext>\.(css|css.map|png|jpeg|jpg|js))$ {
+      proxy_intercept_errors on;
+      proxy_cache            streaming_website_static;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://streaming_website$path$ext;
+      # caching requested    files and pages
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 10m;
+      proxy_cache_key        "$uri";
+      add_header X-Cache     "$upstream_cache_status edge";
+    }
+
+    location ~ .* {
+      proxy_cache            streaming_website_pages;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://streaming_website$1;
+      # caching requested    files and pages
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 5m;
+      proxy_cache_key        "$uri";
+      add_header X-Cache     "$upstream_cache_status edge";
+    }
 {% endif %}
   }
 }
+
+
 {% if nginx_hls_master is defined and nginx_hls_master == 'yes' %}
+# HLS-Master configuration
+
+# important for multi worker processes!!1!
+rtmp_auto_push on;
+
 rtmp {
   log_format rtmp '"$remote_addr [$time_local] $command "$app" "$name" "$args" - $bytes_received $bytes_sent "$pageurl" "$flashver" "$swfurl" "$tcurl" ($session_readable_time)"';
   access_log /var/log/nginx/rtmp_access.log rtmp;
@@ -312,7 +340,7 @@ rtmp {
       hls_fragment_naming timestamp;
       hls_fragment_slicing aligned;
       hls_playlist_length 20m;
-      hls_base_url http://cdn.c3voc.de/hls/;
+      hls_base_url http://{{ loadbalancer.frontend.match_urls.is_cdn.0 | default('cdn.c3voc.de') }}/hls/;
 
 {% if event.formats.hd is defined and event.formats.hd == 'yes' %}
       hls_variant _hd BANDWIDTH=2000000;

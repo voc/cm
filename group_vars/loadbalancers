@@ -27,26 +27,26 @@ loadbalancer:
       headers:
         - 'http-request set-header X-Custom-Header %[url]'
       servers:
-        - { name: '31.172.30.141', port: 80, weight: 50 }
+        - { name: '31.172.30.138', port: 80, weight: 50 }
     # local streaming server
     hls_fragment_local:
       match:
         - is_local
         - hls_fragment
       servers:
-        - { name: 'live.lan.c3voc.de', port: 80, redir_path: 'http://172.23.42.104:80', weight: 50, check: "" }
+        - { name: 'live.lan.c3voc.de', port: 80, redir_path: 'http://172.23.42.233:80', weight: 50, check: "" }
     hls_playlist_local:
       match:
         - is_local
         - hls_playlist
       servers:
-        - { name: 'live.lan.c3voc.de', port: 80, redir_path: 'http://172.23.42.104:80', weight: 50, check: "" }
+        - { name: 'live.lan.c3voc.de', port: 80, redir_path: 'http://172.23.42.233:80', weight: 50, check: "" }
     icecast_local:
       match:
         - is_local
         - icecast
       servers:
-        - { name: 'live.lan.c3voc.de', port: 8000, redir_path: 'http://172.23.42.104:8000', weight: 50, check: "" }
+        - { name: 'live.lan.c3voc.de', port: 8000, redir_path: 'http://172.23.42.233:8000', weight: 50, check: "" }
 
     # default server
     hls_fragment:

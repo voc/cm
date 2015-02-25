@@ -5,8 +5,8 @@ event:
   name: Chaosradio 209
   slogen: Open-Source-Finanzierung
   formats:
-    hd: yes
-    sd: yes
+    hd: 'yes'
+    sd: 'yes'
 
 monitoring:
   collectd_server:

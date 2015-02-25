@@ -39,7 +39,7 @@ frontend icecast_and_nginx_hls
 {% endfor %}
     # return 403 if hostname or defined file extensions are not matching
     http-request deny 	 unless {{ loadbalancer.frontend.match_urls.keys() | join(' or ') }}
-    http-request deny 	 unless {{ loadbalancer.frontend.match_path_ends.keys() | join(' or ') }}
+    http-request deny 	 unless {{ loadbalancer.frontend.match_path_ends.keys() | join(' or ') }} or is_streaming_website
 
 {% if loadbalancer.frontend.match_ip_networks.is_local is defined %}
     # TODO: availability check is only possible with public ip addresses
@@ -69,6 +69,8 @@ frontend icecast_and_nginx_hls
 {% for name, backend in loadbalancer.backends.iteritems() %}
 backend {{ name }}
     balance roundrobin
+{% if backend['proxy'] is defined and backend['proxy'] == true %}
+{% endif %}
     option forwardfor
 {% if backend['headers'] is defined %}
 {% for header in backend['headers'] %}
