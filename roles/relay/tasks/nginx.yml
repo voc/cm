@@ -12,6 +12,7 @@
       - "cache/streaming_website/pages"
       - "cache/hls"
       - "cache/tmp"
+      - "cache/streaming_fcgi"
 
 
   - name: configure nginx

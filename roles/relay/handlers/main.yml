@@ -15,3 +15,6 @@
 
   - name: reload sysctl
     command: /sbin/sysctl --system
+
+  - name: reload php-fpm
+    service: name=php5-fpm state=reloaded

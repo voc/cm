@@ -10,3 +10,5 @@
   - include: icecast.yml
   - include: iptables.yml
   - include: sysctl.yml
+  - include: php.yml
+    when: nginx_frontend_server is defined and nginx_frontend_server == 'yes'

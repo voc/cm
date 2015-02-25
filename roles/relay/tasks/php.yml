@@ -1,0 +1,15 @@
+---
+  - name: install streaming page pagages
+    apt: name={{ item }} state=latest
+    with_items:
+      - php5-fpm
+      - php5-sqlite
+
+  - name: configure php-fpm
+    template: dest=/etc/php5/fpm/pool.d/www.conf
+              src=php_fpm/www.conf.j2
+              mode=0644 owner=root group=root
+    notify: reload php-fpm
+
+  - name: start php-fpm
+    service: name=php5-fpm enabled=yes state=started
