@@ -71,6 +71,8 @@ http {
 {% if nginx_frontend_server_backup is defined%}
     server {{ nginx_frontend_server_backup }} backup;
 {% endif %}
+
+    keepalive 8;
   }
 {% else %}
   # FASTCGI FRONTEND-MASTER directory
@@ -91,6 +93,8 @@ http {
 {% for server in nginx_hls_masters %}
     server {{ server }};
 {% endfor %}
+
+    keepalive 8;
   }
 {% endif %}
 
@@ -133,6 +137,9 @@ http {
         proxy_cache_valid      200 302 2s;
         proxy_cache_key        "$uri";
         proxy_cache_lock       on;
+        # keepalive to upstream server
+        proxy_http_version          1.1;
+        proxy_set_header Connection "";
 
         # client caching
         add_header Cache-Control no-cache;
@@ -149,6 +156,9 @@ http {
         proxy_cache_valid      200 302 20m;
         proxy_cache_key        "$uri";
         proxy_cache_lock       on;
+        # keepalive to upstream server
+        proxy_http_version          1.1;
+        proxy_set_header Connection "";
 
         limit_rate 3m;
 
@@ -184,6 +194,7 @@ http {
 
       include /etc/nginx/fastcgi_params;
       fastcgi_pass unix:/run/php5-fpm-www.sock;
+      fastcgi_keep_conn on;
       fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
 
 {% for ip in nginx_ips_allow_stats %}
@@ -279,6 +290,10 @@ http {
       proxy_cache_methods    GET HEAD;
       proxy_cache_valid      200 302 10m;
       proxy_cache_key        "$uri";
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
       add_header X-Cache     "$upstream_cache_status edge";
     }
 
@@ -291,6 +306,10 @@ http {
       proxy_cache_methods    GET HEAD;
       proxy_cache_valid      200 302 5m;
       proxy_cache_key        "$uri";
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
       add_header X-Cache     "$upstream_cache_status edge";
     }
 {% endif %}
