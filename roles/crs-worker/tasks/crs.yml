@@ -6,6 +6,10 @@
      - libipc-run-perl
      - libxml-rpc-fast-perl
      - libxml-simple-perl
+     - libmath-round-perl
+     - libdatetime-perl
+     - libboolean-perl
+     - fuse-vdv
 
   - name: create /opt/crs/tools
     file: dest=/opt/crs/tools state=directory
