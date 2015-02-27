@@ -10,6 +10,7 @@
      - libdatetime-perl
      - libboolean-perl
      - fuse-vdv
+     - fuse
 
   - name: create /opt/crs/tools
     file: dest=/opt/crs/tools state=directory
