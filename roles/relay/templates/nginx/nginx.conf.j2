@@ -204,6 +204,27 @@ http {
     }
 {% endif %}
 
+{% if ansible_fqdn == "live.ber.c3voc.de" %}
+    # TODO: move to mng.ber.c3voc.de
+    location /tests {
+      include /etc/nginx/mime.types;
+      alias /srv/nginx/htdocs_tests;
+      autoindex on;
+    }
+
+    location /releases {
+      alias /srv/releases;
+      autoindex on;
+    }
+
+    location /releases/private {
+      alias /srv/releases/private;
+      auth_basic "Auf zum Atem!!1!";
+      auth_basic_user_file /etc/nginx/releases_htpasswd;
+      autoindex on;
+    }
+{% endif %}
+
     location / {
       deny all;
     }
