@@ -9,6 +9,7 @@
      - libmath-round-perl
      - libdatetime-perl
      - libboolean-perl
+     - libwww-curl-perl
      - fuse-vdv
      - fuse
 
