@@ -10,6 +10,7 @@
      - libdatetime-perl
      - libboolean-perl
      - libwww-curl-perl
+     - libjson-perl
      - fuse-vdv
      - fuse
 
