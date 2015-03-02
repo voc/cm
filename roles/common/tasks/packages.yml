@@ -27,3 +27,4 @@
     - debian-goodies
     - apt-dater-host
     - dnsutils
+    - subversion
