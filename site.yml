@@ -5,3 +5,4 @@
   - include: relays.yml
   - include: servers.yml
   - include: loadbalancers.yml
+  - include: minions.yml
