@@ -14,6 +14,9 @@ $ORIGIN lan.c3voc.de.
 mixer1        IN      A       10.73.1.1
 grabber1      IN      A       10.73.1.2
 encoder1      IN      A       10.73.1.3
+infobeamer1   IN      A       10.73.1.4
+snom1         IN      A       10.73.1.5
+minion1       IN      A       10.73.1.6
 switch1       IN      A       10.73.1.253
 encoder1-amt  IN      A       10.73.1.243
 
@@ -21,6 +24,9 @@ encoder1-amt  IN      A       10.73.1.243
 mixer2        IN      A       10.73.2.1
 grabber2      IN      A       10.73.2.2
 encoder2      IN      A       10.73.2.3
+infobeamer2   IN      A       10.73.2.4
+snom2         IN      A       10.73.2.5
+minion2       IN      A       10.73.2.6
 switch2       IN      A       10.73.2.253
 encoder2-amt  IN      A       10.73.2.243
 
@@ -28,6 +34,9 @@ encoder2-amt  IN      A       10.73.2.243
 mixer3        IN      A       10.73.3.1
 grabber3      IN      A       10.73.3.2
 encoder3      IN      A       10.73.3.3
+infobeamer3   IN      A       10.73.3.4
+snom3         IN      A       10.73.3.5
+minion3       IN      A       10.73.3.6
 switch3       IN      A       10.73.3.253
 encoder3-amt  IN      A       10.73.3.243
 
@@ -35,6 +44,9 @@ encoder3-amt  IN      A       10.73.3.243
 mixer4        IN      A       10.73.4.1
 grabber4      IN      A       10.73.4.2
 encoder4      IN      A       10.73.4.3
+infobeamer4   IN      A       10.73.4.4
+snom4         IN      A       10.73.4.5
+minion4       IN      A       10.73.4.6
 switch4       IN      A       10.73.4.253
 encoder4-amt  IN      A       10.73.4.243
 
@@ -42,6 +54,9 @@ encoder4-amt  IN      A       10.73.4.243
 mixer5        IN      A       10.73.5.1
 grabber5      IN      A       10.73.5.2
 encoder5      IN      A       10.73.5.3
+infobeamer5   IN      A       10.73.5.4
+snom5         IN      A       10.73.5.5
+minion5       IN      A       10.73.5.6
 switch5       IN      A       10.73.5.253
 encoder5-amt  IN      A       10.73.5.243
 
@@ -49,6 +64,9 @@ encoder5-amt  IN      A       10.73.5.243
 mixer6        IN      A       10.73.6.1
 grabber6      IN      A       10.73.6.2
 encoder6      IN      A       10.73.6.3
+infobeamer6   IN      A       10.73.6.4
+snom6         IN      A       10.73.6.5
+minion6       IN      A       10.73.6.6
 switch6       IN      A       10.73.6.253
 encoder6-amt  IN      A       10.73.6.243
 
@@ -56,6 +74,9 @@ encoder6-amt  IN      A       10.73.6.243
 mixer7        IN      A       10.73.7.1
 grabber7      IN      A       10.73.7.2
 encoder7      IN      A       10.73.7.3
+infobeamer7   IN      A       10.73.7.4
+snom7         IN      A       10.73.7.5
+minion7       IN      A       10.73.7.6
 switch7       IN      A       10.73.7.253
 encoder7-amt  IN      A       10.73.7.243
 
