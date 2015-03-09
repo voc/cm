@@ -380,7 +380,7 @@ rtmp {
       hls_fragment_naming timestamp;
       hls_fragment_slicing aligned;
       hls_playlist_length 20m;
-      hls_base_url http://{{ loadbalancer.frontend.match_urls.is_cdn.0 | default('cdn.c3voc.de') }}/hls/;
+      hls_base_url /hls/;
 
 {% if event.formats.hd is defined and event.formats.hd == 'yes' %}
       hls_variant _hd BANDWIDTH=2000000;
