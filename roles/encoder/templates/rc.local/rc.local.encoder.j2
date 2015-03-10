@@ -27,7 +27,7 @@ iptables -A INPUT -p tcp -s {{ nginx_hls_masters }} --sport 1024:65535 --dport 1
 # allow dns
 iptables -A INPUT -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
 # reject rest
-iptables -A INPUT -p all -j REJECT --reject-with tcp-reset
+iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 iptables -A INPUT -p udp -j REJECT
 
 
