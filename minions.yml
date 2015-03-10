@@ -2,3 +2,4 @@
   - hosts: minions
     roles:
       - common
+      - crs-worker

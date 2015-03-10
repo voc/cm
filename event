@@ -70,4 +70,4 @@ mngslave.dus.c3voc.de
 testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 
 [minions]
-minion1 ansible_ssh_host=berlin.derpeter.net ansible_ssh_port=1028
+minion1.lan.c3voc.de crs_token=GZEyv1pDYebNt12bsevrMmW5ZnqQdYet crs_secret=rPPc5IFq4AUdkFo93Qn7Qd0IVEVkPR7d
