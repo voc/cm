@@ -5,3 +5,4 @@
   - include: x11vnc.yml
   - include: dvswitch.yml
   - include: irssi.yml
+  - include: rc.local.yml

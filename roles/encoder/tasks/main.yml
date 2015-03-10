@@ -9,3 +9,4 @@
  - include: pausesource.yml
  - include: nginx.yml
  - include: samba.yml
+ - include: rc.local.yml
