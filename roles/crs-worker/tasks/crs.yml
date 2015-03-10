@@ -20,6 +20,9 @@
   - name: create /opt/crs/tmp
     file: dest=/opt/crs/tmp state=directory
 
+  - name: create /opt/crs/fuse
+    file: dest=/opt/crs/fuse state=directory
+
   - name: checkout tools/tracker3.0
     subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/tracker3.0/
                 dest=/opt/crs/tools/tracker3.0
