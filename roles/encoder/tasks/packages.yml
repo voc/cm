@@ -7,3 +7,4 @@
     - nginx-rtmp
     - dvsink-voc
     - dvsource-voc
+    - samba

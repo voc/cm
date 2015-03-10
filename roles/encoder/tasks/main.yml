@@ -8,3 +8,4 @@
  - include: grabbersource.yml
  - include: pausesource.yml
  - include: nginx.yml
+ - include: samba.yml
