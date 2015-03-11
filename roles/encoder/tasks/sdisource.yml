@@ -13,5 +13,5 @@
               src=sdisource/run.j2
               owner=root group=root mode=0755
     with_items:
-      - { id: 0, name: "sdisource-0" }
-      - { id: 1, name: "sdisource-1" }
+      - { id: 0, placement: 2, name: "sdisource-0" }
+      - { id: 1, placement: 3, name: "sdisource-1" }
