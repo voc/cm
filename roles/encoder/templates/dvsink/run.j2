@@ -5,4 +5,4 @@ source ../common.sh
 cd /video
 
 {# TODO: add confrence acronym #}
-exec dvsink-command-voc -h "10.73.{{ room_number }}.1" -p 2000 perl /usr/local/bin/dvsplit.pl "{{ room_fahrplan_name }}"
+exec dvsink-command-voc -h "10.73.{{ room_number }}.1" -p 2000 perl /usr/local/bin/dvsplit.pl "{{ room_fahrplan_name | lower | replace(' ', '') }}"
