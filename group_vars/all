@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: CR209
-  name: Chaosradio 209
-  slogen: Open-Source-Finanzierung
+  acronym: XYZ
+  name: Some Name
+  slogen: Some Slogan
   formats:
     hd: 'yes'
     sd: 'yes'
