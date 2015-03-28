@@ -44,4 +44,6 @@ ip6tables -A INPUT -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
 ip6tables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 ip6tables -A INPUT -p udp -j REJECT
 
+sdi-script start saalN-sd-dvswitch
+
 exit 0
