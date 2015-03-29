@@ -9,6 +9,8 @@
       - /etc/sdi-script
       - /etc/sdi-script/saalN-sd-dvswitch
       - /etc/sdi-script/saalN-sd-dvswitch-nostream
+      - /etc/sdi-script/saalN-hd-direct
+      - /etc/sdi-script/saalN-hd-direct-recording
 
   # sd chain
   - name: create /etc/sdi-script/saalN-sd-dvswitch/config
