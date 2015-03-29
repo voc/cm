@@ -18,8 +18,13 @@
               src=dvsink/run.j2
               owner=root group=root mode=0755
 
-  - name: create runit dvsink-stop-file file when not in dvsplit-mode
-    file: dest=/etc/service/dvsink/stop
+  - name: create runit dvsink-down-file file when not in dvsplit-mode
+    file: dest=/etc/service/dvsink/down
           state=touch
-          owner=root group=root mode=0755
+          owner=root group=root mode=0655
     when: encodermode is defined and encodermode != 'sd-dvswitch'
+
+  - name: remove runit dvsink-down-file file when in dvsplit-mode
+    file: dest=/etc/service/dvsink/down
+          state=absent
+    when: encodermode is not defined or encodermode == 'sd-dvswitch'
