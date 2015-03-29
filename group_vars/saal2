@@ -2,3 +2,5 @@
 room_number: 2
 room_fahrplan_name: Saal2
 grabber_aspect: 4x3
+
+#encodermode: hd-direct

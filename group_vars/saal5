@@ -3,3 +3,5 @@ room_number: 5
 room_fahrplan_name: Saal5
 grabber_aspect: 16x9
 grabbersource_url_path: stream.mjpg
+
+#encodermode: hd-direct

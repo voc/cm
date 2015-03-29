@@ -17,3 +17,9 @@
     template: dest=/etc/service/dvsink/run
               src=dvsink/run.j2
               owner=root group=root mode=0755
+
+  - name: create runit dvsink-stop-file file when not in dvsplit-mode
+    file: dest=/etc/service/dvsink/stop
+          state=touch
+          owner=root group=root mode=0755
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
