@@ -29,8 +29,3 @@
     copy: src=common.sh
           dest=/etc/service/common.sh
           owner=root group=staff mode=0644
-
-  - name: create rc.local
-    copy: src=rc.local
-         dest=/etc/rc.local
-         owner=root group=staff mode=0755
