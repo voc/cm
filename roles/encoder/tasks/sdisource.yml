@@ -2,7 +2,7 @@
   # see packages.yml for sdisource package installation
 
   # sdisource configuration
-  - name: create service directory for dvsink
+  - name: create service directory for sdisource
     file: dest=/etc/service/{{ item }} state=directory
     with_items:
       - sdisource-0
@@ -16,7 +16,7 @@
       - { id: 0, placement: 2, name: "sdisource-0" }
       - { id: 1, placement: 3, name: "sdisource-1" }
 
-  - name: create runit dvsink-down-file file when not in dvsplit-mode
+  - name: create runit sdisource-down-file file when not in dvsplit-mode
     file: dest=/etc/service/{{ item.name }}/down
           state=touch
           owner=root group=root mode=0655
@@ -25,7 +25,7 @@
       - { name: "sdisource-0" }
       - { name: "sdisource-1" }
 
-  - name: remove runit dvsink-down-file file when in dvsplit-mode
+  - name: remove runit sdisource-down-file file when in dvsplit-mode
     file: dest=/etc/service/{{ item.name }}/down
           state=absent
     when: encodermode is not defined or encodermode == 'sd-dvswitch'
