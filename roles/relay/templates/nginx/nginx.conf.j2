@@ -319,7 +319,7 @@ http {
 {% else %}
     # FRONTEND SLAVE
     # caching static files or acces backend servers
-    location ~ ^(?<path>.+)(?<ext>\.(css|css.map|png|jpeg|jpg|js))$ {
+    location ~ ^(?<path>.+)(?<ext>\.(css|css.map|png|jpeg|jpg|js|json))$ {
       proxy_intercept_errors on;
       proxy_cache            streaming_website_static;
       proxy_set_header       Host $host;
