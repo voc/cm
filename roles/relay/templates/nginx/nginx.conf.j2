@@ -318,6 +318,17 @@ http {
       add_header X-Cache     "$upstream_cache_status edge";
     }
 
+    # do not cache feedback/read
+    location ~ ^(?<path>.+feedback\/read.*)$ {
+      proxy_intercept_errors on;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://streaming_website$path;
+      # keep alive
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+    }
+
     location ~ .* {
       proxy_cache            streaming_website_pages;
       proxy_set_header       Host $host;
