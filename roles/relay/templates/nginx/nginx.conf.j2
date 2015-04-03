@@ -126,6 +126,24 @@ http {
       root /tmp/;
       autoindex on;
     }
+
+    # relive
+    location ~ ^/crossdomain.xml {
+      alias /srv/releases/relive/crossdomain.xml;
+      include /etc/nginx/mime.types;
+    }
+
+    location ~ ^/releases/relive/(.+\.ts)$ {
+      alias /srv/releases/relive/$1;
+      add_header Cache-Control public;
+    }
+
+    location ~ ^/releases/relive/(.*) {
+      alias /srv/releases/relive/$1;
+      autoindex on;
+
+      add_header Cache-Control no-cache;
+    }
 {% else %}
     location ~  ^/hls/(?<stream>.+)\.m3u8$ {
         proxy_intercept_errors on;
