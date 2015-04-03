@@ -128,11 +128,6 @@ http {
     }
 
     # relive
-    location ~ ^/crossdomain.xml {
-      alias /srv/releases/relive/crossdomain.xml;
-      include /etc/nginx/mime.types;
-    }
-
     location ~ ^/releases/relive/(.+\.ts)$ {
       alias /srv/releases/relive/$1;
       add_header Cache-Control public;
