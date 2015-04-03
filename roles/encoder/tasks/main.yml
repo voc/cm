@@ -10,3 +10,4 @@
  - include: nginx.yml
  - include: samba.yml
  - include: rc.local.yml
+ - include: rsync.yml
