@@ -122,25 +122,25 @@ http {
     }
 
 {% if nginx_hls_master is defined and nginx_hls_master == 'yes' %}
-    location ~ ^/hls {
+    location ~* ^/hls {
       root /tmp/;
       autoindex on;
     }
 
     # relive
-    location ~ ^/releases/relive/(.+\.ts)$ {
+    location ~* ^/releases/relive/(.+\.ts)$ {
       alias /srv/releases/relive/$1;
       add_header Cache-Control public;
     }
 
-    location ~ ^/releases/relive/(.*) {
+    location ~* ^/releases/relive/(.*) {
       alias /srv/releases/relive/$1;
       autoindex on;
 
       add_header Cache-Control no-cache;
     }
 {% else %}
-    location ~  ^/hls/(?<stream>.+)\.m3u8$ {
+    location ~* ^/hls/(?<stream>.+)\.m3u8$ {
         proxy_intercept_errors on;
         proxy_cache            hls;
         proxy_set_header       Host $host;
@@ -159,7 +159,7 @@ http {
         add_header X-Cache     "$upstream_cache_status edge";
     }
 
-    location ~  ^/hls/(?<stream>.+)\.ts$ {
+    location ~* ^/hls/(?<stream>.+)\.ts$ {
         proxy_intercept_errors on;
         proxy_cache            hls;
         proxy_set_header       Host $host;
@@ -182,7 +182,7 @@ http {
 {% endif %}
 
     # stats
-    location ~ ^/stats/rtmp {
+    location ~* ^/stats/rtmp {
       rtmp_stat all;
       access_log off;
 
@@ -191,7 +191,7 @@ http {
 {% endfor %}
       deny all;
     }
-    location ~ ^/stats/nginx {
+    location ~* ^/stats/nginx {
       stub_status on;
       access_log   off;
 
@@ -292,7 +292,7 @@ http {
       expires 1h;
     }
 
-    location ~ (index|404)\.php$ {
+    location ~* (index|404)\.php$ {
       include /etc/nginx/fastcgi_params;
 
       recursive_error_pages on;
@@ -316,7 +316,7 @@ http {
         deny  all;
     }
     # caching static files or acces backend servers
-    location ~ ^(?<path>.+)(?<ext>\.(css|css.map|png|jpeg|jpg|js|json))$ {
+    location ~* ^(?<path>.+)(?<ext>\.(css|css.map|png|jpeg|jpg|js|json))$ {
       proxy_intercept_errors on;
       proxy_cache            streaming_website_static;
       proxy_set_header       Host $host;
@@ -334,7 +334,7 @@ http {
     }
 
     # do not cache feedback/read
-    location ~ ^(?<path>.+feedback\/read.*)$ {
+    location ~* ^(?<path>.+feedback\/read.*)$ {
       proxy_intercept_errors on;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
@@ -344,7 +344,7 @@ http {
       proxy_set_header Connection "";
     }
 
-    location ~ .* {
+    location ~* .* {
       proxy_cache            streaming_website_pages;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
