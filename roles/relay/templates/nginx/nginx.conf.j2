@@ -299,7 +299,13 @@ http {
       fastcgi_pass unix:/run/php5-fpm-www.sock;
       fastcgi_index index.php;
       fastcgi_param  SCRIPT_FILENAME  /srv/nginx/htdocs$fastcgi_script_name;
+      # do not cache
+      if ($arg_route ~* "feedback\/read") {
+        set $do_not_cache 1;
+      }
       # caching some php runs
+      fastcgi_no_cache $do_not_cache;
+      fastcgi_cache_bypass $do_not_cache;
       fastcgi_cache_key "$uri$is_args$args";
       fastcgi_cache streaming_fcgi;
       fastcgi_cache_valid 200 5m;
