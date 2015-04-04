@@ -340,14 +340,18 @@ http {
     }
 
     # do not cache feedback/read
-    location ~* ^(?<path>.+feedback\/read.*)$ {
+    location ~* feedback\/read {
       proxy_intercept_errors on;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://streaming_website$path;
+      proxy_pass             http://streaming_website$uri;
+      # do not cache
+      proxy_cache_bypass     1;
+      proxy_no_cache         1;
       # keep alive
       proxy_http_version          1.1;
       proxy_set_header Connection "";
+      add_header X-Cache     "not cached edge";
     }
 
     location ~* .* {
