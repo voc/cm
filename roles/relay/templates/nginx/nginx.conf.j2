@@ -117,7 +117,7 @@ http {
     # …
     listen 9000 per_worker;
 
-    location ~ /(\.ht|.*\.sh|\.git|.*.htaccess) {
+    location ~* /(.+\.ht|.+\.sh|.+\.git|.+\.htaccess|.+\.php)$ {
         deny  all;
     }
 
@@ -268,16 +268,15 @@ http {
       try_files /404.php  =404;
     }
 
-    location ~ /(\.ht|.*\.sh|\.git|.*.htaccess) {
-        deny  all;
-    }
-
     location = /50x.html {
       alias /srv/nginx/htdocs/50x.html;
     }
 
 {% if nginx_frontend_master is defined and nginx_frontend_master == 'yes' %}
     # FRONTEND MASTER
+    location ~* /(.+\.ht|.+\.sh|.+\.git|.+\.htaccess)$ {
+        deny  all;
+    }
     # serve static files directly add client site caching expire times
     location ~* assets.+.(jpg|jpeg|gif|png|ico|ttf|svg|woff|swf)$ {
       expires 24h;
@@ -313,6 +312,9 @@ http {
     }
 {% else %}
     # FRONTEND SLAVE
+    location ~* /(.+\.ht|.+\.sh|.+\.git|.+\.htaccess|.+\.php)$ {
+        deny  all;
+    }
     # caching static files or acces backend servers
     location ~ ^(?<path>.+)(?<ext>\.(css|css.map|png|jpeg|jpg|js|json))$ {
       proxy_intercept_errors on;
