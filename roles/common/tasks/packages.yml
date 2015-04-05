@@ -28,3 +28,4 @@
     - apt-dater-host
     - dnsutils
     - subversion
+    - dstat
