@@ -103,6 +103,8 @@ http {
 {% if nginx_bind_ipv4 is defined and nginx_bind_ipv6 is defined%}
     listen [{{ nginx_bind_ipv6 }}]:80 default_server ipv6only=off;
     listen {{ nginx_bind_ipv4 }}:80 default_server;
+    listen 127.0.0.1:80 default_server;
+    listen [::]:80 default_server;
 {% else %}
     listen [::]:80 default_server ipv6only=off;
 {% endif %}
