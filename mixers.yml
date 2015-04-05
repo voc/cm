@@ -4,6 +4,7 @@
       - common
       - monitoring-client
       - mixer
+      - crs-worker
     vars:
       ssh_allow_voc_password_login: 'yes'
       mixer_user_password: '$1$80Po7gYl$zOUjSt1SfgEyO.bvFOMWw/'
