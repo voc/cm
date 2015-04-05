@@ -7,6 +7,7 @@ loadbalancer:
     match_path_ends:
       hls_playlist: .m3u8
       hls_fragment: .ts
+      is_relive: relive/index.json thumb.jpg crossdomain.xml relive/index.html
       icecast: .webm .opus .mp3 .ogg .ogv .oga
     match_urls:
       is_streaming_website:

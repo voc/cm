@@ -61,7 +61,7 @@ frontend icecast_and_nginx_hls
 
     # use remote relays
     use_backend hls_playlist      	if hls_playlist
-    use_backend hls_fragment    	  if hls_fragment
+    use_backend hls_fragment    	  if hls_fragment or is_relive
     use_backend icecast			        if icecast
     use_backend streaming_website   if is_streaming_website
 
