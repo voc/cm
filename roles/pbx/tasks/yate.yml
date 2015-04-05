@@ -10,6 +10,12 @@
               owner=root group=root mode=0644
     notify: reload yate
 
+  - name: configure yate sip-ip
+    copy: dest=/etc/yate/ysipchan.conf
+          src=yate/ysipchan.conf
+          owner=root group=root mode=0755
+    notify: reload yate
+
   - name: enable yate start
     lineinfile: dest=/etc/default/yate
                 regexp="^[#N]+O_START="
