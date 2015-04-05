@@ -130,14 +130,11 @@ http {
     # relive
     location ~* ^/releases/relive/(.+\.ts)$ {
       alias /srv/releases/relive/$1;
-      add_header Cache-Control public;
     }
 
     location ~* ^/releases/relive/(.*) {
       alias /srv/releases/relive/$1;
       autoindex on;
-
-      add_header Cache-Control no-cache;
     }
 {% else %}
     location ~* ^/hls/(?<stream>.+)\.m3u8$ {
