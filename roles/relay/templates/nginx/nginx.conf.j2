@@ -139,12 +139,18 @@ http {
       autoindex on;
     }
 {% else %}
-    location ~* ^/hls/(?<stream>.+)\.m3u8$ {
+    # proxy cache m3u8 (live, relive) and index.json (relive)
+    #
+    # live:   /hls/s2_native_sd.m3u8
+    # relive: /releases/relive/19/index.m3u8
+    #         /releases/relive/index.json
+    #
+    location ~* ^/(?<hls_or_relive>hls|releases\/relive)/(?<file>.+\.m3u8|index\.json)$ {
         proxy_intercept_errors on;
         proxy_cache            hls;
         proxy_set_header       Host $host;
         proxy_set_header       X-Real-IP $remote_addr;
-        proxy_pass             http://hls/hls/$stream.m3u8;
+        proxy_pass             http://hls/$hls_or_relive/$file;
         proxy_cache_methods    GET HEAD;
         proxy_cache_valid      200 302 1s;
         proxy_cache_key        "$uri";
@@ -157,18 +163,49 @@ http {
         add_header Cache-Control no-cache;
         add_header X-Cache     "$upstream_cache_status edge";
     }
-
-    location ~* ^/hls/(?<stream>.+)\.ts$ {
+    # proxy cache ts files (live, relive)
+    #
+    # live:   /hls/s2_native_sd-13026687480.ts
+    # relive: /releases/relive/29/1016.ts
+    #
+    location ~* ^/(?<hls_or_relive>hls|releases\/relive)/(?<stream>.+)\.ts$ {
         proxy_intercept_errors on;
         proxy_cache            hls;
         proxy_set_header       Host $host;
         proxy_set_header       X-Real-IP $remote_addr;
-        proxy_pass             http://hls/hls/$stream.ts;
+        proxy_pass             http://hls/$hls_or_relive/$stream.ts;
         proxy_cache_methods    GET HEAD;
         proxy_cache_valid      200 302 20m;
         proxy_cache_key        "$uri";
         proxy_cache_lock       on;
         # keepalive to upstream server
+        proxy_http_version          1.1;
+        proxy_set_header Connection "";
+
+        limit_rate 3m;
+
+        # client caching
+        add_header Cache-Control no-cache;
+        add_header X-Cache     "$upstream_cache_status edge";
+    }
+    # proxy cache thumbs (relive), index.html (relive) and crossdomain.xml (relive)
+    #
+    # relive: /crossdomain.xml
+    #         /releases/relive/29/thumb.jpg
+    #         /releases/relive/index.html
+    #
+    location ~* ^/(crossdomain\.xml|.+thumb\.jpg|.+index\.html)$ {
+        proxy_intercept_errors on;
+        proxy_cache            hls;
+        proxy_set_header       Host $host;
+        proxy_set_header       X-Real-IP $remote_addr;
+        proxy_pass             http://hls/$1;
+        proxy_cache_methods    GET HEAD;
+        proxy_cache_valid      200 302 5m;
+        proxy_cache_key        "$uri";
+        proxy_cache_lock       on;
+        proxy_ignore_headers   Cache-Control;
+        # keep alive
         proxy_http_version          1.1;
         proxy_set_header Connection "";
 
