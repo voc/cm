@@ -37,6 +37,14 @@
 
 
 
+  # sd to ts recrding
+  - name: create /etc/sdi-script/saalN-sd-dvswitch-recording/config
+    template: dest=/etc/sdi-script/saalN-sd-dvswitch-recording/config
+              src=sdi-script/saalN-sd-dvswitch-recording/config.j2
+              owner=root group=root mode=0644
+
+
+
   # hd-direct chain
   - name: create /etc/sdi-script/saalN-hd-direct/config
     template: dest=/etc/sdi-script/saalN-hd-direct/config
