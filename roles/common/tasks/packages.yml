@@ -29,3 +29,4 @@
     - dnsutils
     - subversion
     - dstat
+    - pv
