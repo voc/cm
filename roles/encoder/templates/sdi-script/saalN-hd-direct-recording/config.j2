@@ -13,7 +13,8 @@ CMD_INTERMEDIATE="ffmpeg -v info -y -analyzeduration 10000 \
     -f decklink -i 'DeckLink Mini Recorder (2)@11' \
     -ac 2 -channel_layout 2 -aspect 16:9 \
     -map 0:0 -c:v:0 mpeg2video -pix_fmt:v:0 yuv422p -qscale:v:0 2 -qmin:v:0 2 -qmax:v:0 5 -keyint_min 0 -bf:0 0 -g:0 0 -intra:0 -maxrate:0 50M \
-    -map 0:1 -map_channel 0.1.0:0.1 -map_channel 0.1.1:0.1 -c:a:0 mp2 -b:a:0 384k -ac:a:0 2 -ar:a:0 48000 \
+    -map 0:1 -map_channel 0.1.0:0.1 -c:a:0 mp2 -b:a:0 192k -ac:a:0 1 -ar:a:0 48000 \
+    -map 0:2 -map_channel 0.1.1:0.2 -c:a:0 mp2 -b:a:0 192k -ac:a:0 1 -ar:a:0 48000 \
     -flags +global_header -flags +ilme+ildct \
     -f segment -segment_time ${SEGMENT_SECS} -segment_format mpegts ${STORAGE}/${STREAMNAME}-%t-%05d.ts"
 
