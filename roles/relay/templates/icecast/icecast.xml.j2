@@ -6,14 +6,14 @@
     <limits>
         <clients>{{ icecast_client_limit | default('4096') }}</clients>
         <sources>{{ icecast_source_limit | default('100')  }}</sources>
-        <threadpool>{{ icecast_threadpool | default('5') }}</threadpool>
-        <queue-size>{{ icecast_queue_size | default('2027520') }}</queue-size>
+        <threadpool>{{ icecast_threadpool | default('10') }}</threadpool>
+        <queue-size>{{ icecast_queue_size | default('4055040') }}</queue-size>
         <client-timeout>{{ icecast_client_timeout | default('30') }}</client-timeout>
         <header-timeout>{{ icecast_header_timeout | default('15') }}</header-timeout>
         <source-timeout>{{ icecast_source_timeout | default('10') }}</source-timeout>
 
         <burst-on-connect>{{ icecast_burst_on_connect | default('1') }}</burst-on-connect>
-        <burst-size>{{ icecast_burst_size | default('262140') }}</burst-size>
+        <burst-size>{{ icecast_burst_size | default('524280') }}</burst-size>
     </limits>
 
     <authentication>
