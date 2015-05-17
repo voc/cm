@@ -7,7 +7,6 @@
           owner=www-data group=www-data
           state=directory"
     with_items:
-      - "htdocs"
       - "cache/streaming_website/static"
       - "cache/streaming_website/pages"
       - "cache/hls"
