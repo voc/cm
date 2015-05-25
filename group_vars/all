@@ -10,7 +10,7 @@ event:
 
 monitoring:
   collectd_server:
-    - 188.166.50.60
+    - 195.54.164.163
   collectd_username: server
   collectd_password: satan7laos4Coca
   collectd_interval: 30
