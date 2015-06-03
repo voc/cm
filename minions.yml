@@ -2,4 +2,4 @@
   - hosts: minions
     roles:
       - common
-      - crs-worker
+      - { role: crs-worker, when: crs_token is defined and crs_secret is defined }
