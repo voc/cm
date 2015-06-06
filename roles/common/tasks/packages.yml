@@ -30,3 +30,4 @@
     - subversion
     - dstat
     - pv
+    - lm-sensors
