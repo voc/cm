@@ -16,6 +16,7 @@
   - include: user.yml user=derpeter
   - include: user.yml user=florob
   - include: user.yml user=florolf
+  - include: user.yml user=masterbase
   - include: user.yml user=mazdermind
   - include: user.yml user=meise
   - include: user.yml user=bjoern
