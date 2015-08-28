@@ -20,6 +20,7 @@
   - include: user.yml user=mazdermind
   - include: user.yml user=meise
   - include: user.yml user=bjoern
+  - include: user.yml user=thomic
 
   - name: setting voc password
     user: name=voc
