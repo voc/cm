@@ -175,12 +175,12 @@ http {
     # live:   /hls/s2_native_sd-13026687480.ts
     # relive: /releases/relive/29/1016.ts
     #
-    location ~* ^/(?<hls_or_relive>hls|releases\/relive)/(?<stream>.+)\.ts$ {
+    location ~* ^/(?<hls_or_relive>hls|releases\/relive)/(?<stream>.+\.(ts|mp4))$ {
         proxy_intercept_errors on;
         proxy_cache            hls;
         proxy_set_header       Host $host;
         proxy_set_header       X-Real-IP $remote_addr;
-        proxy_pass             http://hls/$hls_or_relive/$stream.ts;
+        proxy_pass             http://hls/$hls_or_relive/$stream;
         proxy_cache_methods    GET HEAD;
         proxy_cache_valid      200 302 20m;
         proxy_cache_key        "$uri";
