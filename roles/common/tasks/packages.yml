@@ -31,3 +31,4 @@
     - dstat
     - pv
     - lm-sensors
+    - moreutils
