@@ -21,6 +21,8 @@
   - include: user.yml user=meise
   - include: user.yml user=bjoern
   - include: user.yml user=thomic
+  - include: user.yml user=coeins
+
 
   - name: setting voc password
     user: name=voc
