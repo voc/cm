@@ -22,6 +22,7 @@
   - include: user.yml user=bjoern
   - include: user.yml user=thomic
   - include: user.yml user=coeins
+  - include: user.yml user=danimo
 
 
   - name: setting voc password
