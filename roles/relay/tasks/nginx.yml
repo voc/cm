@@ -10,6 +10,7 @@
       - "cache/streaming_website/static"
       - "cache/streaming_website/pages"
       - "cache/hls"
+      - "cache/hls_relive"
       - "cache/tmp"
       - "cache/streaming_fcgi"
 

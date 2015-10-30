@@ -88,7 +88,13 @@ http {
 
   proxy_cache_path /srv/nginx/cache/hls
                    keys_zone=hls:32m
-                   max_size=100g
+                   max_size={{ nginx_hls_cache_max_size | default('50g') }}
+                   inactive=30m
+                   loader_threshold=300 loader_files=1024;
+
+  proxy_cache_path /srv/nginx/cache/hls_relive
+                   keys_zone=hls_relive:32m
+                   max_size={{ nginx_hls_relive_cache_max_size | default('100g') }};
                    inactive=24h
                    loader_threshold=300 loader_files=1024;
 
@@ -99,11 +105,19 @@ http {
 
     keepalive 8;
   }
+
+  upstream hls_relive {
+{% for server in nginx_hls_relive_masters %}
+    server {{ server }};
+{% endfor %}
+
+    keepalive 8;
+  }
 {% endif %}
 
   # DEFAULT vHOST for HLS
   server {
-{% if nginx_bind_ipv4 is defined and nginx_bind_ipv6 is defined%}
+{% if nginx_bind_ipv4 is defined and nginx_bind_ipv6 is defined %}
     listen [{{ nginx_bind_ipv6 }}]:80 default_server ipv6only=off;
     listen {{ nginx_bind_ipv4 }}:80 default_server;
     listen 127.0.0.1:80 default_server;
@@ -171,17 +185,43 @@ http {
         add_header Cache-Control no-cache;
         add_header X-Cache     "$upstream_cache_status edge";
     }
-    # proxy cache ts files (live, relive)
+    # proxy cache ts files (live)
     #
     # live:   /hls/s2_native_sd-13026687480.ts
     # relive: /releases/relive/29/1016.ts
     #
+    # TODO: split hls live and relive
     location ~* ^/(?<hls_or_relive>hls|releases\/relive)/(?<stream>.+\.(ts|mp4))$ {
         proxy_intercept_errors on;
         proxy_cache            hls;
         proxy_set_header       Host $host;
         proxy_set_header       X-Real-IP $remote_addr;
         proxy_pass             http://hls/$hls_or_relive/$stream;
+        proxy_cache_methods    GET HEAD;
+        proxy_cache_valid      200 302 30m;
+        proxy_cache_key        "$uri";
+        proxy_cache_lock       on;
+        # keepalive to upstream server
+        proxy_http_version          1.1;
+        proxy_set_header Connection "";
+
+        limit_rate 3m;
+
+        # client caching
+        add_header Cache-Control no-cache;
+        add_header X-Cache     "$upstream_cache_status edge";
+    }
+    # proxy cache ts files (relive)
+    #
+    # relive: /releases/relive/29/1016.ts
+    #
+    # TODO: split hls live and relive
+    location ~* ^/(?<hls_relive>releases\/relive)/(?<stream>.+\.ts)$ {
+        proxy_intercept_errors on;
+        proxy_cache            hls_relive;
+        proxy_set_header       Host $host;
+        proxy_set_header       X-Real-IP $remote_addr;
+        proxy_pass             http://hls_relive/$hls_relive/$stream;
         proxy_cache_methods    GET HEAD;
         proxy_cache_valid      200 302 24h;
         proxy_cache_key        "$uri";
@@ -191,6 +231,31 @@ http {
         proxy_set_header Connection "";
 
         limit_rate 3m;
+
+        # client caching
+        add_header Cache-Control no-cache;
+        add_header X-Cache     "$upstream_cache_status edge";
+    }
+    # proxy cache mp4 files (relive)
+    #
+    # relive: /releases/relive/29/muxed.mp4
+    #
+    # TODO: split hls live and relive
+    location ~* ^/(?<hls_relive>releases\/relive)/(?<stream>.+muxed\.mp4)$ {
+        proxy_intercept_errors on;
+        proxy_cache            hls_relive;
+        proxy_set_header       Host $host;
+        proxy_set_header       X-Real-IP $remote_addr;
+        proxy_pass             http://hls_relive/$hls_relive/$stream;
+        proxy_cache_methods    GET HEAD;
+        proxy_cache_valid      200 302 24h;
+        proxy_cache_key        "$uri";
+        proxy_cache_lock       on;
+        # keepalive to upstream server
+        proxy_http_version          1.1;
+        proxy_set_header Connection "";
+
+        limit_rate 12m;
 
         # client caching
         add_header Cache-Control no-cache;
