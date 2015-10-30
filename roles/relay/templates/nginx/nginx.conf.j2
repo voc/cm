@@ -88,7 +88,8 @@ http {
 
   proxy_cache_path /srv/nginx/cache/hls
                    keys_zone=hls:32m
-                   max_size=102400m
+                   max_size=100g
+                   inactive=24h
                    loader_threshold=300 loader_files=1024;
 
   upstream hls {
@@ -182,7 +183,7 @@ http {
         proxy_set_header       X-Real-IP $remote_addr;
         proxy_pass             http://hls/$hls_or_relive/$stream;
         proxy_cache_methods    GET HEAD;
-        proxy_cache_valid      200 302 20m;
+        proxy_cache_valid      200 302 24h;
         proxy_cache_key        "$uri";
         proxy_cache_lock       on;
         # keepalive to upstream server
