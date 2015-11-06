@@ -12,7 +12,7 @@ icecast_additional_mounts: [
 ]
 
 icecast_fix_mount_metadata: [
-  # { "mount-name": "/example.opus", "type": "autio/ogg" },
+  # { "mount-name": "/example.opus", "type": "audio/ogg" },
   # { "mount-name": "/example.mp3",  "type": "audio/mpeg" },
 ]
 
