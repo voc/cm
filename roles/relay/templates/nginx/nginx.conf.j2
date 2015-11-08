@@ -386,8 +386,13 @@ http {
     location ~* /(.+\.ht|.+\.sh|.+\.git|.+\.htaccess)$ {
         deny  all;
     }
+
     # serve static files directly add client site caching expire times
-    location ~* assets.+.(jpg|jpeg|gif|png|ico|ttf|svg|woff|swf)$ {
+    #
+    # Example: http://streaming.media.ccc.de/configs/conferences/gpn15/wolkenbar.png
+    #          http://streaming.media.ccc.de/assets/js/lib/jquery.min.js
+    #
+    location ~* (assets|configs\/conferences).+.(jpg|jpeg|gif|png|ico|ttf|svg|woff|swf)$ {
       expires 24h;
       add_header Cache-Control "public";
     }
@@ -397,7 +402,7 @@ http {
       add_header Cache-Control "public";
     }
 
-    location ~* assets.+.(js|css|css.map)$ {
+    location ~* (assets|configs\/conferences).+.(js|css|css.map)$ {
       expires 1h;
     }
 
