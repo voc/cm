@@ -1,6 +1,16 @@
 ---
+  - name: add haproxy debian repo
+    apt_key: data="{{ lookup('file', 'deb_haproxy.key') }}" state=present
+  - name: setup the debian haproxy backports repo
+    apt_repository: repo="deb http://httpredir.debian.org/debian jessie-backports main" state=present
+    tags: install
+
+  - name: setup the debian haproxy repo
+    apt_repository: repo="deb http://haproxy.debian.net jessie-backports-1.6 main" state=present
+    tags: install
+
   - name: install haproxy package
-    apt: name=haproxy state=latest
+    apt: name=haproxy state=latest default_release=jessie-backports-1.6
     tags: install
 
   - name: create haproxy chroot directory
@@ -17,6 +27,11 @@
     tags:
       - install
       - config
+
+  - name: copy usa ip list
+    file: src=usa_subnetworks.txt
+          dest=/etc/haproxy/usa_subnetworks.txt
+          mode=0755 owner=haproxy group=haproxy
 
   - name: autostart haproxy
     service: name=haproxy state=started enabled=yes
