@@ -1,0 +1,10 @@
+---
+  - name: git checkout streaming-website
+    git: repo=ssh://git@mng.ber.c3voc.de:streaming-website
+         dest=/srv/nginx/streaming-website
+
+  - name: create htdocs symlink
+    file: src=/srv/nginx/streaming-website
+          dest=/srv/nginx/htdocs
+          owner=www-data group=www-data
+          state=link

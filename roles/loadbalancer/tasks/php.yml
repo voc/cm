@@ -1,5 +1,5 @@
 ---
-  - name: install streaming page pagages
+  - name: install streaming page packages
     apt: name={{ item }} state=latest
     with_items:
       - php5-fpm
