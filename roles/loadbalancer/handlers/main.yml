@@ -12,3 +12,5 @@
     service: name=php5-fpm state=reloaded
 
   - include: ../../../handlers/systemd.yml
+  - include: ../../../handlers/rc_local.yml
+  - include: ../../../handlers/sysctl.yml

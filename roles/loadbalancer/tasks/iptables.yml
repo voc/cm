@@ -1,0 +1,6 @@
+---
+  - name: create rc.local on lb
+    template: dest=/etc/rc.local
+              src=rc.local/rc.local.loadbalancer.j2
+              mode=0755 owner=root group=root
+    notify: reload rc.local

@@ -53,8 +53,8 @@
 
   - name: start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx is defined and nginx == 'yes'
+    when: nginx_frontend_server is defined and nginx_frontend_server == 'yes'
 
   - name: stopp nginx
     service: name=nginx enabled=no state=stopped
-    when: nginx is not defined or nginx != 'yes'
+    when: nginx_frontend_server is not defined or nginx_frontend_server != 'yes'
