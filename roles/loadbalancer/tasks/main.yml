@@ -1,6 +1,8 @@
 ---
   - include: haproxy.yml
+  - include: php.yml
+    when: nginx_frontend_server is defined and nginx_frontend_server == 'yes'
   - include: streaming_website.yml
     when: nginx_frontend_server is defined and nginx_frontend_server == 'yes'
-  - include: php.yml
+  - include: nginx.yml
     when: nginx_frontend_server is defined and nginx_frontend_server == 'yes'

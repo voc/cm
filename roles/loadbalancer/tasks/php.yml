@@ -4,18 +4,36 @@
     with_items:
       - php5-fpm
       - php5-sqlite
+      - libsqlite3-dev
+    tags: install
 
   - name: configure php-fpm
     template: dest=/etc/php5/fpm/pool.d/www.conf
               src=php_fpm/www.conf.j2
               mode=0644 owner=root group=root
     notify: reload php-fpm
+    tags:
+      - install
+      - config
 
   - name: disable php version expose
     lineinfile: dest=/etc/php5/fpm/php.ini
                 regexp="expose_php.*=.*"
                 line="expose_php = Off"
-    notify: reload php-fpm
+    notify: reload php5-fpm
+    tags:
+      - install
+      - config
+
+  - name: enable php short_open_tag
+    lineinfile: dest=/etc/php5/fpm/php.ini
+                regexp="short_open_tag.*=.*"
+                line="short_open_tag = On"
+    notify: reload php5-fpm
+    tags:
+      - install
+      - config
 
   - name: start php-fpm
     service: name=php5-fpm enabled=yes state=started
+    tags: install

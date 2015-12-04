@@ -1,10 +1,11 @@
 ---
   - name: git checkout streaming-website
-    git: repo=ssh://git@mng.ber.c3voc.de:streaming-website
+    git: repo=ssh://git@mng.ber.c3voc.de/streaming-website
          dest=/srv/nginx/streaming-website
     tags:
       - install
       - config
+      - deploy_website
 
   - name: create htdocs symlink
     file: src=/srv/nginx/streaming-website
@@ -20,8 +21,17 @@
     tags: install
 
   - name: clone mqtt repo
-    git: repo=ssh://git@mng.ber.c3voc.de:mqtt
+    git: repo=ssh://git@mng.ber.c3voc.de/mqtt
          dest=/usr/local/src/mqtt
+
+  - name: install mqttfeedback client dependencies
+    shell: "{{ item }}"
+    args:
+      chdir: /usr/local/src/mqtt/provider/feedback
+    with_items:
+      - gem install bundler
+      - bundle
+    tags:
 
   - name: creeate mqttfeedback user
     user: name=mqttfeedback system=yes groups=www-data
@@ -39,3 +49,13 @@
   - name: start mqttfeedback service
     service: state=started enabled=yes name=mqttfeedback
     tags: install
+
+  - shell: ls -1 /srv/nginx/cache/streaming_website/streaming_fcgi
+    register: contents
+    tags: deploy_website
+
+  - name: remove fcgi cache
+    file: path=/srv/nginx/cache/streaming_website/streaming_fcgi/{{ item }} state=absent
+    with_items: contents.stdout_lines
+    when: item not in managed_files
+    tags: deploy_website

@@ -1,17 +1,19 @@
 global
+    nbproc  2
     chroot  /usr/share/haproxy
     pidfile /run/haproxy.pid
     maxconn 4096
+    ulimit-n 65536
     user    haproxy
     group   haproxy
     stats socket /var/run/haproxy_stats.sock level operator
     daemon
+    log     /dev/log local0 notice
     # tls
     ssl-default-bind-options no-sslv3 force-tlsv12
     ssl-default-bind-ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK
 
 defaults
-    log     global
     mode    http
     # enable some usefull options
     option  dontlognull
@@ -22,14 +24,19 @@ defaults
     timeout connect 5s
     timeout server  10s
     timeout client  30s
+    # constum error filter
+    errorfile 500 /srv/nginx/htdocs/50x.html
+    errorfile 502 /srv/nginx/htdocs/50x.html
+    errorfile 503 /srv/nginx/htdocs/50x.html
+
 
 frontend icecast_and_nginx_hls
     # bind
-    bind 31.172.30.141:80
-    bind 2a01:a700:4633::141:80
+    bind {{ ansible_default_ipv4.address }}:80
+    bind {{ ansible_default_ipv6.address }}:80
     # tls
-    bind 2a01:a700:4633::141:443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
-    bind 31.172.30.141:443       ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
+    bind {{ ansible_default_ipv6.address }}:443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
+    bind {{ ansible_default_ipv4.address }}:443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
 
     # add special header for protocol version
     http-request add-header X-Proto https if  { ssl_fc }
@@ -81,7 +88,10 @@ frontend icecast_and_nginx_hls
     use_backend icecast             if icecast
 
 # enable statistics and basic admin support for localhost
-listen stats 127.0.0.1:9100
+# TODO: add stats per process
+listen stats
+    bind 127.0.0.1:9100
+    mode http
     stats enable
     stats uri     /admin?stats
     stats refresh 10s
@@ -219,10 +229,11 @@ backend streaming_website
     balance roundrobin
     option forwardfor
     http-request set-header X-Custom-Header %[url]
+    http-request set-header X-Real-IP %[src]
 {% if ansible_fqdn == 'lb1.fem.c3voc.de' %}
-    server lb1.fem.c3voc.de /var/run/nginx.sock
-    server lb1.het.c3voc.de lb1.het.c3voc.de:8443 ssl verify none backup
+    server lb1.fem.c3voc.de 127.0.0.1:8080 maxconn 4096
+    server lb1.het.c3voc.de lb1.het.c3voc.de:8443 backup
 {% else %}
-    server lb1.het.c3voc.de /var/run/nginx.sock
-    server lb1.fem.c3voc.de lb1.fem.c3voc.de:8443 ssl verify none backup
+    server lb1.het.c3voc.de 127.0.0.1:8080 maxconn 4096
+    server lb1.fem.c3voc.de lb1.fem.c3voc.de:8443 backup
 {% endif %}

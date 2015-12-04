@@ -1,5 +1,5 @@
 [Service]
-ExecStart=ruby /usr/local/src/mqtt/provider/feedback/client.rb
+ExecStart=/usr/bin/ruby /usr/local/src/mqtt/provider/feedback/client.rb
 Restart=always
 User=mqttfeedback
 Group=www-data

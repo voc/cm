@@ -8,4 +8,7 @@
   - name: reload nginx
     service: name=nginx state=reloaded
 
+  - name: reload php5-fpm
+    service: name=php5-fpm state=reloaded
+
   - include: ../../../handlers/systemd.yml
