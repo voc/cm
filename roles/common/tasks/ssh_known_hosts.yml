@@ -1,0 +1,12 @@
+---
+  - name: create global ssh known_hosts file
+    file: dest=/etc/ssh/ssh_known_hosts state=touch
+          mode=0644 owner=root group=root
+
+  # TODO: create file based on inventory file
+  #
+  # mng
+  - name: add »mng.ber.c3voc.de« to global known_hosts file
+    lineinfile: dest=/etc/ssh/ssh_known_hosts state=present
+                regexp="^mng.ber.c3voc.de.*ecdsa-sha2-nistp521\ .*"
+                line="mng.ber.c3voc.de,2001:67c:20a0:e::163,195.54.164.163 ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADFt5dEapTckFu1xDMmTdELUPSrtOQiyQM18n9d/M1BkIS5mjaobRzLkcALqhenzG0OJMIdQmxRbQECBYQdomZb9gF02MMExqppESajZBHbBPno/59z1TgMRfZ9+Q353ck4yz9IXdK7cjw+6uvH+m//fom8xnaZW5xg/QlqxO46KgQ2Gw=="
