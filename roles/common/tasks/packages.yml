@@ -36,8 +36,15 @@
     - ruby
     - ruby-dev
 
+ # for VMs
  - name: install a vmware specific set of packages
    apt: name={{ item }} state=present update_cache=yes
    with_items:
      - open-vm-tools
-   when: ansible_virtualization_type == 'VMware' and ansible_virtualization_role == role
+   when: ansible_virtualization_type == 'VMware' and ansible_virtualization_role == 'guest'
+
+ - name: install special packages for VMs
+   apt: name={{ item }} state=present update_cache=yes
+   with_items:
+     - haveged
+   when: ansible_virtualization_role == 'guest'
