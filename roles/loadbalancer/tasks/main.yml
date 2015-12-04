@@ -3,8 +3,8 @@
   - include: php.yml
   - include: sysctl.yml
   - include: iptables.yml
-    when: nginx_frontend_server is defined and nginx_frontend_server == 'yes'
+    when: nginx is defined and nginx == 'yes'
   - include: streaming_website.yml
-    when: nginx_frontend_server is defined and nginx_frontend_server == 'yes'
+    when: nginx is defined and nginx == 'yes'
   - include: nginx.yml
-    when: nginx_frontend_server is defined and nginx_frontend_server == 'yes'
+    when: nginx is defined and nginx == 'yes'
