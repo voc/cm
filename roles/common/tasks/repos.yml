@@ -1,9 +1,7 @@
 ---
+ # general
  - name: setup the VOC debian repo key
    apt_key: data="{{ lookup('file', 'voc_repo.key') }}" state=present
-
- - name: setup the VOC debian repo
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=present
 
  - name: ensure that the debian keyrings are present
    apt: name={{ item }} state=present update_cache=yes
@@ -11,5 +9,24 @@
     - debian-keyring
     - debian-archive-keyring
 
- - name: setup the debian backports repo
+ # wheezy specific
+ - name: setup the VOC debian repo for wheezy
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=present
+   when: ansible_distribution_release == 'wheezy'
+
+ - name: setup the debian backports repo for wheezy
    apt_repository: repo="deb http://ftp.debian.org/debian/ wheezy-backports main"
+   when: ansible_distribution_release == 'wheezy'
+
+ # jessie specific
+ - name: remove the VOC debian repo for wheezy when system is jessie
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=absent
+   when: ansible_distribution_release == 'jessie'
+
+ - name: setup the VOC debian repo for jessie
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=present
+   when: ansible_distribution_release == 'jessie'
+
+ - name: setup the debian backports repo for jessie
+   apt_repository: repo="deb http://ftp.debian.org/debian/ jessie-backports main"
+   when: ansible_distribution_release == 'jessie'
