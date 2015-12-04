@@ -30,13 +30,6 @@
     service: name=nginx enabled=no state=stopped
     when: nginx is not defined or nginx != 'yes'
 
-  - name: copy nginx error pages
-    copy: dest=/srv/nginx/htdocs/{{ item }}
-          src=nginx/{{ item }}
-          owner=www-data group=root mode=0644
-    with_items:
-      - 50x.html
-
   - name: remove access-log-truncating cronjob
     file: dest=/etc/cron.hourly/truncate-nginx-accesslog
           state=absent
