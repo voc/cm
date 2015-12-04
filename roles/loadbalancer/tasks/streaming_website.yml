@@ -2,9 +2,40 @@
   - name: git checkout streaming-website
     git: repo=ssh://git@mng.ber.c3voc.de:streaming-website
          dest=/srv/nginx/streaming-website
+    tags:
+      - install
+      - config
 
   - name: create htdocs symlink
     file: src=/srv/nginx/streaming-website
           dest=/srv/nginx/htdocs
           owner=www-data group=www-data
           state=link
+    tags: install
+
+  - name: create feedback directory
+    file: state=directory
+          dest=/opt/streaming-feedback
+          owner=www-data group=www-data mode=0750
+    tags: install
+
+  - name: clone mqtt repo
+    git: repo=ssh://git@mng.ber.c3voc.de:mqtt
+         dest=/usr/local/src/mqtt
+
+  - name: creeate mqttfeedback user
+    user: name=mqttfeedback system=yes groups=www-data
+    tags: config
+
+  - name: configure systemd to run mqttfeedback client
+    copy: src=mqttfeedback.service
+          dest=/lib/systemd/system/
+          owner=root mode=644
+    notify: reload systemd
+    tags:
+      - install
+      - config
+
+  - name: start mqttfeedback service
+    service: state=started enabled=yes name=mqttfeedback
+    tags: install
