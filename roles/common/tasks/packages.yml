@@ -32,6 +32,9 @@
     - pv
     - lm-sensors
     - moreutils
+    - python
+    - ruby
+    - ruby-dev
 
  - name: install a vmware specific set of packages
    apt: name={{ item }} state=present update_cache=yes
