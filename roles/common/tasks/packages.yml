@@ -35,6 +35,7 @@
     - python
     - ruby
     - ruby-dev
+    - inotail
 
  # for VMs
  - name: install a vmware specific set of packages
