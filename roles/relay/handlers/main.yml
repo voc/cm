@@ -10,11 +10,8 @@
   - name: trigger register_relay
     service: name=register_relay state=restarted
 
-  - name: reload rc.local
-    command: /etc/rc.local
-
-  - name: reload sysctl
-    command: /sbin/sysctl --system
-
   - name: reload php-fpm
     service: name=php5-fpm state=reloaded
+
+  - include: ../../../handlers/rc_local.yml
+  - include: ../../../handlers/sysctl.yml
