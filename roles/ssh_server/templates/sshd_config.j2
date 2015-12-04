@@ -10,8 +10,14 @@ Port 22
 
 Protocol 2
 # HostKeys for protocol version 2
+{% if ansible_distribution_release == 'wheezy' %}
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
+{% else %}
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+{% endif %}
+
 #Privilege Separation is turned on for security
 UsePrivilegeSeparation yes
 
