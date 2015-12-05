@@ -20,17 +20,42 @@
 
   - name: add haproxy user to ssl-cert group
     user: name=haproxy groups=ssl-cert append=yes
+    tags: install
 
   # TODO: remove private keys :/
-  - name: copy cdn.c3voc.de certificate
+  - name: copy cdn.c3voc.de certificate pem <cert+privkey+intermediate+dhparam>
     copy: src=haproxy/tls/haproxy_cdn.c3voc.de.pem
           dest=/etc/ssl/certs/haproxy_cdn.c3voc.de.pem
           mode=0640 owner=root group=ssl-cert
+    notify: reload haproxy
+    tags:
+      - install
+      - config
 
-  - name: copy streaming.media.ccc.de certificate
+  - name: copy streaming.media.ccc.de certificate pem <cert+privkey+intermediate+dhparam>
     copy: src=haproxy/tls/haproxy_streaming.media.ccc.de.pem
           dest=/etc/ssl/certs/haproxy_streaming.media.ccc.de.pem
           mode=0640 owner=root group=ssl-cert
+    notify: reload haproxy
+    tags:
+      - install
+      - config
+
+  # seperate crt files for ocsp
+  - name: copy streaming.media.ccc.de certificate
+    copy: src=haproxy/tls/streaming.media.ccc.de.crt
+          dest=/etc/ssl/certs/streaming.media.ccc.de.crt
+          mode=0644 owner=root group=ssl-cert
+
+  - name: copy cdn.c3voc.de certificate
+    copy: src=haproxy/tls/cdn.c3voc.de.crt
+          dest=/etc/ssl/certs/cdn.c3voc.de.crt
+          mode=0644 owner=root group=ssl-cert
+
+  - name: copy startcom class1 sha2 certificate
+    copy: src=haproxy/tls/sub.class1.server.sha2.ca.pem
+          dest=/etc/ssl/certs/sub.class1.server.sha2.ca.pem
+          mode=0644 owner=root group=ssl-cert
 
   # configure haproxy
   - name: create haproxy chroot directory
@@ -42,6 +67,9 @@
     copy: src=usa_subnetworks.txt
           dest=/etc/haproxy/usa_subnetworks.txt
           mode=0755 owner=haproxy group=haproxy
+    tags:
+      - install
+      - config
 
   - name: create haproxy config
     template: src=haproxy/haproxy.cfg.j2

@@ -1,12 +1,13 @@
 ---
+  # Repo checkout
   - name: git checkout streaming-website
     git: repo=ssh://git@mng.ber.c3voc.de/streaming-website
          dest=/srv/nginx/streaming-website
     tags:
       - install
-      - config
       - deploy_website
 
+  # Create directories and symlinks
   - name: create htdocs symlink
     file: src=/srv/nginx/streaming-website
           dest=/srv/nginx/htdocs
@@ -17,12 +18,29 @@
   - name: create feedback directory
     file: state=directory
           dest=/opt/streaming-feedback
-          owner=www-data group=www-data mode=0750
+          owner=www-data group=www-data mode=0755
     tags: install
 
+  - stat: path=/opt/streaming-feedback/feedback.sqlite3
+    register: feedback_db
+    tags: install
+
+  - name: create feedback db
+    shell: "sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
+    become: www-data
+    become_user: www-data
+    when: feedback_db.stat.isreg is not defined or feedback_db.stat.isreg == False
+    tags: install
+
+  # Feedback client
   - name: clone mqtt repo
     git: repo=ssh://git@mng.ber.c3voc.de/mqtt
          dest=/usr/local/src/mqtt
+    tags: install
+
+  - stat: path=/usr/local/src/mqtt/provider/feedback/Gemfile.lock
+    register: mqtt_feedback_gemlock
+    tags: install
 
   - name: install mqttfeedback client dependencies
     shell: "{{ item }}"
@@ -31,7 +49,8 @@
     with_items:
       - gem install bundler
       - bundle
-    tags:
+    when: mqtt_feedback_gemlock.stat.isreg is not defined or mqtt_feedback_gemlock.stat.isreg == False
+    tags: install
 
   - name: creeate mqttfeedback user
     user: name=mqttfeedback system=yes groups=www-data
@@ -50,12 +69,19 @@
     service: state=started enabled=yes name=mqttfeedback
     tags: install
 
-  - shell: ls -1 /srv/nginx/cache/streaming_website/streaming_fcgi
-    register: contents
-    tags: deploy_website
+  # Remove fcgi cache after deployment
+  - shell: ls -1 /srv/nginx/cache/streaming_fcgi/
+    register: streaming_fcgi_cache
+    tags:
+      - deploy_website
+      - install
+      - config
 
   - name: remove fcgi cache
-    file: path=/srv/nginx/cache/streaming_website/streaming_fcgi/{{ item }} state=absent
-    with_items: contents.stdout_lines
-    when: item not in managed_files
-    tags: deploy_website
+    file: path=/srv/nginx/cache/streaming_fcgi/{{ item }} state=absent
+    with_items: streaming_fcgi_cache.stdout_lines
+    when: streaming_fcgi_cache != ''
+    tags:
+      - config
+      - install
+      - deploy_website

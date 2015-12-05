@@ -1,5 +1,5 @@
 global
-    nbproc  2
+    nbproc  {{ haproxy_nbproc | default('2') }}
     chroot  /usr/share/haproxy
     pidfile /run/haproxy.pid
     maxconn 4096
@@ -16,6 +16,7 @@ global
 defaults
     mode    http
     # enable some usefull options
+    option  httplog
     option  dontlognull
     option  http-server-close
     option  abortonclose

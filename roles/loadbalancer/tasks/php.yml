@@ -1,12 +1,15 @@
 ---
+  # Install PHP + stuff
   - name: install streaming page packages
     apt: name={{ item }} state=latest
     with_items:
       - php5-fpm
       - php5-sqlite
       - libsqlite3-dev
+      - sqlite3
     tags: install
 
+  # Create default pool
   - name: configure php-fpm
     template: dest=/etc/php5/fpm/pool.d/www.conf
               src=php_fpm/www.conf.j2
@@ -16,6 +19,7 @@
       - install
       - config
 
+  # Change php.ini settings
   - name: disable php version expose
     lineinfile: dest=/etc/php5/fpm/php.ini
                 regexp="expose_php.*=.*"
@@ -34,6 +38,7 @@
       - install
       - config
 
+  # Enable service
   - name: start php-fpm
     service: name=php5-fpm enabled=yes state=started
     tags: install

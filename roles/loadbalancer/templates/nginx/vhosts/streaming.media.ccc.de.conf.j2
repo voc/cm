@@ -11,6 +11,7 @@ server {
   server_name streaming.media.ccc.de;
 
   listen 127.0.0.1:8080;
+  listen 127.0.0.1:80;
   listen {{ ansible_default_ipv4.address }}:8080;
 
   root /srv/nginx/htdocs;
@@ -74,6 +75,34 @@ server {
     fastcgi_cache_valid 200 5m;
     fastcgi_cache_methods GET HEAD;
     add_header X-Cache "$upstream_cache_status origin";
+  }
+
+  # stats nginx
+  location ~* ^/stats/nginx {
+    stub_status on;
+    access_log   off;
+
+    allow 127.0.0.1;
+{% for ip in nginx_ips_allow_stats %}
+    allow {{ ip }};
+{% endfor %}
+    deny all;
+  }
+
+  # stats php
+  location ~* ^/stats/php {
+    access_log off;
+
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass php;
+    fastcgi_keep_conn on;
+    fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+
+    allow 127.0.0.1;
+{% for ip in nginx_ips_allow_stats %}
+    allow {{ ip }};
+{% endfor %}
+    deny all;
   }
 
   location / {

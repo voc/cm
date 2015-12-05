@@ -1,9 +1,11 @@
 ---
+  # Installation
   - name: install nginx package
     apt: name=nginx state=latest
     tags:
       - install
 
+  # Create needed directories
   - name: added nginx htdocs and caching directories
     file: "dest=/srv/nginx/{{ item }}
           owner=www-data group=www-data
@@ -14,12 +16,13 @@
     tags:
       - install
 
+  # Create config
   - name: remove default vhost
     file: dest=/etc/nginx/sites-enabled/default state=absent
 
   - name: configure nginx
     template: dest=/etc/nginx/nginx.conf
-              src=nginx/nginx.loadbalancer.conf.j2
+              src=../../../roles/relay/templates/nginx/nginx.conf.j2
               mode=0644 owner=root group=root
               validate='nginx -t -c %s'
     notify:
@@ -28,7 +31,7 @@
       - config
       - install
 
-  # vhost
+  # Manage vhost
   - name: create streaming.media.ccc.de vhost
     template: dest="/etc/nginx/sites-available/{{ item }}"
               src="nginx/vhosts/{{ item }}.j2"

@@ -1,70 +1,16 @@
-loadbalancer:
-  timeout_client:  30s
-  timeout_server:  10s
-  timeout_connect: 5s
-  check_interval:  5s
-  frontend:
-    match_path_ends:
-      hls_playlist: .m3u8
-      hls_fragment: .ts
-      is_relive: relive/index.json thumb.jpg crossdomain.xml relive/index.html
-      icecast: .webm .opus .mp3 .ogg .ogv .oga
-    match_urls:
-      is_streaming_website:
-        - "streaming.media.ccc.de"
-        - "www.stream.c3voc.de"
-      is_cdn:
-        - "cdn.c3voc.de"
-    match_ip_networks:
-      is_local:
-        - 80.153.23.35
-        - "2a00:1328:e100:cc00::/56"
-  backends:
-    # define server for streaming frontend
-    streaming_website:
-      proxy: true
-      match:
-        - is_streaming_website
-      headers:
-        - 'http-request set-header X-Custom-Header %[url]'
-      servers:
-        - { name: '31.172.30.138', port: 80, weight: 50 }
-    # local streaming server
-    hls_fragment_local:
-      match:
-        - is_local
-        - hls_fragment
-      servers:
-        - { name: 'live.lan.c3voc.de', port: 80, redir_path: 'http://172.23.42.233:80', weight: 50, check: "" }
-    hls_playlist_local:
-      match:
-        - is_local
-        - hls_playlist
-      servers:
-        - { name: 'live.lan.c3voc.de', port: 80, redir_path: 'http://172.23.42.233:80', weight: 50, check: "" }
-    icecast_local:
-      match:
-        - is_local
-        - icecast
-      servers:
-        - { name: 'live.lan.c3voc.de', port: 8000, redir_path: 'http://172.23.42.233:8000', weight: 50, check: "" }
-
-    # default server
-    hls_fragment:
-      match:
-        - is_cdn
-        - hls_fragment
-      servers:
-        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50, check: "" }
-    hls_playlist:
-      match:
-        - is_cdn
-        - hls_playlist
-      servers:
-        - { name: 'live.dus.c3voc.de', port: 80, redir_path: 'http://live.dus.c3voc.de:80', weight: 50, check: "" }
-    icecast:
-      match:
-        - is_cdn
-        - icecast
-      servers:
-        - { name: 'live.dus.c3voc.de', port: 8000, redir_path: 'http://live.dus.c3voc.de:8000', weight: 50, check: "" }
+# define push ips
+nginx_ips_allow_to_push: [
+  "::1",
+  "127.0.0.1",
+  "195.54.164.160/29",
+  "10.73.0.0/16",
+  "10.8.0.0/16"
+]
+# allow stats ip
+nginx_ips_allow_stats: [
+  "::1",
+  "127.0.0.1",
+  "195.54.164.160/29",
+  "10.73.0.0/16",
+  "10.8.0.0/16"
+]

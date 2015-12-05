@@ -14,7 +14,6 @@
       - "cache/tmp"
       - "cache/streaming_fcgi"
 
-
   - name: configure nginx
     template: dest=/etc/nginx/nginx.conf
               src=nginx/nginx.conf.j2

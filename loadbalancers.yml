@@ -1,5 +1,5 @@
 ---
   - hosts: loadbalancers
     roles:
-      - role: loadbalancer
-        tags: loadbalancer
+      - { role: common, tags: ['common'] }
+      - { role: loadbalancer, tags: ['loadbalancer'] }
