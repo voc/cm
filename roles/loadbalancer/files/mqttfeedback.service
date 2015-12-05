@@ -3,6 +3,10 @@ ExecStart=/usr/bin/ruby /usr/local/src/mqtt/provider/feedback/client.rb
 Restart=always
 User=mqttfeedback
 Group=www-data
+Environment="MQTT_SERVER=195.54.164.163"
+Environment="MQTT_USER=reminder"
+Environment="MQTT_PASSWORD=eddy!flute!Curl"
+Environment="FEEDBACK_DATABASE=/opt/streaming-feedback/feedback.sqlite3"
 
 [Install]
 WantedBy=multi-user.target

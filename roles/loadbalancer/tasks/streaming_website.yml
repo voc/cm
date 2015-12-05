@@ -40,7 +40,7 @@
   - name: configure systemd to run mqttfeedback client
     copy: src=mqttfeedback.service
           dest=/lib/systemd/system/
-          owner=root mode=644
+          owner=root mode=640
     notify: reload systemd
     tags:
       - install
