@@ -1,0 +1,10 @@
+---
+  # systemctl
+  - shell: "command -v systemctl"
+    register: systemctl_bin
+    changed_when: false
+
+  # sysctl
+  - shell: "command -v sysctl"
+    register: sysctl_bin
+    changed_when: false
