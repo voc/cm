@@ -13,13 +13,23 @@
           shell={{ user_shell | default('/bin/zsh') }}
     when: not remove is defined and not ansible_virtualization_role == 'host'
 
-  - name: create user "{{ user }}" on KVM host
-    user: state=present
-          name="{{ user }}"
-          groups="ssh,sudo,adm,libvirt,kvm"
-          shell={{ user_shell | default('/bin/zsh') }}
+  # addiotional groups
+  - shell: "command -v libvirtd"
+    register: libvirtd_bin
+    changed_when: false
+    ignore_errors: yes
     when: not remove is defined and ansible_virtualization_role == 'host'
 
+  - name: append libvirt and kvm group to user
+    user: name={{ user }} append=yes groups=libvirt,kvm
+    when: libvirtd_bin.stdout != '' and not remove is defined and ansible_virtualization_role == 'host'
+
+  - name: append special groups on jessie systems
+    user: name={{ user }} append=yes
+          groups=systemd-journal,systemd-timesync,systemd-network,systemd-resolve
+    when: ansible_distribution_release == 'jessie'
+
+  # install shell stuff
   - name: install zshrc
     copy: dest="/home/{{ user }}/.zshrc" src="{{ item }}"
     with_first_found:
