@@ -1,4 +1,7 @@
 ---
+  - name: create ssl-cert group
+    group: name=ssl-cert state=present
+
   # Prime numbers for any occasion
   - name: copy pre generated DH parameters
     copy: dest=/etc/ssl/{{ item }}
