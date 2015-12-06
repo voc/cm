@@ -1,11 +1,9 @@
 ---
   - include: ../../../register/bin_path.yml
+  - include: nginx.yml
+  - include: php.yml
+  - include: streaming_website.yml
   - include: haproxy.yml
   - include: ocsp.yml
-  - include: php.yml
   - include: sysctl.yml
   - include: iptables.yml
-  - include: streaming_website.yml
-    when: nginx is defined and nginx == 'yes'
-  - include: nginx.yml
-    when: nginx is defined and nginx == 'yes'

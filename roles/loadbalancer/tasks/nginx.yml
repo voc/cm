@@ -11,7 +11,7 @@
           owner=www-data group=www-data
           state=directory"
     with_items:
-      - "cache/streaming_website/streaming_fcgi"
+      - "cache/streaming_fcgi/"
       - "cache/tmp"
     tags:
       - install

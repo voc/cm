@@ -14,7 +14,7 @@
     template: dest=/etc/php5/fpm/pool.d/www.conf
               src=php_fpm/www.conf.j2
               mode=0644 owner=root group=root
-    notify: reload php-fpm
+    notify: reload php5-fpm
     tags:
       - install
       - config
