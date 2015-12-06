@@ -3,13 +3,25 @@
   - shell: "command -v systemctl"
     register: systemctl_bin
     changed_when: false
+    ignore_errors: yes
+    when: ansible_distribution_release == 'jessie'
 
   # sysctl
   - shell: "command -v sysctl"
     register: sysctl_bin
     changed_when: false
+    ignore_errors: yes
+    when: ansible_distribution_release == 'jessie'
 
   # ffmpeg
   - shell: "command -v ffmpeg"
     register: ffmpeg_bin
     changed_when: false
+    ignore_errors: yes
+
+  # timedatectl
+  - shell: "command -v timedatectl"
+    register: timedatectl_bin
+    changed_when: false
+    ignore_errors: yes
+    when: ansible_distribution_release == 'jessie'

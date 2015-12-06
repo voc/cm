@@ -1,18 +1,51 @@
 ---
+  # wheezy
   - name: install ntpd
     apt: name={{ item }} state=present
     with_items:
       - ntp
       - ntpdate
+    when: ansible_distribution_release == 'wheezy'
 
   - name: remove default ntp package
     apt: name=openntpd state=absent purge=yes
+    when: ansible_distribution_release == 'wheezy'
 
   - name: configure ntpd
     template: dest=/etc/ntp.conf
               src=ntpd/ntpd.conf.j2
               owner=root group=root mode=0644
     notify: restart ntpd
+    when: ansible_distribution_release == 'wheezy'
 
   - name: enable ntpd
     service: name=ntp enabled=yes state=started
+    when: ansible_distribution_release == 'wheezy'
+
+
+  # jessie
+  - name: deinstall ntpd
+    apt: name={{ item }} state=absent
+    with_items:
+      - ntp
+    when: ansible_distribution_release == 'jessie'
+
+  # Setting timezone
+  - shell: "{{ timedatectl_bin.stdout | default('timedatectl') }} status | grep 'Time zone' | cut -d ':' -f 2 | cut -d ' ' -f 2"
+    register: current_timezone
+    changed_when: false
+    when: ansible_distribution_release == 'jessie'
+
+  - name: setting timezone to Europe/Berlin
+    command: "{{ timedatectl_bin.stdout }} set-timezone Europe/Berlin"
+    when: current_timezone.stdout != "Europe/Berlin" and ansible_distribution_release == 'jessie'
+
+  # Timesyncd
+  - shell: "{{ timedatectl_bin.stdout }} status | grep 'NTP enabled' | cut -d ':' -f 2 | cut -d ' ' -f 2"
+    register: ntp_enabled
+    changed_when: false
+    when: ansible_distribution_release == 'jessie'
+
+  - name: enable systemd-timesyncd
+    command: "{{ timedatectl_bin.stdout | default('timedatectl') }} set-ntp true"
+    when: ntp_enabled.stdout != 'yes' and ansible_distribution_release == 'jessie'
