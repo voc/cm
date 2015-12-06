@@ -1,7 +1,9 @@
 ---
-  - name: restart icecast
+  - name: restart icecast-beta
     service: name=icecast2-beta state=restarted
-    when: icecast is defined and icecast == 'yes'
+
+  - name: restart icecast2
+    service: name=icecast2 state=restarted
 
   - name: restart nginx
     service: name=nginx state=restarted
