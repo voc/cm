@@ -6,12 +6,16 @@
     when: remove is defined
 
   # realize user
+  - shell: command -v zsh
+    register: zsh_bin
+    changed_when: false
+
   - name: create user "{{ user }}"
     user: state=present
           name="{{ user }}"
           groups="ssh,sudo,adm"
-          shell={{ user_shell | default('/bin/zsh') }}
-    when: not remove is defined and not ansible_virtualization_role == 'host'
+          shell={{ user_shell | default(zsh_bin.stdout) }}
+    when: not remove is defined
 
   # addiotional groups
   - shell: "command -v libvirtd"
