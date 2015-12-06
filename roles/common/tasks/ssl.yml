@@ -1,0 +1,9 @@
+---
+  # Prime numbers for any occasion
+  - name: copy pre generated DH parameters
+    copy: dest=/etc/ssl/{{ item }}
+          src=ssl/{{ item }}
+          mode=0640 owner=root group=ssl-cert
+    with_items:
+      - dhparam2048.pem
+      - dhparam4096.pem

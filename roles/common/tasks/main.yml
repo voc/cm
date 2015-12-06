@@ -9,6 +9,7 @@
   - include: inittab.yml
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
+  - include: ssl.yml
   # realise users
   - include: user.yml user=voc
   - include: user.yml user=andi
