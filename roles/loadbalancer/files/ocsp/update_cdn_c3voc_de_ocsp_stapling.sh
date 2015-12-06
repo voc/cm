@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 openssl ocsp -noverify -issuer /etc/ssl/certs/sub.class1.server.sha2.ca.pem \
   -cert /etc/ssl/certs/cdn.c3voc.de.crt \
