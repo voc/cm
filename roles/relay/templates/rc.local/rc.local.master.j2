@@ -14,11 +14,8 @@
 # By default this script does nothing.
 
 iptables -F INPUT
-{% if ansible_fqdn != 'voc.cdn.as250.net' %}
 iptables -A INPUT -p tcp -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
-{% endif %}
-
 # allow all from trusted ips
 {% for comment, ip in trusted_ipv4_ips.iteritems() %}
 # {{ comment }}
@@ -29,10 +26,7 @@ iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 # ip6tables
 ip6tables -F INPUT
-{% if ansible_fqdn != 'voc.cdn.as250.net' %}
 ip6tables -A INPUT -p tcp -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-{% endif %}
-
 # allow all from trusted ips
 {% for comment, ip in trusted_ipv6_ips.iteritems() %}
 # {{ comment }}

@@ -1,8 +1,23 @@
 ---
   # Repo checkout
+  - name: create user for thumb and schedule download
+    user: name=downloader home=/srv/nginx/streaming-website
+          system=yes
+    tags:
+      - install
+
   - name: git checkout streaming-website
     git: repo=ssh://git@mng.ber.c3voc.de/streaming-website
          dest=/srv/nginx/streaming-website
+    tags:
+      - install
+      - deploy_website
+
+  - name: change streaming-website permissions
+    file: dest=/srv/nginx/streaming-website
+          owner=root group=downloader
+          mode=g+rw recurse=yes
+    changed_when: false
     tags:
       - install
       - deploy_website
@@ -11,27 +26,25 @@
   - name: create htdocs symlink
     file: src=/srv/nginx/streaming-website
           dest=/srv/nginx/htdocs
-          owner=www-data group=www-data
           state=link
     tags: install
 
   - name: create thumbs directory
     file: state=directory
           dest=/srv/nginx/thumbs
-          owner=www-data group=www-data mode=0755
+          owner=downloader group=root mode=0755
     tags: install
 
   - name: create htdocs/thumbs symlink
     file: src=/srv/nginx/thumbs
           dest=/srv/nginx/htdocs/thumbs
-          owner=www-data group=www-data
           state=link
     tags: install
 
   - name: create feedback directory
     file: state=directory
           dest=/opt/streaming-feedback
-          owner=www-data group=www-data mode=0755
+          owner=www-data group=mqttfeedback mode=0771
     tags: install
 
   # Feedback db
@@ -49,7 +62,7 @@
   - name: change feedback.sqlite3 ownership
     file: state=file
           dest=/opt/streaming-feedback/feedback.sqlite3
-          mode=0644 owner=www-data group=www-data
+          mode=0660 owner=www-data group=mqttfeedback
     tags: install
 
   # Feedback client
@@ -72,8 +85,8 @@
     when: mqtt_feedback_gemlock.stat.isreg is not defined or mqtt_feedback_gemlock.stat.isreg == False
     tags: install
 
-  - name: creeate mqttfeedback user
-    user: name=mqttfeedback system=yes groups=www-data
+  - name: create mqttfeedback user
+    user: name=mqttfeedback system=yes group=mqttfeedback
     tags: config
 
   - name: configure systemd to run mqttfeedback client
@@ -93,13 +106,13 @@
   - name: create cronjob to pull upcoming events json every 5 minutes
     cron: name="download upcoming events json" minute=*/5
           job="cd /srv/nginx/streaming-website/configs; ./download.sh"
-          user=www-data
+          user=downloader
     tags: install
 
   - name: create cronjobs to pull thumbs every minute
     cron: name="download thumbnail for {{ item }}"
           job="{{ ffmpeg_bin.stdout }} -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_sd.m3u8 -vf 'scale=213:120' -vframes 1 /srv/nginx/thumbs/{{ item }}.png 2>/dev/null"
-          user=www-data
+          user=downloader
     tags: install
     with_items:
       - s1

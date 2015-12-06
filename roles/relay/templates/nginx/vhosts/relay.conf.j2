@@ -1,0 +1,260 @@
+# HLS slave caching directories
+proxy_cache_path /srv/nginx/cache/hls
+                 keys_zone=hls:32m
+                 max_size={{ nginx_hls_cache_max_size | default('30g') }}
+                 inactive=1h
+                 use_temp_path=off
+                 loader_threshold=300 loader_files=1024;
+
+proxy_cache_path /srv/nginx/cache/hls_relive
+                 keys_zone=hls_relive:32m
+                 max_size={{ nginx_hls_relive_cache_max_size | default('200g') }}
+                 inactive=7d
+                 use_temp_path=off
+                 loader_threshold=300 loader_files=1024;
+
+upstream hls {
+{% for server in nginx_hls_masters %}
+  server {{ server }};
+{% endfor %}
+{% for server in nginx_hls_masters_backup %}
+  server {{ server }} backup;
+{% endfor %}
+
+  keepalive 32;
+}
+
+upstream hls_relive {
+{% for server in nginx_hls_relive_masters %}
+  server {{ server }};
+{% endfor %}
+{% for server in nginx_hls_relive_masters_backup %}
+  server {{ server }} backup;
+{% endfor %}
+
+  keepalive 32;
+}
+{% endif %}
+
+upstream icecast {
+  server localhost:8000;
+  keepalive 1000;
+}
+
+# relay vhost
+server {
+  server_name _;
+
+{% if nginx_bind_ipv4 is defined and nginx_bind_ipv6 is defined %}
+  # http
+  listen [{{ nginx_bind_ipv6 }}]:80 default_server ipv6only=off;
+  listen {{ nginx_bind_ipv4 }}:80 default_server;
+  # https
+  listen [{{ nginx_bind_ipv6 }}]:443 default_server ipv6only=off ssl;
+  listen {{ nginx_bind_ipv4 }}:443 default_server ssl;
+  # stats
+  listen 127.0.0.1:80 default_server;
+{% else %}
+  # http
+  listen [::]:80 default_server ipv6only=off;
+  # https
+  listen [::]:443 default_server ipv6only=off ssl;
+{% endif %}
+
+  root /var/www;
+  index index.html;
+
+  # TLS certificates
+  ssl_certificate       /etc/letsencrypt/{{ ansible_fqdn }}/cert1.pem;
+  ssl_certificate_key   /etc/letsencrypt/{{ ansible_fqdn }}/privkey1.pem;
+  # OCSP stapling
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  ssl_trusted_certificate /etc/ssl/certs/fullchain1.pem;
+  ssl_stapling_file /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp;
+
+  # don't allow access to some files or directories
+  location ~* /.*\.(ht|sh|git|htaccess|php|inc|rb|py|pl|db|sqlite|sqlite3)$ {
+    deny  all;
+  }
+
+{% if nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' %}
+  location ~* ^/hls {
+    root /tmp/;
+    autoindex on;
+  }
+
+  # relive
+  location ~ ^/crossdomain.xml {
+    alias /srv/releases/relive/crossdomain.xml;
+    include /etc/nginx/mime.types;
+  }
+
+  location ~* ^/releases/relive/(.+\.ts)$ {
+    alias /srv/releases/relive/$1;
+  }
+
+  location ~* ^/releases/relive/(.*) {
+    alias /srv/releases/relive/$1;
+    autoindex on;
+  }
+{% else %}
+  # proxy cache m3u8 (live)
+  #
+  # live:   /hls/s2_native_sd.m3u8
+  #
+  location ~* ^/(?<hls>hls)/(?<file>.+\.m3u8)$ {
+      proxy_intercept_errors on;
+      proxy_cache            hls;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://hls/$hls/$file;
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 1s;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+  }
+  # proxy cache ts files (live)
+  #
+  # live:   /hls/s2_native_sd-13026687480.ts
+  #
+  location ~* ^/(?<hls_or_relive>hls)/(?<stream>.+\.(ts|mp4))$ {
+      proxy_intercept_errors on;
+      proxy_cache            hls;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://hls/$hls_or_relive/$stream;
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 30m;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      limit_rate 3m;
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+  }
+  # proxy cache m3u8 (relive) and index.json (relive)
+  #
+  # relive: /releases/relive/19/index.m3u8
+  #         /releases/relive/index.json
+  #
+  location ~* ^/(?<relive>releases\/relive)/(?<file>.+\.m3u8|index\.json)$ {
+      proxy_intercept_errors on;
+      proxy_cache            hls_relive;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://hls_relive/$relive/$file;
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 1s;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+  }
+  # proxy cache ts files (relive)
+  #
+  # relive: /releases/relive/29/1016.ts
+  #
+  location ~* ^/(?<hls_relive>releases\/relive)/(?<stream>.+\.ts)$ {
+      proxy_intercept_errors on;
+      proxy_cache            hls_relive;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://hls_relive/$hls_relive/$stream;
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 7d;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      limit_rate 3m;
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+  }
+  # proxy cache mp4 files (relive)
+  #
+  # relive: /releases/relive/29/muxed.mp4
+  #
+  location ~* ^/(?<hls_relive>releases\/relive)/(?<stream>.+muxed\.mp4)$ {
+      proxy_intercept_errors on;
+      proxy_cache            hls_relive;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://hls_relive/$hls_relive/$stream;
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 6d;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      limit_rate 20m;
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+  }
+  # proxy cache for:
+  #  * thumbs             (relive)
+  #  * index.html         (relive)
+  #  * crossdomain.xml    (relive)
+  #
+  # relive: /crossdomain.xml
+  #         /releases/relive/29/thumb.jpg
+  #         /releases/relive/index.html
+  #
+  location ~* ^/(crossdomain\.xml|.+thumb\.jpg|.+index\.html)$ {
+      proxy_intercept_errors on;
+      proxy_cache            hls_relive;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://hls_relive/$1;
+      proxy_cache_methods    GET HEAD;
+      proxy_cache_valid      200 302 5m;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      proxy_ignore_headers   Cache-Control;
+      # keep alive
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      limit_rate 3m;
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+  }
+  # Icecast direkt proxy path for https streaming
+  #
+  location ~* ^/.*\.(webm|mp3|opus)$ {
+      proxy_redirect            off;
+      proxy_set_header          X-Host $http_host;
+      proxy_set_header          X-Forwarded-For $remote_addr;
+      proxy_buffering           off;
+      proxy_pass                http://icecast;
+      add_header Access-Control-Allow-Origin     "streaming.media.ccc.de";
+  }
+{% endif %}
+}

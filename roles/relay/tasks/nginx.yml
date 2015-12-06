@@ -1,34 +1,102 @@
 ---
-  - name: install nginx package
+  # Install packages
+  - name: install nginx-rtmp package
     apt: name=nginx-rtmp state=latest
+    tags: install
+    when: nginx_rtmp is defined and nginx_rtmp == 'yes'
 
+  - name: install nginx package
+    apt: name=nginx state=latest
+    tags: install
+    when: nginx_rtmp is not defined or nginx_rtmp != 'yes'
+
+  # Create directories
   - name: added nginx htdocs and caching directories
     file: "dest=/srv/nginx/{{ item }}
           owner=www-data group=www-data
-          state=directory"
+          state=directory mode=0750"
     with_items:
-      - "cache/streaming_website/static"
-      - "cache/streaming_website/pages"
       - "cache/hls"
       - "cache/hls_relive"
-      - "cache/tmp"
-      - "cache/streaming_fcgi"
+    tags: install
 
+  # Configure
   - name: configure nginx
     template: dest=/etc/nginx/nginx.conf
               src=nginx/nginx.conf.j2
-              mode=0644 owner=root group=root
+              mode=0640 owner=root group=root
     notify:
       - restart nginx
+    tags:
+      - config
+      - install
 
+  # Manage vhost
+  - name: create relay vhost
+    template: dest="/etc/nginx/sites-available/{{ item }}"
+              src="nginx/vhosts/{{ item }}.j2"
+              mode=0640 owner=root group=root
+    with_items:
+      - relay.conf
+    notify:
+      - reload nginx
+    tags:
+      - config
+      - install
+
+  - name: enable relay vhost
+    file: src=/etc/nginx/sites-available/relay.conf
+          dest=/etc/nginx/sites-enabled/relay.conf
+          state=link
+    notify:
+      - reload nginx
+    tags:
+      - config
+      - install
+
+  # RTMP vhost
+  - name: create rtmp master vhost
+    template: dest="/etc/nginx/sites-available/rtmp_master.conf"
+              src="nginx/vhosts/rtmp_master.conf.j2"
+              mode=0640 owner=root group=root
+    when: nginx_rtmp is defined and nginx_rtmp == 'yes'
+    notify:
+      - reload nginx
+    tags:
+      - config
+      - install
+
+  - name: enable rtmp vhost
+    file: dest=/etc/nginx/sites-enabled/rtmp_master.conf
+          src=/etc/nginx/sites-available/rtmp_master.conf
+          state=link
+    when: nginx_rtmp is defined and nginx_rtmp == 'yes'
+    notify:
+      - reload nginx
+    tags:
+      - config
+      - install
+
+  - name: disbale rtmp vhost
+    file: dest=/etc/nginx/sites-enabled/rtmp_master.conf
+          state=absent
+    when: nginx_rtmp is not defined or nginx_rtmp != 'yes'
+    notify:
+      - reload nginx
+    tags:
+      - config
+      - install
+
+  # Enable service
   - name: start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx is defined and nginx == 'yes'
+    when: nginx is defined and nginx == 'yes' or nginx_rtmp is defined and nginx_rtmp == 'yes'
 
   - name: stopp nginx
     service: name=nginx enabled=no state=stopped
-    when: nginx is not defined or nginx != 'yes'
+    when: nginx is not defined or nginx != 'yes' and nginx_rtmp is not defined or nginx_rtmp != 'yes'
 
+  # TODO: remove me
   - name: remove access-log-truncating cronjob
     file: dest=/etc/cron.hourly/truncate-nginx-accesslog
           state=absent

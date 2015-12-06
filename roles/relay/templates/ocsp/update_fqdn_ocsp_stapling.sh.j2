@@ -1,0 +1,7 @@
+#!/bin/sh
+
+openssl ocsp -noverify -issuer /etc/letsencrypt/{{ ansible_fqdn }}/chain.pem \
+  -cert /etc/letsencrypt/{{ ansible_fqdn }}/cert1.pem \
+  -url http://ocsp.int-x1.letsencrypt.org/ \
+  -no_nonce -header Host cert.int-x1.letsencrypt.org \
+  -respout /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp

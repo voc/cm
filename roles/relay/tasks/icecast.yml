@@ -48,7 +48,7 @@
   # Configure
   - name: configure the icecast streaming server
     template: dest=/etc/icecast2/icecast.xml
-              src=icecast/icecast.xml.j2
+              src=icecast/icecast.xml.jessie.j2
               owner=icecast2 group=icecast mode=0660
     notify:
       - restart icecast2

@@ -1,0 +1,70 @@
+# HLS-Master configuration
+
+# important for multi worker processes!!1!
+rtmp_auto_push on;
+
+rtmp {
+  log_format rtmp '"$remote_addr [$time_local] $command "$app" "$name" "$args" - $bytes_received $bytes_sent "$pageurl" "$flashver" "$swfurl" "$tcurl" ($session_readable_time)"';
+  access_log /var/log/nginx/rtmp_access.log rtmp;
+
+  server {
+{% if nginx_bind_ipv4 is defined and nginx_bind_ipv6 is defined %}
+    listen [{{ nginx_bind_ipv6 }}]:1935 ipv6only=off;
+    listen {{ nginx_bind_ipv4 }}:1935 ipv6only=off;
+{% else %}
+    listen [::]:1935 ipv6only=off;
+{% endif %}
+    ping 30s;
+
+    # Disable audio until first video frame is sent.
+    wait_video on;
+    # Send NetStream.Publish.Start and NetStream.Publish.Stop to subscribers.
+    publish_notify on;
+
+    # Synchronize audio and video streams. If subscriber bandwidth is not
+    # enough to receive data at ublisher rate some frames are dropped by
+    # server. This leads to synchronization problem. When timestamp
+    # difference exceeds the value specified as sync argument an absolute
+    # frame is sent fixing that. Default is 300ms.
+    sync 10ms;
+
+    application stream {
+      # enable live streaming
+      live on;
+      meta copy;
+{% if nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' %}
+      hls on;
+      hls_path /tmp/hls;
+      hls_fragment 5s;
+      hls_fragment_naming timestamp;
+      hls_fragment_slicing aligned;
+      hls_playlist_length 10m;
+      hls_base_url /hls/;
+
+{% if event.formats.hd is defined and event.formats.hd == 'yes' %}
+      hls_variant _hd BANDWIDTH=3000000;
+{% endif %}
+{% if event.formats.sd is defined and event.formats.sd == 'yes' %}
+      hls_variant _sd BANDWIDTH=1000000;
+{% endif %}
+{% if event.formats.slides is defined and event.formats.slides == 'yes' %}
+      # TODO: rtmp slide stream?
+      hls_variant _slides BANDWIDTH=100000;
+{% endif %}
+{% else %}
+      hls off;
+{% endif%}
+
+{% for stream, ip in nginx_streaming_locations.iteritems() %}
+      pull rtmp://{{ ip }}:1935/stream/{{ stream }} name={{ stream }} static live=1;
+{% endfor %}
+
+{% for ip in nginx_ips_allow_to_push %}
+      allow publish {{ ip }};
+{% endfor %}
+      deny publish all;
+
+      allow play all;
+    }
+  }
+}
