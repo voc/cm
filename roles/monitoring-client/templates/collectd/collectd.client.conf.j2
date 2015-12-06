@@ -18,9 +18,14 @@ LoadPlugin memory
 LoadPlugin network
 LoadPlugin swap
 LoadPlugin tcpconns
+LoadPlugin curl_json
+LoadPlugin dbi
+LoadPlugin nginx
+
 <LoadPlugin perl>
   Globals true
 </LoadPlugin>
+
 LoadPlugin "logfile"
 <Plugin "logfile">
   LogLevel "info"
@@ -52,22 +57,14 @@ LoadPlugin "logfile"
 <Plugin perl>
   IncludeDir "/opt/voc/collectd/plugins/"
   BaseName "Collectd::Plugins"
-  # include nginx perl plugin
-{% if nginx is defined and nginx == 'yes' %}
-  LoadPlugin NginxRtmp
-{% endif %}
-  # include icecast perl plugin
+
 {% if icecast is defined and icecast == 'yes' %}
+  # include icecast perl plugin
   LoadPlugin Icecast2
 {% endif %}
 </Plugin>
 
 {% if nginx is defined and nginx == 'yes' %}
-LoadPlugin nginx
-<Plugin "nginx">
-  URL "http://127.0.0.1/stats/nginx"
-</Plugin>
-
 <LoadPlugin python>
   Globals true
 </LoadPlugin>
@@ -87,27 +84,48 @@ LoadPlugin libvirt
 </Plugin>
 {% endif %}
 
-{% if inventory_hostname == 'dnslb.dus.c3voc.de' or inventory_hostname == 'dnslb.fem.c3voc.de' %}
+{% if nginx is defined and nginx == 'yes' %}
 LoadPlugin curl_json
 <Plugin curl_json>
-  <URL "http://127.0.0.1:3506/json">
-    Instance "gdnsd"
-    # stats
-    <Key "uptime">
-      Type "uptime"
+  <URL "http://127.0.0.1:8889/stats/php?json">
+    Instance "fpm"
+    <Key "accepted conn">
+        Type "http_requests"
     </Key>
-    <Key "stats/*">
-      Type "gauge"
+    <Key "listen queue len">
+        Type "listen_queue"
     </Key>
-    # tcp
-    <Key "tcp/*">
-      Type "gauge"
+    <Key "active processes">
+        Type "active_processes"
     </Key>
-    # udp
-    <Key "udp/*">
-      Type "gauge"
+    <Key "total processes">
+        Type "total_processes"
     </Key>
   </URL>
+</Plugin>
+{% endif %}
+
+{% if nginx is defined and nginx == 'yes' and php is defined and php == 'yes' %}
+<Plugin dbi>
+  <Query "streaming_issues">
+    Statement "SELECT COUNT(*) AS value FROM feedback WHERE issues != '';"
+    <Result>
+      Type "counter"
+      ValuesFrom "value"
+    </Result>
+  </Query>
+  <Database "feedback">
+    Driver "sqlite3"
+    DriverOption "sqlite3_dbdir" "/opt/streaming-feedback/"
+    DriverOption "dbname" "feedback.sqlite3"
+    Query "streaming_issues"
+  </Database>
+</Plugin>
+{% endif %}
+
+{% if nginx is defined and nginx == 'yes' %}
+<Plugin "nginx">
+  URL "http://127.0.0.1:8889/stats/nginx"
 </Plugin>
 {% endif %}
 
