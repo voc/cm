@@ -232,9 +232,9 @@ backend streaming_website
     http-request set-header X-Custom-Header %[url]
     http-request set-header X-Real-IP %[src]
 {% if ansible_fqdn == 'lb1.fem.c3voc.de' %}
-    server lb1.fem.c3voc.de 127.0.0.1:8080 maxconn 4096
-    server lb1.het.c3voc.de lb1.het.c3voc.de:8443 backup
+    server lb1.fem.c3voc.de 127.0.0.1:8080 check maxconn 4096
+    server lb1.het.c3voc.de 46.4.3.195:8080 check backup
 {% else %}
-    server lb1.het.c3voc.de 127.0.0.1:8080 maxconn 4096
-    server lb1.fem.c3voc.de lb1.fem.c3voc.de:8443 backup
+    server lb1.het.c3voc.de 127.0.0.1:8080 check maxconn 4096
+    server lb1.fem.c3voc.de 141.24.40.53:8080 check backup
 {% endif %}
