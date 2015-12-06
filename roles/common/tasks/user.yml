@@ -13,7 +13,7 @@
   - name: create user "{{ user }}"
     user: state=present
           name="{{ user }}"
-          groups="ssh,sudo,adm"
+          groups="ssh,sudo,adm" append=yes
           shell={{ user_shell | default(zsh_bin.stdout) }}
     when: not remove is defined
 
