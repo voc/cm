@@ -2,6 +2,7 @@
   - name: create global ssh known_hosts file
     file: dest=/etc/ssh/ssh_known_hosts state=touch
           mode=0644 owner=root group=root
+    changed_when: false
 
   # TODO: create file based on inventory file
   #
