@@ -8,3 +8,8 @@
   - shell: "command -v sysctl"
     register: sysctl_bin
     changed_when: false
+
+  # ffmpeg
+  - shell: "command -v ffmpeg"
+    register: ffmpeg_bin
+    changed_when: false
