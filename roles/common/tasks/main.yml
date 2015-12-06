@@ -11,21 +11,22 @@
   - include: ssh_known_hosts.yml
   - include: ssl.yml
   # realise users
-  - include: user.yml user=voc
   - include: user.yml user=andi
   - include: user.yml user=anton
   - include: user.yml user=atze
+  - include: user.yml user=bjoern
+  - include: user.yml user=coeins
   - include: user.yml user=derpeter
+  - include: user.yml user=danimo
   - include: user.yml user=florob
   - include: user.yml user=florolf
   - include: user.yml user=fxkr
   - include: user.yml user=masterbase
   - include: user.yml user=mazdermind
   - include: user.yml user=meise
-  - include: user.yml user=bjoern
   - include: user.yml user=thomic
-  - include: user.yml user=coeins
-  - include: user.yml user=danimo
+  - include: user.yml user=voc
+
 
 
   - name: setting voc password
