@@ -71,12 +71,12 @@ http {
 
   # vhost for stats
   # Example:
-  #   http://127.0.0.1:8889/stats/nginx → nginx stats for alle workers
+  #   http://127.0.0.1:8999/stats/nginx → nginx stats for alle workers
   #   http://127.0.0.1:9000/stats/nginx → niginx stats for worker 1
   server {
     server_name _;
 
-    listen 127.0.0.1:8889;
+    listen 127.0.0.1:8999;
 {% if rtmp is defined and rtmp == 'yes' %}
     # per-worker listener primary for stats
     # 1st worker will listen 8000

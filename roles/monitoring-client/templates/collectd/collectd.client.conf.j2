@@ -86,7 +86,7 @@ LoadPlugin libvirt
 {% if php is defined and php == 'yes' %}
 LoadPlugin curl_json
 <Plugin curl_json>
-  <URL "http://127.0.0.1:8889/stats/php?json">
+  <URL "http://127.0.0.1:8999/stats/php?json">
     Instance "fpm"
     <Key "accepted conn">
         Type "http_requests"
@@ -125,7 +125,7 @@ LoadPlugin dbi
 
 {% if nginx is defined and nginx == 'yes' %}
 <Plugin "nginx">
-  URL "http://127.0.0.1:8889/stats/nginx"
+  URL "http://127.0.0.1:8999/stats/nginx"
 </Plugin>
 {% endif %}
 
