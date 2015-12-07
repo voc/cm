@@ -15,7 +15,7 @@
 
   - name: copy ocsp update scripts
     template: dest=/usr/local/bin/update_{{ ansible_fqdn }}_ocsp_stapling.sh
-              src=ocsp/update_fqdn_ocsp_stapling.sh.j2
+              src=update_fqdn_ocsp_stapling.sh.j2
               owner=root group=root mode=0755
     notify: run letsencrypt ocsp script
     tags: install

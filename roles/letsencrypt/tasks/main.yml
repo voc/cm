@@ -18,7 +18,7 @@
 
   - name: Checkout letsencrypt
     git:
-      repo: "ssh://git@github.com/letsencrypt/letsencrypt"
+      repo: "https://github.com/letsencrypt/letsencrypt"
       dest: "/opt/letsencrypt"
       version: master
       force: yes
