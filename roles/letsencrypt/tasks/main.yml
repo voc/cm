@@ -46,7 +46,7 @@
     register: port_443_check
 
   - name: Generate or renew certificate (standalone)
-    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --agree-dev-preview --email=contact@c3voc.de -d {{ domain }} --standalone --renew-by-default"
+    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --agree-dev-preview --email=contact@c3voc.de -d {{ domain }} --standalone --renew-by-default --rsa-key-size 4096"
     when: >
       not port_443_check.stdout
       and domain is defined and domain
