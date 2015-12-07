@@ -3,12 +3,12 @@
   - name: install nginx-rtmp package
     apt: name=nginx-rtmp state=latest
     tags: install
-    when: nginx_rtmp is defined and nginx_rtmp == 'yes'
+    when: rtmp is defined and rtmp == 'yes'
 
   - name: install nginx package
     apt: name=nginx state=latest
     tags: install
-    when: nginx_rtmp is not defined or nginx_rtmp != 'yes'
+    when: rtmp is not defined or rtmp != 'yes'
 
   # Create directories
   - name: added nginx htdocs and caching directories
@@ -16,8 +16,10 @@
           owner=www-data group=www-data
           state=directory mode=0750"
     with_items:
+      - "cache/tmp"
       - "cache/hls"
       - "cache/hls_relive"
+    notify: reload nginx
     tags: install
 
   # Configure
@@ -26,12 +28,16 @@
               src=nginx/nginx.conf.j2
               mode=0640 owner=root group=root
     notify:
-      - restart nginx
+      - reload nginx
     tags:
       - config
       - install
 
   # Manage vhost
+  - name: remove default vhost
+    file: dest=/etc/nginx/sites-enabled/default state=absent
+    notify: reload nginx
+
   - name: create relay vhost
     template: dest="/etc/nginx/sites-available/{{ item }}"
               src="nginx/vhosts/{{ item }}.j2"
@@ -59,7 +65,7 @@
     template: dest="/etc/nginx/sites-available/rtmp_master.conf"
               src="nginx/vhosts/rtmp_master.conf.j2"
               mode=0640 owner=root group=root
-    when: nginx_rtmp is defined and nginx_rtmp == 'yes'
+    when: rtmp is defined and rtmp == 'yes'
     notify:
       - reload nginx
     tags:
@@ -70,7 +76,7 @@
     file: dest=/etc/nginx/sites-enabled/rtmp_master.conf
           src=/etc/nginx/sites-available/rtmp_master.conf
           state=link
-    when: nginx_rtmp is defined and nginx_rtmp == 'yes'
+    when: rtmp is defined and rtmp == 'yes'
     notify:
       - reload nginx
     tags:
@@ -80,7 +86,7 @@
   - name: disbale rtmp vhost
     file: dest=/etc/nginx/sites-enabled/rtmp_master.conf
           state=absent
-    when: nginx_rtmp is not defined or nginx_rtmp != 'yes'
+    when: rtmp is not defined or rtmp != 'yes'
     notify:
       - reload nginx
     tags:
@@ -90,11 +96,13 @@
   # Enable service
   - name: start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx is defined and nginx == 'yes' or nginx_rtmp is defined and nginx_rtmp == 'yes'
+    when: nginx is defined and nginx == 'yes' or rtmp is defined and rtmp == 'yes'
 
   - name: stopp nginx
     service: name=nginx enabled=no state=stopped
-    when: nginx is not defined or nginx != 'yes' and nginx_rtmp is not defined or nginx_rtmp != 'yes'
+    when: >
+      (nginx is not defined or nginx != 'yes')
+      and (rtmp is not defined or rtmp != 'yes')
 
   # Cron job to reload nginx after ocsp update
   # TODO: Is there a better solution available?

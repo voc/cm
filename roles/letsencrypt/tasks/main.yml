@@ -65,5 +65,14 @@
       and domain is defined and domain
       and webroot_path is defined and webroot_path
       and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
+      
+  - name: change /etc/letsencrypt permissions
+    file: dest=/etc/letsencrypt/{{ item }}
+          owner=root group=ssl-cert
+          mode=g+rx recurse=yes
+    changed_when: false
+    with_items:
+      - live
+      - archive
 
   - include: ocsp.yml

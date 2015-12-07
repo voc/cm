@@ -1,4 +1,6 @@
 ---
   - name: run letsencrypt ocsp script
-    command: /usr/local/bin/update_{{ ansible_fqdn }}_ocsp.sh 1>/dev/null
+    command: /usr/local/bin/update_{{ ansible_fqdn }}_ocsp_stapling.sh 1>/dev/null
+    become: yes
+    become_user: ocsp-updater
     changed_when: False

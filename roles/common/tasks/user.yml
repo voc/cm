@@ -18,12 +18,6 @@
     when: not remove is defined
 
   # addiotional groups
-  - shell: "command -v libvirtd"
-    register: libvirtd_bin
-    changed_when: false
-    ignore_errors: yes
-    when: not remove is defined and ansible_virtualization_role == 'host'
-
   - name: append libvirt and kvm group to user
     user: name={{ user }} append=yes groups=libvirt,kvm
     when: libvirtd_bin.stdout != '' and not remove is defined and ansible_virtualization_role == 'host'

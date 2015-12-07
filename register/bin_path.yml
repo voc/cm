@@ -25,3 +25,9 @@
     changed_when: false
     ignore_errors: yes
     when: ansible_distribution_release == 'jessie'
+
+  # libvirtd
+  - shell: "command -v libvirtd"
+    register: libvirtd_bin
+    changed_when: false
+    ignore_errors: yes

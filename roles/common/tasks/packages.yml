@@ -58,3 +58,10 @@
    with_items:
      - haveged
    when: ansible_virtualization_role == 'guest'
+
+ # remove not needed packages
+ - name: remove not needed packages
+   apt: name={{ item }} state=absent
+   with_items:
+     - rpcbind
+     - openntpd

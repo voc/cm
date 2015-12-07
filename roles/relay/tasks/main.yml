@@ -1,4 +1,5 @@
 ---
+  - include: ../../../register/bin_path.yml
   # Install packages needed for each relay
   - name: install streaming relay dependencies
     apt: name={{ item }} state=present

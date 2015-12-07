@@ -19,7 +19,6 @@ LoadPlugin network
 LoadPlugin swap
 LoadPlugin tcpconns
 LoadPlugin curl_json
-LoadPlugin dbi
 LoadPlugin nginx
 
 <LoadPlugin perl>
@@ -75,7 +74,7 @@ LoadPlugin "logfile"
 </Plugin>
 {% endif %}
 
-{% if ansible_virtualization_role == 'host' and ansible_virtualization_type == 'kvm' %}
+{% if ansible_virtualization_role == 'host' and libvirtd_bin.stdout != '' %}
 LoadPlugin libvirt
 <Plugin "libvirt">
   Connection "qemu:///system"
@@ -84,7 +83,7 @@ LoadPlugin libvirt
 </Plugin>
 {% endif %}
 
-{% if nginx is defined and nginx == 'yes' %}
+{% if php is defined and php == 'yes' %}
 LoadPlugin curl_json
 <Plugin curl_json>
   <URL "http://127.0.0.1:8889/stats/php?json">
@@ -106,6 +105,7 @@ LoadPlugin curl_json
 {% endif %}
 
 {% if nginx is defined and nginx == 'yes' and php is defined and php == 'yes' %}
+LoadPlugin dbi
 <Plugin dbi>
   <Query "streaming_issues">
     Statement "SELECT COUNT(*) AS value FROM feedback WHERE issues != '';"

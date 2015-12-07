@@ -1,26 +1,29 @@
+{% if not (nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes') %}
 # HLS slave caching directories
+proxy_temp_path /srv/nginx/cache/tmp;
+
 proxy_cache_path /srv/nginx/cache/hls
                  keys_zone=hls:32m
                  max_size={{ nginx_hls_cache_max_size | default('30g') }}
                  inactive=1h
-                 use_temp_path=off
                  loader_threshold=300 loader_files=1024;
 
 proxy_cache_path /srv/nginx/cache/hls_relive
-                 keys_zone=hls_relive:32m
-                 max_size={{ nginx_hls_relive_cache_max_size | default('200g') }}
-                 inactive=7d
-                 use_temp_path=off
-                 loader_threshold=300 loader_files=1024;
+                keys_zone=hls_relive:32m
+                max_size={{ nginx_hls_relive_cache_max_size | default('200g') }}
+                inactive=7d
+                loader_threshold=300 loader_files=1024;
 
+# Upstreams
 upstream hls {
 {% for server in nginx_hls_masters %}
   server {{ server }};
 {% endfor %}
+{% if nginx_hls_masters_backup is defined %}
 {% for server in nginx_hls_masters_backup %}
   server {{ server }} backup;
 {% endfor %}
-
+{% endif %}
   keepalive 32;
 }
 
@@ -28,9 +31,11 @@ upstream hls_relive {
 {% for server in nginx_hls_relive_masters %}
   server {{ server }};
 {% endfor %}
+{% if nginx_hls_relive_masters_backup is defined %}
 {% for server in nginx_hls_relive_masters_backup %}
   server {{ server }} backup;
 {% endfor %}
+{% endif %}
 
   keepalive 32;
 }
@@ -65,12 +70,12 @@ server {
   index index.html;
 
   # TLS certificates
-  ssl_certificate       /etc/letsencrypt/{{ ansible_fqdn }}/cert1.pem;
-  ssl_certificate_key   /etc/letsencrypt/{{ ansible_fqdn }}/privkey1.pem;
+  ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/cert.pem;
+  ssl_certificate_key   /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
   # OCSP stapling
   ssl_stapling on;
   ssl_stapling_verify on;
-  ssl_trusted_certificate /etc/ssl/certs/fullchain1.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
   ssl_stapling_file /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp;
 
   # don't allow access to some files or directories

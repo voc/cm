@@ -64,5 +64,7 @@
 
   # Start service
   - name: enable icecast2 on boot
-    service: name=icecast2 enabled=yes state=started pattern=/usr/bin/icecast2
+    service: name=icecast2.service enabled=yes state=started
+    failed_when: False
+    changed_when: False
     when: icecast is defined and icecast == 'yes' and ansible_distribution_release == 'jessie'
