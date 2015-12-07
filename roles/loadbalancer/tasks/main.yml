@@ -1,5 +1,6 @@
 ---
   - include: ../../../register/bin_path.yml
+  - include: ../../letsencrypt/main.yml domain={{ ansible_fqdn }}
   - include: nginx.yml
   - include: php.yml
   - include: streaming_website.yml

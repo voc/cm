@@ -9,29 +9,19 @@
     file: dest={{ item }} state=touch
           mode=0644 owner=ocsp-updater group=ssl-cert
     with_items:
-      - /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp
+      - /etc/ssl/certs/{{ domain }}.pem.ocsp
     changed_when: false
     tags: install
 
   - name: copy ocsp update scripts
-    template: dest=/usr/local/bin/{{ item }}
+    template: dest=/usr/local/bin/update_{{ ansible_fqdn }}_ocsp_stapling.sh
               src=ocsp/update_fqdn_ocsp_stapling.sh.j2
               owner=root group=root mode=0755
-    with_items:
-      - "update_{{ ansible_fqdn }}_ocsp_stapling.sh"
     notify: run letsencrypt ocsp script
     tags: install
 
   # Cron jobs to update ocsp data and reload services
   - name: create ocsp update cron jobs
-    cron: name="{{ item }}" user=ocsp-updater hour=5
-          job="/usr/local/bin/{{ item }} 1>/dev/null"
-    with_items:
-      - update_cdn_c3voc_de_ocsp_stapling.sh
-      - update_streaming_media_ccc_de_ocsp_stapling.sh
-    tags: install
-
-  - name: reaload haproxy every morning for ocsp updates
-    cron: name="reload haproxy for ocsp update" hour=5 minute=5
-          job="{{ systemctl_bin.stdout }} reload haproxy" user=root
+    cron: name="update_{{ domain }}_stapling.sh" user=ocsp-updater hour=5
+          job="/usr/local/bin/update_{{ domain }}_stapling.sh 1>/dev/null"
     tags: install

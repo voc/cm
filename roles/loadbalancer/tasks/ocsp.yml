@@ -25,6 +25,7 @@
     tags: install
 
   # Cron jobs to update ocsp data and reload services
+  # TODO: Is there a better solution available?
   - name: create ocsp update cron jobs
     cron: name="{{ item }}" user=ocsp-updater hour=5
           job="/usr/local/bin/{{ item }} 1>/dev/null"

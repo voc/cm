@@ -65,3 +65,5 @@
       and domain is defined and domain
       and webroot_path is defined and webroot_path
       and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
+
+  - include: ocsp.yml
