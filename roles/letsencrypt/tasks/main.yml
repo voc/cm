@@ -18,10 +18,9 @@
 
   - name: Checkout letsencrypt
     git:
-      repo: "https://github.com/letsencrypt/letsencrypt"
+      repo: "ssh://git@github.com/letsencrypt/letsencrypt"
       dest: "/opt/letsencrypt"
       version: master
-      accept_hostkey: yes
       force: yes
     register: git_updated
 
@@ -66,4 +65,3 @@
       and domain is defined and domain
       and webroot_path is defined and webroot_path
       and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
-
