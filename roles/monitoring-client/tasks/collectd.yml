@@ -21,12 +21,12 @@
   - name: add nginx rtmp collectd plugin
     template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/NginxRtmp.pm
               src=collectd/plugins/NginxRtmp.pm
-    when: nginx is defined and nginx == 'yes'
+    when: rtmp is defined and rtmp
 
   - name: add nginx hls collectd plugin
     template: dest=/opt/voc/collectd/plugins/NginxHls.py
               src=collectd/plugins/NginxHls.py
-    when: nginx is defined and nginx == 'yes'
+    when: nginx is defined and nginx
 
   - name: install collectd config file
     template: dest=/etc/collectd/collectd.conf
