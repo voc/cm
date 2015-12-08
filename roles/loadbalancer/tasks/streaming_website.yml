@@ -12,6 +12,8 @@
     tags:
       - install
       - deploy_website
+      - pull
+      - checkout
 
   - name: change streaming-website permissions
     file: dest=/srv/nginx/streaming-website
@@ -69,7 +71,10 @@
   - name: clone mqtt repo
     git: repo=ssh://git@mng.ber.c3voc.de/mqtt
          dest=/usr/local/src/mqtt
-    tags: install
+    tags:
+      - install
+      - checkout
+      - pull
 
   - stat: path=/usr/local/src/mqtt/provider/feedback/Gemfile.lock
     register: mqtt_feedback_gemlock

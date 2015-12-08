@@ -26,10 +26,16 @@
   - name: checkout tools/tracker3.0
     subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/tracker3.0/
                 dest=/opt/crs/tools/tracker3.0
+    tags:
+      - checkout
+      - pull
 
   - name: checkout tools/job-control/
     subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/job-control/
                 dest=/opt/crs/tools/job-control
+    tags:
+      - checkout
+      - pull
 
   - name: create worker profile
     template: dest=/opt/crs/tools/tracker3.0/tracker-profile.sh

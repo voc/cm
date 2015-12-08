@@ -8,6 +8,10 @@
   - include: ../../letsencrypt/tasks/main.yml domain={{ ansible_fqdn }}
 
   - include: nginx.yml
+    tags: nginx
   - include: icecast.yml
+    tags: icecast
   - include: iptables.yml
+    tags: iptables
   - include: sysctl.yml
+    tags: sysctl

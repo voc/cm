@@ -16,6 +16,7 @@
     when: ansible_hostname | match("encoder\d+")
 
   - include: collectd.yml
+    tags: collectd
 
   #########
   # TODOs #

@@ -4,5 +4,9 @@
   - include: slim.yml
   - include: x11vnc.yml
   - include: dvswitch.yml
+    tags: dvswitch
   - include: irssi.yml
   - include: rc.local.yml
+    tags:
+      - iptables
+      - rclocal
