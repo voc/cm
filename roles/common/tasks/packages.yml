@@ -36,6 +36,8 @@
     - ruby
     - ruby-dev
     - inotail
+    - libdbi1
+    - libdbd-sqlite3
 
  # jessie
  - name: install a default set of packages
