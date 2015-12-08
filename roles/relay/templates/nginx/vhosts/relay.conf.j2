@@ -152,10 +152,11 @@ server {
   }
   # proxy cache m3u8 (relive) and index.json (relive)
   #
-  # relive: /releases/relive/19/index.m3u8
-  #         /releases/relive/index.json
+  # relive: /releases/relive/nixcon2015/19/index.m3u8
+  #         /releases/relive/nixcon2015/index.json
   #
-  location ~* ^/(?<relive>releases\/relive)/(?<file>.+\.m3u8|index\.json)$ {
+  #
+  location ~* ^/(?<relive>releases\/relive)/(?<file>.+(\.m3u8|index\.json))$ {
       proxy_intercept_errors on;
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
@@ -230,7 +231,7 @@ server {
   #         /releases/relive/29/thumb.jpg
   #         /releases/relive/index.html
   #
-  location ~* ^/(crossdomain\.xml|.+thumb\.jpg|.+index\.html)$ {
+  location ~* ^/(crossdomain\.xml|releases/relive.+thumb\.jpg|.+index\.html)$ {
       proxy_intercept_errors on;
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
