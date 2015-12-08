@@ -1,49 +1,49 @@
 ---
   # remove user when remove variable is defined
-  - name: remove user "{{ user }}"
+  - name: remove user "{{ item.name }}"
     user: state=absent remove=yes
-         name={{ user }}
-    when: remove is defined
+         name={{ item.name }}
+    when: item.state == 'absent'
+    with_items: users
 
   # realize user
   - shell: command -v zsh
     register: zsh_bin
     changed_when: false
 
-  - name: create user "{{ user }}"
+  - name: create user "{{ item.name }}"
     user: state=present
-          name="{{ user }}"
+          name="{{ item.name }}"
           groups="ssh,sudo,adm" append=yes
           shell={{ user_shell | default(zsh_bin.stdout) }}
-    when: not remove is defined
+    with_items: users
+    when: not item.state == 'absent'
 
   # addiotional groups
   - name: append libvirt and kvm group to user
-    user: name={{ user }} append=yes groups=libvirt,kvm
+    user: name={{ item.name }} append=yes groups=libvirt,kvm
+    with_items: users
     when: libvirtd_bin.stdout != '' and not remove is defined and ansible_virtualization_role == 'host'
 
   - name: append special groups on jessie systems
-    user: name={{ user }} append=yes
+    user: name={{ item.name }} append=yes
           groups=systemd-journal,systemd-timesync,systemd-network,systemd-resolve
+    with_items: users
     when: ansible_distribution_release == 'jessie'
 
   # install shell stuff
   - name: install zshrc
-    copy: dest="/home/{{ user }}/.zshrc" src="{{ item }}"
-    with_first_found:
-    - "user/{{ user }}/zshrc"
-    - "user/default/zshrc"
-    when: not remove is defined
+    copy: dest="/home/{{ item.name }}/.zshrc" src="{{ lookup('first_found', ['user/' + item.name + '/zshrc', 'user/default/zshrc']) }}"
+    with_items: users
+    when: item.state != 'absent'
 
   - name: install screenrc
-    copy: dest="/home/{{ user }}/.screenrc" src="{{ item }}"
-    with_first_found:
-    - "user/{{ user }}/screenrc"
-    - "user/default/screenrc"
-    when: not remove is defined
+    copy: dest="/home/{{ item.name }}/.screenrc" src="{{ lookup('first_found', ['user/' + item.name + '/screenrc', 'user/default/screenrc']) }}"
+    with_items: users
+    when: item.state != 'absent'
 
   - name: add user's authorized_keys
-    authorized_key: user="{{ user }}" manage_dir=true key="{{ lookup('file', item) }}" state=present
-    with_fileglob:
-     - "user/{{ user }}/authorized_keys"
-    when: not remove is defined
+    authorized_key: user="{{ item.name }}" manage_dir=true key="{{ lookup('file', '../files/user/' + item.name + '/authorized_keys') }}"
+                    state=present
+    with_items: users
+    when: item.state != 'absent' and item.name != 'voc'

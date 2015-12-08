@@ -44,3 +44,20 @@ trusted_ipv6_ips: {
   "n621.de":      '2a01:4f8:151:8ffd:2::1',
   # relays
 }
+
+users:
+  - { name: 'andi', state: 'present' }
+  - { name: 'anton', state: 'present' }
+  - { name: 'atze', state: 'present' }
+  - { name: 'bjoern', state: 'present' }
+  - { name: 'coeins', state: 'present' }
+  - { name: 'derpeter', state: 'present' }
+  - { name: 'danimo', state: 'present' }
+  - { name: 'florob', state: 'present' }
+  - { name: 'florolf', state: 'present' }
+  - { name: 'fxkr', state: 'present' }
+  - { name: 'masterbase', state: 'present' }
+  - { name: 'mazdermind', state: 'present' }
+  - { name: 'meise', state: 'present' }
+  - { name: 'thomic', state: 'present' }
+  - { name: 'voc', state: 'present' }
