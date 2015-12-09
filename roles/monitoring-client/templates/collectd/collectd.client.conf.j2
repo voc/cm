@@ -8,6 +8,8 @@
 
 Hostname "{{ inventory_hostname }}"
 Interval {{ monitoring.collectd_interval | default('30') }}
+TypesDB "/usr/share/collectd/types.db"
+TypesDB "/opt/voc/collectd/types.db"
 
 LoadPlugin cpu
 LoadPlugin df

@@ -8,36 +8,66 @@
       - collectd
       - liblwp-protocol-https-perl
       - libxml-simple-perl
+    tags: install
 
   - name: create plugins directory
     file: dest=/opt/voc/collectd/plugins/Collectd/Plugins
           state=directory
+    tags: install
+
+  - name: create costum types.db
+    file: dest=/opt/voc/collectd/types.db state=touch
+    notify: restart collectd
+    changed_when: false
+    tags: install
 
   - name: add icecast2 collectd plugin
     template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/Icecast2.pm
               src=collectd/plugins/Icecast2.pm
     when: icecast is defined and icecast == 'yes'
+    tags: install
 
   - name: add nginx rtmp collectd plugin
     template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/NginxRtmp.pm
               src=collectd/plugins/NginxRtmp.pm
     when: rtmp is defined and rtmp
+    tags: install
 
   - name: add nginx hls collectd plugin
     template: dest=/opt/voc/collectd/plugins/NginxHls.py
               src=collectd/plugins/NginxHls.py
     when: nginx is defined and nginx
+    tags: install
 
   - name: install collectd config file
     template: dest=/etc/collectd/collectd.conf
               src=collectd/collectd.client.conf.j2
               owner=root group=root mode=0640
     notify: restart collectd
+    tags:
+      - install
+      - config
 
+  - name: adding entries for curl_json php to types.db
+    lineinfile: dest=/opt/voc/collectd/types.db
+                regexp="{{ item.regex }}"
+                line="{{ item.line }}"
+    with_items:
+      - { regex: '^listen_queue\ .*', line: 'listen_queue       value:GAUGE:0:65535' }
+      - { regex: '^active_processes\ .*', line: 'active_processes   value:GAUGE:0:65535' }
+      - { regex: '^total_processes\ .*', line: 'total_processes    value:GAUGE:0:65535' }
+    notify: restart collectd
+    when: php is defined and php != 'no'
+    tags:
+      - install
+      - config
+
+  # TODO: remove me
   - name: adding entries to types.db
     lineinfile: dest=/usr/share/collectd/types.db
                 regexp="{{ item.regex }}"
                 line="{{ item.line }}"
+                state=absent
     with_items:
       - { regex: '^listen_queue\ .*', line: 'listen_queue       value:GAUGE:0:65535' }
       - { regex: '^active_processes\ .*', line: 'active_processes   value:GAUGE:0:65535' }
