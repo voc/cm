@@ -33,7 +33,7 @@ defaults
     errorfile 502 /srv/nginx/htdocs/50x.html
     errorfile 503 /srv/nginx/htdocs/50x.html
 
-frontend_ icecast_and_nginx_hls_http
+frontend icecast_and_nginx_hls_http
     bind-process 1
     bind {{ ansible_default_ipv4.address }}:80
     bind {{ ansible_default_ipv6.address }}:80
@@ -76,7 +76,7 @@ frontend_ icecast_and_nginx_hls_http
     use_backend icecast_http             if icecast
 
 frontend icecast_and_nginx_hls_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     bind {{ ansible_default_ipv6.address }}:443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
     bind {{ ansible_default_ipv4.address }}:443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
 
@@ -111,7 +111,7 @@ frontend icecast_and_nginx_hls_https
     use_backend icecast_usa_https         if is_usa icecast        { ssl_fc }
 
     # use remote relays
-    use_backend streaming_website_https   if is_streaming_website
+    use_backend streaming_website_https   if is_streaming_website  { ssl_fc }
     use_backend hls_relive_https          if is_relive             { ssl_fc }
     use_backend hls_playlist_https        if hls_playlist          { ssl_fc }
     use_backend hls_fragment_https        if hls_fragment          { ssl_fc }
@@ -136,54 +136,57 @@ listen stats_process_{{ nr }}
 # ######## #
 
 # local
-backend hls_relive_local
+backend hls_playlist_local_http
     bind-process 1
     balance roundrobin
     option forwardfor
 
-backend hls_playlist_local
+backend hls_fragment_local_http
     bind-process 1
     balance roundrobin
     option forwardfor
 
-backend icecast_local
+
+backend hls_relive_local_http
     bind-process 1
     balance roundrobin
     option forwardfor
 
-backend hls_fragment_local
+
+backend icecast_local_http
     bind-process 1
     balance roundrobin
     option forwardfor
 
 
 # USA
-backend hls_playlist_usa
+backend hls_playlist_usa_http
     bind-process 1
     balance roundrobin
     option forwardfor
     server us2.1und1.c3voc.de us2.1und1.c3voc.de:80 redir http://us2.1und1.c3voc.de:80  weight 50
 
-backend icecast_usa
+backend hls_fragment_usa_http
+    bind-process 1
+    balance roundrobin
+    option forwardfor
+    server us2.1und1.c3voc.de us2.1und1.c3voc.de:80 redir http://us2.1und1.c3voc.de:80  weight 50
+
+backend hls_relive_usa_http
+    bind-process 1
+    balance roundrobin
+    option forwardfor
+    server us2.1und1.c3voc.de us2.1und1.c3voc.de:80 redir http://us2.1und1.c3voc.de:80  weight 50
+
+backend icecast_usa_http
     bind-process 1
     balance roundrobin
     option forwardfor
     server us2.1und1.c3voc.de us2.1und1.c3voc.de:80 redir http://us2.1und1.c3voc.de:8000  weight 50
 
-backend hls_fragment_usa
-    bind-process 1
-    balance roundrobin
-    option forwardfor
-    server us2.1und1.c3voc.de us2.1und1.c3voc.de:80 redir http://us2.1und1.c3voc.de:80  weight 50
-
-backend hls_relive_usa
-    bind-process 1
-    balance roundrobin
-    option forwardfor
-    server us2.1und1.c3voc.de us2.1und1.c3voc.de:80 redir http://us2.1und1.c3voc.de:80  weight 50
 
 # Internetz
-backend hls_relive
+backend hls_playlist_http
     bind-process 1
     balance roundrobin
     option forwardfor
@@ -191,7 +194,7 @@ backend hls_relive
     server fr2.1und1.c3voc.de fr2.1und1.c3voc.de:80 redir http://fr2.1und1.c3voc.de:80  weight 50
     server fr3.1und1.c3voc.de fr3.1und1.c3voc.de:80 redir http://fr3.1und1.c3voc.de:80  weight 50
 
-backend hls_fragment
+backend hls_fragment_http
     bind-process 1
     balance roundrobin
     option forwardfor
@@ -199,7 +202,7 @@ backend hls_fragment
     server fr2.1und1.c3voc.de fr2.1und1.c3voc.de:80 redir http://fr2.1und1.c3voc.de:80  weight 50
     server fr3.1und1.c3voc.de fr3.1und1.c3voc.de:80 redir http://fr3.1und1.c3voc.de:80  weight 50
 
-backend icecast
+backend hls_relive_http
     bind-process 1
     balance roundrobin
     option forwardfor
@@ -207,7 +210,7 @@ backend icecast
     server fr2.1und1.c3voc.de fr2.1und1.c3voc.de:80 redir http://fr2.1und1.c3voc.de:80  weight 50
     server fr3.1und1.c3voc.de fr3.1und1.c3voc.de:80 redir http://fr3.1und1.c3voc.de:80  weight 50
 
-backend hls_playlist
+backend icecast_http
     bind-process 1
     balance roundrobin
     option forwardfor
@@ -217,8 +220,8 @@ backend hls_playlist
 
 
 # https
-backend hls_relive_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+backend hls_playlist_https
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
     server fr1.1und1.c3voc.de fr1.1und1.c3voc.de:443 redir https://fr1.1und1.c3voc.de:443  weight 50
@@ -226,7 +229,15 @@ backend hls_relive_https
     server fr3.1und1.c3voc.de fr3.1und1.c3voc.de:443 redir https://fr3.1und1.c3voc.de:443  weight 50
 
 backend hls_fragment_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+    server fr1.1und1.c3voc.de fr1.1und1.c3voc.de:443 redir https://fr1.1und1.c3voc.de:443  weight 50
+    server fr2.1und1.c3voc.de fr2.1und1.c3voc.de:443 redir https://fr2.1und1.c3voc.de:443  weight 50
+    server fr3.1und1.c3voc.de fr3.1und1.c3voc.de:443 redir https://fr3.1und1.c3voc.de:443  weight 50
+
+backend hls_relive_https
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
     server fr1.1und1.c3voc.de fr1.1und1.c3voc.de:443 redir https://fr1.1und1.c3voc.de:443  weight 50
@@ -234,7 +245,7 @@ backend hls_fragment_https
     server fr3.1und1.c3voc.de fr3.1und1.c3voc.de:443 redir https://fr3.1und1.c3voc.de:443  weight 50
 
 backend icecast_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     http-request add-header Access-Control-Allow-Origin streaming.media.ccc.de
     balance roundrobin
     option forwardfor
@@ -242,55 +253,50 @@ backend icecast_https
     server fr2.1und1.c3voc.de fr2.1und1.c3voc.de:443 redir https://fr2.1und1.c3voc.de:443  weight 50
     server fr3.1und1.c3voc.de fr3.1und1.c3voc.de:443 redir https://fr3.1und1.c3voc.de:443  weight 50
 
-backend hls_playlist_https
-    bind-process {{ range(1, haproxy_nbproc) }}
-    balance roundrobin
-    option forwardfor
-    server fr1.1und1.c3voc.de fr1.1und1.c3voc.de:443 redir https://fr1.1und1.c3voc.de:443  weight 50
-    server fr2.1und1.c3voc.de fr2.1und1.c3voc.de:443 redir https://fr2.1und1.c3voc.de:443  weight 50
-    server fr3.1und1.c3voc.de fr3.1und1.c3voc.de:443 redir https://fr3.1und1.c3voc.de:443  weight 50
 
+# local
 backend hls_playlist_local_https
-    bind-process {{ range(1, haproxy_nbproc) }}
-    balance roundrobin
-    option forwardfor
-
-backend icecast_local_https
-    bind-process {{ range(1, haproxy_nbproc) }}
-    balance roundrobin
-    option forwardfor
-
-backend hls_relive_local_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
 
 backend hls_fragment_local_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
+
+backend hls_relive_local_https
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+
+backend icecast_local_https
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+
 
 # USA
 backend hls_playlist_usa_https
-    bind-process {{ range(1, haproxy_nbproc) }}
-    balance roundrobin
-    option forwardfor
-    server us2.1und1.c3voc.de us2.1und1.c3voc.de:443 redir https://us2.1und1.c3voc.de:443  weight 50
-
-backend icecast_usa_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
     server us2.1und1.c3voc.de us2.1und1.c3voc.de:443 redir https://us2.1und1.c3voc.de:443  weight 50
 
 backend hls_fragment_usa_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
     server us2.1und1.c3voc.de us2.1und1.c3voc.de:443 redir https://us2.1und1.c3voc.de:443  weight 50
 
 backend hls_relive_usa_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+    server us2.1und1.c3voc.de us2.1und1.c3voc.de:443 redir https://us2.1und1.c3voc.de:443  weight 50
+
+backend icecast_usa_https
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
     server us2.1und1.c3voc.de us2.1und1.c3voc.de:443 redir https://us2.1und1.c3voc.de:443  weight 50
@@ -314,7 +320,7 @@ backend streaming_website_http
 {% endif %}
 
 backend streaming_website_https
-    bind-process {{ range(1, haproxy_nbproc) }}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
     http-request set-header X-Custom-Header %[url]
