@@ -4,7 +4,7 @@
 import sys, os, re, urllib, datetime, itertools, subprocess, collections, logging, urllib2
 from urlparse import urlparse
 
-logging.basicConfig(level=logging.DEBUG, format='%(levelname)8s %(name)s: %(message)s')
+logging.basicConfig(level=logging.ERROR, format='%(levelname)8s %(name)s: %(message)s')
 
 # list of hls-playlists
 # this controls which hls-streams will be visible in the graphs
