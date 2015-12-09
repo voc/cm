@@ -95,11 +95,11 @@ server {
     include /etc/nginx/mime.types;
   }
 
-  location ~* ^/releases/relive/(.+\.ts)$ {
+  location ~* ^/relive/(.+\.ts)$ {
     alias /srv/releases/relive/$1;
   }
 
-  location ~* ^/releases/relive/(.*) {
+  location ~* ^/relive/(.*) {
     alias /srv/releases/relive/$1;
     autoindex on;
   }
@@ -130,12 +130,12 @@ server {
   #
   # live:   /hls/s2_native_sd-13026687480.ts
   #
-  location ~* ^/(?<hls_or_relive>hls)/(?<stream>.+\.(ts|mp4))$ {
+  location ~* ^/(?<hls>hls)/(?<stream>.+\.(ts))$ {
       proxy_intercept_errors on;
       proxy_cache            hls;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://hls/$hls_or_relive/$stream;
+      proxy_pass             http://hls/$hls/$stream;
       proxy_cache_methods    GET HEAD;
       proxy_cache_valid      200 302 30m;
       proxy_cache_key        "$uri";
@@ -152,15 +152,16 @@ server {
   }
   # proxy cache m3u8 (relive) and index.json (relive)
   #
-  # relive: /releases/relive/19/index.m3u8
-  #         /releases/relive/index.json
+  # relive: /relive/nixcon2015/19/index.m3u8
+  #         /relive/nixcon2015/index.json
   #
-  location ~* ^/(?<relive>releases\/relive)/(?<file>.+\.m3u8|index\.json)$ {
+  #
+  location ~* ^/(?<hls_relive>relive)/(?<file>.+(\.m3u8|index\.json))$ {
       proxy_intercept_errors on;
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://hls_relive/$relive/$file;
+      proxy_pass             http://hls_relive/$hls_relive/$file;
       proxy_cache_methods    GET HEAD;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
@@ -175,9 +176,9 @@ server {
   }
   # proxy cache ts files (relive)
   #
-  # relive: /releases/relive/29/1016.ts
+  # relive: /relive/31c3/29/1016.ts
   #
-  location ~* ^/(?<hls_relive>releases\/relive)/(?<stream>.+\.ts)$ {
+  location ~* ^/(?<hls_relive>/relive)/(?<stream>.+\.ts)$ {
       proxy_intercept_errors on;
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
@@ -199,9 +200,9 @@ server {
   }
   # proxy cache mp4 files (relive)
   #
-  # relive: /releases/relive/29/muxed.mp4
+  # relive: /relive/32c3/29/muxed.mp4
   #
-  location ~* ^/(?<hls_relive>releases\/relive)/(?<stream>.+muxed\.mp4)$ {
+  location ~* ^/(?<hls_relive>relive)/(?<stream>.+muxed\.mp4)$ {
       proxy_intercept_errors on;
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
@@ -227,10 +228,10 @@ server {
   #  * crossdomain.xml    (relive)
   #
   # relive: /crossdomain.xml
-  #         /releases/relive/29/thumb.jpg
-  #         /releases/relive/index.html
+  #         /relive/33c3/29/thumb.jpg
+  #         /relive/33c3/index.html
   #
-  location ~* ^/(crossdomain\.xml|.+thumb\.jpg|.+index\.html)$ {
+  location ~* ^/(crossdomain\.xml|relive.+thumb\.jpg|.+index\.html)$ {
       proxy_intercept_errors on;
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
