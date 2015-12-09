@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, os, re, urllib, datetime, itertools, subprocess, collections, logging, requests
+import sys, os, re, urllib, datetime, itertools, subprocess, collections, logging, urllib2
 from urlparse import urlparse
 
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)8s %(name)s: %(message)s')
@@ -110,8 +110,14 @@ def count_hls_viewers():
 			logging.debug('trying to load playlist %s', playlist_url)
 
 			# split playlist up into lines
-			response = requests.get(playlist_url)
-			playlist_lines = response.text.split('\n')
+			response = None
+			try:
+				response = urllib2.urlopen(playlist_url)
+			except urllib2.URLError:
+				continue
+
+			playlist_lines = response.read().split('\n')
+			response.close()
 
 			# wrap in an reversing iterator
 			reversed_playlist_lines = reversed(playlist_lines)
