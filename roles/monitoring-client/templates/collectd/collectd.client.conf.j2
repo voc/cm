@@ -70,7 +70,9 @@ LoadPlugin "logfile"
 <Plugin python>
   ModulePath "/opt/voc/collectd/plugins/"
   LogTraces true
+{% if php is not defined and php != 'yes' %}
   Import NginxHls
+{% endif %}
 </Plugin>
 {% endif %}
 
