@@ -178,7 +178,9 @@ def read_callback():
       key_root, val_type = METRIC_TYPES[key_root]
       key_name = METRIC_DELIM.join([key_prefix, key_root])
 
-      key_values[key_name] = {}
+      if not key_name in key_values.keys():
+        key_values[key_name] = {}
+
       if not 'val_type' in key_values[key_name].keys():
         key_values[key_name]['val_type'] = val_type
 
