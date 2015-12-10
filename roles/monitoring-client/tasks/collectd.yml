@@ -24,24 +24,28 @@
   - name: add icecast2 collectd plugin
     template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/Icecast2.pm
               src=collectd/plugins/Icecast2.pm
+    notify: restart collectd
     when: icecast is defined and icecast == 'yes'
     tags: install
 
   - name: add nginx rtmp collectd plugin
     template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/NginxRtmp.pm
               src=collectd/plugins/NginxRtmp.pm
+    notify: restart collectd
     when: rtmp is defined and rtmp
     tags: install
 
   - name: add nginx hls collectd plugin
     template: dest=/opt/voc/collectd/plugins/NginxHls.py
               src=collectd/plugins/NginxHls.py
+    notify: restart collectd
     when: nginx is defined and nginx
     tags: install
 
   - name: add haproxy collectd plugin
     template: dest=/opt/voc/collectd/plugins/haproxy.py
               src=collectd/plugins/haproxy.py
+    notify: restart collectd
     when: haproxy is defined and haproxy
     tags: install
 
