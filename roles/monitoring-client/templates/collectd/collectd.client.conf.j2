@@ -65,18 +65,25 @@ LoadPlugin "logfile"
 {% endif %}
 </Plugin>
 
-{% if nginx is defined and nginx == 'yes' %}
 <LoadPlugin python>
   Globals true
 </LoadPlugin>
 <Plugin python>
   ModulePath "/opt/voc/collectd/plugins/"
   LogTraces true
+{% if haproxy is defined and haproxy == 'yes' %}
+  Import "haproxy"
+  <Module haproxy>
+{% for i in  range(1, haproxy_nbproc+1) %}
+    Socket "/var/run/haproxy_stats_{{ i }}.sock"
+{% endfor %}
+  </Module>
+
+{% endif %}
 {% if php is not defined and php != 'yes' %}
   Import NginxHls
 {% endif %}
 </Plugin>
-{% endif %}
 
 {% if ansible_virtualization_role == 'host' and libvirtd_bin.stdout != '' %}
 LoadPlugin libvirt

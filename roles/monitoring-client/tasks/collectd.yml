@@ -39,6 +39,12 @@
     when: nginx is defined and nginx
     tags: install
 
+  - name: add haproxy collectd plugin
+    template: dest=/opt/voc/collectd/plugins/haproxy.py
+              src=collectd/plugins/haproxy.py
+    when: haproxy is defined and haproxy
+    tags: install
+
   - name: install collectd config file
     template: dest=/etc/collectd/collectd.conf
               src=collectd/collectd.client.conf.j2
