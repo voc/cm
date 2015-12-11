@@ -1,0 +1,52 @@
+---
+  # Install PHP + stuff
+  - name: install streaming page packages
+    apt: name={{ item }} state=latest
+    with_items:
+      - php5-fpm
+      - php5-xdiff
+      - php5-apcu
+      - php5-xsl
+      - php5-xmlrpc
+      - php5-readline
+      - php5-pgsql
+      - php5-json
+      - php5-intl
+      - php5-curl
+      - php-pear
+      - php5-dev
+    tags: install
+
+  # Create default pool
+  - name: configure php-fpm
+    template: dest=/etc/php5/fpm/pool.d/www.conf
+              src=php_fpm/www.conf.j2
+              mode=0644 owner=root group=root
+    notify: reload php5-fpm
+    tags:
+      - install
+      - config
+
+  # Change php.ini settings
+  - name: disable php version expose
+    lineinfile: dest=/etc/php5/fpm/php.ini
+                regexp="expose_php.*=.*"
+                line="expose_php = Off"
+    notify: reload php5-fpm
+    tags:
+      - install
+      - config
+
+  - name: enable php short_open_tag
+    lineinfile: dest=/etc/php5/fpm/php.ini
+                regexp="short_open_tag.*=.*"
+                line="short_open_tag = On"
+    notify: reload php5-fpm
+    tags:
+      - install
+      - config
+
+  # Enable service
+  - name: start php-fpm
+    service: name=php5-fpm enabled=yes state=started
+    tags: install

@@ -6,3 +6,4 @@
   - include: servers.yml
   - include: loadbalancers.yml
   - include: minions.yml
+  - include: tracker.yml

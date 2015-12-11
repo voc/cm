@@ -1,0 +1,20 @@
+---
+  - include: nginx.yml
+  - include: php.yml
+
+  - name: install tracker specific packages
+    apt: name={{ item }} state=latest
+    with_items:
+      - libxdiff0
+      - mgdiff
+      - curl
+      - libxslt1.1
+      - libintl-perl
+
+  - name: git checkout tracker repo
+    git: repo=http://git.fem.tu-ilmenau.de/cccongress.git
+         dest=/srv/www/cccongress
+    tags:
+      - install
+      - pull
+      - checkout

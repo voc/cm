@@ -63,7 +63,6 @@ live.dus.c3voc.de
 mng.ber.c3voc.de
 node.ber.c3voc.de
 node.dus.c3voc.de
-tracker.c3voc.de
 live.dus.c3voc.de
 live.ber.c3voc.de
 mngslave.dus.c3voc.de
@@ -71,3 +70,6 @@ testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 
 [minions]
 minion1.lan.c3voc.de crs_token=GZEyv1pDYebNt12bsevrMmW5ZnqQdYet crs_secret=rPPc5IFq4AUdkFo93Qn7Qd0IVEVkPR7d
+
+[tracker]
+tracker.c3voc.de

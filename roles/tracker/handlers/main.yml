@@ -1,0 +1,5 @@
+---
+  - include: ../../../handlers/nginx.yml
+  
+  - name: reload php5-fpm
+    service: name=php5-fpm state=reloaded

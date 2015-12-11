@@ -1,0 +1,5 @@
+---
+  - hosts: tracker
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: tracker, tags: ['tracker'] }

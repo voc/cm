@@ -45,6 +45,16 @@ trusted_ipv6_ips: {
   # relays
 }
 
+
+# allow stats ip
+nginx_ips_allow_stats: [
+  "::1",
+  "127.0.0.1",
+  "195.54.164.160/29",
+  "10.73.0.0/16",
+  "10.8.0.0/16"
+]
+
 users:
   - { name: 'andi', state: 'present' }
   - { name: 'anton', state: 'present' }
