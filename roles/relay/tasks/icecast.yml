@@ -68,3 +68,11 @@
     failed_when: False
     changed_when: False
     when: icecast is defined and icecast == 'yes' and ansible_distribution_release == 'jessie'
+
+  # Start service
+  - name: enable icecast2 on boot
+    service: name=icecast2.service enabled=no state=stoped
+    failed_when: False
+    changed_when: False
+    when: >
+      icecast is not defined or (iceast is defined and icecast == 'yes')
