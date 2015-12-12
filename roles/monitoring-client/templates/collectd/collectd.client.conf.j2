@@ -80,7 +80,7 @@ LoadPlugin "logfile"
   </Module>
 
 {% endif %}
-{% if php is not defined and php != 'yes' %}
+{% if php is not defined or php != 'yes' %}
   Import NginxHls
 {% endif %}
 </Plugin>
