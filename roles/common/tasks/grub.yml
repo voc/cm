@@ -1,4 +1,7 @@
 ---
+  - name: ensure grub is installed
+    apt: name=grub-pc state=present
+
   # Grub config for real hardware
   - name: copy grub default config
     copy: dest=/etc/default/grub
