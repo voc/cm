@@ -19,6 +19,14 @@
    when: ansible_distribution_release == 'wheezy'
 
  # jessie specific
+ - name: remove /etc/apt/sources.list
+   file: dest=/etc/apt/sources.list state=absent
+   when: ansible_distribution_release == 'jessie'
+
+ - name: remove /etc/apt/sources.list.d/ftp_debian_org_debian.list
+   file: dest=/etc/apt/sources.list.d/ftp_debian_org_debian.list state=absent
+   when: ansible_distribution_release == 'jessie'
+
  - name: remove the VOC debian repo for wheezy when system is jessie
    apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=absent
    when: ansible_distribution_release == 'jessie'
@@ -28,5 +36,13 @@
    when: ansible_distribution_release == 'jessie'
 
  - name: setup the debian backports repo for jessie
-   apt_repository: repo="deb http://ftp.debian.org/debian/ jessie-backports main"
+   apt_repository: repo="deb http://httpredir.debian.org/debian jessie-backports main"
+   when: ansible_distribution_release == 'jessie'
+
+ - name: ensure that the non-free suite is enabled for jessie
+   apt_repository: repo="deb http://httpredir.debian.org/debian jessie main contrib non-free"
+   when: ansible_distribution_release == 'jessie'
+
+ - name: ensure that security updates enabled for jessie
+   apt_repository: repo="deb http://security.debian.org/ jessie/updates main contrib non-free"
    when: ansible_distribution_release == 'jessie'
