@@ -25,8 +25,15 @@ server {
 
   client_max_body_size 20m;
 
-  ssl_certificate       /etc/ssl/certs/tracker.c3voc.de.crt;
-  ssl_certificate_key   /etc/ssl/private/tracker.c3voc.de.key;
+  # TLS certificates
+  ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/cert.pem;
+  ssl_certificate_key   /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
+  # OCSP stapling
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
+  ssl_stapling_file /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp;
+
 
   # don't allow access to some files or directories
   location ~* /.*\.(ht|sh|git|htaccess|inc|rb|py|pl|db|sqlite|sqlite3)$ {
