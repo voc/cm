@@ -4,3 +4,6 @@
 
  - name: allow sudo for users in the sudo group
    lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo   ALL=(ALL:ALL) NOPASSWD: ALL'"
+ 
+ - name: allow sudo to keep SSH_AUTH_SOCK env
+   lineinfile: "dest=/etc/sudoers state=present regexp='^Defaults.*env_keep.*SSH_AUTH_SOCK' line='Defaults        env_keep += \"SSH_AUTH_SOCK\"'"
