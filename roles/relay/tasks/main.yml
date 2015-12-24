@@ -15,3 +15,6 @@
     tags: iptables
   - include: sysctl.yml
     tags: sysctl
+
+  - include: relive.yml
+    when: nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes'
