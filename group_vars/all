@@ -3,7 +3,7 @@
 event:
   acronym: XYZ
   name: Some Name
-  slogen: Some Slogan
+  slogan: Some Slogan
   formats:
     hd: 'yes'
     sd: 'yes'

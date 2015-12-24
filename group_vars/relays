@@ -8,7 +8,7 @@ icecast_admin_email:     'contact@c3voc.de'
 icecast_relay_on_demand: 0 # relay-on-demand triggers an icecast bug
 
 icecast_additional_mounts: [
-  # { "mount-name": '/lounge.mp3',  "type": 'audio/mpeg', "username": 'source',  "password": 'flood9Fail9Donkey',    "stream-name": "{{ event.name }} - {{ event.slogen }} - Lounge",   "dump-file": "/srv/icecastdumps/31C3-lounge-%F_%H-%M-%S_%s.mp3" },
+  # { "mount-name": '/lounge.mp3',  "type": 'audio/mpeg', "username": 'source',  "password": 'flood9Fail9Donkey',    "stream-name": "{{ event.name }} - {{ event.slogan }} - Lounge",   "dump-file": "/srv/icecastdumps/31C3-lounge-%F_%H-%M-%S_%s.mp3" },
 ]
 
 icecast_fix_mount_metadata: [
@@ -17,10 +17,10 @@ icecast_fix_mount_metadata: [
 ]
 
 icecast_static_streams_meta_data: [
-  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogen }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogen }}" },
-  { "saal": "s2", stream-name: "{{ event.name }} - {{ event.slogen }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogen }}" },
-  { "saal": "s3", stream-name: "{{ event.name }} - {{ event.slogen }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogen }}" },
-  { "saal": "s4", stream-name: "{{ event.name }} - {{ event.slogen }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogen }}" },
+  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
+  { "saal": "s2", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
+  { "saal": "s3", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
+  { "saal": "s4", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
 ]
 
 # nginx
