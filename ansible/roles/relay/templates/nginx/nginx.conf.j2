@@ -3,7 +3,7 @@ user  www-data;
 # Specifies the value for maximum file descriptors that can be opened by this process.
 worker_rlimit_nofile 65536;
 # multiple worker
-worker_processes  {{ nginx_worker_processes | default('2') }};
+worker_processes  {{ nginx_worker_processes | default('8') }};
 
 error_log  /var/log/nginx/error.log;
 pid /var/run/nginx.pid;
