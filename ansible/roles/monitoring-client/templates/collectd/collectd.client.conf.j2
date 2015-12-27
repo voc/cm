@@ -119,7 +119,7 @@ LoadPlugin curl_json
 LoadPlugin dbi
 <Plugin dbi>
   <Query "streaming_issues">
-    Statement "SELECT COUNT(*) AS value FROM feedback WHERE issues != '';"
+    Statement "SELECT COUNT(*) AS value FROM feedback;"
     <Result>
       Type "counter"
       ValuesFrom "value"
