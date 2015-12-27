@@ -181,7 +181,7 @@ server {
   #
   # relive: /relive/31c3/29/1016.ts
   #
-  location ~* ^/(?<hls_relive>/relive)/(?<stream>.+\.ts)$ {
+  location ~* ^/(?<hls_relive>relive)/(?<stream>.+\.ts)$ {
       proxy_intercept_errors on;
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
