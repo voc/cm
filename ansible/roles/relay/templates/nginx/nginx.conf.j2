@@ -26,6 +26,11 @@ http {
   # mime-types
   include /etc/nginx/mime.types;
 
+  types {
+      application/vnd.apple.mpegurl m3u8;
+      video/mp2t ts;
+  }
+
   # gzip settings
   gzip on;
   gzip_disable "msie6";
