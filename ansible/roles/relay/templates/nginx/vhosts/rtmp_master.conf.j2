@@ -34,8 +34,8 @@ rtmp {
       meta copy;
 {% if nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' %}
       hls on;
-      hls_path /tmp/hls;
-      hls_fragment 5s;
+      hls_path /srv/nginx/hls;
+      hls_fragment 10s;
       hls_fragment_naming timestamp;
       hls_fragment_slicing aligned;
       hls_playlist_length 10m;
