@@ -44,6 +44,6 @@
 
   - name: add user's authorized_keys
     authorized_key: user="{{ item.name }}" manage_dir=true key="{{ lookup('file', '../files/user/' + item.name + '/authorized_keys') }}"
-                    state=present
+                    state=present exclusive=yes
     with_items: users
     when: item.state != 'absent' and item.name != 'voc'
