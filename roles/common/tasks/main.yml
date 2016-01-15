@@ -21,11 +21,17 @@
   - name: setting voc password
     user: name=voc
           password={{ user_voc_password | default('$6$xQDo3Tyf$q8mxcBQTKmaGUA2cHuCS0QoeHSyYwESkyq/53OmEYLErMWF.CpS9Q3NzAoeB3zntZBpysfmEQ9r6sLjubLq5F1') }}
+    tags: user
+
+  - name: clear voc user authorized_keys
+    authorized_key: user=voc manage_dir=true key=""
+    tags: user
 
   - name: add all SSH keys to voc user
-    authorized_key: user=voc manage_dir=true key="{{ lookup('file', item) }}" state=present exclusive=yes
+    authorized_key: user=voc manage_dir=true key="{{ lookup('file', item) }}"
     with_fileglob:
       - user/*/authorized_keys
+    tags: user
 
   # Modify message of the day
   - name: adding message of the day
