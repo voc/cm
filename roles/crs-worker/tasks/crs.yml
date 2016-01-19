@@ -13,6 +13,7 @@
      - libjson-perl
      - fuse-vdv
      - fuse
+     - cifs-utils
 
   - name: create /opt/crs/tools
     file: dest=/opt/crs/tools state=directory
