@@ -70,6 +70,8 @@ testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 
 [minions]
 minion[1:4].lan.c3voc.de crs_token=GZEyv1pDYebNt12bsevrMmW5ZnqQdYet crs_secret=rPPc5IFq4AUdkFo93Qn7Qd0IVEVkPR7d
+speedy.lan.c3voc.de crs_token=ZVgwZjhk6Sh0JFqA06yKYIlX3adj7vf6 crs_secret=wXwQRA56MTClsJ7PCk9A5YTaTzJKjzrR
+tweety.lan.c3voc.de crs_token=iu9TJ5KwoH3p0KeKbZkb50k7fCO6g9x6 crs_secret=pXb8vRvsTrQRPVt02YdUXzpeObSu0mzV
 
 [tracker]
 tracker.c3voc.de
