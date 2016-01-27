@@ -125,6 +125,7 @@
       - s3
       - s4
       - s5
+      - q1
 
   # Remove fcgi cache after deployment
   - shell: ls -1 /srv/nginx/cache/streaming_fcgi/
