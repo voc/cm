@@ -21,6 +21,9 @@ encoder4.lan.c3voc.de
 mixer5.lan.c3voc.de
 encoder5.lan.c3voc.de
 
+[saal6]
+encoder6.lan.c3voc.de
+
 # Host types
 [encoders]
 encoder1.lan.c3voc.de crs_token=uGpBzmtaKO3jhMH0ZvWq2fmdoJu2NsTB crs_secret=sFR8jdrVWf2k2L5uLUgkKCU3iNgjVOTJ
@@ -28,6 +31,7 @@ encoder2.lan.c3voc.de crs_token=bZS9zSOygSPwoPSTszvwwhr3o76HTnxZ crs_secret=KQ3T
 encoder3.lan.c3voc.de crs_token=Bt3xnS7JDTYbKSeLMV2dv7nDiTC14Z4y crs_secret=XS85O1kiygUZAYcExTaMnJzYynbJfps0
 encoder4.lan.c3voc.de crs_token=9qCETQanG933Mf7fEVsENxQUhqq5ccEJ crs_secret=4VsEOyuXLAW20eRWP3cJgUn7A3duXZRy
 encoder5.lan.c3voc.de crs_token=ruVj39QQisWYh4l7bAqEid08TKGrJNmE crs_secret=IxwPe4eS6ewO86eb4wdDujL8guMxQ7ZY
+encoder6.lan.c3voc.de crs_token=ejIyE40fOZKua4ijRkvaF9pV7HIj2ZsA crs_secret=03g90szjvAACwd2pkJ7yrBGbx20Lp73l
 
 [mixers]
 mixer[1:5].lan.c3voc.de
