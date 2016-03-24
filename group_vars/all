@@ -66,6 +66,7 @@ users:
   - { name: 'florob', state: 'present' }
   - { name: 'florolf', state: 'present' }
   - { name: 'fxkr', state: 'present' }
+  - { name: 'jwacalex', state: 'present' }
   - { name: 'masterbase', state: 'present' }
   - { name: 'mazdermind', state: 'present' }
   - { name: 'meise', state: 'present' }
