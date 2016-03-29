@@ -34,3 +34,10 @@
     template: dest=/etc/sdi-script/saalN-hd-slides-recording/config
               src=sdi-script/saalN-hd-slides-recording/config.j2
               owner=root group=root mode=0644
+
+  - name: stop hd-direct scripts when not in hd-direct-mode
+    command: sdi-script stop {{ item }}
+    with_items:
+      - saalN-hd-direct
+      - saalN-hd-direct-recording
+    when: encodermode is defined and encodermode != 'hd-direct'

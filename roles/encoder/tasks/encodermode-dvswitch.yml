@@ -156,3 +156,19 @@
     when: encodermode is not defined or encodermode == 'sd-dvswitch'
 
 
+
+  - name: stop dvswitch scripts when not in dvsplit-mode
+    command: sdi-script stop {{ item }}
+    with_items:
+      - saalN-sd-dvswitch
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
+
+  - name: stop dvswitch services when not in hd-direct-mode
+    command: sv stop {{ item }}
+    with_items:
+      - dvsink
+      - grabbersource
+      - pausesource
+      - sdisource-0
+      - sdisource-1
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
