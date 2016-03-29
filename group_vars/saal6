@@ -1,0 +1,7 @@
+---
+room_number: 6
+room_fahrplan_name: Saal6
+grabber_aspect: 16x9
+grabbersource_url_path: stream.mjpg
+
+#encodermode: hd-direct
