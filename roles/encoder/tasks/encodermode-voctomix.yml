@@ -1,0 +1,9 @@
+---
+  # see packages.yml for gstreamer package installation
+
+  - name: checkout voctomix release
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /opt/voctomix/release/
+      - /opt/voctomix/ansible-generated-scripts/
