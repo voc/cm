@@ -6,6 +6,8 @@
     file: dest={{ item }} state=directory
           owner=root group=root
     with_items:
+      - /video/
+      - /video/intros/
       - /opt/voctomix/scripts/
       - /opt/voctomix/release/
 
@@ -77,6 +79,44 @@
              state=stopped
     when: encodermode is not defined or encodermode != 'hd-voctomix'
     with_indexed_items: decklink_devices.stdout_lines
+
+
+
+
+
+  # pause source
+  - name: uploading default pause-loop
+    copy: src=artwork/default-pause.ts
+          dest=/video/intros/default-pause.ts
+          mode=0644 owner=root group=root
+
+  - name: creating default pause-loop symlink
+    file: src=/video/intros/default-pause.ts
+          dest=/video/intros/pause.ts
+          state=link
+          mode=0644 owner=root group=root
+
+  - name: create pause-source scripts
+    template: src=voctomix-scripts/pause-source.sh.j2
+              dest=/opt/voctomix/scripts/pause-source.sh
+              mode=0755 owner=root group=root
+
+  - name: create pause-source systemd-unit
+    template: src=systemd-units/voctomix-pause-source.service.j2
+              dest=/etc/systemd/system/voctomix-pause-source.service
+              mode=0644 owner=root group=root
+
+  - name: enable pause-source services when in voctomix-mode
+    service: name=voctomix-pause-source
+             enabled=yes
+             state=started
+    when: encodermode is defined and encodermode == 'hd-voctomix'
+
+  - name: disabled pause-source service when not in voctomix-mode
+    service: name=voctomix-pause-source
+             enabled=no
+             state=stopped
+    when: encodermode is not defined or encodermode != 'hd-voctomix'
 
 
 
