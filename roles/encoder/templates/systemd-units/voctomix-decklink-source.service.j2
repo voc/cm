@@ -4,14 +4,7 @@ After=network.target
 
 [Service]
 Type = simple
-ExecStart = \
-	/usr/bin/ffmpeg -y -nostdin \
-		-f decklink \
-		-i '{{ item.1 }}' \
-		-c:v rawvideo -c:a pcm_s16le \
-		-pix_fmt yuv420p \
-		-f matroska \
-		tcp://localhost:{{ item.0 + 10000 }}
+ExecStart = /opt/voctomix/scripts/decklink-source-{{ item.0 + 1 }}.sh
 
 Restart = always
 StartLimitInterval = 60

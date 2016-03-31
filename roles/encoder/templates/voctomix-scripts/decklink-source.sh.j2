@@ -1,0 +1,8 @@
+#!/bin/sh
+ffmpeg -y -nostdin \
+	-f decklink \
+	-i '{{ item.1 }}' \
+	-c:v rawvideo -c:a pcm_s16le \
+	-pix_fmt yuv420p \
+	-f matroska \
+	tcp://localhost:{{ item.0 + 10000 }}
