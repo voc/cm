@@ -41,3 +41,5 @@
       - saalN-hd-direct
       - saalN-hd-direct-recording
     when: encodermode is defined and encodermode != 'hd-direct'
+    register: command_result
+    changed_when: "command_result.stdout.find('Stop capturing') != -1"

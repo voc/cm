@@ -57,8 +57,7 @@
       - { id: 1, placement: 3, name: "sdisource-1" }
 
   - name: create runit sdisource-down-file file when not in dvsplit-mode
-    file: dest=/etc/service/{{ item.name }}/down
-          state=touch
+    copy: content="" dest=/etc/service/{{ item.name }}/down force=no
           owner=root group=root mode=0655
     when: encodermode is defined and encodermode != 'sd-dvswitch'
     with_items:
@@ -86,8 +85,7 @@
 
     # down
   - name: create runit grabbersource-down-file file when not in dvswitch-mode
-    file: dest=/etc/service/grabbersource/down
-          state=touch
+    copy: content="" dest=/etc/service/grabbersource/down force=no
           owner=root group=root mode=0655
     when: encodermode is defined and encodermode != 'sd-dvswitch'
 
@@ -119,8 +117,7 @@
 
     # down
   - name: create runit dvsink-down-file file when not in dvsplit-mode
-    file: dest=/etc/service/dvsink/down
-          state=touch
+    copy: content="" dest=/etc/service/dvsink/down force=no
           owner=root group=root mode=0655
     when: encodermode is defined and encodermode != 'sd-dvswitch'
 
@@ -144,8 +141,7 @@
 
     # down
   - name: create runit pausesource-down-file file when not in dvsplit-mode
-    file: dest=/etc/service/pausesource/down
-          state=touch
+    copy: content="" dest=/etc/service/pausesource/down force=no
           owner=root group=root mode=0655
     when: encodermode is defined and encodermode != 'sd-dvswitch'
 
@@ -162,6 +158,8 @@
     with_items:
       - saalN-sd-dvswitch
     when: encodermode is defined and encodermode != 'sd-dvswitch'
+    register: command_result
+    changed_when: "command_result.stdout.find('Stop capturing') != -1"
 
   - name: stop dvswitch services when not in hd-direct-mode
     command: sv stop {{ item }}
@@ -172,3 +170,5 @@
       - sdisource-0
       - sdisource-1
     when: encodermode is defined and encodermode != 'sd-dvswitch'
+    register: command_result
+    changed_when: "command_result.stdout.find(' 0s') != -1 or command_result.stdout.find(' 1s') != -1"
