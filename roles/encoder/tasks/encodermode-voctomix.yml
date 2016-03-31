@@ -1,12 +1,12 @@
 ---
   # see packages.yml for gstreamer package installation
 
+  # directories & code
   - name: create voctomix directories
     file: dest={{ item }} state=directory
           owner=root group=root
     with_items:
       - /opt/voctomix/release/
-      - /opt/voctomix/ansible-generated-scripts/
 
   - name: checkout voctomix release
     git: repo=https://c3voc.de/git/voctomix
@@ -15,25 +15,66 @@
          force=yes
          accept_hostkey=yes
 
+
+
+  # voctocore service
   - name: create voctocore systemd-unit
-    template: src=systemd-units/voctocore.service.j2
-              dest=/etc/systemd/system/voctocore.service
-              mode=0755 owner=root group=root
+    template: src=systemd-units/voctomix-voctocore.service.j2
+              dest=/etc/systemd/system/voctomix-voctocore.service
+              mode=0644 owner=root group=root
 
-  - name: create voctocore config
-    template: src=voctomix-config/voctocore-config.ini.j2
-              dest=/opt/voctomix/voctocore-config.ini
-              mode=0755 owner=root group=root
-
-
-  - name: enable voctocore service
-    service: name=voctocore
+  - name: enable voctocore service when in voctomix-mode
+    service: name=voctomix-voctocore
              enabled=yes
              state=started
     when: encodermode is defined and encodermode == 'hd-voctomix'
 
-  - name: disabled voctocore service
-    service: name=voctocore
+  - name: disabled voctocore service when not in voctomix-mode
+    service: name=voctomix-voctocore
              enabled=no
              state=stopped
     when: encodermode is not defined or encodermode != 'hd-voctomix'
+
+
+
+  # decklink sources
+  - name: list decklink input devices
+    shell: ffmpeg -hide_banner -f decklink -list_devices 1 -i dummy 2>&1 | grep decklink | grep "'" | cut -d"'" -f2
+    register: decklink_devices
+    changed_when: False
+
+  - name: calculating sources
+    set_fact:
+      number_decklink: "{{ decklink_devices.stdout_lines | length }}"
+      number_sources: "{{ [2, decklink_devices.stdout_lines | length] | max }}"
+
+  - name: print source information
+    debug: msg="Found {{ number_decklink }} Decklink Inputs ({{ decklink_devices.stdout_lines }}), Configuring Voctocore with {{ number_sources }} Sources (Minumum=2)"
+
+  - name: create decklink-source systemd-units
+    template: src=systemd-units/voctomix-decklink-source.service.j2
+              dest=/etc/systemd/system/voctomix-decklink-source-{{ item.0 + 1 }}.service
+              mode=0644 owner=root group=root
+    with_indexed_items: decklink_devices.stdout_lines
+
+  - name: enable decklink-source services when in voctomix-mode
+    service: name=voctomix-decklink-source-{{ item.0 + 1 }}
+             enabled=yes
+             state=started
+    when: encodermode is defined and encodermode == 'hd-voctomix'
+    with_indexed_items: decklink_devices.stdout_lines
+
+  - name: disabled decklink-source service when not in voctomix-mode
+    service: name=voctomix-decklink-source-{{ item.0 + 1 }}
+             enabled=no
+             state=stopped
+    when: encodermode is not defined or encodermode != 'hd-voctomix'
+    with_indexed_items: decklink_devices.stdout_lines
+
+
+
+  # voctocore configuration
+  - name: create voctocore config
+    template: src=voctomix-config/voctocore-config.ini.j2
+              dest=/opt/voctomix/voctocore-config.ini
+              mode=0644 owner=root group=root
