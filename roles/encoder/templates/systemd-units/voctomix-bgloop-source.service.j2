@@ -1,0 +1,15 @@
+[Unit]
+Description = voctomix bgloop-source
+After = voctomix-voctocore.service
+Requires = voctomix-voctocore.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix/scripts/bgloop-source.sh
+
+Restart = always
+StartLimitInterval = 60
+StartLimitBurst = 10
+
+[Install]
+WantedBy = voctomix-voctocore.service

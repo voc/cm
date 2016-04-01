@@ -122,6 +122,28 @@
 
 
 
+    # bgloop source
+  - name: uploading default bgloop
+    copy: src=artwork/default-bgloop.ts
+          dest=/video/intros/bgloop.ts
+          mode=0644 directory_mode=0755 owner=root group=root
+
+  - name: create bgloop script
+    template: src=voctomix-scripts/bgloop-source.sh.j2
+              dest=/opt/voctomix/scripts/bgloop-source.sh
+              mode=0755 owner=root group=root
+
+  - name: create bgloop systemd-unit
+    template: src=systemd-units/voctomix-bgloop-source.service.j2
+              dest=/etc/systemd/system/voctomix-bgloop-source.service
+              mode=0644 owner=root group=root
+
+  - name: enable bgloop service
+    service: name=voctomix-bgloop-source
+             enabled=yes
+
+
+
   # voctocore configuration
   - name: create voctocore config
     template: src=voctomix-config/voctocore-config.ini.j2
