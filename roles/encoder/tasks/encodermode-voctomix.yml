@@ -83,6 +83,29 @@
 
 
 
+    # grabber source source
+  - name: create grabber-source script
+    template: src=voctomix-scripts/grabber-source.sh.j2
+              dest=/opt/voctomix/scripts/grabber-source.sh
+              mode=0755 owner=root group=root
+
+  - name: create grabber-source systemd-unit
+    template: src=systemd-units/voctomix-grabber-source.service.j2
+              dest=/etc/systemd/system/voctomix-grabber-source.service
+              mode=0644 owner=root group=root
+
+  - name: enable grabber-source services when in voctomix-mode
+    service: name=voctomix-grabber-source
+             enabled=yes
+             state=started
+    when: encodermode is defined and encodermode == 'hd-voctomix'
+
+  - name: disabled grabber-source service when not in voctomix-mode
+    service: name=voctomix-grabber-source
+             enabled=no
+             state=stopped
+    when: encodermode is not defined or encodermode != 'hd-voctomix'
+
 
 
   # pause source
