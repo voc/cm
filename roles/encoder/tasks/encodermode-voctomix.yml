@@ -115,7 +115,7 @@
           mode=0644 owner=root group=root
 
   - name: creating default pause-loop symlink
-    file: src=/video/intros/default-pause.ts
+    file: src=default-pause.ts
           dest=/video/intros/pause.ts
           state=link
           mode=0644 owner=root group=root
