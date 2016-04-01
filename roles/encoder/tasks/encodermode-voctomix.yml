@@ -21,26 +21,6 @@
 
 
 
-  # voctocore service
-  - name: create voctocore systemd-unit
-    template: src=systemd-units/voctomix-voctocore.service.j2
-              dest=/etc/systemd/system/voctomix-voctocore.service
-              mode=0644 owner=root group=root
-
-  - name: enable voctocore service when in voctomix-mode
-    service: name=voctomix-voctocore
-             enabled=yes
-             state=started
-    when: encodermode is defined and encodermode == 'hd-voctomix'
-
-  - name: disabled voctocore service when not in voctomix-mode
-    service: name=voctomix-voctocore
-             enabled=no
-             state=stopped
-    when: encodermode is not defined or encodermode != 'hd-voctomix'
-
-
-
   # decklink sources
   - name: list decklink input devices
     shell: ffmpeg -hide_banner -f decklink -list_devices 1 -i dummy 2>&1 | grep decklink | grep "'" | cut -d"'" -f2
@@ -67,18 +47,10 @@
               mode=0644 owner=root group=root
     with_indexed_items: decklink_devices.stdout_lines
 
-  - name: enable decklink-source services when in voctomix-mode
+  - name: enable decklink-source services
     service: name=voctomix-decklink-source-{{ item.0 + 1 }}
              enabled=yes
              state=started
-    when: encodermode is defined and encodermode == 'hd-voctomix'
-    with_indexed_items: decklink_devices.stdout_lines
-
-  - name: disabled decklink-source service when not in voctomix-mode
-    service: name=voctomix-decklink-source-{{ item.0 + 1 }}
-             enabled=no
-             state=stopped
-    when: encodermode is not defined or encodermode != 'hd-voctomix'
     with_indexed_items: decklink_devices.stdout_lines
 
 
@@ -94,17 +66,9 @@
               dest=/etc/systemd/system/voctomix-grabber-source.service
               mode=0644 owner=root group=root
 
-  - name: enable grabber-source services when in voctomix-mode
+  - name: enable grabber-source service
     service: name=voctomix-grabber-source
              enabled=yes
-             state=started
-    when: encodermode is defined and encodermode == 'hd-voctomix'
-
-  - name: disabled grabber-source service when not in voctomix-mode
-    service: name=voctomix-grabber-source
-             enabled=no
-             state=stopped
-    when: encodermode is not defined or encodermode != 'hd-voctomix'
 
 
 
@@ -130,17 +94,9 @@
               dest=/etc/systemd/system/voctomix-pause-source.service
               mode=0644 owner=root group=root
 
-  - name: enable pause-source services when in voctomix-mode
+  - name: enable pause-source service
     service: name=voctomix-pause-source
              enabled=yes
-             state=started
-    when: encodermode is defined and encodermode == 'hd-voctomix'
-
-  - name: disabled pause-source service when not in voctomix-mode
-    service: name=voctomix-pause-source
-             enabled=no
-             state=stopped
-    when: encodermode is not defined or encodermode != 'hd-voctomix'
 
 
 
@@ -160,17 +116,9 @@
               dest=/etc/systemd/system/voctomix-music-source.service
               mode=0644 owner=root group=root
 
-  - name: enable music-source services when in voctomix-mode
+  - name: enable music-source service
     service: name=voctomix-music-source
              enabled=yes
-             state=started
-    when: encodermode is defined and encodermode == 'hd-voctomix'
-
-  - name: disabled music-source service when not in voctomix-mode
-    service: name=voctomix-music-source
-             enabled=no
-             state=stopped
-    when: encodermode is not defined or encodermode != 'hd-voctomix'
 
 
 
@@ -179,3 +127,25 @@
     template: src=voctomix-config/voctocore-config.ini.j2
               dest=/opt/voctomix/voctocore-config.ini
               mode=0644 owner=root group=root
+
+  # voctocore service
+  - name: create voctocore systemd-unit
+    template: src=systemd-units/voctomix-voctocore.service.j2
+              dest=/etc/systemd/system/voctomix-voctocore.service
+              mode=0644 owner=root group=root
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: enable & start voctocore service when in voctomix-mode
+    service: name=voctomix-voctocore
+             enabled=yes
+             state=started
+    when: encodermode is defined and encodermode == 'hd-voctomix'
+
+  - name: disable & start voctocore service when not in voctomix-mode
+    service: name=voctomix-voctocore
+             enabled=no
+             state=stopped
+    when: encodermode is not defined or encodermode != 'hd-voctomix'

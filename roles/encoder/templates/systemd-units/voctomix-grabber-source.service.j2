@@ -1,6 +1,6 @@
 [Unit]
 Description = voctomix video-source for framegrabber
-After = network.target
+After = voctomix-voctocore.service
 Requires = voctomix-voctocore.service
 
 [Service]
@@ -12,4 +12,4 @@ StartLimitInterval = 60
 StartLimitBurst = 10
 
 [Install]
-WantedBy = multi-user.target
+WantedBy = voctomix-voctocore.service
