@@ -1,6 +1,7 @@
 [Unit]
 Description = voctomix video-source for decklink-card #{{ item.0 }}: {{ item.1 }}
-After=network.target
+After = network.target
+Requires = voctomix-voctocore.service
 
 [Service]
 Type = simple
