@@ -3,7 +3,7 @@ videocaps=video/x-raw,format=I420,width=1920,height=1080,framerate=25/1,pixel-as
 audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
 
 ; tcp-ports will be 10000,10001,10002
-sources={% for nr in range(0, number_sources | int) %}cam{{ nr + 1 }},{% endfor %}grabber
+sources={% for nr in range(0, number_cameras | int) %}cam{{ nr + 1 }},{% endfor %}grabber
 
 [side-by-side-equal]
 ; defaults to 1% of the video width
