@@ -1,0 +1,15 @@
+[Unit]
+Description = voctomix pause-source
+After = network.target
+Requires = voctomix-voctocore.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix/scripts/music-source-from-folder.py -vv /video/pause-music
+
+Restart = always
+StartLimitInterval = 60
+StartLimitBurst = 10
+
+[Install]
+WantedBy = multi-user.target

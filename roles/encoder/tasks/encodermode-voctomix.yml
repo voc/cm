@@ -8,6 +8,7 @@
     with_items:
       - /video/
       - /video/intros/
+      - /video/music/
       - /opt/voctomix/scripts/
       - /opt/voctomix/release/
 
@@ -114,6 +115,36 @@
 
   - name: disabled pause-source service when not in voctomix-mode
     service: name=voctomix-pause-source
+             enabled=no
+             state=stopped
+    when: encodermode is not defined or encodermode != 'hd-voctomix'
+
+
+
+    # pause music source
+  - name: uploading default music-files
+    copy: src=artwork/pause-music/
+          dest=/video/pause-music/
+          mode=0644 directory_mode=0755 owner=root group=root
+
+  - name: create music-source script
+    template: src=voctomix-scripts/music-source-from-folder.py.j2
+              dest=/opt/voctomix/scripts/music-source-from-folder.py
+              mode=0755 owner=root group=root
+
+  - name: create music-source systemd-unit
+    template: src=systemd-units/voctomix-music-source.service.j2
+              dest=/etc/systemd/system/voctomix-music-source.service
+              mode=0644 owner=root group=root
+
+  - name: enable music-source services when in voctomix-mode
+    service: name=voctomix-music-source
+             enabled=yes
+             state=started
+    when: encodermode is defined and encodermode == 'hd-voctomix'
+
+  - name: disabled music-source service when not in voctomix-mode
+    service: name=voctomix-music-source
              enabled=no
              state=stopped
     when: encodermode is not defined or encodermode != 'hd-voctomix'
