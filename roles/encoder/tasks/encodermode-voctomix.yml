@@ -148,6 +148,56 @@
 
 
 
+    # recording sink
+  - name: create recording script
+    template: src=voctomix-scripts/recording-sink.sh.j2
+              dest=/opt/voctomix/scripts/recording-sink.sh
+              mode=0755 owner=root group=root
+
+  - name: create recording systemd-unit
+    template: src=systemd-units/voctomix-recording-sink.service.j2
+              dest=/etc/systemd/system/voctomix-recording-sink.service
+              mode=0644 owner=root group=root
+
+  - name: enable recording service
+    service: name=voctomix-recording-sink
+             enabled=yes
+
+
+
+    # streaming-hd sink
+  - name: create streaming-hd script
+    template: src=voctomix-scripts/streaming-hd-sink.sh.j2
+              dest=/opt/voctomix/scripts/streaming-hd-sink.sh
+              mode=0755 owner=root group=root
+
+  - name: create streaming-hd systemd-unit
+    template: src=systemd-units/voctomix-streaming-hd-sink.service.j2
+              dest=/etc/systemd/system/voctomix-streaming-hd-sink.service
+              mode=0644 owner=root group=root
+
+  - name: enable streaming-hd service
+    service: name=voctomix-streaming-hd-sink
+             enabled=yes
+
+
+    # streaming-sd sink
+  - name: create streaming-sd script
+    template: src=voctomix-scripts/streaming-sd-sink.sh.j2
+              dest=/opt/voctomix/scripts/streaming-sd-sink.sh
+              mode=0755 owner=root group=root
+
+  - name: create streaming-sd systemd-unit
+    template: src=systemd-units/voctomix-streaming-sd-sink.service.j2
+              dest=/etc/systemd/system/voctomix-streaming-sd-sink.service
+              mode=0644 owner=root group=root
+
+  - name: enable streaming-sd service
+    service: name=voctomix-streaming-sd-sink
+             enabled=yes
+
+
+
   # voctocore configuration
   - name: create voctocore config
     template: src=voctomix-config/voctocore-config.ini.j2
