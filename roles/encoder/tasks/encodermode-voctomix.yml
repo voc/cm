@@ -50,7 +50,6 @@
   - name: enable decklink-source services
     service: name=voctomix-decklink-source-{{ item.0 + 1 }}
              enabled=yes
-             state=started
     with_indexed_items: decklink_devices.stdout_lines
 
 
