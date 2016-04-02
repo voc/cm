@@ -77,17 +77,6 @@
 
 
   # pause source
-  - name: uploading default pause-loop
-    copy: src=artwork/default-pause.ts
-          dest=/video/intros/default-pause.ts
-          mode=0644 owner=root group=root
-
-  - name: creating default pause-loop symlink
-    file: src=default-pause.ts
-          dest=/video/intros/pause.ts
-          state=link
-          mode=0644 owner=root group=root
-
   - name: create pause-source script
     template: src=voctomix-scripts/pause-source.sh.j2
               dest=/opt/voctomix/scripts/pause-source.sh
@@ -104,12 +93,7 @@
 
 
 
-    # pause music source
-  - name: uploading default music-files
-    copy: src=artwork/pause-music/
-          dest=/video/pause-music/
-          mode=0644 directory_mode=0755 owner=root group=root
-
+    # music source
   - name: create music-source script
     template: src=voctomix-scripts/music-source-from-folder.py.j2
               dest=/opt/voctomix/scripts/music-source-from-folder.py
@@ -127,11 +111,6 @@
 
 
     # bgloop source
-  - name: uploading default bgloop
-    copy: src=artwork/default-bgloop.ts
-          dest=/video/intros/bgloop.ts
-          mode=0644 directory_mode=0755 owner=root group=root
-
   - name: create bgloop script
     template: src=voctomix-scripts/bgloop-source.sh.j2
               dest=/opt/voctomix/scripts/bgloop-source.sh
@@ -179,6 +158,7 @@
   - name: enable streaming-hd service
     service: name=voctomix-streaming-hd-sink
              enabled=yes
+
 
 
     # streaming-sd sink

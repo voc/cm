@@ -1,5 +1,5 @@
 #!/bin/sh
-while true; do cat /video/intros/pause.ts || exit 1; done |\
+while true; do cat /opt/voc/share/pause.ts || exit 1; done |\
 	ffmpeg -y -nostdin -re -i - \
 	-map 0:v \
 	-c:v rawvideo \
