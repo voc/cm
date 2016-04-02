@@ -10,4 +10,5 @@ ffmpeg -y -nostdin \
 	-c:v rawvideo \
 	-pix_fmt yuv420p \
 	-f matroska \
+	-metadata title="grabber" \
 	tcp://localhost:{{ number_cameras | int + 10000 }}

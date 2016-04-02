@@ -5,4 +5,5 @@ ffmpeg -y -nostdin \
 	-c:v rawvideo -c:a pcm_s16le \
 	-pix_fmt yuv420p \
 	-f matroska \
+	-metadata title="{{ item.1 }}" \
 	tcp://localhost:{{ item.0 + 10000 }}

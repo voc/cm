@@ -5,4 +5,5 @@ while true; do cat /video/intros/pause.ts || exit 1; done |\
 	-c:v rawvideo \
 	-pix_fmt yuv420p \
 	-f matroska \
+	-metadata title="pause" \
 	tcp://localhost:17000
