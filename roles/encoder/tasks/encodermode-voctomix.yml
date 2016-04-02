@@ -175,3 +175,8 @@
              enabled=no
              state=stopped
     when: encodermode is not defined or encodermode != 'hd-voctomix'
+
+  - name: create voctomix-status script
+    template: src=voctomix-scripts/voctomix-status.j2
+              dest=/usr/bin/voctomix-status
+              mode=0755 owner=root group=root
