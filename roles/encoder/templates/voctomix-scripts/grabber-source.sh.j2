@@ -1,6 +1,6 @@
 #!/bin/sh
-ffmpeg -y -nostdin \
-	-i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} \
+ffmpeg -y -nostdin -xerror \
+	-timeout 3000000 -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} \
 	-filter_complex "
 		[0:v] fps=25 [v] ;
 		anullsrc=r=48000:cl=stereo [a]
