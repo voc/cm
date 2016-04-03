@@ -6,9 +6,6 @@
     file: dest={{ item }} state=directory
           owner=root group=root
     with_items:
-      - /video/
-      - /video/intros/
-      - /video/music/
       - /opt/voctomix/scripts/
       - /opt/voctomix/release/
 
