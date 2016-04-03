@@ -144,37 +144,23 @@
 
 
 
-    # streaming-hd sink
-  - name: create streaming-hd script
-    template: src=voctomix-scripts/streaming-hd-sink.sh.j2
-              dest=/opt/voctomix/scripts/streaming-hd-sink.sh
+    # streaming sinks
+  - name: create streaming script
+    template: src=voctomix-scripts/streaming-sink.sh.j2
+              dest=/opt/voctomix/scripts/streaming-{{ item }}-sink.sh
               mode=0755 owner=root group=root
+    with_items: [sd, hd]
 
-  - name: create streaming-hd systemd-unit
-    template: src=systemd-units/voctomix-streaming-hd-sink.service.j2
-              dest=/etc/systemd/system/voctomix-streaming-hd-sink.service
+  - name: create streaming systemd-unit
+    template: src=systemd-units/voctomix-streaming-sink.service.j2
+              dest=/etc/systemd/system/voctomix-streaming-{{ item }}-sink.service
               mode=0644 owner=root group=root
+    with_items: [sd, hd]
 
-  - name: enable streaming-hd service
-    service: name=voctomix-streaming-hd-sink
+  - name: enable streaming service
+    service: name=voctomix-streaming-{{ item }}-sink
              enabled=yes
-
-
-
-    # streaming-sd sink
-  - name: create streaming-sd script
-    template: src=voctomix-scripts/streaming-sd-sink.sh.j2
-              dest=/opt/voctomix/scripts/streaming-sd-sink.sh
-              mode=0755 owner=root group=root
-
-  - name: create streaming-sd systemd-unit
-    template: src=systemd-units/voctomix-streaming-sd-sink.service.j2
-              dest=/etc/systemd/system/voctomix-streaming-sd-sink.service
-              mode=0644 owner=root group=root
-
-  - name: enable streaming-sd service
-    service: name=voctomix-streaming-sd-sink
-             enabled=yes
+    with_items: [sd, hd]
 
 
 
