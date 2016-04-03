@@ -1,0 +1,11 @@
+[Unit]
+Description = voctomix {{ item }}-to-framebuffer playout
+After = voctomix-voctocore.service
+Requires = voctomix-voctocore.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix/scripts/{{ item }}-to-framebuffer-playout.sh
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0

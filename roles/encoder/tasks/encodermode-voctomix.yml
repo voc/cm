@@ -161,6 +161,26 @@
 
 
 
+    # framebuffer playout sinks
+  - name: create playout script
+    template: src=voctomix-scripts/framebuffer-playout.sh.j2
+              dest=/opt/voctomix/scripts/{{ item }}-to-framebuffer-playout.sh
+              mode=0755 owner=root group=root
+    with_items: [program, stream, grabber]
+
+  - name: create playout systemd-unit
+    template: src=systemd-units/voctomix-framebuffer-playout.service.j2
+              dest=/etc/systemd/system/voctomix-{{ item }}-to-framebuffer-playout.service
+              mode=0644 owner=root group=root
+    with_items: [program, stream, grabber]
+
+  - name: enable playout service
+    service: name=voctomix-{{ item }}-to-framebuffer-playout
+             enabled=yes
+    with_items: [program, stream, grabber]
+
+
+
   # voctocore configuration
   - name: create voctocore config
     template: src=voctomix-config/voctocore-config.ini.j2
