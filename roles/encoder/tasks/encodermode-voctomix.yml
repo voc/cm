@@ -181,6 +181,50 @@
 
 
 
+  # decklink playouts
+  - name: list decklink playout devices
+    shell: ffmpeg -hide_banner -f lavfi -i testsrc -f decklink -list_devices 1 dummy 2>&1 | grep '\[decklink' | grep "'" | cut -d"'" -f2
+    register: decklink_playout_devices
+    changed_when: False
+
+  - name: list decklink playout device formats
+    shell: ffmpeg -hide_banner -f lavfi -i testsrc -f decklink -list_formats 1 '{{ item.1 }}' 2>&1 | grep '1920x1080 at 25000/1000 fps (interlaced' | cut -f2 -d'	'
+    register: decklink_playout_formats
+    with_indexed_items: decklink_playout_devices.stdout_lines
+    changed_when: False
+
+  - name: calculating sources
+    set_fact:
+      number_decklink_playouts: "{{ decklink_playout_devices.stdout_lines | length }}"
+
+  - name: print playout information
+    debug: msg="Found {{ number_decklink_playouts }} Decklink Playouts ({{ decklink_playout_devices.stdout_lines }})"
+
+  - name: create decklink-playout scripts
+    template: src=voctomix-scripts/decklink-playout.sh.j2
+              dest=/opt/voctomix/scripts/{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout.sh
+              mode=0755 owner=root group=root
+    with_nested:
+      - [program, stream, grabber]
+      - decklink_playout_devices.stdout_lines
+
+  - name: create decklink-playout systemd-units
+    template: src=systemd-units/voctomix-decklink-playout.service.j2
+              dest=/etc/systemd/system/voctomix-{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout.service
+              mode=0644 owner=root group=root
+    with_nested:
+      - [program, stream, grabber]
+      - decklink_playout_devices.stdout_lines
+
+  - name: enable decklink-playout services
+    service: name=voctomix-{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout
+             enabled=yes
+    with_nested:
+      - [program, stream, grabber]
+      - decklink_playout_devices.stdout_lines
+
+
+
   # voctocore configuration
   - name: create voctocore config
     template: src=voctomix-config/voctocore-config.ini.j2

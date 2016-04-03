@@ -1,0 +1,7 @@
+#!/bin/sh
+ffmpeg \
+	-i tcp://localhost:{% if item[0] == 'stream' %}15000{% elif item[0] == 'program' %}11000{% elif item[0] == 'grabber' %}{{ number_cameras | int + 13000 }}{% endif %} \
+	-map 0:v \
+	-c:v rawvideo \
+	-pix_fmt uyvy422 \
+	-f decklink '{{ item[1] }}'
