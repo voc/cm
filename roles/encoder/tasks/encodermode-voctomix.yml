@@ -39,18 +39,18 @@
 
   - name: create decklink-source scripts
     template: src=voctomix-scripts/decklink-source.sh.j2
-              dest=/opt/voctomix/scripts/decklink-source-{{ item.0 + 1 }}.sh
+              dest=/opt/voctomix/scripts/decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}.sh
               mode=0755 owner=root group=root
     with_indexed_items: decklink_devices.stdout_lines
 
   - name: create decklink-source systemd-units
     template: src=systemd-units/voctomix-decklink-source.service.j2
-              dest=/etc/systemd/system/voctomix-decklink-source-{{ item.0 + 1 }}.service
+              dest=/etc/systemd/system/voctomix-decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}.service
               mode=0644 owner=root group=root
     with_indexed_items: decklink_devices.stdout_lines
 
   - name: enable decklink-source services
-    service: name=voctomix-decklink-source-{{ item.0 + 1 }}
+    service: name=voctomix-decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}
              enabled=yes
     with_indexed_items: decklink_devices.stdout_lines
 
