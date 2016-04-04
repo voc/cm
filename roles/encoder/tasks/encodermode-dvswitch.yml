@@ -172,3 +172,15 @@
     when: encodermode is defined and encodermode != 'sd-dvswitch'
     register: command_result
     changed_when: "command_result.stdout.find(' 0s') != -1 or command_result.stdout.find(' 1s') != -1"
+    ignore_errors: yes
+
+  - name: start dvswitch services when in dvsplit-mode
+    command: sv start {{ item }}
+    with_items:
+      - dvsink
+      - grabbersource
+      - pausesource
+      - sdisource-0
+      - sdisource-1
+    when: encodermode is not defined or encodermode == 'sd-dvswitch'
+    ignore_errors: yes
