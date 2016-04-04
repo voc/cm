@@ -161,7 +161,7 @@
     register: command_result
     changed_when: "command_result.stdout.find('Stop capturing') != -1"
 
-  - name: stop dvswitch services when not in hd-direct-mode
+  - name: stop dvswitch services when not in dvsplit-mode
     command: sv stop {{ item }}
     with_items:
       - dvsink

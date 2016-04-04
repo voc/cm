@@ -250,7 +250,7 @@
              state=started
     when: encodermode is defined and encodermode == 'hd-voctomix'
 
-  - name: disable & start voctocore service when not in voctomix-mode
+  - name: disable & stop voctocore service when not in voctomix-mode
     service: name=voctomix-voctocore
              enabled=no
              state=stopped
