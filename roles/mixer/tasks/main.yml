@@ -4,7 +4,9 @@
   - include: slim.yml
   - include: x11vnc.yml
   - include: dvswitch.yml
-    tags: dvswitch
+    tags: dvswitch,encodermode
+  - include: voctomix.yml
+    tags: encodermode
   - include: irssi.yml
   - include: rc.local.yml
     tags:
