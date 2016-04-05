@@ -1,6 +1,6 @@
 ---
 room_number: 4
 room_fahrplan_name: Saal4
-grabber_aspect: 4x3
+grabber_aspect: 16x9
 
 #encodermode: hd-direct
