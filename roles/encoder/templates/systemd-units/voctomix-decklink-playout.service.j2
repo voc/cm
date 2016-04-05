@@ -9,3 +9,6 @@ ExecStart = /opt/voctomix/scripts/{{ item[0] }}-to-{{ item[1] | lower | replace(
 Restart = always
 RestartSec = 1s
 StartLimitInterval = 0
+
+[Install]
+WantedBy = voctomix-voctocore.service

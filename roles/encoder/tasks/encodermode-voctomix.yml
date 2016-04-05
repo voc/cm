@@ -175,9 +175,9 @@
               mode=0644 owner=root group=root
     with_items: [program, stream, grabber]
 
-  - name: enable playout service
+  - name: disable playout service
     service: name=voctomix-{{ item }}-to-framebuffer-playout
-             enabled=yes
+             enabled=false
     with_items: [program, stream, grabber]
 
 
@@ -217,9 +217,9 @@
       - [program, stream, grabber]
       - decklink_playout_devices.stdout_lines
 
-  - name: enable decklink-playout services
+  - name: disable decklink-playout services
     service: name=voctomix-{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout
-             enabled=yes
+             enabled=false
     with_nested:
       - [program, stream, grabber]
       - decklink_playout_devices.stdout_lines

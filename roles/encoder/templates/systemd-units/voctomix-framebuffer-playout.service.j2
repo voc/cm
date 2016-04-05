@@ -9,3 +9,6 @@ ExecStart = /opt/voctomix/scripts/{{ item }}-to-framebuffer-playout.sh
 Restart = always
 RestartSec = 1s
 StartLimitInterval = 0
+
+[Install]
+WantedBy = voctomix-voctocore.service
