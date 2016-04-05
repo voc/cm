@@ -7,4 +7,4 @@ ffmpeg -v info -y -analyzeduration 10000 \
 	-map 0:a -filter:a:0 pan=mono:c0=FL \
 	-map 0:a -filter:a:1 pan=mono:c0=FR \
 	-flags +global_header -flags +ilme+ildct \
-	-f segment -segment_time 180 -segment_format mpegts /video/{{ room_fahrplan_name | lower | replace(' ', '') }}-%t-%05d.ts
+	-f segment -segment_time 180 -segment_format mpegts /video/capture/{{ event.acronym }}/{{ room_fahrplan_name }}/{{ room_fahrplan_name | lower | replace(' ', '') }}-%t-%05d.ts
