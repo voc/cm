@@ -158,10 +158,13 @@
               mode=0644 owner=root group=root
     with_items: [sd, hd]
 
-  - name: enable streaming service
-    service: name=voctomix-streaming-{{ item }}-sink
+  - name: enable hd-streaming service
+    service: name=voctomix-streaming-hd-sink
              enabled=yes
-    with_items: [sd, hd]
+
+  - name: disable sd-streaming service
+    service: name=voctomix-streaming-sd-sink
+             enabled=yes
 
 
 
