@@ -6,26 +6,18 @@ audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
 sources={% for nr in range(0, number_cameras | int) %}cam{{ nr + 1 }},{% endfor %}grabber
 
 [side-by-side-equal]
-; defaults to 1% of the video width
-;gutter=12
 ;ypos=200
-
-ypos=450
+gutter=20
 
 [side-by-side-preview]
-;asize=1024x576
-;apos=12/12
-;bsize=320x180
-;bpos=948/528
-
 asize=1386x780
-apos=12/170
+apos=20/160
 bsize=496x279
-bpos=1380/789
+bpos=1404/781
 
 [picture-in-picture]
-;pipsize=320x180
-;pippos=948/528
+pipsize=480/270
+pippos=1420/790
 
 [previews]
 ; disable if ui & server run on the same computer and can exchange uncompressed video frames
