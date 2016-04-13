@@ -36,11 +36,11 @@
    when: ansible_distribution_release == 'jessie'
 
  - name: setup the debian backports repo for jessie
-   apt_repository: repo="deb http://httpredir.debian.org/debian jessie-backports main"
+   apt_repository: repo="deb http://ftp.de.debian.org/debian jessie-backports main"
    when: ansible_distribution_release == 'jessie'
 
  - name: ensure that the non-free suite is enabled for jessie
-   apt_repository: repo="deb http://httpredir.debian.org/debian jessie main contrib non-free"
+   apt_repository: repo="deb http://ftp.de.debian.org/debian jessie main contrib non-free"
    when: ansible_distribution_release == 'jessie'
 
  - name: ensure that security updates enabled for jessie
