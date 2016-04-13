@@ -164,7 +164,7 @@
 
   - name: disable sd-streaming service
     service: name=voctomix-streaming-sd-sink
-             enabled=yes
+             enabled=no
 
 
 
