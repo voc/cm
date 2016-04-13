@@ -39,7 +39,7 @@
       number_cameras: "{{ [1, decklink_devices.stdout_lines | length] | max }}"
 
   - name: print source information
-    debug: msg="Found {{ number_decklink }} Decklink Inputs ({{ decklink_devices.stdout_lines }}), Configuring Voctocore with {{ number_cameras }} Camera-Sources (Minumum=1)"
+    debug: msg="Found {{ number_decklink }} Decklink Inputs ({{ decklink_devices.stdout_lines }}), Configuring Voctocore with {{ number_cameras }} Camera-Sources (Minimum=1)"
 
   - name: create decklink-source scripts
     template: src=voctomix-scripts/decklink-source.sh.j2
