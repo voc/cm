@@ -15,7 +15,7 @@
   - name: checkout voctomix release
     git: repo=https://c3voc.de/git/voctomix
          dest=/opt/voctomix/release/
-         version=0.2
+         version=master
          force=yes
          accept_hostkey=yes
 
