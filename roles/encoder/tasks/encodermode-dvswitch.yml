@@ -1,0 +1,186 @@
+---
+  # see packages.yml for sdi-script package installation
+  # see rc.local.yml for starup config
+
+  # sdi-script configuration
+  - name: create sdi-script directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /etc/sdi-script
+      - /etc/sdi-script/saalN-hd-direct
+      - /etc/sdi-script/saalN-hd-direct-recording
+      - /etc/sdi-script/saalN-hd-slides-recording
+
+  # sd chain
+  - name: create /etc/sdi-script/saalN-sd-dvswitch/config
+    template: dest=/etc/sdi-script/saalN-sd-dvswitch/config
+              src=sdi-script/saalN-sd-dvswitch/config.j2
+              owner=root group=root mode=0644
+
+  - name: create /etc/sdi-script/saalN-sd-dvswitch/supertee.ini
+    template: dest=/etc/sdi-script/saalN-sd-dvswitch/supertee.ini
+              src=sdi-script/saalN-sd-dvswitch/supertee.ini.j2
+              owner=root group=root mode=0755
+
+  # sd no stream
+  - name: create /etc/sdi-script/saalN-sd-dvswitch-nostream/config
+    template: dest=/etc/sdi-script/saalN-sd-dvswitch-nostream/config
+              src=sdi-script/saalN-sd-dvswitch-nostream/config.j2
+              owner=root group=root mode=0644
+
+  - name: create /etc/sdi-script/saalN-sd-dvswitch-nostream/supertee.ini
+    template: dest=/etc/sdi-script/saalN-sd-dvswitch-nostream/supertee.ini
+              src=sdi-script/saalN-sd-dvswitch-nostream/supertee.ini.j2
+              owner=root group=root mode=0755
+
+  # sd to ts recrding
+  - name: create /etc/sdi-script/saalN-sd-dvswitch-recording/config
+    template: dest=/etc/sdi-script/saalN-sd-dvswitch-recording/config
+              src=sdi-script/saalN-sd-dvswitch-recording/config.j2
+              owner=root group=root mode=0644
+
+
+  # sdisource configuration
+  - name: create service directory for sdisource
+    file: dest=/etc/service/{{ item }} state=directory
+    with_items:
+      - sdisource-0
+      - sdisource-1
+
+  - name: create runit sdisource file for each schwarzemagie-capture card
+    template: dest=/etc/service/{{ item.name }}/run
+              src=sdisource/run.j2
+              owner=root group=root mode=0755
+    with_items:
+      - { id: 0, placement: 2, name: "sdisource-0" }
+      - { id: 1, placement: 3, name: "sdisource-1" }
+
+  - name: create runit sdisource-down-file file when not in dvsplit-mode
+    copy: content="" dest=/etc/service/{{ item.name }}/down force=no
+          owner=root group=root mode=0655
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
+    with_items:
+      - { name: "sdisource-0" }
+      - { name: "sdisource-1" }
+
+  - name: remove runit sdisource-down-file file when in dvsplit-mode
+    file: dest=/etc/service/{{ item.name }}/down
+          state=absent
+    when: encodermode is not defined or encodermode == 'sd-dvswitch'
+    with_items:
+      - { name: "sdisource-0" }
+      - { name: "sdisource-1" }
+
+
+  # grabbersource configuration
+  - name: create service directory for grabbersource
+    file: dest=/etc/service/grabbersource state=directory
+          owner=root group=root
+
+  - name: create runit grabbersource file
+    template: dest=/etc/service/grabbersource/run
+              src=grabbersource/run.j2
+              owner=root group=root mode=0755
+
+    # down
+  - name: create runit grabbersource-down-file file when not in dvswitch-mode
+    copy: content="" dest=/etc/service/grabbersource/down force=no
+          owner=root group=root mode=0655
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
+
+    # up
+  - name: remove runit grabbersource-down-file file when in dvswitch-mode
+    file: dest=/etc/service/grabbersource/down
+          state=absent
+    when: encodermode is not defined or encodermode == 'sd-dvswitch'
+
+
+
+
+  # dvsink configuration
+  - name: create /video if not present
+    file: dest=/video state=directory
+
+  - name: create service directory for dvsink
+    file: dest=/etc/service/dvsink state=directory
+
+  - name: create dvsplit.pl
+    copy: dest=/usr/local/bin/dvsplit.pl
+          src=dvsink/dvsplit.pl
+          owner=root group=root mode=0755
+
+  - name: create runit dvsink file
+    template: dest=/etc/service/dvsink/run
+              src=dvsink/run.j2
+              owner=root group=root mode=0755
+
+    # down
+  - name: create runit dvsink-down-file file when not in dvsplit-mode
+    copy: content="" dest=/etc/service/dvsink/down force=no
+          owner=root group=root mode=0655
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
+
+    # up
+  - name: remove runit dvsink-down-file file when in dvsplit-mode
+    file: dest=/etc/service/dvsink/down
+          state=absent
+    when: encodermode is not defined or encodermode == 'sd-dvswitch'
+
+
+
+  # pausesource configuration
+  - name: create service directory for pausesource
+    file: dest=/etc/service/pausesource state=directory
+          owner=root group=root
+
+  - name: create runit grabbersource file
+    template: dest=/etc/service/pausesource/run
+              src=pausesource/run.j2
+              owner=root group=root mode=0755
+
+    # down
+  - name: create runit pausesource-down-file file when not in dvsplit-mode
+    copy: content="" dest=/etc/service/pausesource/down force=no
+          owner=root group=root mode=0655
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
+
+    # up
+  - name: remove runit pausesource-down-file file when in dvsplit-mode
+    file: dest=/etc/service/pausesource/down
+          state=absent
+    when: encodermode is not defined or encodermode == 'sd-dvswitch'
+
+
+
+  - name: stop dvswitch scripts when not in dvsplit-mode
+    command: sdi-script stop {{ item }}
+    with_items:
+      - saalN-sd-dvswitch
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
+    register: command_result
+    changed_when: "command_result.stdout.find('Stop capturing') != -1"
+
+  - name: stop dvswitch services when not in dvsplit-mode
+    command: sv stop {{ item }}
+    with_items:
+      - dvsink
+      - grabbersource
+      - pausesource
+      - sdisource-0
+      - sdisource-1
+    when: encodermode is defined and encodermode != 'sd-dvswitch'
+    register: command_result
+    changed_when: "command_result.stdout.find(' 0s') != -1 or command_result.stdout.find(' 1s') != -1"
+    ignore_errors: yes
+
+  - name: start dvswitch services when in dvsplit-mode
+    command: sv start {{ item }}
+    with_items:
+      - dvsink
+      - grabbersource
+      - pausesource
+      - sdisource-0
+      - sdisource-1
+    when: encodermode is not defined or encodermode == 'sd-dvswitch'
+    ignore_errors: yes

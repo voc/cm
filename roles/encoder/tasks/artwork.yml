@@ -29,3 +29,35 @@
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.png"
       - "../../../artwork/{{ event.acronym }}/nostream.png"
       - "artwork/default-nostream.png"
+
+  - name: uploading background-loops
+    copy: src={{ item }}
+          dest=/opt/voc/share/
+          owner=root group=staff mode=0644
+    with_items:
+      - "artwork/black-bgloop.ts"
+      - "artwork/white-bgloop.ts"
+
+  - name: symlink black as default background-loop
+    file: src=black-bgloop.ts
+          dest=/opt/voc/share/bgloop.ts
+          owner=root group=staff mode=0644
+          state=link
+
+  - name: uploading pause-loop
+    copy: src={{ item }}
+          dest=/opt/voc/share/pause.ts
+          owner=root group=staff mode=0644
+    with_first_found:
+      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/pause.ts"
+      - "../../../artwork/{{ event.acronym }}/pause.ts"
+      - "artwork/default-pause.ts"
+
+  - name: uploading default music-files
+    copy: src={{ item }}
+          dest=/opt/voc/share/
+          mode=0644 directory_mode=0755 owner=root group=root
+    with_first_found:
+      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/pause-music"
+      - "../../../artwork/{{ event.acronym }}/pause-music"
+      - "artwork/pause-music"

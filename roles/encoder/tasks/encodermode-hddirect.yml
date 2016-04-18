@@ -1,0 +1,45 @@
+---
+  # see packages.yml for sdi-script package installation
+  # see rc.local.yml for starup config
+
+  # sdi-script configuration
+  - name: create sdi-script directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /etc/sdi-script
+      - /etc/sdi-script/saalN-sd-dvswitch
+      - /etc/sdi-script/saalN-sd-dvswitch-nostream
+      - /etc/sdi-script/saalN-sd-dvswitch-recording
+
+  # hd-direct chain
+  - name: create /etc/sdi-script/saalN-hd-direct/config
+    template: dest=/etc/sdi-script/saalN-hd-direct/config
+              src=sdi-script/saalN-hd-direct/config.j2
+              owner=root group=root mode=0644
+
+  - name: create /etc/sdi-script/saalN-hd-direct/supertee.ini
+    template: dest=/etc/sdi-script/saalN-hd-direct/supertee.ini
+              src=sdi-script/saalN-hd-direct/supertee.ini.j2
+              owner=root group=root mode=0755
+
+  # hd-direct recording
+  - name: create /etc/sdi-script/saalN-hd-direct-recording/config
+    template: dest=/etc/sdi-script/saalN-hd-direct-recording/config
+              src=sdi-script/saalN-hd-direct-recording/config.j2
+              owner=root group=root mode=0644
+
+  # hd-slides recrding
+  - name: create /etc/sdi-script/saalN-hd-slides-recording/config
+    template: dest=/etc/sdi-script/saalN-hd-slides-recording/config
+              src=sdi-script/saalN-hd-slides-recording/config.j2
+              owner=root group=root mode=0644
+
+  - name: stop hd-direct scripts when not in hd-direct-mode
+    command: sdi-script stop {{ item }}
+    with_items:
+      - saalN-hd-direct
+      - saalN-hd-direct-recording
+    when: encodermode is defined and encodermode != 'hd-direct'
+    register: command_result
+    changed_when: "command_result.stdout.find('Stop capturing') != -1"

@@ -3,15 +3,12 @@
  - include: packages.yml
  - include: artwork.yml
    tags: artwork
- - include: sdisource.yml
-   tags: sdisource
- - include: sdi-script.yml
-   tags: sdi-script
- - include: dvsink.yml
-   tags: dvsink
- - include: grabbersource.yml
- - include: pausesource.yml
-   tags: pausensource
+ - include: encodermode-dvswitch.yml
+   tags: encodermode
+ - include: encodermode-hddirect.yml
+   tags: encodermode
+ - include: encodermode-voctomix.yml
+   tags: encodermode
  - include: nginx.yml
    tabs: nginx
  - include: samba.yml
@@ -20,5 +17,6 @@
    tags:
      - rclocal
      - iptables
+     - encodermode
  - include: rsync.yml
    tags: rsync

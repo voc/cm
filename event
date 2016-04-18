@@ -22,6 +22,7 @@ mixer5.lan.c3voc.de
 encoder5.lan.c3voc.de
 
 [saal6]
+mixer6.lan.c3voc.de
 encoder6.lan.c3voc.de
 
 # Host types
@@ -34,7 +35,7 @@ encoder5.lan.c3voc.de crs_token=ruVj39QQisWYh4l7bAqEid08TKGrJNmE crs_secret=IxwP
 encoder6.lan.c3voc.de crs_token=ejIyE40fOZKua4ijRkvaF9pV7HIj2ZsA crs_secret=03g90szjvAACwd2pkJ7yrBGbx20Lp73l
 
 [mixers]
-mixer[1:5].lan.c3voc.de
+mixer[1:6].lan.c3voc.de
 
 # Local RZ
 [servers]

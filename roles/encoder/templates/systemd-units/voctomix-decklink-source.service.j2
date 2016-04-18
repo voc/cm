@@ -1,0 +1,14 @@
+[Unit]
+Description = voctomix video-source for decklink-card #{{ item.0 }}: {{ item.1 }}
+After = voctomix-voctocore.service
+Requires = voctomix-voctocore.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix/scripts/decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}.sh
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = voctomix-voctocore.service

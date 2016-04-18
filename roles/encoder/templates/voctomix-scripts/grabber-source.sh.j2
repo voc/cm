@@ -1,0 +1,14 @@
+#!/bin/sh
+ffmpeg -y -nostdin -xerror \
+	-timeout 3000000 -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} \
+	-filter_complex "
+		[0:v] fps=25 [v] ;
+		anullsrc=r=48000:cl=stereo [a]
+	" \
+	-map "[v]" -map "[a]" \
+	-c:a pcm_s16le \
+	-c:v rawvideo \
+	-pix_fmt yuv420p \
+	-f matroska \
+	-metadata title="grabber" \
+	tcp://localhost:{{ number_cameras | int + 10000 }}
