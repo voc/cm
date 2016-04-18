@@ -1,7 +1,7 @@
 ---
   # install general mixer packages
   - name: install packages required to be a mixer
-    apt: name={{ item }} state=present
+    apt: name={{ item }} state=latest
     with_items:
       - dwm-voc
       - runit
