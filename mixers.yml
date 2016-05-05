@@ -4,7 +4,7 @@
       - { role: common, tags: ['common'] }
       - { role: monitoring-client, tags: ['monitoring'] }
       - { role: mixer, tags: ['mixer'] }
-      - { role: crs-worker, when: crs_token is defined and crs_secret is defined }
+      - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }
     vars:
       ssh_allow_voc_password_login: 'yes'
       mixer_user_password: '$1$80Po7gYl$zOUjSt1SfgEyO.bvFOMWw/'

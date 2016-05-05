@@ -4,7 +4,7 @@
      - { role: common, tags: ['common'] }
      - { role: monitoring-client, tags: ['monitoring'] }
      - { role: encoder, tags: ['encoder'] }
-     - { role: crs-worker, when: crs_token is defined and crs_secret is defined }
+     - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }
    vars:
      ssh_allow_voc_password_login: 'yes'
      user_voc_password: '$6$ZpEvVTe8hyM5zzKm$axiqq3x6.oabqhi0nPjZzHVPGNmixY0w8I9BN8OST2A.e5g.EZtc31KPAKp/EaiFckIZGiIdnoPFQHdluXw1z1'
