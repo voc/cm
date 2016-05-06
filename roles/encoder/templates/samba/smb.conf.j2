@@ -344,6 +344,7 @@
    path = /video/fuse
    guest ok = yes
    fake oplocks = yes
+   force user = root
 
 [tmp]
    read only = no
@@ -351,6 +352,7 @@
    path = /video/tmp
    guest ok = yes
    fake oplocks = yes
+   force user = root
 
 [encoded]
    read only = no
@@ -358,3 +360,4 @@
    path = /video/encoded
    guest ok = yes
    fake oplocks = yes
+   force user = root
