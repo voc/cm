@@ -8,6 +8,9 @@
           owner=root group=root
     with_items:
       - /etc/sdi-script
+      - /etc/sdi-script/saalN-sd-dvswitch
+      - /etc/sdi-script/saalN-sd-dvswitch-nostream
+      - /etc/sdi-script/saalN-sd-dvswitch-recording
       - /etc/sdi-script/saalN-hd-direct
       - /etc/sdi-script/saalN-hd-direct-recording
       - /etc/sdi-script/saalN-hd-slides-recording
