@@ -95,9 +95,14 @@
 
 
     # music source
-  - name: create music-source script
+  - name: create music-source script (python)
     template: src=voctomix-scripts/music-source-from-folder.py.j2
               dest=/opt/voctomix/scripts/music-source-from-folder.py
+              mode=0755 owner=root group=root
+
+  - name: create music-source script (sh)
+    template: src=voctomix-scripts/music-source.sh.j2
+              dest=/opt/voctomix/scripts/music-source.sh
               mode=0755 owner=root group=root
 
   - name: create music-source systemd-unit
