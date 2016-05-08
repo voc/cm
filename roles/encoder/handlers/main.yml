@@ -4,6 +4,11 @@
 
   - name: restart samba
     service: name=samba state=restarted
+    when: ansible_distribution_release != 'jessie'
+
+  - name: restart smbd
+    service: name=smbd state=restarted
+    when: ansible_distribution_release == 'jessie'
 
   - name: reload rc.local
     command: /etc/rc.local
