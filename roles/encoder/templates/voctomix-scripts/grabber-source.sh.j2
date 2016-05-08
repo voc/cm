@@ -1,6 +1,6 @@
 #!/bin/sh
 ffmpeg -y -nostdin -xerror \
-	-timeout 3000000 -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} \
+	-use_wallclock_as_timestamps 1 -timeout 3000000 -f mjpeg -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} \
 	-filter_complex "
 		[0:v] fps=25,scale=1920x1080,setsar=1/1 [v] ;
 		anullsrc=r=48000:cl=stereo [a]
