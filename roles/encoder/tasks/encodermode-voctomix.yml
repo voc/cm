@@ -10,7 +10,9 @@
       - /opt/voctomix/release/
       - /video/capture
       - /video/capture/{{ event.acronym }}
-      - /video/capture/{{ event.acronym }}/{{ room_fahrplan_name }}
+      - /video/encoded/{{ event.acronym }}
+      - /video/tmp/{{ event.acronym }}
+      - /video/fuse
 
   - name: checkout voctomix release
     git: repo=https://c3voc.de/git/voctomix
