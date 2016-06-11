@@ -7,4 +7,4 @@ grabbersource_url_path: stream.mjpg
 # sd-dvswitch, hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
-#encodermode: hd-direct
+encodermode: hd-voctomix

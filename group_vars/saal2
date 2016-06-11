@@ -6,4 +6,4 @@ grabber_aspect: 4x3
 # sd-dvswitch, hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
-#encodermode: hd-direct
+encodermode: hd-voctomix
