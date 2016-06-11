@@ -1,9 +1,14 @@
 #!/bin/sh
+
 ffmpeg -y -nostdin \
 	-f decklink \
 	-i '{{ item.1 }}@{{ decklink_formats.results[ item.0 ].stdout }}' \
 	-c:v rawvideo -c:a pcm_s16le \
 	-pix_fmt yuv420p \
+	-r 25 \
 	-f matroska \
 	-metadata title="{{ item.1 }}" \
 	tcp://localhost:{{ item.0 + 10000 }}
+
+# list available formats with
+# ffmpeg -hide_banner -f decklink -list_formats 1 -i '{{ item.1 }}'
