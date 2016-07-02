@@ -198,7 +198,7 @@
 
   # decklink playouts
   - name: list decklink playout devices
-    shell: ffmpeg -hide_banner -f lavfi -i testsrc -f decklink -list_devices 1 dummy 2>&1 | grep '\[decklink' | grep "'" | cut -d"'" -f2
+    shell: ffmpeg -hide_banner -f lavfi -i testsrc -f decklink -list_devices 1 dummy 2>&1 | grep '\[decklink' | grep "'" | grep -v 'Mini Recorder' | cut -d"'" -f2 
     register: decklink_playout_devices
     changed_when: False
 
