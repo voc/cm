@@ -14,6 +14,7 @@
      - fuse-vdv
      - fuse
      - cifs-utils
+     - ntfs-3g
 
   - name: create /opt/crs/tools
     file: dest=/opt/crs/tools state=directory
