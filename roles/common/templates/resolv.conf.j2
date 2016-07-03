@@ -1,0 +1,18 @@
+options rotate timeout:1 attempts:5
+{% if 'lan.c3voc.de' in ansible_domain and 'router.lan.c3voc.de' not in ansible_fqdn %}
+# voc gateway
+nameserver 10.73.0.254
+{% elif 'router.lan.c3voc.de' in ansible_domain or 'mng.ber.c3voc.de' in ansible_domain %}
+# unbound
+nameserver ::1
+{% elif 'dus.c3voc.de' in ansible_domain %}
+# rrbone
+nameserver 195.182.2.2
+{% endif %}
+# dnscache.berlin.ccc.de
+nameserver 213.73.91.35
+# as250
+nameserver 194.150.168.168
+nameserver 2001:4ce8::53
+# FoeBud
+nameserver 85.214.20.141
