@@ -13,6 +13,7 @@
       - /video/encoded/{{ event.acronym }}
       - /video/tmp/{{ event.acronym }}
       - /video/fuse
+      - /video/fuse/{{ event.acronym }}
 
   - name: checkout voctomix release
     git: repo=https://c3voc.de/git/voctomix
