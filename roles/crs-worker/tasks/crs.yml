@@ -12,6 +12,7 @@
      - libwww-curl-perl
      - libjson-perl
      - fuse-vdv
+     - fuse-ts
      - fuse
      - cifs-utils
      - ntfs-3g
