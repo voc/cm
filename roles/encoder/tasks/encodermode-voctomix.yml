@@ -33,7 +33,7 @@
   - name: list decklink input device formats
     shell: ffmpeg -hide_banner -f decklink -list_formats 1 -i '{{ item.1 }}' 2>&1 | grep '1920x1080 at 25000/1000 fps (interlaced' | cut -f2 -d'	'
     register: decklink_formats
-    with_indexed_items: decklink_devices.stdout_lines
+    with_indexed_items: "{{ decklink_devices.stdout_lines }}"
     changed_when: False
 
   - name: calculating sources
@@ -48,18 +48,18 @@
     template: src=voctomix-scripts/decklink-source.sh.j2
               dest=/opt/voctomix/scripts/decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}.sh
               mode=0755 owner=root group=root
-    with_indexed_items: decklink_devices.stdout_lines
+    with_indexed_items: "{{ decklink_devices.stdout_lines }}"
 
   - name: create decklink-source systemd-units
     template: src=systemd-units/voctomix-decklink-source.service.j2
               dest=/etc/systemd/system/voctomix-decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}.service
               mode=0644 owner=root group=root
-    with_indexed_items: decklink_devices.stdout_lines
+    with_indexed_items: "{{ decklink_devices.stdout_lines }}"
 
   - name: enable decklink-source services
     service: name=voctomix-decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}
              enabled=yes
-    with_indexed_items: decklink_devices.stdout_lines
+    with_indexed_items: "{{ decklink_devices.stdout_lines }}"
 
 
 
@@ -205,7 +205,7 @@
   - name: list decklink playout device formats
     shell: ffmpeg -hide_banner -f lavfi -i testsrc -f decklink -list_formats 1 '{{ item.1 }}' 2>&1 | grep '1920x1080 at 25000/1000 fps (interlaced' | cut -f2 -d'	'
     register: decklink_playout_formats
-    with_indexed_items: decklink_playout_devices.stdout_lines
+    with_indexed_items: "{{ decklink_playout_devices.stdout_lines }}"
     changed_when: False
 
   - name: calculating sources
@@ -221,7 +221,7 @@
               mode=0755 owner=root group=root
     with_nested:
       - [program, stream, grabber]
-      - decklink_playout_devices.stdout_lines
+      - "{{ decklink_playout_devices.stdout_lines }}"
 
   - name: create decklink-playout systemd-units
     template: src=systemd-units/voctomix-decklink-playout.service.j2
@@ -229,14 +229,14 @@
               mode=0644 owner=root group=root
     with_nested:
       - [program, stream, grabber]
-      - decklink_playout_devices.stdout_lines
+      - "{{ decklink_playout_devices.stdout_lines }}"
 
   - name: disable decklink-playout services
     service: name=voctomix-{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout
              enabled=false
     with_nested:
       - [program, stream, grabber]
-      - decklink_playout_devices.stdout_lines
+      - "{{ decklink_playout_devices.stdout_lines }}"
 
 
 
