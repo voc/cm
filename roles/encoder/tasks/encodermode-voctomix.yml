@@ -26,7 +26,7 @@
 
   # decklink sources
   - name: list decklink input devices
-    shell: ffmpeg -hide_banner -f decklink -list_devices 1 -i dummy 2>&1 | grep decklink | grep "'" | cut -d"'" -f2
+    shell: ffmpeg -hide_banner -f decklink -list_devices 1 -i dummy 2>&1 | grep decklink | grep "'" | cut -d"'" -f2 | head -n {{ max_number_cameras | default(9) }}
     register: decklink_devices
     changed_when: False
 
@@ -42,7 +42,7 @@
       number_cameras: "{{ [1, decklink_devices.stdout_lines | length] | max }}"
 
   - name: print source information
-    debug: msg="Found {{ number_decklink }} Decklink Inputs ({{ decklink_devices.stdout_lines }}), Configuring Voctocore with {{ number_cameras }} Camera-Sources (Minimum=1)"
+    debug: msg="Found {{ number_decklink }} Decklink Inputs ({{ decklink_devices.stdout_lines }}), Search limited to {{ max_number_cameras | default(9) }} Cameras, Configuring Voctocore with {{ number_cameras }} Camera-Sources (Minimum=1)"
 
   - name: create decklink-source scripts
     template: src=voctomix-scripts/decklink-source.sh.j2
