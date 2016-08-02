@@ -258,10 +258,10 @@
     command: systemctl daemon-reload
     changed_when: false
 
-  - name: enable & start voctocore service when in voctomix-mode
+  - name: enable & (re)start voctocore service when in voctomix-mode
     service: name=voctomix-voctocore
              enabled=yes
-             state=started
+             state=restarted
     when: encodermode is defined and encodermode == 'hd-voctomix'
 
   - name: disable & stop voctocore service when not in voctomix-mode
