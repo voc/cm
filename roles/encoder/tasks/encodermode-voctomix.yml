@@ -151,6 +151,20 @@
     service: name=voctomix-recording-sink
              enabled=yes
 
+  # check recording
+  - name: copy check_recording script
+    copy: src="check_recording.pl"
+          dest="/usr/local/bin/check_recording.pl"
+          mode=0755 owner=root group=root
+
+  - name: create recording check script
+    template: src="voctomix-scripts/check_recording.sh.j2"
+              dest="/opt/voctomix/scripts/check_recording.sh"
+              mode=0755 owner=root group=root
+
+  - cron: name="check recording and send mqtt message"
+          minute="*/1" hour="*" month="*" day="*"
+          job="nice -n 19 /opt/voctomix/scripts/check_recording.sh >/dev/null"
 
 
     # streaming sinks
@@ -274,3 +288,4 @@
     template: src="voctomix-scripts/voctomix-status.j2"
               dest="/usr/bin/voctomix-status"
               mode=0755 owner=root group=root
+
