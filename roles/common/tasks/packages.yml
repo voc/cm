@@ -42,6 +42,7 @@
     - ifenslave-2.6
     - apt-transport-https
     - irqbalance
+    - mosquitto-clients
 
  # jessie
  - name: install a default set of packages
