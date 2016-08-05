@@ -15,6 +15,11 @@ monitoring:
   collectd_password: satan7laos4Coca
   collectd_interval: 30
 
+mqtt:
+  server: 195.54.164.163
+  password: than_feat7apart
+  username: fahrplan
+
 trusted_ipv4_ips: {
   "world TODO: remove me": '0.0.0.0/0',
   "voc internal #3500": '10.73.0.0/16',
