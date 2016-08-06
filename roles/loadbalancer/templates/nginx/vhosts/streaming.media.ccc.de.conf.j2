@@ -6,6 +6,11 @@ upstream php {
   server unix:/run/php5-fpm-www.sock;
 }
 
+map $upstream_http_content_length $flag_cache_empty {
+  default 0;
+  0       1;
+}
+
 # FRONTEND vHOST
 server {
   server_name streaming.media.ccc.de;
@@ -68,7 +73,9 @@ server {
     }
     # caching some php runs
     fastcgi_no_cache $do_not_cache;
+    fastcgi_no_cache $flag_cache_empty;
     fastcgi_cache_bypass $do_not_cache;
+    fastcgi_cache_bypass $flag_cache_empty;
     fastcgi_cache_key "$http_x_proto$uri$is_args$args";
     fastcgi_cache streaming_fcgi;
     fastcgi_cache_valid 200 5m;
