@@ -76,4 +76,5 @@ users:
   - { name: 'mazdermind', state: 'present' }
   - { name: 'meise', state: 'present' }
   - { name: 'thomic', state: 'present' }
+  - { name: 'v0tti', state: 'present' }
   - { name: 'voc', state: 'present' }
