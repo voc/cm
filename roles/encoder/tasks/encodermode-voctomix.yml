@@ -140,7 +140,7 @@
   - name: create recording script
     template: src="voctomix-scripts/recording-sink.sh.j2"
               dest="/opt/voctomix/scripts/recording-sink.sh"
-              mode=0755 owner=root group=root
+              mode=0750 owner=root group=root
 
   - name: create recording systemd-unit
     template: src="systemd-units/voctomix-recording-sink.service.j2"
@@ -160,11 +160,12 @@
   - name: create recording check script
     template: src="voctomix-scripts/check_recording.sh.j2"
               dest="/opt/voctomix/scripts/check_recording.sh"
-              mode=0755 owner=root group=root
+              mode=0750 owner=root group=root
 
   - cron: name="check recording and send mqtt message"
           minute="*/1" hour="*" month="*" day="*"
           job="nice -n 19 /opt/voctomix/scripts/check_recording.sh >/dev/null"
+
 
 
     # streaming sinks
