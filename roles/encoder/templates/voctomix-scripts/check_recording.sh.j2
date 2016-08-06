@@ -6,7 +6,7 @@ if [ "0" -eq "$?" ]; then
   error_code=$?
 
   if [ "2" -eq "$error_code" ]; then
-    mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"warn\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"<red>${message}</red> /video/capture/{{ event.acronym }}/\"}"
+    mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"error\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"<red>${message}</red> /video/capture/{{ event.acronym }}/\"}"
   fi
 fi
 
