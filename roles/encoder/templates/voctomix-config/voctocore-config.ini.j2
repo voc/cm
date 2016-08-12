@@ -6,8 +6,9 @@ audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
 sources={% for nr in range(0, number_cameras | int) %}cam{{ nr + 1 }},{% endfor %}grabber
 
 [side-by-side-equal]
-;ypos=200
 gutter=20
+atop=200
+btop=446
 
 [side-by-side-preview]
 asize=1420x799
