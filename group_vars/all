@@ -77,4 +77,5 @@ users:
   - { name: 'meise', state: 'present' }
   - { name: 'thomic', state: 'present' }
   - { name: 'v0tti', state: 'present' }
+  - { name: 'nihilus', state: 'present' } # nobody
   - { name: 'voc', state: 'present' }
