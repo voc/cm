@@ -1,0 +1,15 @@
+---
+room_number: 7
+room_fahrplan_name: Saal7
+grabber_aspect: 16x9
+grabbersource_url_path: stream.mjpg
+
+# sd-dvswitch, hd-direct, hd-voctomix
+# deploy with --tags encodermode
+# reboot encoder after changing
+encodermode: hd-voctomix
+
+# encoder 1-5 can't handle more then 2 camera feeds
+# with only 1 feed their load is much lower
+# so if possible leave this at 1
+max_number_cameras: 2
