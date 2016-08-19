@@ -30,10 +30,9 @@ check_disk_space () {
 
 
 check_load () {
-  system_load=$(uptime | cut -d ":" -f 5)
-  load_1_minute=$(echo $system_load | cut -d ',' -f 1 | cut -d '.' -f 1)
-  load_5_minutes=$(echo $system_load | cut -d ',' -f 2 | cut -d '.' -f 1)
-  load_15_minutes=$(echo $system_load | cut -d ',' -f 3 | cut -d '.' -f 1)
+  load_1_minute=$(cut -d' ' -f 1 /proc/loadavg)
+  load_5_minutes=$(cut -d' ' -f 2 /proc/loadavg)
+  load_15_minutes=$(cut -d' ' -f 3 /proc/loadavg)
 
   if [ "$load_5_minutes" -ge "$LIMIT_LOAD" ]; then
     send_mqtt_message "error" "system/load/{{ ansible_hostname }}" "system load: $load_1_minute, $load_5_minutes, $load_15_minutes</red>"
