@@ -161,6 +161,8 @@
     template: src="voctomix-scripts/check_recording.sh.j2"
               dest="/opt/voctomix/scripts/check_recording.sh"
               mode=0750 owner=root group=root
+    tags:
+      - check_recording
 
   - cron: name="check recording and send mqtt message"
           minute="*/1" hour="*" month="*" day="*"
