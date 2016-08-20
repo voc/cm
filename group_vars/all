@@ -78,4 +78,5 @@ users:
   - { name: 'thomic', state: 'present' }
   - { name: 'v0tti', state: 'present' }
   - { name: 'nihilus', state: 'present' } # nobody
+  - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'voc', state: 'present' }
