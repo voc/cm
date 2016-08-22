@@ -1,7 +1,9 @@
+#MANAGED BY ANSIBLE
+
 [Unit]
 Description = voctomix music-source
-After = voctomix-voctocore.service
-Requires = voctomix-voctocore.service
+After = voctocore.service
+Requires = voctocore.service
 
 [Service]
 Type = simple
@@ -11,4 +13,4 @@ RestartSec = 1s
 StartLimitInterval = 0
 
 [Install]
-WantedBy = voctomix-voctocore.service
+WantedBy = voctocore.service

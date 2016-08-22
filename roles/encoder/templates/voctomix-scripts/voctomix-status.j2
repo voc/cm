@@ -1,2 +1,2 @@
 #!/bin/sh
-systemctl status -n0 `cd /etc/systemd/system; ls -1 voctomix*service`
+systemctl status -n0 `(grep -l "#MANAGED BY ANSIBLE" -r /etc/systemd/system/; find /etc/systemd/system/ -type f -name 'voctomix-*') | xargs -rl1 basename`

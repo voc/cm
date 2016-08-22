@@ -2,13 +2,10 @@
 
 ffmpeg -y -nostdin \
 	-f decklink -video_input sdi \
-	-i '{{ item.1 }}@{{ decklink_formats.results[ item.0 ].stdout }}' \
+	-i "{{ item.1.device }}@`/opt/voctomix/scripts/ffmpeg-detect-mode-number.sh {{ item.1.device | quote}} {{ item.1.mode | quote}}`" \
 	-c:v rawvideo -c:a pcm_s16le \
 	-pix_fmt yuv420p \
 	-r 25 \
 	-f matroska \
-	-metadata title="{{ item.1 }}" \
+	-metadata title="{{ item.1.name }}" \
 	tcp://localhost:{{ item.0 + 10000 }}
-
-# list available formats with
-# ffmpeg -hide_banner -f decklink -list_formats 1 -i '{{ item.1 }}'

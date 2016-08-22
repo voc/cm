@@ -3,7 +3,7 @@ fbset -g 1920 1080 1920 1080 32
 echo 0 >/sys/class/graphics/fbcon/cursor_blink
 
 ffmpeg \
-	-i tcp://localhost:{% if item == 'stream' %}15000{% elif item == 'program' %}11000{% elif item == 'grabber' %}{{ number_cameras | int + 13000 }}{% endif %} \
+	-i tcp://localhost:{% if item == 'stream' %}15000{% elif item == 'program' %}11000{% endif %} \
 	-map 0:v \
 	-c:v rawvideo \
 	-pix_fmt bgra \

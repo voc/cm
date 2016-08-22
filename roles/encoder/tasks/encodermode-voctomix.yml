@@ -1,6 +1,34 @@
 ---
   # see packages.yml for gstreamer package installation
 
+  # old scripts & units
+  - name: remove old scripts
+    file: state=absent path="/opt/voctomix/scripts"
+
+  - name: find old units
+    shell: (grep -l "#MANAGED BY ANSIBLE" -r /etc/systemd/system/; find /etc/systemd/system/ -type f -name 'voctomix-*') | xargs -rl1 basename
+    register: old_units
+
+  - debug: msg="{{ old_units.stdout_lines }}"
+
+  - name: disable & stop old units
+    service: name={{ item }}
+            enabled=no
+            state=stopped
+    with_items: old_units.stdout_lines
+
+  - name: remove old unit-files
+    file: state=absent path="/etc/systemd/system/{{ item }}"
+    with_items: old_units.stdout_lines
+
+  - name: remove old voctocore.service.wants-dir
+    file: state=absent path="{{ item }}"
+    with_items:
+      - /etc/systemd/system/voctocore.service.wants
+      - /etc/systemd/system/voctomix-voctocore.service.wants
+
+
+
   # directories & code
   - name: create voctomix directories
     file: dest={{ item }} state=directory
@@ -24,59 +52,59 @@
 
 
 
-  # decklink sources
-  - name: list decklink input devices
-    shell: ffmpeg -hide_banner -f decklink -list_devices 1 -i dummy 2>&1 | grep decklink | grep "'" | cut -d"'" -f2 | head -n {{ max_number_cameras | default(9) }}
-    register: decklink_devices
-    changed_when: False
+  - name: deploy decklink-format-detection-script
+    template: src="voctomix-scripts/ffmpeg-detect-mode-number.sh.j2"
+              dest="/opt/voctomix/scripts/ffmpeg-detect-mode-number.sh"
+              mode=0755 owner=root group=root
 
-  - name: list decklink input device formats
-    shell: "ffmpeg -hide_banner -f decklink -list_formats 1 -i '{{ item.1 }}' 2>&1 | grep '1920x1080 at 25000/1000 fps (interlaced' | cut -f2 -d'	'"
-    register: decklink_formats
-    with_indexed_items: "{{ decklink_devices.stdout_lines }}"
-    changed_when: False
-
-  - name: calculating sources
-    set_fact:
-      number_decklink: "{{ decklink_devices.stdout_lines | length }}"
-      number_cameras: "{{ [1, decklink_devices.stdout_lines | length] | max }}"
-
-  - name: print source information
-    debug: msg="Found {{ number_decklink }} Decklink Inputs ({{ decklink_devices.stdout_lines }}), Search limited to {{ max_number_cameras | default(9) }} Cameras, Configuring Voctocore with {{ number_cameras }} Camera-Sources (Minimum=1)"
+  # - name: detect decklink-format
+  #   command: /opt/voctomix/scripts/ffmpeg-detect-mode-number.sh
+  #   when: item.1.type == 'decklink'
+  #   with_indexed_items: "{{ voctomix_sources }}"
+  #   register: decklink_modes
 
   - name: create decklink-source scripts
     template: src="voctomix-scripts/decklink-source.sh.j2"
-              dest="/opt/voctomix/scripts/decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}.sh"
+              dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
-    with_indexed_items: "{{ decklink_devices.stdout_lines }}"
+    when: item.1.type == 'decklink'
+    with_indexed_items: "{{ voctomix_sources }}"
 
   - name: create decklink-source systemd-units
-    template: src="systemd-units/voctomix-decklink-source.service.j2"
-              dest="/etc/systemd/system/voctomix-decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}.service"
+    template: src="systemd-units/decklink-source.service.j2"
+              dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
-    with_indexed_items: "{{ decklink_devices.stdout_lines }}"
+    when: item.1.type == 'decklink'
+    with_indexed_items: "{{ voctomix_sources }}"
 
   - name: enable decklink-source services
-    service: name="voctomix-decklink-source-{{ item.1 | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}"
+    service: name="{{ item.1.name }}-source.service"
              enabled=yes
-    with_indexed_items: "{{ decklink_devices.stdout_lines }}"
+    when: item.1.type == 'decklink'
+    with_indexed_items: "{{ voctomix_sources }}"
 
 
 
     # grabber source source
   - name: create grabber-source script
     template: src="voctomix-scripts/grabber-source.sh.j2"
-              dest="/opt/voctomix/scripts/grabber-source.sh"
+              dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
+    when: item.1.type == 'mjpeg'
+    with_indexed_items: "{{ voctomix_sources }}"
 
   - name: create grabber-source systemd-unit
-    template: src="systemd-units/voctomix-grabber-source.service.j2"
-              dest="/etc/systemd/system/voctomix-grabber-source.service"
+    template: src="systemd-units/grabber-source.service.j2"
+              dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
+    when: item.1.type == 'mjpeg'
+    with_indexed_items: "{{ voctomix_sources }}"
 
   - name: enable grabber-source service
-    service: name=voctomix-grabber-source
+    service: name={{ item.1.name }}-source.service
              enabled=yes
+    when: item.1.type == 'mjpeg'
+    with_indexed_items: "{{ voctomix_sources }}"
 
 
 
@@ -87,12 +115,12 @@
               mode=0755 owner=root group=root
 
   - name: create pause-source systemd-unit
-    template: src="systemd-units/voctomix-pause-source.service.j2"
-              dest="/etc/systemd/system/voctomix-pause-source.service"
+    template: src="systemd-units/pause-source.service.j2"
+              dest="/etc/systemd/system/pause-source.service"
               mode=0644 owner=root group=root
 
   - name: enable pause-source service
-    service: name=voctomix-pause-source
+    service: name=pause-source.service
              enabled=yes
 
 
@@ -109,12 +137,12 @@
               mode=0755 owner=root group=root
 
   - name: create music-source systemd-unit
-    template: src="systemd-units/voctomix-music-source.service.j2"
-              dest="/etc/systemd/system/voctomix-music-source.service"
+    template: src="systemd-units/music-source.service.j2"
+              dest="/etc/systemd/system/music-source.service"
               mode=0644 owner=root group=root
 
   - name: enable music-source service
-    service: name=voctomix-music-source
+    service: name=music-source.service
              enabled=yes
 
 
@@ -126,12 +154,12 @@
               mode=0755 owner=root group=root
 
   - name: create bgloop systemd-unit
-    template: src="systemd-units/voctomix-bgloop-source.service.j2"
-              dest="/etc/systemd/system/voctomix-bgloop-source.service"
+    template: src="systemd-units/bgloop-source.service.j2"
+              dest="/etc/systemd/system/bgloop.service"
               mode=0644 owner=root group=root
 
   - name: enable bgloop service
-    service: name=voctomix-bgloop-source
+    service: name=bgloop.service
              enabled=yes
 
 
@@ -143,12 +171,12 @@
               mode=0750 owner=root group=root
 
   - name: create recording systemd-unit
-    template: src="systemd-units/voctomix-recording-sink.service.j2"
-              dest="/etc/systemd/system/voctomix-recording-sink.service"
+    template: src="systemd-units/recording-sink.service.j2"
+              dest="/etc/systemd/system/recording-sink.service"
               mode=0644 owner=root group=root
 
   - name: enable recording service
-    service: name=voctomix-recording-sink
+    service: name=recording-sink.service
              enabled=yes
 
   # check recording
@@ -173,41 +201,40 @@
     # streaming sinks
   - name: create streaming script
     template: src="voctomix-scripts/streaming-sink.sh.j2"
-              dest="/opt/voctomix/scripts/streaming-{{ item }}-sink.sh"
+              dest="/opt/voctomix/scripts/streaming-sink-{{ item }}.sh"
               mode=0755 owner=root group=root
     with_items: [sd, hd]
 
   - name: create streaming systemd-unit
-    template: src="systemd-units/voctomix-streaming-sink.service.j2"
-              dest="/etc/systemd/system/voctomix-streaming-{{ item }}-sink.service"
+    template: src="systemd-units/streaming-sink.service.j2"
+              dest="/etc/systemd/system/streaming-sink-{{ item }}.service"
               mode=0644 owner=root group=root
     with_items: [sd, hd]
 
   - name: enable hd-streaming service
-    service: name=voctomix-streaming-hd-sink
+    service: name=streaming-sink-hd.service
              enabled=yes
 
   - name: disable sd-streaming service
-    service: name=voctomix-streaming-sd-sink
+    service: name=streaming-sink-sd.service
              enabled=no
 
 
 
-    # framebuffer playout sinks
-  - name: create playout script
+  - name: create framebuffer playout systemd-unit
     template: src="voctomix-scripts/framebuffer-playout.sh.j2"
               dest="/opt/voctomix/scripts/{{ item }}-to-framebuffer-playout.sh"
               mode=0755 owner=root group=root
-    with_items: [program, stream, grabber]
+    with_items: [program, stream]
 
   - name: create playout systemd-unit
-    template: src="systemd-units/voctomix-framebuffer-playout.service.j2"
-              dest="/etc/systemd/system/voctomix-{{ item }}-to-framebuffer-playout.service"
+    template: src="systemd-units/framebuffer-playout.service.j2"
+              dest="/etc/systemd/system/{{ item }}-to-framebuffer-playout.service"
               mode=0644 owner=root group=root
-    with_items: [program, stream, grabber]
+    with_items: [program, stream]
 
   - name: disable playout service
-    service: name=voctomix-{{ item }}-to-framebuffer-playout
+    service: name={{ item }}-to-framebuffer-playout.service
              enabled=false
     with_items: [program, stream, grabber]
 
@@ -241,15 +268,15 @@
       - "{{ decklink_playout_devices.stdout_lines }}"
 
   - name: create decklink-playout systemd-units
-    template: src="systemd-units/voctomix-decklink-playout.service.j2"
-              dest="/etc/systemd/system/voctomix-{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout.service"
+    template: src="systemd-units/decklink-playout.service.j2"
+              dest="/etc/systemd/system/{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout.service"
               mode=0644 owner=root group=root
     with_nested:
       - [program, stream, grabber]
       - "{{ decklink_playout_devices.stdout_lines }}"
 
   - name: disable decklink-playout services
-    service: name="voctomix-{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout"
+    service: name="voctomix-{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout.service"
              enabled=false
     with_nested:
       - [program, stream, grabber]
@@ -267,8 +294,8 @@
 
   # voctocore service
   - name: create voctocore systemd-unit
-    template: src="systemd-units/voctomix-voctocore.service.j2"
-              dest="/etc/systemd/system/voctomix-voctocore.service"
+    template: src="systemd-units/voctocore.service.j2"
+              dest="/etc/systemd/system/voctocore.service"
               mode=0644 owner=root group=root
 
   - name: reload systemd daemon
@@ -276,13 +303,13 @@
     changed_when: false
 
   - name: enable & (re)start voctocore service when in voctomix-mode
-    service: name=voctomix-voctocore
+    service: name=voctocore.service
              enabled=yes
              state=restarted
     when: encodermode is defined and encodermode == 'hd-voctomix'
 
   - name: disable & stop voctocore service when not in voctomix-mode
-    service: name=voctomix-voctocore
+    service: name=voctomix-voctocore.service
              enabled=no
              state=stopped
     when: encodermode is not defined or encodermode != 'hd-voctomix'

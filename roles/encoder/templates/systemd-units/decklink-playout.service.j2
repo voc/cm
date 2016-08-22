@@ -1,7 +1,7 @@
 [Unit]
 Description = voctomix {{ item[0] }}-to-{{ item[1] }} playout
-After = voctomix-voctocore.service
-Requires = voctomix-voctocore.service
+After = voctocore.service
+Requires = voctocore.service
 
 [Service]
 Type = simple
@@ -11,4 +11,4 @@ RestartSec = 1s
 StartLimitInterval = 0
 
 [Install]
-WantedBy = voctomix-voctocore.service
+WantedBy = voctocore.service
