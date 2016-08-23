@@ -5,6 +5,7 @@ ffmpeg -y -nostdin -xerror \
 		[0:v] fps=25,scale=1920x1080,setsar=1/1 [v] ;
 		anullsrc=r=48000:cl=stereo [a]
 	" \
+	-f 25 \
 	-map "[v]" -map "[a]" \
 	-c:a pcm_s16le \
 	-c:v rawvideo \
