@@ -8,7 +8,9 @@
  - include: encodermode-hddirect.yml
    tags: encodermode
  - include: encodermode-voctomix.yml
-   tags: encodermode
+   tags:
+    - encodermode
+    - voctomix
  - include: nginx.yml
    tabs: nginx
  - include: samba.yml
