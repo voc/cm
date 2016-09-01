@@ -31,7 +31,7 @@
     changed_when: False
 
   - name: list decklink input device formats
-    shell: ffmpeg -hide_banner -f decklink -list_formats 1 -i '{{ item.1 }}' 2>&1 | grep '1920x1080 at 25000/1000 fps (interlaced' | cut -f2 -d'	'
+    shell: "ffmpeg -hide_banner -f decklink -list_formats 1 -i '{{ item.1 }}' 2>&1 | grep '1920x1080 at 25000/1000 fps (interlaced' | cut -f2 -d'	'"
     register: decklink_formats
     with_indexed_items: "{{ decklink_devices.stdout_lines }}"
     changed_when: False
@@ -220,7 +220,7 @@
     changed_when: False
 
   - name: list decklink playout device formats
-    shell: ffmpeg -hide_banner -f lavfi -i testsrc -f decklink -list_formats 1 '{{ item.1 }}' 2>&1 | grep '1920x1080 at 25000/1000 fps (interlaced' | cut -f2 -d'	'
+    shell: "ffmpeg -hide_banner -f lavfi -i testsrc -f decklink -list_formats 1 '{{ item.1 }}' 2>&1 | grep '1920x1080 at 25000/1000 fps (interlaced' | cut -f2 -d'	'"
     register: decklink_playout_formats
     with_indexed_items: "{{ decklink_playout_devices.stdout_lines }}"
     changed_when: False
