@@ -38,6 +38,10 @@
       - "artwork/black-bgloop.ts"
       - "artwork/white-bgloop.ts"
 
+  - name: remove existing background-loop
+    file: dest=/opt/voc/share/bgloop.ts
+          state=absent
+
   - name: symlink black as default background-loop
     file: src=black-bgloop.ts
           dest=/opt/voc/share/bgloop.ts
