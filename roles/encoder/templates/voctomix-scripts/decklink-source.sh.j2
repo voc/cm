@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ffmpeg -y -nostdin \
-	-f decklink \
+	-f decklink -video_input sdi \
 	-i '{{ item.1 }}@{{ decklink_formats.results[ item.0 ].stdout }}' \
 	-c:v rawvideo -c:a pcm_s16le \
 	-pix_fmt yuv420p \
