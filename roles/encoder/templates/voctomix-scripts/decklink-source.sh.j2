@@ -3,6 +3,7 @@
 ffmpeg -y -nostdin \
 	-f decklink -video_input sdi \
 	-i "{{ item.1.device }}@`/opt/voctomix/scripts/ffmpeg-detect-mode-number.sh {{ item.1.device | quote}} {{ item.1.mode | quote}}`" \
+	-video_input {{ item.1.plug | default('sdi') }} \
 	-c:v rawvideo -c:a pcm_s16le \
 	-pix_fmt yuv420p \
 	-r 25 \
