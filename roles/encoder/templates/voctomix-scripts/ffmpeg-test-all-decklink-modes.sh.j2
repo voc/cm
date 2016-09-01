@@ -1,0 +1,15 @@
+#!/bin/bash
+ffmpeg -hide_banner -y -nostdin -f decklink -list_devices 1 -i dummy 2>&1 | grep '\[decklink' | grep "'" | cut -d"'" -f2 | while read device; do
+	ffmpeg -hide_banner -y -nostdin -f decklink -list_formats 1 -i "$device" 2>&1 | grep '\[decklink' | grep -v 'Supported formats' | cut -f2 -d'	' | while read mode; do
+		for plug in sdi hdmi; do
+
+			desc="$device@$mode on $plug"
+			echo $desc
+			ffmpeg ffmpeg -v quiet -hide_banner -y -nostdin -f decklink -video_input $plug \
+				-i "$device@$mode" \
+				-ss 1 -vframes 1 \
+				"$desc.png"
+
+		done
+	done
+done

@@ -57,6 +57,11 @@
               dest="/opt/voctomix/scripts/ffmpeg-detect-mode-number.sh"
               mode=0755 owner=root group=root
 
+  - name: deploy decklink-format-test-all-script
+    template: src="voctomix-scripts/ffmpeg-test-all-decklink-modes.sh.j2"
+              dest="/opt/voctomix/scripts/ffmpeg-test-all-decklink-modes.sh"
+              mode=0755 owner=root group=root
+
   # - name: detect decklink-format
   #   command: /opt/voctomix/scripts/ffmpeg-detect-mode-number.sh
   #   when: item.1.type == 'decklink'
