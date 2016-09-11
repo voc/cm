@@ -19,7 +19,7 @@ check_disk_space () {
   df -h | tail -n +2 | while read line; do
     mount_point=$(echo $line | awk '{ print $1 }')
     disk_usage_percent=$(echo $line | awk '{ print $5 }' | tr -d '%')
-    disk_space=$(echo $line | awk '{ print $5 }' | tr -d '%')
+    disk_space=$(echo $line | awk '{ print $2 }')
     disk_space_avilable=$(echo $line | awk '{ print $4 }')
 
     if [ "$disk_usage_percent" -ge "$LIMIT_DISK_USAGE" ]; then
