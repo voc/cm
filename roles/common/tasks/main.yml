@@ -1,5 +1,6 @@
 ---
   - include: ../../../register/bin_path.yml
+  - include: resolv.yml
   - include: repos.yml
   - include: packages.yml
   - include: vim.yml
@@ -11,7 +12,6 @@
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
   - include: ssl.yml
-  - include: resolv.yml
   # realise users
   - include: user.yml user={{ users }}
     tags: user
