@@ -76,7 +76,7 @@
     with_indexed_items: "{{ voctomix_sources }}"
 
   - name: create decklink-source systemd-units
-    template: src="systemd-units/decklink-source.service.j2"
+    template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
     when: item.1.type == 'decklink'
@@ -99,7 +99,7 @@
     with_indexed_items: "{{ voctomix_sources }}"
 
   - name: create grabber-source systemd-unit
-    template: src="systemd-units/grabber-source.service.j2"
+    template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
     when: item.1.type == 'mjpeg'
