@@ -6,4 +6,4 @@ ffmpeg \
 		grep "$2" | \
 		sort -r | \
 		head -1 | \
-		awk '{ print "$4" }'
+		awk '{ print $4 }'
