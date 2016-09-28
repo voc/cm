@@ -52,6 +52,7 @@
 
 
 
+  # decklink sources
   - name: deploy decklink-format-detection-script
     template: src="voctomix-scripts/ffmpeg-detect-mode-number.sh.j2"
               dest="/opt/voctomix/scripts/ffmpeg-detect-mode-number.sh"
@@ -90,7 +91,7 @@
 
 
 
-    # grabber source source
+    # grabber sources
   - name: create grabber-source script
     template: src="voctomix-scripts/grabber-source.sh.j2"
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
