@@ -36,11 +36,10 @@
     with_items:
       - /opt/voctomix/scripts/
       - /opt/voctomix/release/
-      - /video/capture
       - /video/capture/{{ event.acronym }}
       - /video/encoded/{{ event.acronym }}
       - /video/tmp/{{ event.acronym }}
-      - /video/fuse
+      - /video/intros/{{ event.acronym }}
       - /video/fuse/{{ event.acronym }}
 
   - name: checkout voctomix release
