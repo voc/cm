@@ -67,7 +67,7 @@ live.dus.c3voc.de   nginx=yes    icecast=yes                        icecast_mast
 
 
 [loadbalancers]
-live.dus.c3voc.de
+lb1.het.c3voc.de
 
 # mainly remote server
 [basic]
@@ -80,7 +80,10 @@ mngslave.dus.c3voc.de
 testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 
 [minions]
-minion[1:4].lan.c3voc.de crs_token=GZEyv1pDYebNt12bsevrMmW5ZnqQdYet crs_secret=rPPc5IFq4AUdkFo93Qn7Qd0IVEVkPR7d
+minion1.lan.c3voc.de crs_token=OkFY0MF9J2BfTmXb0NuBmOQPoAZpFxEE crs_secret=3XdyGyt2Kvx90RueeQBPSobeWDwQi68E
+minion2.lan.c3voc.de crs_token=LxUGPKrufM07GAauzZEYCjyp9UNpE8Kt crs_secret=8hAq9xG9y5uhLGnf0qHk0oGmKvAuzVyz
+minion3.lan.c3voc.de crs_token=HyKCiGgjSaNzAH40K9v0TQsRJZdECwIh crs_secret=KzEhbGUSo0I69wgDstmj7V5hCSd7yorM
+minion4.lan.c3voc.de crs_token=ksQ6xe0qh6FoVIP3QDsFsItSDjj4550D crs_secret=wuX0csjH0ltDU0oX6KtaXoGMiT500xOo
 speedy.lan.c3voc.de crs_token=ZVgwZjhk6Sh0JFqA06yKYIlX3adj7vf6 crs_secret=wXwQRA56MTClsJ7PCk9A5YTaTzJKjzrR
 tweety.lan.c3voc.de crs_token=iu9TJ5KwoH3p0KeKbZkb50k7fCO6g9x6 crs_secret=pXb8vRvsTrQRPVt02YdUXzpeObSu0mzV
 
