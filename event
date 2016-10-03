@@ -67,7 +67,7 @@ live.dus.c3voc.de   nginx=yes    icecast=yes                        icecast_mast
 
 
 [loadbalancers]
-lb1.het.c3voc.de
+lb.dus.c3voc.de
 
 # mainly remote server
 [basic]
