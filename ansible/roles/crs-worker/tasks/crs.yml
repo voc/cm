@@ -36,6 +36,7 @@
   - name: checkout tools/job-control/
     subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/job-control/
                 dest=/opt/crs/tools/job-control
+                force=yes
     tags:
       - checkout
       - pull
