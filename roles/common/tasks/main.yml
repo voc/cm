@@ -3,6 +3,7 @@
   - include: resolv.yml
   - include: repos.yml
   - include: packages.yml
+  - include: kernel.yml
   - include: vim.yml
   - include: sudo.yml
   - include: grub.yml
