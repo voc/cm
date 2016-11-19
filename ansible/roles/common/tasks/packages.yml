@@ -72,3 +72,4 @@
    with_items:
      - rpcbind
      - openntpd
+     - rdnssd
