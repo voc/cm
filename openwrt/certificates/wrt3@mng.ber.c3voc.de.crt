@@ -1,0 +1,106 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 15 (0xf)
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=DE, ST=Berlin, L=Berlin, O=C3VOC, OU=changeme, CN=c3voc.de/name=c3voc/emailAddress=info@c3voc.de
+        Validity
+            Not Before: Apr  2 20:21:41 2015 GMT
+            Not After : Mar 30 20:21:41 2025 GMT
+        Subject: C=DE, L=Berlin, O=C3VOC, CN=wrt3@mng.ber.c3voc.de/name=changeme/emailAddress=mail@host.domain
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (4096 bit)
+                Modulus:
+                    00:cf:b0:b0:58:0d:4f:7c:32:3a:d7:51:9e:d3:08:
+                    a6:3a:f3:49:21:f4:39:4e:d8:27:a7:2a:dc:cb:a4:
+                    25:ed:a8:1e:4d:a9:98:35:94:c4:dd:3e:32:a8:8b:
+                    b2:95:72:79:4d:42:8c:47:28:60:2c:0d:26:28:d3:
+                    af:3d:c1:df:4b:69:3c:a7:04:ac:46:a0:43:de:14:
+                    a7:03:53:72:cf:71:d6:7b:09:37:1a:13:5d:89:b1:
+                    e5:78:9e:6d:c3:0a:26:30:4b:bd:80:ac:44:72:ad:
+                    23:c8:3a:03:04:f1:9b:18:b0:ac:7f:8d:74:72:34:
+                    21:84:16:06:cb:2c:fa:18:f8:8b:b8:72:7a:78:c2:
+                    ce:e5:e6:1d:b3:ce:1c:63:0b:d2:ae:00:28:1e:97:
+                    61:49:f3:8b:58:ea:cb:cd:b5:10:79:aa:e3:2c:c8:
+                    aa:56:b1:f7:0a:e0:4c:56:f8:78:d8:e4:4d:ed:82:
+                    c5:fe:97:55:d8:1c:c1:8c:16:8b:c0:8a:66:85:9c:
+                    d8:2f:36:86:7f:9d:fe:35:bc:fb:5b:3e:68:59:b8:
+                    ad:cf:64:c0:70:24:17:a0:28:70:c5:2e:fa:5f:dd:
+                    b8:92:37:e9:b0:7b:45:e4:67:48:e1:6b:72:da:d6:
+                    ab:2f:82:43:a6:63:44:b1:5d:7c:ef:a7:b3:ba:d1:
+                    80:56:3b:fd:eb:9a:58:36:69:65:bd:2a:fa:43:68:
+                    c0:1c:c4:68:1d:c3:e6:f9:c7:5f:67:9d:96:b4:63:
+                    12:5b:ca:0c:06:9f:ef:5e:90:1d:c8:63:06:cf:b0:
+                    c7:cf:37:23:e3:ba:9d:25:30:7a:96:77:9c:6f:2e:
+                    93:bd:4b:16:5f:f2:f0:b4:66:65:7e:82:04:e9:98:
+                    d8:30:e2:29:10:2e:ad:75:b6:4b:aa:3c:98:72:f5:
+                    fb:9f:d8:98:b3:c1:2b:43:3e:c4:0d:c8:b7:90:57:
+                    9e:14:c4:7c:4d:73:3f:a2:e1:76:25:3e:83:3a:33:
+                    1a:77:06:2f:e2:86:b2:97:b9:49:6a:cf:20:71:52:
+                    24:11:4b:36:74:53:a5:56:2e:d1:fd:c3:81:b8:39:
+                    74:f3:28:66:51:9f:d0:2b:cf:af:51:fe:c9:79:e4:
+                    84:40:0b:af:c1:6c:53:d7:5c:1c:7b:b5:d0:f7:22:
+                    06:1f:e4:e7:90:05:0f:90:4b:99:77:17:85:8e:c6:
+                    bf:83:7a:a0:43:c9:53:0b:d1:a0:8e:cd:dd:6d:88:
+                    fc:9b:71:d8:21:e8:fd:71:6c:5f:86:f2:b4:38:a1:
+                    99:c2:50:5f:ed:1c:e4:94:cd:58:9b:c8:44:99:71:
+                    99:fb:77:e4:6d:6d:29:56:99:d6:92:01:d6:69:48:
+                    76:d0:25
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints:
+                CA:FALSE
+            Netscape Comment:
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier:
+                44:DE:37:B9:08:EF:38:5E:F6:38:19:A8:81:06:53:E9:DD:B3:43:16
+            X509v3 Authority Key Identifier:
+                keyid:CC:36:94:29:EA:F8:78:8D:33:54:62:29:AA:A0:A6:1D:4A:4A:65:35
+                DirName:/C=DE/ST=Berlin/L=Berlin/O=C3VOC/OU=changeme/CN=c3voc.de/name=c3voc/emailAddress=info@c3voc.de
+                serial:C4:B9:52:0F:31:42:CA:A9
+
+            X509v3 Extended Key Usage:
+                TLS Web Client Authentication
+            X509v3 Key Usage:
+                Digital Signature
+    Signature Algorithm: sha1WithRSAEncryption
+         81:71:8a:39:f6:fc:86:0f:88:99:78:06:d7:07:27:e2:a4:b7:
+         38:9f:cc:dd:6c:5f:f9:05:f5:84:1b:cb:42:0a:57:56:92:6d:
+         0b:3d:a4:15:d5:dc:ab:a9:ba:05:fb:cd:2a:cc:d1:3f:74:74:
+         e1:70:c6:53:75:45:87:3a:3d:35:f0:46:be:d9:0a:fc:f7:9c:
+         74:76:74:c5:1a:a8:01:fa:13:7c:c4:6b:16:f3:56:56:08:2d:
+         8c:43:53:1b:cf:6b:f0:36:b6:fc:49:de:51:5d:cb:38:23:2d:
+         22:76:f0:5e:5e:56:1b:1d:7e:1b:67:e0:6f:3d:dc:d7:fe:7e:
+         83:9e
+-----BEGIN CERTIFICATE-----
+MIIFXTCCBMagAwIBAgIBDzANBgkqhkiG9w0BAQUFADCBkzELMAkGA1UEBhMCREUx
+DzANBgNVBAgTBkJlcmxpbjEPMA0GA1UEBxMGQmVybGluMQ4wDAYDVQQKEwVDM1ZP
+QzERMA8GA1UECxMIY2hhbmdlbWUxETAPBgNVBAMTCGMzdm9jLmRlMQ4wDAYDVQQp
+EwVjM3ZvYzEcMBoGCSqGSIb3DQEJARYNaW5mb0BjM3ZvYy5kZTAeFw0xNTA0MDIy
+MDIxNDFaFw0yNTAzMzAyMDIxNDFaMIGCMQswCQYDVQQGEwJERTEPMA0GA1UEBxMG
+QmVybGluMQ4wDAYDVQQKEwVDM1ZPQzEeMBwGA1UEAxQVd3J0M0BtbmcuYmVyLmMz
+dm9jLmRlMREwDwYDVQQpEwhjaGFuZ2VtZTEfMB0GCSqGSIb3DQEJARYQbWFpbEBo
+b3N0LmRvbWFpbjCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAM+wsFgN
+T3wyOtdRntMIpjrzSSH0OU7YJ6cq3MukJe2oHk2pmDWUxN0+MqiLspVyeU1CjEco
+YCwNJijTrz3B30tpPKcErEagQ94UpwNTcs9x1nsJNxoTXYmx5XiebcMKJjBLvYCs
+RHKtI8g6AwTxmxiwrH+NdHI0IYQWBsss+hj4i7hyenjCzuXmHbPOHGML0q4AKB6X
+YUnzi1jqy821EHmq4yzIqlax9wrgTFb4eNjkTe2Cxf6XVdgcwYwWi8CKZoWc2C82
+hn+d/jW8+1s+aFm4rc9kwHAkF6AocMUu+l/duJI36bB7ReRnSOFrctrWqy+CQ6Zj
+RLFdfO+ns7rRgFY7/euaWDZpZb0q+kNowBzEaB3D5vnHX2edlrRjElvKDAaf716Q
+HchjBs+wx883I+O6nSUwepZ3nG8uk71LFl/y8LRmZX6CBOmY2DDiKRAurXW2S6o8
+mHL1+5/YmLPBK0M+xA3It5BXnhTEfE1zP6LhdiU+gzozGncGL+KGspe5SWrPIHFS
+JBFLNnRTpVYu0f3Dgbg5dPMoZlGf0CvPr1H+yXnkhEALr8FsU9dcHHu10PciBh/k
+55AFD5BLmXcXhY7Gv4N6oEPJUwvRoI7N3W2I/Jtx2CHo/XFsX4bytDihmcJQX+0c
+5JTNWJvIRJlxmft35G1tKVaZ1pIB1mlIdtAlAgMBAAGjggFKMIIBRjAJBgNVHRME
+AjAAMC0GCWCGSAGG+EIBDQQgFh5FYXN5LVJTQSBHZW5lcmF0ZWQgQ2VydGlmaWNh
+dGUwHQYDVR0OBBYEFETeN7kI7zhe9jgZqIEGU+nds0MWMIHIBgNVHSMEgcAwgb2A
+FMw2lCnq+HiNM1RiKaqgph1KSmU1oYGZpIGWMIGTMQswCQYDVQQGEwJERTEPMA0G
+A1UECBMGQmVybGluMQ8wDQYDVQQHEwZCZXJsaW4xDjAMBgNVBAoTBUMzVk9DMREw
+DwYDVQQLEwhjaGFuZ2VtZTERMA8GA1UEAxMIYzN2b2MuZGUxDjAMBgNVBCkTBWMz
+dm9jMRwwGgYJKoZIhvcNAQkBFg1pbmZvQGMzdm9jLmRlggkAxLlSDzFCyqkwEwYD
+VR0lBAwwCgYIKwYBBQUHAwIwCwYDVR0PBAQDAgeAMA0GCSqGSIb3DQEBBQUAA4GB
+AIFxijn2/IYPiJl4BtcHJ+KktzifzN1sX/kF9YQby0IKV1aSbQs9pBXV3KupugX7
+zSrM0T90dOFwxlN1RYc6PTXwRr7ZCvz3nHR2dMUaqAH6E3zEaxbzVlYILYxDUxvP
+a/A2tvxJ3lFdyzgjLSJ28F5eVhsdfhtn4G893Nf+foOe
+-----END CERTIFICATE-----
