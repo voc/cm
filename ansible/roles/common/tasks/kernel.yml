@@ -9,5 +9,5 @@
     when: linux_kernel_installed|failed
     with_items:
       - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-image-4.7.10-040710-generic_4.7.10-040710.201610220847_amd64.deb
-      - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.8.9/linux-headers-4.8.9-040809_4.8.9-040809.201611180631_all.deb 
+      - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710_4.7.10-040710.201610220847_all.deb
       - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710-generic_4.7.10-040710.201610220847_amd64.deb
