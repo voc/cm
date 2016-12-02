@@ -15,7 +15,7 @@
     service: name={{ item }}
             enabled=no
             state=stopped
-    with_items: old_units.stdout_lines
+    with_items: "{{ old_units.stdout_lines }}"
 
   - name: remove old unit-files
     file: state=absent path="/etc/systemd/system/{{ item }}"
