@@ -12,7 +12,7 @@
     - encodermode
     - voctomix
  - include: nginx.yml
-   tabs: nginx
+   tags: nginx
  - include: samba.yml
    tags: samba
  - include: rc.local.yml
