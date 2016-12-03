@@ -68,7 +68,7 @@
       <hidden>0</hidden>
       <public>1</public>
       <stream-name>{{ mount['stream-name'] }}</stream-name>
-      <stream-description>{{ mount['description'] | default("31st Chaos Communication Congress - December 27th to 30th, 2014 - CCH Congress Center Hamburg, Germany, Earth, Milky Way")}}</stream-description>
+      <stream-description>{{ mount['description'] | default("32st Chaos Communication Congress - December 27th to 30th, 2015 - CCH Congress Center Hamburg, Germany, Earth, Milky Way")}}</stream-description>
       <stream-url>{{ mount['stream-url'] }}</stream-url>
     </mount>
 
@@ -86,7 +86,7 @@
       <hidden>0</hidden>
       <public>1</public>
       <stream-name>{{ mount['stream-name'] }}</stream-name>
-      <stream-description>{{ mount['description'] | default("31st Chaos Communication Congress - December 27th to 30th, 2014 - CCH Congress Center Hamburg, Germany, Earth, Milky Way")}}</stream-description>
+      <stream-description>{{ mount['description'] | default("32st Chaos Communication Congress - December 27th to 30th, 2015 - CCH Congress Center Hamburg, Germany, Earth, Milky Way")}}</stream-description>
       <stream-url>{{ mount['stream-url'] }}</stream-url>
     </mount>
 
@@ -110,18 +110,15 @@
     <paths>
         <basedir>{{ icecast_basedir | default('/usr/local/share/icecast') }}</basedir>
 
-        <logdir>{{ icecast_logdir | default('/var/log/icecast2-beta') }}</logdir>
-        <webroot>{{ icecast_webroot | default('/usr/share/icecast2-beta/web')}}</webroot>
-        <adminroot>{{ icecast_adminroot | default('/usr/share/icecast2-beta/admin') }}</adminroot>
+        <logdir>{{ icecast_logdir | default('/var/log/icecast2') }}</logdir>
+        <webroot>{{ icecast_webroot | default('/usr/share/icecast2/web')}}</webroot>
+        <adminroot>{{ icecast_adminroot | default('/usr/share/icecast2/admin') }}</adminroot>
 
         <alias source="/" destination="/status.xsl"/>
     </paths>
 
     <logging>
-{% if icecast_access_log is defined %}
       <accesslog>{{ icecast_access_log | default('access.log') }}</accesslog>
-{% endif %}
-
       <errorlog>{{ icecast_error_log | default('error.log') }}</errorlog>
 
       <loglevel>{{ icecast_log_level | default('3') }}</loglevel> <!-- 4 Debug, 3 Info, 2 Warn, 1 Error -->
@@ -131,8 +128,8 @@
     <security>
         <chroot>{{ icecast_chroot | default('0') }}</chroot>
         <changeowner>
-            <user>{{ icecast_user | default('icecast2-beta') }}</user>
-            <group>{{ icecast_group | default('icecast-beta') }}</group>
+            <user>{{ icecast_user | default('icecast2') }}</user>
+            <group>{{ icecast_group | default('icecast') }}</group>
         </changeowner>
     </security>
 </icecast>

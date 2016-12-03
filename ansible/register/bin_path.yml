@@ -4,14 +4,12 @@
     register: systemctl_bin
     changed_when: false
     ignore_errors: yes
-    when: ansible_distribution_release == 'jessie'
 
   # sysctl
   - shell: "command -v sysctl"
     register: sysctl_bin
     changed_when: false
     ignore_errors: yes
-    when: ansible_distribution_release == 'jessie'
 
   # ffmpeg
   - shell: "command -v ffmpeg"
@@ -24,7 +22,6 @@
     register: timedatectl_bin
     changed_when: false
     ignore_errors: yes
-    when: ansible_distribution_release == 'jessie'
 
   # libvirtd
   - shell: "command -v libvirtd"

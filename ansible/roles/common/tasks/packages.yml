@@ -2,6 +2,9 @@
  - name: install a default set of packages
    apt: name={{ item }} state=latest update_cache=yes
    with_items:
+    # YES, we are using systemd!!1!
+    - systemd
+    - systemd-sysv
     - zsh
     - vim
     - htop
@@ -43,15 +46,6 @@
     - apt-transport-https
     - irqbalance
     - mosquitto-clients
-
- # jessie
- - name: install a default set of packages
-   apt: name={{ item }} state=present update_cache=yes
-   with_items:
-     # YES, we are using systemd!!1!
-     - systemd
-     - systemd-sysv
-   when: ansible_distribution_release == 'jessie'
 
  # for VMs
  - name: install a vmware specific set of packages

@@ -4,10 +4,12 @@
   - name: setup the debian haproxy backports repo
     apt_repository: repo="deb http://httpredir.debian.org/debian jessie-backports main" state=present
     tags: install
+    when: ansible_distribution_release == 'jessie'
 
   - name: setup the debian haproxy repo
     apt_repository: repo="deb http://haproxy.debian.net jessie-backports-1.6 main" state=present
     tags: install
+    when: ansible_distribution_release == 'jessie'
 
   - name: install haproxy package
     apt: name=haproxy state=latest default_release=jessie-backports-1.6

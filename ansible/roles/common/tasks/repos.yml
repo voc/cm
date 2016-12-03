@@ -9,27 +9,12 @@
     - debian-keyring
     - debian-archive-keyring
 
- # wheezy specific
- - name: setup the VOC debian repo for wheezy
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=present
-   when: ansible_distribution_release == 'wheezy'
-
- - name: setup the debian backports repo for wheezy
-   apt_repository: repo="deb http://ftp.debian.org/debian/ wheezy-backports main"
-   when: ansible_distribution_release == 'wheezy'
-
  # jessie specific
  - name: remove /etc/apt/sources.list
    file: dest=/etc/apt/sources.list state=absent
-   when: ansible_distribution_release == 'jessie'
 
  - name: remove /etc/apt/sources.list.d/ftp_debian_org_debian.list
    file: dest=/etc/apt/sources.list.d/ftp_debian_org_debian.list state=absent
-   when: ansible_distribution_release == 'jessie'
-
- - name: remove the VOC debian repo for wheezy when system is jessie
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ release-trunk main" state=absent
-   when: ansible_distribution_release == 'jessie'
 
  - name: setup the VOC debian repo for jessie
    apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=present

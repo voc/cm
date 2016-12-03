@@ -1,73 +1,35 @@
 ---
-  # wheezy
-  - name: install icecast streaming server
-    apt: name=icecast2-beta state=latest
-    when: ansible_distribution_release == 'wheezy'
-
-  - name: configure the icecast streaming server
-    template: dest=/etc/icecast2-beta/icecast.xml
-              src=icecast/icecast.xml.j2
-              owner=root group=root mode=0644
-    notify:
-      - restart icecast-beta
-    when: ansible_distribution_release == 'wheezy'
-
-  - name: create default icecast2-beta config
-    template: dest=/etc/default/icecast2-beta
-              src=icecast/icecast_default.j2
-              owner=root group=root mode=0644
-    notify:
-      - restart icecast-beta
-    when: ansible_distribution_release == 'wheezy'
-
-  - name: enable icecast2-beta on boot
-    service: name=icecast2-beta enabled=yes state=started pattern=/usr/bin/icecast2-beta
-    when: icecast is defined and icecast == 'yes' and ansible_distribution_release == 'wheezy'
-
-  - name: disable icecast2-beta on boot
-    service: name=icecast2-beta enabled=no state=stopped pattern=/usr/bin/icecast2-beta
-    when: icecast is not defined or icecast == 'no' and ansible_distribution_release == 'wheezy'
-
-  - name: create dump file directory for icecast
-    file: dest=/srv/icecastdumps state=directory
-          owner=icecast2-beta group=icecast-beta mode=0755
-    when: icecast_push_master is defined and icecast_push_master == 'yes' and ansible_distribution_release == 'wheezy'
-
-  # jessie
   # Install package
   - name: install icecast streaming server
     apt: name=icecast2 state=latest
-    when: ansible_distribution_release == 'jessie'
 
   # Create directories
   - name: create dump file directory for icecast
     file: dest=/srv/icecastdumps state=directory
           owner=icecast2 group=icecast mode=0755
-    when: icecast_push_master is defined and icecast_push_master == 'yes' and ansible_distribution_release == 'jessie'
+    when: icecast_push_master is defined and icecast_push_master == 'yes'
 
   # Configure
   - name: configure the icecast streaming server
     template: dest=/etc/icecast2/icecast.xml
-              src=icecast/icecast.xml.jessie.j2
+              src=icecast/icecast.xml.j2
               owner=icecast2 group=icecast mode=0660
     notify:
       - restart icecast2
-    when: ansible_distribution_release == 'jessie'
 
   - name: create default icecast2 config
     template: dest=/etc/default/icecast2
-              src=icecast/icecast_default.jessie.j2
+              src=icecast/icecast_default.j2
               owner=root group=root mode=0644
     notify:
       - restart icecast2
-    when: ansible_distribution_release == 'jessie'
 
   # Start service
   - name: enable icecast2 on boot
     service: name=icecast2.service enabled=yes state=started
     failed_when: False
     changed_when: False
-    when: icecast is defined and icecast == 'yes' and ansible_distribution_release == 'jessie'
+    when: icecast is defined and icecast == 'yes'
 
   # Start service
   - name: enable icecast2 on boot

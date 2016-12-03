@@ -25,11 +25,10 @@
     with_items: "{{ users }}"
     when: libvirtd_bin.stdout != '' and not remove is defined and ansible_virtualization_role == 'host'
 
-  - name: append special groups on jessie systems
+  - name: append special groups on systemd systems
     user: name={{ item.name }} append=yes
           groups=systemd-journal,systemd-timesync,systemd-network,systemd-resolve
     with_items: "{{ users }}"
-    when: ansible_distribution_release == 'jessie'
 
   # install shell stuff
   - name: install zshrc
