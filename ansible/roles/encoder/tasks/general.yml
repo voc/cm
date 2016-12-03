@@ -1,10 +1,4 @@
 ---
-  # Prevent pressing power button
-  - name: disable power button
-    lineinfile: dest=/etc/acpi/powerbtn-acpi-support.sh
-                regexp='.*shutdown.*-h.*now.*\"$'
-                line='# /sbin/shutdown -h now "Power button pressed"'
-
   # mdadm
   - name: disable raid checks on the first sunday of the month
     lineinfile: dest=/etc/cron.d/mdadm create=yes

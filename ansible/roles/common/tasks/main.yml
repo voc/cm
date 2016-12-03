@@ -10,6 +10,7 @@
   - include: grub.yml
   - include: ntp.yml
     when: ansible_virtualization_type != 'lxc'
+  - include: acpi.yml
   - include: inittab.yml
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
