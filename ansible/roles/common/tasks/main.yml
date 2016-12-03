@@ -1,6 +1,7 @@
 ---
   - include: ../../../register/bin_path.yml
   - include: resolv.yml
+  - include: apt_proxy.yml
   - include: repos.yml
   - include: packages.yml
   - include: kernel.yml
