@@ -67,3 +67,6 @@
      - rpcbind
      - openntpd
      - rdnssd
+     - dvswitch-voc
+     - dvsource-voc
+     - dvsink-voc

@@ -45,11 +45,7 @@ ip6tables -A INPUT -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
 ip6tables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 ip6tables -A INPUT -p udp -j REJECT
 
-{% if encodermode is not defined or encodermode == 'sd-dvswitch' %}
-
-sdi-script start saalN-sd-dvswitch
-
-{% elif encodermode == 'hd-direct' %}
+{% if encodermode is defined and encodermode == 'hd-direct' %}
 
 sdi-script start saalN-hd-direct
 sdi-script start saalN-hd-direct-recording

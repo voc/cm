@@ -4,7 +4,7 @@ room_fahrplan_name: Saal6
 grabber_aspect: 16x9
 grabbersource_url_path: stream.mjpg
 
-# sd-dvswitch, hd-direct, hd-voctomix
+# hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
 encodermode: hd-voctomix

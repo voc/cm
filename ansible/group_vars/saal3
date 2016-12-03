@@ -3,7 +3,7 @@ room_number: 3
 room_fahrplan_name: Saal3
 grabber_aspect: 16x9
 
-# sd-dvswitch, hd-direct, hd-voctomix
+# hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
 encodermode: hd-voctomix

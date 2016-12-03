@@ -5,8 +5,6 @@
     - bmdtools
     - sdi-script
     - nginx-rtmp
-    - dvsink-voc
-    - dvsource-voc
     - samba
     - gstreamer1.0-plugins-bad
     - gstreamer1.0-plugins-base

@@ -1,42 +1,5 @@
 ---
-  # see packages.yml for dvswitch package installation
-
-  # dvswitch configuration
-  - name: create dvswitch runit directory
-    file: state=directory recurse=yes
+  - name: remove dvswitch runit directory
+    file: state=absent recurse=yes
           dest=/home/mixer/services/dvswitch
           owner=mixer group=mixer
-
-  - name: configure runit for dvswitch
-    copy: dest=/home/mixer/services/dvswitch/run
-          src=dvswitch/run
-          owner=mixer group=mixer mode=0755
-
-
-
-    # down
-  - name: create runit dvswitch-down-file file when not in dvsplit-mode
-    copy: content="" dest=/home/mixer/services/dvswitch/down force=no
-          owner=root group=root mode=0655
-    when: encodermode is defined and encodermode != 'sd-dvswitch'
-
-    # up
-  - name: remove runit dvswitch-down-file file when in dvsplit-mode
-    file: dest=/home/mixer/services/dvswitch/down
-          state=absent
-    when: encodermode is not defined or encodermode == 'sd-dvswitch'
-
-
-  - name: stop dvswitch when not in dvsplit-mode
-    command: sv stop /home/mixer/services/dvswitch
-    when: encodermode is defined and encodermode != 'sd-dvswitch'
-    register: command_result
-    changed_when: "command_result.stdout.find(' 0s') != -1 or command_result.stdout.find(' 1s') != -1"
-    ignore_errors: yes
-
-  - name: start dvswitch when not in dvsplit-mode
-    command: sv start /home/mixer/services/dvswitch
-    when: encodermode is not defined or encodermode == 'sd-dvswitch'
-    register: command_result
-    changed_when: "command_result.stdout.find(' 0s') != -1 or command_result.stdout.find(' 1s') != -1"
-    ignore_errors: yes

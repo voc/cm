@@ -1,6 +1,4 @@
 ---
-  # see packages.yml for dvsink package installation
-
   - name: realise nginx config
     copy: dest=/etc/nginx/nginx.conf
           src=nginx/nginx.conf

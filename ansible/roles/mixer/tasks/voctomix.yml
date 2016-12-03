@@ -1,6 +1,4 @@
 ---
-  # see packages.yml for dvswitch package installation
-
   # directories & code
   - name: create voctomix directories
     file: dest={{ item }} state=directory

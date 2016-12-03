@@ -1,9 +1,0 @@
-#!/bin/bash
-
-source ../common.sh
-
-{% if grabber_aspect == "16x9" %}
-exec ffmpeg -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} -target pal-dv -loglevel error -aspect 16:9 - | dvsource-file-voc -h "10.73.{{ room_number }}.1" -i 1 -p 2000 /dev/stdin
-{% else %}
-exec ffmpeg -i http://10.73.{{ room_number }}.2:1881/{{ grabbersource_url_path | default('vgabroadcaster.mjpg') }} -filter:v 'scale=768:576, pad=1024:576:128:0 , scale=720:576' -target pal-dv -loglevel error -aspect 16:9 - | dvsource-file-voc -h "10.73.{{ room_number }}.1" -i 1 -p 2000 /dev/stdin
-{% endif %}

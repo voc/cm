@@ -1,6 +1,3 @@
 saalN-hd-direct             -> HD-Video an beide SDI-Karten per T-Stück anstecken, von Karte 1 wird in SD und HD gestreamt
 saalN-hd-direct-recording   -> HD-Video an beide SDI-Karten per T-Stück anstecken, von Karte 2 wird in HD MPEG-TS aufgezeichnet
 saalN-hd-slides-recording   -> Vom Framegrabber wird in MPEG-TS aufgezeichnet um später ein Mix-Encoding machen zu können
-saalN-sd-dvswitch           -> Vom DV-Switch wird in SD gestreamt
-saalN-sd-dvswitch-nostream  -> Vom nostream.png wird in SD gestreamt
-saalN-sd-dvswitch-recording -> Vom DV-Switch wird in SD MPEG-TS aufgezeichnet

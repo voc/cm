@@ -21,6 +21,9 @@
             sysctl_set=yes state=present reload=yes
 
   # Create common files and directories
+  - name: create /video if not present
+    file: dest=/video state=directory
+
   - name: create /etc/service diretcory
     file: dest=/etc/service state=directory
           owner=root group=root mode=0755
