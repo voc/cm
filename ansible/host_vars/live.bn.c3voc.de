@@ -1,22 +1,2 @@
-users:
-  - { name: 'andi', state: 'present' }
-  - { name: 'anton', state: 'present' }
-  - { name: 'atze', state: 'present' }
-  - { name: 'bjoern', state: 'present' }
-  - { name: 'coeins', state: 'present' }
-  - { name: 'derpeter', state: 'present' }
-  - { name: 'danimo', state: 'present' }
-  - { name: 'florob', state: 'present' }
-  - { name: 'florolf', state: 'present' }
-  - { name: 'fxkr', state: 'present' }
-  - { name: 'jwacalex', state: 'present' }
-  - { name: 'masterbase', state: 'present' }
-  - { name: 'mazdermind', state: 'present' }
-  - { name: 'meise', state: 'present' }
-  - { name: 'thomic', state: 'present' }
-  - { name: 'v0tti', state: 'present' }
-  - { name: 'felixs', state: 'present' } # selfnet, foss4g
-  - { name: 'nihilus', state: 'present' } # nobody
-  - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
-  - { name: 'scottytm', state: 'present' }
-  - { name: 'voc', state: 'present' }
+additional_users:
+  - { name: 'scottytm', state: 'absent' }

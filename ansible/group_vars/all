@@ -81,3 +81,5 @@ users:
   - { name: 'nihilus', state: 'present' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'voc', state: 'present' }
+
+additional_users:
