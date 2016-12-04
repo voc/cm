@@ -1,2 +1,2 @@
 additional_users:
-  - { name: 'scottytm', state: 'absent' }
+  - { name: 'scottytm', state: 'present' }
