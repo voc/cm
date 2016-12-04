@@ -24,6 +24,17 @@
     notify:
       - restart icecast2
 
+  - name: increase icecast softlimit for open files
+    lineinfile: dest=/etc/init.d/icecast2 create=yes
+                regexp='^ulimit.*' state=present
+                line="ulimit -n 65536"
+                insertafter="# Defaults"
+    notify:
+      - restart icecast2
+    tags:
+      - sysctl
+      - ulimit
+
   # Start service
   - name: enable icecast2 on boot
     service: name=icecast2.service enabled=yes state=started
