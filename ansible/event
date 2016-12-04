@@ -80,6 +80,8 @@ live.dus.c3voc.de
 live.ber.c3voc.de
 mngslave.dus.c3voc.de
 testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
+dellinger.alb.c3voc.de ansible_ssh_port=22 ansible_ssh_host=2a02:f28:1:d:1618:77ff:fe46:40b2
+live.bn.c3voc.de ansible_ssh_port=22 ansible_ssh_host=2001:4dd0:ff2f:0:1a66:daff:fe20:5f60
 
 
 [minions]
