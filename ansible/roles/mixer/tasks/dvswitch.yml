@@ -1,5 +1,5 @@
 ---
   - name: remove dvswitch runit directory
-    file: state=absent recurse=yes
+    file: state=absent
           dest=/home/mixer/services/dvswitch
           owner=mixer group=mixer

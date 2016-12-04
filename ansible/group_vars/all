@@ -82,4 +82,4 @@ users:
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'voc', state: 'present' }
 
-additional_users:
+additional_users: []
