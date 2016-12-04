@@ -47,6 +47,7 @@
     - apt-transport-https
     - irqbalance
     - mosquitto-clients
+    - smartmontools
 
  # for VMs
  - name: install a vmware specific set of packages
