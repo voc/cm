@@ -80,6 +80,7 @@ users:
   - { name: 'felixs', state: 'present' } # selfnet, foss4g
   - { name: 'nihilus', state: 'present' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
+  - { name: 'dedeibel', state: 'present' }
   - { name: 'voc', state: 'present' }
 
 additional_users: []
