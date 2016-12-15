@@ -60,3 +60,11 @@
       - "{{ users }}"
       - "{{ additional_users }}"
     when: item.state != 'absent' and item.name != 'voc'
+
+  - name: add user's authorized_keys to voc
+    authorized_key: user="voc" manage_dir=true key="{{ lookup('file', '../files/user/' + item.name + '/authorized_keys') }}"
+                    state=present
+    with_items:
+      - "{{ users }}"
+      - "{{ additional_users }}"
+    when: item.state != 'absent' and item.name != 'voc'
