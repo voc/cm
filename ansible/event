@@ -20,6 +20,7 @@ encoder4.lan.c3voc.de
 [saal5]
 mixer5.lan.c3voc.de
 encoder5.lan.c3voc.de
+mazdermind.lan.c3voc.de
 
 [saal6]
 mixer6.lan.c3voc.de
@@ -38,6 +39,7 @@ encoder4.lan.c3voc.de crs_token=9qCETQanG933Mf7fEVsENxQUhqq5ccEJ crs_secret=4VsE
 encoder5.lan.c3voc.de crs_token=ruVj39QQisWYh4l7bAqEid08TKGrJNmE crs_secret=IxwPe4eS6ewO86eb4wdDujL8guMxQ7ZY
 encoder6.lan.c3voc.de crs_token=ejIyE40fOZKua4ijRkvaF9pV7HIj2ZsA crs_secret=03g90szjvAACwd2pkJ7yrBGbx20Lp73l
 encoder7.lan.c3voc.de crs_token=s41TtFE4OGcjNGdxtLYIJmRCnmqx68Bq crs_secret=bhdDxCs0eRJf0OBlkKOA6bztCIO8yXdO
+mazdermind.lan.c3voc.de crs_token=RJP7ki2o0vohuiIaUi0dP3eDoDx9PhI0 crs_secret=gdvwzyLPWuDyWqzx7xtjyA3LttaDyb44
 
 
 [mixers]
