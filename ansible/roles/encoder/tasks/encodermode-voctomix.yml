@@ -264,7 +264,7 @@
   - name: disable playout service
     service: name={{ item }}-to-framebuffer-playout.service
              enabled=false
-    with_items: [program, stream, grabber]
+    with_items: [program, stream]
 
 
 
