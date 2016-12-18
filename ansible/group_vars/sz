@@ -29,3 +29,5 @@ voctomix_sources:
     type: decklink                         # decklink, mjpeg or test
     device: 'DeckLink SDI (3)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
     mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
+
+voctomix_audio_source: cam1
