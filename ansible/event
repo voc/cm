@@ -35,8 +35,7 @@ derpeter.lan.c3voc.de   crs_token=ok50HbC0Zulq0sygOcL3ALrFAOWWMxGQ crs_secret=tI
 
 
 [mixers]
-mixer1.lan.c3voc.de crs_token=tzqEguKNIIU9RBCDmSe40m4ZecNlB4i2 crs_secret=A10H3UvgCteMXYkTBZiLFTazVlyPbzep
-mixer[2:7].lan.c3voc.de crs_token=tzqEguKNIIU9RBCDmSe40m4ZecNlB4i2 crs_secret=A10H3UvgCteMXYkTBZiLFTazVlyPbzep
+mixer[1:7].lan.c3voc.de crs_token=tzqEguKNIIU9RBCDmSe40m4ZecNlB4i2 crs_secret=A10H3UvgCteMXYkTBZiLFTazVlyPbzep
 
 # Local RZ
 [servers]
