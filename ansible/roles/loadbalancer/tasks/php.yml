@@ -4,6 +4,7 @@
     apt: name={{ item }} state=latest
     with_items:
       - php5-fpm
+      - php5-curl
       - php5-sqlite
       - libsqlite3-dev
       - sqlite3
@@ -34,6 +35,14 @@
                 regexp="short_open_tag.*=.*"
                 line="short_open_tag = On"
     notify: reload php5-fpm
+    tags:
+      - install
+      - config
+
+  - name: enable php short_open_tag on clu
+    lineinfile: dest=/etc/php5/cli/php.ini
+                regexp="short_open_tag.*=.*"
+                line="short_open_tag = On"
     tags:
       - install
       - config

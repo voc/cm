@@ -110,7 +110,7 @@
   # Cron jobs
   - name: create cronjob to pull upcoming events json every 5 minutes
     cron: name="download upcoming events json" minute=*/5
-          job="cd /srv/nginx/streaming-website/configs; ./download.sh 2>/dev/null"
+          job="/usr/bin/env php /srv/nginx/streaming-website/index.php download >/dev/null"
           user=downloader
     tags: install
 
