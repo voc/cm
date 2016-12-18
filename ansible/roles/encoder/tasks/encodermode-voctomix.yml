@@ -231,21 +231,24 @@
     template: src="voctomix-scripts/streaming-sink.sh.j2"
               dest="/opt/voctomix/scripts/streaming-sink-{{ item }}.sh"
               mode=0755 owner=root group=root
-    with_items: [sd, hd]
+    with_items: [sd, hd, slides]
+    tags: streaming
 
   - name: create streaming systemd-unit
     template: src="systemd-units/streaming-sink.service.j2"
               dest="/etc/systemd/system/streaming-sink-{{ item }}.service"
               mode=0644 owner=root group=root
-    with_items: [sd, hd]
+    with_items: [sd, hd, slides]
 
-  - name: enable hd-streaming service
-    service: name=streaming-sink-hd.service
+  - name: enable slide-streaming services
+    service: name=streaming-sink-{{ item }}.service
              enabled=yes
+    with_items: [hd, slides]
 
-  - name: disable sd-streaming service
-    service: name=streaming-sink-sd.service
+  - name: disable other streaming services
+    service: name=streaming-sink-{{ item }}.service
              enabled=no
+    with_items: [sd]
 
 
 

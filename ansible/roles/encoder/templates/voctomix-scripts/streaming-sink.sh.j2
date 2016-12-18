@@ -1,25 +1,71 @@
 #!/bin/sh
 ffmpeg -y -nostdin \
-	-i tcp://localhost:15000 \
+	{% if item == 'slides' %}
+		{# input from both, slide-mirror for video and mix-out for audio #}
+		-thread_queue_size 512 \
+		-i tcp://localhost:13000 \
+		-thread_queue_size 512 \
+		-i tcp://localhost:15000 \
+	{% else %}
+		{# just input mix-out #}
+		-i tcp://localhost:15000 \
+	{% endif %}
 	-threads:0 0 \
 	-aspect 16:9 \
 	-c:v libx264 \
 	-filter_complex '
-		[0:v] yadif=mode=2, hqdn3d {% if item == 'sd' %}, scale=720:576 {% endif %} [deinter];
+		[0:v] yadif=mode=2, hqdn3d {% if item == 'sd' %}, scale=720:576 {% elif item == 'slides' %}, fps=5 {% endif %} [deinter];
 		movie=/opt/voc/share/overlay_{{ item }}.png [logo];
 		[deinter] [logo] overlay=0:0 [out]
 	' \
-	-map '[out]' \
-	{% if item == 'hd' %}
-	-maxrate:v:0 3000k -crf:0 21 \
+	{% if item == 'slides' %}
+		{# video from 0:v and audio from 1:a #}
+		-map '[out]' -map 1:a \
 	{% else %}
-	-maxrate:v:0 800k  -crf:0 18 \
+		{# video from 0:v and audio from 0:a, no 1: #}
+		-map '[out]' -map 0:a \
 	{% endif %}
+	\
+	\
+	{% if item == 'sd' %}
+		{# low bitrate and quality for SD #}
+		-maxrate:v:0 800k  -crf:0 18 \
+	{% elif item == 'slides' %}
+		{# even lower bitrate but better quality for Slides #}
+		-maxrate:v:0 100k  -crf:0 25 \
+	{% else %}
+		{# high bitrate and quality for HD #}
+		-maxrate:v:0 3000k -crf:0 21 \
+	{% endif %}
+	\
 	-bufsize:v:0 8192k -pix_fmt:0 yuv420p \
-	-profile:v:0 main -g:v:0 25 \
+	-profile:v:0 main \
+	\
+	{% if item == 'slides' %}
+		{# GOP-Size of 50 (= 10 Second @ 25fps) #}
+		-g:v:0 50 \
+	{% else %}
+		{# GOP-Size of 25 (= 1 Second @ 25fps) #}
+		-g:v:0 25 \
+	{% endif %}
 	-preset:v:0 veryfast \
 	\
-	-ac 1 -c:a libfdk_aac -b:a 96k -ar 44100 \
-	-map 0:a -filter:a:0 pan=mono:c0=FL \
+	{# Copy PCM-Audio from input #}
+	-c:a copy \
 	\
-	-y -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_{{ item }}
+	-f nut pipe: | \
+		ffmpeg -v warning -y -nostdin -f nut -i pipe: \
+			{# Pan and Encode Audio, Left Channel -> Native #}
+			-c:v copy -c:a libfdk_aac -b:a 96k -ar 44100 \
+			-map 0:v -map 0:a -filter:a:0 pan='mono|c0=FL' \
+			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_{{ item }} \
+			\
+			{# Pan and Encode Audio, Right Channel -> Translated #}
+			-c:v copy -c:a libfdk_aac -b:a 96k -ar 44100 \
+			-map 0:v -map 0:a -filter:a:0 pan='mono|c0=FR' \
+			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_translated_{{ item }} \
+			\
+			{# Encode Audio, Both Channels -> Stereo #}
+			-c:v copy -c:a libfdk_aac -b:a 96k -ar 44100 \
+			-map 0:v -map 0:a \
+			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_{{ item }}
