@@ -2,33 +2,24 @@
 
 # Lecture rooms
 [saal1]
-mixer1.lan.c3voc.de
 encoder1.lan.c3voc.de
-
-[saal2]
-mixer2.lan.c3voc.de
-encoder2.lan.c3voc.de
-
-[saal3]
-mixer3.lan.c3voc.de
 encoder3.lan.c3voc.de
 
-[saal4]
-mixer4.lan.c3voc.de
+[saal2]
+encoder2.lan.c3voc.de
 encoder4.lan.c3voc.de
 
-[saal5]
-mixer5.lan.c3voc.de
-encoder5.lan.c3voc.de
-mazdermind.lan.c3voc.de
-
-[saal6]
-mixer6.lan.c3voc.de
+[saalg]
+mixer3.lan.c3voc.de
 encoder6.lan.c3voc.de
 
-[saal7]
-mixer7.lan.c3voc.de
-encoder7.lan.c3voc.de
+[saal6]
+mixer4.lan.c3voc.de
+derpeter.lan.c3voc.de
+
+[sz]
+mixer1.lan.c3voc.de
+mazdermind.lan.c3voc.de
 
 # Host types
 [encoders]
@@ -40,6 +31,7 @@ encoder5.lan.c3voc.de crs_token=ruVj39QQisWYh4l7bAqEid08TKGrJNmE crs_secret=IxwP
 encoder6.lan.c3voc.de crs_token=ejIyE40fOZKua4ijRkvaF9pV7HIj2ZsA crs_secret=03g90szjvAACwd2pkJ7yrBGbx20Lp73l
 encoder7.lan.c3voc.de crs_token=s41TtFE4OGcjNGdxtLYIJmRCnmqx68Bq crs_secret=bhdDxCs0eRJf0OBlkKOA6bztCIO8yXdO
 mazdermind.lan.c3voc.de crs_token=RJP7ki2o0vohuiIaUi0dP3eDoDx9PhI0 crs_secret=gdvwzyLPWuDyWqzx7xtjyA3LttaDyb44
+derpeter.lan.c3voc.de   crs_token=ok50HbC0Zulq0sygOcL3ALrFAOWWMxGQ crs_secret=tIL9pbYzD8h5w7vucwm01YTclltwt34R
 
 
 [mixers]
