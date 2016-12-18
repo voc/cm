@@ -5,6 +5,11 @@ audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
 ; tcp-ports will be 10000,10001,10002
 sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
 
+{% if voctomix_audio_source is defined %}
+; set the initial audio source
+audiosource={{ voctomix_audio_source }}
+{% endif %}
+
 [side-by-side-equal]
 gutter=20
 atop=200

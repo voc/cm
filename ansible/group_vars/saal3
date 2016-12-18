@@ -35,3 +35,5 @@ voctomix_sources:
 #  -
 #    name: testsource
 #    type: test
+
+voctomix_audio_source: cam1
