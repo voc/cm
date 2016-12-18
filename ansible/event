@@ -41,8 +41,7 @@ encoder7.lan.c3voc.de crs_token=s41TtFE4OGcjNGdxtLYIJmRCnmqx68Bq crs_secret=bhdD
 
 
 [mixers]
-mixer1.lan.c3voc.de crs_token=tzqEguKNIIU9RBCDmSe40m4ZecNlB4i2 crs_secret=A10H3UvgCteMXYkTBZiLFTazVlyPbzep
-mixer[2:7].lan.c3voc.de crs_token=tzqEguKNIIU9RBCDmSe40m4ZecNlB4i2 crs_secret=A10H3UvgCteMXYkTBZiLFTazVlyPbzep
+mixer[1:7].lan.c3voc.de crs_token=tzqEguKNIIU9RBCDmSe40m4ZecNlB4i2 crs_secret=A10H3UvgCteMXYkTBZiLFTazVlyPbzep
 
 # Local RZ
 [servers]
