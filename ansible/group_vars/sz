@@ -15,24 +15,17 @@ voctomix_vaapi: false
 # encoder 1-5 can't handle more then 3 video-feeds
 voctomix_sources:
   -
+    name: slides
+    type: decklink                         # decklink, mjpeg or test
+    device: 'DeckLink Mini Recorder'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder'
+  -
     name: cam1
     type: decklink                         # decklink, mjpeg or test
-    device: 'DeckLink SDI (1)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (1)'
-#  -
-#    name: cam2
-#    type: decklink                         # decklink, mjpeg or test
-#    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-#    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
-#  -
-#    name: grabber
-#    type: mjpeg
+    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
   -
-    name: android
+    name: cam2
     type: decklink                         # decklink, mjpeg or test
-    plug: hdmi                             # sdi or hdmi
-    device: 'DeckLink Mini Recorder'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-    mode: '1920x1080 at 24000/1000'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder'
-#  -
-#    name: testsource
-#    type: test
+    device: 'DeckLink SDI (3)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
