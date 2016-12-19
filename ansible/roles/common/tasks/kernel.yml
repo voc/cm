@@ -1,13 +1,11 @@
 ---
-  - name: Check if kernel linux-image-4.7.10-040710 is installed
-    command: dpkg-query -W linux-image-4.7.10-040710-generic
+  - name: Check if kernel {{ system.kernel_package }} is installed
+    command: dpkg-query -W {{ system.kernel_package }}
     register: linux_kernel_installed
     ignore_errors: True
 
   - name: install linux specific kernel
     apt: deb={{ item }}
-    when: linux_kernel_installed|failed
-    with_items:
-      - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-image-4.7.10-040710-generic_4.7.10-040710.201610220847_amd64.deb
-      - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710_4.7.10-040710.201610220847_all.deb
-      - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710-generic_4.7.10-040710.201610220847_amd64.deb
+    when:
+      - linux_kernel_installed|failed
+    with_items: "{{ system.kernel_urls }}"
