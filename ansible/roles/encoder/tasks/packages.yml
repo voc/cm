@@ -4,6 +4,7 @@
    with_items:
     - sdi-script
     - nginx-rtmp
+    - icecast2
     - samba
     - gstreamer1.0-plugins-bad
     - gstreamer1.0-plugins-base
