@@ -74,3 +74,4 @@
      - dvswitch-voc
      - dvsource-voc
      - dvsink-voc
+     - bmdtools
