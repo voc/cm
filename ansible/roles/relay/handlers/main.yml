@@ -1,7 +1,4 @@
 ---
-  - name: restart icecast-beta
-    service: name=icecast2-beta state=restarted
-
   - name: restart icecast2
     service: name=icecast2 state=restarted
 
