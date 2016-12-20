@@ -10,6 +10,7 @@
       - /etc/sdi-script
       - /etc/sdi-script/saalN-hd-direct
       - /etc/sdi-script/saalN-hd-direct-recording
+      - /etc/sdi-script/saalN-hd-slides
       - /etc/sdi-script/saalN-hd-slides-recording
 
   # hd-direct chain
@@ -28,6 +29,17 @@
     template: dest=/etc/sdi-script/saalN-hd-direct-recording/config
               src=sdi-script/saalN-hd-direct-recording/config.j2
               owner=root group=root mode=0644
+
+  # hd-slides streaming
+  - name: create /etc/sdi-script/saalN-hd-slides/config
+    template: dest=/etc/sdi-script/saalN-hd-slides/config
+              src=sdi-script/saalN-hd-slides/config.j2
+              owner=root group=root mode=0644
+
+  - name: create /etc/sdi-script/saalN-hd-slides/supertee.ini
+    template: dest=/etc/sdi-script/saalN-hd-slides/supertee.ini
+              src=sdi-script/saalN-hd-slides/supertee.ini.j2
+              owner=root group=root mode=0755
 
   # hd-slides recrding
   - name: create /etc/sdi-script/saalN-hd-slides-recording/config
