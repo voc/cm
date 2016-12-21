@@ -8,7 +8,7 @@ PIPES="${PIPE_NUT} ${PIPE_INTERMEDIATE}"
 
 CMD_CAPTURE="/bin/true"
 
-CMD_INTERMEDIATE="ffmpeg -y -f decklink -i 'DeckLink Mini Recorder (2)@10' -aspect 16:9 -threads:0 0 \
+CMD_INTERMEDIATE="ffmpeg -y -f decklink -i 'DeckLink Mini Recorder (3)@10' -aspect 16:9 -threads:0 0 \
 -c:v libx264 \
 -filter_complex 'yadif=mode=2 [deinter];
  [deinter] scale=720:576, hqdn3d, fps=5 [ugly];
