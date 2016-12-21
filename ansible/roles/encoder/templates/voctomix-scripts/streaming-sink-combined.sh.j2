@@ -90,4 +90,14 @@ ffmpeg -y -nostdin \
 			{# Slides Stereo #}
 			-c:v copy -c:a copy \
 			-map 0:v:2 -map 0:a:2 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_slides
+			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_slides \
+			{# Pass the whole mux to an distribution Icecast #}
+			{% if distribution_mode is defined and distribution_mode == 'icedist' %}
+			-c:v copy -c:a copy \
+			-map 0:v:0 -map 0:v:1 -map 0:v:2 \
+			-map 0:a:0 -map 0:a:1 \
+			-f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/s{{ room_number }}_vocto.mkv
+			{% else %}
+			{# dummy-newline to catch the backslash #}
+
+			{% endif %}
