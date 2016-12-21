@@ -1,24 +1,29 @@
 [system]
-start = rtmp_native_hd rtmp_native_sd rtmp_translated_hd rtmp_translated_sd rtmp_stereo_sd rtmp_stereo_hd
+start = rtmp_native_hd rtmp_native_sd rtmp_translated_hd rtmp_translated_sd rtmp_stereo_sd rtmp_stereo_hd {% if distribution_mode is defined and distribution_mode == 'icedist' %} icedist {% endif%}
 
 [reader]
 source = ${PIPEPATH}/${PIPE_INTERMEDIATE}
 frameSize = 188000
 
 [rtmp_native_hd]
-command = ffmpeg -re -f mpegts -i - -map 0:0 -map 0:2 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_hd
+command = ffmpeg -re -f matroska -i - -map 0:v:0 -map 0:a:0 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_hd
 
 [rtmp_native_sd]
-command = ffmpeg -re -f mpegts -i - -map 0:1 -map 0:2 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_sd
+command = ffmpeg -re -f matroska -i - -map 0:v:1 -map 0:a:0 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_sd
 
 [rtmp_translated_hd]
-command = ffmpeg -re -f mpegts -i - -map 0:0 -map 0:3 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_translated_hd
+command = ffmpeg -re -f matroska -i - -map 0:v:0 -map 0:a:1 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_translated_hd
 
 [rtmp_translated_sd]
-command = ffmpeg -re -f mpegts -i - -map 0:1 -map 0:3 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_translated_sd
+command = ffmpeg -re -f matroska -i - -map 0:v:1 -map 0:a:1 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_translated_sd
 
 [rtmp_stereo_hd]
-command = ffmpeg -re -f mpegts -i - -map 0:0 -map 0:4 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_hd
+command = ffmpeg -re -f matroska -i - -map 0:v:0 -map 0:a:3 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_hd
 
 [rtmp_stereo_sd]
-command = ffmpeg -re -f mpegts -i - -map 0:1 -map 0:4 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_sd
+command = ffmpeg -re -f matroska -i - -map 0:v:1 -map 0:a:3 -c:v:0 copy -c:a:0 libfdk_aac -b:a 96k -ar 44100 -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_sd
+
+{% if distribution_mode is defined and distribution_mode == 'icedist' %}
+[icedist]
+command = ffmpeg -f matroska -i - -c:a copy -c:v copy -map 0:v:0 -map 0:v:1 -map 0:a:0 -map 0:a:1 -map 0:a:2 -f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/s{{ room_number }}_direct.mkv
+{% endif %}
