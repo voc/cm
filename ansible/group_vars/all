@@ -91,3 +91,5 @@ users:
   - { name: 'voc', state: 'present' }
 
 additional_users: []
+
+distribution_mode: icedist
