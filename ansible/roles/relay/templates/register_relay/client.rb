@@ -19,9 +19,9 @@ def encrypt(data, password, iv)
 end
 
 # Please change me…
-uri            = URI('http://c3voc.de/31c3/register/register')
-api_key        = '70fb66b9efefb7ccb6084d217569694fd1624fa8883660204517bb9b532251e53cfa5bb2f55791f02257b3be3a9ccc533e1b5b8e9b580810771223c9aa9632bd'
-encryption_key = 'Shop&Fringe8Fury'
+uri            = URI('http://c3voc.de/33c3/register/register')
+api_key        = '3c739572d7727ec2d408838baf372fe9afd0a77cae7df77ace30303a32f88e23'
+encryption_key = 'where2gravel2plague'
 
 # Create some useful variables for encryption and communication
 iv             = OpenSSL::Cipher.new('aes-256-cbc').random_iv.unpack('H*')[0]
