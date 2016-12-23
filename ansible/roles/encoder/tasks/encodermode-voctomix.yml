@@ -73,20 +73,20 @@
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
     when: item.1.type == 'decklink'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
   - name: create decklink-source systemd-units
     template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
     when: item.1.type == 'decklink'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
   - name: enable decklink-source services
     service: name="{{ item.1.name }}-source.service"
              enabled=yes
     when: item.1.type == 'decklink'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
 
 
@@ -96,20 +96,20 @@
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
     when: item.1.type == 'mjpeg'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
   - name: create grabber-source systemd-unit
     template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
     when: item.1.type == 'mjpeg'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
   - name: enable grabber-source service
     service: name={{ item.1.name }}-source.service
              enabled=yes
     when: item.1.type == 'mjpeg'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
 
 
@@ -119,20 +119,20 @@
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
     when: item.1.type == 'test'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
   - name: create test-source systemd-unit
     template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
     when: item.1.type == 'test'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
   - name: enable test-source service
     service: name={{ item.1.name }}-source.service
              enabled=yes
     when: item.1.type == 'test'
-    with_indexed_items: "{{ voctomix_sources }}"
+    with_indexed_items: "{{ voctomix_sources | default([]) }}"
 
 
 
@@ -311,6 +311,7 @@
     template: src="voctomix-config/voctocore-config.ini.j2"
               dest="/opt/voctomix/voctocore-config.ini"
               mode=0644 owner=root group=root
+    when: voctomix_sources is defined
 
 
 
@@ -331,7 +332,7 @@
     when: encodermode is defined and encodermode == 'hd-voctomix'
 
   - name: disable & stop voctocore service when not in voctomix-mode
-    service: name=voctomix-voctocore.service
+    service: name=voctocore.service
              enabled=no
              state=stopped
     when: encodermode is not defined or encodermode != 'hd-voctomix'
