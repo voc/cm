@@ -338,7 +338,7 @@
     when: encodermode is defined and encodermode == 'hd-voctomix'
 
   - name: disable & stop voctocore service when not in voctomix-mode
-    service: name=voctomix-voctocore.service
+    service: name=voctocore.service
              enabled=no
              state=stopped
     when: encodermode is not defined or encodermode != 'hd-voctomix'
