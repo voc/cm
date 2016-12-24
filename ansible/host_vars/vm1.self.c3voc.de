@@ -1,0 +1,3 @@
+---
+nginx_hls_cache_max_size: 4g
+nginx_dash_cache_max_size: 4g
