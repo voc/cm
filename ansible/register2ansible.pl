@@ -9,6 +9,7 @@ use JSON;
 
 # HACK
 my $relive_master = "live.dus.c3voc.de";
+my $dash_master = "live.dus.c3voc.de";
 
 sub get_relays {
 	my ($path) = @_;
@@ -61,6 +62,7 @@ sub generate {
 
 	my $icecast = has_tag($relay, 'icecast');
 	my $hls = has_tag($relay, 'hls');
+	my $dash = has_tag($relay, 'dash');
 	my $relive = has_tag($relay, 'relive');
 	my $nginx = $hls || $relive;
 
@@ -84,6 +86,10 @@ sub generate {
 
 	if($relive and $master) {
 		printf 'nginx_relive_masters=["%s"] ', get_ip($data, $relive_master);
+	}
+
+	if($dash and $master) {
+		printf 'nginx_dash_masters=["%s"] ', get_ip($data, $dash_master);
 	}
 
 	say "";
