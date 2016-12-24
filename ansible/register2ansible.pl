@@ -8,8 +8,7 @@ use File::Slurp;
 use JSON;
 
 # HACK
-my $relive_master = "live.dus.c3voc.de";
-my $dash_master = "live.dus.c3voc.de";
+my $icecast_push_master = "live.cch.c3voc.de";
 
 sub get_relays {
 	my ($path) = @_;
@@ -30,6 +29,7 @@ sub get_ip {
 	my $relay = $data->{$name};
 
 	my $ip;
+
 	if($relay->{ips}{register} =~ /^[0-9.]+$/) {
 		$ip = $relay->{ips}{register};
 	} elsif(@{$relay->{ips}{ipv4}} == 1) {
@@ -64,7 +64,7 @@ sub generate {
 	my $hls = has_tag($relay, 'hls');
 	my $dash = has_tag($relay, 'dash');
 	my $relive = has_tag($relay, 'relive');
-	my $nginx = $hls || $relive;
+	my $nginx = $hls || $relive || $dash || $icecast; # icecast needs an SSL proxy
 
 	return unless $nginx or $icecast;
 
@@ -76,20 +76,15 @@ sub generate {
 	if($icecast) {
 		if($master) {
 			printf "icecast_master_ip=%s ", get_ip($data, $master);
-			printf "icecast_push_master=%s ", yesno($hidden);
 		}
+
+		printf "icecast_push_master=%s ", yesno($host eq $icecast_push_master);
 	}
 
-	if($hls and $master) {
-		printf 'nginx_hls_masters=["%s"] ', get_ip($data, $master);
-	}
-
-	if($relive and $master) {
-		printf 'nginx_relive_masters=["%s"] ', get_ip($data, $relive_master);
-	}
-
-	if($dash and $master) {
-		printf 'nginx_dash_masters=["%s"] ', get_ip($data, $dash_master);
+	if($master) {
+		printf 'nginx_hls_masters=\'["%s"]\' ', get_ip($data, $master);
+		printf 'nginx_hls_relive_masters=\'["%s"]\' ', get_ip($data, $master);
+		printf 'nginx_dash_masters=\'["%s"]\' ', get_ip($data, $master);
 	}
 
 	say "";
