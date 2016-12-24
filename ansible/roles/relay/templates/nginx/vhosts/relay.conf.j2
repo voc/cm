@@ -22,12 +22,9 @@ proxy_cache_path /srv/nginx/cache/dash
 
 # Upstreams
 upstream hls {
-{% if nginx_hls_masters is defined %}
 {% for server in nginx_hls_masters %}
   server {{ server }};
 {% endfor %}
-{% endif %}
-
 {% if nginx_hls_masters_backup is defined %}
 {% for server in nginx_hls_masters_backup %}
   server {{ server }} backup;
@@ -37,12 +34,9 @@ upstream hls {
 }
 
 upstream hls_relive {
-{% if nginx_hls_relive_masters is defined %}
 {% for server in nginx_hls_relive_masters %}
   server {{ server }};
 {% endfor %}
-{% endif %}
-
 {% if nginx_hls_relive_masters_backup is defined %}
 {% for server in nginx_hls_relive_masters_backup %}
   server {{ server }} backup;
@@ -54,12 +48,9 @@ upstream hls_relive {
 {% endif %}
 
 upstream dash {
-{% if nginx_dash_masters is defined %}
 {% for server in nginx_dash_masters %}
   server {{ server }};
 {% endfor %}
-{% endif %}
-
 {% if nginx_dash_masters_backup is defined %}
 {% for server in nginx_dash_masters_backup %}
   server {{ server }} backup;
