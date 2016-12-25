@@ -1,5 +1,5 @@
 global
-    nbproc  {{ haproxy_nbproc | default('2') }}
+    nbproc  {{ haproxy_nbproc | default('4') }}
     chroot  /usr/share/haproxy
     pidfile /run/haproxy.pid
     maxconn 8192
@@ -309,14 +309,12 @@ backend streaming_website_http
     option forwardfor
     http-request set-header X-Custom-Header %[url]
     http-request set-header X-Real-IP %[src]
-{% if ansible_fqdn == 'lb1.fem.c3voc.de' %}
-    server lb1.fem.c3voc.de 127.0.0.1:8080 check maxconn 2048
-    server lb1.het.c3voc.de 46.4.3.195:8080 check backup maxconn 2048
-{% elif ansible_fqdn == 'live.dus.c3voc.de' %}
-    server lb1.het.c3voc.de 127.0.0.1:8080 check maxconn 2048
-{% elif ansible_fqdn == 'lb1.het.c3voc.de'%}
-    server lb1.het.c3voc.de 127.0.0.1:8080 check maxconn 2048
-    server lb1.fem.c3voc.de 141.24.40.53:8080 check backup maxconn 2048
+{% if ansible_fqdn == 'lb.dus.c3voc.de' %}
+    server lb1.fem.c3voc.de 127.0.0.1:8080 maxconn 2048
+    server lb1.het.c3voc.de 185.106.87.2:8080 backup maxconn 2048
+{% elif ansible_fqdn == 'lb.alb.c3voc.de'%}
+    server lb1.het.c3voc.de 127.0.0.1:8080 maxconn 2048
+    server lb1.fem.c3voc.de 31.172.30.138:8080 backup maxconn 2048
 {% endif %}
 
 backend streaming_website_https
@@ -325,13 +323,11 @@ backend streaming_website_https
     option forwardfor
     http-request set-header X-Custom-Header %[url]
     http-request set-header X-Real-IP %[src]
-{% if ansible_fqdn == 'lb1.fem.c3voc.de' %}
+{% if ansible_fqdn == 'lb.dus.c3voc.de' %}
     server lb1.fem.c3voc.de 127.0.0.1:8080 maxconn 2048
-    server lb1.het.c3voc.de 46.4.3.195:8080 backup maxconn 2048
-{% elif ansible_fqdn == 'live.dus.c3voc.de' %}
+    server lb1.het.c3voc.de 185.106.87.2:8080 backup maxconn 2048
+{% elif ansible_fqdn == 'lb.alb.c3voc.de'%}
     server lb1.het.c3voc.de 127.0.0.1:8080 maxconn 2048
-{% elif ansible_fqdn == 'lb1.het.c3voc.de'%}
-    server lb1.het.c3voc.de 127.0.0.1:8080 maxconn 2048
-    server lb1.fem.c3voc.de 141.24.40.53:8080 backup maxconn 2048
+    server lb1.fem.c3voc.de 31.172.30.138:8080 backup maxconn 2048
 {% endif %}
     # check is disabled cause of multiple processes
