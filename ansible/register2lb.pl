@@ -43,7 +43,7 @@ my $data = get_relays($ARGV[0]);
 
 my $cnt = 0;
 
-foreach my $type (qw(hls relive icecast)) {
+foreach my $type (qw(hls relive icecast dash)) {
 	say "";
 	say "lb_${type}_relays: {";
 	foreach my $host (grep { $data->{$_}->{public} and has_tag($data->{$_}, $type)}
