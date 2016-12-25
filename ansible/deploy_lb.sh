@@ -1,10 +1,14 @@
 #!/bin/sh
 
-if [[ $* != *--deploy* ]]; then
+if [[ $* != *--deploy* && $* != *--diff* ]]; then
   echo "Generate loadbalancer config and deploy it."
   echo
-  echo "Usage: $0 --deploy"
+  echo "Usage: $0 --deploy or --diff"
   exit 1
+fi
+
+if [[ $* = *--diff* ]]; then
+  DIFF=true
 fi
 
 BASEDIR=$(dirname "$0")
@@ -27,9 +31,23 @@ function create_lb_cariables() {
 }
 
 function deploy_lbs() {
-  ansible-playbook $BASEDIR/site.yml -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy
+  if [[ $DIFF = true ]]; then
+    ansible-playbook $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --check --diff
+  else
+    echo
+    echo "Deploy new config to loadbalancers? [yes|no]"
+    read choice
+
+    if [ "$choice" = "yes" ]; then
+      ansible-playbook $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy
+    else
+      echo "Nothing deployed."
+    fi
+  fi
 }
 
 get_relay_json
 create_lb_cariables
 deploy_lbs
+
+exit $?
