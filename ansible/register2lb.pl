@@ -25,9 +25,6 @@ sub has_tag {
 sub generate {
 	my ($data, $host) = @_;
 
-	# HACK: filter US relays, those are configured manually
-	return if $host =~ /^us[12]\.1und1/;
-
 	my $relay = $data->{$host};
 	printf '  "%s": %d,', $host, $relay->{dns_priority};
 
@@ -41,13 +38,17 @@ if(@ARGV != 1) {
 
 my $data = get_relays($ARGV[0]);
 
-my $cnt = 0;
+my $tags;
+foreach my $host (grep {$data->{$_}->{public}} keys %$data) {
+	foreach my $tag (@{$data->{$host}{tags}}) {
+		push @{$tags->{$tag}}, $host;
+	}
+}
 
-foreach my $type (qw(hls relive icecast dash)) {
+foreach my $tag (keys %$tags) {
 	say "";
-	say "lb_${type}_relays: {";
-	foreach my $host (grep { $data->{$_}->{public} and has_tag($data->{$_}, $type)}
-		sort keys %$data) {
+	say "lb_${tag}_relays: {";
+	foreach my $host (sort @{$tags->{$tag}}) {
 		generate($data, $host);
 	}
 	say "}";
