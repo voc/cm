@@ -26,6 +26,9 @@ sub generate {
 	my ($data, $host) = @_;
 
 	my $relay = $data->{$host};
+
+	return unless $relay->{cm_deploy};
+
 	printf '  "%s": %d,', $host, $relay->{dns_priority};
 
 	say "";
