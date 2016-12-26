@@ -314,7 +314,7 @@ server {
   # chunk-segments:   /dash/s2/chunk-stream1-00041.chk for WebM-dash or
   #                   /dash/s2/chunk-stream1-00041.m4s for MP4-dash
   #
-  location ~* ^/dash/live/(?<stream>[^/]+)/(?<segment>.+\.(hdr|chk|m4s))$ {
+  location ~* ^/dash/(?<stream>[^/]+)/(?<segment>.+\.(hdr|chk|m4s))$ {
       proxy_intercept_errors on;
       proxy_cache            dash;
       proxy_set_header       Host $host;
