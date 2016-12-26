@@ -20,46 +20,51 @@ nginx_ips_allow_stats: [
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
 lb_relive_relays: {
-  "dedi5.het.c3voc.de": 0,
-  "dedi6.het.c3voc.de": 0,
-  "live.bn.c3voc.de": 0,
-  "live.dus.c3voc.de": 0,
+  "dedi5.het.c3voc.de": 50,
+  "dedi6.het.c3voc.de": 50,
+  "live.bn.c3voc.de": 50,
+  "live.dus.c3voc.de": 50,
   "usa.cch.c3voc.de": 50,
 }
 
 lb_icecast_relays: {
-  "dedi1.het.c3voc.de": 0,
-  "dedi2.het.c3voc.de": 0,
-  "dedi3.het.c3voc.de": 0,
-  "dedi4.het.c3voc.de": 0,
-  "desmit.cch.c3voc.de": 0,
-  "gsa.cch.c3voc.de": 0,
-  "vm1.self.c3voc.de": 0,
-  "vm2.self.c3voc.de": 0,
-  "vm3.self.c3voc.de": 0,
-  "vm4.self.c3voc.de": 0,
+  "dedi1.het.c3voc.de": 50,
+  "dedi2.het.c3voc.de": 50,
+  "dedi3.het.c3voc.de": 50,
+  "dedi4.het.c3voc.de": 50,
+  "dellinger.alb.c3voc.de": 50,
+  "gsa.cch.c3voc.de": 50,
+  "vm1.self.c3voc.de": 50,
+  "vm2.self.c3voc.de": 50,
+  "vm3.self.c3voc.de": 50,
+  "vm4.self.c3voc.de": 50,
 }
 
 lb_dash_relays: {
-  "dedi5.het.c3voc.de": 0,
-  "dedi6.het.c3voc.de": 0,
-  "live.bn.c3voc.de": 0,
-  "live.dus.c3voc.de": 0,
+  "dedi5.het.c3voc.de": 50,
+  "dedi6.het.c3voc.de": 50,
+  "live.bn.c3voc.de": 50,
+  "live.dus.c3voc.de": 50,
   "usa.cch.c3voc.de": 50,
-  "vm5.self.c3voc.de": 0,
+  "vm5.self.c3voc.de": 50,
 }
 
-lb_local_relays: {
-  "desmit.cch.c3voc.de": 0,
-  "gsa.cch.c3voc.de": 0,
+lb_dtag_relays: {
+  "dellinger.alb.c3voc.de": 50,
+  "gsa.cch.c3voc.de": 50,
   "usa.cch.c3voc.de": 50,
 }
 
 lb_hls_relays: {
-  "dedi5.het.c3voc.de": 0,
-  "dedi6.het.c3voc.de": 0,
-  "live.bn.c3voc.de": 0,
-  "live.dus.c3voc.de": 0,
+  "dedi5.het.c3voc.de": 50,
+  "dedi6.het.c3voc.de": 50,
+  "live.bn.c3voc.de": 50,
+  "live.dus.c3voc.de": 50,
   "usa.cch.c3voc.de": 50,
-  "vm5.self.c3voc.de": 0,
+  "vm5.self.c3voc.de": 50,
+}
+
+lb_local_relays: {
+  "gsa.cch.c3voc.de": 50,
+  "usa.cch.c3voc.de": 50,
 }
