@@ -39,7 +39,7 @@ function deploy_lbs() {
     read choice
 
     if [ "$choice" = "yes" ]; then
-      ansible-playbook $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy
+      ansible-playbook $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --diff
     else
       echo "Nothing deployed."
     fi
