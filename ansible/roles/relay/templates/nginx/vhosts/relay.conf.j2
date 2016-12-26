@@ -276,7 +276,7 @@ server {
       proxy_cache            dash;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://dash/$stream/$manifest;
+      proxy_pass             http://dash/dash/$stream/$manifest;
       proxy_cache_methods    GET HEAD;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
@@ -301,7 +301,7 @@ server {
       proxy_cache            dash;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://dash/$stream/$segment;
+      proxy_pass             http://dash/dash/$stream/$segment;
       proxy_cache_methods    GET HEAD;
       proxy_cache_valid      200 302 30m;
       proxy_cache_key        "$uri";
