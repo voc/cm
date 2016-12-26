@@ -16,6 +16,12 @@ sub get_relays {
 	my $content = read_file($path) or die "Reading relay file failed: $@";
 	my $json = decode_json($content) or die "Decoding JSON failed: $@";
 
+	foreach my $relay (values %$json) {
+		$relay->{ips}{ipv4} = [
+			grep(!/^10/, @{$relay->{ips}{ipv4}})
+		];
+	}
+
 	return $json;
 }
 
