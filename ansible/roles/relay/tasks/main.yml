@@ -5,7 +5,6 @@
     apt: name={{ item }} state=present
     with_items:
       - oggfwd-voc
-  - include: ../../letsencrypt/tasks/main.yml domain={{ ansible_fqdn }}
 
   - include: nginx.yml
     tags: nginx
