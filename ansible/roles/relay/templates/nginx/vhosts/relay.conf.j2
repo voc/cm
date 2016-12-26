@@ -96,6 +96,11 @@ server {
     autoindex on;
   }
 
+  location ~* ^/dash/(.+)$ {
+    root /srv/nginx/dash/$1;
+    autoindex on;
+  }
+
   # relive
   location ~ ^/crossdomain.xml {
     alias /srv/releases/relive/crossdomain.xml;
