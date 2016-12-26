@@ -15,11 +15,11 @@ encoder6.lan.c3voc.de
 
 [saal6]
 mixer4.lan.c3voc.de
-derpeter.lan.c3voc.de
+mazdermind.lan.c3voc.de
 
 [sz]
 mixer1.lan.c3voc.de
-mazdermind.lan.c3voc.de
+derpeter.lan.c3voc.de
 
 # Host types
 [encoders]
