@@ -14,7 +14,7 @@
 # By default this script does nothing.
 
 iptables -F INPUT
-iptables -A INPUT -p tcp -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 # allow all from trusted ips
 {% for comment, ip in trusted_ipv4_ips.iteritems() %}
@@ -26,7 +26,7 @@ iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 # ip6tables
 ip6tables -F INPUT
-ip6tables -A INPUT -p tcp -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+ip6tables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 # allow all from trusted ips
 {% for comment, ip in trusted_ipv6_ips.iteritems() %}
 # {{ comment }}
