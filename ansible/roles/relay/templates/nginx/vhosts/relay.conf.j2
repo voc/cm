@@ -91,8 +91,8 @@ server {
   }
 
 {% if nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' %}
-  location ~* ^/hls {
-    root /tmp/;
+  location ~* ^/hls/(.+)$ {
+    root /srv/nginx/hls/$1;
     autoindex on;
   }
 
