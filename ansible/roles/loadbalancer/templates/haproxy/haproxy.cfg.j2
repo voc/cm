@@ -52,6 +52,7 @@ frontend icecast_and_nginx_hls_http
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+    acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
     # return 403 if hostname or defined file extensions are not matching
     http-request deny        unless is_cdn or is_streaming_website
     http-request deny        unless hls_playlist or hls_fragment or icecast or is_streaming_website or is_relive or dash_playlist or dash_fragment
@@ -64,6 +65,14 @@ frontend icecast_and_nginx_hls_http
     use_backend dash_fragment_local_http  if is_local dash_fragment
     use_backend dash_playlist_local_http  if is_local dash_playlist
     use_backend icecast_local_http       if is_local icecast
+
+    # dtag relay
+    use_backend hls_relive_dtag_http    if is_dtag is_relive
+    use_backend hls_fragment_dtag_http  if is_dtag hls_fragment
+    use_backend hls_playlist_dtag_http  if is_dtag hls_playlist
+    use_backend dash_fragment_dtag_http  if is_dtag dash_fragment
+    use_backend dash_playlist_dtag_http  if is_dtag dash_playlist
+    use_backend icecast_dtag_http       if is_dtag icecast
 
     # use remote relays
     use_backend streaming_website_http   if is_streaming_website
@@ -93,6 +102,7 @@ frontend icecast_and_nginx_hls_https
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+    acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
     # return 403 if hostname or defined file extensions are not matching
     http-request deny        unless is_cdn or is_streaming_website
     http-request deny        unless hls_playlist or hls_fragment or icecast or is_streaming_website or is_relive or dash_playlist or dash_fragment
@@ -105,6 +115,14 @@ frontend icecast_and_nginx_hls_https
     use_backend dash_fragment_local_https  if is_local dash_fragment { ssl_fc }
     use_backend dash_playlist_local_https  if is_local dash_playlist { ssl_fc }
     use_backend icecast_local_https       if is_local icecast      { ssl_fc }
+
+    # dtag relay
+    use_backend hls_relive_dtag_https    if is_dtag is_relive    { ssl_fc }
+    use_backend hls_fragment_dtag_https  if is_dtag hls_fragment { ssl_fc }
+    use_backend hls_playlist_dtag_https  if is_dtag hls_playlist { ssl_fc }
+    use_backend dash_fragment_dtag_https  if is_dtag dash_fragment { ssl_fc }
+    use_backend dash_playlist_dtag_https  if is_dtag dash_playlist { ssl_fc }
+    use_backend icecast_dtag_https       if is_dtag icecast      { ssl_fc }
 
     # use remote relays
     use_backend streaming_website_https   if is_streaming_website  { ssl_fc }
@@ -149,7 +167,14 @@ backend hls_playlist_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -165,7 +190,14 @@ backend hls_fragment_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -181,7 +213,14 @@ backend dash_playlist_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -198,7 +237,14 @@ backend dash_fragment_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -215,7 +261,14 @@ backend hls_relive_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -233,7 +286,14 @@ backend icecast_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -251,7 +311,7 @@ backend hls_playlist_local_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -267,7 +327,7 @@ backend hls_fragment_local_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -283,7 +343,7 @@ backend dash_playlist_local_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -300,7 +360,7 @@ backend dash_fragment_local_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -317,7 +377,7 @@ backend hls_relive_local_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
@@ -335,7 +395,109 @@ backend icecast_local_{{ protocol }}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
-    server {{ server }} {{ server }}:443 redir http://{{ server }}:443  weight {{ weight }}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+
+# DTAG EXTRAWURST
+backend hls_playlist_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend hls_fragment_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_playlist_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_fragment_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend hls_relive_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend icecast_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    http-request add-header Access-Control-Allow-Origin streaming.media.ccc.de
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
 
