@@ -12,7 +12,7 @@ dedi3.het.c3voc.de             hidden=no nginx=yes icecast=yes icecast_master_ip
 dedi4.het.c3voc.de             hidden=no nginx=yes icecast=yes icecast_master_ip=5.9.196.94 icecast_push_master=no nginx_hls_masters='["5.9.196.94"]' nginx_hls_relive_masters='["5.9.196.94"]' nginx_dash_masters='["5.9.196.94"]' 
 dedi5.het.c3voc.de             hidden=no nginx=yes icecast=no nginx_hls_masters='["5.9.196.94"]' nginx_hls_relive_masters='["5.9.196.94"]' nginx_dash_masters='["5.9.196.94"]' 
 dedi6.het.c3voc.de             hidden=no nginx=yes icecast=no nginx_hls_masters='["5.9.196.94"]' nginx_hls_relive_masters='["5.9.196.94"]' nginx_dash_masters='["5.9.196.94"]' 
-dellinger.alb.c3voc.de         hidden=no nginx=yes icecast=yes icecast_push_master=no 
+dellinger.alb.c3voc.de         hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.123 icecast_push_master=no nginx_hls_masters='["94.45.241.123"]' nginx_hls_relive_masters='["94.45.241.123"]' nginx_dash_masters='["94.45.241.123"]' 
 gsa.cch.c3voc.de               hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.123 icecast_push_master=no nginx_hls_masters='["94.45.241.123"]' nginx_hls_relive_masters='["94.45.241.123"]' nginx_dash_masters='["94.45.241.123"]' 
 live.bn.c3voc.de               hidden=no nginx=yes icecast=no nginx_hls_masters='["94.45.241.123"]' nginx_hls_relive_masters='["94.45.241.123"]' nginx_dash_masters='["94.45.241.123"]' 
 live.dus.c3voc.de              hidden=no nginx=yes icecast=no nginx_hls_masters='["94.45.241.123"]' nginx_hls_relive_masters='["94.45.241.123"]' nginx_dash_masters='["94.45.241.123"]' 
