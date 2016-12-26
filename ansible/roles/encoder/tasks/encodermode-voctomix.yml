@@ -16,6 +16,7 @@
             enabled=no
             state=stopped
     with_items: "{{ old_units.stdout_lines }}"
+    ignore_errors: yes
 
   - name: remove old unit-files
     file: state=absent path="/etc/systemd/system/{{ item }}"
@@ -303,6 +304,7 @@
     with_nested:
       - [program, stream, grabber]
       - "{{ decklink_playout_devices.stdout_lines }}"
+    ignore_errors: yes
 
 
 

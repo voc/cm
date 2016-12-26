@@ -1,8 +1,8 @@
 ---
 # Event config
 event:
-  acronym: 33C3
-  name: 33C3
+  acronym: 33c3
+  name: 33c3
   slogan: works for me
   formats:
     hd: 'yes'

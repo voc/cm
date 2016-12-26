@@ -3,23 +3,23 @@
 # Lecture rooms
 [saal1]
 encoder1.lan.c3voc.de
-encoder3.lan.c3voc.de
+#encoder3.lan.c3voc.de
 
 [saal2]
 encoder2.lan.c3voc.de
-encoder4.lan.c3voc.de
+#encoder4.lan.c3voc.de
 
 [saalg]
-mixer3.lan.c3voc.de
+# disabled # mixer3.lan.c3voc.de
 encoder6.lan.c3voc.de
 
 [saal6]
-mixer4.lan.c3voc.de
-derpeter.lan.c3voc.de
+# disabled # mixer4.lan.c3voc.de
+mazdermind.lan.c3voc.de
 
 [sz]
-mixer1.lan.c3voc.de
-mazdermind.lan.c3voc.de
+# disabled # mixer1.lan.c3voc.de
+derpeter.lan.c3voc.de
 
 # Host types
 [encoders]

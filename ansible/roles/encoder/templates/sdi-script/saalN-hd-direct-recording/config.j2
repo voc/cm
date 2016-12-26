@@ -1,6 +1,6 @@
 DEVICENUM=2
 STREAMNAME=${STREAMNAME:-"{{ room_fahrplan_name | lower | replace(' ', '') }}"}
-STORAGE=/video/
+STORAGE=/video/capture/{{ event.acronym }}/
 SEGMENT_SECS=${SEGMENT_SECS:-180}
 PIPES=
 
