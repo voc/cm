@@ -21,6 +21,10 @@ mazdermind.lan.c3voc.de
 # disabled # mixer1.lan.c3voc.de
 c4.lan.c3voc.de
 
+[transcoders]
+minion2.lan.c3voc.de transcode_streams='["s1_direct.mkv", "s2_direct.mkv", "s3_vocto.mkv"]'
+minion5.lan.c3voc.de transcode_streams='["s4_vocto.mkv", "s5_vocto.mkv"]' transcode_slides='["s1_stereo_slides", "s2_stereo_slides"]'
+
 # Host types
 [encoders]
 encoder1.lan.c3voc.de crs_token=uGpBzmtaKO3jhMH0ZvWq2fmdoJu2NsTB crs_secret=sFR8jdrVWf2k2L5uLUgkKCU3iNgjVOTJ

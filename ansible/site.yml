@@ -7,3 +7,4 @@
   - include: loadbalancers.yml
   - include: minions.yml
   - include: tracker.yml
+  - include: transcoders.yml

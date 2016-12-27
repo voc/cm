@@ -1,0 +1,3 @@
+---
+  - name: restart icedist
+    service: name=icedist state=restarted

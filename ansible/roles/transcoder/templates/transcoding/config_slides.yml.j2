@@ -1,0 +1,45 @@
+---
+
+server:
+  type: "static"
+  streams:
+{% if transcode_slides is defined %}
+{% for stream in transcode_slides %}
+    - "{{ stream }}"
+{% endfor %}
+{% endif %}
+
+#metrics:
+#  influx:
+#    host: "http://127.0.0.1:8086"
+#    database: "..."
+#    username: "..."
+#    password: "..."
+
+#times:
+#  source_restart_delay: 3
+#  source_timeout: 2
+#  sink_restart_delay: 3
+#  server_poll_interval: 5
+#  server_request_timeout: 3
+#  server_timeout: 16
+#  idle_time: 0
+
+#misc:
+#  reuse_screens: true
+#  restart_when_sink_dies: false
+
+source_buffer:
+  buffer_count: 64
+  buffer_size: 131072
+
+sink_buffer:
+  buffer_count: 24
+
+flows:
+  "slides":
+    regexp: "^s\d+_stereo_slides$"
+    source: './source_classic_sd.sh {stream}'
+    sinks:
+      "webm_native":  "./sink_video.sh {stream} slides native"
+      "webm_translated":  "./sink_video.sh {stream} slides translated"
