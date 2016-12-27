@@ -45,7 +45,7 @@ frontend icecast_and_nginx_hls_http
     acl hls_playlist         path_end   -i .m3u8
     acl dash_playlist        path_end   -i .mpd
     acl dash_fragment        path_end   -i .hdr .chk .m4s
-    acl is_relive            path_sub   -i relive thumb.jpg crossdomain.xml .mp4
+    acl is_relive            path_sub   -i relive/index.json thumb.jpg crossdomain.xml .mp4
     acl hls_fragment         path_end   -i .ts
     acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
     acl is_cdn               hdr(host)  -i cdn.c3voc.de
@@ -93,7 +93,7 @@ frontend icecast_and_nginx_hls_https
 
     # tag request for the right destination server
     acl hls_playlist         path_end   -i .m3u8
-    acl is_relive            path_sub   -i relive thumb.jpg crossdomain.xml .mp4
+    acl is_relive            path_sub   -i relive/index.json thumb.jpg crossdomain.xml .mp4
     acl hls_fragment         path_end   -i .ts
     acl dash_playlist        path_end   -i .mpd
     acl dash_fragment        path_end   -i .hdr .chk .m4s
