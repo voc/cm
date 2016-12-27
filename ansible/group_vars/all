@@ -140,6 +140,7 @@ users:
   - { name: 'nihilus', state: 'present' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'dedeibel', state: 'present' }
+  - { name: 'pegro', state: 'present' }
   - { name: 'voc', state: 'present' }
 
 additional_users: []
