@@ -9,7 +9,7 @@ CMD_CAPTURE="/bin/true"
 # weggelassene filter:
 #   -filter_complex:0 yadif,hqdn3d 
 
-CMD_INTERMEDIATE="ffmpeg -v info -y -analyzeduration 10000 \
+CMD_INTERMEDIATE="ffmpeg -v info -y \
     -f decklink -audio_channels 8 -i 'DeckLink Mini Recorder (2)@10' \
     -filter_complex '[0:a]channelsplit=channel_layout=7.1[a1][a2][a3][a4][a5][a6][a7][a8] ; [a5]anullsink;[a6]anullsink;[a7]anullsink;[a8]anullsink' \
     -aspect 16:9 \
