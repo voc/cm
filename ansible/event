@@ -21,6 +21,10 @@ mazdermind.lan.c3voc.de
 # disabled # mixer1.lan.c3voc.de
 c4.lan.c3voc.de
 
+[assembly]
+# disabled # mixer6.lan.c3voc.de
+encoder5.lan.c3voc.de
+
 # Host types
 [encoders]
 encoder1.lan.c3voc.de crs_token=uGpBzmtaKO3jhMH0ZvWq2fmdoJu2NsTB crs_secret=sFR8jdrVWf2k2L5uLUgkKCU3iNgjVOTJ
