@@ -12,7 +12,7 @@ get_src(){
 	encoders[2]="10.73.2.3" # encoder2
 	encoders[3]="10.73.6.3" # encoder6
 	encoders[4]="10.73.99.3" # encoder mazdermind
-	encoders[5]="10.73.5.3" # encoder5
+	encoders[5]="10.73.170.240" # encoder c4
 
 	echo ${encoders[$1]}
 }
