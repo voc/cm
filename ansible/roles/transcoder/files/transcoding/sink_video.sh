@@ -13,7 +13,7 @@ case $RES in
 		VIDEO_IDX=1
 		;;
 	slides)
-		VIDEO_IDX=2
+		VIDEO_IDX=0
 		;;
 esac
 

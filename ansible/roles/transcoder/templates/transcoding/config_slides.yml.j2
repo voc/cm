@@ -16,18 +16,19 @@ server:
 #    username: "..."
 #    password: "..."
 
-#times:
+
+times:
+  sink_restart_delay: 8
+  source_timeout: 30
 #  source_restart_delay: 3
-#  source_timeout: 2
-#  sink_restart_delay: 3
 #  server_poll_interval: 5
 #  server_request_timeout: 3
 #  server_timeout: 16
 #  idle_time: 0
 
-#misc:
+misc:
 #  reuse_screens: true
-#  restart_when_sink_dies: false
+  restart_when_sink_dies: true
 
 source_buffer:
   buffer_count: 64
@@ -38,7 +39,7 @@ sink_buffer:
 
 flows:
   "slides":
-    regexp: "^s\d+_stereo_slides$"
+    regexp: "^s\\d+_stereo_slides$"
     source: './source_classic_sd.sh {stream}'
     sinks:
       "webm_native":  "./sink_video.sh {stream} slides native"
