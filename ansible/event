@@ -95,6 +95,7 @@ minion5.lan.c3voc.de crs_token=rnrN5j6XlTcDqAbvkqXrwJUu4Hj30XL9 crs_secret=mdQae
 minion6.lan.c3voc.de crs_token=Hin6xVA0hgKD5wlexQuIHfP5abnMZVX0 crs_secret=YpjNWEk62lEUxl4WdQxRiRC8Rp808Kbt
 speedy.lan.c3voc.de crs_token=ZVgwZjhk6Sh0JFqA06yKYIlX3adj7vf6 crs_secret=wXwQRA56MTClsJ7PCk9A5YTaTzJKjzrR
 tweety.lan.c3voc.de crs_token=iu9TJ5KwoH3p0KeKbZkb50k7fCO6g9x6 crs_secret=pXb8vRvsTrQRPVt02YdUXzpeObSu0mzV
+desmit.lan.c3voc.de crs_token=sAYvIvsnJqtjigew20mNZodBa09WhaQ4 crs_secret=ZdeQOqzLhWMr7w0xYRZxCClRC5CXmsAS
 
 [tracker]
 tracker.c3voc.de
