@@ -45,11 +45,12 @@ frontend icecast_and_nginx_hls_http
     acl hls_playlist         path_end   -i .m3u8
     acl dash_playlist        path_end   -i .mpd
     acl dash_fragment        path_end   -i .hdr .chk .m4s
-    acl is_relive            path_sub   -i relive thumb.jpg crossdomain.xml .mp4
+    acl is_relive            path_sub   -i index.json thumb.jpg crossdomain.xml .mp4
     acl hls_fragment         path_end   -i .ts
     acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
     acl is_cdn               hdr(host)  -i cdn.c3voc.de
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
+    acl is_streaming_website path_end   -i logo.webm
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
     acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
@@ -58,6 +59,8 @@ frontend icecast_and_nginx_hls_http
     http-request deny        unless hls_playlist or hls_fragment or icecast or is_streaming_website or is_relive or dash_playlist or dash_fragment
 
     # Backend usage
+    use_backend streaming_website_http   if is_streaming_website
+
     # local relay
     use_backend hls_relive_local_http    if is_local is_relive
     use_backend hls_fragment_local_http  if is_local hls_fragment
@@ -75,7 +78,6 @@ frontend icecast_and_nginx_hls_http
     use_backend icecast_dtag_http       if is_dtag icecast
 
     # use remote relays
-    use_backend streaming_website_http   if is_streaming_website
     use_backend hls_relive_http          if is_relive
     use_backend hls_playlist_http        if hls_playlist
     use_backend hls_fragment_http        if hls_fragment
@@ -93,13 +95,14 @@ frontend icecast_and_nginx_hls_https
 
     # tag request for the right destination server
     acl hls_playlist         path_end   -i .m3u8
-    acl is_relive            path_sub   -i relive thumb.jpg crossdomain.xml .mp4
+    acl is_relive            path_sub   -i index.json thumb.jpg crossdomain.xml .mp4
     acl hls_fragment         path_end   -i .ts
     acl dash_playlist        path_end   -i .mpd
     acl dash_fragment        path_end   -i .hdr .chk .m4s
     acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
     acl is_cdn               hdr(host)  -i cdn.c3voc.de
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
+    acl is_streaming_website path_end   -i logo.webm
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
     acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
@@ -108,6 +111,8 @@ frontend icecast_and_nginx_hls_https
     http-request deny        unless hls_playlist or hls_fragment or icecast or is_streaming_website or is_relive or dash_playlist or dash_fragment
 
     # Backend usage
+    use_backend streaming_website_https   if is_streaming_website  { ssl_fc }
+
     # local relay
     use_backend hls_relive_local_https    if is_local is_relive    { ssl_fc }
     use_backend hls_fragment_local_https  if is_local hls_fragment { ssl_fc }
@@ -125,7 +130,6 @@ frontend icecast_and_nginx_hls_https
     use_backend icecast_dtag_https       if is_dtag icecast      { ssl_fc }
 
     # use remote relays
-    use_backend streaming_website_https   if is_streaming_website  { ssl_fc }
     use_backend hls_relive_https          if is_relive             { ssl_fc }
     use_backend hls_playlist_https        if hls_playlist          { ssl_fc }
     use_backend hls_fragment_https        if hls_fragment          { ssl_fc }

@@ -25,6 +25,10 @@ c4.lan.c3voc.de
 # disabled # mixer6.lan.c3voc.de
 encoder5.lan.c3voc.de
 
+[transcoders]
+minion2.lan.c3voc.de transcode_streams='["s1_direct.mkv", "s2_direct.mkv", "s3_vocto.mkv"]'
+minion5.lan.c3voc.de transcode_streams='["s4_vocto.mkv", "s5_vocto.mkv"]' transcode_slides='["s1_stereo_slides", "s2_stereo_slides", "s3_stereo_slides", "s4_stereo_slides"]'
+
 # Host types
 [encoders]
 encoder1.lan.c3voc.de crs_token=uGpBzmtaKO3jhMH0ZvWq2fmdoJu2NsTB crs_secret=sFR8jdrVWf2k2L5uLUgkKCU3iNgjVOTJ
@@ -55,7 +59,7 @@ phony.lan.c3voc.de
 
 # Streaming server
 [relays]
-live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes ansible_ssh_port=8000 ansible_ssh_host=localhost
+live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes
 
 # remote
 # master

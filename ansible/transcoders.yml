@@ -1,0 +1,6 @@
+---
+ - hosts: transcoders
+   roles:
+     - { role: common, tags: ['common'] }
+     - { role: monitoring-client, tags: ['monitoring'] }
+     - { role: transcoder, tags: ['transcoder'] }
