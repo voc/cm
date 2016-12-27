@@ -19,7 +19,7 @@ mazdermind.lan.c3voc.de
 
 [sz]
 # disabled # mixer1.lan.c3voc.de
-derpeter.lan.c3voc.de
+c4.lan.c3voc.de
 
 # Host types
 [encoders]
@@ -32,7 +32,7 @@ encoder6.lan.c3voc.de crs_token=ejIyE40fOZKua4ijRkvaF9pV7HIj2ZsA crs_secret=03g9
 encoder7.lan.c3voc.de crs_token=s41TtFE4OGcjNGdxtLYIJmRCnmqx68Bq crs_secret=bhdDxCs0eRJf0OBlkKOA6bztCIO8yXdO
 mazdermind.lan.c3voc.de crs_token=RJP7ki2o0vohuiIaUi0dP3eDoDx9PhI0 crs_secret=gdvwzyLPWuDyWqzx7xtjyA3LttaDyb44
 derpeter.lan.c3voc.de   crs_token=ok50HbC0Zulq0sygOcL3ALrFAOWWMxGQ crs_secret=tIL9pbYzD8h5w7vucwm01YTclltwt34R
-
+c4.lan.c3voc.de         crs_token=I0hZzhpDevK3VqRb7XaoI5E7VBZGu1gN crs_secret=zlZMeQ17CmFXaHfsFn7F7tfC50TDWvUo
 
 [mixers]
 mixer[1:7].lan.c3voc.de crs_token=tzqEguKNIIU9RBCDmSe40m4ZecNlB4i2 crs_secret=A10H3UvgCteMXYkTBZiLFTazVlyPbzep

@@ -1,6 +1,6 @@
 ---
 room_number: 5
-room_fahrplan_name: Saal5
+room_fahrplan_name: Sendezentrum
 grabber_aspect: 16x9
 grabbersource_url_path: stream.mjpg
 
@@ -17,17 +17,18 @@ voctomix_sources:
   -
     name: slides
     type: decklink                         # decklink, mjpeg or test
+    plug: hdmi
     device: 'DeckLink Mini Recorder'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder'
+    mode: '1920x1080 at 24000/1000 fps'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder'
   -
     name: cam1
     type: decklink                         # decklink, mjpeg or test
-    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    device: 'DeckLink SDI (3)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
     mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
   -
     name: cam2
     type: decklink                         # decklink, mjpeg or test
-    device: 'DeckLink SDI (3)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
     mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
 
-voctomix_audio_source: cam1
+voctomix_audio_source: cam2
