@@ -55,7 +55,7 @@ phony.lan.c3voc.de
 
 # Streaming server
 [relays]
-live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes ansible_ssh_port=8000 ansible_ssh_host=localhost
+live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes
 
 # remote
 # master
