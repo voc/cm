@@ -12,6 +12,7 @@
     - encodermode
     - voctomix
  - include: icedist.yml
+   tags: icedist
  - include: nginx.yml
    tags: nginx
  - include: samba.yml
