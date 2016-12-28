@@ -24,7 +24,6 @@ CMD_INTERMEDIATE="ffmpeg -y -f decklink -audio_channels 8 -i 'DeckLink Mini Reco
 -map '[a1]' \
 -map '[a2]' \
 -map '[a3]' \
--ac:a:3 2 -map 0:a \
 -y -f matroska pipe: > ${PIPEPATH}/${PIPE_INTERMEDIATE}"
 
 CFG_SUPERTEE="supertee.ini"
