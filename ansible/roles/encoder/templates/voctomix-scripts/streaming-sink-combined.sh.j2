@@ -16,7 +16,12 @@ ffmpeg -y -nostdin \
 		movie=/opt/voc/share/overlay_sd.png [logo_sd];
 		[deinter_sd] [logo_sd] overlay=0:0 [sd];
 		movie=/opt/voc/share/overlay_slides.png [logo_slides];
-		[deinter_slides] [logo_slides] overlay=0:0 [slides]
+		[deinter_slides] [logo_slides] overlay=0:0 [slides];
+
+
+		[0:a:0] volume=12dB, asplit=3 [native_in][translated_in][stereo];
+		[native_in] pan=mono|c0=FL [native];
+		[translated_in] pan=mono|c0=FR [translated]
 	' \
 	-map '[hd]' -map '[sd]' -map '[slides]' \
 	\
@@ -41,13 +46,13 @@ ffmpeg -y -nostdin \
 	-g:v:2 50 \
 	\
 	{# Pan and Encode Audio, Left Channel -> Native #}
-	-map 0:a:0 -filter:a:0 pan='mono|c0=FL' \
+	-map '[native]' \
 	-c:a:0 libfdk_aac -b:a:0 96k -ar 44100 \
 	{# Pan and Encode Audio, Righr Channel -> Translated #}
-	-map 0:a:0 -filter:a:1 pan='mono|c0=FR' \
+	-map '[translated]' \
 	-c:a:1 libfdk_aac -b:a:1 96k -ar 44100 \
 	{# Encode Audio, Both Channels -> Stereo #}
-	-map 0:a:0 \
+	-map '[stereo]' \
 	-c:a:2 libfdk_aac -b:a:2 96k -ar 44100 \
 	\
 	-max_interleave_delta 0 \
