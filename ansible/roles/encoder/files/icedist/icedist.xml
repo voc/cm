@@ -15,7 +15,7 @@
 	<!-- sources can be a bit slow to start, wait longer than usual -->
         <source-timeout>30</source-timeout>
 
-        <burst-size>0</burst-size>
+        <burst-size>524280</burst-size>
     </limits>
 
     <authentication>
