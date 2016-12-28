@@ -3,6 +3,8 @@ room_number: 2
 room_fahrplan_name: Saal 2
 grabber_aspect: 16x9
 
+room_volume: 18dB
+
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
