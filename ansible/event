@@ -26,9 +26,9 @@ c4.lan.c3voc.de
 encoder5.lan.c3voc.de
 
 [transcoders]
-minion2.lan.c3voc.de transcode_rooms='[1, 2]'
-minion5.lan.c3voc.de transcode_rooms='[4, 5]'
-minion6.lan.c3voc.de transcode_rooms='[3]' transcode_room_slides='[1, 2, 3, 4]'
+minion2.lan.c3voc.de transcode_rooms='[1, 4]'
+minion5.lan.c3voc.de transcode_rooms='[3, 5]'
+minion6.lan.c3voc.de transcode_rooms='[2]' transcode_room_slides='[1, 2, 3, 4]'
 
 # Host types
 [encoders]
