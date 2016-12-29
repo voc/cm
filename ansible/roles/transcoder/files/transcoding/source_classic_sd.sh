@@ -1,8 +1,7 @@
 #!/bin/bash
+# consumes: sX_sd_multiaudio
 
 . common.sh
-
-# consumes: sX_sd_multiaudio
 
 ffmpeg -y -i "rtmp://${RTMP_SERVER}/stream/${STREAM}" -aspect 16:9 -threads:0 0 \
 	-fflags +genpts -flags +global_header \

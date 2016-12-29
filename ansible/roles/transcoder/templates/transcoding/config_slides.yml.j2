@@ -3,9 +3,9 @@
 server:
   type: "static"
   streams:
-{% if transcode_slides is defined %}
-{% for stream in transcode_slides %}
-    - "{{ stream }}"
+{% if transcode_room_slides is defined %}
+{% for room in transcode_room_slides %}
+    - "s{{ room }}_stereo_slides"
 {% endfor %}
 {% endif %}
 

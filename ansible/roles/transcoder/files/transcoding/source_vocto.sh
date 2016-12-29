@@ -3,8 +3,6 @@
 
 . common.sh
 
-SRC=$(get_src $STREAM_ROOM)
-
 ffmpeg -y -i "http://${SRC}:7999/${STREAM}" -aspect 16:9 -threads:0 0 \
 	-fflags +genpts -flags +global_header \
 	-c:v libvpx -g 75 -keyint_min 75 -deadline realtime \

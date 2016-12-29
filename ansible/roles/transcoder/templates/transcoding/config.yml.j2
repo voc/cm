@@ -3,9 +3,13 @@
 server:
   type: "static"
   streams:
-{% if transcode_streams is defined %}
-{% for stream in transcode_streams %}
-    - "{{ stream }}"
+{% if transcode_rooms is defined %}
+{% for room in transcode_rooms %}
+{% for item in transcoding_mkv_sources %}
+{% if room == item['room'] %}
+    - "{{ item['stream'] }}"
+{% endif %}
+{% endfor %}
 {% endfor %}
 {% endif %}
 

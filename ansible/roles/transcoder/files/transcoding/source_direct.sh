@@ -2,7 +2,6 @@
 # consumes 2-video, 3-audio integrated mkv
 
 . common.sh
-SRC=$(get_src $STREAM_ROOM)
 
 ffmpeg -y -i "http://${SRC}:7999/${STREAM}" -aspect 16:9 -threads:0 0 \
 	-fflags +genpts -flags +global_header \
