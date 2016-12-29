@@ -2,10 +2,10 @@
 
 . common.sh
 
-RES="$2"
-LANG="$3"
+STREAM_RES="$2"
+STREAM_LANG="$3"
 
-case $RES in
+case $STREAM_RES in
 	hd)
 		VIDEO_IDX=0
 		;;
@@ -17,7 +17,7 @@ case $RES in
 		;;
 esac
 
-if [ "$LANG" = "native" ]
+if [ "$STREAM_LANG" = "native" ]
 then
 	AUDIO_IDX=0
 else
@@ -31,4 +31,4 @@ ffmpeg -f matroska -i - \
 	\
 	mse_webm_remuxer -cm 2000 - - | \
 	\
-	oggfwd -w ${IC_IP} 8000 "${IC_PASSWD}" /"s${STREAM_ROOM}_${LANG}_${RES}.webm"
+	oggfwd -w ${IC_IP} 8000 "${IC_PASSWD}" /"s${STREAM_ROOM}_${STREAM_LANG}_${STREAM_RES}.webm"
