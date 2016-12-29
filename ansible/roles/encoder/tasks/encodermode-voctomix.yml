@@ -151,6 +151,7 @@
   - name: enable pause-source service
     service: name=pause-source.service
              enabled=yes
+    when: (voctomix_no_pause is not defined) or (not voctomix_no_pause)
 
 
 
@@ -173,6 +174,7 @@
   - name: enable music-source service
     service: name=music-source.service
              enabled=yes
+    when: (voctomix_no_music is not defined) or (not voctomix_no_music)
 
 
 
