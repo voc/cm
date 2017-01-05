@@ -2,32 +2,33 @@
 
 # Lecture rooms
 [saal1]
-mixer1.lan.c3voc.de
 encoder1.lan.c3voc.de
+#encoder3.lan.c3voc.de
 
 [saal2]
-mixer2.lan.c3voc.de
 encoder2.lan.c3voc.de
+#encoder4.lan.c3voc.de
 
-[saal3]
-mixer3.lan.c3voc.de
-encoder3.lan.c3voc.de
-
-[saal4]
-mixer4.lan.c3voc.de
-encoder4.lan.c3voc.de
-
-[saal5]
-mixer5.lan.c3voc.de
-encoder5.lan.c3voc.de
-
-[saal6]
-mixer6.lan.c3voc.de
+[saalg]
+# disabled # mixer3.lan.c3voc.de
 encoder6.lan.c3voc.de
 
-[saal7]
-mixer7.lan.c3voc.de
-encoder7.lan.c3voc.de
+[saal6]
+# disabled # mixer4.lan.c3voc.de
+mazdermind.lan.c3voc.de
+
+[sz]
+# disabled # mixer1.lan.c3voc.de
+c4.lan.c3voc.de
+
+[assembly]
+# disabled # mixer6.lan.c3voc.de
+encoder5.lan.c3voc.de
+
+[transcoders]
+minion2.lan.c3voc.de transcode_rooms='[1, 4]'
+minion5.lan.c3voc.de transcode_rooms='[3, 5]'
+minion6.lan.c3voc.de transcode_rooms='[2]' transcode_room_slides='[1, 2, 3, 4]'
 
 # Host types
 [encoders]
@@ -38,7 +39,9 @@ encoder4.lan.c3voc.de crs_token=9qCETQanG933Mf7fEVsENxQUhqq5ccEJ crs_secret=4VsE
 encoder5.lan.c3voc.de crs_token=ruVj39QQisWYh4l7bAqEid08TKGrJNmE crs_secret=IxwPe4eS6ewO86eb4wdDujL8guMxQ7ZY
 encoder6.lan.c3voc.de crs_token=ejIyE40fOZKua4ijRkvaF9pV7HIj2ZsA crs_secret=03g90szjvAACwd2pkJ7yrBGbx20Lp73l
 encoder7.lan.c3voc.de crs_token=s41TtFE4OGcjNGdxtLYIJmRCnmqx68Bq crs_secret=bhdDxCs0eRJf0OBlkKOA6bztCIO8yXdO
-
+mazdermind.lan.c3voc.de crs_token=RJP7ki2o0vohuiIaUi0dP3eDoDx9PhI0 crs_secret=gdvwzyLPWuDyWqzx7xtjyA3LttaDyb44
+derpeter.lan.c3voc.de   crs_token=ok50HbC0Zulq0sygOcL3ALrFAOWWMxGQ crs_secret=tIL9pbYzD8h5w7vucwm01YTclltwt34R
+c4.lan.c3voc.de         crs_token=I0hZzhpDevK3VqRb7XaoI5E7VBZGu1gN crs_secret=zlZMeQ17CmFXaHfsFn7F7tfC50TDWvUo
 
 [mixers]
 mixer[1:7].lan.c3voc.de crs_token=tzqEguKNIIU9RBCDmSe40m4ZecNlB4i2 crs_secret=A10H3UvgCteMXYkTBZiLFTazVlyPbzep
@@ -57,7 +60,7 @@ phony.lan.c3voc.de
 
 # Streaming server
 [relays]
-live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes ansible_ssh_port=8000 ansible_ssh_host=localhost
+live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes
 
 # remote
 # master
@@ -69,18 +72,16 @@ live.dus.c3voc.de   nginx=yes    icecast=yes                        icecast_mast
 
 [loadbalancers]
 lb.dus.c3voc.de
+lb.alb.c3voc.de
 
 # mainly remote server
 [basic]
 mng.ber.c3voc.de
 node.ber.c3voc.de
 node.dus.c3voc.de
-live.dus.c3voc.de
 live.ber.c3voc.de
 mngslave.dus.c3voc.de
 testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
-dellinger.alb.c3voc.de ansible_ssh_port=22 ansible_ssh_host=2a02:f28:1:d:1618:77ff:fe46:40b2
-live.bn.c3voc.de ansible_ssh_port=22 ansible_ssh_host=2001:4dd0:ff2f:0:1a66:daff:fe20:5f60
 
 
 [minions]
@@ -92,6 +93,7 @@ minion5.lan.c3voc.de crs_token=rnrN5j6XlTcDqAbvkqXrwJUu4Hj30XL9 crs_secret=mdQae
 minion6.lan.c3voc.de crs_token=Hin6xVA0hgKD5wlexQuIHfP5abnMZVX0 crs_secret=YpjNWEk62lEUxl4WdQxRiRC8Rp808Kbt
 speedy.lan.c3voc.de crs_token=ZVgwZjhk6Sh0JFqA06yKYIlX3adj7vf6 crs_secret=wXwQRA56MTClsJ7PCk9A5YTaTzJKjzrR
 tweety.lan.c3voc.de crs_token=iu9TJ5KwoH3p0KeKbZkb50k7fCO6g9x6 crs_secret=pXb8vRvsTrQRPVt02YdUXzpeObSu0mzV
+desmit.lan.c3voc.de crs_token=sAYvIvsnJqtjigew20mNZodBa09WhaQ4 crs_secret=ZdeQOqzLhWMr7w0xYRZxCClRC5CXmsAS
 
 [tracker]
 tracker.c3voc.de

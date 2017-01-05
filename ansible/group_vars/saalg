@@ -1,0 +1,32 @@
+---
+room_number: 3
+room_fahrplan_name: Saal G
+grabber_aspect: 16x9
+
+# hd-direct, hd-voctomix
+# deploy with --tags encodermode
+# reboot encoder after changing
+encodermode: hd-voctomix
+
+# check `vainfo` before and read https://github.com/voc/voctomix/pull/87#issuecomment-250289443
+voctomix_vaapi: false
+
+# encoder 1-5 can't handle more then 3 video-feeds
+voctomix_sources:
+  -
+    name: slides
+    type: decklink                         # decklink, mjpeg or test
+    device: 'DeckLink SDI (1)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (1)'
+  -
+    name: cam1
+    type: decklink                         # decklink, mjpeg or test
+    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
+  -
+    name: cam2
+    type: decklink                         # decklink, mjpeg or test
+    device: 'DeckLink Mini Recorder'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
+
+voctomix_audio_source: cam1

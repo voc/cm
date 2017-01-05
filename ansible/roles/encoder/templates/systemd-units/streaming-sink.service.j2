@@ -1,13 +1,13 @@
 #MANAGED BY ANSIBLE
 
 [Unit]
-Description = voctomix {{ item }} streaming sink
+Description = voctomix streaming sink
 After = voctocore.service
 Requires = voctocore.service
 
 [Service]
 Type = simple
-ExecStart = /opt/voctomix/scripts/streaming-sink-{{ item }}.sh
+ExecStart = /opt/voctomix/scripts/streaming-sink.sh
 Restart = always
 RestartSec = 1s
 StartLimitInterval = 0

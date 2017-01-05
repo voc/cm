@@ -1,2 +1,2 @@
-additional_users:
-  - { name: 'scottytm', state: 'present' }
+---
+letsencrypt_fake: dedi1.het

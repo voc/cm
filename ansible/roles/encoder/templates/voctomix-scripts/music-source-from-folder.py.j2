@@ -85,6 +85,7 @@ class LoopSource(object):
 		pipeline = """
 			audioresample name=join !
 			audioconvert !
+			volume volume=0.175 !
 			audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000 !
 			matroskamux !
 			tcpclientsink host=localhost port=18000

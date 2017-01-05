@@ -1,0 +1,61 @@
+<icecast>
+	<hostname>live.dus.c3voc.de</hostname>
+	<location>voc</location>
+	<admin>contact@c3voc.de</admin>
+
+
+    <limits>
+        <clients>4096</clients>
+        <sources>100</sources>
+        <threadpool>10</threadpool>
+        <queue-size>4055040</queue-size>
+        <client-timeout>30</client-timeout>
+        <header-timeout>15</header-timeout>
+
+	<!-- sources can be a bit slow to start, wait longer than usual -->
+        <source-timeout>30</source-timeout>
+
+        <burst-size>524280</burst-size>
+    </limits>
+
+    <authentication>
+        <source-password>source</source-password>
+        <relay-password>relay</relay-password>
+
+        <admin-user>admin</admin-user>
+        <admin-password>admin</admin-password>
+    </authentication>
+
+    <listen-socket>
+        <port>7999</port>
+        <bind-address>0.0.0.0</bind-address>
+        <bindv6only>0</bindv6only>
+    </listen-socket>
+
+    <fileserve>1</fileserve>
+    <paths>
+        <basedir>/usr/local/share/icecast</basedir>
+
+        <logdir>/var/log/icedist</logdir>
+        <webroot>/usr/share/icecast2/web</webroot>
+        <adminroot>/usr/share/icecast2/admin</adminroot>
+
+        <alias source="/" destination="/status.xsl"/>
+    </paths>
+
+    <logging>
+      <accesslog>access.log</accesslog>
+      <errorlog>error.log</errorlog>
+
+      <loglevel>3</loglevel> <!-- 4 Debug, 3 Info, 2 Warn, 1 Error -->
+      <logsize>1000</logsize>  <!-- Max size of a logfile -->
+    </logging>
+
+    <security>
+        <chroot>0</chroot>
+        <changeowner>
+            <user>icecast2</user>
+            <group>icecast</group>
+        </changeowner>
+    </security>
+</icecast>

@@ -19,6 +19,8 @@
       - "cache/tmp"
       - "cache/hls"
       - "cache/hls_relive"
+      - "cache/dash"
+      - "dash"
     notify: reload nginx
     tags: install
 

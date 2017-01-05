@@ -2,6 +2,9 @@
   - name: restart nginx
     service: name=nginx state=restarted
 
+  - name: restart icedist
+    service: name=icedist state=restarted
+
   - name: restart smbd
     service: name=smbd state=restarted
 

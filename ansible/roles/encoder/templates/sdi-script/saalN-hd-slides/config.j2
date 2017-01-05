@@ -8,16 +8,17 @@ PIPES="${PIPE_NUT} ${PIPE_INTERMEDIATE}"
 
 CMD_CAPTURE="/bin/true"
 
-CMD_INTERMEDIATE="ffmpeg -y -f decklink -i 'DeckLink Mini Recorder (2)@10' -aspect 16:9 -threads:0 0 \
+CMD_INTERMEDIATE="ffmpeg -y -f decklink -i 'DeckLink Mini Recorder (3)@10' -aspect 16:9 -threads:0 0 \
 -c:v libx264 \
--filter_complex 'yadif=mode=2 [deinter];
+-filter_complex '[0:v] yadif=mode=2 [deinter];
  [deinter] scale=720:576, hqdn3d, fps=5 [ugly];
  movie=/opt/voc/share/overlay_slides.png [logo_hd];
- [ugly] [logo_hd] overlay=0:0 [out_hd]' \
+ [ugly] [logo_hd] overlay=0:0 [out_hd];
+ [0:a] volume={{ room_volume | default('1') }}, channelsplit=channel_layout [native][translated]' \
 -map '[out_hd]' -maxrate:v:0 100k -bufsize:v:0 8192k -crf:0 25 -pix_fmt:0 yuv420p -profile:v:0 main -g:v:0 50 -preset:v:0 veryfast \
 -ac 1 -c:a libfdk_aac -b:a 64k -ar 44100 \
--map 0:1 -filter:a:0 pan=mono:c0=FL \
--map 0:1 -filter:a:1 pan=mono:c0=FR \
+-map '[native]'
+-map '[translated]'\
 -ac:a:2 2 -map 0:1 \
 -y -f mpegts pipe: > ${PIPEPATH}/${PIPE_INTERMEDIATE}"
 

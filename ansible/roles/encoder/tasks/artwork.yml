@@ -21,6 +21,18 @@
       - "../../../artwork/{{ event.acronym }}/overlay_hd.png"
       - "artwork/default-overlay_hd.png"
 
+  - name: add slides-overlay image
+    copy: src={{ item }}
+          dest=/opt/voc/share/overlay_slides.png
+          owner=root group=staff mode=0644
+    with_first_found:
+      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay_slides.png"
+      - "../../../artwork/{{ event.acronym }}/overlay_slides.png"
+      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay_hd.png"
+      - "../../../artwork/{{ event.acronym }}/overlay_hd.png"
+      - "artwork/default-overlay_slides.png"
+      - "artwork/default-overlay_hd.png"
+
   - name: add nostream image
     copy: src={{ item }}
           dest=/opt/voc/share/nostream.png
@@ -30,6 +42,10 @@
       - "../../../artwork/{{ event.acronym }}/nostream.png"
       - "artwork/default-nostream.png"
 
+  - name: remove existing background-loop
+    file: dest=/opt/voc/share/bgloop.ts
+          state=absent
+
   - name: uploading background-loops
     copy: src={{ item }}
           dest=/opt/voc/share/
@@ -37,16 +53,7 @@
     with_items:
       - "artwork/black-bgloop.ts"
       - "artwork/white-bgloop.ts"
-
-  - name: remove existing background-loop
-    file: dest=/opt/voc/share/bgloop.ts
-          state=absent
-
-  - name: symlink black as default background-loop
-    file: src=black-bgloop.ts
-          dest=/opt/voc/share/bgloop.ts
-          owner=root group=staff mode=0644
-          state=link
+      - "artwork/bgloop.ts"
 
   - name: uploading pause-loop
     copy: src={{ item }}

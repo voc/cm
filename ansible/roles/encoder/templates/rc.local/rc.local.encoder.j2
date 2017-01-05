@@ -12,7 +12,7 @@
 # By default this script does nothing.
 
 iptables -F INPUT
-iptables -A INPUT -p tcp -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 
 # allow all from trusted ips
@@ -34,7 +34,7 @@ iptables -A INPUT -p udp -j REJECT
 
 # ip6tables
 ip6tables -F INPUT
-ip6tables -A INPUT -p tcp -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+ip6tables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 ip6tables -A INPUT -i lo -j ACCEPT
 
 # allow ssh
@@ -49,6 +49,7 @@ ip6tables -A INPUT -p udp -j REJECT
 
 sdi-script start saalN-hd-direct
 sdi-script start saalN-hd-direct-recording
+sdi-script start saalN-hd-slides
 
 {% endif %}
 

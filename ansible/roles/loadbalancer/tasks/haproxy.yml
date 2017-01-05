@@ -82,6 +82,7 @@
     tags:
       - install
       - config
+      - haproxy_deploy
 
   - name: autostart haproxy
     service: name=haproxy state=started enabled=yes

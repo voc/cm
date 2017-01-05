@@ -1,3 +1,10 @@
+system:
+  kernel_package: linux-image-4.9.0-040900-generic
+  kernel_urls:
+    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-image-4.9.0-040900-generic_4.9.0-040900.201612111631_amd64.deb
+    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-headers-4.9.0-040900_4.9.0-040900.201612111631_all.deb
+    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.9/linux-headers-4.9.0-040900-generic_4.9.0-040900.201612111631_amd64.deb
+
 # icecast
 icecast_admin_user:      'admin'
 icecast_admin_password:  'Else8Reform=About=Hey9Harp7'
@@ -24,7 +31,7 @@ icecast_static_streams_meta_data: [
 ]
 
 # nginx
-nginx_worker_processes: 2
+nginx_worker_processes: auto
 nginx_streaming_locations: {
   "s1_native_sd": "{{ nginx_master_ip | default('10.73.1.3') }}",
   "s1_native_hd": "{{ nginx_master_ip | default('10.73.1.3') }}",
@@ -60,6 +67,9 @@ nginx_frontend_masters:
 
 nginx_hls_masters:
   - '195.54.164.164'
+
+nginx_dash_masters:
+  - '141.24.40.50'
 
 loadbalancer:
   frontend:
