@@ -19,12 +19,19 @@ nginx_ips_allow_stats: [
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
+lb_local_relays: {
+}
+
 lb_hls_relays: {
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
 }
 
 lb_bbr_relays: {
+  "dellinger.alb.c3voc.de": 100,
+}
+
+lb_icecast_relays: {
   "dellinger.alb.c3voc.de": 100,
 }
 
@@ -36,13 +43,6 @@ lb_relive_relays: {
 lb_dash_relays: {
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
-}
-
-lb_icecast_relays: {
-  "dellinger.alb.c3voc.de": 100,
-}
-
-lb_local_relays: {
 }
 
 lb_dtag_relays: {
