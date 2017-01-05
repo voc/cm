@@ -110,7 +110,7 @@
   # TODO: Is there a better solution available?
   - name: reaload nginx every morning for ocsp updates
     cron: name="reload nginx for ocsp update" hour=5 minute=5
-          job="{{ systemctl_bin.stdout }} reload nginx" user=root
+          job="systemctl reload nginx" user=root
     tags: install
 
   # TODO: remove me

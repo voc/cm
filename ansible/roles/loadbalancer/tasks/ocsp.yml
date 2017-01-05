@@ -36,5 +36,5 @@
 
   - name: reaload haproxy every morning for ocsp updates
     cron: name="reload haproxy for ocsp update" hour=5 minute=5
-          job="{{ systemctl_bin.stdout }} reload haproxy" user=root
+          job="systemctl reload haproxy" user=root
     tags: install
