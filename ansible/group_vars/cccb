@@ -1,0 +1,12 @@
+---
+m_number: 23
+room_fahrplan_name: Saal 23
+grabber_aspect: 16x9
+grabbersource_url_path: stream.mjpg
+
+room_volume: 12dB
+
+# hd-direct, hd-voctomix
+# deploy with --tags encodermode
+# reboot encoder after changing
+encodermode: hd-voctomix

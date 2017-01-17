@@ -1,0 +1,6 @@
+# Hosts file
+[cccb]
+encoder23.lan.c3voc.de
+
+[encoders]
+encoder23.lan.c3voc.de crs_token=CuYz0vnydk3liYauzvPsCe0M385e18Rf crs_secret=r35WrpUHjPOM8UNRysZ7m6zWm0yKYZ5v
