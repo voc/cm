@@ -235,9 +235,14 @@
               dest="/opt/voctomix/scripts/streaming-sink.sh"
               mode=0755 owner=root group=root
 
-  - name: create combined streaming script
+  - name: create -inactive- combined streaming script
     template: src="voctomix-scripts/streaming-sink-combined.sh.j2"
               dest="/opt/voctomix/scripts/streaming-sink-combined.sh"
+              mode=0755 owner=root group=root
+
+  - name: create -inactive- mkv-only streaming script
+    template: src="voctomix-scripts/streaming-sink-mkvonly.sh.j2"
+              dest="/opt/voctomix/scripts/streaming-sink-mkvonly.sh"
               mode=0755 owner=root group=root
 
   - name: create streaming systemd-unit
