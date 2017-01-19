@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: 33c3
-  name: 33c3
-  slogan: works for me
+  acronym: XYZ
+  name: Some Name
+  slogan: Some Slogan
   formats:
     hd: 'yes'
     sd: 'yes'

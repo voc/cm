@@ -1,8 +1,7 @@
 ---
-room_number: 1
-room_fahrplan_name: Saal1
+room_number: 4
+room_fahrplan_name: Saal4
 grabber_aspect: 16x9
-grabbersource_url_path: stream.mjpg
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
