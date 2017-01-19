@@ -51,7 +51,6 @@
           dest=/opt/voc/share/
           owner=root group=staff mode=0644
     with_items:
-      - "artwork/black-bgloop.ts"
       - "artwork/white-bgloop.ts"
       - "artwork/bgloop.ts"
 
