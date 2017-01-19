@@ -230,9 +230,14 @@
 
 
     # streaming sinks
+  - name: create streaming script
+    template: src="voctomix-scripts/streaming-sink.sh.j2"
+              dest="/opt/voctomix/scripts/streaming-sink.sh"
+              mode=0755 owner=root group=root
+
   - name: create combined streaming script
     template: src="voctomix-scripts/streaming-sink-combined.sh.j2"
-              dest="/opt/voctomix/scripts/streaming-sink.sh"
+              dest="/opt/voctomix/scripts/streaming-sink-combined.sh"
               mode=0755 owner=root group=root
 
   - name: create streaming systemd-unit
