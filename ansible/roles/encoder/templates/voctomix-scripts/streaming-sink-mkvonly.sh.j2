@@ -1,0 +1,54 @@
+#!/bin/sh
+# !!! UNTESTED !!!
+ffmpeg -y -nostdin \
+	{# input from both mix-out and slide-mirror #}
+	-thread_queue_size 512 \
+	-i tcp://localhost:15000 \
+	-thread_queue_size 512 \
+	-i tcp://localhost:13000 \
+	-threads:0 0 \
+	-aspect 16:9 \
+	-filter_complex '
+		[0:v] yadif=mode=2, hqdn3d, [deinter_hd];
+		[1:v] scale=720:576, fps=5, hqdn3d [deinter_slides];
+
+		movie=/opt/voc/share/overlay_hd.png [logo_hd];
+		[deinter_hd] [logo_hd] overlay=0:0 [hd];
+
+		movie=/opt/voc/share/overlay_sd.png [logo_sd];
+		[deinter_sd] [logo_sd] overlay=0:0 [sd];
+
+		movie=/opt/voc/share/overlay_slides.png [logo_slides];
+		[deinter_slides] [logo_slides] overlay=0:0 [slides];
+
+		[0:a:0] volume=12dB, asplit=2 [native_in][translated_in];
+		[native_in]     pan=mono|c0=FL [native];
+		[translated_in] pan=mono|c0=FR [translated]
+	' \
+	-map '[hd]' \
+	\
+	{# high bitrate and quality for HD #}
+	-maxrate:v:0 3000k -crf:0 21 \
+	-c:v:0 libx264 -preset:v:0 veryfast -bufsize:v:0 8192k -pix_fmt:0 yuv420p -profile:v:0 main \
+	\
+	{# GOP-Size of 25 für HD & SD (= 1 Second @ 25fps) #}
+	-g:v:0 25 \
+	\
+	-map '[slides]' \
+	{# even lower bitrate but better quality for Slides #}
+	-maxrate:v:1 100k  -crf:2 25 \
+	-c:v:1 libx264 -preset:v:0 veryfast -bufsize:v:2 8192k -pix_fmt:2 yuv420p -profile:v:2 main \
+	\
+	{# GOP-Size of 50 für Slides (= 10 Second @ 25fps) #}
+	-g:v:1 50 \
+	\
+	{# Encode Audio Native #}
+	-map '[native]' \
+	-c:a:0 libfdk_aac -b:a:0 96k -ar 44100 \
+	\
+	{# Encode Audio Translated #}
+	-map '[translated]' \
+	-c:a:1 libfdk_aac -b:a:1 96k -ar 44100 \
+	\
+	-map 0:v:0 -map 0:v:1 -map 0:a:0 -map 0:a:1 \
+	-f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/s{{ room_number }}.mkv

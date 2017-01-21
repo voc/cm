@@ -1,11 +1,37 @@
 ---
 room_number: 2
-room_fahrplan_name: Saal 2
+room_fahrplan_name: Saal2
 grabber_aspect: 16x9
-
-room_volume: 18dB
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
-encodermode: hd-direct
+encodermode: hd-voctomix
+
+# check `vainfo` before and read https://github.com/voc/voctomix/pull/87#issuecomment-250289443
+voctomix_vaapi: false
+
+# encoder 1-5 can't handle more then 3 video-feeds
+voctomix_sources:
+  -
+    name: cam1
+    type: decklink                         # decklink, mjpeg or test
+    device: 'DeckLink Mini Recorder (1)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (1)'
+#  -
+#    name: cam2
+#    type: decklink                         # decklink, mjpeg or test
+#    device: 'DeckLink Mini Recorder (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+#    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
+  -
+    name: grabber
+    type: mjpeg
+#  -
+#    name: android
+#    type: decklink                         # decklink, mjpeg or test
+#    plug: hdmi                             # sdi or hdmi
+#    device: 'DeckLink Mini Recorder (1)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+#    mode: '1920x1080 at 24000/1000'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (1)'
+#  -
+#    name: testsource
+#    type: test
