@@ -1,0 +1,12 @@
+---
+room_number: 1
+room_fahrplan_name: Loop1
+grabber_aspect: 16x9
+grabbersource_url_path: stream.mjpg
+
+room_volume: 12dB
+
+# hd-direct, hd-voctomix
+# deploy with --tags encodermode
+# reboot encoder after changing
+encodermode: hd-voctomix
