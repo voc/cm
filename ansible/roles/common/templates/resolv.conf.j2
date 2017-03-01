@@ -8,6 +8,12 @@ nameserver ::1
 {% elif 'dus.c3voc.de' in ansible_domain %}
 # rrbone
 nameserver 195.182.2.2
+{% elif 'fem.tu-ilmenau.de' in ansible_domain %}
+# fem
+nameserver 141.24.40.3
+nameserver 141.24.40.4
+nameserver 2001:638:904:ffcc::3
+nameserver 2001:638:904:ffcc::4
 {% endif %}
 # dnscache.berlin.ccc.de
 nameserver 213.73.91.35
