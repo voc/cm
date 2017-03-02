@@ -1,12 +1,12 @@
 ---
 # Event config
 event:
-  acronym: XYZ
-  name: Some Name
+  acronym: LO
+  name: loop
   slogan: Some Slogan
   formats:
     hd: 'yes'
-    sd: 'yes'
+    sd: 'no'
 
 system:
   kernel_package: linux-image-4.7.10-040710-generic
