@@ -10,9 +10,9 @@
     sysctl: name=vm.swappiness value=5
             sysctl_set=yes state=present reload=yes
 
-  - name: disable IPv6 on all interfaces
-    sysctl: name=net.ipv6.conf.all.disable_ipv6 value=1
-            sysctl_set=yes state=present reload=yes
+  # - name: disable IPv6 on all interfaces
+  #   sysctl: name=net.ipv6.conf.all.disable_ipv6 value=1
+  #           sysctl_set=yes state=present reload=yes
 
   # Create common files and directories
   - name: create /video if not present
