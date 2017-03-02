@@ -6,4 +6,4 @@ loop-encoder ansible_host=2001:638:904:ffc8:c474:71ff:fedc:bd08
 loop-encoder ansible_host=2001:638:904:ffc8:c474:71ff:fedc:bd08
 
 [transcoders]
-loop-transcoder ansible_host=2001:638:904:ffc8:c474:71ff:fedc:bd09
+loop-transcoder ansible_host=2001:638:904:ffc8:c474:71ff:fedc:bd09 transcode_streams='[{"host": "10.10.10.4:7999", "stream": "s1"}]'
