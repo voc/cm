@@ -1,54 +1,41 @@
 #!/bin/sh
-# !!! UNTESTED !!!
-ffmpeg -y -nostdin \
-	{# input from both mix-out and slide-mirror #}
+ffmpeg -y -nostdin -hide_banner \
+{# input from both mix-out and slide-mirror #}
 	-thread_queue_size 512 \
 	-i tcp://localhost:15000 \
 	-thread_queue_size 512 \
 	-i tcp://localhost:13000 \
-	-threads:0 0 \
-	-aspect 16:9 \
 	-filter_complex '
-		[0:v] yadif=mode=2, hqdn3d, [deinter_hd];
-		[1:v] scale=720:576, fps=5, hqdn3d [deinter_slides];
+		[0:v] hqdn3d [smooth_hd];
+		[1:v] scale=720:576, fps=5, hqdn3d [smooth_slides];
 
 		movie=/opt/voc/share/overlay_hd.png [logo_hd];
-		[deinter_hd] [logo_hd] overlay=0:0 [hd];
-
-		movie=/opt/voc/share/overlay_sd.png [logo_sd];
-		[deinter_sd] [logo_sd] overlay=0:0 [sd];
+		[smooth_hd] [logo_hd] overlay=0:0 [hd];
 
 		movie=/opt/voc/share/overlay_slides.png [logo_slides];
-		[deinter_slides] [logo_slides] overlay=0:0 [slides];
+		[smooth_slides] [logo_slides] overlay=0:0 [slides];
 
 		[0:a:0] volume=12dB, asplit=2 [native_in][translated_in];
 		[native_in]     pan=mono|c0=FL [native];
 		[translated_in] pan=mono|c0=FR [translated]
 	' \
-	-map '[hd]' \
+{# Shared video settings #}
+	-c:v libx264 -preset:v veryfast -profile:v main -pix_fmt yuv420p \
+	-threads:v 0 -aspect 16:9 \
 	\
-	{# high bitrate and quality for HD #}
-	-maxrate:v:0 3000k -crf:0 21 \
-	-c:v:0 libx264 -preset:v:0 veryfast -bufsize:v:0 8192k -pix_fmt:0 yuv420p -profile:v:0 main \
+{# High bitrate and high quality for HD #}
+	-map [hd] -metadata:s:v:0 title="HD"\
+	-r:v:0 25 -g:v:0 25 -crf:v:0 21 -maxrate:v:0 5M -bufsize:v:0 8M \
 	\
-	{# GOP-Size of 25 für HD & SD (= 1 Second @ 25fps) #}
-	-g:v:0 25 \
+{# Low bitrate and ok quality for Slides #}
+	-map [slides] -metadata:s:v:1 title="Slides"\
+	-g:v:1 50 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 5M \
 	\
-	-map '[slides]' \
-	{# even lower bitrate but better quality for Slides #}
-	-maxrate:v:1 100k  -crf:2 25 \
-	-c:v:1 libx264 -preset:v:0 veryfast -bufsize:v:2 8192k -pix_fmt:2 yuv420p -profile:v:2 main \
+{# Shared audio settings #}
+	-c:a libfdk_aac -b:a 192k -ar 48000 -ac 1 \
 	\
-	{# GOP-Size of 50 für Slides (= 10 Second @ 25fps) #}
-	-g:v:1 50 \
+{# Encode audio #}
+	-map [native] -metadata:s:a:0 title="Native" \
+	-map [translated] -metadata:s:a:1 title="Translated" \
 	\
-	{# Encode Audio Native #}
-	-map '[native]' \
-	-c:a:0 libfdk_aac -b:a:0 96k -ar 44100 \
-	\
-	{# Encode Audio Translated #}
-	-map '[translated]' \
-	-c:a:1 libfdk_aac -b:a:1 96k -ar 44100 \
-	\
-	-map 0:v:0 -map 0:v:1 -map 0:a:0 -map 0:a:1 \
-	-f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/s{{ room_number }}.mkv
+	-f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/s{{ room_number }}
