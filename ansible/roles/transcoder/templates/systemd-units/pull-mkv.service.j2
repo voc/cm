@@ -1,0 +1,16 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = push mkv from {{ item.host }} to local icecast
+After = icedist.service
+Requires = icedist.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voc/transcoding/forward_mkv.sh -s {{ item.host }}/{{ item.stream }} -d source:source@127.0.0.1:7999/{{ item.stream }}
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = icedist.service

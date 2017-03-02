@@ -29,6 +29,7 @@
     <listen-socket>
         <port>7999</port>
         <bind-address>0.0.0.0</bind-address>
+				<bind-address>::</bind-address>
         <bindv6only>0</bindv6only>
     </listen-socket>
 

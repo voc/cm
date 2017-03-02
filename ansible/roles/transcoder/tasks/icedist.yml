@@ -16,14 +16,7 @@
           state=directory
           mode=755 owner=icecast2 group=icecast
 
-  - name: enable icedist on boot when in icedist mode
+  - name: enable icedist on boot
     service: name=icedist.service
              enabled=yes
              state=started
-    when: distribution_mode is defined and distribution_mode == 'icedist'
-
-  - name: disable icedist on boot when not in icedist mode
-    service: name=icedist.service
-             enabled=no
-             state=stopped
-    when: distribution_mode is not defined or distribution_mode != 'icedist'

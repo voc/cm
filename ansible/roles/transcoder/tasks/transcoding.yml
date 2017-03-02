@@ -1,20 +1,67 @@
 ---
+  # Unit cleanup
+  - name: find old units
+    shell: (grep -l "#MANAGED BY ANSIBLE" -r /etc/systemd/system/) | xargs -rl1 basename
+    register: old_units
+
+  - debug: msg="{{ old_units.stdout_lines }}"
+
+  - name: disable & stop old units
+    service: name={{ item }}
+            enabled=no
+            state=stopped
+    with_items: "{{ old_units.stdout_lines }}"
+    ignore_errors: yes
+
+  - name: remove old unit-files
+    file: state=absent path="/etc/systemd/system/{{ item }}"
+    with_items: old_units.stdout_lines
+
+  # Scripts
   - name: copy transcoding scripts
-    copy: dest=/var/lib/transcoding/
+    copy: dest=/opt/voc/transcoding/
           src=transcoding/
-          owner=root group=root mode=0755
+          mode=0755 owner=root group=root
 
-  - name: create config.sh
-    template: dest=/var/lib/transcoding/config.sh
-              src=transcoding/config.sh.j2
-              owner=root group=root mode=0755
+  # Mkv-Pull
+  - name: create systemd units for mkv pull
+    template: src=systemd-units/pull-mkv.service.j2
+              dest="/etc/systemd/system/pull-mkv-{{ item.stream }}.service"
+              mode=0644 owner=root group=root
+    with_items: "{{ transcode_streams }}"
 
-  - name: create config.yml
-    template: dest=/var/lib/transcoding/config.yml
-              src=transcoding/config.yml.j2
-              owner=root group=root mode=0755
+  - name: enable mkv-pull units
+    service: name=pull-mkv-{{ item.stream }}.service
+             enabled=yes
+    with_items: "{{ transcode_streams }}"
 
-  - name: create config_slides.yml
-    template: dest=/var/lib/transcoding/config_slides.yml
-              src=transcoding/config_slides.yml.j2
-              owner=root group=root mode=0755
+  # Transcodings
+  - name: create systemd units for transcoding
+    template: src="systemd-units/transcode.service.j2"
+              dest="/etc/systemd/system/transcode-{{ item[0] }}-{{ item[1].stream }}.service"
+              mode=0644 owner=root group=root
+    with_nested:
+      - [vp8, h264]
+      - "{{ transcode_streams }}"
+
+  - name: enable mkv-pull units
+    service: name="transcode-{{ item[0] }}-{{ item[1].stream }}.service"
+             enabled=yes
+    with_nested:
+      - [vp8, h264]
+      - "{{ transcode_streams }}"
+
+  # - name: create systemd units for mkv push
+  #   template: src=""
+  #   with_nested:
+  #     - [vp8, h264, audio, slides]
+  #     -
+
+  # Reload systemd daemon
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  # Restart icedist
+  - name: restart icedist
+    service: name=icedist.service state=restarted
