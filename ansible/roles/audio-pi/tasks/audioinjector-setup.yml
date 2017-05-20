@@ -25,3 +25,11 @@
                 state=present
                 regexp='^#?\s*dtoverlay=audioinjector.*'
                 line='dtoverlay=audioinjector-wm8731-audio'
+
+  - name: configure soundcard
+    command: amixer set {{ item }}
+    with_items:
+        - "'Input Mux' 'Line In'"
+        - "'ADC High Pass Filter' 'on' caputure"
+        - "'Line' 'on' caputure"
+        - "'Capture' '100%' caputure"
