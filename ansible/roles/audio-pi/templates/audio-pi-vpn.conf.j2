@@ -1,0 +1,32 @@
+; MANAGED BY ANSIBLE
+; general
+client
+dev tun
+topology subnet
+
+; connection
+remote 195.54.164.163
+port 1194
+proto udp
+keepalive 10 30
+resolv-retry infinite
+link-mtu 1400
+mssfix 0
+
+; crypto
+cipher AES-128-CBC
+
+; certificates
+key /etc/openvpn/{{ vpn_name }}.key
+cert /etc/openvpn/{{ vpn_name }}.crt
+ca /etc/openvpn/ca.crt
+tls-auth /etc/openvpn/ta.key 1
+
+; auth
+tls-cipher "DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA"
+tls-client
+auth SHA512
+remote-cert-tls server
+
+; logging
+verb 0

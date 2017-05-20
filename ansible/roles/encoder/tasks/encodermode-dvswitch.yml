@@ -1,0 +1,37 @@
+---
+  # see packages.yml for sdi-script package installation
+  # see rc.local.yml for starup config
+
+  # sdi-script configuration
+  - name: remove dvswitch sdi-script directories
+    file: dest={{ item }} state=absent
+          owner=root group=root
+    with_items:
+      - /etc/sdi-script/saalN-sd-dvswitch
+      - /etc/sdi-script/saalN-sd-dvswitch-nostream
+      - /etc/sdi-script/saalN-sd-dvswitch-recording
+
+  # sdisource configuration
+  - name: remove service directory for sdisource
+    file: dest=/etc/service/{{ item }} state=absent
+    with_items:
+      - sdisource-0
+      - sdisource-1
+
+  # grabbersource configuration
+  - name: remove service directory for grabbersource
+    file: dest=/etc/service/grabbersource state=absent
+          owner=root group=root
+
+  # dvsink configuration
+  - name: remove service directory for dvsink
+    file: dest=/etc/service/dvsink state=absent
+
+  - name: remove dvsplit.pl
+    file: dest=/usr/local/bin/dvsplit.pl
+          state=absent
+
+  # pausesource configuration
+  - name: remove service directory for pausesource
+    file: dest=/etc/service/pausesource state=absent
+          owner=root group=root

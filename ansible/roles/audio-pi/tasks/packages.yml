@@ -1,0 +1,5 @@
+---
+ - name: install special packages for audio-pis
+   apt: name={{ item }} state=latest update_cache=yes
+   with_items:
+    - openvpn

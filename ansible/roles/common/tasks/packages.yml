@@ -1,0 +1,77 @@
+---
+ - name: install a default set of packages
+   apt: name={{ item }} state=latest update_cache=yes
+   tags: packages
+   with_items:
+    # YES, we are using systemd!!1!
+    - systemd
+    - systemd-sysv
+    - acpid
+    - zsh
+    - vim
+    - htop
+    - iftop
+    - tcpdump
+    - ffmpeg
+    - git
+    - mtr-tiny
+    - tmux
+    - iperf
+    - strace
+    - iotop
+    - screen
+    - build-essential
+    - gdb
+    - bwm-ng
+    - lldpd
+    - mosh
+    - runit
+    - molly-guard
+    - ncdu
+    - debian-goodies
+    - apt-dater-host
+    - dnsutils
+    - subversion
+    - dstat
+    - pv
+    - lm-sensors
+    - moreutils
+    - python
+    - ruby
+    - ruby-dev
+    - inotail
+    - libdbi1
+    - libdbd-sqlite3
+    - ethtool
+    - ifenslave-2.6
+    - apt-transport-https
+    - irqbalance
+    - mosquitto-clients
+    - smartmontools
+    - zip
+    - unzip
+
+ # for VMs
+ - name: install a vmware specific set of packages
+   apt: name={{ item }} state=present update_cache=yes
+   with_items:
+     - open-vm-tools
+   when: ansible_virtualization_type == 'VMware' and ansible_virtualization_role == 'guest'
+
+ - name: install special packages for VMs
+   apt: name={{ item }} state=present update_cache=yes
+   with_items:
+     - haveged
+   when: ansible_virtualization_role == 'guest'
+
+ # remove not needed packages
+ - name: remove not needed packages
+   apt: name={{ item }} state=absent
+   with_items:
+     - rpcbind
+     - openntpd
+     - rdnssd
+     - dvswitch-voc
+     - dvsource-voc
+     - dvsink-voc
+     - bmdtools

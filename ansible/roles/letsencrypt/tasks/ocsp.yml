@@ -1,0 +1,32 @@
+---
+  # User to run ocsp scripts
+  - name: create ocsp-updater user
+    user: name=ocsp-updater group=ssl-cert state=present
+    tags: install
+
+  # Files and scripts
+  - name: create initial ocsp files
+    file: dest={{ item }} state=touch
+          mode=0640 owner=ocsp-updater group=ssl-cert
+    with_items:
+      - /etc/ssl/certs/{{ domain }}.pem.ocsp
+    changed_when: false
+    tags: install
+
+  - name: copy ocsp update scripts
+    template: dest=/usr/local/bin/update_{{ domain }}_ocsp_stapling.sh
+              src=update_fqdn_ocsp_stapling.sh.j2
+              owner=root group=root mode=0755
+    notify: run letsencrypt ocsp script
+    tags: install
+
+  # Cron jobs to update ocsp data and reload services
+  - name: create ocsp update cron jobs
+    cron: name="update_{{ domain }}_stapling.sh" user=ocsp-updater hour=5
+          job="/usr/local/bin/update_{{ domain }}_ocsp_stapling.sh 1>/dev/null"
+    tags: install
+
+  - name: create fresh ocsp file
+    command: "/usr/local/bin/update_{{ domain }}_ocsp_stapling.sh 1>/dev/null"
+    failed_when: False
+    changed_when: False

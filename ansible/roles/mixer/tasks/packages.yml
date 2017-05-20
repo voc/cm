@@ -1,0 +1,30 @@
+---
+  # install general mixer packages
+  - name: install packages required to be a mixer
+    apt: name={{ item }} state=latest
+    with_items:
+      - dwm-voc
+      - runit
+      - xserver-xorg
+      - x11-xserver-utils
+      - slim
+      - x11vnc
+      - irssi
+      - xterm
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-plugins-ugly
+      - gstreamer1.0-alsa
+      - gstreamer1.0-tools
+      - libgstreamer1.0-0
+      - python3
+      - python3-gi
+      - python3-gi-cairo
+      - python3-pyinotify
+      - gir1.2-gstreamer-1.0
+      - gir1.2-gst-plugins-base-1.0
+      - gir1.2-gtk-3.0
+      - gnome-themes-standard
+      - lxde
+      - chromium

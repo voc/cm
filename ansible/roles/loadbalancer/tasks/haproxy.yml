@@ -1,0 +1,89 @@
+---
+  - name: add haproxy debian repo
+    apt_key: data="{{ lookup('file', 'deb_haproxy.key') }}" state=present
+  - name: setup the debian haproxy backports repo
+    apt_repository: repo="deb http://httpredir.debian.org/debian jessie-backports main" state=present
+    tags: install
+    when: ansible_distribution_release == 'jessie'
+
+  - name: setup the debian haproxy repo
+    apt_repository: repo="deb http://haproxy.debian.net jessie-backports-1.6 main" state=present
+    tags: install
+    when: ansible_distribution_release == 'jessie'
+
+  - name: install haproxy package
+    apt: name=haproxy state=latest default_release=jessie-backports-1.6
+    tags: install
+
+  # TLS certificates
+  # create ssl-cert group and add haproxy user to it
+  - name: create ssl-cert group
+    group: name=ssl-cert state=present
+
+  - name: add haproxy user to ssl-cert group
+    user: name=haproxy groups=ssl-cert append=yes
+    tags: install
+
+  # TODO: remove private keys :/
+  - name: copy cdn.c3voc.de certificate pem <cert+privkey+intermediate+dhparam>
+    copy: content="{{ lookup('keepass', 'ansible/tls/haproxy_cdn.c3voc.de.notes') }}"
+          dest=/etc/ssl/certs/haproxy_cdn.c3voc.de.pem
+          mode=0640 owner=root group=ssl-cert
+    notify: reload haproxy
+    tags:
+      - install
+      - config
+
+  - name: copy streaming.media.ccc.de certificate pem <cert+privkey+intermediate+dhparam>
+    copy: content="{{ lookup('keepass', 'ansible/tls/haproxy_streaming.media.ccc.de.notes') }}"
+          dest=/etc/ssl/certs/haproxy_streaming.media.ccc.de.pem
+          mode=0640 owner=root group=ssl-cert
+    notify: reload haproxy
+    tags:
+      - install
+      - config
+
+  # seperate crt files for ocsp
+  - name: copy streaming.media.ccc.de certificate
+    copy: content="{{ lookup('keepass', 'ansible/tls/streaming.media.ccc.de.notes') }}"
+          dest=/etc/ssl/certs/streaming.media.ccc.de.crt
+          mode=0644 owner=root group=ssl-cert
+
+  - name: copy cdn.c3voc.de certificate
+    copy: content="{{ lookup('keepass', 'ansible/tls/cdn.c3voc.de.notes') }}"
+          dest=/etc/ssl/certs/cdn.c3voc.de.crt
+          mode=0644 owner=root group=ssl-cert
+
+  - name: copy startcom class1 sha2 certificate
+    copy: content="{{ lookup('keepass', 'ansible/tls/sub.class1.server.sha2.ca.notes') }}"
+          dest=/etc/ssl/certs/sub.class1.server.sha2.ca.pem
+          mode=0644 owner=root group=ssl-cert
+
+  # configure haproxy
+  - name: create haproxy chroot directory
+    file: dest=/usr/share/haproxy state=directory
+          mode=0750 owner=haproxy group=haproxy
+    tags: install
+
+  - name: copy usa ip list
+    copy: src=usa_subnetworks.txt
+          dest=/etc/haproxy/usa_subnetworks.txt
+          mode=0755 owner=haproxy group=haproxy
+    tags:
+      - install
+      - config
+
+  - name: create haproxy config
+    template: src=haproxy/haproxy.cfg.j2
+              dest=/etc/haproxy/haproxy.cfg
+              owner=root group=root mode=0640
+              validate='haproxy -f %s -c'
+    notify: reload haproxy
+    tags:
+      - install
+      - config
+      - haproxy_deploy
+
+  - name: autostart haproxy
+    service: name=haproxy state=started enabled=yes
+    tags: install

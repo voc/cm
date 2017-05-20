@@ -1,0 +1,12 @@
+---
+  - name: create ssl-cert group
+    group: name=ssl-cert state=present
+
+  # Prime numbers for any occasion
+  - name: copy pre generated DH parameters
+    copy: dest=/etc/ssl/{{ item }}.pem
+          content={{ lookup('keepass', 'ansible/ssl/'+item+'.notes') }}
+          mode=0640 owner=root group=ssl-cert
+    with_items:
+      - dhparam2048
+      - dhparam4096

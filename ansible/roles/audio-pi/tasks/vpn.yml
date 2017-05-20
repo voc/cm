@@ -1,0 +1,25 @@
+---
+  - name: create /etc/openvpn
+    file: dest=/etc/openvpn
+          state=directory
+          owner=root group=root mode=0700
+
+  - name: create /etc/openvpn/voc.conf
+    template: dest=/etc/openvpn/voc.conf
+              src=audio-pi-vpn.conf.j2
+              owner=root group=root mode=0600
+    notify: restart openvpn
+
+  - name: create openvpn crt/key files
+    copy: dest="/etc/openvpn/{{ item }}"
+          content="{{ lookup('keepass', 'ansible/vpn/'+item+'.notes') }}"
+          owner=root group=root mode=0600
+    with_items:
+      - ca.crt
+      - ta.key
+      - "{{ vpn_name }}.crt"
+      - "{{ vpn_name }}.key"
+    notify: restart openvpn
+
+  - name: enable openvpn on boot
+    service: name=openvpn@voc.service enabled=yes state=started

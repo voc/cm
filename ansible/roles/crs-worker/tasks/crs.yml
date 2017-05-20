@@ -1,0 +1,59 @@
+---
+  - name: install dependency packages
+    apt: name={{ item }} state=latest
+    with_items:
+     - libconfig-inifiles-perl
+     - libipc-run-perl
+     - libxml-rpc-fast-perl
+     - libxml-simple-perl
+     - libmath-round-perl
+     - libdatetime-perl
+     - libboolean-perl
+     - libwww-curl-perl
+     - libjson-perl
+     - fuse-vdv
+     - fuse-ts
+     - fuse
+     - cifs-utils
+     - ntfs-3g
+
+  - name: create /opt/crs/tools
+    file: dest=/opt/crs/tools state=directory
+
+  - name: create /opt/crs/tmp
+    file: dest=/opt/crs/tmp state=directory
+
+  - name: create /opt/crs/fuse
+    file: dest=/opt/crs/fuse state=directory
+
+  - name: checkout tools/tracker3.0
+    subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/tracker3.0/
+                dest=/opt/crs/tools/tracker3.0
+                force=yes
+    tags:
+      - checkout
+      - pull
+
+  - name: checkout tools/job-control/
+    subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/job-control/
+                dest=/opt/crs/tools/job-control
+                force=yes
+    tags:
+      - checkout
+      - pull
+
+  - name: create/override screenrc scripts
+    template: dest=/opt/crs/tools/tracker3.0/screenrc-scripts
+              src=screenrc-scripts.j2
+              mode=0644 owner=root group=root
+
+  - name: create worker profile
+    template: dest=/opt/crs/tools/tracker3.0/tracker-profile.sh
+              src=tracker-profile.sh.j2
+              mode=0644 owner=root group=root
+
+  - name: create worker profile (meta-tickets)
+    template: dest=/opt/crs/tools/tracker3.0/tracker-profile-meta.sh
+              src=tracker-profile-meta.sh.j2
+              mode=0644 owner=root group=root
+    when: crs_token_meta is defined and crs_secret_meta is defined

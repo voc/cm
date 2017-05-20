@@ -1,0 +1,50 @@
+[mix]
+videocaps=video/x-raw,format=I420,width=1920,height=1080,framerate=25/1,pixel-aspect-ratio=1/1
+audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
+
+; tcp-ports will be 10000,10001,10002
+sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
+
+{% if voctomix_audio_source is defined %}
+; set the initial audio source
+audiosource={{ voctomix_audio_source }}
+{% endif %}
+
+[side-by-side-equal]
+utter=20
+atop=80
+btop=480
+
+default-a=grabber
+
+[side-by-side-preview]
+asize=1420x799
+apos=20/160
+bsize=496x279
+bpos=1404/781
+
+default-a=grabber
+
+[picture-in-picture]
+pipsize=496x279
+pippos=1404/781
+
+default-a=grabber
+
+[previews]
+; disable if ui & server run on the same computer and can exchange uncompressed video frames
+enabled=true
+deinterlace=true
+
+; default to mix-videocaps, only applicable if enabled=true
+; you can change the framerate and the width/height, but nothing else
+videocaps=video/x-raw,width=1024,height=576,framerate=25/1
+
+{% if voctomix_vaapi is defined and voctomix_vaapi %}
+# check `vainfo`!
+vaapi=h264
+{% endif %}
+
+[stream-blanker]
+enabled=true
+sources=pause

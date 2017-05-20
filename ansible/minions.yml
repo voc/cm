@@ -1,0 +1,5 @@
+---
+  - hosts: minions
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }

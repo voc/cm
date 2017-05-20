@@ -1,0 +1,9 @@
+---
+  - name: realise nginx config
+    copy: dest=/etc/nginx/nginx.conf
+          src=nginx/nginx.conf
+          owner=root group=root mode=0644
+    notify: restart nginx
+
+  - name: enable nginx on boot
+    service: name=nginx enabled=yes state=started

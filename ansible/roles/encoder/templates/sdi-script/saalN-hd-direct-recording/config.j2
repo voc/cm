@@ -1,0 +1,27 @@
+DEVICENUM=2
+STREAMNAME=${STREAMNAME:-"{{ room_fahrplan_name | lower | replace(' ', '') }}"}
+STORAGE=/video/capture/{{ event.acronym }}/
+SEGMENT_SECS=${SEGMENT_SECS:-180}
+PIPES=
+
+CMD_CAPTURE="/bin/true"
+
+# weggelassene filter:
+#   -filter_complex:0 yadif,hqdn3d 
+
+CMD_INTERMEDIATE="ffmpeg -v info -y \
+    -f decklink -audio_channels 8 -i 'DeckLink Mini Recorder (2)@10' \
+    -filter_complex '[0:a]channelsplit=channel_layout=7.1[a1][a2][a3][a4][a5][a6][a7][a8] ; [a5]anullsink;[a6]anullsink;[a7]anullsink;[a8]anullsink' \
+    -aspect 16:9 \
+    -map 0:v -c:v:0 mpeg2video -pix_fmt:v:0 yuv422p -qscale:v:0 2 -qmin:v:0 2 -qmax:v:0 7 -keyint_min 0 -bf:0 0 -g:0 0 -intra:0 -maxrate:0 90M \
+    -map '[a1]' -c:a mp2 -b:a 192k -ac:a 1 -ar:a 48000 \
+    -map '[a2]' -c:a mp2 -b:a 192k -ac:a 1 -ar:a 48000 \
+    -map '[a3]' -c:a mp2 -b:a 192k -ac:a 1 -ar:a 48000 \
+    -map '[a4]' -c:a mp2 -b:a 192k -ac:a 1 -ar:a 48000 \
+    -flags +global_header -flags +ilme+ildct \
+    -f segment -segment_time ${SEGMENT_SECS} -segment_format mpegts ${STORAGE}/${STREAMNAME}-%t-%05d.ts"
+
+mkdir -p "${STORAGE}"
+echo "[INFO] Change directory to ${STORAGE}"
+cd ${STORAGE}
+

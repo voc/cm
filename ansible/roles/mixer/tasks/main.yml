@@ -1,0 +1,15 @@
+---
+  - include: general.yml
+  - include: packages.yml
+  - include: slim.yml
+  - include: x11vnc.yml
+  - include: edid-tools.yml
+  - include: dvswitch.yml
+    tags: dvswitch,encodermode
+  - include: voctomix.yml
+    tags: encodermode
+  - include: irssi.yml
+  - include: rc.local.yml
+    tags:
+      - iptables
+      - rclocal

@@ -1,0 +1,20 @@
+#!/bin/bash
+# MANAGED BY ANSIBLE
+
+# STREAM 16bit stereo
+/usr/bin/arecord -q --fatal-errors -c2 -f S16_LE -r 96000 | \
+	ffmpeg -loglevel error -i - \
+		-ar 48000 -c:a opus -b:a 128k -bufsize 32M -content_type audio/ogg -f ogg \
+		-ice_name "Audio Stream {{ stream }}" -ice_description "Audio Stream {{ stream }}" \
+		icecast://{{ icecast_user }}:{{ icecast_password }}@{{ icecast_server }}/{{ stream }}.opus
+
+# Volume boost
+#-af 'volume=10dB' \
+
+# STREAM 32bit stereo - lags over wifi
+# /usr/bin/arecord -q --fatal-errors -c2 -f S32_LE -r 96000 | \
+#	  dd ibs=32M iflag=fullblock oflag=dsync | \
+#	  ffmpeg -loglevel error -i - -c:a opus -b:a 128k -bufsize 32M -content_type audio/ogg \
+#		  -ice_name "Audio Stream {{ stream }}" -ice_description "Audio Stream {{ stream }}" \
+#	    icecast://{{ icecast_user }}:{{ icecast_password }}@{{ icecast_server }}/{{ icecast_path }}
+

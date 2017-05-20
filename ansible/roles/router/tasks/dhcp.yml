@@ -1,0 +1,15 @@
+---
+  # Configure DHCP-Server
+  - name: copy dhcpd config file
+    copy: src=dhcp/dhcpd.conf
+          dest=/etc/dhcp/dhcpd.conf
+          owner=root group=root mode=0644
+    notify: restart dhcpd
+
+  - name: enabled dhcp server on internal interface
+    lineinfile: dest=/etc/default/isc-dhcp-server
+                regexp='^[I#\s]+NTERFACES='
+                line='INTERFACES="int"'
+
+  - name: start dhcp daemon
+    service: name=isc-dhcp-server enabled=yes state=started

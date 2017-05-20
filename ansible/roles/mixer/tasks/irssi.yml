@@ -1,0 +1,25 @@
+---
+  # see packages.yml for irssi package installation
+
+  # irssi configuration
+  # configure runit
+  - name: create runit irssi directory
+    file: state=directory recurse=yes
+          dest=/home/mixer/services/irssi
+          owner=mixer group=mixer
+
+  - name: create irssi runit config
+    copy: dest=/home/mixer/services/irssi/run
+          src=irssi/run
+          owner=mixer group=mixer mode=0755
+
+  # configure irssi
+  - name: create irssi directory
+    file: state=directory recurse=yes
+          dest=/home/mixer/.irssi
+          owner=mixer group=mixer
+
+  - name: create irssi config
+    template: dest=/home/mixer/.irssi/config
+              src=irssi/config.j2
+              owner=mixer group=mixer mode=0640

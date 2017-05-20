@@ -1,0 +1,540 @@
+global
+    nbproc  {{ haproxy_nbproc | default('4') }}
+    chroot  /usr/share/haproxy
+    pidfile /run/haproxy.pid
+    maxconn  32768
+    ulimit-n 65536
+    user    haproxy
+    group   haproxy
+    # stats sockets
+{% for nr in range(1, haproxy_nbproc+1) %}
+    stats socket /var/run/haproxy_stats_{{ nr }}.sock level operator process {{ nr}}
+{% endfor %}
+    daemon
+    log     /dev/log local0 notice
+    # tls
+    ssl-default-bind-options no-sslv3 force-tlsv12
+    ssl-default-bind-ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK
+
+defaults
+    mode    http
+    # enable some usefull options
+    option  httplog
+    option  dontlognull
+    option  http-server-close
+    option  abortonclose
+    # configure timeouts
+    timeout http-request 5s # avoid slowloris
+    timeout connect 5s
+    timeout server  10s
+    timeout client  30s
+    # constum error filter
+    errorfile 500 /srv/nginx/htdocs/50x.html
+    errorfile 502 /srv/nginx/htdocs/50x.html
+    errorfile 503 /srv/nginx/htdocs/50x.html
+
+frontend icecast_and_nginx_hls_http
+    bind-process 1
+    bind {{ ansible_default_ipv4.address }}:80
+    bind {{ ansible_default_ipv6.address }}:80
+
+    # add special header for protocol version
+    http-request add-header X-Proto http  if !{ ssl_fc }
+
+    # tag request for the right destination server
+    acl hls_playlist         path_end   -i .m3u8
+    acl dash_playlist        path_end   -i .mpd
+    acl dash_fragment        path_end   -i .hdr .chk .m4s
+    acl is_relive            path_sub   -i index.json thumb.jpg crossdomain.xml .mp4
+    acl hls_fragment         path_end   -i .ts
+    acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
+    acl is_cdn               hdr(host)  -i cdn.c3voc.de
+    acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
+    acl is_streaming_website path_end   -i logo.webm
+    # ip address matching
+    acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+    acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
+    # return 403 if hostname or defined file extensions are not matching
+    http-request deny        unless is_cdn or is_streaming_website
+    http-request deny        unless hls_playlist or hls_fragment or icecast or is_streaming_website or is_relive or dash_playlist or dash_fragment
+
+    # Backend usage
+    use_backend streaming_website_http   if is_streaming_website
+
+    # local relay
+    use_backend hls_relive_local_http    if is_local is_relive
+    use_backend hls_fragment_local_http  if is_local hls_fragment
+    use_backend hls_playlist_local_http  if is_local hls_playlist
+    use_backend dash_fragment_local_http  if is_local dash_fragment
+    use_backend dash_playlist_local_http  if is_local dash_playlist
+    use_backend icecast_local_http       if is_local icecast
+
+    # dtag relay
+    use_backend hls_relive_dtag_http    if is_dtag is_relive
+    use_backend hls_fragment_dtag_http  if is_dtag hls_fragment
+    use_backend hls_playlist_dtag_http  if is_dtag hls_playlist
+    use_backend dash_fragment_dtag_http  if is_dtag dash_fragment
+    use_backend dash_playlist_dtag_http  if is_dtag dash_playlist
+    use_backend icecast_dtag_http       if is_dtag icecast
+
+    # use remote relays
+    use_backend hls_relive_http          if is_relive
+    use_backend hls_playlist_http        if hls_playlist
+    use_backend hls_fragment_http        if hls_fragment
+    use_backend dash_playlist_http       if dash_playlist
+    use_backend dash_fragment_http       if dash_fragment
+    use_backend icecast_http             if icecast
+
+frontend icecast_and_nginx_hls_https
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    bind {{ ansible_default_ipv6.address }}:443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
+    bind {{ ansible_default_ipv4.address }}:443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
+
+    # add special header for protocol version
+    http-request add-header X-Proto https if  { ssl_fc }
+
+    # tag request for the right destination server
+    acl hls_playlist         path_end   -i .m3u8
+    acl is_relive            path_sub   -i index.json thumb.jpg crossdomain.xml .mp4
+    acl hls_fragment         path_end   -i .ts
+    acl dash_playlist        path_end   -i .mpd
+    acl dash_fragment        path_end   -i .hdr .chk .m4s
+    acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
+    acl is_cdn               hdr(host)  -i cdn.c3voc.de
+    acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
+    acl is_streaming_website path_end   -i logo.webm
+    # ip address matching
+    acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+    acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
+    # return 403 if hostname or defined file extensions are not matching
+    http-request deny        unless is_cdn or is_streaming_website
+    http-request deny        unless hls_playlist or hls_fragment or icecast or is_streaming_website or is_relive or dash_playlist or dash_fragment
+
+    # Backend usage
+    use_backend streaming_website_https   if is_streaming_website  { ssl_fc }
+
+    # local relay
+    use_backend hls_relive_local_https    if is_local is_relive    { ssl_fc }
+    use_backend hls_fragment_local_https  if is_local hls_fragment { ssl_fc }
+    use_backend hls_playlist_local_https  if is_local hls_playlist { ssl_fc }
+    use_backend dash_fragment_local_https  if is_local dash_fragment { ssl_fc }
+    use_backend dash_playlist_local_https  if is_local dash_playlist { ssl_fc }
+    use_backend icecast_local_https       if is_local icecast      { ssl_fc }
+
+    # dtag relay
+    use_backend hls_relive_dtag_https    if is_dtag is_relive    { ssl_fc }
+    use_backend hls_fragment_dtag_https  if is_dtag hls_fragment { ssl_fc }
+    use_backend hls_playlist_dtag_https  if is_dtag hls_playlist { ssl_fc }
+    use_backend dash_fragment_dtag_https  if is_dtag dash_fragment { ssl_fc }
+    use_backend dash_playlist_dtag_https  if is_dtag dash_playlist { ssl_fc }
+    use_backend icecast_dtag_https       if is_dtag icecast      { ssl_fc }
+
+    # use remote relays
+    use_backend hls_relive_https          if is_relive             { ssl_fc }
+    use_backend hls_playlist_https        if hls_playlist          { ssl_fc }
+    use_backend hls_fragment_https        if hls_fragment          { ssl_fc }
+    use_backend dash_playlist_https        if dash_playlist          { ssl_fc }
+    use_backend dash_fragment_https        if dash_fragment          { ssl_fc }
+    use_backend icecast_https             if icecast               { ssl_fc }
+
+
+# enable statistics and basic admin support for localhost
+{% for nr in range(1, haproxy_nbproc+1) %}
+listen stats_process_{{ nr }}
+    bind-process {{ nr }}
+    bind 127.0.0.1:910{{ nr }}
+    mode http
+    stats enable
+    stats uri     /admin?stats
+    stats refresh 10s
+    stats admin   if LOCALHOST
+
+{% endfor %}
+
+# ######## #
+# BACKENDs #
+# ######## #
+
+{% for protocol in ["http", "https"] %}
+
+# {{ protocol }}
+# REMOTE
+backend hls_playlist_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_hls_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend hls_fragment_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_hls_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_playlist_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dash_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_fragment_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dash_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend hls_relive_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_relive_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend icecast_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    http-request add-header Access-Control-Allow-Origin "*"
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_icecast_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+
+# LOCAL
+backend hls_playlist_local_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend hls_fragment_local_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_playlist_local_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_fragment_local_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend hls_relive_local_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend icecast_local_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    http-request add-header Access-Control-Allow-Origin "*"
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+
+# DTAG EXTRAWURST
+backend hls_playlist_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend hls_fragment_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_playlist_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_fragment_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend hls_relive_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend icecast_dtag_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    http-request add-header Access-Control-Allow-Origin "*"
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_dtag_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+
+{% endfor %}
+
+
+# frontend
+backend streaming_website_http
+    bind-process 1
+    balance roundrobin
+    option forwardfor
+    http-request set-header X-Custom-Header %[url]
+    http-request set-header X-Real-IP %[src]
+{% if ansible_fqdn == 'lb.dus.c3voc.de' %}
+    server lb1.fem.c3voc.de 127.0.0.1:8080 maxconn 2048
+    server lb1.het.c3voc.de 185.106.87.2:8080 backup maxconn 2048
+{% elif ansible_fqdn == 'lb.alb.c3voc.de'%}
+    server lb1.het.c3voc.de 127.0.0.1:8080 maxconn 2048
+    server lb1.fem.c3voc.de 31.172.30.138:8080 backup maxconn 2048
+{% endif %}
+
+backend streaming_website_https
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    balance roundrobin
+    option forwardfor
+    http-request set-header X-Custom-Header %[url]
+    http-request set-header X-Real-IP %[src]
+{% if ansible_fqdn == 'lb.dus.c3voc.de' %}
+    server lb1.fem.c3voc.de 127.0.0.1:8080 maxconn 2048
+    server lb1.het.c3voc.de 185.106.87.2:8080 backup maxconn 2048
+{% elif ansible_fqdn == 'lb.alb.c3voc.de'%}
+    server lb1.het.c3voc.de 127.0.0.1:8080 maxconn 2048
+    server lb1.fem.c3voc.de 31.172.30.138:8080 backup maxconn 2048
+{% endif %}
+    # check is disabled cause of multiple processes

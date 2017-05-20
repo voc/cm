@@ -1,0 +1,23 @@
+server {
+  listen [::]:80 ipv6only=off;
+  server_name _;
+
+  location / {
+    deny  all;
+  }
+}
+
+server {
+  listen [::]:443 ipv6only=off ssl;
+
+  server_name _;
+
+  root /var/www;
+
+  ssl_certificate       /etc/ssl/certs/ssl-cert-snakeoil.pem;
+  ssl_certificate_key   /etc/ssl/private/ssl-cert-snakeoil.key;
+
+  location / {
+    deny  all;
+  }
+}

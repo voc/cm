@@ -1,0 +1,15 @@
+---
+  - include: packages.yml
+  - include: rpi-update.yml
+    tags: rpiupdate
+  - include: vpn.yml
+    tags: vpn
+  - include: rc.local.yml
+    tags: rc
+  - include: audioinjector-setup.yml
+    tags: audioinjector
+  - include: journald.yml
+    tags: journald
+  - include: ingest.yml
+    tags: ingest
+#  - include: icecast.yml

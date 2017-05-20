@@ -1,0 +1,7 @@
+---
+  - include: packages.yml
+  - include: network_interfaces.yml
+  - include: shorewall.yml
+    tags: iptables
+  - include: dhcp.yml
+  - include: bind.yml

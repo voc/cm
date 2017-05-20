@@ -1,0 +1,9 @@
+startup_message off
+autodetach on
+vbell off
+defscrollback 500
+msgminwait 3
+silencewait 20
+defsilence off
+
+hardstatus alwayslastline "%H | %-w %{= bY}%n* %t%{-} %+w | %c:%s %d/%m/%y | load: %l"

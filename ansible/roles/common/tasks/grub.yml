@@ -1,0 +1,19 @@
+---
+  - name: ensure grub is installed
+    apt: name=grub-pc state=present
+
+  # Grub config for real hardware
+  - name: copy grub default config
+    copy: dest=/etc/default/grub
+          src=grub/grub_default
+          owner=root group=root mode=0644
+    notify: update grub
+    when: ansible_virtualization_role != 'guest'
+
+  # Grub config for virtual machines
+  - name: copy grub default config for virtual machines
+    copy: dest=/etc/default/grub
+          src=grub/grub_default.vm
+          owner=root group=root mode=0644
+    notify: update grub
+    when: ansible_virtualization_role == 'guest'

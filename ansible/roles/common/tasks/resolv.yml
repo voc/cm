@@ -1,0 +1,5 @@
+---
+  - name: configure resolv.conf
+    template: dest=/etc/resolv.conf
+              src=resolv.conf.j2
+              owner=root group=root mode=0644

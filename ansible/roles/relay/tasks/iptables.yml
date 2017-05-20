@@ -1,0 +1,14 @@
+---
+  - name: create rc.local on master
+    template: dest=/etc/rc.local
+              src=rc.local/rc.local.master.j2
+              mode=0755 owner=root group=root
+    notify: reload rc.local
+    when: hidden is defined and hidden == 'yes'
+
+  - name: create rc.local on edge
+    template: dest=/etc/rc.local
+              src=rc.local/rc.local.edge.j2
+              mode=0755 owner=root group=root
+    notify: reload rc.local
+    when: hidden is not defined or hidden != 'yes'

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+xset -dpms
+xset s off
+
+synclient TouchpadOff=1
+
+xrdb -load /home/mixer/.Xresources
+
+{% if mixer_master_height is defined %}
+export MASTER_HEIGHT={{mixer_master_height}}
+{% endif %}
+
+runsvdir /home/mixer/services/ &
+dwm-voc

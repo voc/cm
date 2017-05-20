@@ -1,0 +1,19 @@
+---
+  - include: ../../../register/bin_path.yml
+  # Install packages needed for each relay
+  - name: install streaming relay dependencies
+    apt: name={{ item }} state=present
+    with_items:
+      - oggfwd-voc
+
+  - include: nginx.yml
+    tags: nginx
+  - include: icecast.yml
+    tags: icecast
+  - include: iptables.yml
+    tags: iptables
+  - include: sysctl.yml
+    tags: sysctl
+
+  - include: relive.yml
+    when: nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes'

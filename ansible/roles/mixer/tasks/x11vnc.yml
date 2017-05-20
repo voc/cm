@@ -1,0 +1,13 @@
+---
+  # see packages.yml for x11vnc package installation
+
+  # x11vnc configuration
+  - name: create /home/mixer/services/x11vnc directory
+    file: state=directory recurse=yes
+          dest=/home/mixer/services/x11vnc
+          owner=mixer group=mixer
+
+  - name: configure x11vnc runit file
+    copy: dest=/home/mixer/services/x11vnc/run
+          src=x11vnc/run
+          owner=mixer group=mixer mode=0755

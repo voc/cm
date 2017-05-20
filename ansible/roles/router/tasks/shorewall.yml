@@ -1,0 +1,13 @@
+---
+  # Copy shorewall config files to the right location and restart shorewall if
+  # any change occur.
+  - name: configure shorewall
+    copy: dest=/etc/shorewall/{{ item }}
+          src=shorewall/{{ item }}
+    with_items:
+      - rules
+      - interfaces
+      - masq
+      - policy
+    notify:
+      - restart shorewall

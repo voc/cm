@@ -1,0 +1,46 @@
+---
+  # Prevent pressing power button
+  - name: create script for custom power button sequence
+    copy: dest=/etc/acpi/powerbtn-acpi-support_voc.sh
+          src=powerbtn-acpi-support_voc.sh
+          mode=0755
+    tags:
+      - acpi
+      - config
+      - install
+
+  - name: activate custom acpi script for power button
+    lineinfile: dest=/etc/acpi/events/powerbtn-acpi-support
+                regexp='^action=.*'
+                line='action=/etc/acpi/powerbtn-acpi-support_voc.sh'
+    register: acpi_config
+    tags:
+      - acpi
+      - config
+      - install
+
+  - name: restart acpid
+    service: state=restarted name=acpid
+    when: acpi_config.changed
+    tags:
+      - acpi
+      - config
+      - install
+
+  - name: activate custom acpi script for power button
+    lineinfile: dest=/etc/systemd/logind.conf
+                regexp='.*HandlePowerKey.*'
+                line='HandlePowerKey=ignore'
+    register: logind_conf
+    tags:
+      - acpi
+      - config
+      - install
+
+  - name: reload systemd-logind
+    service: name=systemd-logind state=restarted
+    when: logind_conf.changed
+    tags:
+      - config
+      - install
+      - acpi

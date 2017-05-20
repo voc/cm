@@ -1,0 +1,11 @@
+---
+  - name: Check if kernel {{ system.kernel_package }} is installed
+    command: dpkg-query -W {{ system.kernel_package }}
+    register: linux_kernel_installed
+    ignore_errors: True
+
+  - name: install linux specific kernel
+    apt: deb={{ item }}
+    when:
+      - linux_kernel_installed|failed
+    with_items: "{{ system.kernel_urls }}"

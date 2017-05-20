@@ -1,0 +1,40 @@
+---
+  - name: create relive user
+    user: name=relive groups="ssh" append=yes group=relive
+
+  - name: create relive directory
+    file: dest=/srv/nginx/relive state=directory
+          owner=relive group=relive mode=0755
+
+  - name: checkout relive git repo
+    git: repo=ssh://git@mng.ber.c3voc.de/relive
+         dest=/home/relive/git
+    tags:
+      - install
+      - config
+      - pull
+      - checkout
+
+  - name: install relive dependencies
+    apt: name={{ item }} state=latest
+    with_items:
+      - imagemagick
+
+  # Cron jobs
+  - name: create cronjob to get releases every 10 minutes
+    cron: name="get-releases.sh" minute=*/10
+          job="/home/relive/git/scripts/foreach-project.sh /home/relive/git/scripts/get-releases.sh"
+          user=relive
+    tags: install
+
+  - name: create cronjob to get get fahrlan
+    cron: name="get-fahrplan.sh" minute=0
+          job="/home/relive/git/scripts/foreach-project.sh /home/relive/git/scripts/get-fahrplan.sh"
+          user=relive
+    tags: install
+
+  - name: create cronjob to generate pages every two minutes
+    cron: name="get-fahrplan.sh" minute=*/2
+          job="/home/relive/git/scripts/foreach-project.sh 'perl /home/relive/git/hls-relive/genpage.pl'"
+          user=relive
+    tags: install

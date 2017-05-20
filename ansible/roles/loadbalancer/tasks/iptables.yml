@@ -1,0 +1,11 @@
+---
+  # Deploy iptables to rc.local
+  # TODO: we should not use rc.local for that task :/
+  - name: create rc.local on lb
+    template: dest=/etc/rc.local
+              src=rc.local/rc.local.loadbalancer.j2
+              mode=0755 owner=root group=root
+    notify: reload rc.local
+    tags:
+      - install
+      - config

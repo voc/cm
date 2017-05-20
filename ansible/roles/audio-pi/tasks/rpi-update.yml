@@ -1,0 +1,6 @@
+---
+  - name: update raspbian
+    apt:
+      update_cache: yes
+      cache_valid_time: 7200
+      upgrade: dist

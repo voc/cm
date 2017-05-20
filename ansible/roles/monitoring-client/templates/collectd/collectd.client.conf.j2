@@ -1,0 +1,145 @@
+# Config file for collectd(1).
+#
+# Some plugins need additional configuration and are disabled by default.
+# Please read collectd.conf(5) for details.
+#
+# You should also read /usr/share/doc/collectd-core/README.Debian.plugins
+# before enabling any more plugins.
+
+Hostname "{{ inventory_hostname }}"
+Interval {{ monitoring.collectd_interval | default('30') }}
+TypesDB "/usr/share/collectd/types.db"
+TypesDB "/opt/voc/collectd/types.db"
+
+LoadPlugin cpu
+LoadPlugin df
+LoadPlugin disk
+LoadPlugin interface
+LoadPlugin load
+LoadPlugin memory
+LoadPlugin network
+LoadPlugin swap
+LoadPlugin tcpconns
+LoadPlugin curl_json
+LoadPlugin nginx
+
+<LoadPlugin perl>
+  Globals true
+</LoadPlugin>
+
+LoadPlugin "logfile"
+<Plugin "logfile">
+  LogLevel "info"
+  File "/var/log/collectd.log"
+  Timestamp true
+</Plugin>
+
+<Plugin interface>
+  # collect all interface data!!1!
+</Plugin>
+
+<Plugin network>
+  # client setup:
+{% for server_ip in monitoring.collectd_server %}
+  <Server "{{ server_ip }}" "{{ monitoring.collectd_port | default('25826') }}">
+    SecurityLevel Encrypt
+    Username "{{ monitoring.collectd_username }}"
+    Password "{{ monitoring.collectd_password }}"
+  </Server>
+{% endfor %}
+
+  MaxPacketSize 1024
+  TimeToLive 128
+</Plugin>
+
+<LoadPlugin perl>
+  Globals true
+</LoadPlugin>
+<Plugin perl>
+  IncludeDir "/opt/voc/collectd/plugins/"
+  BaseName "Collectd::Plugins"
+
+{% if icecast is defined and icecast == 'yes' %}
+  # include icecast perl plugin
+  LoadPlugin Icecast2
+{% endif %}
+</Plugin>
+
+<LoadPlugin python>
+  Globals true
+</LoadPlugin>
+<Plugin python>
+  ModulePath "/opt/voc/collectd/plugins/"
+  LogTraces true
+{% if haproxy is defined and haproxy == 'yes' %}
+  Import "haproxy"
+  <Module haproxy>
+{% for i in  range(1, haproxy_nbproc+1) %}
+    Socket "/var/run/haproxy_stats_{{ i }}.sock"
+{% endfor %}
+  </Module>
+
+{% endif %}
+{% if php is not defined or php != 'yes' %}
+  Import NginxHls
+  Import NginxDash
+{% endif %}
+</Plugin>
+
+{% if ansible_virtualization_role == 'host' and libvirtd_bin.stdout != '' %}
+LoadPlugin libvirt
+<Plugin "libvirt">
+  Connection "qemu:///system"
+  RefreshInterval 7200
+  HostnameFormat "uuid"
+</Plugin>
+{% endif %}
+
+{% if php is defined and php == 'yes' %}
+LoadPlugin curl_json
+<Plugin curl_json>
+  <URL "http://127.0.0.1:8999/stats/php?json">
+    Instance "fpm"
+    <Key "accepted conn">
+        Type "http_requests"
+    </Key>
+    <Key "listen queue len">
+        Type "listen_queue"
+    </Key>
+    <Key "active processes">
+        Type "active_processes"
+    </Key>
+    <Key "total processes">
+        Type "total_processes"
+    </Key>
+  </URL>
+</Plugin>
+{% endif %}
+
+{% if nginx is defined and nginx == 'yes' and php is defined and php == 'yes' %}
+LoadPlugin dbi
+<Plugin dbi>
+  <Query "streaming_issues">
+    Statement "SELECT COUNT(*) AS value FROM feedback;"
+    <Result>
+      Type "counter"
+      ValuesFrom "value"
+    </Result>
+  </Query>
+  <Database "feedback">
+    Driver "sqlite3"
+    DriverOption "sqlite3_dbdir" "/opt/streaming-feedback/"
+    DriverOption "dbname" "feedback.sqlite3"
+    Query "streaming_issues"
+  </Database>
+</Plugin>
+{% endif %}
+
+{% if nginx is defined and nginx == 'yes' %}
+<Plugin "nginx">
+  URL "http://127.0.0.1:8999/stats/nginx"
+</Plugin>
+{% endif %}
+
+Include "/etc/collectd/filters.conf"
+Include "/etc/collectd/thresholds.conf"

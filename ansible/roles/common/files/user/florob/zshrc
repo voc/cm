@@ -1,0 +1,57 @@
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt AUTO_CD
+setopt NOTIFY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt NO_NOMATCH
+zstyle :compinstall filename '/home/florian/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+autoload -U colors
+colors
+fg[lightred]=$'%{\e[1;31m%}'
+
+bindkey -e
+
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias hd='hexdump -C'
+
+if [ -d ~/bin ]; then
+    PATH=~/bin:$PATH
+fi
+
+if [ -d ~/.local/bin ]; then
+    PATH=~/.local/bin:$PATH
+fi
+
+export EDITOR=vim
+
+# enable color support of ls
+if [ "$TERM" != "dumb" ]; then
+    eval "`dircolors -b`"
+    alias ls='ls --color=auto'
+fi
+
+# ls on directory change
+chpwd() {
+	ls
+}
+
+if [ x"$WINDOW" != x ]; then
+	SCREEN="%{$fg[green]%}(screen: $WINDOW)%{$reset_color%} "
+else
+	SCREEN=""
+fi
+
+PS1=$(\
+print "%M %{$fg[blue]%}(%{$reset_color%}%l%{$fg[blue]%})%{$reset_color%} \
+$SCREEN%(?.(%?).%{$fg[lightred]%}(%?%)%{$reset_color%}) \
+%{$fg[red]%}[%D{%F} %T]%{$reset_color%}\n%n@%m:%{$fg[blue]%}(%{$reset_color%}%~%{$fg[blue]%})%{$reset_color%}%# "\
+)

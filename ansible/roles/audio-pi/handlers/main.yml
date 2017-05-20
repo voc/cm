@@ -1,0 +1,6 @@
+---
+  - name: restart openvpn
+    service: name=openvpn@voc.service state=restarted
+
+  - name: reload rc.local
+    command: /etc/rc.local

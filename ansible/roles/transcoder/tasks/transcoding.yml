@@ -1,0 +1,20 @@
+---
+  - name: copy transcoding scripts
+    copy: dest=/var/lib/transcoding/
+          src=transcoding/
+          owner=root group=root mode=0755
+
+  - name: create config.sh
+    template: dest=/var/lib/transcoding/config.sh
+              src=transcoding/config.sh.j2
+              owner=root group=root mode=0755
+
+  - name: create config.yml
+    template: dest=/var/lib/transcoding/config.yml
+              src=transcoding/config.yml.j2
+              owner=root group=root mode=0755
+
+  - name: create config_slides.yml
+    template: dest=/var/lib/transcoding/config_slides.yml
+              src=transcoding/config_slides.yml.j2
+              owner=root group=root mode=0755

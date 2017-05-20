@@ -1,0 +1,7 @@
+#!/bin/sh
+mv /var/log/nginx/access.log /var/log/nginx/access.log.o
+tail -5000 /var/log/nginx/access.log.o > /var/log/nginx/access.log
+rm /var/log/nginx/access.log.o
+[ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`
+
+exit 0

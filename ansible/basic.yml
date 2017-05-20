@@ -1,0 +1,4 @@
+---
+ - hosts: basic
+   roles:
+     - { role: common, tags: ['common'] }

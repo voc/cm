@@ -1,0 +1,51 @@
+---
+  # Install package
+  - name: install icecast streaming server
+    apt: name=icecast2 state=latest
+
+  # Create directories
+  - name: create dump file directory for icecast
+    file: dest=/srv/icecastdumps state=directory
+          owner=icecast2 group=icecast mode=0755
+    when: icecast_push_master is defined and icecast_push_master == 'yes'
+
+  # Configure
+  - name: configure the icecast streaming server
+    template: dest=/etc/icecast2/icecast.xml
+              src=icecast/icecast.xml.j2
+              owner=icecast2 group=icecast mode=0660
+    notify:
+      - restart icecast2
+
+  - name: create default icecast2 config
+    template: dest=/etc/default/icecast2
+              src=icecast/icecast_default.j2
+              owner=root group=root mode=0644
+    notify:
+      - restart icecast2
+
+  - name: increase icecast softlimit for open files
+    lineinfile: dest=/etc/init.d/icecast2 create=yes
+                regexp='^ulimit.*' state=present
+                line="ulimit -n 65536"
+                insertafter="# Defaults"
+    notify:
+      - restart icecast2
+    tags:
+      - sysctl
+      - ulimit
+
+  # Start service
+  - name: enable icecast2 on boot
+    service: name=icecast2.service enabled=yes state=started
+    failed_when: False
+    changed_when: False
+    when: icecast is defined and icecast == 'yes'
+
+  # Start service
+  - name: enable icecast2 on boot
+    service: name=icecast2.service enabled=no state=stoped
+    failed_when: False
+    changed_when: False
+    when: >
+      icecast is not defined or (iceast is defined and icecast == 'yes')

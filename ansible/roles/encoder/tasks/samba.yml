@@ -1,0 +1,8 @@
+---
+  # samba configuration
+  - name: create smb.conf
+    template: dest=/etc/samba/smb.conf
+              src=samba/smb.conf.j2
+              owner=root group=root mode=0755
+    notify:
+      - restart smbd

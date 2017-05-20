@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec xterm -e irssi

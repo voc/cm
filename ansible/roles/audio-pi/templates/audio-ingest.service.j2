@@ -1,0 +1,15 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = audio-ingest
+After=network.target
+
+[Service]
+Type = simple
+ExecStart = /opt/audio-ingest.sh
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = multi-user.target

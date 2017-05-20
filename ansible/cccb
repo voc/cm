@@ -1,0 +1,6 @@
+# Hosts file
+[cccb]
+encoder23.lan.c3voc.de
+
+[encoders]
+encoder23.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder23.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder23.password') }}"

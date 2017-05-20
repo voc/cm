@@ -1,0 +1,13 @@
+---
+ - name: install openssh-server
+   apt: name=openssh-server state=present
+
+ - name: configure the ssh server
+   template: dest=/etc/ssh/sshd_config validate='sshd -T -f %s'
+             src=sshd_config.j2
+             owner=root group=root mode=0644
+   notify:
+     - restart sshd
+
+ - name: enable sshd on boot
+   service: name=ssh enabled=yes state=started

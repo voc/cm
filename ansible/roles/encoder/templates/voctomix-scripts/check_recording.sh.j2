@@ -1,0 +1,75 @@
+#!/bin/sh
+
+LIMIT_DISK_USAGE=90
+LIMIT_LOAD=$(echo "$(grep processor /proc/cpuinfo | wc -l) * 2" | bc)
+
+send_mqtt_message () {
+  error_level=$1
+  component=$2
+  message=$3
+
+  if [ -n "$DEBUG" ]; then
+    echo mosquitto_pub --insecure -h \"{{ mqtt.server }}\" -u \"{{ mqtt.username }}\" -P \"{{ mqtt.password }}\" -t \"/voc/alert\" -m \"{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}\"
+  else
+    mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}"
+  fi
+}
+
+check_disk_space () {
+  df -h | tail -n +2 | while read line; do
+    mount_point=$(echo $line | awk '{ print $1 }')
+    disk_usage_percent=$(echo $line | awk '{ print $5 }' | tr -d '%')
+    disk_space=$(echo $line | awk '{ print $2 }')
+    disk_space_avilable=$(echo $line | awk '{ print $4 }')
+
+    if [ "$disk_usage_percent" -ge "$LIMIT_DISK_USAGE" ]; then
+      send_mqtt_message "error" "system/disk/{{ ansible_hostname }}" "<red>$mount_point: disk usage $disk_usage_percent%, only $disk_space_avilable left of $disk_space</red>"
+    fi
+  done
+}
+
+
+check_load () {
+  local load_1_minute=$(cut -d' ' -f 1 /proc/loadavg)
+  local load_5_minutes=$(cut -d' ' -f 2 /proc/loadavg)
+  local load_15_minutes=$(cut -d' ' -f 3 /proc/loadavg)
+
+  local truncated_load=$(echo "$load_5_minutes" | cut -d. -f1)
+
+  if [ "$truncated_load" -ge "$LIMIT_LOAD" ]; then
+    send_mqtt_message "error" "system/load/{{ ansible_hostname }}" "system load: $load_1_minute, $load_5_minutes, $load_15_minutes</red>"
+  fi
+}
+
+check_recording () {
+  systemctl is-active voctomix-recording-sink.service >/dev/null
+  if [ "0" -eq "$?" ]; then
+    message=$(perl /usr/local/bin/check_recording.pl /video/capture/{{ event.acronym }}/)
+    error_code=$?
+
+    if [ "2" -eq "$error_code" ]; then
+      send_mqtt_message "error" "recording/{{ ansible_hostname }}" "<red>${message}</red> /video/capture/{{ event.acronym }}/"
+    fi
+  fi
+}
+
+check_raid () {
+  if [ -e "/proc/mdstat" ]; then
+    cat /proc/mdstat | awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' | while read line; do
+      raid_device=$(echo $line | cut -d ":" -f 1)
+      raid_device_state=$(echo $line | cut -d " " -f 2)
+
+      echo $raid_device_state | grep -q "_"
+      if [ "0" -eq "$?" ]; then
+        send_mqtt_message "error" "system/raid/{{ ansible_hostname }}" "<red>RAID disk failed: $raid_device: $raid_device_state"
+      fi
+    done
+  fi
+}
+
+check_recording
+check_load
+check_disk_space
+check_raid
+
+exit 0

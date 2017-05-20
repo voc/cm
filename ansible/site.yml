@@ -1,0 +1,11 @@
+---
+  - include: basic.yml
+  - include: encoders.yml
+  - include: mixers.yml
+  - include: relays.yml
+  - include: servers.yml
+  - include: loadbalancers.yml
+  - include: minions.yml
+  - include: tracker.yml
+  - include: transcoders.yml
+  - include: audio-pis.yml

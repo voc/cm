@@ -1,0 +1,26 @@
+---
+ - include: general.yml
+ - include: packages.yml
+ - include: artwork.yml
+   tags: artwork
+ - include: encodermode-dvswitch.yml
+   tags: encodermode
+ - include: encodermode-hddirect.yml
+   tags: encodermode
+ - include: encodermode-voctomix.yml
+   tags:
+    - encodermode
+    - voctomix
+ - include: icedist.yml
+   tags: icedist
+ - include: nginx.yml
+   tags: nginx
+ - include: samba.yml
+   tags: samba
+ - include: rc.local.yml
+   tags:
+     - rclocal
+     - iptables
+     - encodermode
+ - include: rsync.yml
+   tags: rsync

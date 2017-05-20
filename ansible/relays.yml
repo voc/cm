@@ -1,0 +1,6 @@
+---
+  - hosts: relays
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: relay, tags: ['relay'] }

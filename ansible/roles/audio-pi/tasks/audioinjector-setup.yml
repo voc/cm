@@ -1,0 +1,27 @@
+# From http://www.flatmax.org/phpbb/viewtopic.php?f=5&t=3&sid=63d2bc3118cfdc7cc2e0b3f311ff0c2b
+#
+# audio.injector.scripts_0.1-1_all.deb
+# - /usr/bin/audioinjector-setup.sh
+#
+# # check the device tree overlay is setup correctly ...
+# # firstly disable PWM audio
+# sudo bash -c "sed -i \"s/^\s*dtparam=audio/#dtparam=audio/\" /boot/config.txt"
+# # now check to see the correct device tree overlay is loaded ...
+# cnt=`grep -c audioinjector-wm8731-audio /boot/config.txt`
+# if [ "$cnt" -eq "0" ]; then
+# 	sudo bash -c "echo '# enable the AudioInjector.net sound card
+# 	dtoverlay=audioinjector-wm8731-audio' >> /boot/config.txt"
+# fi
+---
+  - name: disable dtparam=audio
+    lineinfile: dest=/boot/config.txt
+                state=present
+                backrefs=yes
+                regexp='^#?\s*(dtparam=audio.*)'
+                line='# \1'
+
+  - name: enable dtoverlay=audioinjector-wm8731-audio
+    lineinfile: dest=/boot/config.txt
+                state=present
+                regexp='^#?\s*dtoverlay=audioinjector.*'
+                line='dtoverlay=audioinjector-wm8731-audio'

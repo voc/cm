@@ -1,0 +1,34 @@
+---
+  - include: ../../../register/bin_path.yml
+  ###########
+  # General #
+  ###########
+  # Install packages
+  - name: install packages needed to monitor host
+    apt: name={{ item }} state=latest
+    with_items:
+      - check-mk-agent
+      - nagios-plugins-basic
+
+  - include: check_mk_client.yml
+
+  - include: encoder.yml
+    when: ansible_hostname | match("encoder\d+")
+
+  - include: collectd.yml
+    tags: collectd
+
+  #########
+  # TODOs #
+  #########
+  # TODO: snippet should be removed if everything is deployed ones
+  #       check_record script should be only deployed on encoder
+  - name: remove check_recording script from mrpe.cfg for non encoder
+    lineinfile: dest=/etc/check_mk/mrpe.cfg regexp='^RECORDING'
+                line='RECORDING /usr/local/bin/check_recording /video'
+                state=absent
+
+  # TODO: snippet should be removed if everything is deployed ones
+  #       check_record script should be only deployed on encoder
+  - name: remove check_recording script on non encoder
+    file: dest=/usr/local/bin/check_recording state=absent

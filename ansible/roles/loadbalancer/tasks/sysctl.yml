@@ -1,0 +1,12 @@
+---
+  - name: change sysctl settings
+    copy: dest=/etc/sysctl.d/loadbalancer.conf
+          src=../../../roles/relay/files/sysctl/relay.conf
+          mode=0644 owner=root group=root
+    notify: reload sysctl
+
+  - name: increase softlimit for open files
+    lineinfile: dest=/etc/security/limits.conf create=yes
+                regexp='\*.*soft.*nofile.*\d+$' state=present
+                line="*               soft    nofile          4092"
+                insertbefore=".*End.*file$"

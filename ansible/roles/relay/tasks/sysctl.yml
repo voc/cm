@@ -1,0 +1,26 @@
+---
+  - name: change sysctl settings
+    copy: dest=/etc/sysctl.d/relay.conf
+          src=sysctl/relay.conf
+          mode=0644 owner=root group=root
+    notify: reload sysctl
+    tags:
+      - sysctl
+
+  - name: increase softlimit for open files
+    lineinfile: dest=/etc/security/limits.conf create=yes
+                regexp='\*.*soft.*nofile.*\d+$' state=present
+                line="*               soft    nofile          65536"
+                insertbefore=".*End.*file$"
+    tags:
+      - sysctl
+      - ulimit
+
+  - name: increase hardlimit for open files
+    lineinfile: dest=/etc/security/limits.conf create=yes
+                regexp='\*.*hard.*nofile.*\d+$' state=present
+                line="*               hard    nofile          65536"
+                insertbefore=".*End.*file$"
+    tags:
+      - sysctl
+      - ulimit

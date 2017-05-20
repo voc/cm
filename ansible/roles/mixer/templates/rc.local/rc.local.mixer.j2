@@ -1,0 +1,44 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+iptables -F INPUT
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+
+# allow all from trusted ips
+iptables -A INPUT -s 10.73.0.0/16 -j ACCEPT -m comment --comment "voc subnet"
+iptables -A INPUT -s 10.8.0.0/16 -j ACCEPT -m comment --comment "voc vpn subnet"
+
+# allow ssh
+iptables -A INPUT -p tcp --sport 1024:65535 --dport 22 -j ACCEPT
+# allow dns
+iptables -A INPUT -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+# reject rest
+iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
+iptables -A INPUT -p udp -j REJECT
+
+
+# ip6tables
+ip6tables -F INPUT
+ip6tables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+ip6tables -A INPUT -i lo -j ACCEPT
+
+# allow ssh
+ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 22 -j ACCEPT
+# allow dns
+ip6tables -A INPUT -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+# reject rest
+ip6tables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
+ip6tables -A INPUT -p udp -j REJECT
+
+exit 0

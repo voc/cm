@@ -1,0 +1,70 @@
+---
+  # remove user when remove variable is defined
+  - name: remove user "{{ item.name }}"
+    user: state=absent remove=yes
+         name={{ item.name }}
+    when: item.state == 'absent'
+    with_items:
+      - "{{ users }}"
+      - "{{ additional_users }}"
+
+  # realize user
+  - shell: command -v zsh
+    register: zsh_bin
+    changed_when: false
+
+  - name: create user "{{ item.name }}"
+    user: state=present
+          name="{{ item.name }}"
+          groups="ssh,sudo,adm" append=yes
+          shell={{ user_shell | default(zsh_bin.stdout) }}
+    with_items:
+      - "{{ users }}"
+      - "{{ additional_users }}"
+    when: not item.state == 'absent'
+
+  # addiotional groups
+  - name: append libvirt and kvm group to user
+    user: name={{ item.name }} append=yes groups=libvirt,kvm
+    with_items: 
+      - "{{ users }}"
+      - "{{ additional_users }}"
+    when: libvirtd_bin.stdout != '' and not remove is defined and ansible_virtualization_role == 'host'
+
+  - name: append special groups on systemd systems
+    user: name={{ item.name }} append=yes
+          groups=systemd-journal,systemd-timesync,systemd-network,systemd-resolve
+    with_items: 
+      - "{{ users }}"
+      - "{{ additional_users }}"
+
+  # install shell stuff
+  - name: install zshrc
+    copy: dest="/home/{{ item.name }}/.zshrc" src="{{ lookup('first_found', ['user/' + item.name + '/zshrc', 'user/default/zshrc']) }}"
+    with_items: 
+      - "{{ users }}"
+      - "{{ additional_users }}"
+    when: item.state != 'absent'
+
+  - name: install screenrc
+    copy: dest="/home/{{ item.name }}/.screenrc" src="{{ lookup('first_found', ['user/' + item.name + '/screenrc', 'user/default/screenrc']) }}"
+    with_items: 
+      - "{{ users }}"
+      - "{{ additional_users }}"
+    when: item.state != 'absent'
+
+  - name: add user's authorized_keys
+    authorized_key: user="{{ item.name }}" manage_dir=true key="{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes') }}"
+                    state=present exclusive=yes
+    with_items: 
+      - "{{ users }}"
+      - "{{ additional_users }}"
+    when: item.state != 'absent' and item.name != 'voc'
+
+  - name: add user's authorized_keys to voc
+    authorized_key: user="voc" manage_dir=true key="{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes') }}"
+                    state=present
+    with_items:
+      - "{{ users }}"
+      - "{{ additional_users }}"
+    when: item.state != 'absent' and item.name != 'voc'

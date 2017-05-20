@@ -1,0 +1,75 @@
+$ORIGIN .
+$TTL 300
+73.10.in-addr.arpa  IN SOA      73.10.in-addr.arpa. florolf.n621.de. (
+                                2013122703 ; serial
+                                604800     ; refresh (1 week)
+                                86400      ; retry (1 day)
+                                2419200    ; expire (4 weeks)
+                                86400      ; minimum (1 day)
+                                )
+                        NS      router.voc.lan.
+
+1.1.73.10.in-addr.arpa	PTR  mixer1.voc.lan.
+2.1.73.10.in-addr.arpa	PTR  grabber1.voc.lan.
+3.1.73.10.in-addr.arpa	PTR  encoder1.voc.lan.
+4.1.73.10.in-addr.arpa	PTR  infobeamer1.voc.lan.
+5.1.73.10.in-addr.arpa	PTR  snom1.voc.lan.
+6.1.73.10.in-addr.arpa	PTR  minion1.voc.lan.
+253.1.73.10.in-addr.arpa	PTR        switch1.voc.lan.
+1.2.73.10.in-addr.arpa	PTR  mixer2.voc.lan.
+2.2.73.10.in-addr.arpa	PTR  grabber2.voc.lan.
+3.2.73.10.in-addr.arpa	PTR  encoder2.voc.lan.
+4.2.73.10.in-addr.arpa	PTR  infobeamer2.voc.lan.
+5.2.73.10.in-addr.arpa	PTR  snom2.voc.lan.
+6.2.73.10.in-addr.arpa	PTR  minion2.voc.lan.
+253.2.73.10.in-addr.arpa	PTR        switch2.voc.lan.
+1.3.73.10.in-addr.arpa	PTR  mixer3.voc.lan.
+2.3.73.10.in-addr.arpa	PTR  grabber3.voc.lan.
+3.3.73.10.in-addr.arpa	PTR  encoder3.voc.lan.
+4.3.73.10.in-addr.arpa	PTR  infobeamer3.voc.lan.
+5.3.73.10.in-addr.arpa	PTR  snom3.voc.lan.
+6.3.73.10.in-addr.arpa	PTR  minion3.voc.lan.
+253.3.73.10.in-addr.arpa	PTR        switch3.voc.lan.
+1.4.73.10.in-addr.arpa	PTR  mixer4.voc.lan.
+2.4.73.10.in-addr.arpa	PTR  grabber4.voc.lan.
+3.4.73.10.in-addr.arpa	PTR  encoder4.voc.lan.
+4.4.73.10.in-addr.arpa	PTR  infobeamer4.voc.lan.
+5.4.73.10.in-addr.arpa	PTR  snom4.voc.lan.
+6.4.73.10.in-addr.arpa	PTR  minion4.voc.lan.
+253.4.73.10.in-addr.arpa	PTR        switch4.voc.lan.
+1.5.73.10.in-addr.arpa	PTR  mixer5.voc.lan.
+2.5.73.10.in-addr.arpa	PTR  grabber5.voc.lan.
+3.5.73.10.in-addr.arpa	PTR  encoder5.voc.lan.
+4.5.73.10.in-addr.arpa	PTR  infobeamer5.voc.lan.
+5.5.73.10.in-addr.arpa	PTR  snom5.voc.lan.
+6.5.73.10.in-addr.arpa	PTR  minion5.voc.lan.
+253.5.73.10.in-addr.arpa	PTR        switch5.voc.lan.
+1.6.73.10.in-addr.arpa	PTR  mixer6.voc.lan.
+2.6.73.10.in-addr.arpa	PTR  grabber6.voc.lan.
+3.6.73.10.in-addr.arpa	PTR  encoder6.voc.lan.
+4.6.73.10.in-addr.arpa	PTR  infobeamer6.voc.lan.
+5.6.73.10.in-addr.arpa	PTR  snom6.voc.lan.
+6.6.73.10.in-addr.arpa	PTR  minion6.voc.lan.
+253.6.73.10.in-addr.arpa	PTR        switch6.voc.lan.
+1.7.73.10.in-addr.arpa	PTR  mixer7.voc.lan.
+2.7.73.10.in-addr.arpa	PTR  grabber7.voc.lan.
+3.7.73.10.in-addr.arpa	PTR  encoder7.voc.lan.
+4.7.73.10.in-addr.arpa	PTR  infobeamer7.voc.lan.
+5.7.73.10.in-addr.arpa	PTR  snom7.voc.lan.
+6.7.73.10.in-addr.arpa	PTR  minion7.voc.lan.
+253.7.73.10.in-addr.arpa	PTR        switch7.voc.lan.
+6.0.73.10.in-addr.arpa	PTR  live.voc.lan.
+254.0.73.10.in-addr.arpa	PTR        router.voc.lan.
+2.0.73.10.in-addr.arpa	PTR  storage.voc.lan.
+1.0.73.10.in-addr.arpa	PTR  node.voc.lan.
+3.0.73.10.in-addr.arpa	PTR  sun.voc.lan.
+4.0.73.10.in-addr.arpa	PTR  todesencoder.voc.lan.
+5.0.73.10.in-addr.arpa	PTR  usa.voc.lan.
+8.0.73.10.in-addr.arpa	PTR  monitoring.voc.lan.
+10.0.73.10.in-addr.arpa	PTR  tracker.voc.lan.
+253.0.73.10.in-addr.arpa	PTR  switchrz.voc.lan.
+10.2.73.10.in-addr.arpa	PTR  femsource2.voc.lan.
+12.0.73.10.in-addr.arpa	PTR  ron.voc.lan.
+248.0.73.10.in-addr.arpa PTR doppelkeks.voc.lan.
+220.100.73.10.in-addr.arpa PTR thinkcenter.voc.lan.
+88.100.73.10.in-addr.arpa PTR winkestream.voc.lan.

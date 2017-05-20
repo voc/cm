@@ -1,0 +1,37 @@
+---
+  - name: adding bind rndc.key file
+    template: dest=/etc/bind/rndc.key
+              src=bind/rndc.key.j2
+              owner=bind group=bind mode=0640
+    notify: reload bind
+
+  - name: adding main bind config files
+    copy: dest=/etc/bind/{{ item }}
+          src=bind/{{ item }}
+          owner=bind group=bind mode=0644
+    with_items:
+      - named.conf
+      - bind.keys
+    notify: reload bind
+
+  - name: create bind zones directories
+    file: path={{ item }} state=directory
+          owner=root group=bind mode=2755
+    with_items:
+      - /etc/bind/zones
+      - /etc/bind/zones/lan.c3voc.de
+      - /etc/bind/zones/73.10.in-addr.arpa
+      - /etc/bind/zones/tracker.fem-net.de
+
+  - name: realize bind zones
+    copy: dest=/etc/bind/zone/{{ item.dest }}
+          src=bind/zones/{{ item.src }}/zone.db
+          owner=root group=bind mode=0644
+    with_items:
+      - '73.10.in-addr.arpa'
+      - 'lan.c3voc.de'
+      - 'tracker.fem-net.de'
+    notify: reload bind
+
+  - name: start bind
+    service: name=bind9 state=started enabled=yes

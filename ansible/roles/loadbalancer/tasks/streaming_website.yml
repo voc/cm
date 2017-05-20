@@ -1,0 +1,147 @@
+---
+  # Repo checkout
+  - name: create user for thumb and schedule download
+    user: name=downloader home=/srv/nginx/streaming-website
+          system=yes
+    tags:
+      - install
+
+  - name: git checkout streaming-website
+    git: repo=ssh://git@mng.ber.c3voc.de/streaming-website
+         dest=/srv/nginx/streaming-website
+    tags:
+      - install
+      - deploy_website
+      - pull
+      - checkout
+
+  - name: change streaming-website permissions
+    file: dest=/srv/nginx/streaming-website
+          owner=root group=downloader
+          mode=g+rw recurse=yes
+    changed_when: false
+    tags:
+      - install
+      - deploy_website
+
+  # Create directories and symlinks
+  - name: create htdocs symlink
+    file: src=/srv/nginx/streaming-website
+          dest=/srv/nginx/htdocs
+          state=link
+    tags: install
+
+  - name: create thumbs directory
+    file: state=directory
+          dest=/srv/nginx/thumbs
+          owner=downloader group=root mode=0755
+    tags: install
+
+  - name: create htdocs/thumbs symlink
+    file: src=/srv/nginx/thumbs
+          dest=/srv/nginx/htdocs/thumbs
+          state=link
+    tags: install
+
+  - name: create feedback directory
+    file: state=directory
+          dest=/opt/streaming-feedback
+          owner=www-data group=mqttfeedback mode=0771
+    tags: install
+
+  # Feedback db
+  - stat: path=/opt/streaming-feedback/feedback.sqlite3
+    register: feedback_db
+    tags: install
+
+  - name: create feedback db
+    shell: "sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
+    become: www-data
+    become_user: www-data
+    when: feedback_db.stat.isreg is not defined or feedback_db.stat.isreg == False
+    tags: install
+
+  - name: change feedback.sqlite3 ownership
+    file: state=file
+          dest=/opt/streaming-feedback/feedback.sqlite3
+          mode=0660 owner=www-data group=mqttfeedback
+    tags: install
+
+  # Feedback client
+  - name: clone mqtt repo
+    git: repo=ssh://git@mng.ber.c3voc.de/mqtt
+         dest=/usr/local/src/mqtt
+    tags:
+      - install
+      - checkout
+      - pull
+
+  - stat: path=/usr/local/src/mqtt/provider/feedback/Gemfile.lock
+    register: mqtt_feedback_gemlock
+    tags: install
+
+  - name: install mqttfeedback client dependencies
+    shell: "{{ item }}"
+    args:
+      chdir: /usr/local/src/mqtt/provider/feedback
+    with_items:
+      - gem install bundler
+      - bundle
+    when: mqtt_feedback_gemlock.stat.isreg is not defined or mqtt_feedback_gemlock.stat.isreg == False
+    tags: install
+
+  - name: create mqttfeedback user
+    user: name=mqttfeedback system=yes group=mqttfeedback
+    tags: config
+
+  - name: configure systemd to run mqttfeedback client
+    template: src=mqttfeedback.service.j2
+              dest=/lib/systemd/system/
+              owner=root mode=640
+    notify: reload systemd
+    tags:
+      - install
+      - config
+
+  - name: start mqttfeedback service
+    service: state=started enabled=yes name=mqttfeedback
+    tags: install
+
+  # Cron jobs
+  - name: create cronjob to pull upcoming events json every 15 minutes
+    cron: name="download upcoming events json" minute=*/15
+          job="/usr/bin/env php /srv/nginx/streaming-website/index.php download >/dev/null"
+          user=downloader
+    tags: install
+
+  - name: create cronjobs to pull thumbs every minute
+    cron: name="download thumbnail for {{ item }}"
+          job="{{ ffmpeg_bin.stdout }} -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_sd.m3u8 -vf 'scale=213:120' -vframes 1 /srv/nginx/thumbs/{{ item }}.png 2>/dev/null"
+          user=downloader
+    tags: install
+    with_items:
+      - s1
+      - s2
+      - s3
+      - s4
+      - s5
+      - q1
+      - cam5
+      - cam6
+
+  # Remove fcgi cache after deployment
+  - shell: ls -1 /srv/nginx/cache/streaming_fcgi/
+    register: streaming_fcgi_cache
+    tags:
+      - deploy_website
+      - install
+      - config
+
+  - name: remove fcgi cache
+    file: path=/srv/nginx/cache/streaming_fcgi/{{ item }} state=absent
+    with_items: streaming_fcgi_cache.stdout_lines
+    when: streaming_fcgi_cache != ''
+    tags:
+      - config
+      - install
+      - deploy_website

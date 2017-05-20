@@ -1,0 +1,3 @@
+*.pyc
+*.retry
+.keepass_file_path

@@ -1,0 +1,22 @@
+# don't display the copyright page
+startup_message off
+
+# increase scrollback buffer size
+defscrollback 10000
+
+# title of the session
+sessionname tracker-scripts
+
+hardstatus alwayslastline
+hardstatus string '%{= kG}%-Lw%{= kW}%50> %n%f* %t%{= kG}%+Lw%< %{= kG}'
+
+screen -t A-recording-scheduler      bash -c '{% if crs_token_meta is defined and crs_secret_meta is defined %}LOCALFILE=tracker-profile-meta.sh{% endif %} ./bin/crs_run script-A-recording-scheduler.pl'
+screen -t B-mount4cut                bash -c '{% if crs_token_meta is defined and crs_secret_meta is defined %}LOCALFILE=tracker-profile-meta.sh{% endif %} ./bin/crs_run script-B-mount4cut.pl'
+screen -t C-cut-postprocessor        bash -c '{% if crs_token_meta is defined and crs_secret_meta is defined %}LOCALFILE=tracker-profile-meta.sh{% endif %} ./bin/crs_run script-C-cut-postprocessor.pl'
+screen -t D-encoding                 bash -c 'echo press CTRL-D to activate this worker, CTRL-C to close tab. ; cat ; ./bin/crs_run script-D-encoding.pl'
+
+screen -t E-postencoding             bash -c './bin/crs_run script-E-postencoding-auphonic.pl'
+screen -t F-postprocessing           bash -c './bin/crs_run script-F-postprocessing-upload.pl'
+
+screen -t X-help                     bash -c 'echo -e "\nThis screen has multiple tabs opened, which each run one of the scripts for the various stages of a tracker-ticket. Use <Ctrl+a> <number> to switch to one of these tabs. The tabs run the following scripts:\n Tab 0: A-recording-scheduler\n Tab 1: B-mount4cut\n Tab 2: C-cut-postprocessor\n Tab 3: D-encoding\n Tab 4: E-postencoding (auphonic)\n Tab 5: F-postprocessing(upload)\n Tab 6: this help\n\nQuit everything with <Ctrl+a> :quit <Return>\n"; cat '
+

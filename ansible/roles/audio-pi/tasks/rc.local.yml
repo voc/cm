@@ -1,0 +1,6 @@
+---
+  - name: create rc.local file
+    template: src=rc.local/rc.local.audio-pi.j2
+              dest=/etc/rc.local
+              mode=0755 owner=root group=root
+    notify: reload rc.local

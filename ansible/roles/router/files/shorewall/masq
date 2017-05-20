@@ -1,0 +1,12 @@
+#
+# Shorewall version 4 - Masq file
+#
+# For information about entries in this file, type "man shorewall-masq"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-masq.html
+#
+######################################################################################################
+#INTERFACE:DEST         SOURCE          ADDRESS         PROTO   PORT(S) IPSEC   MARK    USER/   SWITCH
+#                                                                                       GROUP
+pbl                     10.73.0.0/16

@@ -1,0 +1,40 @@
+---
+  # User to run ocsp scripts
+  - name: create ocsp-updater user
+    user: name=ocsp-updater state=present
+    tags: install
+
+  # Files and scripts
+  - name: create initial ocsp files
+    file: dest={{ item }} state=touch
+          mode=0644 owner=ocsp-updater group=ssl-cert
+    with_items:
+      - /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem.ocsp
+      - /etc/ssl/certs/haproxy_cdn.c3voc.de.pem.ocsp
+    changed_when: false
+    tags: install
+
+  - name: copy ocsp update scripts
+    copy: dest=/usr/local/bin/{{ item }}
+          src=ocsp/{{ item }}
+          owner=root group=root mode=0755
+    with_items:
+      - update_cdn_c3voc_de_ocsp_stapling.sh
+      - update_streaming_media_ccc_de_ocsp_stapling.sh
+    notify: run startcom ocsp scripts
+    tags: install
+
+  # Cron jobs to update ocsp data and reload services
+  # TODO: Is there a better solution available?
+  - name: create ocsp update cron jobs
+    cron: name="{{ item }}" user=ocsp-updater hour=5
+          job="/usr/local/bin/{{ item }} 1>/dev/null"
+    with_items:
+      - update_cdn_c3voc_de_ocsp_stapling.sh
+      - update_streaming_media_ccc_de_ocsp_stapling.sh
+    tags: install
+
+  - name: reaload haproxy every morning for ocsp updates
+    cron: name="reload haproxy for ocsp update" hour=5 minute=5
+          job="systemctl reload haproxy" user=root
+    tags: install

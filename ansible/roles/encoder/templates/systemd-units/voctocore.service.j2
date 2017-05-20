@@ -1,0 +1,15 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = voctomix core
+After=network.target
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix/release/voctocore/voctocore.py --ini-file /opt/voctomix/voctocore-config.ini -vv
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = multi-user.target

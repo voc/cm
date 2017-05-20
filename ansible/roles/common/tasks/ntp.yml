@@ -1,0 +1,23 @@
+---
+  - name: deinstall ntpd
+    apt: name={{ item }} state=absent
+    with_items:
+      - ntp
+
+  # Setting timezone
+  - shell: "{{ timedatectl_bin.stdout | default('timedatectl') }} status | grep 'Time zone' | cut -d ':' -f 2 | cut -d ' ' -f 2"
+    register: current_timezone
+    changed_when: false
+
+  - name: setting timezone to Europe/Berlin
+    command: "{{ timedatectl_bin.stdout }} set-timezone Europe/Berlin"
+    when: current_timezone.stdout != "Europe/Berlin"
+
+  # Timesyncd
+  - shell: "{{ timedatectl_bin.stdout }} status | grep 'NTP enabled' | cut -d ':' -f 2 | cut -d ' ' -f 2"
+    register: ntp_enabled
+    changed_when: false
+
+  - name: enable systemd-timesyncd
+    command: "{{ timedatectl_bin.stdout | default('timedatectl') }} set-ntp true"
+    when: ntp_enabled.stdout != 'yes'

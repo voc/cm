@@ -1,0 +1,11 @@
+---
+vpn_name: "{{ inventory_hostname_short }}"
+icecast_user: "source"
+icecast_password: "{{ lookup('keepass', 'ansible/audio-pi/icecast_' + stream + '.password') }}"
+icecast_server: "live.ber.c3voc.de:8000"
+icecast_path: "{{ stream }}.opus"
+
+system:
+  type: pi
+
+use_lan_dns: false

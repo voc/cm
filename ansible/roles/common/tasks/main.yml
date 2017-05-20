@@ -1,0 +1,38 @@
+---
+  - include: ../../../register/bin_path.yml
+  - include: locale.yml
+  - include: resolv.yml
+  - include: apt_proxy.yml
+  - include: repos.yml
+  - include: packages.yml
+  - include: kernel.yml
+    when: system.type == 'pc'
+  - include: vim.yml
+  - include: sudo.yml
+  - include: grub.yml
+    when: system.type == 'pc'
+  - include: ntp.yml
+    when: ansible_virtualization_type != 'lxc'
+  - include: acpi.yml
+    when: system.type == 'pc'
+  - include: inittab.yml
+  - include: molly-guard.yml
+  - include: ssh_known_hosts.yml
+  - include: ssl.yml
+  # realise users
+  - include: user.yml user={{ users }}
+    tags: user
+
+
+
+
+  - name: setting voc password
+    user: name=voc
+          password={{ user_voc_password }}
+    tags: user
+
+  # Modify message of the day
+  - name: adding message of the day
+    template: dest=/etc/motd
+              src=motd/motd
+              owner=root group=root mode=0644

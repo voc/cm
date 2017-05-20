@@ -1,0 +1,12 @@
+[Service]
+ExecStart=/usr/bin/ruby /usr/local/src/mqtt/provider/feedback/client.rb
+Restart=always
+User=mqttfeedback
+Group=mqttfeedback
+Environment="MQTT_SERVER={{ mqtt.server }}"
+Environment="MQTT_USER={{ mqtt.username }}"
+Environment="MQTT_PASSWORD={{ mqtt.password }}"
+Environment="FEEDBACK_DATABASE=/opt/streaming-feedback/feedback.sqlite3"
+
+[Install]
+WantedBy=multi-user.target

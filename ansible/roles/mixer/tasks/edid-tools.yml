@@ -1,0 +1,5 @@
+---
+  - name: create make-edid.pl
+    copy: dest=/usr/bin/make-edid.pl
+          src=edid-tools/make-edid.pl
+          owner=root group=root mode=0755
