@@ -25,6 +25,8 @@ monitoring:
   collectd_password: "{{ lookup('keepass', 'ansible/collectd.password') }}"
   collectd_interval: 30
 
+tracker_url: "https://tracker.c3voc.de/rpc"
+
 mqtt:
   server: "{{ lookup('keepass', 'ansible/mqtt.url') }}"
   username: "{{ lookup('keepass', 'ansible/mqtt.username') }}"
