@@ -26,10 +26,15 @@
                 regexp='^#?\s*dtoverlay=audioinjector.*'
                 line='dtoverlay=audioinjector-wm8731-audio'
 
-  - name: configure soundcard
+  - name: configure soundcard using alsa
     command: amixer set {{ item }}
     with_items:
         - "'Input Mux' 'Line In'"
-        - "'ADC High Pass Filter' 'on' caputure"
-        - "'Line' 'on' caputure"
-        - "'Capture' '100%' caputure"
+        - "'ADC High Pass Filter' 'on' capture"
+        - "'Line' 'on' cap"
+        - "'Capture' '100%' capture"
+        - "'Output Mixer Line Bypass' 'on' playback"
+
+  - name: store alsa configuration
+    command: alsactl store
+
