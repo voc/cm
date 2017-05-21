@@ -1,5 +1,5 @@
 ---
-room_number: 2
+room_number: 42
 room_fahrplan_name: "Gallerie"
 grabber_aspect: 16x9
 grabbersource_url_path: stream.mjpg
