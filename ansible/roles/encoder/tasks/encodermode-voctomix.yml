@@ -208,7 +208,7 @@
 
   - name: enable recording service
     service: name=recording-sink.service
-             enabled=yes
+             enabled=no
 
   # check recording
   - name: copy check_recording script

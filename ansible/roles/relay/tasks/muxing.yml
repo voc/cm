@@ -1,0 +1,4 @@
+---
+  - name: create relive directory
+    file: dest=/srv/nginx/dash state=directory
+          owner=relive group=relive mode=0755
