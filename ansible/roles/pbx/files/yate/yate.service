@@ -1,0 +1,13 @@
+[Unit]
+Description = VoIP server
+
+[Service]
+ExecStartPre  = /bin/ip a a 10.73.111.5/16 dev eth0
+ExecStart     = /usr/bin/yate -vv
+ExecStopPost  = /bin/ip a d 10.73.111.5/16 dev eth0
+
+Restart       = always
+RestartSec    = 180
+
+[Install]
+WantedBy = multi-user.target

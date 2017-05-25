@@ -1,25 +1,31 @@
 ---
-  - name: copy yate init script
-    copy: dest=/etc/init.d/yate
-          src=yate/init.d/yate
-          owner=root group=root mode=0755
-
   - name: configure yate
     template: dest=/etc/yate/regfile.conf
               src=yate/regfile.conf.j2
               owner=root group=root mode=0644
-    notify: reload yate
+    # notify: reload yate
 
   - name: configure yate sip-ip
     copy: dest=/etc/yate/ysipchan.conf
           src=yate/ysipchan.conf
           owner=root group=root mode=0755
-    notify: reload yate
+    # notify: reload yate
 
   - name: enable yate start
     lineinfile: dest=/etc/default/yate
                 regexp="^[#N]+O_START="
                 line="NO_START=0"
 
-  - name: start yate
-    service: name=yate enabled=yes state=started
+  - name: create yate systemd-unit
+    copy: src=yate/yate.service
+          dest=/etc/systemd/system/yate.service
+          mode=0644 owner=root group=root
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: disable yate service
+    service: name=yate
+             enabled=false
+             state=stopped
