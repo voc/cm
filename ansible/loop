@@ -1,9 +1,9 @@
 # Hosts file
 [loop]
-loop-encoder ansible_host=2001:638:904:ffc8:c474:71ff:fedc:bd08
+loop-encoder ansible_host=dekan.fem.tu-ilmenau.de ansible_port=10022
 
 [encoders]
-loop-encoder ansible_host=2001:638:904:ffc8:c474:71ff:fedc:bd08
+loop-encoder ansible_host=dekan.fem.tu-ilmenau.de ansible_port=10022
 
 [transcoders]
-loop-transcoder ansible_host=2001:638:904:ffc8:c474:71ff:fedc:bd09 transcode_streams='[{"host": "10.10.10.4:7999", "stream": "s1"}]'
+loop-transcoder ansible_host=dekan.fem.tu-ilmenau.de ansible_port=10023 transcode_streams='[{"host": "10.10.10.4:7999", "stream": "s1"}]' push_transcoding='[{"host": "deinemutter.fem.tu-ilmenau.de", "port": 8000, "login": "source", "prefix": "loop_"}]'

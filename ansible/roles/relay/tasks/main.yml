@@ -17,3 +17,6 @@
 
   - include: relive.yml
     when: nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes'
+
+  - include: muxing.yml
+    when: nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' or nginx_dash_master is defined and nginx_dash_master == 'yes'

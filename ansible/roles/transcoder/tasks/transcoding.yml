@@ -23,6 +23,16 @@
           src=transcoding/
           mode=0755 owner=root group=root
 
+  - name: template h264 transcoding script
+    template: dest=/opt/voc/transcoding/transcode_h264.sh
+              src=transcoding/transcode_h264.sh.j2
+              mode=0755 owner=root group=root
+
+  - name: template vp8 transcoding script
+    template: dest=/opt/voc/transcoding/transcode_vp8.sh
+              src=transcoding/transcode_vp8.sh.j2
+              mode=0755 owner=root group=root
+
   # Mkv-Pull
   - name: create systemd units for mkv pull
     template: src=systemd-units/pull-mkv.service.j2
@@ -44,18 +54,29 @@
       - [vp8, h264]
       - "{{ transcode_streams }}"
 
-  - name: enable mkv-pull units
+  - name: enable transcoding units
     service: name="transcode-{{ item[0] }}-{{ item[1].stream }}.service"
              enabled=yes
     with_nested:
       - [vp8, h264]
       - "{{ transcode_streams }}"
 
-  # - name: create systemd units for mkv push
-  #   template: src=""
-  #   with_nested:
-  #     - [vp8, h264, audio, slides]
-  #     -
+  # Mkv-Push
+  - name: create systemd units for mkv push
+    template: src="systemd-units/push-mkv.service.j2"
+              dest="/etc/systemd/system/push-mkv-{{ item[0] }}-{{ item[1].stream }}-{{ item[2].host }}.service"
+    with_nested:
+      - [vp8, h264]
+      - "{{ transcode_streams }}"
+      - "{{ push_transcoding }}"
+
+  - name: enable mkv-push units
+    service: name="push-mkv-{{ item[0] }}-{{ item[1].stream }}-{{ item[2].host }}.service"
+             enabled=yes
+    with_nested:
+      - [vp8, h264]
+      - "{{ transcode_streams }}"
+      - "{{ push_transcoding }}"
 
   # Reload systemd daemon
   - name: reload systemd daemon
@@ -64,4 +85,6 @@
 
   # Restart icedist
   - name: restart icedist
-    service: name=icedist.service state=restarted
+    service: name=icedist.service
+             state=restarted
+    changed_when: false
