@@ -1,10 +1,20 @@
 # Hosts file
 [saal-osc1]
 encoder-osc1.lan.c3voc.de
+mixer-osc1.lan.c3voc.de
 
 [saal-osc2]
 encoder-osc2.lan.c3voc.de
+mixer-osc2.lan.c3voc.de
 
 [encoders]
 encoder-osc1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.password') }}"
 encoder-osc2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.password') }}"
+
+[minions]
+minion-osc1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion-osc1.password') }}"
+minion-osc2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion-osc2.password') }}"
+
+[mixers]
+mixer-osc1.lan.c3voc.de
+mixer-osc2.lan.c3voc.de
