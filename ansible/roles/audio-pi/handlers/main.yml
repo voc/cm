@@ -1,4 +1,6 @@
 ---
+  - include: ../../../handlers/main.yml
+
   - name: restart openvpn
     service: name=openvpn@voc.service state=restarted
 

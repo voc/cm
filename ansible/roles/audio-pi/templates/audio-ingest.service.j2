@@ -2,14 +2,17 @@
 
 [Unit]
 Description = audio-ingest
-After=network.target
+After = network.target
+OnFailure = audio-ingest-failure-notice@%i.service
 
 [Service]
 Type = simple
 ExecStart = /opt/audio-ingest.sh
+ExecStartPost = /bin/bash -c "sleep 5 ; /bin/kill -0 $MAINPID &> /dev/null && /opt/mqtt/alert-running.sh"
 Restart = always
 RestartSec = 1s
 StartLimitInterval = 0
 
 [Install]
 WantedBy = multi-user.target
+

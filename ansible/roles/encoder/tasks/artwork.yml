@@ -1,5 +1,5 @@
 ---
-  - name: create /opt/voc/share/ diretcory
+  - name: create /opt/voc/share/ directory
     file: dest=/opt/voc/share/ state=directory
           owner=root group=root mode=0755
 

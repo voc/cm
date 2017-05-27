@@ -1,7 +1,7 @@
 #!/bin/bash
 # MANAGED BY ANSIBLE
 
-ffmpeg -loglevel error -f alsa -i hw:audioinjectorpi \
+exec ffmpeg -loglevel error -f alsa -i hw:audioinjectorpi \
 	-ar 48000 -c:a opus -b:a 128k -bufsize 32M -content_type audio/ogg -f ogg \
 	-ice_name "Audio Stream {{ stream }}" -ice_description "Audio Stream {{ stream }}" \
 	icecast://{{ icecast_user }}:{{ icecast_password }}@{{ icecast_server }}/{{ stream }}.opus

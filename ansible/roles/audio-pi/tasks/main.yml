@@ -12,4 +12,6 @@
     tags: journald
   - include: ingest.yml
     tags: ingest
+  - include: mqtt-alert.yml
+    tags: mqttalert
 #  - include: icecast.yml

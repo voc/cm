@@ -1,0 +1,38 @@
+---
+- name: install special packages for mqtt messaging
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+   - libanyevent-perl
+   - libconfig-tiny-perl
+   - cpanminus
+
+- name: install anyevent mqtt
+  command: bash -c 'eval $(perl -Mlocal::lib); cpanm AnyEvent::MQTT'
+  changed_when: false
+
+- name: create /opt/mqtt directory
+  file: dest=/opt/mqtt state=directory
+        owner=root group=root mode=0755
+
+- name: copy alert scripts
+  copy: src={{ item }}
+        dest=/opt/mqtt/
+        owner=root group=staff mode=0755
+  with_items:
+   - "mqttsend.pl"
+   - "ratelimit.sh"
+   - "alert-failed.sh"
+   - "alert-running.sh"
+
+- name: deploy mqtt config file
+  template: src="mqtt.conf.j2"
+            dest="/opt/mqtt/mqtt.conf"
+            mode=0644 owner=root group=root
+
+- name: copy failure notice scripts
+  copy: src={{ item }}
+        dest=/etc/systemd/system/
+        owner=root group=staff mode=0644
+  with_items:
+   - "audio-ingest-failure-notice@.service"
+  notify: reload systemd

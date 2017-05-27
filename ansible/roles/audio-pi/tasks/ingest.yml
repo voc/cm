@@ -8,10 +8,7 @@
     template: src="audio-ingest.service.j2"
               dest="/etc/systemd/system/audio-ingest.service"
               mode=0644 owner=root group=root
-
-  - name: reload systemd daemon
-    command: systemctl daemon-reload
-    changed_when: false
+    notify: reload systemd
 
   - name: enable & (re)start audio-ingest service
     service: name=audio-ingest.service

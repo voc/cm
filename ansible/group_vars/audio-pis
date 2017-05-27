@@ -4,6 +4,8 @@ icecast_user: "source"
 icecast_password: "{{ lookup('keepass', 'ansible/audio-pi/icecast_' + stream + '.password') }}"
 icecast_server: "live.ber.c3voc.de:8000"
 icecast_path: "{{ stream }}.opus"
+audio_pi_mqtt_user: "{{ lookup('keepass', 'ansible/audio-pi/mqtt.username') }}"
+audio_pi_mqtt_password: "{{ lookup('keepass', 'ansible/audio-pi/mqtt.password') }}"
 
 system:
   type: pi
