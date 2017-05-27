@@ -29,10 +29,3 @@
             dest="/opt/mqtt/mqtt.conf"
             mode=0644 owner=root group=root
 
-- name: copy failure notice scripts
-  copy: src={{ item }}
-        dest=/etc/systemd/system/
-        owner=root group=staff mode=0644
-  with_items:
-   - "audio-ingest-failure-notice@.service"
-  notify: reload systemd

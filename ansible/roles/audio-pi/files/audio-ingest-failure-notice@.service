@@ -1,7 +1,0 @@
-[Unit]
-Description = audio-ingest-failure-notice for %i
-
-[Service]
-Type = oneshot
-ExecStart = /opt/mqtt/alert-failed.sh
-
