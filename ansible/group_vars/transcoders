@@ -5,20 +5,16 @@ transcoder_video_qualities:
   -
     width: 1920
     height: 1080
-    bitrate: 4.0
+    bitrate: 5.0
   -
     width: 1280
     height: 720
-    bitrate: 1.8
+    bitrate: 2.2
   -
     width: 960
     height: 540
-    bitrate: 1.0
+    bitrate: 1.25
   -
     width: 640
     height: 360
-    bitrate: 0.44
-  -
-    width: 320
-    height: 180
-    bitrate: 0.11
+    bitrate: 0.6

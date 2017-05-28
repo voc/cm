@@ -6,4 +6,4 @@ loop-encoder ansible_host=dekan.fem.tu-ilmenau.de ansible_port=10022
 loop-encoder ansible_host=dekan.fem.tu-ilmenau.de ansible_port=10022
 
 [transcoders]
-loop-transcoder ansible_host=dekan.fem.tu-ilmenau.de ansible_port=10023 transcode_streams='[{"host": "10.10.10.4:7999", "stream": "s1"}]' push_transcoding='[{"host": "deinemutter.fem.tu-ilmenau.de", "port": 8000, "login": "source", "prefix": "loop_"}]'
+loop-transcoder ansible_host=dekan.fem.tu-ilmenau.de ansible_port=10023 transcode_streams='[{"host": "10.10.10.4:7999", "stream": "s1"}]' push_transcoding='[{"host": "live.ber.c3voc.de", "port": 8000, "login": "crazy6cove9scene", "prefix": "multi_loop_"}]'
