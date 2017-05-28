@@ -16,5 +16,5 @@ minion-osc1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/
 minion-osc2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion-osc2.password') }}"
 
 [mixers]
-mixer-osc1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansib    le/worker-groups/mixer-osc1.password') }}"
-mixer-osc2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansib    le/worker-groups/mixer-osc2.password') }}"
+mixer-osc1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer-osc1.password') }}"
+mixer-osc2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer-osc2.password') }}"
