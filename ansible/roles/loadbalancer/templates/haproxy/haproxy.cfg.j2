@@ -51,6 +51,7 @@ frontend icecast_and_nginx_hls_http
     acl is_cdn               hdr(host)  -i cdn.c3voc.de
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
     acl is_streaming_website path_end   -i logo.webm
+    acl is_streaming_website path_sub   -i acme-challenge
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
     acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
@@ -103,6 +104,7 @@ frontend icecast_and_nginx_hls_https
     acl is_cdn               hdr(host)  -i cdn.c3voc.de
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
     acl is_streaming_website path_end   -i logo.webm
+    acl is_streaming_website path_sub   -i acme-challenge
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
     acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
