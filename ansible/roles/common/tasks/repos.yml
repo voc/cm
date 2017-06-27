@@ -2,6 +2,9 @@
  # general
  - name: setup the VOC debian repo key
    apt_key: data="{{ lookup('file', 'voc_repo.key') }}" state=present
+   tags:
+     - repo
+     - gpg
 
  - name: ensure that the debian keyrings are present
    apt: name={{ item }} state=present update_cache=yes
