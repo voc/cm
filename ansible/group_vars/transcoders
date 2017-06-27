@@ -22,6 +22,10 @@ transcoding_mkv_sources:
     stream: "s5_vocto.mkv"
     host: "10.73.170.240"
   -
+    room: 6
+    stream: "s6_vocto.mkv"
+    host: "10.73.170.240"
+  -
     room: 99
     stream: "s99_direct.mkv"
     host: "10.73.5.3"
