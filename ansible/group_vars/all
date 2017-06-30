@@ -1,9 +1,8 @@
 ---
 # Event config
 event:
-  acronym: XYZ
-  name: Some Name
-  slogan: Some Slogan
+  acronym: fcmc17
+  name: FCMC tv
   formats:
     hd: 'yes'
     sd: 'yes'
