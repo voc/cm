@@ -1,5 +1,4 @@
 ---
-  - include: basic.yml
   - include: encoders.yml
   - include: mixers.yml
   - include: relays.yml
