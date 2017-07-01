@@ -51,6 +51,8 @@ mixer[1:7].lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/m
 audio-pi1.lan.c3voc.de stream=a1
 audio-pi2.lan.c3voc.de stream=a2
 audio-pi3.lan.c3voc.de stream=a3
+voc-pi-tv ansible_ssh_host=10.73.100.76
+
 
 # Local RZ
 [servers]
