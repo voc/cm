@@ -146,13 +146,14 @@ users:
   - { name: 'nihilus', state: 'present' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'dedeibel', state: 'present' }
-  - { name: 'pegro', state: 'present' }
+  - { name: 'pegro', state: 'present' } # FeM
   - { name: 'bix', state: 'present' }  # SHA
   - { name: 'dave', state: 'present' } # SHA
   - { name: 'arl4223', state: 'present' } # NOC
-  - { name: 'holger', state: 'present' } # Debian
+  - { name: 'holgi', state: 'present' } # Debian h0lger
   - { name: 'zuntrax', state: 'present' } # SHA
   - { name: 'cardno', state: 'present' } # cristoph fcmc
+  - { name: 'lynxis', state: 'present' } # lynxis coreboot lede
   - { name: 'voc', state: 'present' }
 
 additional_users: []
