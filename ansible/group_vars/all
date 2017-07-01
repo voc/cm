@@ -41,10 +41,9 @@ trusted_ipv4_ips: {
   'voc dus':      '31.172.30.136/29',
   '3st.be':       '188.40.235.220',
   'luusa.org':    '212.201.69.24',
-  'derpeter.net': '212.79.162.38',
   'n621.de':      '176.9.182.227',
   'ilmenau':      '141.24.40.0/26',
-  'derpeter.cup.c3voc.de': '5.45.111.82',
+  'derpeter.net': '5.45.111.82',
   'alb':          '185.106.84.0/22',
   'alb rr1':      '185.1.74.1/32',
   'alb rr2':      '185.1.74.2/32',
@@ -150,6 +149,10 @@ users:
   - { name: 'pegro', state: 'present' }
   - { name: 'bix', state: 'present' }  # SHA
   - { name: 'dave', state: 'present' } # SHA
+  - { name: 'arl4223', state: 'present' } # NOC
+  - { name: 'holger', state: 'present' } # Debian
+  - { name: 'zuntrax', state: 'present' } # SHA
+  - { name: 'cardno', state: 'present' } # cristoph fcmc
   - { name: 'voc', state: 'present' }
 
 additional_users: []
