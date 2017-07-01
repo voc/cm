@@ -151,7 +151,7 @@ users:
   - { name: 'dave', state: 'present' } # SHA
   - { name: 'arl4223', state: 'present' } # NOC
   - { name: 'holgi', state: 'present' } # Debian h0lger
-  - { name: 'zuntrax', state: 'present' } # SHA
+  - { name: 'zuntrax', state: 'present' } 
   - { name: 'cardno', state: 'present' } # cristoph fcmc
   - { name: 'lynxis', state: 'present' } # lynxis coreboot lede
   - { name: 'voc', state: 'present' }
