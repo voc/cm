@@ -3,6 +3,7 @@
 event:
   acronym: fcmc17
   name: FCMC tv
+  slogen: The FC⚡MC is a collective initiative to change the perception of the G20 in Hamburg
   formats:
     hd: 'yes'
     sd: 'yes'
