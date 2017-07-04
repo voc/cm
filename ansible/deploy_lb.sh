@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 if [[ $* != *--deploy* && $* != *--diff* ]]; then
   echo "Generate loadbalancer config and deploy it."
   echo
@@ -7,14 +8,19 @@ if [[ $* != *--deploy* && $* != *--diff* ]]; then
   exit 1
 fi
 
+if [ -z "${PASSWORD}" ]; then
+  echo -n "Relay register voc password: "
+  read -r PASSWORD
+fi
+
 if [[ $* = *--diff* ]]; then
   DIFF=true
 fi
 
-BASEDIR=$(dirname "$0")
+BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function get_relay_json() {
-  wget -O $BASEDIR/relays.json https://voc:…@c3voc.de/33c3/register/relays
+  wget -O $BASEDIR/relays.json https://voc:${PASSWORD}@c3voc.de/33c3/register/relays
 }
 
 function create_lb_cariables() {
@@ -32,14 +38,14 @@ function create_lb_cariables() {
 
 function deploy_lbs() {
   if [[ $DIFF = true ]]; then
-    ansible-playbook $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --check --diff
+    $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --check --diff
   else
     echo
     echo "Deploy new config to loadbalancers? [yes|no]"
     read choice
 
     if [ "$choice" = "yes" ]; then
-      ansible-playbook $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --diff
+      $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --diff
     else
       echo "Nothing deployed."
     fi
