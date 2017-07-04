@@ -5,6 +5,7 @@ edges
 [masters]
 
 [edges]
-dellinger.alb.c3voc.de         hidden=no nginx=yes icecast=yes icecast_master_ip=195.54.164.164 icecast_push_master=no nginx_hls_masters='["195.54.164.164"]' nginx_hls_relive_masters='["195.54.164.164"]' nginx_dash_masters='["195.54.164.164"]' 
-live.bn.c3voc.de               hidden=no nginx=yes icecast=no nginx_hls_masters='["195.54.164.164"]' nginx_hls_relive_masters='["195.54.164.164"]' nginx_dash_masters='["195.54.164.164"]' 
-live.dus.c3voc.de              hidden=no nginx=yes icecast=no nginx_hls_masters='["195.54.164.164"]' nginx_hls_relive_masters='["195.54.164.164"]' nginx_dash_masters='["195.54.164.164"]' 
+live.alb.c3voc.de              hidden=no nginx=yes icecast=yes icecast_master_ip=195.54.164.164 icecast_push_master=no nginx_hls_masters='["195.54.164.164"]' nginx_hls_relive_masters='["195.54.164.164"]' nginx_dash_masters='["195.54.164.164"]' 
+live.bn.c3voc.de              hidden=no nginx=yes icecast=yes icecast_master_ip=195.54.164.164 icecast_push_master=no nginx_hls_masters='["195.54.164.164"]' nginx_hls_relive_masters='["195.54.164.164"]' nginx_dash_masters='["195.54.164.164"]' 
+live.dus.c3voc.de              hidden=no nginx=yes icecast=yes icecast_master_ip=195.54.164.164 icecast_push_master=no nginx_hls_masters='["195.54.164.164"]' nginx_hls_relive_masters='["195.54.164.164"]' nginx_dash_masters='["195.54.164.164"]' 
+live.self.c3voc.de              hidden=no nginx=yes icecast=yes icecast_master_ip=195.54.164.164 icecast_push_master=no nginx_hls_masters='["195.54.164.164"]' nginx_hls_relive_masters='["195.54.164.164"]' nginx_dash_masters='["195.54.164.164"]' 
