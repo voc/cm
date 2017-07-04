@@ -68,10 +68,10 @@ icecast_fix_mount_metadata: [
 ]
 
 icecast_static_streams_meta_data: [
-  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
-  { "saal": "s2", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
-  { "saal": "s3", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
-  { "saal": "s4", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
+#  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
+#  { "saal": "s2", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
+#  { "saal": "s3", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
+#  { "saal": "s4", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
 ]
 
 # nginx
