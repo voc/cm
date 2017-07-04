@@ -87,7 +87,7 @@ live.dus.c3voc.de   nginx=yes    icecast=yes                        icecast_mast
 
 [loadbalancers]
 lb.dus.c3voc.de
-#lb.alb.c3voc.de
+lb.alb.c3voc.de
 
 
 [minions]
