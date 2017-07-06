@@ -34,7 +34,7 @@ ffmpeg -y -hide_banner\
   \
   -metadata title=${STREAM} \
   \
-  -c:v libvpx -threads:v 8 -cpu-used 16 -r 25 -g 50 -keyint_min 50 -deadline realtime -crf 10 \
+  -c:v libvpx -threads:v 6 -cpu-used 16 -r 25 -g 50 -keyint_min 50 -deadline realtime -crf 14 \
   \
 {% for q in transcoder_video_qualities %}
 {% set i = loop.index0 %}
