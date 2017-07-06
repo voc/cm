@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.ERROR, format='%(levelname)8s %(name)s: %(mess
 # list of stream-identifiers
 # this controls which streams will be visible in the graphs
 streams = itertools.product(
-        ['s1', ,'fcmc', 'weltbild1', 'weltbild2'],
+        ['s1', 's2', 's3', 's4', 's5', 's6', 'fcmc', 'weltbild1', 'weltbild2'],
 
 )
 manifests = map('/dash/{0[0]}/manifest.mpd'.format, streams)
