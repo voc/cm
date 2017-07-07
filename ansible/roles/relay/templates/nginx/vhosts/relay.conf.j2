@@ -288,14 +288,14 @@ server {
   }
   # proxy cache dash manifests (live)
   #
-  # live:   /dash/s2/manifest.mpd
+  # live:   /dash/s2.mpd
   #
-  location ~* ^/dash/(?<stream>[^/]+)/(?<manifest>.+\.mpd)$ {
+  location ~* ^/dash/(?<manifest>.+\.mpd)$ {
       proxy_intercept_errors on;
       proxy_cache            dash;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://dash/dash/$stream/$manifest;
+      proxy_pass             http://dash/dash/$manifest;
       proxy_cache_methods    GET HEAD;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
@@ -311,16 +311,16 @@ server {
   }
   # proxy cache dash segments (live)
   #
-  # init-segment:     /dash/s2/init-stream1.chk or /dash/s2/init-stream1.hdr
-  # chunk-segments:   /dash/s2/chunk-stream1-00041.chk for WebM-dash or
-  #                   /dash/s2/chunk-stream1-00041.m4s for MP4-dash
+  # init-segment:     /dash/s2-i1.chk or /dash/s2-i1.hdr
+  # chunk-segments:   /dash/s2-s1-00041.chk for WebM-dash or
+  #                   /dash/s2-s1-00041.m4s for MP4-dash
   #
-  location ~* ^/dash/(?<stream>[^/]+)/(?<segment>.+\.(hdr|chk|m4s))$ {
+  location ~* ^/dash/(?<segment>.+\.(hdr|chk|m4s))$ {
       proxy_intercept_errors on;
       proxy_cache            dash;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://dash/dash/$stream/$segment;
+      proxy_pass             http://dash/dash/$segment;
       proxy_cache_methods    GET HEAD;
       proxy_cache_valid      200 302 30m;
       proxy_cache_key        "$uri";
