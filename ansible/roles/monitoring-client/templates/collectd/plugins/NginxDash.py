@@ -6,14 +6,6 @@ from urlparse import urlparse
 
 logging.basicConfig(level=logging.ERROR, format='%(levelname)8s %(name)s: %(message)s')
 
-# list of stream-identifiers
-# this controls which streams will be visible in the graphs
-streams = itertools.product(
-	['s1', 's2', 's3', 's4', 's5', 's6']
-)
-manifests = map('/dash/{0[0]}/manifest.mpd'.format, streams)
-logging.debug('constructed list of dash_manifests: %s', manifests)
-
 # path to the access-log containing the nginx-access-logs
 nginx_accesslog = '/var/log/nginx/access.log'
 
@@ -86,10 +78,7 @@ def count_dash_viewers():
 
 	# viewer-count per stream
 	viewer_counts = collections.Counter()
-
 	counters = {}
-	for manifest in manifests:
-		counters[manifest] = set()
 
 	# open the access-log
 	logging.debug('reading access-log %s', nginx_accesslog)
@@ -115,11 +104,16 @@ def count_dash_viewers():
 			if age > minimum_update_period * 2:
 				break
 
-			if (path in manifests):
-				counters[path].add(ip);
+			# add manifest requests to sets
+			if (path[-4:] == ".mpd"):
+				if not path in counters:
+					counters[path] = set()
 
-	for manifest in manifests:
-		viewer_counts[ urlparse(manifest).path ] = len(counters[manifest]);
+				counters[path].add(ip)
+
+	# count set lengths
+	for path in counters:
+		viewer_counts[path] = len(counters[path])
 
 	return viewer_counts
 
@@ -133,7 +127,7 @@ try:
 			vl = collectd.Values(plugin='dash', type='users', type_instance=stream, values=[viewer])
 			vl.dispatch()
 
-	collectd.register_read(read);
+	collectd.register_read(read)
 
 except ImportError:
 	print('collectd module not found, assuming test-run')
