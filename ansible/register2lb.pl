@@ -55,7 +55,7 @@ foreach my $host (grep {$data->{$_}->{public}} keys %$data) {
 	}
 }
 
-foreach my $tag (keys %$tags) {
+foreach my $tag (sort keys %$tags) {
 	say "";
 	say "lb_${tag}_relays: {";
 	foreach my $host (sort @{$tags->{$tag}}) {
