@@ -20,10 +20,11 @@ nginx_ips_allow_stats: [
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
 lb_hls_relays: {
-  "live.alb.c3voc.de": 100,
-  "live.bn.c3voc.de": 70,
-  "live.dus.c3voc.de": 70,
-  "live.self.c3voc.de": 50,
+  "live.alb.c3voc.de": 120,
+  "live.bn.c3voc.de": 120,
+  "live.fem.c3voc.de": 100,
+  "live.dus.c3voc.de": 40,
+  "live.self.c3voc.de": 30,
 }
 
 lb_relive_relays: {
@@ -31,10 +32,15 @@ lb_relive_relays: {
 }
 
 lb_icecast_relays: {
-  "live.alb.c3voc.de": 100,
-  "live.bn.c3voc.de": 70,
-  "live.dus.c3voc.de": 70,
-  "live.self.c3voc.de": 50,
+  "live.alb.c3voc.de": 120,
+  "live.bn.c3voc.de": 120,
+  "live.fem.c3voc.de": 100,
+  "live.dus.c3voc.de": 40,
+  "live.self.c3voc.de": 30,
+  "live1.rrb.c3voc.de": 20,
+  "live2.rrb.c3voc.de": 20,
+  "live3.rrb.c3voc.de": 20,
+  "live4.rrb.c3voc.de": 20,
 }
 
 
