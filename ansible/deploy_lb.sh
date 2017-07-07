@@ -52,8 +52,8 @@ function deploy_lbs() {
   fi
 }
 
-get_relay_json
-create_lb_cariables
+#get_relay_json
+#create_lb_cariables
 deploy_lbs
 
 exit $?
