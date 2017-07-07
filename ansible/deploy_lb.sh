@@ -23,7 +23,7 @@ function get_relay_json() {
   wget -O $BASEDIR/relays.json https://voc:${PASSWORD}@c3voc.de/33c3/register/relays
 }
 
-function create_lb_cariables() {
+function create_lb_variables() {
   file_pattern="# DO NOT EDIT MANUALLY BELOW THAT LINE"
 
   # remove current variables
@@ -53,7 +53,7 @@ function deploy_lbs() {
 }
 
 #get_relay_json
-#create_lb_cariables
+#create_lb_variables
 deploy_lbs
 
 exit $?
