@@ -63,7 +63,7 @@ def parse_logdate(datestr):
 
 ##### numbercrunching methods #####
 def count_dash_viewers():
-	"Count the number of live-viewer for each configured and available dash-manifest"
+	"Count the number of live-viewer for each available dash-manifest"
 	# - read all lines from the access-log which concern the last minimum_update_periodx2 seconds,
 	#   the ×2 gives us a little buffer because not all players ask exactly
 	#	every minimum_update_period-seconds
@@ -71,7 +71,7 @@ def count_dash_viewers():
 	# - count the set keys
 
 	# regex to parse interesting parts of ngix access-log
-	exp = '^([^ ]+) ([^ ]+) ([^ ]+) \[([^\]]+)\] "([A-Z]+) ([^ "]+) HTTP\/1.[01]" [0-9]{3}'
+	exp = '^([^ ]+) ([^ ]+) ([^ ]+) \[([^\]]+)\] "([A-Z]+) ([^ "]+) HTTP\/1.[01]" ([0-9]{3})'
 
 	# compare timestamp
 	now = datetime.datetime.today()
@@ -89,7 +89,7 @@ def count_dash_viewers():
 			if not match:
 				break
 
-			(ip, ident, username, tstamp, method, path) = match.groups()
+			(ip, ident, username, tstamp, method, path, code) = match.groups()
 
 			# parse date
 			tstamp = parse_logdate(tstamp)
@@ -97,15 +97,15 @@ def count_dash_viewers():
 			# calculate number of seconds this record is old
 			age = int((now - tstamp).total_seconds())
 
-			#print 'parse line:', path, tstamp, age
+			#print 'parse line:', path, tstamp, method, age, code
 
 			# quit parsing when we reached the end of our window
 			# double the update_period to give us some buffer
 			if age > minimum_update_period * 2:
 				break
 
-			# add manifest requests to sets
-			if (path[-4:] == ".mpd"):
+			# add successful manifest requests to sets
+			if code[0] == "2" and path[-4:] == ".mpd":
 				if not path in counters:
 					counters[path] = set()
 
