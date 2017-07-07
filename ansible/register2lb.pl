@@ -41,7 +41,14 @@ if(@ARGV != 1) {
 
 my $data = get_relays($ARGV[0]);
 
+# preseed well-known tags which might not be used in a given setup, but are
+# still being depended upon by Ansible roles
+
 my $tags;
+foreach my $tag (qw(dash dtag hls icecast local relive)) {
+	$tags->{$tag} = [];
+}
+
 foreach my $host (grep {$data->{$_}->{public}} keys %$data) {
 	foreach my $tag (@{$data->{$host}{tags}}) {
 		push @{$tags->{$tag}}, $host;
