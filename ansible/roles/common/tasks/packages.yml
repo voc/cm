@@ -39,7 +39,6 @@
     - python
     - ruby
     - ruby-dev
-    - inotail
     - libdbi1
     - libdbd-sqlite3
     - ethtool
