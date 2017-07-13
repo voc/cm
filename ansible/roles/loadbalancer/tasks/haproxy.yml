@@ -2,17 +2,17 @@
   - name: add haproxy debian repo
     apt_key: data="{{ lookup('file', 'deb_haproxy.key') }}" state=present
   - name: setup the debian haproxy backports repo
-    apt_repository: repo="deb http://httpredir.debian.org/debian jessie-backports main" state=present
+    apt_repository: repo="deb http://httpredir.debian.org/debian stretch-backports main" state=present
     tags: install
-    when: ansible_distribution_release == 'jessie'
+    when: ansible_distribution_release == 'stretch'
 
   - name: setup the debian haproxy repo
-    apt_repository: repo="deb http://haproxy.debian.net jessie-backports-1.6 main" state=present
+    apt_repository: repo="deb http://haproxy.debian.net stretch-backports-1.6 main" state=present
     tags: install
-    when: ansible_distribution_release == 'jessie'
+    when: ansible_distribution_release == 'stretch'
 
   - name: install haproxy package
-    apt: name=haproxy state=latest default_release=jessie-backports-1.6
+    apt: name=haproxy state=latest default_release=stretch-backports-1.6
     tags: install
 
   # TLS certificates
