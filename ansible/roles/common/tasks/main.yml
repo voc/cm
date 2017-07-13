@@ -15,7 +15,6 @@
     when: ansible_virtualization_type != 'lxc'
   - include: acpi.yml
     when: system.type == 'pc'
-  - include: inittab.yml
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
   - include: ssl.yml
