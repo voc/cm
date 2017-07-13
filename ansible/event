@@ -68,6 +68,7 @@ mng.ber.c3voc.de
 ber.c3voc.de
 dus.c3voc.de
 live.ber.c3voc.de
+build.ber.c3voc.de
 live.self.c3voc.de
 mngslave.dus.c3voc.de
 testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
