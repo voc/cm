@@ -35,7 +35,7 @@
     - raspi.list
 
  - name: setup the VOC debian repo for stretch
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ stretch main" state=present
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=present
    when: ansible_distribution_release == 'stretch' and system.type == 'pc'
 
  - name: setup the debian backports repo for stretch
