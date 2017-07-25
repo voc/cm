@@ -1,0 +1,11 @@
+---
+  - name: setup the jenkins LTS repo key
+    apt_key: data="{{ lookup('file', 'jenkins.io.key') }}" state=present
+
+  - name: setup the jenkins LTS repo
+    apt_repository: repo="deb https://pkg.jenkins.io/debian-stable binary/" state=present
+
+  - name: install packages needed for jenkins
+    apt: name={{ item }} state=present update_cache=yes
+    with_items:
+      - jenkins

@@ -7,10 +7,10 @@
   - name: install packages needed to monitor host
     apt: name={{ item }} state=latest
     with_items:
-      - check-mk-agent
       - nagios-plugins-basic
+#      - check-mk-agent
 
-  - include: check_mk_client.yml
+#  - include: check_mk_client.yml
 
   - include: encoder.yml
     when: ansible_hostname | match("encoder\d+")
