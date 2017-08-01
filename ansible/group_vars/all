@@ -150,10 +150,10 @@ users:
   - { name: 'pegro', state: 'present' }
   - { name: 'bix', state: 'present' }  # SHA
   - { name: 'dave', state: 'present' } # SHA
-  - { name: 'arl4223', state: 'present' } # NOC
-  - { name: 'holger', state: 'present' } # Debian
+  - { name: 'arl4223', state: 'absent' } # NOC
+  - { name: 'holger', state: 'absent' } # Debian
   - { name: 'zuntrax', state: 'present' } # SHA
-  - { name: 'cardno', state: 'present' } # cristoph fcmc
+  - { name: 'cardno', state: 'absent' } # cristoph fcmc
   - { name: 'voc', state: 'present' }
 
 additional_users: []
