@@ -1,6 +1,6 @@
 ---
 room_number: 6
-room_fahrplan_name: Saal6
+room_fahrplan_name: Pa
 grabber_aspect: 16x9
 grabbersource_url_path: stream.mjpg
 
@@ -22,11 +22,11 @@ voctomix_sources:
     type: decklink                         # decklink, mjpeg or test
     device: 'DeckLink SDI (1)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
     mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (1)'
-#  -
-#    name: cam2
-#    type: decklink                         # decklink, mjpeg or test
-#    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-#    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
+  -
+    name: cam2
+    type: decklink                         # decklink, mjpeg or test
+    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
 #  -
 #    name: grabber
 #    type: mjpeg
@@ -35,8 +35,8 @@ voctomix_sources:
     name: grabber
     type: decklink                         # decklink, mjpeg or test
     plug: hdmi                             # sdi or hdmi
-    device: 'DeckLink Mini Recorder (1)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-    mode: '1920x1080 at 24000/1000'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (1)'
+    device: 'DeckLink Mini Recorder'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+    mode: '1920x1080 at 24000/1000 fps'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (1)'
 #  -
 #    name: testsource
 #    type: test
