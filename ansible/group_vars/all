@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XYZ
-  name: Some Name
-  slogan: Some Slogan
+  acronym: SHA2017
+  name: SHA2017
+  slogan: Still Hacking Anyway
   formats:
     hd: 'yes'
     sd: 'yes'
