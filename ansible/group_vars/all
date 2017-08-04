@@ -33,7 +33,7 @@ mqtt:
   password: "{{ lookup('keepass', 'ansible/mqtt.password') }}"
 
 trusted_ipv4_ips: {
-  'allow all TODO: remove me': '0.0.0.0/0',
+  'sha orga public vlan 2216': '145.116.216.0/24',
   'voc internal #3500': '10.73.0.0/16',
   'voc vpn': '10.8.0.0/16',
   'voc public #2241':   '94.45.241.0/24',
@@ -49,34 +49,20 @@ trusted_ipv4_ips: {
   'alb rr1':      '185.1.74.1/32',
   'alb rr2':      '185.1.74.2/32',
   # relays
-  'dedi1.het.c3voc.de': '88.99.25.4',
-  'dedi2.het.c3voc.de': '88.99.64.17',
-  'dedi3.het.c3voc.de': '88.99.64.49',
-  'dedi4.het.c3voc.de': '88.99.67.133',
-  'dedi5.het.c3voc.de': '88.99.64.12',
-  'dedi6.het.c3voc.de': '88.99.64.46',
   'live.dus.c3voc.de': '31.172.30.138',
   'live.bn.c3voc.de': '212.201.68.141',
   'lb.dus.c3voc.de': '31.172.30.141',
-  'vm2.self.c3voc.de': '141.70.120.67',
-  'vm1.self.c3voc.de': '141.70.120.66',
-  'vm3.self.c3voc.de': '141.70.120.68',
-  'vm4.self.c3voc.de': '141.70.120.69',
-  'vm5.self.c3voc.de': '141.70.120.70',
-  'vm6.self.c3voc.de': '141.70.120.71',
-  'dellinger.alb.c3voc.de 1': '185.106.84.1',
-  'dellinger.alb.c3voc.de 2': '185.1.74.15',
-  'dellinger.alb.c3voc.de 3': '185.106.87.1',
-  'froscon.het.c3voc.de': '5.9.196.94',
-  'usa.cch.c3voc.de': '94.45.241.11',
   'live.cch.c3voc.de': '94.45.241.10',
-  'lb.alb.c3voc.de': '185.106.87.2',
-  'dekan.cch.c3voc.de': '94.45.241.15',
-  'gsa.cch.c3voc.de': '94.45.241.13'
+  'lb.alb.c3voc.de': '185.106.84.35',
+  'live.alb.c3voc.de': '185.106.84.36',
+  'live.self.c3voc.de': '141.70.120.34',
+  'live.ber.c3voc.de': '195.54.164.164',
+  'live.fem.c3voc.de': '141.24.220.23',
+  'live.sha.c3voc.de': '145.116.216.71',
 }
 
 trusted_ipv6_ips: {
-  'allow all TODO: remove me': '::/0',
+  "sha orga public vlan 2216":  '2a05:2d01:2017:2216::/64',
   "31c3 public #2241":  '2001:67c:20a1:2241::/64',
   "31c3 voc #2240":     '2001:67c:20a1:2240::/64',
   "voc berlin":   '2001:67c:20a0:e::/64',
@@ -89,30 +75,16 @@ trusted_ipv6_ips: {
   "alb rr1":       '2001:7f8:a5::5:7555:1/128',
   "alb rr2":       '2001:7f8:a5::5:7555:2/128',
   # relays
-  'dedi1.het.c3voc.de': '2a01:4f8:10a:143::2',
-  'dedi2.het.c3voc.de': '2a01:4f8:10a:1050::2',
-  'dedi3.het.c3voc.de': '2a01:4f8:10a:1070::2',
-  'dedi4.het.c3voc.de': '2a01:4f8:10a:13c4::2',
-  'dedi5.het.c3voc.de': '2a01:4f8:10a:104b::2',
-  'dedi6.het.c3voc.de': '2a01:4f8:10a:106d::2',
   'live.dus.c3voc.de': '2a01:a700:4633::138',
   'live.bn.c3voc.de': '2a00:5ba0:8000:64:3aea:a7ff:fe90:6944',
   'lb.dus.c3voc.de': '2a01:a700:4633::141',
-  'vm2.self.c3voc.de': '2001:7c0:712:33c3::',
-  'vm1.self.c3voc.de': '2001:7c0:712:33c3::66',
-  'vm3.self.c3voc.de': '2001:7c0:712:33c3::68',
-  'vm4.self.c3voc.de': '2001:7c0:712:33c3::69',
-  'vm5.self.c3voc.de': '2001:7c0:712:33c3::70',
-  'vm6.self.c3voc.de': '2001:7c0:712:33c3::71',
-  'dellinger.alb.c3voc.de 1': '2a02:8000::1',
-  'dellinger.alb.c3voc.de 2': '2001:7f8:a5::5:472:2',
-  'dellinger.alb.c3voc.de 3': '2a02:8000:ffff:ffff::1',
-  'froscon.het.c3voc.de': '2a01:4f8:161:7ffd:f055:c0:f323:c394',
-  'usa.cch.c3voc.de': '2001:67c:20a1:2241::11',
   'live.cch.c3voc.de': '2001:67c:20a1:2241::10',
-  'lb.alb.c3voc.de': '2a02:8000:ffff:ffff::2',
-  'dekan.cch.c3voc.de': '2001:67c:20a1:2241::15',
-  'gsa.cch.c3voc.de': '2001:67c:20a1:2241::13'
+  'lb.alb.c3voc.de': '2001:67c:20a0:e::169',
+  'live.alb.c3voc.de': '2001:67c:20a0:e::170',
+  'live.self.c3voc.de': '2001:7c0:712:c3::42',
+  'live.ber.c3voc.de': '2001:67c:20a0:e::164',
+  'live.fem.c3voc.de': '2001:638:904:ffbf:11:43ff:fee6:ed07',
+  'live.sha.c3voc.de': '2a05:2d01:2017:2216::71'
 }
 
 

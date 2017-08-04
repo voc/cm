@@ -53,7 +53,7 @@ frontend icecast_and_nginx_hls_http
     acl is_streaming_website path_end   -i logo.webm
     acl is_streaming_website path_sub   -i acme-challenge
     # ip address matching
-    acl is_local             src        -- # 151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+    acl is_local             src        2a05:2d01::/32 151.216.0.0/16 145.116.224.0/19 145.116.216.0/24 # TODO: update subnetworks
     acl is_dtag              src        -- # -f /etc/haproxy/dtag_subnetworks.txt
     # return 403 if hostname or defined file extensions are not matching
     http-request deny        unless is_cdn or is_streaming_website
@@ -106,7 +106,7 @@ frontend icecast_and_nginx_hls_https
     acl is_streaming_website path_end   -i logo.webm
     acl is_streaming_website path_sub   -i acme-challenge
     # ip address matching
-    acl is_local             src        -- # 151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+    acl is_local             src        2a05:2d01::/32 151.216.0.0/16 145.116.224.0/19 145.116.216.0/24 # TODO: update subnetworks
     acl is_dtag              src        -- # -f /etc/haproxy/dtag_subnetworks.txt
     # return 403 if hostname or defined file extensions are not matching
     http-request deny        unless is_cdn or is_streaming_website
@@ -263,20 +263,11 @@ backend hls_relive_{{ protocol }}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
-{% for server, weight in lb_relive_relays.iteritems() %}
 {% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+    server live.dus.c3voc.de live.dus.c3voc.de:80 redir http://live.dus.c3voc.de:80  weight 100
 {% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+    server live.dus.c3voc.de live.dus.c3voc.de:443 redir https://live.dus.c3voc.de:443  weight 100
 {% endif %}
-{% endfor %}
-{% for server, weight in lb_local_relays.iteritems() %}
-{% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
-{% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
-{% endif %}
-{% endfor %}
 
 backend icecast_{{ protocol }}
 {% if protocol == "http" %}
@@ -379,13 +370,11 @@ backend hls_relive_local_{{ protocol }}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
-{% for server, weight in lb_local_relays.iteritems() %}
 {% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+    server live.dus.c3voc.de live.dus.c3voc.de:80 redir http://live.dus.c3voc.de:80  weight 100
 {% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+    server live.dus.c3voc.de live.dus.c3voc.de:443 redir https://live.dus.c3voc.de:443  weight 100
 {% endif %}
-{% endfor %}
 
 backend icecast_local_{{ protocol }}
 {% if protocol == "http" %}
@@ -481,7 +470,7 @@ backend hls_relive_dtag_{{ protocol }}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance roundrobin
     option forwardfor
-{% for server, weight in lb_dtag_relays.iteritems() %}
+{% for server, weight in lb_relive_relays.iteritems() %}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
