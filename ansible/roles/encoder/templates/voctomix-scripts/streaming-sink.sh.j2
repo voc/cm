@@ -9,7 +9,7 @@ ffmpeg -y -nostdin \
 		movie=/opt/voc/share/overlay_{{ item }}.png [logo];
 		[deinter] [logo] overlay=0:0 [v];
 
-		[0:a:0] volume=12dB, pan=mono|c0=FL [native]
+		[0:a:0] volume={{ room_volume | default('1') }}, pan=mono|c0=FL [native]
 	' \
 	-map '[v]' -map '[native]' \
 	{% if item == 'hd' %}

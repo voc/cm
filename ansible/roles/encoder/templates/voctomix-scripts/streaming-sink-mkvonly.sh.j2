@@ -15,7 +15,7 @@ ffmpeg -y -nostdin -hide_banner \
 		movie=/opt/voc/share/overlay_slides.png [logo_slides];
 		[smooth_slides] [logo_slides] overlay=0:0 [slides];
 
-		[0:a:0] volume=12dB, asplit=2 [native_in][translated_in];
+		[0:a:0] volume={{ room_volume | default('1') }}, asplit=2 [native_in][translated_in];
 		[native_in]     pan=mono|c0=FL [native];
 		[translated_in] pan=mono|c0=FR [translated]
 	' \
