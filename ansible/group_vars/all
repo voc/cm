@@ -8,6 +8,9 @@ event:
     hd: 'yes'
     sd: 'yes'
 
+voctomix:
+  version: "0.6"
+
 system:
   kernel_package: linux-image-4.7.10-040710-generic
   kernel_urls:
