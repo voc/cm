@@ -63,31 +63,23 @@
               dest="/opt/voctomix/scripts/ffmpeg-test-all-decklink-modes.sh"
               mode=0755 owner=root group=root
 
-  # - name: detect decklink-format
-  #   command: /opt/voctomix/scripts/ffmpeg-detect-mode-number.sh
-  #   when: item.1.type == 'decklink'
-  #   with_indexed_items: "{{ voctomix_sources }}"
-  #   register: decklink_modes
 
   - name: create decklink-source scripts
     template: src="voctomix-scripts/decklink-source.sh.j2"
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
-    when: item.1.type == 'decklink'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'decklink') | list }}"
 
   - name: create decklink-source systemd-units
     template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
-    when: item.1.type == 'decklink'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'decklink') | list }}"
 
   - name: enable decklink-source services
     service: name="{{ item.1.name }}-source.service"
              enabled=yes
-    when: item.1.type == 'decklink'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'decklink') | list }}"
 
 
 
@@ -96,21 +88,18 @@
     template: src="voctomix-scripts/grabber-source.sh.j2"
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
-    when: item.1.type == 'mjpeg'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'mjpeg') | list }}"
 
   - name: create grabber-source systemd-unit
     template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
-    when: item.1.type == 'mjpeg'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'mjpeg') | list }}"
 
   - name: enable grabber-source service
     service: name={{ item.1.name }}-source.service
              enabled=yes
-    when: item.1.type == 'mjpeg'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'mjpeg') | list }}"
 
 
 
@@ -119,21 +108,18 @@
     template: src="voctomix-scripts/rtmp-source.sh.j2"
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
-    when: item.1.type == 'rtmp'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'rtmp') | list }}"
 
   - name: create rtmp-source systemd-unit
     template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
-    when: item.1.type == 'rtmp'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'rtmp') | list }}"
 
   - name: enable rtmp-source service
     service: name={{ item.1.name }}-source.service
              enabled=yes
-    when: item.1.type == 'rtmp'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'rtmp') | list }}"
 
 
 
@@ -142,21 +128,18 @@
     template: src="voctomix-scripts/test-source.sh.j2"
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
               mode=0755 owner=root group=root
-    when: item.1.type == 'test'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'test') | list }}"
 
   - name: create test-source systemd-unit
     template: src="systemd-units/source.service.j2"
               dest="/etc/systemd/system/{{ item.1.name }}-source.service"
               mode=0644 owner=root group=root
-    when: item.1.type == 'test'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'test') | list }}"
 
   - name: enable test-source service
     service: name={{ item.1.name }}-source.service
              enabled=yes
-    when: item.1.type == 'test'
-    with_indexed_items: "{{ voctomix_sources | default([]) }}"
+    with_indexed_items: "{{ voctomix_sources | selectattr('type', 'equalto', 'test') | list }}"
 
 
 
