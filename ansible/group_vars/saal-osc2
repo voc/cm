@@ -16,10 +16,10 @@ voctomix_vaapi: false
 voctomix_sources:
   -
     name: cam1
-    type: decklink                         # decklink, mjpeg or test
-    plug: sdi
-    device: 'DeckLink Mini Recorder (1)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (1)'
+    type: decklink-internal
+    devicenumber: 0
+    video_connection: SDI
+    video_mode: "1080i50"
 #  -
 #    name: cam2
 #    type: decklink                         # decklink, mjpeg or test
@@ -27,8 +27,8 @@ voctomix_sources:
 #    device: 'DeckLink Mini Recorder (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
 #    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
   -
-    name: grabber
-    type: decklink                         # decklink, mjpeg or test
-    plug: hdmi                             # sdi or hdmi
-    device: 'DeckLink Mini Recorder (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-    mode: '1920x1080 at 24000/1000'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
+    name: slides
+    type: decklink-internal
+    devicenumber: 1
+    video_connection: HDMI
+    video_mode: "1080p24"
