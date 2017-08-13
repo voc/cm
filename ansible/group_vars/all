@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XYZ
-  name: Some Name
-  slogan: Some Slogan
+  acronym: froscon2017
+  name: FrOSCon 2017
+  slogan: FrOSCon 2017
   formats:
     hd: 'yes'
     sd: 'yes'
