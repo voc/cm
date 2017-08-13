@@ -19,6 +19,12 @@ video_mode={{ source.video_mode }}
 audio_connection=embedded
 {% endfor %}
 
+{% if voctomix.static_background_image %}
+[source.background]
+kind=img
+imguri=file:///opt/voc/share/bg.png
+{% endif %}
+
 [side-by-side-equal]
 utter=20
 atop=80

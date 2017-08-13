@@ -180,7 +180,7 @@
   - name: enable music-source service
     service: name=music-source.service
              enabled=yes
-    when: (voctomix_no_music is not defined) or (not voctomix_no_music)
+    when: voctomix.music
 
 
 
@@ -189,15 +189,18 @@
     template: src="voctomix-scripts/bgloop-source.sh.j2"
               dest="/opt/voctomix/scripts/bgloop-source.sh"
               mode=0755 owner=root group=root
+    when: not voctomix.static_background_image
 
   - name: create bgloop systemd-unit
     template: src="systemd-units/bgloop-source.service.j2"
               dest="/etc/systemd/system/bgloop.service"
               mode=0644 owner=root group=root
+    when: not voctomix.static_background_image
 
   - name: enable bgloop service
     service: name=bgloop.service
              enabled=yes
+    when: not voctomix.static_background_image
 
 
 
