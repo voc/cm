@@ -10,6 +10,15 @@ sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
 audiosource={{ voctomix_audio_source }}
 {% endif %}
 
+{% for source in voctomix_sources | selectattr("type", "equalto", "decklink-internal") %}
+[source.{{ source.name }}]
+kind=decklink
+devicenumber={{ source.devicenumber }}
+video_connection={{ source.video_connection | default('SDI') | upper }}
+video_mode={{ source.video_mode }}
+audio_connection=embedded
+{% endfor %}
+
 [side-by-side-equal]
 utter=20
 atop=80
