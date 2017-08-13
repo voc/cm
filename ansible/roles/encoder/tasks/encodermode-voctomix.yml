@@ -91,7 +91,7 @@
 
 
 
-    # grabber sources
+    # grabber sources # FIXME REMOVE
   - name: create grabber-source script
     template: src="voctomix-scripts/grabber-source.sh.j2"
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"
@@ -137,7 +137,7 @@
 
 
 
-    # test sources
+    # test sources # FIXME REMOVE
   - name: create test-source script
     template: src="voctomix-scripts/test-source.sh.j2"
               dest="/opt/voctomix/scripts/{{ item.1.name }}-source.sh"

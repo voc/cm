@@ -28,16 +28,9 @@ voctomix_sources:
 #    plug: sdi
 #    device: 'DeckLink Mini Recorder (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
 #    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
-#  -
-#    name: grabber
-#    type: mjpeg
-#    number: 42 # defaults to room-number
   -
     name: grabber
     type: decklink                         # decklink, mjpeg or test
     plug: hdmi                             # sdi or hdmi
     device: 'DeckLink Mini Recorder (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
     mode: '1920x1080 at 24000/1000'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (1)'
-#  -
-#    name: testsource
-#    type: test
