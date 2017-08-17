@@ -29,6 +29,14 @@ encoder6.lan.c3voc.de
 mixer7.lan.c3voc.de
 encoder7.lan.c3voc.de
 
+[saal-osc1]
+encoder-osc1.lan.c3voc.de
+mixer-osc1.lan.c3voc.de
+
+[saal-osc2]
+encoder-osc2.lan.c3voc.de
+mixer-osc2.lan.c3voc.de
+
 # Host types
 [transcoders]
 minion2.lan.c3voc.de transcode_rooms='[1, 4]'
@@ -43,6 +51,8 @@ encoder4.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/en
 encoder5.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder5.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder5.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder5-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder5-meta.password') }}"
 encoder6.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder6.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder6.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder6-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder6-meta.password') }}"
 encoder7.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder7.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder7.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder7-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder7-meta.password') }}"
+encoder-osc1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.password') }}"
+encoder-osc2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.password') }}"
 
 [mixers]
 mixer[1:7].lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}"
@@ -96,6 +106,8 @@ minion3.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mini
 minion4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion4.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion4.username') }}"
 minion5.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion5.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion5.username') }}"
 minion6.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion6.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion6.username') }}"
+minion-osc1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion-osc1.password') }}"
+minion-osc2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion-osc2.password') }}"
 
 speedy.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/speedy.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/speedy.username') }}"
 tweety.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/tweety.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/tweety.username') }}"
