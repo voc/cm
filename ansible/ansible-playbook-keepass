@@ -48,5 +48,5 @@ fi
 # Exec
 #
 echo "using keepass file: '${KEEPASS}'"
-exec env KEEPASS="${KEEPASS}" KEEPASS_PW="${KEEPASS_PW}" ansible-playbook $*
+exec env KEEPASS="${KEEPASS}" KEEPASS_PW="${KEEPASS_PW}" python `which ansible-playbook` $*
 
