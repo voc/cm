@@ -27,10 +27,10 @@
       - config
       - install
 
-  - name: activate custom acpi script for power button
-    lineinfile: dest=/etc/systemd/logind.conf
-                regexp='.*HandlePowerKey.*'
-                line='HandlePowerKey=ignore'
+  - name: disable logind handling of acpi events
+    replace: path=/etc/systemd/logind.conf
+             regexp='.*Handle(PowerKey|SuspendKey|HibernateKey|LidSwitch).*'
+             replace='Handle\1=ignore'
     register: logind_conf
     tags:
       - acpi
