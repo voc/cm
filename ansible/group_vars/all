@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: froscon2017
-  name: FrOSCon 2017
-  slogan: FrOSCon 2017
+  acronym: esp17
+  name: EuroSciPy 2017
+  slogan: EuroSciPy 2017
   formats:
     hd: 'yes'
     sd: 'yes'

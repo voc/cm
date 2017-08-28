@@ -1,6 +1,6 @@
 ---
 room_number: 41
-room_fahrplan_name: "HS 7"
+room_fahrplan_name: "Room F"
 grabber_aspect: 16x9
 grabbersource_url_path: stream.mjpg
 
