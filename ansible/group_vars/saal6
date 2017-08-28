@@ -23,6 +23,12 @@ voctomix_sources:
     devicenumber: 0
     video_connection: SDI
     video_mode: "1080i50"
+  -
+    name: cam2
+    type: decklink-internal
+    devicenumber: 1
+    video_connection: SDI
+    video_mode: "1080i50"
 #  -
 #    name: cam2
 #    type: decklink                         # decklink, mjpeg or test
