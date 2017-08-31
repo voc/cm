@@ -123,3 +123,7 @@ loadbalancer:
         - www.stream.c3voc.de
       is_cdn:
         - cdn.c3voc.de
+
+system:
+  type: pc
+
