@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XYZ
-  name: Some Name
-  slogan: Some Slogan
+  acronym: vcfb2017
+  name: Vintage Computing Festival Berlin 2017
+  slogan: 7. und 8. Oktober 2017, Deutsches Technikmuseum Berlin
   formats:
     hd: 'yes'
     sd: 'yes'
