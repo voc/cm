@@ -1,0 +1,13 @@
+---
+
+  - name: create check_system script
+    template: src="monitoring/check_system.sh.j2"
+              dest="/usr/local/sbin/check_system.sh"
+              mode=0750 owner=root group=root
+    tags:
+      - check_recording
+      - check_system
+
+  - cron: name="check system and send mqtt message"
+          minute="*/1" hour="*" month="*" day="*"
+          job="nice -n 19 /usr/local/sbin/check_system.sh >/dev/null"

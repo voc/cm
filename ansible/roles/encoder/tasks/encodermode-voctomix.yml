@@ -219,20 +219,34 @@
     service: name=recording-sink.service
              enabled=yes
 
-  # check recording
+  # check recording - called via check_system script (common role)
   - name: copy check_recording script
     copy: src="check_recording.pl"
           dest="/usr/local/bin/check_recording.pl"
           mode=0755 owner=root group=root
+    tags:
+      - check_recording
 
+  - file: src=/usr/local/sbin/check_system.sh
+        dest=/opt/voctomix/scripts/check_recording.sh
+        state=link
+    tags:
+      - check_recording
+
+  # legacy - check_system is per default deployed on all systems
+  # via common role
+  # TODO: please remove me some day
   - name: create recording check script
     template: src="voctomix-scripts/check_recording.sh.j2"
+              state=absent
               dest="/opt/voctomix/scripts/check_recording.sh"
               mode=0750 owner=root group=root
     tags:
       - check_recording
 
+
   - cron: name="check recording and send mqtt message"
+          state=absent
           minute="*/1" hour="*" month="*" day="*"
           job="nice -n 19 /opt/voctomix/scripts/check_recording.sh >/dev/null"
 
