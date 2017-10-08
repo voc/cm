@@ -1,4 +1,9 @@
 ---
+  - name: deploy raidstatus script on system with HW raid
+    copy: src=raidstatus
+          dest=/usr/local/sbin/raidstatus
+          owner=root group=root mode=0750
+    when: ansible_hostname | match('dellinger|storage')
 
   - name: create check_system script
     template: src="monitoring/check_system.sh.j2"
