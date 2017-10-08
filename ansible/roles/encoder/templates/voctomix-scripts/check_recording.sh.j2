@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# I'm sorry…
+
 LIMIT_DISK_USAGE=90
 LIMIT_LOAD=$(echo "$(grep processor /proc/cpuinfo | wc -l) * 2" | bc)
 
@@ -53,6 +55,13 @@ check_recording () {
   fi
 }
 
+# check_raid implements:
+#
+#  * mdadm status of existing md devices
+#  * megacli raid controller status via wrapper raidstatus
+#    (available e.g. on storage and dellinger)
+#  * megacli battery status via wrapper raidstatus
+#
 check_raid () {
   if [ -e "/proc/mdstat" ]; then
     cat /proc/mdstat | awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' | while read line; do
@@ -65,11 +74,76 @@ check_raid () {
       fi
     done
   fi
+
+  if [ -e "/usr/local/sbin/raidstatus" ]; then
+    raidstatus status | grep "State" | grep -q "Optimal"
+    if [ "1" -eq "$?" ]; then
+      send_mqtt_message "error" "system/raid/{{ ansible_hostname }}" "<red>RAID status is not 'Optimal': please run 'raidstatus status' for more information</red>"
+    fi
+
+    raidstatus bat | grep "Battery State" | grep -q "Optimal"
+    if [ "1" -eq "$?" ]; then
+      send_mqtt_message "error" "system/raid/{{ ansible_hostname }}" "<red>RAID battery status is not 'Optimal': please run 'raidstatus bat' for more information</red>"
+    fi
+
+  fi
 }
 
-check_recording
+# check_logs implements:
+#   It checks the kernel logs generated in the last 10 minutes according to the
+#   following errors:
+#
+#     * OOM situations
+#     * hanging tasks for more then 120 seconds
+#
+check_logs () {
+  kernel_log=$(journalctl _TRANSPORT=kernel --since "10 minutes ago")
+
+  task_blocked=$(echo $kernel_log | grep -q "blocked for more than")
+  if [ "0" -eq "$?" ]; then
+    send_mqtt_message "error" "system/kernel/{{ ansible_hostname }}" "<red>Task '$(echo $task_blocked | awk '{ print $8 }' | xargs | tr ' ' ',')' blocked for more than 120 seconds.</red>"
+  fi
+
+  oom_messages=$(echo $kernel_log | grep -q "Out of memory")
+  if [ "0" -eq "$?" ]; then
+    send_mqtt_message "error" "system/kernel/{{ ansible_hostname }}" "<red>OOM killer killed processes!</red>"
+  fi
+}
+
+
+# check_interfaces implements:
+#
+#   * full-duplex check
+#   * line speed test for at least 1gbit
+#
+# limitations:
+#
+#   * check only work on real hardware.
+#
+check_interfaces () {
+  for interface in $(grep "iface" /etc/network/interfaces | grep -vE "iface lo |#|br" | awk '{ print $2 }' | uniq); do
+    # we need at least 1gbit
+    if [ -e "/sys/class/net/${interface}/speed" ] && \
+         [ "$(cat /sys/class/net/${interface}/speed)" -lt "1000" ]; then
+      send_mqtt_message "error" "system/interface/${interface}/{{ ansible_hostname }}" "<red>${interface} has lass then 1Gbit/s</red>"
+    fi
+    # we need full-dumplex
+    if [ -e "/sys/class/net/${interface}/duplex" ] && \
+        ! [[ "$(cat /sys/class/net/${interface}/duplex)" =~ "full" ]]; then
+      send_mqtt_message "error" "system/interface/${interface}/{{ ansible_hostname }}" "<red>${interface} runs not in full-dumplex mode!</red>"
+    fi
+  done
+}
+
+
+if [[ "encoder" =~ "$(hostnamectl status --static)" ]]; then
+  check_recording
+fi
+
 check_load
 check_disk_space
 check_raid
+check_logs
+check_interfaces
 
 exit 0
