@@ -123,20 +123,18 @@ check_logs () {
 check_interfaces () {
   for interface in $(grep "iface" /etc/network/interfaces | grep -vE "iface lo |#|br" | awk '{ print $2 }' | uniq); do
     # we need at least 1gbit
-    if [ -e "/sys/class/net/${interface}/speed" ] && \
-         [ "$(cat /sys/class/net/${interface}/speed)" -lt "1000" ]; then
-      send_mqtt_message "error" "system/interface/${interface}/{{ ansible_hostname }}" "<red>${interface} has lass then 1Gbit/s</red>"
+    if [ -e "/sys/class/net/${interface}/speed" ] && [ "$(cat /sys/class/net/${interface}/speed)" -lt "1000" ]; then
+      send_mqtt_message "error" "system/interface/${interface}/dellinger" "<red>${interface} has lass then 1Gbit/s</red>"
     fi
     # we need full-dumplex
-    if [ -e "/sys/class/net/${interface}/duplex" ] && \
-        ! [[ "$(cat /sys/class/net/${interface}/duplex)" =~ "full" ]]; then
-      send_mqtt_message "error" "system/interface/${interface}/{{ ansible_hostname }}" "<red>${interface} runs not in full-dumplex mode!</red>"
+    if [ -e "/sys/class/net/${interface}/duplex" ] && [ "$(grep -q "full" /sys/class/net/${interface}/duplex; echo $?)" -eq "1" ]; then
+      send_mqtt_message "error" "system/interface/${interface}/dellinger" "<red>${interface} runs not in full-dumplex mode!</red>"
     fi
   done
 }
 
 
-if [[ "encoder" =~ "$(hostnamectl status --static)" ]]; then
+if [ "0" -eq "$(hostnamectl status --static | grep -q "encoder"; echo $?)" ]; then
   check_recording
 fi
 
