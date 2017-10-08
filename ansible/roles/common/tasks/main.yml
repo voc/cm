@@ -23,7 +23,9 @@
   - include: user.yml user={{ users }}
     tags: user
   - include: monitoring.yml
-    tags: monitoring
+    tags: 
+      - monitoring
+      - check_system
 
 
 
