@@ -65,8 +65,8 @@ audio-pi3.lan.c3voc.de stream=a3
 # Local RZ
 [servers]
 mng.ber.c3voc.de
-node.ber.c3voc.de
-node.dus.c3voc.de
+ber.c3voc.de
+dus.c3voc.de
 live.ber.c3voc.de
 live.self.c3voc.de
 mngslave.dus.c3voc.de
@@ -74,7 +74,7 @@ testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 node.lan.c3voc.de
 storage.lan.c3voc.de
 usa.lan.c3voc.de
-sun.lan.c3voc.de
+dellinger.alb.c3voc.de
 deskjet.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/deskjet.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/deskjet.username') }}"
 # VMs
 monitoring.lan.c3voc.de
