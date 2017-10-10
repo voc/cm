@@ -1,8 +1,7 @@
 ---
-room_number: 6
-room_fahrplan_name: C01
+room_number: 41
+room_fahrplan_name: B07
 grabber_aspect: 16x9
-grabbersource_url_path: stream.mjpg
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -27,11 +26,11 @@ voctomix_sources:
 #    name: cam2
 #    type: decklink                         # decklink, mjpeg or test
 #    plug: sdi
-#    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-#    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
+#    device: 'DeckLink Mini Recorder (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
+#    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
   -
     name: slides
     type: decklink-internal
-    devicenumber: 2
+    devicenumber: 1
     video_connection: HDMI
     video_mode: "1080p24"
