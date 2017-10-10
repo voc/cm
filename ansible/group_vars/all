@@ -15,7 +15,7 @@ voctomix:
   #    artwork/{{ event.acronym }}/bg.png
   # or artwork/{{ event.acronym }}/saal{{ room_number }}/bg.png
   # and set the next variable to true
-  static_background_image: false
+  static_background_image: true
   music: true
 
 system:
