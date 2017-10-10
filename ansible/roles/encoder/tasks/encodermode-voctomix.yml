@@ -237,10 +237,8 @@
   # via common role
   # TODO: please remove me some day
   - name: create recording check script
-    template: src="voctomix-scripts/check_recording.sh.j2"
-              state=absent
-              dest="/opt/voctomix/scripts/check_recording.sh"
-              mode=0750 owner=root group=root
+    file: state=absent
+          dest="/opt/voctomix/scripts/check_recording.sh"
     tags:
       - check_recording
 
