@@ -154,9 +154,9 @@ check_interfaces () {
 # send system uptime in every run
 ping () {
   hostname="$(hostname -f)"
-  uptime="$(uptime  | awk '{ print $1 }')"
-  mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"uptime\": \"${uptime}\", \"interval\": \"60\" }"
-}
+  uptime="$(cat /proc/uptime | awk '{ print $1 }')"
+  mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
+} 
 
 # general checks
 ping
