@@ -29,9 +29,15 @@ voctomix_sources:
 #    plug: sdi
 #    device: 'DeckLink SDI (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
 #    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink SDI (2)'
+#  -
+#    name: slides
+#    type: decklink-internal
+#    devicenumber: 2
+#    video_connection: HDMI
+#    video_mode: "1080p24"
   -
     name: slides
     type: decklink-internal
     devicenumber: 2
-    video_connection: HDMI
-    video_mode: "1080p24"
+    video_connection: SDI
+    video_mode: "1080i50"
