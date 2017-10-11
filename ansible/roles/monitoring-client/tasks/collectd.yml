@@ -2,6 +2,12 @@
   ############
   # collectd #
   ############
+  # libvirtd
+  - shell: "command -v libvirtd"
+    register: libvirtd_bin
+    changed_when: false
+    ignore_errors: yes
+
   - name: install collectd perl packages
     apt: name={{ item }} state=latest
     with_items:
@@ -94,3 +100,10 @@
     tags:
       - install
       - config
+
+  - name: install snmp stuff
+    apt: name={{ item }} state=present
+    with_items:
+      - snmp
+      - snmp-mibs-downloader
+    when: ansible_hostname | match('mixer\d+')

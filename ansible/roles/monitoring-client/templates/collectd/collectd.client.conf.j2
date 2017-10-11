@@ -141,5 +141,25 @@ LoadPlugin dbi
 </Plugin>
 {% endif %}
 
+{% if ansible_hostname | match('mixer\d+')  %}
+LoadPlugin "snmp"
+<Plugin snmp>
+  <Data "if_traffic">
+    Type "if_octets"
+    Table true
+    Instance "IF-MIB::ifDescr"
+    Values "IF-MIB::ifInOctets" "IF-MIB::ifOutOctets"
+  </Data>
+
+  <Host "roomswitch{{ room_number  }}">
+    Address "10.73.{{ room_number }}.200"
+    Version 1
+    Community "public"
+    Collect "if_traffic"
+    Interval 120
+  </Host>
+</Plugin>
+{% endif %}
+
 Include "/etc/collectd/filters.conf"
 Include "/etc/collectd/thresholds.conf"
