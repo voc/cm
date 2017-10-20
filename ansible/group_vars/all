@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XYZ
-  name: Some Name
-  slogan: Some Slogan
+  acronym: asg2017
+  name: All Systems Go!
+  slogan: 
   formats:
     hd: 'yes'
     sd: 'yes'
