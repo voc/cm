@@ -163,6 +163,7 @@ users:
   - { name: 'arl4223', state: 'absent' } # NOC
   - { name: 'holger', state: 'absent' } # Debian
   - { name: 'zuntrax', state: 'present' } # SHA
+  - { name: 'jayjay', state: 'present' } 
   - { name: 'cardno', state: 'absent' } # cristoph fcmc
   - { name: 'voc', state: 'present' }
 
