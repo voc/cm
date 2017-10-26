@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XYZ
-  name: Some Name
-  slogan: Some Slogan
+  acronym: subscribe9
+  name: SUBSCRIBE 9
+  slogan: Konferenz und Workshop für Podcasting
   formats:
     hd: 'yes'
     sd: 'yes'
