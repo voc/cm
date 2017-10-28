@@ -1,6 +1,6 @@
 ---
 room_number: 2
-room_fahrplan_name: Saal2
+room_fahrplan_name: A2
 grabber_aspect: 16x9
 
 # hd-direct, hd-voctomix
@@ -31,5 +31,5 @@ voctomix_sources:
     name: slides
     type: decklink-internal
     devicenumber: 1
-    video_connection: HDMI
+    video_connection: SDI
     video_mode: "1080p24"
