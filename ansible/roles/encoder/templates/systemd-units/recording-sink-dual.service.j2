@@ -1,0 +1,16 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = voctomix recording-sink mix + slides
+After = voctocore.service
+Requires = voctocore.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix/scripts/recording-sink-dual.sh
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = voctocore.service

@@ -38,6 +38,7 @@
       - /opt/voctomix/scripts/
       - /opt/voctomix/release/
       - /video/capture/{{ event.acronym }}
+      - /video/capture-dual/{{ event.acronym }}
       - /video/encoded/{{ event.acronym }}
       - /video/tmp/{{ event.acronym }}
       - /video/intros/{{ event.acronym }}
@@ -218,6 +219,21 @@
   - name: enable recording service
     service: name=recording-sink.service
              enabled=yes
+
+    # recording sink
+  - name: create dual-mode recording script
+    template: src="voctomix-scripts/recording-sink-dual.sh.j2"
+              dest="/opt/voctomix/scripts/recording-sink-dual.sh"
+              mode=0750 owner=root group=root
+
+  - name: create recording systemd-unit
+    template: src="systemd-units/recording-sink-dual.service.j2"
+              dest="/etc/systemd/system/recording-sink-dual.service"
+              mode=0644 owner=root group=root
+
+  - name: disable dual-mode recording service
+    service: name=recording-sink-dual.service
+             enabled=no
 
   # check recording - called via check_system script (common role)
   - name: copy check_recording script

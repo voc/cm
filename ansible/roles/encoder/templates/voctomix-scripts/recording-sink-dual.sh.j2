@@ -1,0 +1,23 @@
+#!/bin/sh
+mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording (dual-mode) started…\"}" &
+
+ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
+	-i tcp://localhost:11000?timeout=3000 \
+	-i tcp://localhost:{{ 13000 + (voctomix_sources | length) - 1 }}?timeout=3000 \
+	-aspect 16:9 \
+	-map 0:v -c:v:0 mpeg2video -pix_fmt:v:0 yuv420p -qscale:v:0 2 -qmin:v:0 2 -qmax:v:0 7 -keyint_min:v:0 0 -bf:v:0 0 -g:v:0 0 -intra:v:0 -maxrate:v:0 90M \
+	-map 1:v -c:v:1 mpeg2video -pix_fmt:v:1 yuv420p -qscale:v:1 2 -qmin:v:1 2 -qmax:v:1 7 -keyint_min:v:1 0 -bf:v:1 0 -g:v:1 0 -intra:v:1 -maxrate:v:1 90M \
+	-c:a mp2 -b:a 192k -ac:a 1 -ar:a 48000 \
+	-map 0:a -filter:a:0 pan=mono:c0=FL \
+	-map 0:a -filter:a:1 pan=mono:c0=FR \
+	-flags +global_header -flags +ilme+ildct \
+	-f segment -segment_time 180 -segment_format mpegts /video/capture-dual/{{ event.acronym }}/{{ room_fahrplan_name | lower | replace(' ', '') }}-%t-%05d.ts
+
+ffmpeg_error_code=$?
+if [ "0" -ne "$ffmpeg_error_code" ]; then
+  mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"error\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording (dual-mode) failed!\"}" &
+else
+  mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"warn\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording (dual-mode) <red>stopped</red>! (ffmpeg error code ${ffmpeg_error_code})\"}" &
+fi
+
+exit $ffmpeg_error_code
