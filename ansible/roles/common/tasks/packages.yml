@@ -75,3 +75,4 @@
      - dvsink-voc
      - bmdtools
      - check-mk-agent
+     - munin-node
