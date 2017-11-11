@@ -4,3 +4,8 @@
 # when set, causes the 30-query-hostname script to always ask for the
 # hostname, even if no SSH session was detected.
 ALWAYS_QUERY_HOSTNAME=true
+
+# USE_FQDN
+# when set, causes the 30-query-hostname script to ask for the fully-qualified
+# hostname, rather than the short name
+#USE_FQDN=true
