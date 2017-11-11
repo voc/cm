@@ -29,5 +29,10 @@
   - name: copy sudoers file
     copy: src="jenkins.sudo" dest="/etc/sudoers.d/jenkins" mode="440"
 
+  - name: copy jenkins defaults
+    copy: src="jenkins.defaults" dest="/etc/default/jenkins" mode="644"
+    notify:
+      - restart jenkins
+
   - name: create /srv/repository
     file: dest=/srv/repository state=directory owner=jenkins

@@ -148,6 +148,7 @@ users:
   - { name: 'fxkr', state: 'present' }
   - { name: 'ike', state: 'present' }
   - { name: 'jwacalex', state: 'present' }
+  - { name: 'lhampe', state: 'present' }
   - { name: 'masterbase', state: 'present' }
   - { name: 'mazdermind', state: 'present' }
   - { name: 'meise', state: 'present' }

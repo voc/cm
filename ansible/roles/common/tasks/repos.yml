@@ -21,7 +21,7 @@
      allow_unauthenticated=true
    with_items:
     - deb-multimedia-keyring
-   when: ansible_distribution_release == 'stretch' and system.type == 'pi'
+   when: system.type == 'pi'
    tags: packages
 
  # stretch specific
@@ -36,34 +36,34 @@
 
  - name: setup the VOC debian repo for stretch
    apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=present
-   when: ansible_distribution_release == 'stretch' and system.type == 'pc'
+   when: system.type == 'pc'
 
  - name: setup the debian backports repo for stretch
    apt_repository: repo="deb http://ftp.de.debian.org/debian stretch-backports main"
-   when: ansible_distribution_release == 'stretch' and system.type == 'pc'
+   when: system.type == 'pc'
 
  - name: ensure that the non-free suite is enabled for stretch
    apt_repository: repo="deb http://ftp.de.debian.org/debian stretch main contrib non-free"
-   when: ansible_distribution_release == 'stretch' and system.type == 'pc'
+   when: system.type == 'pc'
 
  - name: ensure that security updates enabled for stretch
    apt_repository: repo="deb http://security.debian.org/ stretch/updates main contrib non-free"
-   when: ansible_distribution_release == 'stretch' and system.type == 'pc'
+   when: system.type == 'pc'
 
  - name: setup the raspbian debian repo for stretch
    apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi" state=present
-   when: ansible_distribution_release == 'stretch' and system.type == 'pi'
+   when: system.type == 'pi'
 
  - name: setup the raspbian debian repo for stretch
    apt_repository: repo="deb http://archive.raspberrypi.org/debian/ stretch main ui" state=present
-   when: ansible_distribution_release == 'stretch' and system.type == 'pi'
+   when: system.type == 'pi'
 
  - name: setup the armhf debian multimedia repo for stretch
    apt_repository: repo="deb http://deb-multimedia.org stable main non-free" state=present
-   when: ansible_distribution_release == 'stretch' and system.type == 'pi'
+   when: system.type == 'pi'
 
  - name: pin multimedia packages for arm ffmpeg*
    template: src="apt-pin-ffmpeg-multimedia.pref.j2"
              dest="/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref"
              mode=0644 owner=root group=root
-   when: ansible_distribution_release == 'stretch' and system.type == 'pi'
+   when: system.type == 'pi'

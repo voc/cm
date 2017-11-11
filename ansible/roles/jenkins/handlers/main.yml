@@ -2,3 +2,5 @@
   - name: restart nginx
     service: name=nginx state=restarted
 
+  - name: restart jenkins
+    service: name=jenkins state=restarted
