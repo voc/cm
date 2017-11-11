@@ -81,6 +81,7 @@ server {
     fastcgi_cache_valid 200 5m;
     fastcgi_cache_methods GET HEAD;
     add_header X-Cache "$upstream_cache_status origin";
+    add_header Access-Control-Allow-Origin "*";
   }
 
   location / {
