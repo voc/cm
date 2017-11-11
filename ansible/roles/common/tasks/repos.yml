@@ -34,8 +34,12 @@
     - ftp_debian_org_debian.list
     - raspi.list
 
+ - name: remove the VOC debian repo for jessie
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=absent
+   when: system.type == 'pc'
+
  - name: setup the VOC debian repo for stretch
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=present
+   apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
    when: system.type == 'pc'
 
  - name: setup the debian backports repo for stretch
