@@ -11,10 +11,14 @@
       - linux_kernel_installed|failed and kernel_urls is defined
     with_items: "{{ system.kernel_urls }}"
 
-  - name: install linux specific kernel {{ system.kernel_package }}
+  - name: install linux specific kernel '{{ system.kernel_package }}'
     apt: name={{ item }} state=present
     with_items:
       - "{{ system.kernel_package }}"
       - "{{ system.kernel_package | regex_replace('image', 'headers') }}"
     when:
       - linux_kernel_installed|failed and kernel_urls is undefined
+
+  - name: install microcode package for cpu '{{ ansible_processor[2] }}'
+    apt: name=intel-microcode state=present
+    when: ansible_virtualization_role == "host" and ansible_processor[2] | regex_search('Intel')
