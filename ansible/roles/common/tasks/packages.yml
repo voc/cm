@@ -74,3 +74,4 @@
      - dvsource-voc
      - dvsink-voc
      - bmdtools
+     - check-mk-agent

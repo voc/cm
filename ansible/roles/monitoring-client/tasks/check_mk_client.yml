@@ -2,9 +2,12 @@
   ###################
   # check_mk-client #
   ###################
+  - name: remove check-mk-agent
+    apt:  name=check-mk-agent state=absent
+
   # Creating files and directories
   - name: create /etc/check_mk directory
-    file: state=directory recurse=yes
+    file: state=absent recurse=yes
           dest=/etc/check_mk
           owner=root group=root
 
@@ -12,28 +15,32 @@
     copy: dest=/etc/check_mk/mrpe.cfg force=no
           content='# managed by ansible\n'
           owner=root group=root mode=0644
+          state=absent
 
   - name: add run-agent.sh script used as check-mk shell
     copy: dest=/usr/lib/check_mk_agent/run-agent.sh
           src=check_mk/run-agent.sh
           owner=root group=root mode=0755
+          state=absent
 
   - name: add modified check_mk_agent binary
     copy: dest=/usr/bin/check_mk_agent
           src=check_mk/check_mk_agent force=yes
           owner=root group=root mode=0755
+          state=absent
 
   # Manage users
   - name: create check-mk user
     user: name=check-mk groups=ssh
           home=/usr/lib/check_mk_agent
           shell=/usr/lib/check_mk_agent/run-agent.sh
+          state=absent
 
   - name: add SSH key to check-mk user
-    authorized_key: user=check-mk manage_dir=true state=present
+    authorized_key: user=check-mk manage_dir=true state=absent
                     key="{{ lookup('file', 'check_mk/authorized_keys') }}"
 
   # Adding sudo permissions
   - name: adding sudo permissions for check-mk user
-    lineinfile: "dest=/etc/sudoers state=present regexp='^check-mk'
+    lineinfile: "dest=/etc/sudoers state=absent regexp='^check-mk'
                 line='check-mk ALL=(ALL) NOPASSWD: /usr/bin/check_mk_agent'"
