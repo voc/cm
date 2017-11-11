@@ -2,7 +2,6 @@
  - name: install additional packages for encoder role
    apt: name={{ item }} state=latest
    with_items:
-    - sdi-script
     - nginx-rtmp
     - icecast2
     - samba
