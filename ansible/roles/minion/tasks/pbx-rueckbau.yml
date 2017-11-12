@@ -1,0 +1,28 @@
+# todo remove once pbx on minions is long past
+
+# remove not needed packages
+- name: remove not needed packages
+  apt: name={{ item }} state=absent purge=yes
+  with_items:
+    - pbx
+
+- name: remove yate config
+  file: dest=/etc/yate/regfile.conf
+        state=absent
+
+- name: remove sip ip
+  file: dest=/etc/yate/ysipchan.conf
+        state=absent
+
+- name: remove default cfg
+  file: dest=/etc/default/yate
+        state=absent
+
+- name: remove systemd unit
+  file: dest=/etc/systemd/system/yate.service
+        state=absent
+
+- name: reload systemd daemon
+  command: systemctl daemon-reload
+  changed_when: false
+

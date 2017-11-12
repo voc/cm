@@ -25,6 +25,14 @@
   - name: create /opt/crs/fuse
     file: dest=/opt/crs/fuse state=directory
 
+  - stat: path=/opt/crs/tools/tracker3.0/.svn
+    register: tracker_svn_checkout
+
+  - name: remove tracker svn checkout if present
+    file: dest=/opt/crs/tools/tracker3.0
+          state=absent
+    when: tracker_svn_checkout.stat.exists == True
+
   - name: checkout tools/tracker3.0
     git: repo=https://github.com/crs-tools/crs-scripts
                 dest=/opt/crs/tools/tracker3.0

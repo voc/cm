@@ -55,7 +55,7 @@ encoder-osc1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-group
 encoder-osc2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.password') }}"
 
 [mixers]
-mixer[1:7].lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}"
+mixer[1:6].lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}"
 
 [audio-pis]
 audio-pi1.lan.c3voc.de stream=a1

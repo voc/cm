@@ -3,7 +3,7 @@
     apt_key: data="{{ lookup('file', 'yate/nightly-repo.key') }}" state=present
 
   - name: setup the yate-nightly repo
-    apt_repository: repo="deb http://debian.ctm.ru/nightly/ stable main non-free" state=present
+    apt_repository: repo="deb http://debian.ctm.ru/nightly/ stretch main non-free" state=present
 
   - name: install packages needed to be a pbx server
     apt: name={{ item }} state=present update_cache=yes
