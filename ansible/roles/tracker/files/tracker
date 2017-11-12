@@ -1,0 +1,9 @@
+/srv/www/cccongress/log/application.log {
+        daily
+        missingok
+        rotate 21
+        compress
+        delaycompress
+        notifempty
+}
+

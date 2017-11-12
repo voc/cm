@@ -12,6 +12,7 @@
       - libxslt1.1
       - libintl-perl
       - php-xdiff
+      - autopostgresqlbackup
 
   - name: git checkout tracker repo
     git: repo=https://github.com/crs-tools/tracker
@@ -20,3 +21,7 @@
       - install
       - pull
       - checkout
+
+  - name: create logrotate config
+    copy: src=tracker dest=/etc/logrotate.d
+
