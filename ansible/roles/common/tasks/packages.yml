@@ -39,7 +39,6 @@
     - python
     - ruby
     - ruby-dev
-    - inotail
     - libdbi1
     - libdbd-sqlite3
     - ethtool
@@ -75,3 +74,5 @@
      - dvsource-voc
      - dvsink-voc
      - bmdtools
+     - check-mk-agent
+     - munin-node

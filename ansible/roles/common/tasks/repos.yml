@@ -21,10 +21,10 @@
      allow_unauthenticated=true
    with_items:
     - deb-multimedia-keyring
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
+   when: system.type == 'pi'
    tags: packages
 
- # jessie specific
+ # stretch specific
  - name: remove /etc/apt/sources.list
    file: dest=/etc/apt/sources.list state=absent
 
@@ -34,36 +34,43 @@
     - ftp_debian_org_debian.list
     - raspi.list
 
- - name: setup the VOC debian repo for jessie
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=present
-   when: ansible_distribution_release == 'jessie' and system.type == 'pc'
+ - name: setup the debian backports repo for stretch
+   apt_repository: repo="deb http://ftp.de.debian.org/debian stretch-backports main"
+   when: system.type == 'pc'
 
- - name: setup the debian backports repo for jessie
-   apt_repository: repo="deb http://ftp.de.debian.org/debian jessie-backports main"
-   when: ansible_distribution_release == 'jessie' and system.type == 'pc'
+ - name: ensure that the non-free suite is enabled for stretch
+   apt_repository: repo="deb http://ftp.de.debian.org/debian stretch main contrib non-free"
+   when: system.type == 'pc'
 
- - name: ensure that the non-free suite is enabled for jessie
-   apt_repository: repo="deb http://ftp.de.debian.org/debian jessie main contrib non-free"
-   when: ansible_distribution_release == 'jessie' and system.type == 'pc'
+ - name: ensure that security updates enabled for stretch
+   apt_repository: repo="deb http://security.debian.org/ stretch/updates main contrib non-free"
+   when: system.type == 'pc'
 
- - name: ensure that security updates enabled for jessie
-   apt_repository: repo="deb http://security.debian.org/ jessie/updates main contrib non-free"
-   when: ansible_distribution_release == 'jessie' and system.type == 'pc'
+ - name: setup the raspbian debian repo for stretch
+   apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi" state=present
+   when: system.type == 'pi'
 
- - name: setup the raspbian debian repo for jessie
-   apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi" state=present
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
+ - name: setup the raspbian debian repo for stretch
+   apt_repository: repo="deb http://archive.raspberrypi.org/debian/ stretch main ui" state=present
+   when: system.type == 'pi'
 
- - name: setup the raspbian debian repo for jessie
-   apt_repository: repo="deb http://archive.raspberrypi.org/debian/ jessie main ui" state=present
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
-
- - name: setup the armhf debian multimedia repo for jessie
+ - name: setup the armhf debian multimedia repo for stretch
    apt_repository: repo="deb http://deb-multimedia.org stable main non-free" state=present
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
+   when: system.type == 'pi'
+
+ - name: make sure apt-transport-https is installed to read our https repo
+   apt: name=apt-transport-https state=latest update_cache=yes
+
+ - name: remove the VOC debian repo for jessie
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=absent
+   when: system.type == 'pc'
+
+ - name: setup the VOC debian repo for stretch
+   apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
+   when: system.type == 'pc'
 
  - name: pin multimedia packages for arm ffmpeg*
    template: src="apt-pin-ffmpeg-multimedia.pref.j2"
              dest="/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref"
              mode=0644 owner=root group=root
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
+   when: system.type == 'pi'

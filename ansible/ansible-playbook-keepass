@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export ANSIBLE_NOCOWS=1
+
 #
 # Read config, use env or ask for keepass file
 # and store it if entered. 

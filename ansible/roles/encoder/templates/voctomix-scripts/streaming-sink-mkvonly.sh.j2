@@ -32,7 +32,7 @@ ffmpeg -y -nostdin -hide_banner \
 	-g:v:1 50 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 5M \
 	\
 {# Shared audio settings #}
-	-c:a libfdk_aac -b:a 192k -ar 48000 -ac 1 \
+	-c:a aac -b:a 192k -ar 48000 -ac 1 \
 	\
 {# Encode audio #}
 	-map [native] -metadata:s:a:0 title="Native" \

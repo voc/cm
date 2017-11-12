@@ -80,7 +80,7 @@ LoadPlugin "logfile"
   </Module>
 
 {% endif %}
-{% if php is not defined or php != 'yes' %}
+{%  if nginx is defined and nginx == 'yes' %}
   Import NginxHls
   Import NginxDash
 {% endif %}
@@ -160,6 +160,3 @@ LoadPlugin "snmp"
   </Host>
 </Plugin>
 {% endif %}
-
-Include "/etc/collectd/filters.conf"
-Include "/etc/collectd/thresholds.conf"

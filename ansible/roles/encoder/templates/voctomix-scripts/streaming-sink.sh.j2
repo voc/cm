@@ -21,6 +21,6 @@ ffmpeg -y -nostdin \
 	-profile:v:0 main -g:v:0 25 \
 	-preset:v:0 veryfast \
 	\
-	-ac 1 -c:a libfdk_aac -b:a 96k -ar 44100 \
+	-ac 1 -c:a aac -b:a 96k -ar 44100 \
 	\
 	-y -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_{{ item }}

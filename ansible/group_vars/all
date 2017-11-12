@@ -1,15 +1,15 @@
 ---
 # Event config
 event:
-  acronym: qtws2017
-  name: Qt World Summit 2017
+  acronym: xyz
+  name: XYZ
   slogan: ""
   formats:
     hd: 'yes'
     sd: 'yes'
 
 voctomix:
-  version: "0.6"
+  version: "1.0RC1"
 
   # to use a static bg-image place image in
   #    artwork/{{ event.acronym }}/bg.png
@@ -19,12 +19,12 @@ voctomix:
   music: true
 
 system:
-  kernel_package: linux-image-4.7.10-040710-generic
-  kernel_urls:
-    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-image-4.7.10-040710-generic_4.7.10-040710.201610220847_amd64.deb
-    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710_4.7.10-040710.201610220847_all.deb
-    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710-generic_4.7.10-040710.201610220847_amd64.deb
   type: pc
+  kernel_package: linux-image-4.13.12-041312-generic
+#  kernel_urls:
+#    - http://pkg.c3voc.de/pool/main/l/linux/linux-image-4.13.12-041312-generic_4.13.12-041312.201711080535_amd64.deb
+#    - http://pkg.c3voc.de/pool/main/l/linux/linux-headers-4.13.12-041312_4.13.12-041312.201711080535_all.deb
+#    - http://pkg.c3voc.de/pool/main/l/linux/linux-headers-4.13.12-041312-generic_4.13.12-041312.201711080535_amd64.deb
 
 use_lan_dns: true
 

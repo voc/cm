@@ -1,0 +1,4 @@
+---
+  - include: packages.yml
+  - include: dehydrated.yml vhost=build.ber.c3voc.de
+  - include: dehydrated.yml vhost=pkg.c3voc.de

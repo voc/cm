@@ -23,7 +23,7 @@
       - "{{ additional_users }}"
     when: not item.state == 'absent'
 
-  # addiotional groups
+  # additional groups
   - name: append libvirt and kvm group to user
     user: name={{ item.name }} append=yes groups=libvirt,kvm
     with_items: 
@@ -37,6 +37,7 @@
     with_items: 
       - "{{ users }}"
       - "{{ additional_users }}"
+    when: item.state != 'absent'
 
   # install shell stuff
   - name: install zshrc

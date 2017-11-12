@@ -2,8 +2,8 @@
  - name: install additional packages for encoder role
    apt: name={{ item }} state=latest
    with_items:
-    - sdi-script
-    - nginx-rtmp
+    - nginx
+    - libnginx-mod-rtmp
     - icecast2
     - samba
     - gstreamer1.0-plugins-bad
