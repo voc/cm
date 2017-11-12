@@ -1,5 +1,5 @@
 #!/bin/sh
-mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording started…\"}" &
+mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording started…\"}" &
 
 ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
 	-i tcp://localhost:11000?timeout=3000 \
@@ -13,9 +13,9 @@ ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
 
 ffmpeg_error_code=$?
 if [ "0" -ne "$ffmpeg_error_code" ]; then
-  mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"error\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording failed!\"}" &
+  mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"error\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording failed!\"}" &
 else
-  mosquitto_pub --insecure -h "{{ mqtt.server }}" -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"warn\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording <red>stopped</red>! (ffmpeg error code ${ffmpeg_error_code})\"}" &
+  mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"warn\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording <red>stopped</red>! (ffmpeg error code ${ffmpeg_error_code})\"}" &
 fi
 
 exit $ffmpeg_error_code
