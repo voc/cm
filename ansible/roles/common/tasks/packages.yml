@@ -31,7 +31,6 @@
     - debian-goodies
     - apt-dater-host
     - dnsutils
-    - subversion
     - dstat
     - pv
     - lm-sensors
