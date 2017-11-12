@@ -6,6 +6,16 @@
      - repo
      - gpg
 
+ - name: remove the VOC debian mng.berg repo before any updates are done since it is unavailable now pkg.c3voc is new
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ {{ item }} main" state=absent
+   when: system.type == 'pc'
+   with_items:
+    - jessie
+    - stretch
+
+ - name: remove yate nightly repo if present since it's key is not supported by stretch atm dsa1024 
+   apt_repository: repo="deb http://debian.ctm.ru/nightly/ stable main non-free" state=absent
+
  - name: ensure that the debian keyrings are present
    apt: name={{ item }} state=present update_cache=yes
    with_items:
@@ -60,10 +70,6 @@
 
  - name: make sure apt-transport-https is installed to read our https repo
    apt: name=apt-transport-https state=latest update_cache=yes
-
- - name: remove the VOC debian repo for jessie
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=absent
-   when: system.type == 'pc'
 
  - name: setup the VOC debian repo for stretch
    apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
