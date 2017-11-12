@@ -11,9 +11,10 @@
       - curl
       - libxslt1.1
       - libintl-perl
+      - php-xdiff
 
   - name: git checkout tracker repo
-    git: repo=http://git.fem.tu-ilmenau.de/cccongress.git
+    git: repo=https://github.com/crs-tools/tracker
          dest=/srv/www/cccongress
     tags:
       - install
