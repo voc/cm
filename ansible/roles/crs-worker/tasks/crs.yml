@@ -26,16 +26,8 @@
     file: dest=/opt/crs/fuse state=directory
 
   - name: checkout tools/tracker3.0
-    subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/tracker3.0/
+    git: repo=https://github.com/crs-tools/crs-scripts
                 dest=/opt/crs/tools/tracker3.0
-                force=yes
-    tags:
-      - checkout
-      - pull
-
-  - name: checkout tools/job-control/
-    subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/job-control/
-                dest=/opt/crs/tools/job-control
                 force=yes
     tags:
       - checkout
