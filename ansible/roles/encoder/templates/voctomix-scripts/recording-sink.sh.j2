@@ -2,9 +2,9 @@
 mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording started…\"}" &
 
 ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
-	-thread_queue_size 32 -i tcp://localhost:11000?timeout=3000 \
+	-thread_queue_size 512 -i tcp://localhost:11000?timeout=3000 \
 {% if voctomix.parallel_slide_recording %}
-	-thread_queue_size 32 -i tcp://localhost:13001?timeout=3000 \
+	-thread_queue_size 512 -i tcp://localhost:13001?timeout=3000 \
 {% endif %}
 	-aspect 16:9 \
 	-map 0:v -c:v:0 mpeg2video -pix_fmt:v:0 yuv420p -qscale:v:0 2 -qmin:v:0 2 -qmax:v:0 7 -keyint_min:v:0 0 -bf:v:0 0 -g:v:0 0 -intra:v:0 -maxrate:v:0 90M \
