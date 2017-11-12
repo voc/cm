@@ -17,13 +17,23 @@ devicenumber={{ source.devicenumber }}
 video_connection={{ source.video_connection | default('SDI') | upper }}
 video_mode={{ source.video_mode }}
 audio_connection=embedded
+
 {% endfor %}
 
 {% if voctomix.static_background_image %}
 [source.background]
 kind=img
 imguri=file:///opt/voc/share/bg.png
+
+{% else %}
+[source.background]
+deinterlace = assume-progressive
 {% endif %}
+
+[source.stream-blanker-pause]
+deinterlace = assume-progressive
+
+
 
 [side-by-side-equal]
 gutter=20
