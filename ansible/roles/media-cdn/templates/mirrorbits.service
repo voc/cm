@@ -1,0 +1,16 @@
+[Unit]
+Description=mirrorbits daemon
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/mirrorbits
+User=mirrorbits
+ExecStart=/usr/local/bin/mirrorbits -config /etc/mirrorbits.conf -p /var/run/mirrorbits/mirrorbits.pid -D
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=mirrorbits
+
+[Install]
+WantedBy=default.target

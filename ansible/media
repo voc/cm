@@ -1,6 +1,8 @@
 [cdn]
-koeln.media.ccc.de
-
+berlin-ak.media.ccc.de
 
 [mirror]
 berlin.media.ccc.de
+
+[not-yet-in-ansible]
+koeln.media.ccc.de

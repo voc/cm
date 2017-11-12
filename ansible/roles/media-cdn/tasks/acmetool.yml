@@ -1,0 +1,4 @@
+---
+- shell: /bin/rm -rf /var/lib/acme
+  tags: nginx
+  when: acmetool_cleanup is defined and acmetool_cleanup == "true"

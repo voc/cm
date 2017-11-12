@@ -1,0 +1,27 @@
+---
+  - name: install defaut packages
+    apt: name={{ item }} state=latest update_cache=yes
+    with_items:
+      - zsh
+      - vim
+      - htop
+      - iftop
+      - tmux
+      - strace
+      - build-essential
+      - pv
+      - ethtool
+      - git
+      - etckeeper
+      - smartmontools
+      - zip
+      - nginx
+      - rsync
+      - rssh
+      - vnstat
+      - unattended-upgrades
+
+  - name: remove not needed packages
+    apt: name={{ item }} state=absent
+    with_items:
+      - rpcbind

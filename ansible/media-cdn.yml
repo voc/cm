@@ -1,0 +1,30 @@
+---
+  - hosts: cdn
+    roles:
+      - { role: 'media-common', tags: ['media-common'] }
+      - role: 'ansible-acmetool'
+        tags: ['ansible-acmetool', 'nginx']
+        when: live is defined and live == "true" and inventory_hostname == 'test-cdn.home.manno.name'
+        vars: { acmetool_staging: true, acmetool_want: ["{{ inventory_hostname }}"] }
+      - role: 'ansible-acmetool'
+        tags: ['ansible-acmetool', 'nginx']
+        when: live is defined and live == "true" and inventory_hostname == 'berlin-ak.media.ccc.de'
+        vars: { acmetool_want: ["cdn.media.ccc.de {{ inventory_hostname }}"] }
+      - { role: 'media-cdn', tags: ['media-cdn'] }
+
+    vars:
+      # testing deployment - will requests certs and such
+      live: "false"
+      # remove all configuration/state first
+      acmetool_cleanup: "false"
+
+      acmetool_websrv: "nginx"
+      redis_bind: 127.0.0.1
+      google_maps_api_key: 'TODO keepass plz'
+      users:
+        - { name: 'derpeter', state: 'absent' }
+        - { name: 'danimo', state: 'absent' }
+        - { name: 'florolf', state: 'absent' }
+        - { name: 'mazdermind', state: 'absent' }
+        - { name: 'meise', state: 'absent' }
+        - { name: 'voc', state: 'present' }

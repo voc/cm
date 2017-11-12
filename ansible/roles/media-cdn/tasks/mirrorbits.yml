@@ -1,0 +1,40 @@
+---
+- shell: /usr/lib/go-1.9/bin/go get github.com/voc/mirrorbits
+  environment:
+    GOPATH: /usr/local/
+- shell: /usr/lib/go-1.9/bin/go install github.com/voc/mirrorbits
+  environment:
+    GOPATH: /usr/local/
+
+- group: name="mirrorbits" state=present
+
+- user: state=present
+        name="mirrorbits"
+        groups="mirrorbits"
+        shell="/bin/false"
+
+- file: path=/srv/mirrorbits state=directory
+        mode=0755 owner=root group=root
+- file: path=/srv/mirrorbits/logs state=directory
+        mode=0755 owner=mirrorbits group=root
+
+- group: name=sudo state=present
+
+- template: src=mirrorbits.service
+            dest=/etc/systemd/system/mirrorbits.service
+            mode=0644 owner=root group=root
+
+- template: src=mirrorbits.conf
+            dest=/etc/mirrorbits.conf
+            mode=0640 owner=mirrorbits group=root
+
+- copy: src=mirrorbits/templates
+        dest=/srv/mirrorbits/
+        owner=mirrorbits group=root
+
+- copy: src=mirrorbits-cli
+        dest=/usr/local/bin
+        owner=root group=root mode=0755
+
+- systemd: state=started enabled=yes name=mirrorbits.service
+- systemd: state=started enabled=yes name=redis.service

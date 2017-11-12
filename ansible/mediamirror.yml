@@ -1,5 +1,0 @@
----
-  - hosts: mirror
-    roles:
-      - { role: mediamirror, tags: ['mediamirror'] }
-    vars:

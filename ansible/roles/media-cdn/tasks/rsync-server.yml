@@ -1,0 +1,35 @@
+---
+- file: path=/srv/ftp state=directory
+        mode=0755 owner=root group=root
+
+- copy: src={{ item }}
+        dest=/usr/local/bin
+        owner=root group=root mode=0755
+  with_items:
+    - mkindex.sh
+    - mkindex_local.sh
+
+- cron: user=root minute="13" cron_file="local_mkindex"
+        job="if [ -x /usr/local/bin/mkindex.sh ]; then /usr/local/bin/mkindex.sh; fi;"
+
+- cron: user=root minute="30" cron_file="local_mkindex"
+        job="if [ -x /usr/local/bin/mkindex_local.sh ]; then /usr/local/bin/mkindex_local.sh; fi;"
+
+- template: src=rsyncd.conf
+            dest=/etc/rsyncd.conf
+            mode=0644 owner=root group=root
+
+- name: enable rsyncd
+  lineinfile: dest=/etc/default/rsync
+              regexp='^RSYNC_ENABLE.*' state=present
+              line="RSYNC_ENABLE=true"
+
+# TODO create secrets from keepass
+# - copy: dest=/etc/ssl/{{ item }}.pem
+#       content={{ lookup('keepass', 'ansible/media/'+item+'.notes') }}
+#       mode=0640 owner=root group=ssl-cert
+#   with_items:
+#     - rsyncd.secrets
+#     - rsyncd-congress.secrets
+
+- systemd: state=started enabled=yes name=rsync.service

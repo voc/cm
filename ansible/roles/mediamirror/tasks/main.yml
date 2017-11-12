@@ -1,3 +1,0 @@
----
-  - name: create nix
-    shell: echo 'foobar'
