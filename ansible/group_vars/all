@@ -1,8 +1,8 @@
 ---
 # Event config
 event:
-  acronym: qtws2017
-  name: Qt World Summit 2017
+  acronym: xyz
+  name: XYZ
   slogan: ""
   formats:
     hd: 'yes'
