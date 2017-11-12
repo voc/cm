@@ -55,7 +55,7 @@
    when: system.type == 'pi'
 
  - name: setup the armhf debian multimedia repo for stretch
-   apt_repository: repo="deb http://deb-multimedia.org stable main non-free" state=present
+   apt_repository: repo="deb http://deb-multimedia.org stretch main non-free" state=present
    when: system.type == 'pi'
 
  - name: make sure apt-transport-https is installed to read our https repo
