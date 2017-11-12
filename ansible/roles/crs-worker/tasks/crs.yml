@@ -57,11 +57,10 @@
               mode=0644 owner=root group=root
     when: crs_token_meta is defined and crs_secret_meta is defined
 
-
   - name: undeploy shadowing ffmpeg static binary
     file: dest=/usr/local/bin/ffmpeg
           state=absent
 
-  - name: undeploydeploy ffmpeg3 static binary
-    copy: src=ffmpeg3-static
+  - name: undeploy ffmpeg3 static binary
+    file: dest=/usr/local/bin/ffmpeg3
           state=absent
