@@ -12,8 +12,7 @@ ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
 	-map 1:v -c:v:1 mpeg2video -pix_fmt:v:1 yuv420p -qscale:v:1 2 -qmin:v:1 2 -qmax:v:1 7 -keyint_min:v:1 0 -bf:v:1 0 -g:v:1 5 -me_method:v:1 dia -maxrate:v:1 90M \
 {% endif %}
 	-c:a mp2 -b:a 192k -ac:a 1 -ar:a 48000 \
-	-map 0:a -filter:a:0 pan=mono:c0=FL \
-	-map 0:a -filter:a:1 pan=mono:c0=FR \
+	-map 0:a \
 	-flags +global_header -flags +ilme+ildct \
 	-f segment -segment_time 180 -strftime 1 -segment_format mpegts /video/capture/{{ event.acronym }}/{{ room_fahrplan_name | lower | replace(' ', '') }}-%Y-%m-%d_%H-%M-%S-$$.ts
 
