@@ -9,6 +9,12 @@ To manage hosts with [ansible](http://ansible.com/)  you only need to install `a
   sudo aptitude install ansible
 ```
 
+
+```
+  pip2.7 install libkeepass pykeepass
+
+```
+
 # Usage
 
 Syntax validation.
