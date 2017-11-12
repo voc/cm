@@ -11,6 +11,9 @@ event:
 voctomix:
   version: "1.0RC1"
 
+  # also record Full-HD Slides into the .ts-Files
+  parallel_slide_recording: true
+
   # to use a static bg-image place image in
   #    artwork/{{ event.acronym }}/bg.png
   # or artwork/{{ event.acronym }}/saal{{ room_number }}/bg.png

@@ -2,9 +2,15 @@
 mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording started…\"}" &
 
 ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
-	-i tcp://localhost:11000?timeout=3000 \
+	-thread_queue_size 32 -i tcp://localhost:11000?timeout=3000 \
+{% if voctomix.parallel_slide_recording %}
+	-thread_queue_size 32 -i tcp://localhost:13001?timeout=3000 \
+{% endif %}
 	-aspect 16:9 \
-	-map 0:v -c:v:0 mpeg2video -pix_fmt:v:0 yuv420p -qscale:v:0 2 -qmin:v:0 2 -qmax:v:0 7 -keyint_min 0 -bf:0 0 -g:0 0 -intra:0 -maxrate:0 90M \
+	-map 0:v -c:v:0 mpeg2video -pix_fmt:v:0 yuv420p -qscale:v:0 2 -qmin:v:0 2 -qmax:v:0 7 -keyint_min:v:0 0 -bf:v:0 0 -g:v:0 0 -intra:v:0 -maxrate:v:0 90M \
+{% if voctomix.parallel_slide_recording %}
+	-map 1:v -c:v:1 mpeg2video -pix_fmt:v:1 yuv420p -qscale:v:1 2 -qmin:v:1 2 -qmax:v:1 7 -keyint_min:v:1 0 -bf:v:1 0 -g:v:1 5 -me_method:v:1 dia -maxrate:v:1 90M \
+{% endif %}
 	-c:a mp2 -b:a 192k -ac:a 1 -ar:a 48000 \
 	-map 0:a -filter:a:0 pan=mono:c0=FL \
 	-map 0:a -filter:a:1 pan=mono:c0=FR \
