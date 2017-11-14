@@ -273,11 +273,20 @@
               dest="/opt/voctomix/scripts/streaming-sink-combined.sh"
               mode=0755 owner=root group=root
 
-  - name: create -inactive- mkv-only streaming script
+  - name: create mkv-only streaming script
     template: src="voctomix-scripts/streaming-sink-mkvonly.sh.j2"
               dest="/opt/voctomix/scripts/streaming-sink-mkvonly.sh"
               mode=0755 owner=root group=root
 
+  - name: create mkv-only systemd-unit
+    template: src="systemd-units/streaming-sink.service.j2"
+              dest="/etc/systemd/system/streaming-sink-{{ item }}.service"
+              mode=0644 owner=root group=root
+    with_items: [mkvonly]
+
+  - name: disable streaming-sink-mkvonly service
+    service: name=streaming-sink-mkvonly.service
+             enabled=no
 
 
   - name: create framebuffer playout systemd-unit
