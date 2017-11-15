@@ -42,7 +42,7 @@ Basic `ansible` call to deploy new config to a set of hosts on an event.
 In case you need to do a lot of playbook runs you can also set the password using the following although it is not recommended.
 
 ```
-  export KEEPASS_PW='…'
+   export KEEPASS_PW='…'
   ./ansible-playbook-keepass … site.yml
 ```
 

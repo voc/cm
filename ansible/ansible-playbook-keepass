@@ -36,7 +36,7 @@ fi
 # Ask for the keepass file or use the env var
 #
 if [ -z "${KEEPASS_PW}" ]; then
-  echo -n "Keepass Password: "
+  echo -n "Keepass Password (or export KEEPASS_PW): "
   read -ers KEEPASS_PW
   echo ""
 fi
