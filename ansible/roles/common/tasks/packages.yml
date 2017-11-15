@@ -48,6 +48,7 @@
     - smartmontools
     - zip
     - unzip
+    - bc
 
  # for VMs
  - name: install a vmware specific set of packages
