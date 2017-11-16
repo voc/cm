@@ -1,0 +1,5 @@
+---
+- include_tasks: download.yml
+  when: download_logcheck is defined and download_logcheck == 'true'
+- include_tasks: upload.yml
+  when: download_logcheck is not defined or download_logcheck == 'false'

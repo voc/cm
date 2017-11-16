@@ -11,12 +11,17 @@
         when: live is defined and live == "true" and inventory_hostname == 'berlin-ak.media.ccc.de'
         vars: { acmetool_want: ["cdn.media.ccc.de {{ inventory_hostname }}"] }
       - { role: 'media-cdn', tags: ['media-cdn'] }
+      - { role: 'logcheck', tags: ['logcheck'] }
 
     vars:
       # testing deployment - will requests certs and such
       live: "false"
       # remove all configuration/state first
       acmetool_cleanup: "false"
+      # will overwrite local files
+      download_logcheck: 'false'
+      # will remove local logcheck rules before upload
+      remove_logcheck: 'false'
 
       acmetool_websrv: "nginx"
       redis_bind: 127.0.0.1

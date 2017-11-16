@@ -1,0 +1,26 @@
+- group: name=logcheck state=present
+
+- name: upload common rules
+  copy: src=common
+        dest=/etc/logcheck/ignore.d.server/common
+        owner=root group=logcheck mode=644
+
+- shell: /bin/rm -rf /etc/logcheck/ignore.d.server/local*
+  when: remove_logcheck is defined and remove_logcheck == 'true'
+
+- name: upload rules
+  copy: src={{ item }}
+        dest=/etc/logcheck/ignore.d.server/
+        owner=root group=logcheck mode=644
+  with_fileglob:
+    - "roles/logcheck/files/{{ inventory_hostname }}/server/*"
+
+- shell: /bin/rm -rf /etc/logcheck/violations.ignore.d/local*
+  when: remove_logcheck is defined and remove_logcheck == 'true'
+
+- name: upload violations rules
+  copy: src={{ item }}
+        dest=/etc/logcheck/violations.ignore.d/
+        owner=root group=logcheck mode=644
+  with_fileglob:
+    - "roles/logcheck/files/{{ inventory_hostname }}/violations/*"
