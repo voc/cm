@@ -2,7 +2,7 @@
 ffmpeg -y -nostdin -hide_banner \
 {# input from both mix-out and slide-mirror #}
 	-thread_queue_size 512 -i tcp://localhost:15000?timeout=3000 \
-	-thread_queue_size 512 -i tcp://localhost:13003?timeout=3000 \
+	-thread_queue_size 512 -i tcp://localhost:{{ 13000 + voctomix_sources|length - 1}}?timeout=3000 \
 	-filter_complex '
 		[0:v] hqdn3d [smooth_hd];
 		[1:v] scale=720:576, fps=5, hqdn3d [smooth_slides];
