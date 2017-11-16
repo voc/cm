@@ -251,21 +251,22 @@
 
 
     # streaming sinks
-  - name: create streaming script
+  - name: create rtmp streaming script
     template: src="voctomix-scripts/streaming-sink.sh.j2"
               dest="/opt/voctomix/scripts/streaming-sink-{{ item }}.sh"
               mode=0755 owner=root group=root
     with_items: [hd, sd]
 
-  - name: create streaming systemd-unit
+  - name: create rtmp streaming systemd-unit
     template: src="systemd-units/streaming-sink.service.j2"
               dest="/etc/systemd/system/streaming-sink-{{ item }}.service"
               mode=0644 owner=root group=root
     with_items: [hd, sd]
 
-  - name: enable hd-streaming services
-    service: name=streaming-sink-hd.service
-             enabled=yes
+  - name: disable rtmp streaming services
+    service: name=streaming-sink-{{ item }}.service
+             enabled=no
+    with_items: [hd, sd]
 
 
   - name: create -inactive- combined streaming script
@@ -284,9 +285,9 @@
               mode=0644 owner=root group=root
     with_items: [mkvonly]
 
-  - name: disable streaming-sink-mkvonly service
+  - name: enable streaming-sink-mkvonly service
     service: name=streaming-sink-mkvonly.service
-             enabled=no
+             enabled=yes
 
 
   - name: create framebuffer playout systemd-unit
