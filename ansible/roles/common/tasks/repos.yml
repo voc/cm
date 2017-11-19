@@ -6,6 +6,10 @@
      - repo
      - gpg
 
+ #
+ # remove old repos
+ #
+
  - name: remove the VOC debian mng.ber repo before any updates are done since it is unavailable now pkg.c3voc is new
    apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ {{ item }} main" state=absent
    when: system.type == 'pc'
@@ -16,24 +20,6 @@
  - name: remove yate nightly repo if present since it's key is not supported by stretch atm dsa1024 
    apt_repository: repo="deb http://debian.ctm.ru/nightly/ stable main non-free" state=absent
 
- - name: ensure that the debian keyrings are present
-   apt: name={{ item }} state=present update_cache=yes
-   with_items:
-    - debian-keyring
-    - debian-archive-keyring
-
- - name: ensure that the debian multimedia keyring is present
-   apt:
-     name={{ item }}
-     state=present
-     update_cache=yes
-     cache_valid_time=7200
-     allow_unauthenticated=true
-   with_items:
-    - deb-multimedia-keyring
-   when: system.type == 'pi'
-   tags: packages
-
  # stretch specific
  - name: remove /etc/apt/sources.list
    file: dest=/etc/apt/sources.list state=absent
@@ -43,6 +29,10 @@
    with_items:
     - ftp_debian_org_debian.list
     - raspi.list
+
+ #
+ # add repos
+ #
 
  - name: setup the debian backports repo for stretch
    apt_repository: repo="deb http://ftp.de.debian.org/debian stretch-backports main"
@@ -56,6 +46,24 @@
    apt_repository: repo="deb http://security.debian.org/ stretch/updates main contrib non-free"
    when: system.type == 'pc'
 
+ - name: make sure apt-transport-https is installed
+   apt: name=apt-transport-https state=latest update_cache=yes
+
+ - name: ensure that the debian keyrings are present
+   apt: name={{ item }} state=present update_cache=yes
+   with_items:
+    - debian-keyring
+    - debian-archive-keyring
+
+ - name: setup the VOC debian repo for stretch
+   apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
+   when: system.type == 'pc'
+
+
+#
+# raspberry specific
+#
+
  - name: setup the raspbian debian repo for stretch
    apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi" state=present
    when: system.type == 'pi'
@@ -64,24 +72,12 @@
    apt_repository: repo="deb http://archive.raspberrypi.org/debian/ stretch main ui" state=present
    when: system.type == 'pi'
 
- - name: setup the armhf debian multimedia repo for stretch
-   apt_repository: repo="deb http://deb-multimedia.org stretch main non-free" state=present
+ - name: remove pinning for ffmpeg multimedia repo since it is now in the default repo
+   file: dest=/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref state=absent
    when: system.type == 'pi'
-
- - name: make sure apt-transport-https is installed to read our https repo
-   apt: name=apt-transport-https state=latest update_cache=yes
-
- - name: setup the VOC debian repo for stretch
-   apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
-   when: system.type == 'pc'
 
  - name: pin the VOC repo to the highest priority
    copy: src=voc-repo-pinning
          dest="/etc/apt/preferences.d/voc.pref"
          mode=0644 owner=root group=root
 
- - name: pin multimedia packages for arm ffmpeg*
-   template: src="apt-pin-ffmpeg-multimedia.pref.j2"
-             dest="/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref"
-             mode=0644 owner=root group=root
-   when: system.type == 'pi'
