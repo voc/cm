@@ -6,7 +6,7 @@
      - repo
      - gpg
 
- - name: remove the VOC debian mng.berg repo before any updates are done since it is unavailable now pkg.c3voc is new
+ - name: remove the VOC debian mng.ber repo before any updates are done since it is unavailable now pkg.c3voc is new
    apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ {{ item }} main" state=absent
    when: system.type == 'pc'
    with_items:
