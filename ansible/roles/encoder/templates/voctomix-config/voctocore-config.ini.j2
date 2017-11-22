@@ -9,6 +9,7 @@ sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
 ; set the initial audio source
 audiosource={{ voctomix_audio_source }}
 {% endif %}
+audiostreams = {{ voctomix_audiostreams | default(1) }}
 
 {% for source in voctomix_sources | selectattr("type", "equalto", "decklink-internal") %}
 [source.{{ source.name }}]
@@ -17,8 +18,17 @@ devicenumber={{ source.devicenumber }}
 video_connection={{ source.video_connection | default('SDI') | upper }}
 video_mode={{ source.video_mode }}
 audio_connection=embedded
+
+volume={{ source.volume | default('0.0') }}
+
 {% if source.deinterlace is defined %}
 deinterlace={{ source.deinterlace }}
+{% endif %}
+
+{% if source.audiostream is defined  %}
+{% for audiostream, mapping in source.audiostream.items() %}
+audiostream[{{ audiostream }}] = {{ mapping }}
+{% endfor %}
 {% endif %}
 
 {% endfor %}

@@ -7,8 +7,8 @@ room_fahrplan_name: Saal3
 # reboot encoder after changing
 encodermode: hd-voctomix
 
-# set the initial audio source
-voctomix_audio_source: cam1
+# Anzahl der Stereo-Streams (1 = native, 2 = backup)
+voctomix_audiostreams: 2
 
 # für JVC:
 #    video_connection: SDI
@@ -33,6 +33,18 @@ voctomix_sources:
     video_connection: SDI
     video_mode: "1080i50"
     deinterlace: assume-progressive
+    volume: 1.0
+
+    audiostream:
+#      # fill stereo-stream 0 (native) with sdi-channel 0 on left and sdi-channel 1 on right
+#      0: 0+1
+
+      # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
+      0: 0
+
+      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
+      1: 1
+
 #  -
 #    # Duo Port 4
 #    name: cam2
