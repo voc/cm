@@ -10,22 +10,47 @@ encodermode: hd-voctomix
 # set the initial audio source
 voctomix_audio_source: cam1
 
+# für JVC:
+#    video_connection: SDI
+#    video_mode: "1080p25"
+#
+# für Panasonic:
+#    video_connection: SDI
+#    video_mode: "1080i50"
+#    deinterlace: assume-progressive
+#
+# für Tronsmart:
+#    video_connection: HDMI
+#    video_mode: "1080p24"
+
+
 voctomix_sources:
   -
+    # Duo Port 2
     name: cam1
     type: decklink-internal
-    devicenumber: 0
+    devicenumber: 1
     video_connection: SDI
     video_mode: "1080i50"
+    deinterlace: assume-progressive
 #  -
+#    # Duo Port 4
 #    name: cam2
-#    type: decklink                         # decklink, mjpeg or test
-#    plug: sdi
-#    device: 'DeckLink Mini Recorder (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-#    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
+#    type: decklink-internal
+#    devicenumber: 0
+#    video_connection: SDI
+#    video_mode: "1080p25"
+#  -
+#    # Mini Recorder links
+#    name: cam3
+#    type: decklink-internal
+#    devicenumber: 4
+#    video_connection: SDI
+#    video_mode: "1080p25"
   -
+    # Mini Recorder rechts
     name: slides
     type: decklink-internal
-    devicenumber: 1
+    devicenumber: 5
     video_connection: HDMI
     video_mode: "1080p24"

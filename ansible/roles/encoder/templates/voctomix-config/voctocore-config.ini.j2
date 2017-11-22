@@ -17,6 +17,9 @@ devicenumber={{ source.devicenumber }}
 video_connection={{ source.video_connection | default('SDI') | upper }}
 video_mode={{ source.video_mode }}
 audio_connection=embedded
+{% if source.deinterlace is defined %}
+deinterlace={{ source.deinterlace }}
+{% endif %}
 
 {% endfor %}
 

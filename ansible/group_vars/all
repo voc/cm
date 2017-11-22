@@ -9,7 +9,7 @@ event:
     sd: 'yes'
 
 voctomix:
-  version: "1.0RC1"
+  version: "master"
 
   # also record Full-HD Slides into the .ts-Files
   parallel_slide_recording: true
