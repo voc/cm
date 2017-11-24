@@ -2,16 +2,21 @@
 ffmpeg -y -nostdin -hide_banner \
 {# input from both mix-out and slide-mirror #}
 	-thread_queue_size 512 -i tcp://localhost:15000?timeout=3000 \
+{% if voctomix.parallel_slide_recording %}
 	-thread_queue_size 512 -i tcp://localhost:{{ 13000 + voctomix_sources|length - 1}}?timeout=3000 \
+{% endif %}
 	-filter_complex '
 		[0:v] hqdn3d [smooth_hd];
-		[1:v] scale=720:576, fps=5, hqdn3d [smooth_slides];
-
 		movie=/opt/voc/share/overlay_hd.png [logo_hd];
-		[smooth_hd] [logo_hd] overlay=0:0 [hd];
+		[smooth_hd] [logo_hd] overlay=0:0 [hd]
+
+{% if voctomix.parallel_slide_recording %}
+		;
+		[1:v] scale=720:576, fps=5, hqdn3d [smooth_slides];
 
 		movie=/opt/voc/share/overlay_slides.png [logo_slides];
 		[smooth_slides] [logo_slides] overlay=0:0 [slides]
+{% endif %}
 	' \
 {# Shared video settings #}
 	-c:v libx264 -preset:v veryfast -profile:v main -pix_fmt yuv420p \
@@ -21,10 +26,12 @@ ffmpeg -y -nostdin -hide_banner \
 	-map [hd] -metadata:s:v:0 title="HD"\
 	-r:v:0 25 -g:v:0 25 -crf:v:0 21 -maxrate:v:0 5M -bufsize:v:0 8M \
 	\
+{% if voctomix.parallel_slide_recording %}
 {# Low bitrate and ok quality for Slides #}
 	-map [slides] -metadata:s:v:1 title="Slides"\
 	-g:v:1 50 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 5M \
 	\
+{% endif %}
 {# Shared audio settings #}
 	-c:a aac -b:a 192k -ar 48000 -ac 1 \
 	\
