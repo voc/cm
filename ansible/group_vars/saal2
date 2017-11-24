@@ -1,6 +1,6 @@
 ---
 room_number: 2
-room_fahrplan_name: Saal2
+room_fahrplan_name: S34
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

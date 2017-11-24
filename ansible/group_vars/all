@@ -1,8 +1,8 @@
 ---
 # Event config
 event:
-  acronym: xyz
-  name: XYZ
+  acronym: T4AT
+  name: Tools4AgileTeams
   slogan: ""
   formats:
     hd: 'yes'
