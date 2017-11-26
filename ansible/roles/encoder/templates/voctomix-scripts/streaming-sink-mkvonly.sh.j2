@@ -12,7 +12,7 @@ ffmpeg -y -nostdin -hide_banner \
 
 {% if voctomix.parallel_slide_recording %}
 		;
-		[1:v] scale=720:576, fps=5, hqdn3d [smooth_slides];
+		[1:v] scale=1024:576, fps=5, hqdn3d [smooth_slides];
 
 		movie=/opt/voc/share/overlay_slides.png [logo_slides];
 		[smooth_slides] [logo_slides] overlay=0:0 [slides]
