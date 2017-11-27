@@ -1,0 +1,5 @@
+---
+  - name: create script
+    template: dest=/opt/transcoding/scripts/s{{ item.0 }}_{{ item.1 }}_{{ item.2 }}_{{ item.3 }}.sh
+              src=transcode.sh
+              owner=root group=root

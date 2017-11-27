@@ -1,0 +1,122 @@
+#!/bin/sh
+
+ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
+	-i http://${transcoding.pull_host}/s{item.0} \
+	\
+{# select video-strem #}
+{% if item.1 in ['hd', 'sd'] %}
+	-map 0:v:0 \
+{% elif item.1 in ['slides'] %}
+	-map 0:v:1 \
+{% endif %}
+	\
+	\
+{# select video-strem #}
+{% if item.2 == 'native' %}
+	-map 0:a:0 \
+{% elif item.2 == 'translated' %}
+	-map 0:a:1 \
+{% elif item.2 == 'translated-2' %}
+	-map 0:a:2 \
+{% endif %}
+	\
+	\
+{# select encoder -- h264 in hls #}
+{% if item.1 == 'hd' and item.3 == 'hls' %}
+	{# copy hd-h264 #}
+	-c:v copy -c:a copy \
+{% elif item.1 == 'sd' and item.3 == 'hls' %}
+	{# re-encode hd-h264 to sd-h264 #}
+	-vf 'scale=1024:576' \
+		-c:v libx264 \
+		-maxrate:v:0 800k \
+		-crf:0 18 \
+		-bufsize:v:0 8192k \
+		-pix_fmt:0 yuv420p \
+		-profile:v:0 main \
+		-g:v:0 25 \
+		-flags +cgop \
+		-preset:v:0 veryfast \
+	-c:a copy \
+{% elif item.1 == 'slides' and item.3 == 'hls' %}
+	{# copy slides-h264 #}
+	-c:v copy -c:a copy \
+{% elif item.1 == 'hd' and item.3 == 'webm' %}
+	-threads:0 8 \
+		-fflags +genpts \
+		-flags +global_header \
+		-c:v libvpx \
+		-g 75 \
+		-keyint_min 75 \
+		-deadline realtime \
+		-b:v 2800k \
+		\
+		\
+		-ac 2 \
+		-maxrate:a 96k \
+		-c:a libvorbis \
+{% elif item.1 == 'sd' and item.3 == 'webm' %}
+	-vf 'scale=1024:576' \
+		-threads:0 8 \
+		-fflags +genpts \
+		-flags +global_header \
+		-c:v libvpx \
+		-g 75 \
+		-keyint_min 75 \
+		-deadline realtime \
+		-b:v 800k \
+		\
+		\
+		-ac 2 \
+		-maxrate:a 96k \
+		-c:a libvorbis \
+{% elif item.1 == 'slides' and item.3 == 'webm' %}
+	-threads:0 8 \
+		-fflags +genpts \
+		-flags +global_header \
+		-c:v libvpx \
+		-g 15 \
+		-keyint_min 15 \
+		-deadline realtime \
+		-b:v 100k \
+		\
+		\
+		-ac 2 \
+		-maxrate:a 96k \
+		-c:a libvorbis \
+{% elif item.3 == 'mp3' %}
+	-c:a libmp3lame \
+		-b:a 96k \
+{% elif item.3 == 'opus' %}
+	-c:a libopus \
+		-b:a 64k \
+		-vbr off \
+{% endif %}
+	\
+	\
+{# select muxer & output #}
+{% if item.3 == 'hls' %}
+	-hls_init_time 5 \
+	-hls_time 5 \
+	-hls_list_size 240 \
+	-hls_base_url '/hls/' \
+	-hls_flags delete_segments+omit_endlist
+	{{ transcoding.hls_write_path }}/s{item.0}_{{ item.2 }}_{{ item.1 }}.m3u8
+{% elif item.3 == 'webm' %}
+	-f webm \
+	-cluster_size_limit 2M \
+	-cluster_time_limit 3100 \
+	-content_type video/webm \
+	-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
+	icecast://${transcoding.pull_host}:8000/s{item.0}_{{ item.2 }}_{{ item.1 }}.webm
+{% elif item.3 == 'mp3' %}
+	-f mp3 \
+	-content_type audio/mp3 \
+	-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
+	icecast://${transcoding.pull_host}:8000/s{item.0}_{{ item.2 }}.mp3
+{% elif item.3 == 'opus' %}
+	-f ogg \
+	-content_type audio/opus \
+	-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
+	icecast://${transcoding.pull_host}:8000/s{item.0}_{{ item.2 }}.opus
+{% endif %}

@@ -1,20 +1,14 @@
 ---
-  - name: copy transcoding scripts
-    copy: dest=/var/lib/transcoding/
-          src=transcoding/
-          owner=root group=root mode=0755
+  - name: create directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /opt/transcoding/scripts/
+      - /srv/hls
 
-  - name: create config.sh
-    template: dest=/var/lib/transcoding/config.sh
-              src=transcoding/config.sh.j2
-              owner=root group=root mode=0755
-
-  - name: create config.yml
-    template: dest=/var/lib/transcoding/config.yml
-              src=transcoding/config.yml.j2
-              owner=root group=root mode=0755
-
-  - name: create config_slides.yml
-    template: dest=/var/lib/transcoding/config_slides.yml
-              src=transcoding/config_slides.yml.j2
-              owner=root group=root mode=0755
+  - include: _stream.yml
+    with_nested:
+      - transcoding.rooms                        # room      - item.0
+      - ['hd', 'sd', 'slides', 'audio']          # quality   - item.1
+      - ['native', 'translated', 'translated-2'] # language  - item.2
+      - ['webm', 'hls', 'opus', 'mp3']           # transport - item.3
