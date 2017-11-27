@@ -1,8 +1,4 @@
 ---
-  - name: remove old scripts
-    file: dest=/opt/transcoder/scripts
-          state=absent
-
   - name: create directories
     file: dest={{ item }} state=directory
           owner=root group=root
@@ -10,16 +6,22 @@
       - /opt/transcoder/scripts/
       - /srv/hls
 
-  - include: _stream.yml
-    with_nested:
-      - "{{ transcoder_rooms }}"                 # room      - item.0
-      - ['hd', 'sd', 'slides']                   # quality   - item.1
-      - ['native', 'translated', 'translated-2'] # language  - item.2
-      - ['webm', 'hls']                          # transport - item.3
 
-  - include: _stream.yml
-    with_nested:
-      - "{{ transcoder_rooms }}"                 # room      - item.0
-      - ['audio']                                # quality   - item.1
-      - ['native', 'translated', 'translated-2'] # language  - item.2
-      - ['mp3', 'opus']                          # transport - item.3
+  - name: create hls-script for s{{ item }}
+    template: dest=/opt/transcoder/scripts/s{{ item }}_hls.sh
+              src=transcoder/hls.sh.j2
+              owner=root group=root mode=755
+    with_items: "{{ transcoder_rooms }}"
+    tags: tscripts
+
+  # - name: create webm transcode-script for s{{ item.0 }}
+  #   template: dest=/opt/transcoder/scripts/s{{ item.0 }}_webm.sh
+  #             src=transcoder/transcode-webm.sh.j2
+  #             owner=root group=root mode=755
+  #   with_items: "{{ transcoder_rooms }}"
+
+  # - name: create audio transcode-script for s{{ item.0 }}
+  #   template: dest=/opt/transcoder/scripts/s{{ item.0 }}_audio.sh
+  #             src=transcoder/transcode-audio.sh.j2
+  #             owner=root group=root mode=755
+  #   with_items: "{{ transcoder_rooms }}"

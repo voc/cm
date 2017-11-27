@@ -1,0 +1,44 @@
+#!/bin/sh
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 \
+	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
+	\
+{% for language in ['native', 'translated', 'translated-2'] %}
+	{% for quality in ['hd', 'sd', 'slides'] %}
+		{% if quality == 'hd' %}
+			-map 0:v:0 -c:v copy \
+		{% elif quality == 'sd' %}
+			-map 0:v:0 \
+				-vf 'scale=1024:576' \
+				-c:v libx264 \
+					-maxrate:v:0 800k \
+					-crf:0 18 \
+					-bufsize:v:0 8192k \
+					-pix_fmt:0 yuv420p \
+					-profile:v:0 main \
+					-g:v:0 25 \
+					-flags +cgop \
+					-preset:v:0 veryfast \
+		{% elif quality == 'slides' %}
+			-map 0:v:1 -c:v copy \
+		{% endif %}
+		\
+		\
+		{% if language == 'native' %}
+			-map 0:a:0 -c:a copy \
+		{% elif language == 'translated' %}
+			-map 0:a:1 -c:a copy \
+		{% elif language == 'translated-2' %}
+			-map 0:a:2 -c:a copy \
+		{% endif %}
+		\
+		\
+		-hls_init_time 5 \
+		-hls_time 5 \
+		-hls_list_size 240 \
+		-hls_base_url '/hls/' \
+		-hls_flags delete_segments+omit_endlist \
+		{{ transcoder.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}.m3u8 \
+		\
+	{% endfor %}
+{% endfor %};

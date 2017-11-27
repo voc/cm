@@ -100,7 +100,7 @@ ffmpeg -v verbose -nostats -nostdin -y -analyzeduration 10000 \
 	-hls_time 5 \
 	-hls_list_size 240 \
 	-hls_base_url '/hls/' \
-	-hls_flags delete_segments+omit_endlist
+	-hls_flags delete_segments+omit_endlist \
 	{{ transcoder.hls_write_path }}/s{{ item.0 }}_{{ item.2 }}_{{ item.1 }}.m3u8
 {% elif item.3 == 'webm' %}
 	-f webm \
