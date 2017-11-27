@@ -14,11 +14,11 @@
     with_items: "{{ transcoder_rooms }}"
     tags: tscripts
 
-  # - name: create webm transcode-script for s{{ item.0 }}
-  #   template: dest=/opt/transcoder/scripts/s{{ item.0 }}_webm.sh
-  #             src=transcoder/transcode-webm.sh.j2
-  #             owner=root group=root mode=755
-  #   with_items: "{{ transcoder_rooms }}"
+   - name: create webm transcode-script for s{{ item.0 }}
+     template: dest=/opt/transcoder/scripts/s{{ item.0 }}_webm.sh
+               src=transcoder/transcode-webm.sh.j2
+               owner=root group=root mode=755
+     with_items: "{{ transcoder_rooms }}"
 
   # - name: create audio transcode-script for s{{ item.0 }}
   #   template: dest=/opt/transcoder/scripts/s{{ item.0 }}_audio.sh
