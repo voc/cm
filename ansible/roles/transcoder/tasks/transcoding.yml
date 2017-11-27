@@ -1,14 +1,25 @@
 ---
+  - name: remove old scripts
+    file: dest=/opt/transcoder/scripts
+          state=absent
+
   - name: create directories
     file: dest={{ item }} state=directory
           owner=root group=root
     with_items:
-      - /opt/transcoding/scripts/
+      - /opt/transcoder/scripts/
       - /srv/hls
 
   - include: _stream.yml
     with_nested:
-      - transcoding.rooms                        # room      - item.0
-      - ['hd', 'sd', 'slides', 'audio']          # quality   - item.1
+      - "{{ transcoder_rooms }}"                 # room      - item.0
+      - ['hd', 'sd', 'slides']                   # quality   - item.1
       - ['native', 'translated', 'translated-2'] # language  - item.2
-      - ['webm', 'hls', 'opus', 'mp3']           # transport - item.3
+      - ['webm', 'hls']                          # transport - item.3
+
+  - include: _stream.yml
+    with_nested:
+      - "{{ transcoder_rooms }}"                 # room      - item.0
+      - ['audio']                                # quality   - item.1
+      - ['native', 'translated', 'translated-2'] # language  - item.2
+      - ['mp3', 'opus']                          # transport - item.3

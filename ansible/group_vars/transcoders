@@ -1,5 +1,5 @@
 ---
-transcoding:
-  pull_host=live.ber.c3voc.de
-  push_host=live.ber.c3voc.de
-  hls_write_path=/srv/hls
+transcoder:
+  pull_endpoint: live.ber.c3voc.de:8000
+  push_endpoint: live.ber.c3voc.de:8000
+  hls_write_path: /srv/hls

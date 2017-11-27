@@ -1,7 +1,7 @@
 #!/bin/sh
 
-ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
-	-i http://${transcoding.pull_host}/s{item.0} \
+ffmpeg -v verbose -nostats -nostdin -y -analyzeduration 10000 \
+	-i http://{{ transcoder.pull_endpoint }}/s{{ item.0 }} \
 	\
 {# select video-strem #}
 {% if item.1 in ['hd', 'sd'] %}
@@ -61,8 +61,8 @@ ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
 		-fflags +genpts \
 		-flags +global_header \
 		-c:v libvpx \
-		-g 75 \
-		-keyint_min 75 \
+		-g 25 \
+		-keyint_min 25 \
 		-deadline realtime \
 		-b:v 800k \
 		\
@@ -101,22 +101,22 @@ ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
 	-hls_list_size 240 \
 	-hls_base_url '/hls/' \
 	-hls_flags delete_segments+omit_endlist
-	{{ transcoding.hls_write_path }}/s{item.0}_{{ item.2 }}_{{ item.1 }}.m3u8
+	{{ transcoder.hls_write_path }}/s{{ item.0 }}_{{ item.2 }}_{{ item.1 }}.m3u8
 {% elif item.3 == 'webm' %}
 	-f webm \
-	-cluster_size_limit 2M \
-	-cluster_time_limit 3100 \
+	-cluster_size_limit 3M \
+	-cluster_time_limit 3500 \
 	-content_type video/webm \
 	-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
-	icecast://${transcoding.pull_host}:8000/s{item.0}_{{ item.2 }}_{{ item.1 }}.webm
+	icecast://{{ transcoder.push_endpoint }}/s{{ item.0 }}_{{ item.2 }}_{{ item.1 }}.webm
 {% elif item.3 == 'mp3' %}
 	-f mp3 \
 	-content_type audio/mp3 \
 	-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
-	icecast://${transcoding.pull_host}:8000/s{item.0}_{{ item.2 }}.mp3
+	icecast://{{ transcoder.push_endpoint }}/s{{ item.0 }}_{{ item.2 }}.mp3
 {% elif item.3 == 'opus' %}
 	-f ogg \
 	-content_type audio/opus \
 	-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
-	icecast://${transcoding.pull_host}:8000/s{item.0}_{{ item.2 }}.opus
+	icecast://{{ transcoder.push_endpoint }}/s{{ item.0 }}_{{ item.2 }}.opus
 {% endif %}
