@@ -62,26 +62,20 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 -i - \
 		-c:v copy \
 		{% if quality == 'hd' %}
 			-map 0:v:0 \
-			-metadata:s:v:0 title="HD" \
 		{% elif quality == 'sd' %}
 			-map 0:v:1 \
-			-metadata:s:v:0 title="SD" \
 		{% elif quality == 'slides' %}
 			-map 0:v:2 \
-			-metadata:s:v:0 title="Slides" \
 		{% endif %}
 		\
 		\
 		-c:a copy \
 		{% if language == 'native' %}
 			-map 0:a:0 \
-			-metadata:s:a:0 title="Native" \
 		{% elif language == 'translated' %}
 			-map 0:a:1 \
-			-metadata:s:a:0 title="Translated" \
 		{% elif language == 'translated-2' %}
 			-map 0:a:2 \
-			-metadata:s:a:0 title="Translated-2" \
 		{% endif %}
 		\
 		\
