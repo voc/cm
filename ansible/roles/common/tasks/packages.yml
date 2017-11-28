@@ -33,6 +33,7 @@
     - dnsutils
     - dstat
     - pv
+    - buffer
     - lm-sensors
     - moreutils
     - python

@@ -4,24 +4,29 @@
           owner=root group=root
     with_items:
       - /opt/transcoder/scripts/
-      - /srv/hls
 
+  - name: create hls directories
+    file: dest="{{ transcoder.hls_write_path }}/s{{ item.0 }}_{{ item.1 }}_{{ item.2 }}/"
+          state=directory owner=root group=root
+    with_nested:
+      - "{{ transcoder_rooms }}"
+      - "{{ transcoder.languages }}"
+      - "{{ transcoder.qualities }}"
 
-  - name: create hls-script for s{{ item }}
+  - name: create hls-script
     template: dest=/opt/transcoder/scripts/s{{ item }}_hls.sh
               src=transcoder/hls.sh.j2
               owner=root group=root mode=755
     with_items: "{{ transcoder_rooms }}"
-    tags: tscripts
 
-   - name: create webm transcode-script for s{{ item.0 }}
-     template: dest=/opt/transcoder/scripts/s{{ item.0 }}_webm.sh
-               src=transcoder/transcode-webm.sh.j2
-               owner=root group=root mode=755
-     with_items: "{{ transcoder_rooms }}"
+  - name: create webm transcode-script
+    template: dest=/opt/transcoder/scripts/s{{ item }}_webm.sh
+              src=transcoder/webm.sh.j2
+              owner=root group=root mode=755
+    with_items: "{{ transcoder_rooms }}"
 
-  # - name: create audio transcode-script for s{{ item.0 }}
-  #   template: dest=/opt/transcoder/scripts/s{{ item.0 }}_audio.sh
+  # - name: create audio transcode-script
+  #   template: dest=/opt/transcoder/scripts/s{{ item }}_audio.sh
   #             src=transcoder/transcode-audio.sh.j2
   #             owner=root group=root mode=755
   #   with_items: "{{ transcoder_rooms }}"
