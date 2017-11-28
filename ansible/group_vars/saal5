@@ -1,6 +1,6 @@
 ---
 room_number: 5
-room_fahrplan_name: Saal5
+room_fahrplan_name: Praesidentenzimmer
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
