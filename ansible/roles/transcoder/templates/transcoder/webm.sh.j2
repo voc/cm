@@ -2,36 +2,58 @@
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
-	-map 0:v:0 \
-		-threads:0 8 \
-		-c:v libvpx \
-		-fflags +genpts \
-		-flags +global_header \
-		-g 75 \
-		-keyint_min 75 \
-		-deadline realtime \
-		-b:v 2800k \
-	-map 0:v:0 \
-		-vf 'scale=1024:576' \
-		-threads:0 8 \
-		-c:v libvpx \
-		-b:v 800k \
-		-fflags +genpts \
-		-flags +global_header \
-		-g 25 \
-		-keyint_min 25 \
-		-deadline realtime \
-	-map 0:v:1 \
-		-threads:0 8 \
-		-c:v libvpx \
-		-b:v 100k \
-		-fflags +genpts \
-		-flags +global_header \
-		-g 15 \
-		-keyint_min 15 \
-		-deadline realtime \
-	-map 0:a \
-	-f nut - |\
+	-filter_complex '[0:v:0] scale=1024:576 [sd]' \
+	-map '0:v:0' \
+		-metadata:s:v:0 title="HD" \
+		-c:v:0 libvpx \
+			-threads:v:0 8 \
+			-flags:v:0 +global_header \
+			-g:v:0 75 \
+			-keyint_min:v:0 75 \
+			-deadline:v:0 realtime \
+			-b:v:0 2800k \
+	-map '[sd]' \
+		-metadata:s:v:1 title="SD" \
+		-c:v:1 libvpx \
+			-threads:v:1 8 \
+			-flags:v:1 +global_header \
+			-g:v:1 75 \
+			-keyint_min:v:1 75 \
+			-deadline:v:1 realtime \
+			-b:v:1 800k \
+	-map '0:v:1' \
+		-metadata:s:v:2 title="Slides" \
+		-c:v:2 libvpx \
+			-threads:v:2 8 \
+			-flags:v:2 +global_header \
+			-g:v:2 75 \
+			-keyint_min:v:2 75 \
+			-deadline:v:2 realtime \
+			-b:v:2 100k \
+	\
+	\
+	-map 0:a:0 \
+		-metadata:s:a:0 title="Native" \
+		-c:a:0 libvorbis \
+			-ac:a:0 2 \
+			-maxrate:a:0 96k \
+	\
+	-map 0:a:1 \
+		-metadata:s:a:1 title="Translated" \
+		-c:a:1 libvorbis \
+			-ac:a:1 2 \
+			-maxrate:a:1 96k \
+	\
+	-map 0:a:2 \
+		-metadata:s:a:2 title="Translated-2" \
+		-c:a:2 libvorbis \
+			-ac:a:2 2 \
+			-maxrate:a:2 96k \
+	\
+	-fflags +genpts \
+	-max_muxing_queue_size 400 \
+	-f nut - | buffer | \
+
 \
 \
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 -i - \
@@ -40,20 +62,26 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 -i - \
 		-c:v copy \
 		{% if quality == 'hd' %}
 			-map 0:v:0 \
+			-metadata:s:v:0 title="HD" \
 		{% elif quality == 'sd' %}
 			-map 0:v:1 \
+			-metadata:s:v:0 title="SD" \
 		{% elif quality == 'slides' %}
 			-map 0:v:2 \
+			-metadata:s:v:0 title="Slides" \
 		{% endif %}
 		\
 		\
 		-c:a copy \
 		{% if language == 'native' %}
 			-map 0:a:0 \
+			-metadata:s:a:0 title="Native" \
 		{% elif language == 'translated' %}
 			-map 0:a:1 \
+			-metadata:s:a:0 title="Translated" \
 		{% elif language == 'translated-2' %}
 			-map 0:a:2 \
+			-metadata:s:a:0 title="Translated-2" \
 		{% endif %}
 		\
 		\
@@ -62,7 +90,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 -i - \
 		-cluster_time_limit 3500 \
 		-content_type video/webm \
 		-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
-		icecast://{{ transcoder.push_endpoint }}/s{{ item.0 }}_{{ item.2 }}_{{ item.1 }}.webm
+		icecast://{{ transcoder.push_endpoint }}/s{{ item }}_{{ language }}_{{ quality }}.webm \
 		\
 	{% endfor %}
 {% endfor %};
