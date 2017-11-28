@@ -71,7 +71,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -i - \
 		\
 		-hls_init_time 5 \
 		-hls_time 5 \
-		-hls_list_size 24 \
+		-hls_list_size 240 \
 		-hls_base_url '/hls/s{{ item }}_{{ language }}_{{ quality }}/' \
 		-hls_segment_filename '{{ transcoder.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}/segment-%d.ts' \
 		-hls_flags +delete_segments+omit_endlist \
