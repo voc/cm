@@ -6,3 +6,4 @@ transcoder:
 
   languages: ['native', 'translated', 'translated-2']
   qualities: ['hd', 'sd', 'slides']
+  audiocodecs: ['mp3', 'opus']

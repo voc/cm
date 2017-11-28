@@ -25,8 +25,8 @@
               owner=root group=root mode=755
     with_items: "{{ transcoder_rooms }}"
 
-  # - name: create audio transcode-script
-  #   template: dest=/opt/transcoder/scripts/s{{ item }}_audio.sh
-  #             src=transcoder/transcode-audio.sh.j2
-  #             owner=root group=root mode=755
-  #   with_items: "{{ transcoder_rooms }}"
+  - name: create audio transcode-script
+    template: dest=/opt/transcoder/scripts/s{{ item }}_audio.sh
+              src=transcoder/audio.sh.j2
+              owner=root group=root mode=755
+    with_items: "{{ transcoder_rooms }}"

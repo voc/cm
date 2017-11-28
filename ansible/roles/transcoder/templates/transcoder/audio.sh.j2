@@ -1,0 +1,42 @@
+#!/bin/sh
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
+	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
+	-map 0:a:0 \
+		-metadata:s:a:0 title="Native" \
+		-c:a:0 copy \
+	\
+	-map 0:a:1 \
+		-metadata:s:a:1 title="Translated" \
+		-c:a:1 copy \
+	\
+	-map 0:a:2 \
+		-metadata:s:a:2 title="Translated-2" \
+		-c:a:2 copy \
+	\
+	-max_muxing_queue_size 400 \
+	-f nut - | buffer | \
+\
+\
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -i - \
+{% for language in transcoder.languages %}
+	{% for audiocodec in transcoder.audiocodecs %}
+		{% if language == 'native' %}
+			-map 0:a:0 \
+		{% elif language == 'translated' %}
+			-map 0:a:1 \
+		{% elif language == 'translated-2' %}
+			-map 0:a:2 \
+		{% endif %}
+		\
+		\
+		-hls_init_time 5 \
+		-hls_time 5 \
+		-hls_list_size 240 \
+		-hls_base_url '/hls/s{{ item }}_{{ language }}_{{ quality }}/' \
+		-hls_segment_filename '{{ transcoder.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}/segment-%d.ts' \
+		-hls_flags +delete_segments+omit_endlist \
+		{{ transcoder.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}.m3u8 \
+		\
+	{% endfor %}
+{% endfor %};
