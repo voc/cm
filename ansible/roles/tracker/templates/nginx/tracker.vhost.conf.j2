@@ -32,7 +32,7 @@ server {
   ssl_stapling on;
   ssl_stapling_verify on;
   ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
-  ssl_stapling_file /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp;
+  ssl_stapling_file ssl_stapling_file /etc/dehydrated/certs/{{ ansible_fqdn }}/ocsp.der;
 
 
   # don't allow access to some files or directories

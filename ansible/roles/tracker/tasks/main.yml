@@ -25,3 +25,6 @@
   - name: create logrotate config
     copy: src=tracker dest=/etc/logrotate.d
 
+  - name: create cronjobs for lets encrypt / dehydrated
+    copy: src=dehydrated dest=/etc/cron.d
+
