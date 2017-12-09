@@ -13,6 +13,14 @@
       - "{{ transcoder.languages }}"
       - "{{ transcoder.qualities }}"
 
+  - name: create hls master-playlists
+    template: dest="{{ relay_fanout.hls_write_path }}/s{{ item.0 }}_{{ item.1 }}.m3u8"
+              src=fanout/hls_master.m3u8.j2
+              owner=root group=root
+    with_nested:
+      - "{{ transcoder_rooms }}"
+      - "{{ transcoder.languages }}"
+
   - name: create h264 fanout-script
     template: dest=/opt/fanout/scripts/s{{ item }}_h264.sh
               src=fanout/h264.sh.j2
