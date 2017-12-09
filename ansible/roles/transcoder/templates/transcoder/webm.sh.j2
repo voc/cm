@@ -1,0 +1,58 @@
+#!/bin/sh
+
+ffmpeg -nostdin -y -analyzeduration 1000000 \
+	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
+	-filter_complex '[0:v:0] scale=1024:576 [sd]' \
+	-map '0:v:0' \
+		-metadata:s:v:0 title="HD" \
+		-c:v:0 libvpx \
+			-threads:v:0 8 \
+			-flags:v:0 +global_header \
+			-g:v:0 75 \
+			-keyint_min:v:0 75 \
+			-deadline:v:0 realtime \
+			-b:v:0 2800k \
+	-map '[sd]' \
+		-metadata:s:v:1 title="SD" \
+		-c:v:1 libvpx \
+			-threads:v:1 8 \
+			-flags:v:1 +global_header \
+			-g:v:1 75 \
+			-keyint_min:v:1 75 \
+			-deadline:v:1 realtime \
+			-b:v:1 800k \
+	-map '0:v:1' \
+		-metadata:s:v:2 title="Slides" \
+		-c:v:2 libvpx \
+			-threads:v:2 8 \
+			-flags:v:2 +global_header \
+			-g:v:2 75 \
+			-keyint_min:v:2 75 \
+			-deadline:v:2 realtime \
+			-b:v:2 100k \
+	\
+	\
+	-map 0:a:0 \
+		-metadata:s:a:0 title="Native" \
+		-c:a:0 libvorbis \
+			-ac:a:0 2 \
+			-maxrate:a:0 96k \
+	\
+	-map 0:a:1 \
+		-metadata:s:a:1 title="Translated" \
+		-c:a:1 libvorbis \
+			-ac:a:1 2 \
+			-maxrate:a:1 96k \
+	\
+	-map 0:a:2 \
+		-metadata:s:a:2 title="Translated-2" \
+		-c:a:2 libvorbis \
+			-ac:a:2 2 \
+			-maxrate:a:2 96k \
+	\
+	-fflags +genpts \
+	-max_muxing_queue_size 1000 \
+	-f matroska \
+	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+	-content_type video/webm \
+	icecast://{{ transcoder.push_endpoint }}/s{{ item }}_webm

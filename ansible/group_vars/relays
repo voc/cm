@@ -2,6 +2,11 @@ system:
   type: pc
   kernel_package: linux-image-4.13.12-041312-generic
 
+relay_fanout:
+  pull_endpoint: 127.0.0.1:7999
+  push_endpoint: 127.0.0.1:7999
+  hls_write_path: /srv/nginx/hls
+
 # icecast
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
 icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"
