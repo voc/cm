@@ -21,6 +21,9 @@ voctomix:
   static_background_image: false
   music: true
 
+qualities: ['hd', 'sd', 'slides']
+languages: ['native', 'translated', 'translated-2']
+
 system:
   type: pc
   kernel_package: linux-image-4.13.12-041312-generic

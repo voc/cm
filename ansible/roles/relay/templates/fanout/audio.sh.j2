@@ -2,7 +2,7 @@
 
 ffmpeg -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_audio \
-	{% for language in transcoder.languages %}
+	{% for language in languages %}
 		{% for codec in ['mp3', 'opus'] %}
 			-c:a copy \
 			{% if language == 'native' and codec == 'mp3' %}

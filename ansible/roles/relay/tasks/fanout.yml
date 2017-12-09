@@ -9,35 +9,35 @@
     file: dest="{{ relay_fanout.hls_write_path }}/s{{ item.0 }}_{{ item.1 }}_{{ item.2 }}/"
           state=directory owner=root group=root
     with_nested:
-      - "{{ transcoder_rooms }}"
-      - "{{ transcoder.languages }}"
-      - "{{ transcoder.qualities }}"
+      - "{{ relay_fanout.rooms }}"
+      - "{{ languages }}"
+      - "{{ qualities }}"
 
   - name: create hls master-playlists
     template: dest="{{ relay_fanout.hls_write_path }}/s{{ item.0 }}_{{ item.1 }}.m3u8"
               src=fanout/hls_master.m3u8.j2
               owner=root group=root
     with_nested:
-      - "{{ transcoder_rooms }}"
-      - "{{ transcoder.languages }}"
+      - "{{ relay_fanout.rooms }}"
+      - "{{ languages }}"
 
   - name: create h264 fanout-script
     template: dest=/opt/fanout/scripts/s{{ item }}_h264.sh
               src=fanout/h264.sh.j2
               owner=root group=root mode=755
-    with_items: "{{ transcoder_rooms }}"
+    with_items: "{{ relay_fanout.rooms }}"
 
   - name: create vpx fanout-script
     template: dest=/opt/fanout/scripts/s{{ item }}_vpx.sh
               src=fanout/vpx.sh.j2
               owner=root group=root mode=755
-    with_items: "{{ transcoder_rooms }}"
+    with_items: "{{ relay_fanout.rooms }}"
 
   - name: create audio fanout-script
     template: dest=/opt/fanout/scripts/s{{ item }}_audio.sh
               src=fanout/audio.sh.j2
               owner=root group=root mode=755
-    with_items: "{{ transcoder_rooms }}"
+    with_items: "{{ relay_fanout.rooms }}"
 
 
 
@@ -48,7 +48,7 @@
               mode=0644 owner=root group=root
               owner=root group=root mode=755
     with_nested:
-      - "{{ transcoder_rooms }}"
+      - "{{ relay_fanout.rooms }}"
       - ["h264", "vpx", "audio"]
 
   - name: create fanout systemd-target (room {{item}})
@@ -57,7 +57,7 @@
               mode=0644 owner=root group=root
               owner=root group=root mode=755
     with_items:
-      - "{{ transcoder_rooms }}"
+      - "{{ relay_fanout.rooms }}"
 
   - name: reload systemd daemon
     command: systemctl daemon-reload
@@ -68,11 +68,11 @@
              enabled=yes
              state=restarted
     with_nested:
-      - "{{ transcoder_rooms }}"
+      - "{{ relay_fanout.rooms }}"
       - ["h264", "vpx", "audio"]
 
   - name: enable & start fanout systemd-target
     service: name=fanout_s{{ item }}.target
              enabled=yes
     with_items:
-      - "{{ transcoder_rooms }}"
+      - "{{ relay_fanout.rooms }}"

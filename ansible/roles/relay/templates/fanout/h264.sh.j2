@@ -2,8 +2,8 @@
 
 ffmpeg -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_h264 \
-{% for language in transcoder.languages %}
-	{% for quality in transcoder.qualities %}
+{% for language in languages %}
+	{% for quality in qualities %}
 		-c:v copy \
 		{% if quality == 'hd' %}
 			-map 0:v:0 \
