@@ -58,6 +58,7 @@
   - name: enable fanout systemd-units
     service: name=fanout_s{{ item.0 }}_{{ item.1 }}.service
              enabled=yes
+             state=restarted
     with_nested:
       - "{{ transcoder_rooms }}"
       - ["h264", "webm", "audio"]
@@ -65,6 +66,5 @@
   - name: enable & start fanout systemd-target
     service: name=fanout_s{{ item }}.target
              enabled=yes
-             state=started
     with_items:
       - "{{ transcoder_rooms }}"

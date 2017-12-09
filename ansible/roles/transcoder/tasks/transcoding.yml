@@ -50,6 +50,7 @@
   - name: enable transcode systemd-units
     service: name=transcode_s{{ item.0 }}_{{ item.1 }}.service
              enabled=yes
+             state=restarted
     with_nested:
       - "{{ transcoder_rooms }}"
       - ["h264", "webm", "audio"]
@@ -57,6 +58,5 @@
   - name: enable & start transcode systemd-target
     service: name=transcode_s{{ item }}.target
              enabled=yes
-             state=started
     with_items:
       - "{{ transcoder_rooms }}"
