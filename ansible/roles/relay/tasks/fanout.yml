@@ -27,9 +27,9 @@
               owner=root group=root mode=755
     with_items: "{{ transcoder_rooms }}"
 
-  - name: create webm fanout-script
-    template: dest=/opt/fanout/scripts/s{{ item }}_webm.sh
-              src=fanout/webm.sh.j2
+  - name: create vpx fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_vpx.sh
+              src=fanout/vpx.sh.j2
               owner=root group=root mode=755
     with_items: "{{ transcoder_rooms }}"
 
@@ -49,7 +49,7 @@
               owner=root group=root mode=755
     with_nested:
       - "{{ transcoder_rooms }}"
-      - ["h264", "webm", "audio"]
+      - ["h264", "vpx", "audio"]
 
   - name: create fanout systemd-target (room {{item}})
     template: src=systemd-units/fanout.target.j2
@@ -69,7 +69,7 @@
              state=restarted
     with_nested:
       - "{{ transcoder_rooms }}"
-      - ["h264", "webm", "audio"]
+      - ["h264", "vpx", "audio"]
 
   - name: enable & start fanout systemd-target
     service: name=fanout_s{{ item }}.target

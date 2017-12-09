@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ffmpeg -nostdin -y -analyzeduration 1000000 \
-	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_webm \
+	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vpx \
 {% for language in ['native', 'translated', 'translated-2'] %}
 	{% for quality in ['hd', 'sd', 'slides'] %}
 		-c:v copy \
