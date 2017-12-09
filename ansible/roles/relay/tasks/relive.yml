@@ -1,4 +1,7 @@
 ---
+  - name: create relive group
+    group: name=relive
+
   - name: create relive user
     user: name=relive groups="ssh" append=yes group=relive
 
