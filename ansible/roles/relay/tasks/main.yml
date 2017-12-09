@@ -19,5 +19,5 @@
     when: nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes'
 
   - include: fanout.yml
-    when: fanout is defined
+    when: fanout_rooms is defined
     tags: fanout
