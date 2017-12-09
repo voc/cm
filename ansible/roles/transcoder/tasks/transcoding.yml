@@ -22,3 +22,41 @@
               src=transcoder/audio.sh.j2
               owner=root group=root mode=755
     with_items: "{{ transcoder_rooms }}"
+
+
+
+
+  - name: create transcode systemd-units
+    template: src=systemd-units/transcode.service.j2
+              dest="/etc/systemd/system/transcode_s{{ item.0 }}_{{ item.1 }}.service"
+              mode=0644 owner=root group=root
+              owner=root group=root mode=755
+    with_nested:
+      - "{{ transcoder_rooms }}"
+      - ["h264", "webm", "audio"]
+
+  - name: create transcode systemd-target (room {{item}})
+    template: src=systemd-units/transcode.target.j2
+              dest="/etc/systemd/system/transcode_s{{ item }}.target"
+              mode=0644 owner=root group=root
+              owner=root group=root mode=755
+    with_items:
+      - "{{ transcoder_rooms }}"
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: enable transcode systemd-units
+    service: name=transcode_s{{ item.0 }}_{{ item.1 }}.service
+             enabled=yes
+    with_nested:
+      - "{{ transcoder_rooms }}"
+      - ["h264", "webm", "audio"]
+
+  - name: enable & start transcode systemd-target
+    service: name=transcode_s{{ item }}.target
+             enabled=yes
+             state=started
+    with_items:
+      - "{{ transcoder_rooms }}"
