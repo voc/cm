@@ -55,4 +55,4 @@ ffmpeg -nostdin -y -analyzeduration 1000000 \
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder.push_endpoint }}/s{{ item }}_webm
+	icecast://{{ transcoder.push_endpoint }}/s{{ item }}_vpx
