@@ -38,4 +38,7 @@ ffmpeg -y -nostdin -hide_banner \
 {# Encode audio #}
 	-map 0:a \
 	\
-	-f matroska -password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} -content_type video/webm icecast://127.0.0.1:7999/s{{ 	room_number }}
+	-f matroska \
+	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+	-content_type video/webm \
+	icecast://127.0.0.1:7999/s{{ room_number }}

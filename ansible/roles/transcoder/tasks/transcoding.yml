@@ -5,17 +5,9 @@
     with_items:
       - /opt/transcoder/scripts/
 
-  - name: create hls directories
-    file: dest="{{ transcoder.hls_write_path }}/s{{ item.0 }}_{{ item.1 }}_{{ item.2 }}/"
-          state=directory owner=root group=root
-    with_nested:
-      - "{{ transcoder_rooms }}"
-      - "{{ transcoder.languages }}"
-      - "{{ transcoder.qualities }}"
-
-  - name: create hls-script
-    template: dest=/opt/transcoder/scripts/s{{ item }}_hls.sh
-              src=transcoder/hls.sh.j2
+  - name: create h264-script
+    template: dest=/opt/transcoder/scripts/s{{ item }}_h264.sh
+              src=transcoder/h264.sh.j2
               owner=root group=root mode=755
     with_items: "{{ transcoder_rooms }}"
 

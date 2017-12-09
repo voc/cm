@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 \
+ffmpeg -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
 	-filter_complex '[0:v:0] scale=1024:576 [sd]' \
 	-map '0:v:0' \
@@ -51,40 +51,8 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 \
 			-maxrate:a:2 96k \
 	\
 	-fflags +genpts \
-	-max_muxing_queue_size 400 \
-	-f nut - | buffer | \
-
-\
-\
-ffmpeg -v warning -nostats -nostdin -y -analyzeduration 10000 -i - \
-{% for language in ['native', 'translated', 'translated-2'] %}
-	{% for quality in ['hd', 'sd', 'slides'] %}
-		-c:v copy \
-		{% if quality == 'hd' %}
-			-map 0:v:0 \
-		{% elif quality == 'sd' %}
-			-map 0:v:1 \
-		{% elif quality == 'slides' %}
-			-map 0:v:2 \
-		{% endif %}
-		\
-		\
-		-c:a copy \
-		{% if language == 'native' %}
-			-map 0:a:0 \
-		{% elif language == 'translated' %}
-			-map 0:a:1 \
-		{% elif language == 'translated-2' %}
-			-map 0:a:2 \
-		{% endif %}
-		\
-		\
-		-f webm \
-		-cluster_size_limit 3M \
-		-cluster_time_limit 3500 \
-		-content_type video/webm \
-		-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
-		icecast://{{ transcoder.push_endpoint }}/s{{ item }}_{{ language }}_{{ quality }}.webm \
-		\
-	{% endfor %}
-{% endfor %};
+	-max_muxing_queue_size 1000 \
+	-f matroska \
+	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+	-content_type video/webm \
+	icecast://{{ transcoder.push_endpoint }}/s{{ item }}_webm
