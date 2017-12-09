@@ -7,8 +7,6 @@ relay_fanout:
   push_endpoint: 127.0.0.1:7999
   hls_write_path: /srv/nginx/hls
 
-  rooms: '[1, 2, 3, 4, "X"]'
-
 # icecast
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
 icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"

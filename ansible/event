@@ -85,7 +85,7 @@ web.ber.c3voc.de
 
 # Streaming server
 [relays]
-live.lan.c3voc.de   nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes
+live.lan.c3voc.de   fanout_rooms="[1, 2, 3, 4]" nginx=yes    nginx_hls_master=yes icecast=yes icecast_push_master=yes
 
 # remote
 # master
