@@ -1,9 +1,7 @@
 ---
 transcoder:
-  pull_endpoint: live.ber.c3voc.de:8000
-  push_endpoint: live.ber.c3voc.de:8000
-  hls_write_path: /srv/hls
+  pull_endpoint: 127.0.0.1:7999
+  push_endpoint: 127.0.0.1:7999
 
   languages: ['native', 'translated', 'translated-2']
   qualities: ['hd', 'sd', 'slides']
-  audiocodecs: ['mp3', 'opus']

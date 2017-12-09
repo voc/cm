@@ -1,0 +1,70 @@
+---
+  - name: create directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /opt/fanout/scripts/
+
+  - name: create hls directories
+    file: dest="{{ relay_fanout.hls_write_path }}/s{{ item.0 }}_{{ item.1 }}_{{ item.2 }}/"
+          state=directory owner=root group=root
+    with_nested:
+      - "{{ transcoder_rooms }}"
+      - "{{ transcoder.languages }}"
+      - "{{ transcoder.qualities }}"
+
+  - name: create h264 fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_h264.sh
+              src=fanout/h264.sh.j2
+              owner=root group=root mode=755
+    with_items: "{{ transcoder_rooms }}"
+
+  - name: create webm fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_webm.sh
+              src=fanout/webm.sh.j2
+              owner=root group=root mode=755
+    with_items: "{{ transcoder_rooms }}"
+
+  - name: create audio fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_audio.sh
+              src=fanout/audio.sh.j2
+              owner=root group=root mode=755
+    with_items: "{{ transcoder_rooms }}"
+
+
+
+
+  - name: create fanout systemd-units
+    template: src=systemd-units/fanout.service.j2
+              dest="/etc/systemd/system/fanout_s{{ item.0 }}_{{ item.1 }}.service"
+              mode=0644 owner=root group=root
+              owner=root group=root mode=755
+    with_nested:
+      - "{{ transcoder_rooms }}"
+      - ["h264", "webm", "audio"]
+
+  - name: create fanout systemd-target (room {{item}})
+    template: src=systemd-units/fanout.target.j2
+              dest="/etc/systemd/system/fanout_s{{ item }}.target"
+              mode=0644 owner=root group=root
+              owner=root group=root mode=755
+    with_items:
+      - "{{ transcoder_rooms }}"
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: enable fanout systemd-units
+    service: name=fanout_s{{ item.0 }}_{{ item.1 }}.service
+             enabled=yes
+    with_nested:
+      - "{{ transcoder_rooms }}"
+      - ["h264", "webm", "audio"]
+
+  - name: enable & start fanout systemd-target
+    service: name=fanout_s{{ item }}.target
+             enabled=yes
+             state=started
+    with_items:
+      - "{{ transcoder_rooms }}"
