@@ -10,7 +10,7 @@
           owner=relive group=relive mode=0755
 
   - name: checkout relive git repo
-    git: repo=ssh://git@mng.ber.c3voc.de/relive
+    git: repo=https://github.com/voc/relive
          dest=/home/relive/git
     tags:
       - install
