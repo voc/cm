@@ -43,7 +43,12 @@ class LookupModule(LookupBase):
 						(path, filename)
 					)
 
-			value = getattr(found, attribute)
+			if attribute.startswith('attr_'):
+				dict = found.custom_properties
+				value = dict[attribute[len('attr_'):]]
+			else:
+				value = getattr(found, attribute)
+
 			ret.append(value)
 
 		return ret
