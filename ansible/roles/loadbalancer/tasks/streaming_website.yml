@@ -15,11 +15,15 @@
     tags:
       - install
 
+  - name: create mqttfeedback group
+    group: name=mqttfeedback system=yes
+    tags:
+      - install
+
   - name: create mqttfeedback user
     user: name=mqttfeedback system=yes group=mqttfeedback
     tags:
       - install
-      - config
 
   - name: change streaming-website permissions
     file: dest=/srv/nginx/streaming-website
