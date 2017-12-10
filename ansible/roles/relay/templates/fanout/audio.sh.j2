@@ -22,7 +22,7 @@ ffmpeg -nostdin -y -analyzeduration 1000000 \
 			\
 			-f {{ codec }} \
 			-content_type audio/{{ codec }} \
-			-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+			-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
 			icecast://{{ relay_fanout.push_endpoint }}/s{{ item }}_{{ language }}.{{ codec }} \
 			\
 		{% endfor %}

@@ -28,7 +28,7 @@ ffmpeg -nostdin -y -analyzeduration 1000000 \
 		-cluster_size_limit 3M \
 		-cluster_time_limit 3500 \
 		-content_type video/webm \
-		-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+		-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
 		icecast://{{ relay_fanout.push_endpoint }}/s{{ item }}_{{ language }}_{{ quality }}.webm \
 		\
 	{% endfor %}
