@@ -21,6 +21,7 @@ voctomix:
   static_background_image: false
   music: true
 
+youtube: true
 qualities: ['hd', 'sd', 'slides']
 languages: ['native', 'translated', 'translated-2']
 

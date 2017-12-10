@@ -44,6 +44,7 @@
               src=fanout/youtube.sh.j2
               owner=root group=root mode=755
     with_items: "{{ fanout_rooms }}"
+    when: youtube is defined and youtube
 
 
 
@@ -55,7 +56,17 @@
               owner=root group=root mode=755
     with_nested:
       - "{{ fanout_rooms }}"
-      - ["h264", "vpx", "audio", "youtube"]
+      - ["h264", "vpx", "audio"]
+
+  - name: create youtube systemd-units
+    template: src=systemd-units/fanout.service.j2
+              dest="/etc/systemd/system/fanout_s{{ item.0 }}_{{ item.1 }}.service"
+              mode=0644 owner=root group=root
+              owner=root group=root mode=755
+    with_nested:
+      - "{{ fanout_rooms }}"
+      - ["youtube"]
+    when: youtube is defined and youtube
 
   - name: create fanout systemd-target (room {{item}})
     template: src=systemd-units/fanout.target.j2
@@ -75,7 +86,16 @@
              state=restarted
     with_nested:
       - "{{ fanout_rooms }}"
-      - ["h264", "vpx", "audio", "youtube"]
+      - ["h264", "vpx", "audio"]
+
+  - name: enable youtube systemd-units
+    service: name=fanout_s{{ item.0 }}_{{ item.1 }}.service
+             enabled=yes
+             state=restarted
+    with_nested:
+      - "{{ fanout_rooms }}"
+      - ["youtube"]
+    when: youtube is defined and youtube
 
   - name: enable & start fanout systemd-target
     service: name=fanout_s{{ item }}.target
