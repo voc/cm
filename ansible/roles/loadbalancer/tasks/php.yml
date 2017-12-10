@@ -3,44 +3,44 @@
   - name: install streaming page packages
     apt: name={{ item }} state=latest
     with_items:
-      - php5-fpm
-      - php5-curl
-      - php5-sqlite
+      - php7.0-fpm
+      - php7.0-curl
+      - php7.0-sqlite3
       - libsqlite3-dev
       - sqlite3
     tags: install
 
   # Create default pool
   - name: configure php-fpm
-    template: dest=/etc/php5/fpm/pool.d/www.conf
+    template: dest=/etc/php/7.0/fpm/pool.d/www.conf
               src=php_fpm/www.conf.j2
               mode=0644 owner=root group=root
-    notify: reload php5-fpm
+    notify: reload php7.0-fpm
     tags:
       - install
       - config
 
   # Change php.ini settings
   - name: disable php version expose
-    lineinfile: dest=/etc/php5/fpm/php.ini
+    lineinfile: dest=/etc/php/7.0/fpm/php.ini
                 regexp="expose_php.*=.*"
                 line="expose_php = Off"
-    notify: reload php5-fpm
+    notify: reload php7.0-fpm
     tags:
       - install
       - config
 
   - name: enable php short_open_tag
-    lineinfile: dest=/etc/php5/fpm/php.ini
+    lineinfile: dest=/etc/php/7.0/fpm/php.ini
                 regexp="short_open_tag.*=.*"
                 line="short_open_tag = On"
-    notify: reload php5-fpm
+    notify: reload php7.0-fpm
     tags:
       - install
       - config
 
-  - name: enable php short_open_tag on clu
-    lineinfile: dest=/etc/php5/cli/php.ini
+  - name: enable php short_open_tag on cli
+    lineinfile: dest=/etc/php/7.0/cli/php.ini
                 regexp="short_open_tag.*=.*"
                 line="short_open_tag = On"
     tags:
@@ -49,5 +49,5 @@
 
   # Enable service
   - name: start php-fpm
-    service: name=php5-fpm enabled=yes state=started
+    service: name=php7.0-fpm enabled=yes state=started
     tags: install
