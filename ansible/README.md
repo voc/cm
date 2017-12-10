@@ -34,7 +34,7 @@ _On the first call you will be prompted for the location to your keepass file an
 Basic `ansible` call to deploy new config to a set of hosts on an event.
 
 ```
-  ./ansible-playbook-keepass -u voc --sudo -i event -l saal1 site.yml
+  ./ansible-playbook-keepass -u voc --become --become-method=sudo -i event -l saal1 site.yml
 ```
 
 ## Keepass Password
