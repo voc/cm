@@ -39,6 +39,12 @@
               owner=root group=root mode=755
     with_items: "{{ fanout_rooms }}"
 
+  - name: create youtube fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_youtube.sh
+              src=fanout/youtube.sh.j2
+              owner=root group=root mode=755
+    with_items: "{{ fanout_rooms }}"
+
 
 
 
@@ -49,7 +55,7 @@
               owner=root group=root mode=755
     with_nested:
       - "{{ fanout_rooms }}"
-      - ["h264", "vpx", "audio"]
+      - ["h264", "vpx", "audio", "youtube"]
 
   - name: create fanout systemd-target (room {{item}})
     template: src=systemd-units/fanout.target.j2
@@ -69,7 +75,7 @@
              state=restarted
     with_nested:
       - "{{ fanout_rooms }}"
-      - ["h264", "vpx", "audio"]
+      - ["h264", "vpx", "audio", "youtube"]
 
   - name: enable & start fanout systemd-target
     service: name=fanout_s{{ item }}.target

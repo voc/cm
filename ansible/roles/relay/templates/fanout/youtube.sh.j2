@@ -1,0 +1,13 @@
+#!/bin/sh
+
+ffmpeg -nostdin -y -analyzeduration 1000000 \
+	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_h264 \
+	-c:v copy \
+	-map 0:v:0 \
+	\
+	\
+	-c:a copy \
+	-map 0:a:0 \
+	\
+	\
+	-f flv rtmp://a.rtmp.youtube.com/live2/{{ lookup('keepass', 'ansible/youtube/s'+item+'.password') }}
