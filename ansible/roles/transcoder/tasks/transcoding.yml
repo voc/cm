@@ -8,19 +8,19 @@
   - name: create h264 transcode-script
     template: dest=/opt/transcoder/scripts/s{{ item }}_h264.sh
               src=transcoder/h264.sh.j2
-              owner=root group=root mode=755
+              owner=root group=root mode=0755
     with_items: "{{ transcoder_rooms }}"
 
   - name: create vpx transcode-script
     template: dest=/opt/transcoder/scripts/s{{ item }}_vpx.sh
               src=transcoder/vpx.sh.j2
-              owner=root group=root mode=755
+              owner=root group=root mode=0755
     with_items: "{{ transcoder_rooms }}"
 
   - name: create audio transcode-script
     template: dest=/opt/transcoder/scripts/s{{ item }}_audio.sh
               src=transcoder/audio.sh.j2
-              owner=root group=root mode=755
+              owner=root group=root mode=0755
     with_items: "{{ transcoder_rooms }}"
 
 
@@ -30,7 +30,6 @@
     template: src=systemd-units/transcode.service.j2
               dest="/etc/systemd/system/transcode_s{{ item.0 }}_{{ item.1 }}.service"
               mode=0644 owner=root group=root
-              owner=root group=root mode=755
     with_nested:
       - "{{ transcoder_rooms }}"
       - ["h264", "vpx", "audio"]
@@ -39,7 +38,6 @@
     template: src=systemd-units/transcode.target.j2
               dest="/etc/systemd/system/transcode_s{{ item }}.target"
               mode=0644 owner=root group=root
-              owner=root group=root mode=755
     with_items:
       - "{{ transcoder_rooms }}"
 
