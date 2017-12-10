@@ -65,9 +65,7 @@
     tags: install
 
   - name: create feedback db
-    shell: "sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
-    become: www-data
-    become_user: www-data
+    shell: "sudo -uwww-data sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
     when: feedback_db.stat.isreg is not defined or feedback_db.stat.isreg == False
     tags: install
 
