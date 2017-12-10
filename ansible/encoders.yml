@@ -7,4 +7,3 @@
      - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }
    vars:
      ssh_allow_voc_password_login: 'yes'
-     user_voc_password: "{{ lookup('keepass', 'ansible/logins/voc.password') }}"

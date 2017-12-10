@@ -6,5 +6,3 @@
       - { role: minion, tags: ['minion'] }
     vars:
      ssh_allow_voc_password_login: 'yes'
-     user_voc_password: "{{ lookup('keepass', 'ansible/logins/voc.password') }}"
-

@@ -8,5 +8,3 @@
       - { role: pbx, when: ansible_fqdn == 'phony.lan.c3voc.de' }
     vars:
        ssh_allow_voc_password_login: 'yes'
-       user_voc_password: "{{ lookup('keepass', 'ansible/logins/voc.password') }}"
-
