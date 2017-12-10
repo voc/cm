@@ -4,3 +4,4 @@
   - include: letsencrypt_fake.yml
     when: letsencrypt_fake is defined
   - include: ocsp.yml
+    when: letsencrypt_fake is not defined

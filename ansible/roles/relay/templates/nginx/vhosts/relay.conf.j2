@@ -96,7 +96,9 @@ server {
   ssl_stapling on;
   ssl_stapling_verify on;
   ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
+{% if letsencrypt_fake is not defined %}
   ssl_stapling_file /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp;
+{% endif %}
 
   # don't allow access to some files or directories
   location ~* /.*\.(ht|sh|git|htaccess|php|inc|rb|py|pl|db|sqlite|sqlite3)$ {
