@@ -44,10 +44,6 @@ lb_icecast_relays: {
   "live.dus.c3voc.de": 25,
   "live.fem.c3voc.de": 100,
   "live.self.c3voc.de": 30,
-  "live1.rrb.c3voc.de": 20,
-  "live2.rrb.c3voc.de": 20,
-  "live3.rrb.c3voc.de": 20,
-  "live4.rrb.c3voc.de": 20,
 }
 
 lb_local_relays: {
