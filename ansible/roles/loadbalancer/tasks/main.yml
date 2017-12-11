@@ -1,6 +1,5 @@
 ---
   - include: ../../../register/bin_path.yml
-  - include: ../../letsencrypt/tasks/main.yml domain={{ ansible_fqdn }}
   - include: nginx.yml
     tags: nginx
   - include: php.yml

@@ -3,5 +3,6 @@
     roles:
       - { role: common, tags: ['common'] }
       - { role: tracker, tags: ['tracker'] }
+      - { role: letsencrypt, vars: { 'domain': 'tracker.c3voc.de' }}
     vars:
       ssh_allow_voc_password_login: 'yes'

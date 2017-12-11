@@ -3,3 +3,4 @@
     roles:
       - { role: common, tags: ['common'] }
       - { role: loadbalancer, tags: ['loadbalancer'] }
+      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'} }

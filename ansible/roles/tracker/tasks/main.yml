@@ -1,5 +1,4 @@
 ---
-  - include: ../../letsencrypt/tasks/main.yml domain=tracker.c3voc.de
   - include: nginx.yml
   - include: php.yml
 
