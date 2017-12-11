@@ -1,0 +1,26 @@
+---
+  - name: undeploy old ocsp update scripts
+    file: dest=/usr/local/bin/{{ item }}
+          state=absent
+    with_items:
+      - update_cdn_c3voc_de_ocsp_stapling.sh
+      - update_streaming_media_ccc_de_ocsp_stapling.sh
+
+  - name: undeploy ocsp update cron jobs
+    cron: name="{{ item }}"
+          state=absent
+    with_items:
+      - update_cdn_c3voc_de_ocsp_stapling.sh
+      - update_streaming_media_ccc_de_ocsp_stapling.sh
+
+  - name: undeploy old letsencrypt.service
+    file: dest=/etc/systemd/system/letsencrypt.service
+          state=absent
+
+  - name: undeploy old letsencrypt.timer
+    file: dest=/etc/systemd/system/letsencrypt.timer
+          state=absent
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false

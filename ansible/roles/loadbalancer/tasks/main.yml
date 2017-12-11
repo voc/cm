@@ -11,3 +11,4 @@
     tags: sysctl
   - include: iptables.yml
     tags: iptables
+  - include: undeploy.yml
