@@ -1,0 +1,9 @@
+#!/bin/sh
+touch /etc/ssl/certs/haproxy_{{ item }}.pem
+chmod 660 /etc/ssl/certs/haproxy_{{ item }}.pem
+cat \
+	/etc/letsencrypt/live/{{ item }}/cert.pem \
+	/etc/letsencrypt/live/{{ item }}/privkey.pem \
+	/etc/letsencrypt/live/{{ item }}/chain.pem \
+	/etc/ssl/dhparam2048.pem \
+		> /etc/ssl/certs/haproxy_{{ item }}.pem
