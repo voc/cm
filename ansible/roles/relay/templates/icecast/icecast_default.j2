@@ -15,8 +15,4 @@ GROUPID=icecast
 
 # Edit /etc/icecast2/icecast.xml and change at least the passwords.
 # Change this to true when done to enable the init.d script
-{% if icecast is defined and icecast == 'yes' %}
-ENABLE=true
-{% else %}
 ENABLE=false
-{% endif %}
