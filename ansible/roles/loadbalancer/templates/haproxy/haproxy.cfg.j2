@@ -525,6 +525,8 @@ backend streaming_website_http
 {% elif ansible_fqdn == 'lb.alb.c3voc.de'%}
     server lb.alb.c3voc.de 127.0.0.1:8080 maxconn 2048
     server lb.dus.c3voc.de 31.172.30.138:8080 backup maxconn 2048
+{% else %}
+    server localhost 127.0.0.1:8080 maxconn 2048
 {% endif %}
 
 backend streaming_website_https
@@ -539,5 +541,7 @@ backend streaming_website_https
 {% elif ansible_fqdn == 'lb.alb.c3voc.de'%}
     server lb.alb.c3voc.de 127.0.0.1:8080 maxconn 2048
     server lb.dus.c3voc.de 31.172.30.138:8080 backup maxconn 2048
+{% else %}
+    server localhost 127.0.0.1:8080 maxconn 2048
 {% endif %}
     # check is disabled cause of multiple processes
