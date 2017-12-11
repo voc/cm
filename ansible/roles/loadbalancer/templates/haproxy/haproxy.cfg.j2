@@ -32,6 +32,7 @@ defaults
     errorfile 500 /srv/nginx/htdocs/50x.html
     errorfile 502 /srv/nginx/htdocs/50x.html
     errorfile 503 /srv/nginx/htdocs/50x.html
+    log     /dev/log local0 notice
 
 frontend icecast_and_nginx_hls_http
     bind-process 1
