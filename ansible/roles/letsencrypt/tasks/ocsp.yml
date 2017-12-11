@@ -28,5 +28,4 @@
 
   - name: create fresh ocsp file
     command: "/usr/local/bin/update_{{ domain }}_ocsp_stapling.sh 1>/dev/null"
-    failed_when: False
     changed_when: False
