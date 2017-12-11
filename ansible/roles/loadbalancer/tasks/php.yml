@@ -48,6 +48,6 @@
       - config
 
   # Enable service
-  - name: start php-fpm
-    service: name=php7.0-fpm enabled=yes state=started
+  - name: (re)start php-fpm
+    service: name=php7.0-fpm enabled=yes state=restarted
     tags: install
