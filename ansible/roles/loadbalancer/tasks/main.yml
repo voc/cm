@@ -7,7 +7,6 @@
   - include: streaming_website.yml
   - include: haproxy.yml
     tags: haproxy
-  - include: ocsp.yml
   - include: sysctl.yml
     tags: sysctl
   - include: iptables.yml
