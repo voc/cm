@@ -15,8 +15,7 @@ map $upstream_http_content_length $flag_cache_empty {
 server {
   server_name streaming.media.ccc.de;
 
-  listen 127.0.0.1:80;
-  listen [::]:8080  ipv6only=off;
+  listen [::1]:8080  ipv6only=off;
 
   root /srv/nginx/htdocs;
   index index.php;
