@@ -101,7 +101,7 @@
 
   - name: configure systemd to run mqttfeedback client
     template: src=mqttfeedback.service.j2
-              dest=/lib/systemd/system/
+              dest=/lib/systemd/system/mqttfeedback.service
               owner=root mode=640
     notify: reload systemd
     tags:
