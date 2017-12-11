@@ -1,9 +1,12 @@
 #!/bin/sh
-touch /etc/ssl/certs/haproxy_{{ item }}.pem
-chmod 660 /etc/ssl/certs/haproxy_{{ item }}.pem
-cat \
-	/etc/letsencrypt/live/{{ item }}/cert.pem \
-	/etc/letsencrypt/live/{{ item }}/privkey.pem \
-	/etc/letsencrypt/live/{{ item }}/chain.pem \
-	/etc/ssl/dhparam2048.pem \
-		> /etc/ssl/certs/haproxy_{{ item }}.pem
+TARGET="/etc/ssl/certs/haproxy_{{ item }}.pem"
+
+cp /dev/null $TARGET
+chmod 660 $TARGET
+cat /etc/letsencrypt/live/{{ item }}/cert.pem >> $TARGET
+echo >> $TARGET
+cat /etc/letsencrypt/live/{{ item }}/privkey.pem >> $TARGET
+echo >> $TARGET
+cat /etc/letsencrypt/live/{{ item }}/chain.pem >> $TARGET
+echo >> $TARGET
+cat /etc/ssl/dhparam2048.pem >> $TARGET
