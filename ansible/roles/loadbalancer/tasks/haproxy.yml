@@ -3,49 +3,19 @@
     apt: name=haproxy state=latest
     tags: install
 
-  # TLS certificates
-  # create ssl-cert group and add haproxy user to it
-  - name: create ssl-cert group
-    group: name=ssl-cert state=present
+  - name: setup certboot-hook to aggregate haproxy combined cert-files
+    template: src=haproxy/certbot-renewal-hook.sh.j2
+              dest=/etc/letsencrypt/renewal-hooks/post/20-haproxy-{{ item }}
+              mode=0755 owner=root group=root
+    with_items:
+      - cdn.c3voc.de
+      - streaming.media.ccc.de
 
-  - name: add haproxy user to ssl-cert group
-    user: name=haproxy groups=ssl-cert append=yes
-    tags: install
-
-  # TODO: remove private keys :/
-  - name: copy cdn.c3voc.de certificate pem <cert+privkey+intermediate+dhparam>
-    copy: content="{{ lookup('keepass', 'ansible/tls/haproxy_cdn.c3voc.de.notes') }}"
-          dest=/etc/ssl/certs/haproxy_cdn.c3voc.de.pem
-          mode=0640 owner=root group=ssl-cert
-    notify: reload haproxy
-    tags:
-      - install
-      - config
-
-  - name: copy streaming.media.ccc.de certificate pem <cert+privkey+intermediate+dhparam>
-    copy: content="{{ lookup('keepass', 'ansible/tls/haproxy_streaming.media.ccc.de.notes') }}"
-          dest=/etc/ssl/certs/haproxy_streaming.media.ccc.de.pem
-          mode=0640 owner=root group=ssl-cert
-    notify: reload haproxy
-    tags:
-      - install
-      - config
-
-  # seperate crt files for ocsp
-  - name: copy streaming.media.ccc.de certificate
-    copy: content="{{ lookup('keepass', 'ansible/tls/streaming.media.ccc.de.notes') }}"
-          dest=/etc/ssl/certs/streaming.media.ccc.de.crt
-          mode=0644 owner=root group=ssl-cert
-
-  - name: copy cdn.c3voc.de certificate
-    copy: content="{{ lookup('keepass', 'ansible/tls/cdn.c3voc.de.notes') }}"
-          dest=/etc/ssl/certs/cdn.c3voc.de.crt
-          mode=0644 owner=root group=ssl-cert
-
-  - name: copy startcom class1 sha2 certificate
-    copy: content="{{ lookup('keepass', 'ansible/tls/sub.class1.server.sha2.ca.notes') }}"
-          dest=/etc/ssl/certs/sub.class1.server.sha2.ca.pem
-          mode=0644 owner=root group=ssl-cert
+  - name: run certboot-hook once to aggregate haproxy combined cert-files
+    command: /etc/letsencrypt/renewal-hooks/post/20-haproxy-{{ item }}
+    with_items:
+      - cdn.c3voc.de
+      - streaming.media.ccc.de
 
   # configure haproxy
   - name: create haproxy chroot directory
