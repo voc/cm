@@ -75,6 +75,11 @@
    apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
    when: system.type == 'pc'
 
+ - name: pin the VOC repo to the highest priority
+   copy: src=voc-repo-pinning
+         dest="/etc/apt/preferences.d/voc.pref"
+         mode=0644 owner=root group=root
+
  - name: pin multimedia packages for arm ffmpeg*
    template: src="apt-pin-ffmpeg-multimedia.pref.j2"
              dest="/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref"
