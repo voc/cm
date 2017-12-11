@@ -1,0 +1,13 @@
+[Unit]
+Description=User-facing Icecast
+After=network.target
+
+[Service]
+Type=simple
+LimitNOFILE=65536
+ExecStart=/usr/bin/icecast2 -c /etc/icecast2/icecast.xml
+ExecReload=/usr/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+
