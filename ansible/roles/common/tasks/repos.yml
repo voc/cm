@@ -76,6 +76,10 @@
    file: dest=/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref state=absent
    when: system.type == 'pi'
 
+#
+# Configure pinning
+#
+
  - name: pin the VOC repo to the highest priority
    copy: src=voc-repo-pinning
          dest="/etc/apt/preferences.d/voc.pref"
