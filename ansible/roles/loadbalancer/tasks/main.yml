@@ -1,5 +1,7 @@
 ---
   - include: ../../../register/bin_path.yml
+  - include: undeploy.yml
+    tags: undeploy
   - include: nginx.yml
     tags: nginx
   - include: php.yml
@@ -11,4 +13,3 @@
     tags: sysctl
   - include: iptables.yml
     tags: iptables
-  - include: undeploy.yml
