@@ -49,7 +49,7 @@
     register: port_443_check
 
   - name: Generate or renew certificate (standalone)
-    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --agree-dev-preview --email=contact@c3voc.de -d {{ domain }} --standalone --renew-by-default --rsa-key-size 4096"
+    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --email=contact@c3voc.de -d {{ domain }} --standalone --renew-by-default --rsa-key-size 4096"
     when: >
       not (port_443_check.stdout is defined and port_443_check.stdout)
       and domain is defined and domain
@@ -61,7 +61,7 @@
     failed_when: False
 
   - name: Generate or renew certificate (webroot)
-    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --agree-dev-preview --email=contact@c3voc.de -d {{ domain }} --webroot --webroot-path {{ webroot_path }} --renew-by-default"
+    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --email=contact@c3voc.de -d {{ domain }} --webroot --webroot-path {{ webroot_path }} --renew-by-default"
     when: >
       webroot_stat is defined and webroot_stat.stat is defined and webroot_stat.stat.isdir is defined and webroot_stat.stat.isdir
       and port_443_check.stdout is defined and port_443_check.stdout
