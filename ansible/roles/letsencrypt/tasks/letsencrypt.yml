@@ -70,6 +70,7 @@
       not (port_443_check.stdout is defined and port_443_check.stdout)
       and domain is defined and domain
       and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
+    failed_when: False
 
   - stat: path={{ webroot_path }}
     register: webroot_stat
@@ -88,6 +89,7 @@
       and domain is defined and domain
       and webroot_path is defined and webroot_path
       and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
+    failed_when: False
 
   - name: change /etc/letsencrypt permissions
     file: dest=/etc/letsencrypt/{{ item }}
