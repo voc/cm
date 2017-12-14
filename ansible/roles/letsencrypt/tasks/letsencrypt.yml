@@ -41,7 +41,7 @@
     changed_when: False
 
   - name: Check if a webserver is already running
-    shell: "netstat -lnt | awk '$6 == \"LISTEN\" && $4 ~ \":631\"'"
+    shell: "netstat -lnt | awk '$6 == \"LISTEN\" && $4 ~ \":443\"'"
     when: >
       domain is defined and domain
       and not cert_exists.stat.exists
