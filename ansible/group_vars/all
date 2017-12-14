@@ -180,3 +180,5 @@ users:
 additional_users: []
 
 distribution_mode: icedist
+
+webroot_path: "/var/www"
