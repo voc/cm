@@ -48,6 +48,22 @@
       or cert_exists.stat.exists and openssl_checkend.rc != 0
     register: port_443_check
 
+  - name: debug domain
+    debug: var=domain
+           verbosity=2
+
+  - name: debug cert_exists
+    debug: var=cert_exists
+           verbosity=2
+
+  - name: debug openssl_checkend
+    debug: var=openssl_checkend
+           verbosity=2
+
+  - name: debug port_443_check
+    debug: var=port_443_check
+           verbosity=2
+
   - name: Generate or renew certificate (standalone)
     shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --email=contact@c3voc.de -d {{ domain }} --standalone --renew-by-default --rsa-key-size 4096"
     when: >
@@ -59,6 +75,10 @@
     register: webroot_stat
     when: webroot_path is defined and webroot_path
     failed_when: False
+
+  - name: debug webroot_path
+    debug: var=webroot_path
+           verbosity=2
 
   - name: Generate or renew certificate (webroot)
     shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --email=contact@c3voc.de -d {{ domain }} --webroot --webroot-path {{ webroot_path }} --renew-by-default"
