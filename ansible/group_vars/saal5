@@ -7,8 +7,8 @@ room_fahrplan_name: 4k
 # reboot encoder after changing
 encodermode: hd-voctomix
 
-# Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator)
-voctomix_audiostreams: 3
+# Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
+voctomix_audiostreams: 4
 
 # für JVC:
 #    video_connection: SDI
@@ -65,3 +65,6 @@ voctomix_sources:
 
       # fill stereo-stream 2 (second translator) with sdi-channel 4 on left and sdi-channel 5 on right
       2: 4+5
+
+      # fill stereo-stream 3 (PA-Backup) with sdi-channel 6 on left and sdi-channel 7 on right
+      3: 6+7
