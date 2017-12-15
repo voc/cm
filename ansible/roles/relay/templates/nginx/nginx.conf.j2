@@ -6,10 +6,8 @@ worker_rlimit_nofile 65536;
 # multiple worker
 worker_processes  {{ nginx_worker_processes | default(8) }};
 
-{% if rtmp is defined and rtmp == 'yes' %}
-# important for multi worker processes!!1!
-rtmp_auto_push on;
-{% endif %}
+# dynamic config
+include /etc/nginx/conf.d/*;
 
 error_log  /var/log/nginx/error.log;
 pid /var/run/nginx.pid;
@@ -90,13 +88,6 @@ http {
     server_name _;
 
     listen 127.0.0.1:8999;
-{% if rtmp is defined and rtmp == 'yes' %}
-    # per-worker listener primary for stats
-    # 1st worker will listen 8000
-    # 2nd worker will listen 8001
-    # …
-    listen 127.0.0.1:9000 per_worker;
-{% endif %}
 
     # stats
     location ~* ^/stats/nginx {

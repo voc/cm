@@ -1,5 +1,10 @@
 # HLS-Master configuration
 
+include /usr/share/nginx/modules-available/mod-rtmp.conf;
+
+# important for multi worker processes!!1!
+rtmp_auto_push on;
+
 rtmp {
   log_format rtmp '"$remote_addr [$time_local] $command "$app" "$name" "$args" - $bytes_received $bytes_sent "$pageurl" "$flashver" "$swfurl" "$tcurl" ($session_readable_time)"';
   access_log /var/log/nginx/rtmp_access.log rtmp;

@@ -71,8 +71,20 @@
       - install
 
   # RTMP vhost
-  - name: create rtmp master vhost
-    template: dest="/etc/nginx/sites-available/rtmp_master.conf"
+  - name: remove old rtmp master vhost
+    file: dest="{{ item }}"
+          state=absent
+    with_items:
+      - /etc/nginx/sites-enabled/rtmp_master.conf
+      - /etc/nginx/sites-available/rtmp_master.conf
+    notify:
+      - reload nginx
+    tags:
+      - config
+      - install
+
+  - name: create rtmp master config
+    template: dest="/etc/nginx/conf.d/rtmp_master.conf"
               src="nginx/vhosts/rtmp_master.conf.j2"
               mode=0640 owner=root group=root
     when: rtmp is defined and rtmp == 'yes'
@@ -82,19 +94,8 @@
       - config
       - install
 
-  - name: enable rtmp vhost
-    file: dest=/etc/nginx/sites-enabled/rtmp_master.conf
-          src=/etc/nginx/sites-available/rtmp_master.conf
-          state=link
-    when: rtmp is defined and rtmp == 'yes'
-    notify:
-      - reload nginx
-    tags:
-      - config
-      - install
-
-  - name: disbale rtmp vhost
-    file: dest=/etc/nginx/sites-enabled/rtmp_master.conf
+  - name: remove rtmp master config
+    file: dest=/etc/nginx/conf.d/rtmp_master.conf
           state=absent
     when: rtmp is not defined or rtmp != 'yes'
     notify:
