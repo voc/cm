@@ -21,7 +21,7 @@
           state=directory
     tags: install
 
-  - name: create costum types.db
+  - name: create custom types.db
     file: dest=/opt/voc/collectd/types.db state=touch
     notify: restart collectd
     changed_when: false
