@@ -7,6 +7,8 @@
         - "letsencrypt"
         - "letsencrypt/live"
         - "letsencrypt/live/{{ domain }}"
+        - "letsencrypt/renewal-hooks/"
+        - "letsencrypt/renewal-hooks/post"
 
     - name: copy over pregenerated certificate data
       copy: "dest=/etc/letsencrypt/live/{{ domain }}/{{ item }}.pem
