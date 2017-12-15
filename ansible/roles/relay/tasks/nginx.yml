@@ -111,6 +111,7 @@
 
   - name: stopp nginx-rtmp
     service: name=nginx-rtmp enabled=no state=stopped
+    failed_when: false
 
   # Cron job to reload nginx after ocsp update
   # TODO: Is there a better solution available?
