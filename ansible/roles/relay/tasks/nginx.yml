@@ -1,14 +1,22 @@
 ---
   # Install packages
-  - name: install nginx-rtmp package
-    apt: name=nginx-rtmp state=latest
+  - name: uninstall nginx-rtmp package
+    apt: name=nginx-rtmp state=absent
     tags: install
-    when: rtmp is defined and rtmp == 'yes'
 
   - name: install nginx package
     apt: name=nginx state=latest
     tags: install
-    when: rtmp is not defined or rtmp != 'yes'
+
+  - name: install libnginx-mod-rtmp package
+    apt: name=libnginx-mod-rtmp state=latest
+    tags: install
+    when: (rtmp is defined and rtmp == 'yes')
+
+  - name: uninstall libnginx-mod-rtmp package
+    apt: name=libnginx-mod-rtmp state=absent
+    tags: install
+    when: not (rtmp is defined and rtmp == 'yes')
 
   # Create directories
   - name: added nginx htdocs and caching directories
@@ -98,13 +106,11 @@
   # Enable service
   - name: start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx is defined and nginx == 'yes' or rtmp is defined and rtmp == 'yes'
+    when: nginx is defined and nginx == 'yes'
 
-  - name: stopp nginx
-    service: name=nginx enabled=no state=stopped
-    when: >
-      (nginx is not defined or nginx != 'yes')
-      and (rtmp is not defined or rtmp != 'yes')
+  - name: stopp nginx-rtmp
+    service: name=nginx-rtmp enabled=no state=stopped
+    when: not (nginx is defined and nginx == 'yes')
 
   # Cron job to reload nginx after ocsp update
   # TODO: Is there a better solution available?

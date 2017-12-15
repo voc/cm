@@ -39,7 +39,7 @@ sub get_viewers {
 }
 
 my @urls = qw(
-{% for id in range(0,(nginx_worker_processes | default('2'))) %}
+{% for id in range(0, 8) %}
   http://127.0.0.1:900{{ id }}/stats/rtmp
 {% endfor %}
 );
