@@ -2,8 +2,14 @@ user  www-data;
 
 # Specifies the value for maximum file descriptors that can be opened by this process.
 worker_rlimit_nofile 65536;
+
 # multiple worker
 worker_processes  {{ nginx_worker_processes | default(8) }};
+
+{% if rtmp is defined and rtmp == 'yes' %}
+# important for multi worker processes!!1!
+rtmp_auto_push on;
+{% endif %}
 
 error_log  /var/log/nginx/error.log;
 pid /var/run/nginx.pid;
