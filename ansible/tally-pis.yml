@@ -1,0 +1,5 @@
+---
+  - hosts: tally-pis
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: tally, tags: ['tally'] }

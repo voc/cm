@@ -1,0 +1,33 @@
+---
+  - name: create voctomix directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /opt/voctomix/scripts/
+      - /opt/voctomix/release/
+
+  - name: checkout voctomix release
+    git: repo=https://c3voc.de/git/voctomix
+         dest=/opt/voctomix/release/
+         version={{ voctomix.version }}
+         force=yes
+         accept_hostkey=yes
+
+  - name: create voctolight config
+    template: src=config/config.ini.j2
+              dest=/opt/voctomix/release/example-scripts/voctolight/config.ini
+              mode=0644 owner=root group=root
+
+  - name: create voctolight systemd unit
+    template: src=systemd-units/voctolight.service.j2
+              dest=/etc/systemd/system/voctolight.service
+              mode=0644 owner=root group=root
+
+  - name: reload systemd-unit
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: enable and start voctolight service
+    service: name=voctolight
+             enabled=yes
+             state=started
