@@ -1,5 +1,11 @@
 #!/bin/sh
 
+{% for language in languages %}
+	{% for quality in qualities %}
+		mkdir -p "{{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}"
+	{% endfor %}
+{% endfor %}
+
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_h264 \
 {% for language in languages %}
