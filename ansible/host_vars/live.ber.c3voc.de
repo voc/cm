@@ -4,6 +4,8 @@ fanout_rooms: ['X']
 nginx: 'yes'
 nginx_hls_master: 'yes'
 
+icedist: 'yes'
+
 icecast: 'yes'
 icecast_push_master: 'yes'
 
