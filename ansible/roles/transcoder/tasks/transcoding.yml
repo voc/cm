@@ -23,6 +23,11 @@
               owner=root group=root mode=0755
     with_items: "{{ transcoder_rooms }}"
 
+  - name: create lounge transcode-script
+    template: dest=/opt/transcoder/scripts/lounge_a{{ item }}.sh
+              src=transcoder/lounge.sh.j2
+              owner=root group=root mode=0755
+    with_items: "{{ transcoder_lounges }}"
 
 
 
@@ -34,12 +39,20 @@
       - "{{ transcoder_rooms }}"
       - ["h264", "vpx", "audio"]
 
-  - name: create transcode systemd-target (room {{item}})
+  - name: create transcode systemd-target
     template: src=systemd-units/transcode.target.j2
               dest="/etc/systemd/system/transcode_s{{ item }}.target"
               mode=0644 owner=root group=root
     with_items:
       - "{{ transcoder_rooms }}"
+
+  - name: create lounge systemd-units
+    template: src=systemd-units/lounge.service.j2
+              dest="/etc/systemd/system/transcode_lounge_a{{ item }}.service"
+              mode=0644 owner=root group=root
+    with_items: "{{ transcoder_lounges }}"
+
+
 
   - name: reload systemd daemon
     command: systemctl daemon-reload
@@ -58,3 +71,9 @@
              enabled=yes
     with_items:
       - "{{ transcoder_rooms }}"
+
+  - name: enable & start lounge systemd-units
+    service: name=transcode_lounge_a{{ item }}.service
+             enabled=yes
+             state=restarted
+    with_items: "{{ transcoder_lounges }}"
