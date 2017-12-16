@@ -10,7 +10,7 @@ icecast: 'yes'
 icecast_push_master: 'yes'
 
 rtmp: 'yes'
-nginx_rtmp_hls_master: 'yes'
+nginx_rtmp_hls_master: 'no'
 
 nginx_hls_relive_masters: ['127.0.0.1']
 
