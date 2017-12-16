@@ -26,8 +26,8 @@ ffmpeg -v warning -nostats -v warning -nostats -nostdin -y -analyzeduration 1000
 		-c:v:2 libvpx \
 			-threads:v:2 8 \
 			-flags:v:2 +global_header \
-			-g:v:2 75 \
-			-keyint_min:v:2 75 \
+			-g:v:2 5 \
+			-keyint_min:v:2 5 \
 			-deadline:v:2 realtime \
 			-b:v:2 100k \
 	\
