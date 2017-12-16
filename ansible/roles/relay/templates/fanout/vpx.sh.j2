@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ffmpeg -nostdin -y -analyzeduration 1000000 \
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vpx \
 {% for language in languages %}
 	{% for quality in qualities %}
