@@ -1,7 +1,7 @@
 ---
 transcoder:
-  pull_endpoint: live.ber.c3voc.de:7999
-  push_endpoint: live.ber.c3voc.de:7999
+  pull_endpoint: live.lan.c3voc.de:7999
+  push_endpoint: live.lan.c3voc.de:7999
 
-  lounge_pull_endpoint: 127.0.0.1:8000
-  lounge_push_endpoint: 127.0.0.1:8000
+  lounge_pull_endpoint: live.lan.c3voc.de:8000
+  lounge_push_endpoint: live.lan.c3voc.de:8000
