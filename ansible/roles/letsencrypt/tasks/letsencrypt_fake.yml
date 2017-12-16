@@ -26,3 +26,4 @@
 
     - name: disable certbot systemd timer
       service: name="certbot.timer" enabled=no state=stopped
+      ignore_errors: yes
