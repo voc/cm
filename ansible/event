@@ -42,6 +42,7 @@ mixer-osc2.lan.c3voc.de
 minion1.lan.c3voc.de transcoder_rooms='[1]'
 minion5.lan.c3voc.de transcoder_rooms='[2]'
 minion6.lan.c3voc.de transcoder_rooms='[3, 4]'
+speedy.lan.c3voc.de transcoder_rooms='["X"]'
 
 [encoders]
 encoder1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder1.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.password') }}"
