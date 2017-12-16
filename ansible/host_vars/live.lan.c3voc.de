@@ -1,8 +1,11 @@
 ---
-fanout_rooms: [1, 2, 3, 4, 5]
+fanout_rooms: ['1', '2', '3', '4', '5']
 
 nginx: 'yes'
 nginx_hls_master: 'yes'
+
+icedist: 'yes'
+icedist_pull_rooms: ['1', '2', '3', '4', '5']
 
 icecast: 'yes'
 icecast_push_master: 'yes'

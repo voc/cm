@@ -5,6 +5,7 @@ nginx: 'yes'
 nginx_hls_master: 'yes'
 
 icedist: 'yes'
+icedist_pull_rooms: []
 
 icecast: 'yes'
 icecast_push_master: 'yes'

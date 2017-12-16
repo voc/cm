@@ -43,6 +43,20 @@
         <alias source="/" destination="/status.xsl"/>
     </paths>
 
+{% if icedist_pull_rooms is defined %}
+{% for room in icedist_pull_rooms %}
+    <relay>
+        <server>10.73.{{ room }}.3</server>
+        <port>7999</port>
+        <mount>/s{{ room }}</mount>
+        <username>relay</username>
+        <password>{{ lookup('keepass', 'ansible/icecast/icedist/relay.password') }}</password>
+        <relay-shoutcast-metadata>0</relay-shoutcast-metadata>
+        <on-demand>0</on-demand>
+    </relay>
+{% endfor %}
+{% endif %}
+
     <logging>
       <accesslog>access.log</accesslog>
       <errorlog>error.log</errorlog>
