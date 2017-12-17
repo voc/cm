@@ -133,7 +133,7 @@ check_logs () {
 #  * no bond status check
 #
 check_interfaces () {
-  for interface in $(grep "iface" /etc/network/interfaces | grep -vE "iface lo |#|br|bond.*\..*" | awk '{ print $2 }' | sort | uniq); do
+  for interface in $(grep "iface" /etc/network/interfaces | grep -vE "iface lo |#|br|bond.*\..*|monitoring-ignore-me" | awk '{ print $2 }' | sort | uniq); do
     if [ "$(systemd-detect-virt)" = "none" ] && [ "$(grep -q up /sys/class/net/${interface}/operstate; echo $?)" -eq "0" ]; then
       # we need at least 1gbit
       if [ -e "/sys/class/net/${interface}/speed" ]; then
