@@ -101,6 +101,5 @@
       - archive
 
   # Cron jobs to update letsencrypt certs
-  - name: create letsencrypt update cron job
-    cron: name="update_{{ domain }}" user=letsencrypt weekday=0 minute=42 hour=3
-          job="VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --email=contact@c3voc.de -d {{ domain }} --webroot --webroot-path {{ webroot_path }} --renew-by-default"
+   - name: disable letsencrypt update cron job
+      cron: name="update_{{ domain }}" user=letsencrypt state=absent
