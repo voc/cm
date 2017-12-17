@@ -101,5 +101,5 @@
       - archive
 
   # Cron jobs to update letsencrypt certs
-   - name: disable letsencrypt update cron job
-      cron: name="update_{{ domain }}" user=letsencrypt state=absent
+  - name: disable letsencrypt update cron job
+    cron: name="update_{{ domain }}" user=letsencrypt state=absent
