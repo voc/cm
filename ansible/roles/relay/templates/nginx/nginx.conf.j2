@@ -4,7 +4,7 @@ user  www-data;
 worker_rlimit_nofile 65536;
 
 # multiple worker
-worker_processes  {{ nginx_worker_processes | default(8) }};
+worker_processes  {{ nginx_worker_processes | default('auto') }};
 
 # dynamic config
 include /etc/nginx/conf.d/*;
