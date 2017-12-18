@@ -24,7 +24,7 @@ ffmpeg -y -nostdin -hide_banner \
 {% if voctomix.parallel_slide_recording %}
 {# Low bitrate and ok quality for Slides #}
 	-map [slides] -metadata:s:v:1 title="Slides"\
-	-g:v:1 50 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 5M \
+	-g:v:1 5 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 5M \
 	\
 {% endif %}
 {# Shared audio settings #}
