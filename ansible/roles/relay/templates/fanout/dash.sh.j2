@@ -8,13 +8,13 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-map 0:v:2 -b:v:2 100k \
 	\
 	-c:a copy \
-	-map 0:a:0 -b:a:0 96k \
-	-map 0:a:1 -b:a:1 96k \
-	-map 0:a:2 -b:a:2 96k \
+	-map 0:a:0 -b:a:0 96k -metadata:s:a:0 language="Native" \
+	-map 0:a:1 -b:a:1 96k -metadata:s:a:1 language="Translated" \
+	-map 0:a:2 -b:a:2 96k -metadata:s:a:2 language="Translated2" \
 	\
 	-f dash \
 	-window_size 20 -extra_window_size 10 -min_seg_duration 6000000 \
 	-init_seg_name 'init_$RepresentationID$.hdr' \
-	-media_seg_name 'segment_$RepresentationID$_$Time$.chk' \
-    -adaptation_sets 'id=0,streams=v id=1,streams=a' \
+	-media_seg_name 'segment_$RepresentationID$_$Number$.chk' \
+    -adaptation_sets 'id=1,streams=v id=2,streams=3 id=3,streams=4 id=4,streams=5' \
     {{ relay_fanout.dash_write_path }}/s{{ item }}/manifest.mpd
