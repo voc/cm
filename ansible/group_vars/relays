@@ -6,6 +6,7 @@ relay_fanout:
   pull_endpoint: 127.0.0.1:7999
   push_endpoint: 127.0.0.1:8000
   hls_write_path: /srv/nginx/hls
+  dash_write_path: /srv/nginx/dash
 
 # icecast
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
