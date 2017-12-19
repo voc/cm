@@ -90,7 +90,7 @@ server {
 
   add_header Access-Control-Allow-Origin "*";
   # TLS certificates
-  ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/cert.pem;
+  ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
   ssl_certificate_key   /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
   # OCSP stapling
   ssl_stapling on;
