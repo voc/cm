@@ -1,5 +1,9 @@
 #!/bin/sh
 
+mkdir -p "{{ relay_fanout.dash_write_path }}/s{{ item }}"
+rm {{ relay_fanout.dash_write_path }}/s{{ item }}/*.hdr
+rm {{ relay_fanout.dash_write_path }}/s{{ item }}/*.chk
+
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vpx \
 	-c:v copy \
