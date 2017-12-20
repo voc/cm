@@ -21,7 +21,11 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 			\
 			\
 			-f {{ codec }} \
-			-content_type audio/{{ codec }} \
+			{% if codec == 'mp3' %}
+			-content_type audio/mpeg \
+			{% elif codec == 'opus' %}
+			-content_type audio/ogg \
+			{% endif %}
 			-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
 			icecast://{{ relay_fanout.push_endpoint }}/s{{ item }}_{{ language }}.{{ codec }} \
 			\
