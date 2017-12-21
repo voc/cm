@@ -2,6 +2,8 @@
   - include: packages.yml
   - include: rpi-update.yml
     tags: rpiupdate
+  - include: users.yml
+    tags: users
   - include: vpn.yml
     tags: vpn
   - include: rc.local.yml
