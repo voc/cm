@@ -1,8 +1,8 @@
 #!/bin/sh
 
 mkdir -p "{{ relay_fanout.dash_write_path }}/s{{ item }}"
-rm {{ relay_fanout.dash_write_path }}/s{{ item }}/*.hdr
-rm {{ relay_fanout.dash_write_path }}/s{{ item }}/*.chk
+rm -f {{ relay_fanout.dash_write_path }}/s{{ item }}/*.hdr
+rm -f {{ relay_fanout.dash_write_path }}/s{{ item }}/*.chk
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vpx \
@@ -20,5 +20,5 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-window_size 20 -extra_window_size 10 -min_seg_duration 6000000 \
 	-init_seg_name 'init_$RepresentationID$.hdr' \
 	-media_seg_name 'segment_$RepresentationID$_$Number$.chk' \
-    -adaptation_sets 'id=1,streams=v id=2,streams=3 id=3,streams=4 id=4,streams=5' \
-    {{ relay_fanout.dash_write_path }}/s{{ item }}/manifest.mpd
+	-adaptation_sets 'id=1,streams=v id=2,streams=3 id=3,streams=4 id=4,streams=5' \
+	{{ relay_fanout.dash_write_path }}/s{{ item }}/manifest.mpd

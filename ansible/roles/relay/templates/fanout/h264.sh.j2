@@ -3,7 +3,7 @@
 {% for language in languages %}
 	{% for quality in qualities %}
 		mkdir -p "{{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}"
-		rm {{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}/*.ts
+		rm -f {{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}/*.ts
 	{% endfor %}
 {% endfor %}
 
