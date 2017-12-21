@@ -54,6 +54,7 @@
    with_items:
     - debian-keyring
     - debian-archive-keyring
+   when: system.type == 'pc'
 
  - name: setup the VOC debian repo for stretch
    apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
