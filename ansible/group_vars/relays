@@ -115,7 +115,7 @@ nginx_hls_masters:
   - '195.54.164.164'
 
 nginx_dash_masters:
-  - '141.24.40.50'
+  - '195.54.164.164'
 
 loadbalancer:
   frontend:
