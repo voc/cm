@@ -1,4 +1,10 @@
 ---
  - include: packages.yml
+
  - include: transcoding.yml
+   when: transcoder_rooms is defined
+   tags: transcoding
+
+ - include: transcoding_lounges.yml
+   when: transcoder_lounges is defined
    tags: transcoding
