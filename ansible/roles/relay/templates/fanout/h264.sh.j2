@@ -31,9 +31,9 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		{% endif %}
 		\
 		\
-		-hls_init_time 5 \
-		-hls_time 5 \
-		-hls_list_size 240 \
+		-hls_init_time 6 \
+		-hls_time 6 \
+		-hls_list_size 200 \
 		-use_localtime 1 \
 		-hls_base_url '/hls/s{{ item }}_{{ language }}_{{ quality }}/' \
 		-hls_segment_filename '{{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}/segment-%s.ts' \
