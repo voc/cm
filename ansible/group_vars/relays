@@ -62,7 +62,7 @@ icecast_additional_mounts: [
     "password": "{{ lookup('keepass', 'ansible/audio-pi/icecast_a3.password') }}",
     "stream-name": "Audio-Pi 3 MP3",
     "dump-file": "/srv/icecastdumps/a3-%F_%H-%M-%S_%s.mp3"
-  }
+  },
   {
     "mount-name": '/a4.opus',
     "type": 'audio/ogg',
