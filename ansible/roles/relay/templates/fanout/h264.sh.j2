@@ -1,44 +1,20 @@
 #!/bin/sh
 
-{% for language in languages %}
-	{% for quality in qualities %}
-		mkdir -p "{{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}"
-		rm -f {{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}/*.ts
-	{% endfor %}
-{% endfor %}
+mkdir -p "{{ relay_fanout.hls_write_path }}/s{{ item }}"
+rm -f {{ relay_fanout.hls_write_path }}/s{{ item }}/*.ts
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_h264 \
-{% for language in languages %}
-	{% for quality in qualities %}
 		-c:v copy \
-		{% if quality == 'hd' %}
-			-map 0:v:0 \
-		{% elif quality == 'sd' %}
-			-map 0:v:1 \
-		{% elif quality == 'slides' %}
-			-map 0:v:2 \
-		{% endif %}
-		\
-		\
 		-c:a copy \
-		{% if language == 'native' %}
-			-map 0:a:0 \
-		{% elif language == 'translated' %}
-			-map 0:a:1 \
-		{% elif language == 'translated-2' %}
-			-map 0:a:2 \
-		{% endif %}
 		\
+		-map '0:v:0' -map '0:v:1' -map '0:v:2' \
+		-map '0:a:0' -map '0:a:0' -map '0:a:0' -map '0:a:1' -map '0:a:2' \
 		\
 		-hls_init_time 6 \
 		-hls_time 6 \
 		-hls_list_size 200 \
 		-use_localtime 1 \
-		-hls_base_url '/hls/s{{ item }}_{{ language }}_{{ quality }}/' \
-		-hls_segment_filename '{{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}/segment-%s.ts' \
 		-hls_flags +delete_segments+omit_endlist \
-		{{ relay_fanout.hls_write_path }}/s{{ item }}_{{ language }}_{{ quality }}.m3u8 \
-		\
-	{% endfor %}
-{% endfor %};
+		-var_stream_map 'v:0,a:0 v:1,a:1 v:2,a:2 a:3 a:4' \
+		{{ relay_fanout.hls_write_path }}/s{{ item }}/chunks.m3u8
