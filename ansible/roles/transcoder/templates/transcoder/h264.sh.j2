@@ -3,6 +3,8 @@
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
 	-filter_complex '[0:v:0] scale=1024:576 [sd]' \
+	\
+{# Video settings #}
 	-map '0:v:0' \
 		-metadata:s:v:0 title="HD" \
 		-c:v:0 copy \
@@ -12,10 +14,10 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-c:v:1 libx264 \
 			-maxrate:v:1 800k \
 			-crf:v:1 18 \
-			-bufsize:v:1 8192k \
+			-bufsize:v:1 3600k \
 			-pix_fmt:v:1 yuv420p \
 			-profile:v:1 main \
-			-g:v:1 25 \
+			-g:v:1 75 \
 			-flags:v:1 +cgop \
 			-preset:v:1 veryfast \
 	\
@@ -23,18 +25,12 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-metadata:s:v:2 title="Slides" \
 		-c:v:2 copy \
 	\
+{# Audio settings #}
+	-c:a copy \
 	\
-	-map 0:a:0 \
-		-metadata:s:a:0 title="Native" \
-		-c:a:0 copy \
-	\
-	-map 0:a:1 \
-		-metadata:s:a:1 title="Translated" \
-		-c:a:1 copy \
-	\
-	-map 0:a:2 \
-		-metadata:s:a:2 title="Translated-2" \
-		-c:a:2 copy \
+	-map 0:a:0 -metadata:s:a:0 title="Native" \
+	-map 0:a:1 -metadata:s:a:1 title="Translated" \
+	-map 0:a:2 -metadata:s:a:2 title="Translated-2" \
 	\
 	-max_muxing_queue_size 400 \
 	-f matroska \
