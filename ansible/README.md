@@ -46,6 +46,10 @@ In case you need to do a lot of playbook runs you can also set the password usin
   ./ansible-playbook-keepass … site.yml
 ```
 
+## Keepass Version
+
+If you use ``./ansible-playbook-keepass`` a sanity check verifies that your passwords checkout is recent enough. to update it, make sure the passsword checkout is correct and run ``./update_keepass_version``
+
 # Host notes
 
 ## router.lan.c3voc.de

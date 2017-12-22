@@ -63,6 +63,21 @@ icecast_additional_mounts: [
     "stream-name": "Audio-Pi 3 MP3",
     "dump-file": "/srv/icecastdumps/a3-%F_%H-%M-%S_%s.mp3"
   }
+  {
+    "mount-name": '/a4.opus',
+    "type": 'audio/ogg',
+    "username": 'source',
+    "password": "{{ lookup('keepass', 'ansible/audio-pi/icecast_a4.password') }}",
+    "stream-name": "Audio-Pi 4 Opus",
+    "dump-file": "/srv/icecastdumps/a3-%F_%H-%M-%S_%s.opus"
+  }, {
+    "mount-name": '/a4.mp3',
+    "type": 'audio/mpeg',
+    "username": 'source',
+    "password": "{{ lookup('keepass', 'ansible/audio-pi/icecast_a4.password') }}",
+    "stream-name": "Audio-Pi 4 MP3",
+    "dump-file": "/srv/icecastdumps/a4-%F_%H-%M-%S_%s.mp3"
+  }
 ]
 
 icecast_fix_mount_metadata: [
