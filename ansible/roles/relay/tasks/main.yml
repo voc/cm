@@ -23,5 +23,5 @@
     tags: icedist
 
   - include: fanout.yml
-    when: fanout_rooms is defined
+    when: fanout_streams is defined
     tags: fanout

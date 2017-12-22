@@ -43,8 +43,8 @@
         <alias source="/" destination="/status.xsl"/>
     </paths>
 
-{% if icedist_pull_rooms is defined %}
-{% for room in icedist_pull_rooms %}
+{% if icedist_pull_streams is defined %}
+{% for room in icedist_pull_streams %}
     <relay>
         <server>10.73.{{ room }}.3</server>
         <port>7999</port>
