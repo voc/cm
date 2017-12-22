@@ -8,8 +8,7 @@
   - name: create hls directories
     file: dest="{{ relay_fanout.hls_write_path }}/s{{ item }}/"
           state=directory owner=root group=root
-    with_items:
-      - "{{ fanout_rooms }}"
+    with_items: "{{ fanout_rooms }}"
 
   - name: create hls master-playlists
     template: dest="{{ relay_fanout.hls_write_path }}/s{{ item.0 }}_{{ item.1 }}_{{ item.2 }}.m3u8"
