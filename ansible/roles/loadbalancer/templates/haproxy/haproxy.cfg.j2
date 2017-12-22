@@ -53,6 +53,9 @@ frontend icecast_and_nginx_hls_http
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
     acl is_streaming_website path_end   -i logo.webm
     acl is_streaming_website path_sub   -i acme-challenge
+    {% if haproxy_3rdparty_regex is defined %}
+    acl is_3rdparty          path_reg   -i {{ haproxy_3rdparty_regex }}
+    {% endif %}
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
     acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
@@ -62,6 +65,13 @@ frontend icecast_and_nginx_hls_http
 
     # Backend usage
     use_backend streaming_website_http   if is_streaming_website
+
+    {% if haproxy_3rdparty_regex is defined %}
+    # 3rd party streams
+    use_backend hls_3rdparty_http        if is_3rdparty hls_playlist or is_3rdparty hls_fragment
+    use_backend dash_3rdparty_http       if is_3rdparty dash_playlist or is_3rdparty dash_fragment
+    use_backend icecast_3rdparty_http    if is_3rdparty icecast
+    {% endif %}
 
     # local relay
     use_backend hls_relive_local_http    if is_local is_relive
@@ -100,6 +110,9 @@ frontend icecast_and_nginx_hls_https
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
     acl is_streaming_website path_end   -i logo.webm
     acl is_streaming_website path_sub   -i acme-challenge
+    {% if haproxy_3rdparty_regex is defined %}
+    acl is_3rdparty          path_reg   -i {{ haproxy_3rdparty_regex }}
+    {% endif %}
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
     acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
@@ -109,6 +122,13 @@ frontend icecast_and_nginx_hls_https
 
     # Backend usage
     use_backend streaming_website_https   if is_streaming_website  { ssl_fc }
+
+    {% if haproxy_3rdparty_regex is defined %}
+    # 3rd party streams
+    use_backend hls_3rdparty_https        if is_3rdparty hls_playlist  { ssl_fc } or is_3rdparty hls_fragment { ssl_fc }
+    use_backend dash_3rdparty_https       if is_3rdparty dash_playlist { ssl_fc } or is_3rdparty dash_fragment { ssl_fc }
+    use_backend icecast_3rdparty_https    if is_3rdparty icecast
+    {% endif %}
 
     # local relay
     use_backend hls_relive_local_https    if is_local is_relive     { ssl_fc }
@@ -238,6 +258,58 @@ backend icecast_{{ protocol }}
 {% endif %}
 {% endfor %}
 {% for server, weight in lb_local_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+
+# 3rd party
+backend hls_3rdparty_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_3rdparty_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend dash_3rdparty_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_3rdparty_relays.iteritems() %}
+{% if protocol == "http" %}
+    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
+{% else %}
+    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
+{% endif %}
+{% endfor %}
+
+backend icecast_3rdparty_{{ protocol }}
+{% if protocol == "http" %}
+    bind-process 1
+{% else %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+{% endif %}
+    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
+    http-request add-header Access-Control-Allow-Origin "*"
+    balance roundrobin
+    option forwardfor
+{% for server, weight in lb_3rdparty_relays.iteritems() %}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}

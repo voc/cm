@@ -52,3 +52,6 @@ lb_local_relays: {
 lb_relive_relays: {
   "live.dus.c3voc.de": 25,
 }
+
+lb_3rdparty_relays: {
+}
