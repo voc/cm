@@ -1,12 +1,13 @@
 ---
-  - import_tasks: ../../../register/bin_path.yml
-  - import_tasks: ../../common/tasks/locale.yml
+  - import_tasks: media_locale.yml
   #- include_tasks: ../../common/tasks/monitoring.yml
-  - import_tasks: ../../common/tasks/sudo.yml
+  - import_tasks: media_sudo.yml
   - import_tasks: timezone.yml
   - import_tasks: packages.yml
   - import_tasks: users.yml
     tags: user
+  - import_tasks: acmetool-cleanup.yml
+    tags: ansible-acmetool
   - import_tasks: nginx-common.yml
     tags: nginx
   # - import_tasks: configs: vim/tmux via skel

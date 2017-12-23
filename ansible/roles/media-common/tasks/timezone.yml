@@ -1,4 +1,11 @@
 ---
+  # timedatectl
+  - name: Probe for timedatectl
+    shell: "command -v timedatectl"
+    register: timedatectl_bin
+    changed_when: false
+    ignore_errors: yes
+
   # Setting timezone
   - shell: "{{ timedatectl_bin.stdout | default('timedatectl') }} status | grep 'Time zone' | cut -d ':' -f 2 | cut -d ' ' -f 2"
     register: current_timezone

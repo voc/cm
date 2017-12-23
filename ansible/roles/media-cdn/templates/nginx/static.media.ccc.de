@@ -1,7 +1,7 @@
 server {
   #listen [::]:80 ipv6only=off;
   listen [::]:80;
-  server_name static.media.ccc.de koeln.media.ccc.de;
+  server_name static.media.ccc.de {{ inventory_hostname }};
 
   # Letsencrypt - renewal does not work via ssl
   location /.well-known/ {
@@ -17,12 +17,12 @@ server {
 
 server {
   listen [::]:443;
-  server_name static.media.ccc.de koeln.media.ccc.de;
+  server_name static.media.ccc.de {{ inventory_hostname }};
 
   root /srv/www/media.ccc.de/root;
   ssl                         on;
-  ssl_certificate             /var/lib/acme/live/cdn.media.ccc.de/fullchain;
-  ssl_certificate_key         /var/lib/acme/live/cdn.media.ccc.de/privkey;
+  ssl_certificate             /var/lib/acme/live/{{ inventory_hostname }}/fullchain;
+  ssl_certificate_key         /var/lib/acme/live/{{ inventory_hostname }}/privkey;
   ssl_session_timeout         1d;
   ssl_session_cache           shared:SSL:5m;
   ssl_protocols               TLSv1.1 TLSv1.2;
@@ -38,7 +38,7 @@ server {
     autoindex  on;
   }
 
-  # for koeln.media.ccc.de
+  # for {{ inventory_hostname }}
   location /stats {
     alias /srv/www/media.ccc.de/stats/;
     index  index.html index.htm;
@@ -46,7 +46,7 @@ server {
     auth_basic_user_file /etc/awstats/awstats.htpasswd;
   }
 
-  # for koeln.media.ccc.de
+  # for {{ inventory_hostname }}
   location /mrtg {
     alias /srv/www/media.ccc.de/mrtg/;
     index  index.html index.htm;

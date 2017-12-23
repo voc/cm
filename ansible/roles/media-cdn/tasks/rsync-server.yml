@@ -1,4 +1,11 @@
 ---
+- group: name=ftp
+
+- user: state=present
+        name="ftp"
+        groups="ftp"
+        shell="/bin/false"
+
 - file: path=/srv/ftp state=directory
         mode=0755 owner=root group=root
 

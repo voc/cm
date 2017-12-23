@@ -1,6 +1,0 @@
----
-  - hosts: mirror
-    roles:
-      - { role: 'media-common', tags: ['media-common'] }
-      - { role: 'media-mirror', tags: ['media-mirror'] }
-    vars:
