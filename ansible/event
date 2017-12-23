@@ -119,6 +119,8 @@ speedy.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/speed
 tweety.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/tweety.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/tweety.password') }}"
 blade1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade1.password') }}"
 blade2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade2.password') }}"
+blade3.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade3.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade3.password') }}"
+blade4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade4.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade4.password') }}"
 
 #desmit.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/desmit.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/desmit.password') }}"
 
