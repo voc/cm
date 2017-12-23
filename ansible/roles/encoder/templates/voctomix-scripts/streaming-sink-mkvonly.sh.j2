@@ -24,12 +24,12 @@ ffmpeg -y -nostdin -hide_banner \
 	\
 {# High bitrate and high quality for HD #}
 	-map [hd] -metadata:s:v:0 title="HD" \
-	-r:v:0 25 -g:v:0 25 -crf:v:0 21 -maxrate:v:0 5M -bufsize:v:0 8M \
+	-r:v:0 25 -g:v:0 75 -crf:v:0 23 -maxrate:v:0 4M -bufsize:v:0 18M \
 	\
 {% if voctomix.parallel_slide_recording %}
 {# Low bitrate and ok quality for Slides #}
 	-map [slides] -metadata:s:v:1 title="Slides" \
-	-g:v:1 5 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 750k \
+	-g:v:1 15 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 750k \
 	\
 {% endif %}
 {# Shared audio settings #}
