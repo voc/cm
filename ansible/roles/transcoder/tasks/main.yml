@@ -8,3 +8,7 @@
  - include: transcoding_lounges.yml
    when: transcoder_lounges is defined
    tags: transcoding
+
+ - include: transcoding_external.yml
+   when: transcoder_external_streams is defined
+   tags: transcoding

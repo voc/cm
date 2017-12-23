@@ -1,5 +1,9 @@
 #!/bin/sh
 
+{% if fanout_capabilities != 'extended' %}
+{% set languages = ['native'] %}
+{% endif %}
+
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_audio \
 	{% for language in languages %}
@@ -12,7 +16,11 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 			{% elif language == 'translated-2' and codec == 'mp3' %}
 				-map 0:a:2 \
 			{% elif language == 'native' and codec == 'opus' %}
+{% if fanout_capabilities == 'extended' %}
 				-map 0:a:3 \
+{% else %}
+				-map 0:a:1 \
+{% endif %}
 			{% elif language == 'translated' and codec == 'opus' %}
 				-map 0:a:4 \
 			{% elif language == 'translated-2' and codec == 'opus' %}

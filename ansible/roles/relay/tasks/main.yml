@@ -25,3 +25,7 @@
   - include: fanout.yml
     when: fanout_streams is defined
     tags: fanout
+
+  - include: fanout_external.yml
+    when: fanout_external_streams is defined
+    tags: fanout

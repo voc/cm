@@ -54,4 +54,7 @@ lb_relive_relays: {
 }
 
 lb_3rdparty_relays: {
+  "dawaschtel.lan.c3voc.de": 100,
 }
+
+haproxy_3rdparty_regex: "s(c3tv|jh|fsfe|freifunk|uewagen|4k)"
