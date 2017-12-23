@@ -1,0 +1,16 @@
+#!/bin/sh
+
+echo "check and fix me manually: $0"
+exit 1
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
+	-i rtmp://live.ber.c3voc.de/stream/{{ item }} \
+	-c copy \
+	-map 0:v:0 \
+	-map 0:a:0 \
+	\
+	-max_muxing_queue_size 400 \
+	-f matroska \
+	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+	-content_type video/webm \
+	icecast://{{ transcoder.push_endpoint }}/s{{ item }}

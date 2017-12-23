@@ -31,6 +31,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-bufsize:v:1 4500k \
 		-rc_init_occupancy:v:1 1000k \
 	\
+{% if transcoding_capabilities == 'extended' %}
 	{# Use CBR Mode and high skip threshold for slides #}
 	-map '0:v:1' \
 		-metadata:s:v:2 title="Slides" \
@@ -45,12 +46,15 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-rc_init_occupancy:v:2 500k \
 		-static-thresh:v:2 500 \
 	\
+{% endif  %}
 {# Audio settings #}
 	-c:a libvorbis -ac:a 2 -maxrate:a 96k \
 	\
 	-map 0:a:0 -metadata:s:a:0 title="Native" \
+{% if transcoding_capabilities == 'extended' %}
 	-map 0:a:1 -metadata:s:a:1 title="Translated" \
 	-map 0:a:2 -metadata:s:a:2 title="Translated-2" \
+{% endif %}
 	\
 	-fflags +genpts \
 	-max_muxing_queue_size 1000 \
