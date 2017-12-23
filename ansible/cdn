@@ -9,6 +9,9 @@ live.dus.c3voc.de
 live.bn.c3voc.de
 live.fem.c3voc.de
 
+# external
+dawaschtel.lan.c3voc.de
+
 [loadbalancers]
 lb.dus.c3voc.de
 lb.alb.c3voc.de

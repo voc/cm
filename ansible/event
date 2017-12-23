@@ -44,6 +44,8 @@ minion5.lan.c3voc.de    transcoder_streams='[2]'    transcoder_lounges='[3,4]'
 minion6.lan.c3voc.de    transcoder_streams='[3]'
 minion-muc.lan.c3voc.de transcoder_streams='[4]'
 
+dawaschtel.lan.c3voc.de
+
 [encoders]
 encoder1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder1.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.password') }}"
 encoder2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder2.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder2-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder2-meta.password') }}"
@@ -95,6 +97,9 @@ live.self.c3voc.de
 live.dus.c3voc.de
 live.bn.c3voc.de
 live.fem.c3voc.de
+
+# external
+dawaschtel.lan.c3voc.de
 
 [loadbalancers]
 lb.dus.c3voc.de
