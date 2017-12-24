@@ -1,0 +1,13 @@
+---
+  - name: enable locales
+    lineinfile: dest=/etc/locale.gen
+                state=present
+                regexp='.*{{ item }}.*'
+                line='{{ item }}'
+    with_items:
+      - de_DE.UTF-8 UTF-8
+      - en_US.UTF-8 UTF-8
+      - nl_NL.UTF-8 UTF-8
+    # TODO locale-gen not executed?
+    notify:
+      - generate locales
