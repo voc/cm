@@ -2,7 +2,11 @@
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
-	-filter_complex '[0:v:0] scale=1024:576 [sd]' \
+	-filter_complex '
+		[0:v:0] scale=1024:576 [smooth_sd];
+		movie=/opt/voc/share/overlay_sd_saal{{ transcoder_stream }}.png [logo_sd];
+		[smooth_sd] [logo_sd] overlay=0:0 [sd]
+	' \
 	\
 {# Video settings #}
 	-c:v libvpx -flags:v +global_header \
