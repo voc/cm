@@ -69,6 +69,15 @@
       - "../../../artwork/{{ event.acronym }}/pause.ts"
       - "artwork/default-pause.ts"
 
+  - name: uploading nostream-loop
+    copy: src={{ item }}
+          dest=/opt/voc/share/nostream.ts
+          owner=root group=staff mode=0644
+    with_first_found:
+      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.ts"
+      - "../../../artwork/{{ event.acronym }}/nostream.ts"
+      - "artwork/default-nostream.ts"
+
   - name: synchronizing default music-files
     synchronize: src={{ item }}
                  dest=/opt/voc/share/
