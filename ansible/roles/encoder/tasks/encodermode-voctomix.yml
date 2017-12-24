@@ -161,6 +161,23 @@
 
 
 
+  # nostream source
+  - name: create nostream-source script
+    template: src="voctomix-scripts/nostream-source.sh.j2"
+              dest="/opt/voctomix/scripts/nostream-source.sh"
+              mode=0755 owner=root group=root
+
+  - name: create nostream-source systemd-unit
+    template: src="systemd-units/nostream-source.service.j2"
+              dest="/etc/systemd/system/nostream-source.service"
+              mode=0644 owner=root group=root
+
+  - name: enable nostream-source service
+    service: name=nostream-source.service
+             enabled=yes
+    when: (voctomix_no_nostream is not defined) or (not voctomix_no_nostream)
+
+
     # music source
   - name: create music-source script (python)
     template: src="voctomix-scripts/music-source-from-folder.py.j2"
