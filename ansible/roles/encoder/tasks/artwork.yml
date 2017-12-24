@@ -10,7 +10,7 @@
     with_first_found:
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay_hd.png"
       - "../../../artwork/{{ event.acronym }}/overlay_hd.png"
-      - "artwork/default-overlay_hd.png"
+      - "artwork/default-overlay.png"
 
   - name: add slides-overlay image
     copy: src={{ item }}
@@ -21,8 +21,7 @@
       - "../../../artwork/{{ event.acronym }}/overlay_slides.png"
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay_hd.png"
       - "../../../artwork/{{ event.acronym }}/overlay_hd.png"
-      - "artwork/default-overlay_slides.png"
-      - "artwork/default-overlay_hd.png"
+      - "artwork/default-overlay.png"
 
   - name: uploading background-loop
     copy: src={{ item }}
