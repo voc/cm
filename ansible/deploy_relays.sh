@@ -10,8 +10,7 @@ fi
 
 if [ -z "${PASSWORD}" ]; then
   echo -n "Relay register voc password: "
-  read -r PASSWORD
-  echo $PASSWORD
+  read -rs PASSWORD
 fi
 
 if [[ $* = *--diff* ]]; then
