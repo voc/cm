@@ -1,15 +1,20 @@
 ---
-- template: src=media-sync.sh
-        dest=/usr/local/sbin/media-sync.sh
-        owner=root group=root mode=0750
+- template: src=sync-cdn.sh
+        dest=/usr/local/bin/sync-cdn.sh
+        owner=root group=root mode=0755
 
-- copy: src=rsync-webroot.sh
-        dest=/usr/local/sbin
-        owner=root group=root mode=0750
+- copy: src=sync-webroot.sh
+        dest=/usr/local/bin
+        owner=root group=root mode=0755
 
-- cron: user=root minute="*/15" cron_file="local_mirror"
-        job="if [ -x /usr/local/sbin/media-sync.sh ]; then /usr/local/sbin/media-sync.sh; fi;"
+# TODO media-sync@koeln private key from keepass
+# - copy: src=media-sync.id_rsa
+#         dest=/home/cdn-app/.ssh/id_rsa
+#         owner=cdn-app group=cdn-app mode=0600
 
-- cron: user=root minute="*/3" cron_file="local_mirror"
-        job="if [ -x /usr/local/sbin/rsync-webroot.sh ]; then /usr/local/sbin/rsync-webroot.sh; fi;"
+- cron: user=ftp minute="*/15" cron_file="local_mirror"
+        job="if [ -x /usr/local/bin/sync-cdn.sh ]; then /usr/local/bin/sync-cdn.sh; fi;"
 
+# TODO remove this script, update voctoweb-static repo instead, sync web root as www-data
+- cron: user=cdn-app minute="*/3" cron_file="local_mirror"
+        job="if [ -x /usr/local/bin/sync-webroot.sh ]; then /usr/local/bin/sync-webroot.sh; fi;"
