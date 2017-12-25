@@ -2,24 +2,25 @@
   - name: install defaut packages
     apt: name={{ item }} state=latest update_cache=yes
     with_items:
-      - zsh
-      - vim
-      - htop
-      - iftop
-      - tmux
-      - strace
       - build-essential
-      - pv
+      - etckeeper
       - ethtool
       - git
-      - etckeeper
-      - smartmontools
-      - zip
+      - htop
+      - iftop
+      - lockfile-progs
       - nginx
-      - rsync
+      - pv
       - rssh
-      - vnstat
+      - rsync
+      - smartmontools
+      - strace
+      - tmux
       - unattended-upgrades
+      - vim
+      - vnstat
+      - zip
+      - zsh
 
   - name: remove not needed packages
     apt: name={{ item }} state=absent
