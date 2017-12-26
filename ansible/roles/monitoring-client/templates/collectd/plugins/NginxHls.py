@@ -110,6 +110,10 @@ def count_hls_viewers():
 				# ensure unescaped path
 				path = dirname(urlparse(path).path)
 
+                                # avoid dual counting for multi-quality hls
+                                if len(path.split("/")) == 2:
+                                    continue
+
 				# create set
 				if not path in counters:
 					counters[path] = set()
