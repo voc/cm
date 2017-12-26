@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys, os, re, urllib, datetime, itertools, subprocess, collections, logging, urllib2
-from os.path import basename, splitext
+from os.path import basename, dirname, splitext
 from urlparse import urlparse
 
 logging.basicConfig(level=logging.ERROR, format='%(levelname)8s %(name)s: %(message)s')
@@ -108,7 +108,7 @@ def count_hls_viewers():
 			# add successful playlist requests to sets
 			if code[0] == "2" and path[-5:] == ".m3u8":
 				# ensure unescaped path
-				path = urlparse(path).path
+				path = dirname(urlparse(path).path)
 
 				# create set
 				if not path in counters:
@@ -119,7 +119,8 @@ def count_hls_viewers():
 
 	# count set lengths
 	for path in counters:
-		viewer_counts[splitext(basename(path))[0]] = len(counters[path])
+                key = basename(path) + "_hls"
+                viewer_counts[key] = len(counters[path])
 
 	return viewer_counts
 
