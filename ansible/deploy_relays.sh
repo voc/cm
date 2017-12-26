@@ -25,14 +25,14 @@ function get_relay_json() {
 
 function deploy_relays() {
   if [[ $DIFF = true ]]; then
-    $DIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/relays -l 'edges' --tags icecast,nginx,iptables --check --diff
+    $DIR/ansible-playbook-keepass $DIR/site.yml -f 1 -u $USER -s -i $DIR/relays -l 'edges' --tags icecast,nginx,iptables,letsencrypt --check --diff
   else
     echo
     echo "Deploy new config on relays? [yes|no]"
     read choice
 
     if [ "$choice" = "yes" ]; then
-      $DIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/relays -l 'edges' --tags icecast,nginx,iptables --diff
+      $DIR/ansible-playbook-keepass $DIR/site.yml -f 1 -u $USER -s -i $DIR/relays -l 'edges' --tags icecast,nginx,iptables,letsencrypt --diff
     else
       echo "Nothing deployed."
     fi
