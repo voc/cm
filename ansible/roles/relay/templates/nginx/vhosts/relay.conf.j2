@@ -151,6 +151,8 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
   }
   # proxy cache ts files (live)
   #
@@ -308,6 +310,8 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
   }
   # proxy cache dash segments (live)
   #
