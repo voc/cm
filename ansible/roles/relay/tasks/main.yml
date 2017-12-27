@@ -18,6 +18,14 @@
   - include: relive.yml
     when: nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes'
 
+  - include: icedist.yml
+    when: icedist is defined and icedist == 'yes'
+    tags: icedist
+
   - include: fanout.yml
-    when: fanout_rooms is defined
+    when: fanout_streams is defined
+    tags: fanout
+
+  - include: fanout_external.yml
+    when: fanout_external_streams is defined
     tags: fanout

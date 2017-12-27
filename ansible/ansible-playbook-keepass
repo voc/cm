@@ -2,26 +2,19 @@
 
 export ANSIBLE_NOCOWS=1
 
-#
-# Read config, use env or ask for keepass file
-# and store it if entered. 
-#
-KEEPASS_FILE_CONFIG=".keepass_file_path"
-if [ -z "${KEEPASS}" -a -r "${KEEPASS_FILE_CONFIG}" ]; then
-  KEEPASS=`cat ${KEEPASS_FILE_CONFIG} | xargs`
+source "_ansible_keepass_util.sh"
 
-  # If the path is empty or does not exist, delete the conf
-  if [ -z "${KEEPASS}" -o ! -f "${KEEPASS}" -o ! -r "${KEEPASS}" ]; then
-    echo "Stored keepass path '${KEEPASS}' is not readable file,"\
-         "deleting configuration file"
-    rm "${KEEPASS_FILE_CONFIG}"
-    unset KEEPASS
+KEEPASS_DIR=$(dirname "${KEEPASS}")
+if [ -f "${KEEPASS_VERSION_CONFIG}" ]; then
+  KEEPASS_REQUIRED_VERSION=$(cat "${KEEPASS_VERSION_CONFIG}")
+  GIT_DIR="${KEEPASS_DIR}/.git" git merge-base --is-ancestor $KEEPASS_REQUIRED_VERSION HEAD
+
+  if [ $? -ne 0 ]; then
+    echo "keepass checkout must be newer or equal to ${KEEPASS_REQUIRED_VERSION}, which it isn't"
+    echo "do a git pull before continuing"
+
+    exit 1
   fi
-fi
-
-if [ -z "${KEEPASS}" ]; then
-  echo -n "Keepass file path (…voc.kdbx): "
-  read -r KEEPASS
 fi
 
 if [ -z "${KEEPASS_FILE_CONFIG}" -o ! -f "${KEEPASS}" -o ! -r "${KEEPASS}" ]; then

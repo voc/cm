@@ -124,7 +124,7 @@
           job="{{ ffmpeg_bin.stdout }} -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_sd.m3u8 -vf 'scale=213:120' -vframes 1 /srv/nginx/thumbs/{{ item }}.png 2>/dev/null"
           user=downloader
     tags: install
-    with_items: [s1, s2, s3, s4, s5, s6, q1, q2]
+    with_items: [s1, s2, s3, s4, s5, s6, q1, q2, "sc3tv", "sjh", "sfsfe", "sfreifunk", "suewagen", "s4k"]
 
   # Remove fcgi cache after deployment
   - shell: ls -1 /srv/nginx/cache/streaming_fcgi/

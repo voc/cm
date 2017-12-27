@@ -1,28 +1,31 @@
 ---
+  - set_fact:
+      transcoding_capabilities: extended
+
   - name: create directories
     file: dest={{ item }} state=directory
           owner=root group=root
     with_items:
       - /opt/transcoder/scripts/
 
+
   - name: create h264 transcode-script
     template: dest=/opt/transcoder/scripts/s{{ item }}_h264.sh
               src=transcoder/h264.sh.j2
               owner=root group=root mode=0755
-    with_items: "{{ transcoder_rooms }}"
+    with_items: "{{ transcoder_streams }}"
 
   - name: create vpx transcode-script
     template: dest=/opt/transcoder/scripts/s{{ item }}_vpx.sh
               src=transcoder/vpx.sh.j2
               owner=root group=root mode=0755
-    with_items: "{{ transcoder_rooms }}"
+    with_items: "{{ transcoder_streams }}"
 
   - name: create audio transcode-script
     template: dest=/opt/transcoder/scripts/s{{ item }}_audio.sh
               src=transcoder/audio.sh.j2
               owner=root group=root mode=0755
-    with_items: "{{ transcoder_rooms }}"
-
+    with_items: "{{ transcoder_streams }}"
 
 
 
@@ -31,15 +34,17 @@
               dest="/etc/systemd/system/transcode_s{{ item.0 }}_{{ item.1 }}.service"
               mode=0644 owner=root group=root
     with_nested:
-      - "{{ transcoder_rooms }}"
+      - "{{ transcoder_streams }}"
       - ["h264", "vpx", "audio"]
 
-  - name: create transcode systemd-target (room {{item}})
+  - name: create transcode systemd-target
     template: src=systemd-units/transcode.target.j2
               dest="/etc/systemd/system/transcode_s{{ item }}.target"
               mode=0644 owner=root group=root
     with_items:
-      - "{{ transcoder_rooms }}"
+      - "{{ transcoder_streams }}"
+
+
 
   - name: reload systemd daemon
     command: systemctl daemon-reload
@@ -50,11 +55,12 @@
              enabled=yes
              state=restarted
     with_nested:
-      - "{{ transcoder_rooms }}"
+      - "{{ transcoder_streams }}"
       - ["h264", "vpx", "audio"]
 
   - name: enable & start transcode systemd-target
     service: name=transcode_s{{ item }}.target
              enabled=yes
     with_items:
-      - "{{ transcoder_rooms }}"
+      - "{{ transcoder_streams }}"
+

@@ -41,33 +41,55 @@
     changed_when: False
 
   - name: Check if a webserver is already running
-    shell: "netstat -lnt | awk '$6 == \"LISTEN\" && $4 ~ \":631\"'"
+    shell: "netstat -lnt | awk '$6 == \"LISTEN\" && $4 ~ \":443\"'"
     when: >
       domain is defined and domain
       and not cert_exists.stat.exists
       or cert_exists.stat.exists and openssl_checkend.rc != 0
     register: port_443_check
 
+  - name: debug domain
+    debug: var=domain
+           verbosity=2
+
+  - name: debug cert_exists
+    debug: var=cert_exists
+           verbosity=2
+
+  - name: debug openssl_checkend
+    debug: var=openssl_checkend
+           verbosity=2
+
+  - name: debug port_443_check
+    debug: var=port_443_check
+           verbosity=2
+
   - name: Generate or renew certificate (standalone)
-    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --agree-dev-preview --email=contact@c3voc.de -d {{ domain }} --standalone --renew-by-default --rsa-key-size 4096"
+    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --email=contact@c3voc.de -d {{ domain }} --standalone --renew-by-default --rsa-key-size 4096"
     when: >
       not (port_443_check.stdout is defined and port_443_check.stdout)
       and domain is defined and domain
       and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
+    failed_when: False
 
   - stat: path={{ webroot_path }}
     register: webroot_stat
     when: webroot_path is defined and webroot_path
     failed_when: False
 
+  - name: debug webroot_path
+    debug: var=webroot_path
+           verbosity=2
+
   - name: Generate or renew certificate (webroot)
-    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --agree-dev-preview --email=contact@c3voc.de -d {{ domain }} --webroot --webroot-path {{ webroot_path }} --renew-by-default"
+    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --email=contact@c3voc.de -d {{ domain }} --webroot --webroot-path {{ webroot_path }} --renew-by-default"
     when: >
       webroot_stat is defined and webroot_stat.stat is defined and webroot_stat.stat.isdir is defined and webroot_stat.stat.isdir
       and port_443_check.stdout is defined and port_443_check.stdout
       and domain is defined and domain
       and webroot_path is defined and webroot_path
       and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
+    failed_when: False
 
   - name: change /etc/letsencrypt permissions
     file: dest=/etc/letsencrypt/{{ item }}
@@ -77,3 +99,7 @@
     with_items:
       - live
       - archive
+
+  # Cron jobs to update letsencrypt certs
+  - name: disable letsencrypt update cron job
+    cron: name="update_{{ domain }}" user=letsencrypt state=absent

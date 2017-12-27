@@ -1,0 +1,82 @@
+{{define "title"}}Mirrorlist {{.FileInfo.Path}}{{end}}
+{{define "headline"}}{{.FileInfo.Path}}{{end}}
+
+{{define "head"}}
+    <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
+    <script type="text/javascript">
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = new google.visualization.arrayToDataTable([
+                ['mirror','probability'],
+                {{range $i, $v := .MirrorList}}{{if $v.Weight}}['{{$v.ID}}', {{$v.Weight}}],{{end}}{{end}}
+            ]);
+
+            // Set chart options
+            var options = {
+                title:                          'Load distribution',
+                width:                          600,
+                height:                         320,
+                chartArea:                      {'width': '90%', 'height': '90%'},
+                sliceVisibilityThreshold:       .01
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+         }
+    </script>
+{{end}}
+
+{{define "body"}}
+<h3>Client</h3>
+<div>You are connecting with IP address <i>{{.IP}}</i>, which belongs to autonomous system <i>{{.ClientInfo.ASName}} (ASN{{.ClientInfo.ASNum}})</i>.<br />
+{{if .ClientInfo.GeoIPRecord}}We believe you are {{if .ClientInfo.City}}near <i>{{.ClientInfo.City}}</i> in {{else}}somewhere in {{end}}<i>{{.ClientInfo.CountryName}}</i> and have selected mirrors based on this.{{else}}We were not able to use your IP to approximate your location, so have chosen the mirrors at random.{{end}}
+</div>
+
+<h3>Graphs</h3>
+<div style="width: 100%; overflow: hidden;">
+    <div style="float: left; margin-right: 50px;">
+        <img style="border: 1px grey;"  width="500" height="320" src="{{.MapURL}}"/>
+    </div>
+    <div style="float: left;">
+        <div id="chart_div" style="width:600; height:320;"></div>
+    </div>
+</div>
+
+<div style="clear:both;">
+    <h3>Mirrors</h3>
+
+    {{if .Fallback}}<p style="color:red">Warning: file not served by any mirror, fallbacks to the rescue.</p>{{end}}
+
+    {{if .MirrorList}}
+    <table border="0" cellpadding="2" style="width: 95%; text-align:left;">
+    <tr>
+        <th>Rank</th><th>Mirror Name</th><th style="text-align: right;">URL</th><th style="text-align: center;">Direct Link</th><th style="text-align: center;">Country</th><th style="text-align: center;">Continent</th><th style="text-align: right;">Distance</th><th style="text-align: center;">Probabilistic weight</th><th style="text-align: right;">File size</th>
+    </tr>
+    {{end}}
+    {{range $i, $v := .MirrorList}}
+    <tr{{if not $v.Weight}} style="color: grey;"{{end}}>
+        <td>{{add $i 1}}.</td><td>{{if $v.SponsorName}}{{$v.SponsorName}}{{else}}{{$v.ID}}{{end}}</td><td style="text-align: right;"><i>{{$v.HttpURL}}</i></td><td style="text-align: center;"><a href="{{$v.HttpURL}}{{$.FileInfo.Path}}">link</a></td><td style="text-align: center;">{{$v.CountryCodes}}</td><td style="text-align: center;">{{$v.ContinentCode}}</td><td style="text-align: right;">{{printf "%.0f" $v.Distance}} Km</td><td style="text-align: center;">{{if $v.Weight}}{{if ge $v.Weight 1.0}}{{printf "%.0f" $v.Weight}}{{else}}<1{{end}}%{{else}}n/a{{end}}</td><td style="text-align: right;">{{if $v.FileInfo}}{{$v.FileInfo.Size}}{{end}}</td>
+    </tr>
+    {{else}}
+    <i>No mirrors for this file</i>
+    {{end}}
+    {{if .MirrorList}}
+    </table>
+    {{end}}
+
+    {{if .ExcludedList}}
+    <h3>Excluded Mirrors</h3>
+    <table border="0" cellpadding="2" style="width: 60%; text-align:left;">
+    <th>Mirror Name</th><th style="text-align: right;">URL</th><th style="text-align: center;">Country</th><th style="text-align: center;">Continent</th><th style="text-align: right;">Distance</th><th style="text-align: center;">Exclude Reason</th>
+    {{end}}
+    {{range $i, $v := .ExcludedList}}
+        <tr>
+            <td>{{if $v.SponsorName}}{{$v.SponsorName}}{{else}}{{$v.ID}}{{end}}<td style="text-align: right;"><a href="{{$v.HttpURL}}">{{$v.HttpURL}}</a></td><td style="text-align: center;">{{$v.CountryCodes}}</td><td style="text-align: center;">{{$v.ContinentCode}}</td><td style="text-align:right;">{{printf "%.0f" $v.Distance}} Km</td><td style="text-align: center;">{{$v.ExcludeReason}}</td>
+        </tr>
+    {{end}}
+    {{if .ExcludedList}}
+    </table>
+    {{end}}
+</div>
+{{end}}

@@ -1,5 +1,20 @@
 ---
  - include: packages.yml
- - include: icedist.yml
+
+ - include: artwork.yml
+   tags: artwork
+   with_items: "{{ transcoder_streams }}"
+   loop_control:
+     loop_var: transcoder_stream
+
  - include: transcoding.yml
+   when: transcoder_streams is defined
+   tags: transcoding
+
+ - include: transcoding_lounges.yml
+   when: transcoder_lounges is defined
+   tags: transcoding
+
+ - include: transcoding_external.yml
+   when: transcoder_external_streams is defined
    tags: transcoding

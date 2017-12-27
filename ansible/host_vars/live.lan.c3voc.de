@@ -1,0 +1,18 @@
+---
+fanout_streams: ['1', '2', '3', '4', '5']
+
+hidden: 'yes'
+nginx: 'yes'
+nginx_hls_master: 'yes'
+
+icedist: 'yes'
+icedist_pull_streams: ['1', '2', '3', '4', '5']
+
+icecast: 'yes'
+icecast_push_master: 'yes'
+
+rtmp: 'no'
+rtmp_auto_hls: 'no'
+nginx_rtmp_hls_master: 'yes'
+
+letsencrypt_fake: "34c3.cdn.c3voc.de"

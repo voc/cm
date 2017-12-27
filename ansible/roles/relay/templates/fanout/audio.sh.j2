@@ -1,6 +1,10 @@
 #!/bin/sh
 
-ffmpeg -nostdin -y -analyzeduration 1000000 \
+{% if fanout_capabilities != 'extended' %}
+{% set languages = ['native'] %}
+{% endif %}
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_audio \
 	{% for language in languages %}
 		{% for codec in ['mp3', 'opus'] %}
@@ -12,7 +16,11 @@ ffmpeg -nostdin -y -analyzeduration 1000000 \
 			{% elif language == 'translated-2' and codec == 'mp3' %}
 				-map 0:a:2 \
 			{% elif language == 'native' and codec == 'opus' %}
+{% if fanout_capabilities == 'extended' %}
 				-map 0:a:3 \
+{% else %}
+				-map 0:a:1 \
+{% endif %}
 			{% elif language == 'translated' and codec == 'opus' %}
 				-map 0:a:4 \
 			{% elif language == 'translated-2' and codec == 'opus' %}
@@ -21,7 +29,11 @@ ffmpeg -nostdin -y -analyzeduration 1000000 \
 			\
 			\
 			-f {{ codec }} \
-			-content_type audio/{{ codec }} \
+			{% if codec == 'mp3' %}
+			-content_type audio/mpeg \
+			{% elif codec == 'opus' %}
+			-content_type audio/ogg \
+			{% endif %}
 			-password {{ lookup('keepass', 'ansible/icecast/source.password') }} \
 			icecast://{{ relay_fanout.push_endpoint }}/s{{ item }}_{{ language }}.{{ codec }} \
 			\

@@ -2,6 +2,8 @@
   - include: packages.yml
   - include: rpi-update.yml
     tags: rpiupdate
+  - include: users.yml
+    tags: users
   - include: vpn.yml
     tags: vpn
   - include: rc.local.yml
@@ -10,8 +12,8 @@
     tags: audioinjector
   - include: journald.yml
     tags: journald
-  - include: ingest.yml
-    tags: ingest
   - include: mqtt-alert.yml
     tags: mqttalert
+  - include: ingest.yml
+    tags: ingest
 

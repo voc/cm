@@ -23,3 +23,25 @@
     template: dest=/home/mixer/.irssi/config
               src=irssi/config.j2
               owner=mixer group=mixer mode=0640
+
+  - name: create irssi script directories
+    file: state=directory recurse=yes
+          dest=/home/mixer/.irssi/scripts/autorun
+          owner=mixer group=mixer
+
+  - name: install irssi scripts
+    copy: dest=/home/mixer/.irssi/scripts/{{ item }}
+          src=irssi/{{ item }}
+          owner=mixer group=mixer mode=0755
+    with_items:
+      - selectvocmixer.pl
+      - knast.pl
+
+  - name: install irssi scripts to autorun
+    file: src=/home/mixer/.irssi/scripts/{{ item }}
+          dest=/home/mixer/.irssi/scripts/autorun/{{ item }}
+          state=link
+    with_items:
+      - selectvocmixer.pl
+      - knast.pl
+

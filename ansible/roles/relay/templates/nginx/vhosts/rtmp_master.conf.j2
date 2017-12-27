@@ -1,5 +1,7 @@
 # HLS-Master configuration
 
+include /usr/share/nginx/modules-available/mod-rtmp.conf;
+
 # important for multi worker processes!!1!
 rtmp_auto_push on;
 
@@ -32,7 +34,7 @@ rtmp {
       # enable live streaming
       live on;
       meta copy;
-{% if nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' %}
+{% if (nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes') and (rtmp_auto_hls is defined and rtmp_auto_hls == 'yes') %}
       hls on;
       hls_path /srv/nginx/hls;
       hls_fragment 10s;

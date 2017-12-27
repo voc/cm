@@ -1,0 +1,110 @@
+---
+  - set_fact:
+      fanout_capabilities: simple
+
+  - name: create directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /opt/fanout/scripts/
+
+  - name: create hls directories
+    file: dest="{{ relay_fanout.hls_write_path }}/s{{ item }}/"
+          state=directory owner=root group=root
+    with_items: "{{ fanout_external_streams }}"
+
+  - name: create hls master-playlists
+    template: dest="{{ relay_fanout.hls_write_path }}/s{{ item }}.m3u8"
+              src=fanout/hls_master_simple.m3u8.j2
+              owner=root group=root
+    with_items: "{{ fanout_external_streams }}"
+
+  - name: create dash directories
+    file: dest="{{ relay_fanout.dash_write_path }}/s{{ item }}"
+          state=directory owner=root group=root
+    with_items: "{{ fanout_external_streams }}"
+
+  - name: create h264 fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_h264.sh
+              src=fanout/h264.sh.j2
+              owner=root group=root mode=0755
+    with_items: "{{ fanout_external_streams }}"
+
+  - name: create dash fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_dash.sh
+              src=fanout/dash.sh.j2
+              owner=root group=root mode=0755
+    with_items: "{{ fanout_external_streams }}"
+
+  - name: create vpx fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_vpx.sh
+              src=fanout/vpx.sh.j2
+              owner=root group=root mode=0755
+    with_items: "{{ fanout_external_streams }}"
+
+  - name: create audio fanout-script
+    template: dest=/opt/fanout/scripts/s{{ item }}_audio.sh
+              src=fanout/audio.sh.j2
+              owner=root group=root mode=0755
+    with_items: "{{ fanout_external_streams }}"
+
+  # - name: create youtube fanout-script
+  #   template: dest=/opt/fanout/scripts/s{{ item }}_youtube.sh
+  #             src=fanout/youtube.sh.j2
+  #             owner=root group=root mode=0755
+  #   with_items: "{{ fanout_external_streams }}"
+  #   when: youtube is defined and youtube
+
+
+
+
+  - name: create fanout systemd-units
+    template: src=systemd-units/fanout.service.j2
+              dest="/etc/systemd/system/fanout_s{{ item.0 }}_{{ item.1 }}.service"
+              mode=0644 owner=root group=root
+    with_nested:
+      - "{{ fanout_external_streams }}"
+      - ["h264", "dash", "vpx", "audio"]
+
+  # - name: create youtube systemd-units
+  #   template: src=systemd-units/fanout.service.j2
+  #             dest="/etc/systemd/system/fanout_s{{ item.0 }}_{{ item.1 }}.service"
+  #             mode=0644 owner=root group=root
+  #   with_nested:
+  #     - "{{ fanout_external_streams }}"
+  #     - ["youtube"]
+  #   when: youtube is defined and youtube
+
+  - name: create fanout systemd-target (room {{item}})
+    template: src=systemd-units/fanout.target.j2
+              dest="/etc/systemd/system/fanout_s{{ item }}.target"
+              mode=0644 owner=root group=root
+    with_items:
+      - "{{ fanout_external_streams }}"
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: enable fanout systemd-units
+    service: name=fanout_s{{ item.0 }}_{{ item.1 }}.service
+             enabled=yes
+             state=restarted
+    with_nested:
+      - "{{ fanout_external_streams }}"
+      - ["h264", "dash", "vpx", "audio"]
+
+  # - name: enable youtube systemd-units
+  #   service: name=fanout_s{{ item.0 }}_{{ item.1 }}.service
+  #            enabled=yes
+  #            state=restarted
+  #   with_nested:
+  #     - "{{ fanout_external_streams }}"
+  #     - ["youtube"]
+  #   when: youtube is defined and youtube
+
+  - name: enable & start fanout systemd-target
+    service: name=fanout_s{{ item }}.target
+             enabled=yes
+    with_items:
+      - "{{ fanout_external_streams }}"

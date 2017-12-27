@@ -1,0 +1,13 @@
+---
+  - name: create /opt/voc/share/ directory
+    file: dest=/opt/voc/share/ state=directory
+          owner=root group=root mode=0755
+
+  - name: add sd-overlay image
+    copy: src={{ item }}
+          dest=/opt/voc/share/overlay_sd_saal{{ transcoder_stream }}.png
+          owner=root group=staff mode=0644
+    with_first_found:
+      - "../../../artwork/{{ event.acronym }}/saal{{ transcoder_stream }}/overlay_sd.png"
+      - "../../../artwork/{{ event.acronym }}/overlay_sd.png"
+      - "../../encoder/files/artwork/default-overlay.png"

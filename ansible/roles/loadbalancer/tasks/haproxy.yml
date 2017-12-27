@@ -31,6 +31,14 @@
       - install
       - config
 
+  - name: copy dtag ip list
+    copy: src=dtag_subnetworks.txt
+          dest=/etc/haproxy/dtag_subnetworks.txt
+          mode=0755 owner=haproxy group=haproxy
+    tags:
+      - install
+      - config
+
   - name: create haproxy config
     template: src=haproxy/haproxy.cfg.j2
               dest=/etc/haproxy/haproxy.cfg

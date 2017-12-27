@@ -1,0 +1,13 @@
+#!/bin/sh
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
+	-i http://{{ transcoder.lounge_pull_endpoint }}/a{{ item }}.opus \
+	\
+	-map 0:a:0 \
+		-metadata:s:a:0 title="Lounge MP3" \
+		-c:a:0 libmp3lame -b:a:0 96k \
+	\
+	-f mp3 \
+	-content_type audio/mp3 \
+	-password "{{ lookup('keepass', 'ansible/audio-pi/icecast_a{{ item }}.password') }}" \
+	icecast://{{ transcoder.lounge_push_endpoint }}/a{{ item }}.mp3

@@ -1,54 +1,64 @@
 #!/bin/sh
 
-ffmpeg -nostdin -y -analyzeduration 1000000 \
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
-	-filter_complex '[0:v:0] scale=1024:576 [sd]' \
+	-filter_complex '
+		[0:v:0] scale=1024:576 [smooth_sd];
+		movie=/opt/voc/share/overlay_sd_saal{{ item }}.png [logo_sd];
+		[smooth_sd] [logo_sd] overlay=0:0 [sd]
+	' \
+	\
+{# Video settings #}
+	-c:v libvpx -flags:v +global_header \
+		-deadline:v good -cpu-used:v 16 \
+		-static-thresh:v 250 -skip_threshold:v 70 \
+	\
+	{# Use CQ Mode for HD/SD #}
 	-map '0:v:0' \
 		-metadata:s:v:0 title="HD" \
-		-c:v:0 libvpx \
-			-threads:v:0 8 \
-			-flags:v:0 +global_header \
-			-g:v:0 75 \
-			-keyint_min:v:0 75 \
-			-deadline:v:0 realtime \
-			-b:v:0 2800k \
+		-threads:v:0 8 \
+		-slices:v:0 4 \
+		-keyint_min:v:0 75 \
+		-g:v:0 75 \
+		-b:v:0 2800k \
+		-crf:v:0 27 \
+		-bufsize:v:0 12000k \
+		-rc_init_occupancy:v:0 8400k \
 	-map '[sd]' \
 		-metadata:s:v:1 title="SD" \
-		-c:v:1 libvpx \
-			-threads:v:1 8 \
-			-flags:v:1 +global_header \
-			-g:v:1 75 \
-			-keyint_min:v:1 75 \
-			-deadline:v:1 realtime \
-			-b:v:1 800k \
+		-threads:v:1 4 \
+		-slices:v:1 2 \
+		-keyint_min:v:1 75 \
+		-g:v:1 75 \
+		-b:v:1 800k \
+		-crf:v:0 40 \
+		-bufsize:v:1 4500k \
+		-rc_init_occupancy:v:1 1000k \
+	\
+{% if transcoding_capabilities == 'extended' %}
+	{# Use CBR Mode and high skip threshold for slides #}
 	-map '0:v:1' \
 		-metadata:s:v:2 title="Slides" \
-		-c:v:2 libvpx \
-			-threads:v:2 8 \
-			-flags:v:2 +global_header \
-			-g:v:2 75 \
-			-keyint_min:v:2 75 \
-			-deadline:v:2 realtime \
-			-b:v:2 100k \
+		-threads:v:2 4 \
+		-slices:v:2 2 \
+		-g:v:2 15 \
+		-keyint_min:v:2 15 \
+		-b:v:2 100k \
+		-minrate:v:2 100k \
+		-maxrate:v:2 100k \
+		-bufsize:v:2 750k \
+		-rc_init_occupancy:v:2 500k \
+		-static-thresh:v:2 500 \
 	\
+{% endif  %}
+{# Audio settings #}
+	-c:a libvorbis -ac:a 2 -maxrate:a 96k \
 	\
-	-map 0:a:0 \
-		-metadata:s:a:0 title="Native" \
-		-c:a:0 libvorbis \
-			-ac:a:0 2 \
-			-maxrate:a:0 96k \
-	\
-	-map 0:a:1 \
-		-metadata:s:a:1 title="Translated" \
-		-c:a:1 libvorbis \
-			-ac:a:1 2 \
-			-maxrate:a:1 96k \
-	\
-	-map 0:a:2 \
-		-metadata:s:a:2 title="Translated-2" \
-		-c:a:2 libvorbis \
-			-ac:a:2 2 \
-			-maxrate:a:2 96k \
+	-map 0:a:0 -metadata:s:a:0 title="Native" \
+{% if transcoding_capabilities == 'extended' %}
+	-map 0:a:1 -metadata:s:a:1 title="Translated" \
+	-map 0:a:2 -metadata:s:a:2 title="Translated-2" \
+{% endif %}
 	\
 	-fflags +genpts \
 	-max_muxing_queue_size 1000 \

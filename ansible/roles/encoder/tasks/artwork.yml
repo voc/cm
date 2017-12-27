@@ -3,15 +3,6 @@
     file: dest=/opt/voc/share/ state=directory
           owner=root group=root mode=0755
 
-  - name: add overlay image
-    copy: src={{ item }}
-          dest=/opt/voc/share/overlay_sd.png
-          owner=root group=staff mode=0644
-    with_first_found:
-      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay.png"
-      - "../../../artwork/{{ event.acronym }}/overlay.png"
-      - "artwork/default-overlay.png"
-
   - name: add hd-overlay image
     copy: src={{ item }}
           dest=/opt/voc/share/overlay_hd.png
@@ -19,7 +10,7 @@
     with_first_found:
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay_hd.png"
       - "../../../artwork/{{ event.acronym }}/overlay_hd.png"
-      - "artwork/default-overlay_hd.png"
+      - "artwork/default-overlay.png"
 
   - name: add slides-overlay image
     copy: src={{ item }}
@@ -30,17 +21,7 @@
       - "../../../artwork/{{ event.acronym }}/overlay_slides.png"
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay_hd.png"
       - "../../../artwork/{{ event.acronym }}/overlay_hd.png"
-      - "artwork/default-overlay_slides.png"
-      - "artwork/default-overlay_hd.png"
-
-  - name: add nostream image
-    copy: src={{ item }}
-          dest=/opt/voc/share/nostream.png
-          owner=root group=staff mode=0644
-    with_first_found:
-      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.png"
-      - "../../../artwork/{{ event.acronym }}/nostream.png"
-      - "artwork/default-nostream.png"
+      - "artwork/default-overlay.png"
 
   - name: uploading background-loop
     copy: src={{ item }}
@@ -68,6 +49,15 @@
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/pause.ts"
       - "../../../artwork/{{ event.acronym }}/pause.ts"
       - "artwork/default-pause.ts"
+
+  - name: uploading nostream-loop
+    copy: src={{ item }}
+          dest=/opt/voc/share/nostream.ts
+          owner=root group=staff mode=0644
+    with_first_found:
+      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.ts"
+      - "../../../artwork/{{ event.acronym }}/nostream.ts"
+      - "artwork/default-nostream.ts"
 
   - name: synchronizing default music-files
     synchronize: src={{ item }}

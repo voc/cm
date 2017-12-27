@@ -14,7 +14,7 @@ After = network.target
 [Service]
 Type = simple
 ExecStart = /opt/audio-ingest.sh
-ExecStartPost = /opt/restart-notifier.sh $MAINPID
+ExecStartPost = /opt/mqtt/restart-notifier.sh $MAINPID
 Restart = always
 RestartSec = 1s
 StartLimitInterval = 0

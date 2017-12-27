@@ -46,22 +46,28 @@ deinterlace = assume-progressive
 [source.stream-blanker-pause]
 deinterlace = assume-progressive
 
+[source.stream-blanker-nostream]
+deinterlace = assume-progressive
+
 
 [fullscreen]
 default-a=slides
 
 [side-by-side-equal]
-gutter=20
-atop=80
-btop=480
+border=51
+gutter=-90
+atop=498
+btop=226
 
 default-a=slides
 
 [side-by-side-preview]
-asize=1420x799
-apos=20/160
-bsize=496x279
-bpos=1404/781
+asize=1366x769
+apos=52/148
+
+bsize=407x407
+bcrop=0/840/0/0
+bpos=1462/392
 
 default-a=slides
 
@@ -87,4 +93,4 @@ vaapi=h264
 
 [stream-blanker]
 enabled=true
-sources=pause
+sources=pause,nostream

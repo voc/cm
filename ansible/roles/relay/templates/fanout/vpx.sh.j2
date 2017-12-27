@@ -1,6 +1,11 @@
 #!/bin/sh
 
-ffmpeg -nostdin -y -analyzeduration 1000000 \
+{% if fanout_capabilities != 'extended' %}
+{% set languages = ['native'] %}
+{% set qualities = ['hd', 'sd'] %}
+{% endif %}
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vpx \
 {% for language in languages %}
 	{% for quality in qualities %}

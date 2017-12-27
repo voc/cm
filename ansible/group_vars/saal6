@@ -1,6 +1,6 @@
 ---
 room_number: 6
-room_fahrplan_name: Saal6
+room_fahrplan_name: Assembly
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

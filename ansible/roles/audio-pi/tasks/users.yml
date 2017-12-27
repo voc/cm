@@ -1,0 +1,19 @@
+---
+- name: "set root user password"
+  user:
+    name: root
+    password: "{{ lookup('keepass', 'ansible/audio-pi/audio-pi-root.password') | password_hash('sha512') }}"
+    update_password: always
+
+# Since the audio-pis are deployed somewhere, change the pw at least
+- name: "set voc user password"
+  user:
+    name: voc
+    password: "{{ lookup('keepass', 'ansible/audio-pi/audio-pi-voc.password') | password_hash('sha512') }}"
+    update_password: always
+
+- name: "set pi user password"
+  user:
+    name: pi
+    password: "{{ lookup('keepass', 'ansible/audio-pi/audio-pi-voc.password') | password_hash('sha512') }}"
+    update_password: always

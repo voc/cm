@@ -90,7 +90,7 @@ server {
 
   add_header Access-Control-Allow-Origin "*";
   # TLS certificates
-  ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/cert.pem;
+  ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
   ssl_certificate_key   /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
   # OCSP stapling
   ssl_stapling on;
@@ -116,16 +116,16 @@ server {
 
   # relive
   location ~ ^/crossdomain.xml {
-    alias /srv/releases/relive/crossdomain.xml;
+    alias /srv/nginx/relive/crossdomain.xml;
     include /etc/nginx/mime.types;
   }
 
   location ~* ^/relive/(.+\.ts)$ {
-    alias /srv/releases/relive/$1;
+    alias /srv/nginx/relive/$1;
   }
 
   location ~* ^/relive/(.*) {
-    alias /srv/releases/relive/$1;
+    alias /srv/nginx/relive/$1;
     autoindex on;
   }
 {% else %}
@@ -151,6 +151,8 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
   }
   # proxy cache ts files (live)
   #
@@ -308,6 +310,8 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
   }
   # proxy cache dash segments (live)
   #
@@ -322,7 +326,7 @@ server {
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://dash/dash/$segment;
       proxy_cache_methods    GET HEAD;
-      proxy_cache_valid      200 302 30m;
+      proxy_cache_valid      200 302 3m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;

@@ -1,11 +1,12 @@
 #!/bin/sh
 
-ffmpeg -nostdin -y -analyzeduration 1000000 \
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
 	-map 0:a:0 \
 		-metadata:s:a:0 title="Native MP3" \
 		-c:a:0 libmp3lame -b:a:0 96k \
 	\
+{% if transcoding_capabilities == 'extended' %}
 	-map 0:a:1 \
 		-metadata:s:a:1 title="Translated MP3" \
 		-c:a:1 libmp3lame -b:a:1 96k \
@@ -28,6 +29,12 @@ ffmpeg -nostdin -y -analyzeduration 1000000 \
 		-metadata:s:a:5 title="Translated-2 Opus" \
 		-c:a:5 libopus -vbr:a:5 off -b:a:5 32k \
 	\
+{% else %}
+	-map 0:a:0 \
+		-metadata:s:a:1 title="Native Opus" \
+		-c:a:1 libopus -vbr:a:1 off -b:a:1 32k \
+	\
+{% endif %}
 	-max_muxing_queue_size 400 \
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
