@@ -60,6 +60,7 @@ lb_icecast_relays: {
   "dedi3.het.c3voc.de": 50,
   "dedi4.het.c3voc.de": 50,
   "deskjet.ccl.c3voc.de": 25,
+  "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
   "usa.ccl.c3voc.de": 25,
 }
@@ -70,8 +71,6 @@ lb_local_relays: {
 }
 
 lb_relive_relays: {
-  "dedi5.het.c3voc.de": 50,
-  "dedi6.het.c3voc.de": 50,
   "deskjet.ccl.c3voc.de": 25,
   "live.dus.c3voc.de": 50,
   "usa.ccl.c3voc.de": 25,
