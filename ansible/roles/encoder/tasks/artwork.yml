@@ -63,6 +63,7 @@
     synchronize: src={{ item }}
                  dest=/opt/voc/share/
                  delete=yes
+                 rsync_path="sudo rsync"
     with_first_found:
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/pause-music"
       - "../../../artwork/{{ event.acronym }}/pause-music"
