@@ -25,10 +25,8 @@
           state=directory mode=0750"
     with_items:
       - "cache/tmp"
-      - "cache/hls"
       - "cache/hls_relive"
-      - "cache/dash"
-      - "dash"
+      - "cache/live"
     notify: reload nginx
     tags: install
 

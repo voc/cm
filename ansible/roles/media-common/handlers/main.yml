@@ -1,0 +1,3 @@
+---
+  - name: generate locales
+    command: /usr/sbin/locale-gen

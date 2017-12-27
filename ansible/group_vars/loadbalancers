@@ -17,44 +17,62 @@ nginx_ips_allow_stats: [
   "10.8.0.0/16"
 ]
 
+haproxy_3rdparty_regex: "s(c3tv|jh|fsfe|freifunk|uewagen|4k)"
+
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
+lb_3rdparty_relays: {
+  "dawaschtel.ccl.c3voc.de": 50,
+}
+
 lb_dash_relays: {
-  "live.alb.c3voc.de": 120,
-  "live.bn.c3voc.de": 120,
-  "live.dus.c3voc.de": 25,
-  "live.fem.c3voc.de": 100,
-  "live.self.c3voc.de": 30,
+  "dedi1.het.c3voc.de": 50,
+  "dedi2.het.c3voc.de": 50,
+  "dedi3.het.c3voc.de": 50,
+  "dedi4.het.c3voc.de": 50,
+  "deskjet.ccl.c3voc.de": 25,
+  "live.bn.c3voc.de": 50,
+  "live.dus.c3voc.de": 50,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_dtag_relays: {
+  "deskjet.ccl.c3voc.de": 25,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_hls_relays: {
-  "live.alb.c3voc.de": 120,
-  "live.bn.c3voc.de": 120,
-  "live.dus.c3voc.de": 25,
-  "live.fem.c3voc.de": 100,
-  "live.self.c3voc.de": 30,
+  "dedi5.het.c3voc.de": 50,
+  "dedi6.het.c3voc.de": 50,
+  "deskjet.ccl.c3voc.de": 25,
+  "live.bn.c3voc.de": 50,
+  "live.dus.c3voc.de": 50,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_icecast_relays: {
-  "live.alb.c3voc.de": 120,
-  "live.bn.c3voc.de": 120,
-  "live.dus.c3voc.de": 25,
-  "live.fem.c3voc.de": 100,
-  "live.self.c3voc.de": 30,
+  "dedi1.het.c3voc.de": 50,
+  "dedi2.het.c3voc.de": 50,
+  "dedi3.het.c3voc.de": 50,
+  "dedi4.het.c3voc.de": 50,
+  "deskjet.ccl.c3voc.de": 25,
+  "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_local_relays: {
+  "deskjet.ccl.c3voc.de": 25,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_relive_relays: {
-  "live.dus.c3voc.de": 25,
+  "dedi5.het.c3voc.de": 50,
+  "dedi6.het.c3voc.de": 50,
+  "deskjet.ccl.c3voc.de": 25,
+  "live.dus.c3voc.de": 50,
+  "usa.ccl.c3voc.de": 25,
 }
-
-lb_3rdparty_relays: {
-  "dawaschtel.lan.c3voc.de": 100,
-}
-
-haproxy_3rdparty_regex: "s(c3tv|jh|fsfe|freifunk|uewagen|4k)"

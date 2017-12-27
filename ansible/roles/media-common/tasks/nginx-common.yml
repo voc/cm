@@ -1,0 +1,5 @@
+---
+- file: path=/etc/nginx/sites-enabled/default state=absent
+- copy: src=nginx/anon.conf
+        dest=/etc/nginx/conf.d/
+        owner=root group=root

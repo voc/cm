@@ -1,0 +1,15 @@
+---
+- template: src=media-sync.sh
+        dest=/usr/local/sbin/media-sync.sh
+        owner=root group=root mode=0750
+
+- copy: src=rsync-webroot.sh
+        dest=/usr/local/sbin
+        owner=root group=root mode=0750
+
+- cron: user=root minute="*/15" cron_file="local_mirror"
+        job="if [ -x /usr/local/sbin/media-sync.sh ]; then /usr/local/sbin/media-sync.sh; fi;"
+
+- cron: user=root minute="*/3" cron_file="local_mirror"
+        job="if [ -x /usr/local/sbin/rsync-webroot.sh ]; then /usr/local/sbin/rsync-webroot.sh; fi;"
+

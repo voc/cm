@@ -1,0 +1,13 @@
+---
+- shell: /usr/lib/go-1.9/bin/go get github.com/manno/mirrorbits-serverlist-api
+  environment:
+    GOPATH: /usr/local/
+- shell: /usr/lib/go-1.9/bin/go install github.com/manno/mirrorbits-serverlist-api
+  environment:
+    GOPATH: /usr/local/
+
+- template: src=mirrorbits-serverlist-api.service
+            dest=/etc/systemd/system/mirrorbits-serverlist-api.service
+            mode=0644 owner=root group=root
+
+- systemd: state=started enabled=yes name=mirrorbits-serverlist-api.service

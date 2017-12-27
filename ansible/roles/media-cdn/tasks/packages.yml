@@ -1,0 +1,23 @@
+---
+  - apt_repository:
+      repo: "ppa:gophers/archive"
+      update_cache: "yes"
+    when: ansible_distribution == "Ubuntu"
+
+  - apt_repository:
+      repo: "ppa:chris-lea/redis-server"
+      update_cache: "yes"
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install defaut packages
+    apt: name={{ item }} state=latest
+    with_items:
+      - golang-1.9-go
+      - zlib1g-dev
+      - libgeoip-dev
+      - redis-server
+
+  - name: remove uneeded
+    apt: name={{ item }} state=absent
+    with_items:
+      - golang-1.6-go

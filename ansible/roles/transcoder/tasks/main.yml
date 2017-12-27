@@ -1,6 +1,12 @@
 ---
  - include: packages.yml
 
+ - include: artwork.yml
+   tags: artwork
+   with_items: "{{ transcoder_streams }}"
+   loop_control:
+     loop_var: transcoder_stream
+
  - include: transcoding.yml
    when: transcoder_streams is defined
    tags: transcoding

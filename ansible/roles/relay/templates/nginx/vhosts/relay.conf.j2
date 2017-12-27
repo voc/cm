@@ -2,22 +2,16 @@
 # HLS slave caching directories
 proxy_temp_path /srv/nginx/cache/tmp;
 
-proxy_cache_path /srv/nginx/cache/hls
-                 keys_zone=hls:32m
-                 max_size={{ nginx_hls_cache_max_size | default('30g') }}
-                 inactive=1h
-                 loader_threshold=300 loader_files=1024;
-
 proxy_cache_path /srv/nginx/cache/hls_relive
                 keys_zone=hls_relive:32m
                 max_size={{ nginx_hls_relive_cache_max_size | default('200g') }}
                 inactive=7d
                 loader_threshold=300 loader_files=1024;
 
-proxy_cache_path /srv/nginx/cache/dash
-                keys_zone=dash:32m
-                max_size={{ nginx_dash_cache_max_size | default('30g') }}
-                inactive=7d
+proxy_cache_path /srv/nginx/cache/live
+                keys_zone=live:32m
+                max_size={{ nginx_live_cache_max_size | default('10g') }}
+                inactive=1h
                 loader_threshold=300 loader_files=1024;
 
 # Upstreams
@@ -116,16 +110,16 @@ server {
 
   # relive
   location ~ ^/crossdomain.xml {
-    alias /srv/releases/relive/crossdomain.xml;
+    alias /srv/nginx/relive/crossdomain.xml;
     include /etc/nginx/mime.types;
   }
 
   location ~* ^/relive/(.+\.ts)$ {
-    alias /srv/releases/relive/$1;
+    alias /srv/nginx/relive/$1;
   }
 
   location ~* ^/relive/(.*) {
-    alias /srv/releases/relive/$1;
+    alias /srv/nginx/relive/$1;
     autoindex on;
   }
 {% else %}
@@ -135,7 +129,7 @@ server {
   #
   location ~* ^/(?<hls>hls)/(?<file>.+\.m3u8)$ {
       proxy_intercept_errors on;
-      proxy_cache            hls;
+      proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls/$hls/$file;
@@ -151,6 +145,8 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
   }
   # proxy cache ts files (live)
   #
@@ -158,12 +154,12 @@ server {
   #
   location ~* ^/(?<hls>hls)/(?<stream>.+\.(ts))$ {
       proxy_intercept_errors on;
-      proxy_cache            hls;
+      proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls/$hls/$stream;
       proxy_cache_methods    GET HEAD;
-      proxy_cache_valid      200 302 30m;
+      proxy_cache_valid      200 302 6m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;
@@ -292,7 +288,7 @@ server {
   #
   location ~* ^/dash/(?<manifest>.+\.mpd)$ {
       proxy_intercept_errors on;
-      proxy_cache            dash;
+      proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://dash/dash/$manifest;
@@ -308,6 +304,8 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
   }
   # proxy cache dash segments (live)
   #
@@ -317,7 +315,7 @@ server {
   #
   location ~* ^/dash/(?<segment>.+\.(hdr|chk|m4s))$ {
       proxy_intercept_errors on;
-      proxy_cache            dash;
+      proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://dash/dash/$segment;

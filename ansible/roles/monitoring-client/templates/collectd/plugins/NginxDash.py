@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys, os, re, urllib, datetime, itertools, subprocess, collections, logging, urllib2
-from os.path import basename, splitext
+from os.path import basename, dirname, splitext
 from urlparse import urlparse
 
 logging.basicConfig(level=logging.ERROR, format='%(levelname)8s %(name)s: %(message)s')
@@ -119,7 +119,8 @@ def count_dash_viewers():
 
 	# count set lengths
 	for path in counters:
-		viewer_counts[splitext(basename(path))[0]] = len(counters[path])
+                key = basename(dirname(path)) + "_dash"
+                viewer_counts[key] = len(counters[path])
 
 	return viewer_counts
 
