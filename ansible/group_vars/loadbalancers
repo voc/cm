@@ -30,30 +30,28 @@ lb_dash_relays: {
   "dedi2.het.c3voc.de": 50,
   "dedi3.het.c3voc.de": 50,
   "dedi4.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 100,
-  "live.alb.c3voc.de": 100,
+  "deskjet.ccl.c3voc.de": 25,
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
-  "live.fem.c3voc.de": 50,
-  "live.self.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 50,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_dtag_relays: {
-  "deskjet.ccl.c3voc.de": 100,
-  "live.alb.c3voc.de": 100,
-  "usa.ccl.c3voc.de": 50,
+  "deskjet.ccl.c3voc.de": 25,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_hls_relays: {
   "dedi5.het.c3voc.de": 50,
   "dedi6.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 100,
+  "deskjet.ccl.c3voc.de": 25,
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
-  "live.fem.c3voc.de": 50,
-  "live.self.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 50,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_icecast_relays: {
@@ -61,21 +59,20 @@ lb_icecast_relays: {
   "dedi2.het.c3voc.de": 50,
   "dedi3.het.c3voc.de": 50,
   "dedi4.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 100,
-  "live.alb.c3voc.de": 100,
-  "live.self.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 50,
+  "deskjet.ccl.c3voc.de": 25,
+  "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_local_relays: {
-  "deskjet.ccl.c3voc.de": 100,
-  "usa.ccl.c3voc.de": 50,
+  "deskjet.ccl.c3voc.de": 25,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_relive_relays: {
   "dedi5.het.c3voc.de": 50,
   "dedi6.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 100,
+  "deskjet.ccl.c3voc.de": 25,
   "live.dus.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 50,
+  "usa.ccl.c3voc.de": 25,
 }
