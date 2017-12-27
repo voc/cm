@@ -62,6 +62,16 @@ audio-pi1.lan.c3voc.de stream=a1
 audio-pi2.lan.c3voc.de stream=a2
 audio-pi3.lan.c3voc.de stream=a3
 
+[tally-pis]
+10.73.1.15 cam=cam1 encoder=encoder1.lan.c3voc.de
+10.73.1.16 cam=cam2 encoder=encoder1.lan.c3voc.de
+10.73.2.15 cam=cam1 encoder=encoder2.lan.c3voc.de
+10.73.2.16 cam=cam2 encoder=encoder2.lan.c3voc.de
+10.73.3.16 cam=cam2 encoder=encoder3.lan.c3voc.de
+10.73.4.15 cam=cam1 encoder=encoder4.lan.c3voc.de
+10.73.4.16 cam=cam2 encoder=encoder4.lan.c3voc.de
+#10.73.3.15 cam=cam1 encoder=encoder3.lan.c3voc.de
+
 # Local RZ
 [servers]
 mng.ber.c3voc.de
