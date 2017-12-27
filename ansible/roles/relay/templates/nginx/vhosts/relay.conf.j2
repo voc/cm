@@ -116,16 +116,16 @@ server {
 
   # relive
   location ~ ^/crossdomain.xml {
-    alias /srv/releases/relive/crossdomain.xml;
+    alias /srv/nginx/relive/crossdomain.xml;
     include /etc/nginx/mime.types;
   }
 
   location ~* ^/relive/(.+\.ts)$ {
-    alias /srv/releases/relive/$1;
+    alias /srv/nginx/relive/$1;
   }
 
   location ~* ^/relive/(.*) {
-    alias /srv/releases/relive/$1;
+    alias /srv/nginx/relive/$1;
     autoindex on;
   }
 {% else %}
