@@ -7,3 +7,6 @@ icecast: 'yes'
 #nginx_hls_relive_masters: ['195.54.164.164']
 
 letsencrypt_fake: "34c3.cdn.c3voc.de"
+
+# workaround until relive lb config does something useful
+nginx_hls_relive_cache_max_size: '10g'
