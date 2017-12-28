@@ -8,8 +8,8 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vpx \
 	-c:v copy \
 	-map 0:v:0 -b:v:0 2800k \
-	-map 0:v:1 -b:v:1 800k \
 {% if fanout_capabilities == 'extended' %}
+	-map 0:v:1 -b:v:1 800k \
 	-map 0:v:2 -b:v:2 100k \
 {% endif %}
 	\
@@ -27,6 +27,6 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 {% if fanout_capabilities == 'extended' %}
 	-adaptation_sets 'id=1,streams=v id=2,streams=3 id=3,streams=4 id=4,streams=5' \
 {% else %}
-	-adaptation_sets 'id=1,streams=v id=2,streams=2' \
+	-adaptation_sets 'id=1,streams=v id=2,streams=1' \
 {% endif %}
 	{{ relay_fanout.dash_write_path }}/s{{ item }}/manifest.mpd

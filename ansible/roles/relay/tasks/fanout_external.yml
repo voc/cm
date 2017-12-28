@@ -19,7 +19,7 @@
               owner=root group=root
     with_nested:
       - "{{ fanout_external_streams }}"
-      - ['hd', 'sd']
+      - ['hd']
 
   - name: create dash directories
     file: dest="{{ relay_fanout.dash_write_path }}/s{{ item }}"

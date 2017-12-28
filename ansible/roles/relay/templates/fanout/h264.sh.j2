@@ -14,7 +14,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-map '0:v:0' -map '0:v:1' -map '0:v:2' \
 		-map '0:a:0' -map '0:a:0' -map '0:a:0' -map '0:a:1' -map '0:a:2' \
 {% else %}
-		-map '0:v:0' -map '0:v:1' \
+		-map '0:v:0' \
 		-map '0:a:0' -map '0:a:0' \
 {% endif %}
 		\
@@ -26,6 +26,6 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 {% if fanout_capabilities == 'extended' %}
 		-var_stream_map 'v:0,a:0 v:1,a:1 v:2,a:2 a:3 a:4' \
 {% else %}
-		-var_stream_map 'v:0,a:0 v:1,a:1' \
+		-var_stream_map 'v:0,a:0 a:1' \
 {% endif %}
 		{{ relay_fanout.hls_write_path }}/s{{ item }}/chunks.m3u8

@@ -2,11 +2,13 @@
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
+{% if transcoding_capabilities == 'extended' %}
 	-filter_complex '
 		[0:v:0] scale=1024:576 [smooth_sd];
 		movie=/opt/voc/share/overlay_sd_saal{{ item }}.png [logo_sd];
 		[smooth_sd] [logo_sd] overlay=0:0 [sd]
 	' \
+{% endif  %}
 	\
 {# Video settings #}
 	-c:v libvpx -flags:v +global_header \
@@ -25,6 +27,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-bufsize:v:0 12000k \
 		-rc_init_occupancy:v:0 8400k \
 		-pix_fmt yuv420p \
+{% if transcoding_capabilities == 'extended' %}
 	-map '[sd]' \
 		-metadata:s:v:1 title="SD" \
 		-threads:v:1 4 \
@@ -37,7 +40,6 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-rc_init_occupancy:v:1 1000k \
 		-pix_fmt yuv420p \
 	\
-{% if transcoding_capabilities == 'extended' %}
 	{# Use CBR Mode and high skip threshold for slides #}
 	-map '0:v:1' \
 		-metadata:s:v:2 title="Slides" \
