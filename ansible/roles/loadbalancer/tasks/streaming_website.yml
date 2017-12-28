@@ -119,9 +119,14 @@
           user=downloader
     tags: install
 
+  - name: remove possibly old thumbnail lockfiles
+    file: path=/home/downloader/_thumb_{{ item }}.lck state=absent
+    tags: install
+    with_items: [s1, s2, s3, s4, s5, s6, q1, q2, "sc3tv", "sjh", "sfsfe", "sfreifunk", "suewagen", "s4k"]
+
   - name: create cronjobs to pull thumbs every minute
     cron: name="download thumbnail for {{ item }}"
-          job="{{ ffmpeg_bin.stdout }} -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_sd.m3u8 -vf 'scale=213:120' -vframes 1 /srv/nginx/thumbs/{{ item }}.png 2>/dev/null"
+          job="flock -xn /home/downloader/_thumb_{{ item }}.lck -c \"{{ ffmpeg_bin.stdout }} -nostdin -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_sd.m3u8 -vf 'scale=213:120' -vframes 1 /srv/nginx/thumbs/{{ item }}.png 2>/dev/null\""
           user=downloader
     tags: install
     with_items: [s1, s2, s3, s4, s5, s6, q1, q2, "sc3tv", "sjh", "sfsfe", "sfreifunk", "suewagen", "s4k"]
