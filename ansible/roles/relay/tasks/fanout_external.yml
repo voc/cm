@@ -14,10 +14,12 @@
     with_items: "{{ fanout_external_streams }}"
 
   - name: create hls master-playlists
-    template: dest="{{ relay_fanout.hls_write_path }}/s{{ item }}.m3u8"
+    template: dest="{{ relay_fanout.hls_write_path }}/s{{ item.0 }}_native_{{ item.1 }}.m3u8"
               src=fanout/hls_master_simple.m3u8.j2
               owner=root group=root
-    with_items: "{{ fanout_external_streams }}"
+    with_nested:
+      - "{{ fanout_external_streams }}"
+      - ['hd', 'sd']
 
   - name: create dash directories
     file: dest="{{ relay_fanout.dash_write_path }}/s{{ item }}"
