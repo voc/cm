@@ -103,6 +103,7 @@ check_raid () {
 #
 #     * OOM situations
 #     * hanging tasks for more then 120 seconds
+#     * CPU throttling
 #
 check_logs () {
   kernel_log=$(journalctl _TRANSPORT=kernel --since "10 minutes ago")
@@ -115,6 +116,11 @@ check_logs () {
   oom_messages=$(echo $kernel_log | grep -q "Out of memory")
   if [ "0" -eq "$?" ]; then
     send_mqtt_message "error" "system/kernel/${TRUNC_HOSTNAME}" "<red>OOM killer killed processes!</red>"
+  fi
+
+  throttle_messages=$(echo $kernel_log | grep -q "cpu clock throttled")
+  if [ "0" -eq "$?" ]; then
+    send_mqtt_message "error" "system/kernel/${TRUNC_HOSTNAME}" "<red>CPU throttled!</red>"
   fi
 }
 
@@ -157,13 +163,14 @@ check_interfaces () {
 # check_temperature implements:
 #   * intel cpu temperature with coretemp
 check_temperature () {
-  for thermal_zone in $(ls -d /sys/class/hwmon/hwmon*); do
-    if [ $(cat ${thermal_zone}/name) = "coretemp" ]; then
-      for temp in $(ls ${thermal_zone}/temp*_label | grep -o "temp."); do
-        if [ $(cat "${thermal_zone}/${temp}_crit_alarm") = "1" ]; then
-          label="$(cat ${thermal_zone}/${temp}_label)"
-          value="$(cat ${thermal_zone}/${temp}_input)"
-          send_mqtt_message "error" "system/temp/${TRUNC_HOSTNAME}" "<red>${label} temp critical at $(echo "scale=2;${value}/1000" | bc) °C</red>"
+  for hwmon in $(ls -d /sys/class/hwmon/hwmon*); do
+    if [ $(cat ${hwmon}/name) = "coretemp" ]; then
+      for temp in $(ls ${hwmon}/temp*_label | grep -o "temp."); do
+        value="$(cat ${hwmon}/${temp}_input)"
+        limit="$(cat ${hwmon}/${temp}_crit)"
+        if [ $(echo "${value} > (${limit}*0.95)" | bc) -eq "1" ]; then
+          label="$(cat ${hwmon}/${temp}_label)"
+          send_mqtt_message "error" "system/temp/${TRUNC_HOSTNAME}" "<red>${label} temp critical at $(echo "${value}/1000" | bc) °C</red>"
           break 2
         fi
       done
