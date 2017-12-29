@@ -153,12 +153,31 @@ check_interfaces () {
   done
 }
 
+
+# check_temperature implements:
+#   * intel cpu temperature with coretemp
+check_temperature () {
+  for thermal_zone in $(ls -d /sys/class/hwmon/hwmon*); do
+    if [ $(cat ${thermal_zone}/name) = "coretemp" ]; then
+      for temp in $(ls ${thermal_zone}/temp*_label | grep -o "temp."); do
+        if [ $(cat "${thermal_zone}/${temp}_crit_alarm") = "1" ]; then
+          label="$(cat ${thermal_zone}/${temp}_label)"
+          value="$(cat ${thermal_zone}/${temp}_input)"
+          send_mqtt_message "error" "system/temp/${TRUNC_HOSTNAME}" "<red>${label} temp critical at $(echo "scale=2;${value}/1000" | bc) °C</red>"
+          break 2
+        fi
+      done
+    fi
+  done
+}
+
+
 # send system uptime in every run
 ping () {
   hostname="$(hostname -f)"
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
-  mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
-} 
+  mosquitto_pub --capath /etc/ssl/certs/ -h "mng.ber.c3voc.de" -p 8883 -u "fahrplan" -P "than_feat7apart" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
+}
 
 # general checks
 ping
@@ -167,6 +186,7 @@ check_disk_space
 check_raid
 check_logs
 check_interfaces
+check_temperature
 
 # special cases
 if [ "0" -eq "$(hostnamectl status --static | grep -q "encoder"; echo $?)" ]; then
