@@ -57,12 +57,23 @@
     file: state=directory
           dest=/opt/streaming-feedback
           owner=www-data group=mqttfeedback mode=0771
-    tags: install
+    tags:
+      - install
+      - feedback_password
 
   # Feedback db
   - stat: path=/opt/streaming-feedback/feedback.sqlite3
     register: feedback_db
     tags: install
+
+  - name: set streaming page feedback read password
+    template: src=feedback-password.j2
+              dest=/opt/streaming-feedback/feedback-password
+              owner=www-data group=www-data mode=640
+    tags:
+      - install
+      - config
+      - feedback_password
 
   - name: create feedback db
     shell: "sudo -uwww-data sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
