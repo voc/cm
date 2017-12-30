@@ -5,7 +5,7 @@ rm -f {{ relay_fanout.dash_write_path }}/s{{ item }}/*.hdr
 rm -f {{ relay_fanout.dash_write_path }}/s{{ item }}/*.chk
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
-	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vpx \
+	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vp9 \
 	-c:v copy \
 	-map 0:v:0 -b:v:0 2800k \
 {% if fanout_capabilities == 'extended' %}

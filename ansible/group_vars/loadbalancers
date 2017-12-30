@@ -45,8 +45,6 @@ lb_dtag_relays: {
 }
 
 lb_hls_relays: {
-  "dedi5.het.c3voc.de": 50,
-  "dedi6.het.c3voc.de": 50,
   "deskjet.ccl.c3voc.de": 25,
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,

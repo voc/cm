@@ -15,6 +15,13 @@
    loop_control:
      loop_var: transcoder_stream
 
+ - include: artwork.yml
+   tags: artwork
+   with_items: "{{ transcoder_vp9_streams }}"
+   when: transcoder_vp9_streams is defined
+   loop_control:
+     loop_var: transcoder_stream
+
  - include: transcoding.yml
    when: transcoder_streams is defined
    tags: transcoding
@@ -25,4 +32,8 @@
 
  - include: transcoding_external.yml
    when: transcoder_external_streams is defined
+   tags: transcoding
+
+ - include: transcoding_vp9.yml
+   when: transcoder_vp9_streams is defined
    tags: transcoding
