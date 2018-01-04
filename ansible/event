@@ -44,9 +44,7 @@ minion5.lan.c3voc.de    transcoder_streams='[2]'    transcoder_lounges='[3,4]'
 minion2.lan.c3voc.de    transcoder_streams='[3]'
 minion-muc.lan.c3voc.de transcoder_streams='[4]'
 minion6.lan.c3voc.de
-dedi5.het.c3voc.de      transcoder_vp9_streams='[1,2]'
-dedi6.het.c3voc.de      transcoder_vp9_streams='[3,4]'
-speedy.lan.c3voc.de
+speedy.lan.c3voc.de     transcoder_streams='X'
 
 dawaschtel.lan.c3voc.de
 
