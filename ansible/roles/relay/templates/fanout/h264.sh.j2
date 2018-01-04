@@ -5,7 +5,7 @@ rm -f {{ relay_fanout.hls_write_path }}/s{{ item }}/*.ts
 
 STARTTIME=$(date +%s)
 
-ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_h264 \
 		-c:v copy \
 		-c:a copy \
