@@ -20,6 +20,7 @@ voctomix:
   # and set the next variable to true
   static_background_image: true
   music: true
+  nostream_loop: true
 
 # only enable for congress
 #youtube: true

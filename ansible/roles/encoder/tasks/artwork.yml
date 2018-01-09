@@ -56,6 +56,7 @@
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.ts"
       - "../../../artwork/{{ event.acronym }}/nostream.ts"
       - "artwork/default-nostream.ts"
+    when: voctomix.nostream_loop
 
   - name: synchronizing default music-files
     synchronize: src={{ item }}

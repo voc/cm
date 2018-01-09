@@ -94,4 +94,4 @@ vaapi=h264
 
 [stream-blanker]
 enabled=true
-sources=pause,nostream
+sources=pause{% if voctomix.nostream_loop ,nostream{% endif %}
