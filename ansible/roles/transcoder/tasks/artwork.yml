@@ -10,4 +10,4 @@
     with_first_found:
       - "../../../artwork/{{ event.acronym }}/saal{{ transcoder_stream }}/overlay_sd.png"
       - "../../../artwork/{{ event.acronym }}/overlay_sd.png"
-      - "../../encoder/files/artwork/default-overlay.png"
+      - "../../encoder/files/artwork/default-overlay-sd.png"

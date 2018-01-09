@@ -1,6 +1,7 @@
 ---
   - set_fact:
-      transcoding_capabilities: simple
+      #transcoding_capabilities: ['sd', 'slides', 'translations']
+      transcoding_capabilities: []
 
   - name: create directories
     file: dest={{ item }} state=directory

@@ -1,11 +1,11 @@
 ---
-fanout_streams: ['X']
+fanout_streams: ['X', 1, 2, 3, 4, 5, 6, 23]
 
 nginx: 'yes'
 nginx_hls_master: 'yes'
 
 icedist: 'yes'
-icedist_pull_streams: []
+icedist_pull_streams: [1, 2, 3, 4, 5, 6, 23]
 
 icecast: 'yes'
 icecast_push_master: 'yes'

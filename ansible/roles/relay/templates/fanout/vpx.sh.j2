@@ -1,8 +1,15 @@
 #!/bin/sh
 
-{% if fanout_capabilities != 'extended' %}
+{% if 'translations' not in fanout_capabilities %}
 {% set languages = ['native'] %}
-{% set qualities = ['hd'] %}
+{% endif %}
+
+{% if 'slides' not in fanout_capabilities %}
+{% set qualities = qualities | difference(['slides']) %}
+{% endif %}
+
+{% if 'sd' not in fanout_capabilities %}
+{% set qualities = qualities | difference(['sd']) %}
 {% endif %}
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000 \

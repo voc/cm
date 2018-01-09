@@ -10,12 +10,16 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000 \
 		-c:v copy \
 		-c:a copy \
 		\
-{% if fanout_capabilities == 'extended' %}
-		-map '0:v:0' -map '0:v:1' -map '0:v:2' \
-		-map '0:a:0' -map '0:a:0' -map '0:a:0' -map '0:a:1' -map '0:a:2' \
-{% else %}
 		-map '0:v:0' \
+{% if 'sd-and-slides' in fanout_capabilities %}
+		-map '0:v:1' -map '0:v:2'  \
+{% endif %}
+		-map '0:a:0' \
+{% if 'sd-and-slides' in fanout_capabilities %}
 		-map '0:a:0' -map '0:a:0' \
+{% endif %}
+{% if 'translations' in fanout_capabilities %}
+		-map '0:a:1' -map '0:a:2' \
 {% endif %}
 		\
 		-hls_init_time 6 \
@@ -23,9 +27,5 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000 \
 		-hls_list_size 200 \
 		-hls_segment_filename "{{ relay_fanout.hls_write_path }}/s{{ item }}/${STARTTIME}-%d.ts" \
 		-hls_flags +delete_segments+omit_endlist \
-{% if fanout_capabilities == 'extended' %}
-		-var_stream_map 'v:0,a:0 v:1,a:1 v:2,a:2 a:3 a:4' \
-{% else %}
-		-var_stream_map 'v:0,a:0 a:1' \
-{% endif %}
+		-var_stream_map 'v:0,a:0 {% if 'sd-and-slides' in fanout_capabilities %}v:1,a:1 v:2,a:2{% endif %} {% if 'translations' in fanout_capabilities and not 'sd-and-slides' in fanout_capabilities%}a:1 a:2{% endif %} {% if 'translations' in fanout_capabilities and 'sd-and-slides' in fanout_capabilities%}a:3 a:4{% endif %}' \
 		{{ relay_fanout.hls_write_path }}/s{{ item }}/chunks.m3u8

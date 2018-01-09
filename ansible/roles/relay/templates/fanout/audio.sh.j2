@@ -1,6 +1,6 @@
 #!/bin/sh
 
-{% if fanout_capabilities != 'extended' %}
+{% if 'translations' not in fanout_capabilities %}
 {% set languages = ['native'] %}
 {% endif %}
 
@@ -16,7 +16,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 			{% elif language == 'translated-2' and codec == 'mp3' %}
 				-map 0:a:2 \
 			{% elif language == 'native' and codec == 'opus' %}
-{% if fanout_capabilities == 'extended' %}
+{% if 'translations' in fanout_capabilities %}
 				-map 0:a:3 \
 {% else %}
 				-map 0:a:1 \

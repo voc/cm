@@ -10,4 +10,4 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000 \
 	-map 0:a:0 \
 	\
 	\
-	-f flv rtmp://a.rtmp.youtube.com/live2/{{ lookup('keepass', 'ansible/youtube/s'+item+'.password') }}
+	-f flv rtmp://a.rtmp.youtube.com/live2/{{ lookup('keepass', 'ansible/youtube/s' + item|string + '.password') }}

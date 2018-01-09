@@ -1,6 +1,7 @@
 ---
   - set_fact:
-      transcoding_capabilities: extended
+      #transcoding_capabilities: ['sd-and-slides', 'translations']
+      transcoding_capabilities: ['sd-and-slides']
 
   - name: create directories
     file: dest={{ item }} state=directory
@@ -55,12 +56,26 @@
              enabled=yes
              state=restarted
     with_nested:
-      - "{{ transcoder_streams }}"
+      - "{{ transcoder_streams_enabled }}"
       - ["h264", "vpx", "audio"]
 
   - name: enable & start transcode systemd-target
     service: name=transcode_s{{ item }}.target
              enabled=yes
     with_items:
-      - "{{ transcoder_streams }}"
+      - "{{ transcoder_streams_enabled }}"
+
+  - name: disable transcode systemd-units
+    service: name=transcode_s{{ item.0 }}_{{ item.1 }}.service
+             enabled=no
+             state=stopped
+    with_nested:
+      - "{{ transcoder_streams | difference(transcoder_streams_enabled) }}"
+      - ["h264", "vpx", "audio"]
+
+  - name: disable & start transcode systemd-target
+    service: name=transcode_s{{ item }}.target
+             enabled=no
+    with_items:
+      - "{{ transcoder_streams | difference(transcoder_streams_enabled) }}"
 

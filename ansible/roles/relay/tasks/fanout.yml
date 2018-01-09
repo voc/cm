@@ -1,6 +1,7 @@
 ---
   - set_fact:
-      fanout_capabilities: extended
+      #fanout_capabilities: ['sd-and-slides', 'translations']
+      fanout_capabilities: ['sd-and-slides']
 
   - name: create directories
     file: dest={{ item }} state=directory

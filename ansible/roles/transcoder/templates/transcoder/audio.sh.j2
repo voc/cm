@@ -2,17 +2,17 @@
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
+{% if 'translations' in transcoding_capabilities %}
 	-map 0:a:0 \
 		-metadata:s:a:0 title="Native MP3" \
 		-c:a:0 libmp3lame -b:a:0 96k \
 	\
-{% if transcoding_capabilities == 'extended' %}
 	-map 0:a:1 \
-		-metadata:s:a:1 title="Translated MP3" \
+		-metadata:s:a:1? title="Translated MP3" \
 		-c:a:1 libmp3lame -b:a:1 96k \
 	\
 	-map 0:a:2 \
-		-metadata:s:a:2 title="Translated-2 MP3" \
+		-metadata:s:a:2? title="Translated-2 MP3" \
 		-c:a:2 libmp3lame -b:a:2 96k \
 	\
 	\
@@ -22,14 +22,18 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-c:a:3 libopus -vbr:a:3 off -b:a:3 32k \
 	\
 	-map 0:a:1 \
-		-metadata:s:a:4 title="Translated Opus" \
+		-metadata:s:a:4? title="Translated Opus" \
 		-c:a:4 libopus -vbr:a:4 off -b:a:4 32k \
 	\
 	-map 0:a:2 \
-		-metadata:s:a:5 title="Translated-2 Opus" \
+		-metadata:s:a:5? title="Translated-2 Opus" \
 		-c:a:5 libopus -vbr:a:5 off -b:a:5 32k \
 	\
 {% else %}
+	-map 0:a:0 \
+		-metadata:s:a:0 title="Native MP3" \
+		-c:a:0 libmp3lame -b:a:0 96k \
+	\
 	-map 0:a:0 \
 		-metadata:s:a:1 title="Native Opus" \
 		-c:a:1 libopus -vbr:a:1 off -b:a:1 32k \

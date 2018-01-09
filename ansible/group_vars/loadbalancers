@@ -22,55 +22,24 @@ haproxy_3rdparty_regex: "s(c3tv|jh|fsfe|freifunk|uewagen|4k)"
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
-lb_3rdparty_relays: {
-  "dawaschtel.ccl.c3voc.de": 50,
-}
-
-lb_dash_relays: {
-  "dedi1.het.c3voc.de": 50,
-  "dedi2.het.c3voc.de": 50,
-  "dedi3.het.c3voc.de": 50,
-  "dedi4.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 25,
+lb_c3voc_owned_relays: {
+  "live.alb.c3voc.de": 75,
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
-  "usa.ccl.c3voc.de": 25,
 }
 
-lb_dtag_relays: {
-  "deskjet.ccl.c3voc.de": 25,
-  "usa.ccl.c3voc.de": 25,
-}
+lb_3rdparty_relays: "{{ lb_c3voc_owned_relays }}"
 
-lb_hls_relays: {
-  "deskjet.ccl.c3voc.de": 25,
-  "live.bn.c3voc.de": 50,
-  "live.dus.c3voc.de": 50,
-  "live.fem.c3voc.de": 75,
-  "live.self.c3voc.de": 75,
-  "usa.ccl.c3voc.de": 25,
-}
+lb_dash_relays: "{{ lb_c3voc_owned_relays }}"
 
-lb_icecast_relays: {
-  "dedi1.het.c3voc.de": 50,
-  "dedi2.het.c3voc.de": 50,
-  "dedi3.het.c3voc.de": 50,
-  "dedi4.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 25,
-  "live.fem.c3voc.de": 75,
-  "live.self.c3voc.de": 75,
-  "usa.ccl.c3voc.de": 25,
-}
+lb_dtag_relays: "{{ lb_c3voc_owned_relays }}"
 
-lb_local_relays: {
-  "deskjet.ccl.c3voc.de": 25,
-  "usa.ccl.c3voc.de": 25,
-}
+lb_hls_relays: "{{ lb_c3voc_owned_relays }}"
 
-lb_relive_relays: {
-  "deskjet.ccl.c3voc.de": 25,
-  "live.dus.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 25,
-}
+lb_icecast_relays: "{{ lb_c3voc_owned_relays }}"
+
+lb_local_relays: "{{ lb_c3voc_owned_relays }}"
+
+lb_relive_relays: "{{ lb_c3voc_owned_relays }}"

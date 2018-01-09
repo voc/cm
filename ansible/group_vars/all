@@ -21,7 +21,8 @@ voctomix:
   static_background_image: true
   music: true
 
-youtube: true
+# only enable for congress
+#youtube: true
 qualities: ['hd', 'sd', 'slides']
 languages: ['native', 'translated', 'translated-2']
 
@@ -67,12 +68,6 @@ trusted_ipv4_ips: {
   'alb rr1':      '185.1.74.1/32',
   'alb rr2':      '185.1.74.2/32',
   # relays
-  'dedi1.het.c3voc.de': '78.46.43.195',
-  'dedi2.het.c3voc.de': '78.46.45.133',
-  'dedi3.het.c3voc.de': '78.46.45.140',
-  'dedi4.het.c3voc.de': '78.46.47.173',
-  'dedi5.het.c3voc.de': '78.46.53.2',
-  'dedi6.het.c3voc.de': '78.46.53.5',
   'live.bn.c3voc.de': '212.201.68.141',
   'live.fem.c3voc.de': '141.24.220.23',
   'live.alb.c3voc.de': '185.106.84.36',
@@ -83,10 +78,6 @@ trusted_ipv4_ips: {
   'live.ccl.c3voc.de': '31.172.30.138',
   'usa.ccl.c3voc.de': '31.172.30.138',
   'deskjet.ccl.c3voc.de': '31.172.30.138',
-  'live2.s11.c3voc.de': '185.56.132.100',
-  'live3.s11.c3voc.de': '185.56.132.102',
-  'live1.s11.c3voc.de': '185.56.132.101',
-  'dawaschtel.ccl.c3voc.de': '31.172.30.138'
 }
 
 trusted_ipv6_ips: {
@@ -102,12 +93,6 @@ trusted_ipv6_ips: {
   "alb rr1":       '2001:7f8:a5::5:7555:1/128',
   "alb rr2":       '2001:7f8:a5::5:7555:2/128',
   # relays
-  'dedi1.het.c3voc.de': '2a01:4f8:110:1248::2',
-  'dedi2.het.c3voc.de': '2a01:4f8:110:3372::2',
-  'dedi3.het.c3voc.de': '2a01:4f8:110:3379::2',
-  'dedi4.het.c3voc.de': '2a01:4f8:110:12d1::2',
-  'dedi5.het.c3voc.de': '2a01:4f8:110:12d5::2',
-  'dedi6.het.c3voc.de': '2a01:4f8:110:12d6::2',
   'live.bn.c3voc.de': '2a00:5ba0:8000:64:3aea:a7ff:fe90:6944',
   'live.fem.c3voc.de': '2001:638:904:ffbf::23',
   'live.alb.c3voc.de': '2001:67c:20a0:e::170',

@@ -2,7 +2,7 @@
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
-{% if transcoding_capabilities == 'extended' %}
+{% if 'sd-and-slides' in transcoding_capabilities %}
 	-filter_complex '
 		[0:v:0] scale=1024:576 [smooth_sd];
 		movie=/opt/voc/share/overlay_sd_saal{{ item }}.png [logo_sd];
@@ -25,7 +25,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 		-crf:v:0 23 \
 		-b:v:0 2800k \
 		-bufsize:v:0 12000k \
-{% if transcoding_capabilities == 'extended' %}
+{% if 'sd-and-slides' in transcoding_capabilities %}
 	-map '[sd]' \
 		-metadata:s:v:1 title="SD" \
 		-threads:v:1 4 \
@@ -53,7 +53,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 	-c:a libopus -ac:a 2 -b:a 128k \
 	\
 	-map 0:a:0 -metadata:s:a:0 title="Native" \
-{% if transcoding_capabilities == 'extended' %}
+{% if 'translations' in transcoding_capabilities %}
 	-map 0:a:1 -metadata:s:a:1 title="Translated" \
 	-map 0:a:2 -metadata:s:a:2 title="Translated-2" \
 {% endif %}
