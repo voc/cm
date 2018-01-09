@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: 34c3
-  name: 34c3:tuwat
-  slogan: "tuwat"
+  acronym: XXX
+  name: XXX
+  slogan: XXX
   formats:
     hd: 'yes'
     sd: 'yes'
