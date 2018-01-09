@@ -84,7 +84,7 @@ voctomix_sources:
 #    devicenumber: 4
 #    video_connection: SDI
 #    video_mode: "1080p25"
-#  -
+  -
     # Mini Recorder rechts
     name: slides
     type: decklink-internal
