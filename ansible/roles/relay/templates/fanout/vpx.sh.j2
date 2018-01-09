@@ -4,13 +4,10 @@
 {% set languages = ['native'] %}
 {% endif %}
 
-{% if 'slides' not in fanout_capabilities %}
-{% set qualities = qualities | difference(['slides']) %}
+{% if 'sd-and-slides' not in fanout_capabilities %}
+{% set qualities = ['hd'] %}
 {% endif %}
 
-{% if 'sd' not in fanout_capabilities %}
-{% set qualities = qualities | difference(['sd']) %}
-{% endif %}
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000 \
 	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_vpx \
