@@ -1,6 +1,6 @@
 ---
 room_number: 3
-room_fahrplan_name: Saal Clarke
+room_fahrplan_name: Saal 3
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -8,7 +8,7 @@ room_fahrplan_name: Saal Clarke
 encodermode: hd-voctomix
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
-voctomix_audiostreams: 4
+voctomix_audiostreams: 2
 
 # für JVC:
 #    video_connection: SDI
@@ -23,6 +23,36 @@ voctomix_audiostreams: 4
 #    video_connection: HDMI
 #    video_mode: "1080p24"
 
+# Audio-Mapping Native-und-Backup
+#  volume: 1.0
+#  audiostream:
+#    # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
+#    0: 0
+#
+#    # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
+#    1: 1
+
+# Audio-Mapping Native-Stereo
+#  volume: 1.0
+#  audiostream:
+#    # fill stereo-stream 0 (native) with sdi-channel 0 on left and sdi-channel 1 on right
+#    0: 0+1
+
+# Audio-Mapping 4x Stereo (mit Embeddern)
+#  volume: 1.0
+#  audiostream:
+#    # fill stereo-stream 0 (native) with sdi-channel 0 on left and sdi-channel 1 on right
+#    0: 0+1
+#
+#    # fill stereo-stream 1 (first translator) with sdi-channel 2 on left and sdi-channel 3 on right
+#    1: 2+3
+#
+#    # fill stereo-stream 2 (second translator) with sdi-channel 4 on left and sdi-channel 5 on right
+#    2: 4+5
+#
+#    # fill stereo-stream 3 (PA-Backup) with sdi-channel 6 on left and sdi-channel 7 on right
+#    3: 6+7
+
 
 voctomix_sources:
   -
@@ -33,38 +63,32 @@ voctomix_sources:
     video_connection: SDI
     video_mode: "1080i50"
     deinterlace: assume-progressive
-  -
-    # Duo Port 4
-    name: cam2
-    type: decklink-internal
-    devicenumber: 0
-    video_connection: SDI
-    video_mode: "1080p25"
-  -
-    # Mini Recorder links
-    name: cam3
-    type: decklink-internal
-    devicenumber: 4
-    video_connection: SDI
-    video_mode: "1080p25"
-  -
+    volume: 1.0
+    audiostream:
+      # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
+      0: 0
+  
+      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
+      1: 1
+#  -
+#    # Duo Port 4
+#    name: cam2
+#    type: decklink-internal
+#    devicenumber: 0
+#    video_connection: SDI
+#    video_mode: "1080p25"
+#  -
+#    # Mini Recorder links
+#    name: cam3
+#    type: decklink-internal
+#    devicenumber: 4
+#    video_connection: SDI
+#    video_mode: "1080p25"
+#  -
     # Mini Recorder rechts
     name: slides
     type: decklink-internal
     devicenumber: 5
-    video_connection: SDI
-    video_mode: "1080p25"
-    volume: 1.0
-
-    audiostream:
-      # fill stereo-stream 0 (native) with sdi-channel 0 on left and sdi-channel 1 on right
-      0: 0+1
-
-      # fill stereo-stream 1 (first translator) with sdi-channel 2 on left and sdi-channel 3 on right
-      1: 2+3
-
-      # fill stereo-stream 2 (second translator) with sdi-channel 4 on left and sdi-channel 5 on right
-      2: 4+5
-
-      # fill stereo-stream 3 (PA-Backup) with sdi-channel 6 on left and sdi-channel 7 on right
-      3: 6+7
+    video_connection: HDMI
+    video_mode: "1080p24"
+    volume: 0.0
