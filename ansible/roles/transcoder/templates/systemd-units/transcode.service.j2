@@ -9,7 +9,7 @@ After = transcode_s{{ item.0 }}.target
 Type = simple
 ExecStart = /opt/transcoder/scripts/s{{ item.0 }}_{{ item.1 }}.sh
 Restart = always
-RestartSec = 1s
+RestartSec = 30s
 StartLimitInterval = 0
 
 [Install]
