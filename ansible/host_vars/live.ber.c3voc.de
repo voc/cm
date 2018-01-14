@@ -1,5 +1,5 @@
 ---
-fanout_streams: ['X', 1, 2, 3, 4, 5, 6, 23]
+fanout_streams: ["s1", "s2", "s3", "s4", "s5", "s6", "s23", "sX"]
 
 nginx: 'yes'
 nginx_hls_master: 'yes'

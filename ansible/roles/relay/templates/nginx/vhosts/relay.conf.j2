@@ -98,12 +98,12 @@ server {
   }
 
 {% if nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' %}
-  location ~* ^/hls/(.+)$ {
+  location ~* ^/hls/(.+)?$ {
     alias /srv/nginx/hls/$1;
     autoindex on;
   }
 
-  location ~* ^/dash/(.+)$ {
+  location ~* ^/dash/(.+)?$ {
     alias /srv/nginx/dash/$1;
     autoindex on;
   }

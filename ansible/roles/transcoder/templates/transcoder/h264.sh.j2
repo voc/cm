@@ -1,21 +1,20 @@
 #!/bin/sh
 
+while true; do
+
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
-	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
-{% if 'sd-and-slides' in transcoding_capabilities %}
+	-i http://{{ transcoder.pull_endpoint }}/{{ item }} \
 	-filter_complex '
 		[0:v:0] scale=1024:576 [smooth_sd];
-		movie=/opt/voc/share/overlay_sd_saal{{ item }}.png [logo_sd];
+		movie=/opt/voc/share/overlay_sd_{{ item }}.png [logo_sd];
 		[smooth_sd] [logo_sd] overlay=0:0 [sd]
 	' \
-{% endif  %}
 	\
 {# Video settings #}
 	-map '0:v:0' \
 		-metadata:s:v:0 title="HD" \
 		-c:v:0 copy \
 	\
-{% if 'sd-and-slides' in transcoding_capabilities %}
 	-map '[sd]' \
 		-metadata:s:v:1 title="SD" \
 		-c:v:1 libx264 \
@@ -28,22 +27,22 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
 			-flags:v:1 +cgop \
 			-preset:v:1 veryfast \
 	\
-	-map '0:v:1' \
+	-map '0:v:1?' \
 		-metadata:s:v:2 title="Slides" \
 		-c:v:2 copy \
 	\
-{% endif  %}
 {# Audio settings #}
 	-c:a copy \
 	\
-	-map 0:a:0 -metadata:s:a:0 title="Native" \
-{% if 'translations' in transcoding_capabilities %}
-	-map 0:a:1? -metadata:s:a:1 title="Translated" \
-	-map 0:a:2? -metadata:s:a:2 title="Translated-2" \
-{% endif %}
+	-map '0:a:0' -metadata:s:a:0 title="Native" \
+	-map '0:a:1?' -metadata:s:a:1 title="Translated" \
+	-map '0:a:2?' -metadata:s:a:2 title="Translated-2" \
 	\
 	-max_muxing_queue_size 400 \
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder.push_endpoint }}/s{{ item }}_h264
+	icecast://{{ transcoder.push_endpoint }}/{{ item }}_h264
+
+sleep 10
+done

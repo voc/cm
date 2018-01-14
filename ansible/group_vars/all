@@ -24,8 +24,6 @@ voctomix:
 
 # only enable for congress
 #youtube: true
-qualities: ['hd', 'sd', 'slides']
-languages: ['native', 'translated', 'translated-2']
 
 user_voc_password: "{{ lookup('keepass', 'ansible/logins/voc.password') }}"
 

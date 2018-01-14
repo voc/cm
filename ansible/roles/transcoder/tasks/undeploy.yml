@@ -1,0 +1,23 @@
+---
+  - name: collecting old transcoder-scripts
+    find:
+      paths: /opt/transcoder/scripts/
+      patterns: "*.sh"
+    register: old_transcoder_scripts
+
+  - name: removing old transcoder-scripts
+    file: dest={{ item.path }}
+          state=absent
+    with_items: "{{ old_transcoder_scripts.files }}"
+
+  - name: collecting old transcoder-units
+    find:
+      paths: /etc/systemd/system/
+      patterns: "transcode_*"
+      file_type: any
+    register: old_transcoder_units
+
+  - name: removing old transcoder-units
+    file: dest={{ item.path }}
+          state=absent
+    with_items: "{{ old_transcoder_units.files }}"
