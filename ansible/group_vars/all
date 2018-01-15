@@ -100,7 +100,7 @@ trusted_ipv6_ips: {
   'live.dus.c3voc.de': '2a01:a700:4633::138',
   'lb.dus.c3voc.de': '2a01:a700:4633::141',
   'lb.alb.c3voc.de': '2001:67c:20a0:e::169',
-  'live.self.c3voc.de': '2001:7c0:712:c3::42',
+  'live.self.c3voc.de': '2001:7c7:2111::1',
   'live.ccl.c3voc.de': '2a01:a700:4633::138',
   'usa.ccl.c3voc.de': '2a01:a700:4633::138',
   'deskjet.ccl.c3voc.de': '2a01:a700:4633::138',
