@@ -52,7 +52,7 @@
              enabled=yes
              state=restarted
     with_nested:
-      - "{{ transcoder_streams_enabled }}"
+      - "{{ transcoder_streams }}"
       - ["h264", "vpx", "audio"]
 
   - name: enable & start transcode systemd-target
@@ -61,9 +61,10 @@
     with_items:
       - "{{ transcoder_streams_enabled }}"
 
+   # enabled but stopped, allows control via the targets below
   - name: disable transcode systemd-units
     service: name=transcode_{{ item.0 }}_{{ item.1 }}.service
-             enabled=no
+             enabled=yes
              state=stopped
     with_nested:
       - "{{ transcoder_streams | difference(transcoder_streams_enabled) }}"
