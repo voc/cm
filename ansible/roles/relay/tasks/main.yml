@@ -1,5 +1,7 @@
 ---
   - include: ../../../register/bin_path.yml
+  - include: undeploy.yml
+
   # Install packages needed for each relay
   - name: install streaming relay dependencies
     apt: name={{ item }} state=present
@@ -24,8 +26,4 @@
 
   - include: fanout.yml
     when: fanout_streams is defined
-    tags: fanout
-
-  - include: fanout_external.yml
-    when: fanout_external_streams is defined
     tags: fanout
