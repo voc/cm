@@ -1,5 +1,6 @@
 ---
 fanout_streams: ["s1", "s2", "s3", "s4", "s5", "s6", "s23", "q1", "q2", "sX"]
+rtmp_ingest_streams: ["q1", "q2"]
 
 nginx: 'yes'
 nginx_hls_master: 'yes'
