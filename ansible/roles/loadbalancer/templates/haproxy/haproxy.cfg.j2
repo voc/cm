@@ -93,8 +93,8 @@ frontend icecast_and_nginx_hls_http
 
 frontend icecast_and_nginx_hls_https
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-    bind 0.0.0.0:443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
-    bind :::443 ssl crt /etc/ssl/certs/haproxy_streaming.media.ccc.de.pem crt /etc/ssl/certs/haproxy_cdn.c3voc.de.pem # <cert+privkey+intermediate+dhparam>
+    bind 0.0.0.0:443 ssl crt /etc/letsencrypt/live/streaming.media.ccc.de/haproxy.pem crt /etc/letsencrypt/live/cdn.c3voc.de/haproxy.pem # <cert+privkey+intermediate+dhparam>
+    bind :::443 ssl crt /etc/letsencrypt/live/streaming.media.ccc.de/haproxy.pem crt /etc/letsencrypt/live/cdn.c3voc.de/haproxy.pem # <cert+privkey+intermediate+dhparam>
 
     # add special header for protocol version
     http-request add-header X-Proto https if  { ssl_fc }

@@ -1,5 +1,5 @@
 #!/bin/sh
-TARGET="/etc/ssl/certs/haproxy_{{ item }}.pem"
+TARGET="/etc/letsencrypt/live/{{ item }}/haproxy.pem"
 
 cp /dev/null $TARGET
 chmod 660 $TARGET
@@ -10,3 +10,5 @@ echo >> $TARGET
 cat /etc/letsencrypt/live/{{ item }}/chain.pem >> $TARGET
 echo >> $TARGET
 cat /etc/ssl/dhparam2048.pem >> $TARGET
+
+systemctl reload haproxy
