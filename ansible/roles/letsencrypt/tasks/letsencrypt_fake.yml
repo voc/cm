@@ -25,5 +25,13 @@
       cron: name="update_{{ domain }}" user=letsencrypt state=absent
 
     - name: disable certbot systemd timer
-      service: name="certbot.timer" enabled=no state=stopped
+      service: name=certbot.timer
+               enabled=no
+               state=stopped
+      ignore_errors: yes
+
+    - name: disable dehydrated systemd timer
+      service: name=dehydrated.timer
+               enabled=no
+               state=stopped
       ignore_errors: yes
