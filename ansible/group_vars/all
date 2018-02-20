@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: fossgis2018
+  name: FOSSGIS 2018
+  slogan:
   formats:
     hd: 'yes'
     sd: 'yes'
