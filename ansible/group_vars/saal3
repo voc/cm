@@ -1,6 +1,6 @@
 ---
 room_number: 3
-room_fahrplan_name: Hörsaal IV - Geozentrum
+room_fahrplan_name: Heisenberg 3
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

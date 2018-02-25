@@ -1,6 +1,6 @@
 ---
 room_number: 1
-room_fahrplan_name: Alfred-Philippson-Hörsaal
+room_fahrplan_name: Heisenberg 1
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: fossgis2018
-  name: FOSSGIS 2018
-  slogan:
+  acronym: eh18
+  name: Easterhegg 2018
+  slogan: Rabbits and Byterflies
   formats:
     hd: 'yes'
     sd: 'yes'
