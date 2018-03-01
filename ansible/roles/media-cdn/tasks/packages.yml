@@ -16,6 +16,7 @@
       - zlib1g-dev
       - libgeoip-dev
       - redis-server
+      - unattended-upgrades
 
   - name: remove uneeded
     apt: name={{ item }} state=absent
