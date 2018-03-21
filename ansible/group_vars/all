@@ -2,7 +2,7 @@
 # Event config
 event:
   acronym: eh18
-  name: Easterhegg 2018
+  name: EasterHegg 2018
   slogan: Rabbits and Byterflies
   formats:
     hd: 'yes'
