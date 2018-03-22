@@ -118,9 +118,12 @@ check_logs () {
     send_mqtt_message "error" "system/kernel/${TRUNC_HOSTNAME}" "<red>OOM killer killed processes!</red>"
   fi
 
-  throttle_messages=$(echo $kernel_log | grep -q "cpu clock throttled")
-  if [ "0" -eq "$?" ]; then
-    send_mqtt_message "error" "system/kernel/${TRUNC_HOSTNAME}" "<red>CPU throttled!</red>"
+  # don't check cpu throttleing on minions
+  if [ "1" -eq "$(hostnamectl status --static | grep -q "minion"; echo $?)" ]; then
+    throttle_messages=$(echo $kernel_log | grep -q "cpu clock throttled")
+    if [ "0" -eq "$?" ]; then
+      send_mqtt_message "error" "system/kernel/${TRUNC_HOSTNAME}" "<red>CPU throttled!</red>"
+    fi
   fi
 }
 
