@@ -2,6 +2,7 @@
 
 # I'm sorry…
 
+# limits
 LIMIT_DISK_USAGE=90
 LIMIT_LOAD=$(echo "$(grep processor /proc/cpuinfo | wc -l) * 2" | bc)
 
@@ -19,6 +20,16 @@ send_mqtt_message () {
   fi
 }
 
+debug_output() {
+  if [ "$DEBUG" = "true" ]; then
+    for param in "$@"; do
+      printf $param,
+    done
+
+    echo
+  fi
+}
+
 check_disk_space () {
   df -h | tail -n +2 | while read line; do
     mount_point=$(echo $line | awk '{ print $1 }')
@@ -29,6 +40,8 @@ check_disk_space () {
     if [ "$disk_usage_percent" -ge "$LIMIT_DISK_USAGE" ]; then
       send_mqtt_message "error" "system/disk/${TRUNC_HOSTNAME}" "<red>$mount_point: disk usage $disk_usage_percent%, only $disk_space_avilable left of $disk_space</red>"
     fi
+
+    debug_output "df" $mount_point $disk_usage_percent $disk_space $disk_space_avilable
   done
 }
 
@@ -43,6 +56,8 @@ check_load () {
   if [ "$truncated_load" -ge "$LIMIT_LOAD" ]; then
     send_mqtt_message "error" "system/load/${TRUNC_HOSTNAME}" "system load: $load_1_minute, $load_5_minutes, $load_15_minutes</red>"
   fi
+
+  debug_output "load" $load_1_minute $load_5_minutes $load_15_minutes $truncated_load
 }
 
 check_recording () {
@@ -54,6 +69,8 @@ check_recording () {
     if [ "2" -eq "$error_code" ]; then
       send_mqtt_message "error" "recording/${TRUNC_HOSTNAME}" "<red>${message}</red> /video/capture/{{ event.acronym }}/"
     fi
+
+    debug_output "recording" $message $error_code
   fi
 }
 
@@ -74,6 +91,8 @@ check_raid () {
       if [ "0" -eq "$?" ]; then
         send_mqtt_message "error" "system/raid/${TRUNC_HOSTNAME}" "<red>RAID disk failed: $raid_device: $raid_device_state"
       fi
+
+      debug_output "mdadm" $raid_device $raid_device_state
     done
   fi
 
@@ -93,6 +112,8 @@ check_raid () {
         send_mqtt_message "error" "system/raid/${TRUNC_HOSTNAME}" "<red>RAID battery status is not 'Optimal': please run 'raidstatus bat' for more information</red>"
       fi
     fi
+
+    debug_output "raid_status" $raid_status $bat_status
   fi
 }
 
@@ -125,6 +146,8 @@ check_logs () {
       send_mqtt_message "error" "system/kernel/${TRUNC_HOSTNAME}" "<red>CPU throttled!</red>"
     fi
   fi
+
+  debug_output "log" $task_blocked $oom_messages $throttle_messages
 }
 
 
@@ -158,6 +181,8 @@ check_interfaces () {
           send_mqtt_message "error" "system/interface/${interface}/${TRUNC_HOSTNAME}" "<red>${interface} runs not in full-dumplex mode!</red>"
         fi
       fi
+
+      debug_output "interface" $interface "$(cat /sys/class/net/${interface}/duplex)" "$(cat /sys/class/net/${interface}/speed)"
     fi
   done
 }
@@ -171,11 +196,14 @@ check_temperature () {
       for temp in $(ls ${hwmon}/temp*_label | grep -o "temp."); do
         value="$(cat ${hwmon}/${temp}_input)"
         limit="$(cat ${hwmon}/${temp}_crit)"
+
+        debug_output "temp" $temp $value $limit
         if [ $(echo "${value} > (${limit}*0.95)" | bc) -eq "1" ]; then
           label="$(cat ${hwmon}/${temp}_label)"
           send_mqtt_message "error" "system/temp/${TRUNC_HOSTNAME}" "<red>${label} temp critical at $(echo "${value}/1000" | bc) °C</red>"
           break 2
         fi
+
       done
     fi
   done
@@ -187,6 +215,8 @@ ping () {
   hostname="$(hostname -f)"
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
   mosquitto_pub --capath /etc/ssl/certs/ -h "mng.ber.c3voc.de" -p 8883 -u "fahrplan" -P "than_feat7apart" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
+
+  debug_output "ping" $hostname $uptime
 }
 
 # general checks
