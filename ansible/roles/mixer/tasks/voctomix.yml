@@ -7,12 +7,12 @@
       - /opt/voctomix/scripts/
       - /opt/voctomix/release/
 
-  - name: checkout voctomix release
-    git: repo=https://c3voc.de/git/voctomix
-         dest=/opt/voctomix/release/
-         version={{ voctomix.version }}
-         force=yes
-         accept_hostkey=yes
+#  - name: checkout voctomix release
+#    git: repo=https://c3voc.de/git/voctomix
+#         dest=/opt/voctomix/release/
+#         version={{ voctomix.version }}
+#         force=yes
+#         accept_hostkey=yes
 
 
   # alternative gui

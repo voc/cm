@@ -8,7 +8,7 @@ room_fahrplan_name: Heisenberg 1
 encodermode: hd-voctomix
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
-voctomix_audiostreams: 1
+voctomix_audiostreams: 2
 
 # für JVC:
 #    video_connection: SDI
@@ -70,7 +70,7 @@ voctomix_sources:
   
       # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
       1: 1
-#  -
+  -
     # Duo Port 4
     name: cam2
     type: decklink-internal
