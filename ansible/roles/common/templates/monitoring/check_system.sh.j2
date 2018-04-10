@@ -1,6 +1,8 @@
-#!/bin/sh
+#!/bin/bash
+shopt -s nullglob
 
 # I'm sorry…
+## What for?
 
 # limits
 LIMIT_DISK_USAGE=90
@@ -191,7 +193,7 @@ check_interfaces () {
 # check_temperature implements:
 #   * intel cpu temperature with coretemp
 check_temperature () {
-  for hwmon in $(ls -d /sys/class/hwmon/hwmon*); do
+  for hwmon in /sys/class/hwmon/hwmon*; do
     if [ $(cat ${hwmon}/name) = "coretemp" ]; then
       for temp in $(ls ${hwmon}/temp*_label | grep -o "temp."); do
         value="$(cat ${hwmon}/${temp}_input)"
