@@ -1,6 +1,6 @@
 ---
 room_number: 3
-room_fahrplan_name: Saal 3
+room_fahrplan_name: G.AP147.005
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

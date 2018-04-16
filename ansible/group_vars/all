@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: eh18
-  name: Easterhegg 2018
-  slogan: Rabbits and Byterflies
+  acronym: glt18
+  name: Grazer Linuxtage 2018
+  slogan: Verein zur Förderung freier Soft- und Hardware
   formats:
     hd: 'yes'
     sd: 'yes'
