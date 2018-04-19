@@ -82,6 +82,7 @@ check_recording () {
 #  * megacli battery status via wrapper raidstatus
 #
 check_raid () {
+  # mdadm software linux raid
   if [ -e "/proc/mdstat" ]; then
     cat /proc/mdstat | awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' | while read line; do
       raid_device=$(echo $line | cut -d ":" -f 1)
@@ -96,6 +97,7 @@ check_raid () {
     done
   fi
 
+  # megacli LSI controller
   if [ -e "/usr/local/sbin/raidstatus" ]; then
     raid_status=$(raidstatus status | grep -v "Current" | grep "State")
     if [ "0" -eq "$?" ]; then
@@ -107,13 +109,25 @@ check_raid () {
 
     bat_status=$(raidstatus bat | grep "Battery State:")
     echo $bat_status | grep -q "Optimal"
-    if [ "0" -eq "$?" ]; then
-      if [ "1" -eq "$?" ]; then
-        send_mqtt_message "error" "system/raid/${TRUNC_HOSTNAME}" "<red>RAID battery status is not 'Optimal': please run 'raidstatus bat' for more information</red>"
-      fi
+    if [ "1" -eq "$?" ]; then
+      send_mqtt_message "error" "system/raid/${TRUNC_HOSTNAME}" "<red>RAID battery status is not 'Optimal': please run 'raidstatus bat' for more information</red>"
     fi
 
     debug_output "raid_status" $raid_status $bat_status
+  fi
+
+  # zfs
+  if [ -e "/proc/spl/kstat/zfs" ]; then
+    zpool_status=$(zpool status)
+    zpool_name=$(echo $zpool_status | grep pool | cut -d ":" -f 2)
+    zpool_state=$(echo $zpool_status | grep state | cut -d ":" -f 2)
+
+    echo $zpool_state | grep -q -iE '(DEGRADED|FAULTED|OFFLINE|UNAVAIL|REMOVED|FAIL|DESTROYED|corrupt|cannot|unrecover)'
+    if [ "0" -eq "$?" ]; then
+      send_mqtt_message "error" "system/zfs/${TRUNC_HOSTNAME}" "<red>ZFS pool status not optimal: '$zpool_name' '$zpool_state'"
+    fi
+
+    debug_output "zfs" $zpool_name $zpool_state
   fi
 }
 
