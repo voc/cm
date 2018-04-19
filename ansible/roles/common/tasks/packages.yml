@@ -50,6 +50,7 @@
     - zip
     - unzip
     - bc
+    - at
 
  # for VMs
  - name: install a vmware specific set of packages
