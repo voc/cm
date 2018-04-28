@@ -1,34 +1,79 @@
 ---
-room_number: 42
-room_fahrplan_name: "Gallerie"
-grabber_aspect: 16x9
-grabbersource_url_path: stream.mjpg
+room_number: 41
+room_fahrplan_name: OpenSUSE 2
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
 encodermode: hd-voctomix
 
-# check `vainfo` before and read https://github.com/voc/voctomix/pull/87#issuecomment-250289443
-voctomix_vaapi: false
+# Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
+voctomix_audiostreams: 2
 
-# encoder 1-5 can't handle more then 3 video-feeds
+# für JVC:
+#    video_connection: SDI
+#    video_mode: "1080p25"
+#
+# für Panasonic:
+#    video_connection: SDI
+#    video_mode: "1080i50"
+#    deinterlace: assume-progressive
+#
+# für Tronsmart:
+#    video_connection: HDMI
+#    video_mode: "1080p24"
+
+# Audio-Mapping Native-und-Backup
+#  volume: 1.0
+#  audiostream:
+#    # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
+#    0: 0
+#
+#    # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
+#    1: 1
+
+# Audio-Mapping Native-Stereo
+#  volume: 1.0
+#  audiostream:
+#    # fill stereo-stream 0 (native) with sdi-channel 0 on left and sdi-channel 1 on right
+#    0: 0+1
+
+# Audio-Mapping 4x Stereo (mit Embeddern)
+#  volume: 1.0
+#  audiostream:
+#    # fill stereo-stream 0 (native) with sdi-channel 0 on left and sdi-channel 1 on right
+#    0: 0+1
+#
+#    # fill stereo-stream 1 (first translator) with sdi-channel 2 on left and sdi-channel 3 on right
+#    1: 2+3
+#
+#    # fill stereo-stream 2 (second translator) with sdi-channel 4 on left and sdi-channel 5 on right
+#    2: 4+5
+#
+#    # fill stereo-stream 3 (PA-Backup) with sdi-channel 6 on left and sdi-channel 7 on right
+#    3: 6+7
+
+
 voctomix_sources:
   -
+    # Mini Recorder unten
     name: cam1
     type: decklink-internal
     devicenumber: 0
     video_connection: SDI
-    video_mode: "1080i50"
-#  -
-#    name: cam2
-#    type: decklink                         # decklink, mjpeg or test
-#    plug: sdi
-#    device: 'DeckLink Mini Recorder (2)'   # use ffmpeg -f decklink -list_devices 1 -i dummy
-#    mode: '1920x1080 at 25000/1000 fps (interlaced, upper field first)'        # use ffmpeg -hide_banner -f decklink -list_formats 1 -i 'DeckLink Mini Recorder (2)'
+    video_mode: "1080p25"
+    volume: 1.0
+    audiostream:
+      # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
+      0: 0
+  
+      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
+      1: 1
   -
+    # Mini Recorder oben
     name: slides
     type: decklink-internal
     devicenumber: 1
     video_connection: HDMI
     video_mode: "1080p24"
+    volume: 0.0
