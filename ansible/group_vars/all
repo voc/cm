@@ -146,6 +146,7 @@ users:
   - { name: 'zuntrax', state: 'present' } # SHA
   - { name: 'jayjay', state: 'present' } 
   - { name: 'cardno', state: 'absent' } # cristoph fcmc
+  - { name: 'derchris', state: 'present' }
   - { name: 'voc', state: 'present' }
 
 additional_users: []
