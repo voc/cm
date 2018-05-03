@@ -41,4 +41,8 @@ ffmpeg -y -nostdin -hide_banner \
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://127.0.0.1:7999/s{{ room_number }}
+{% if streaming_endpoint_pulling %}
+	icecast://127.0.0.1:7999/{{ streaming_endpoint }}
+{% else %}
+	icecast://live.ber.c3voc.de:7999/{{ streaming_endpoint }}
+{% endif %}

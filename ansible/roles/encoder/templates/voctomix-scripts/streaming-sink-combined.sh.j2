@@ -61,47 +61,47 @@ ffmpeg -y -nostdin \
 			{# HD Native #}
 			-c:v copy -c:a copy \
 			-map 0:v:0 -map 0:a:0 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_hd \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_native_hd \
 			{# HD Translated #}
 			-c:v copy -c:a copy \
 			-map 0:v:0 -map 0:a:1 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_translated_hd \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_translated_hd \
 			{# HD Stereo #}
 			-c:v copy -c:a copy \
 			-map 0:v:0 -map 0:a:2 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_hd \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_stereo_hd \
 			\
 			{# SD Native #}
 			-c:v copy -c:a copy \
 			-map 0:v:1 -map 0:a:0 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_sd \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_native_sd \
 			{# SD Translated #}
 			-c:v copy -c:a copy \
 			-map 0:v:1 -map 0:a:1 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_translated_sd \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_translated_sd \
 			{# SD Stereo #}
 			-c:v copy -c:a copy \
 			-map 0:v:1 -map 0:a:2 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_sd \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_stereo_sd \
 			\
 			{# Slides Native #}
 			-c:v copy -c:a copy \
 			-map 0:v:2 -map 0:a:0 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_slides \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_native_slides \
 			{# Slides Translated #}
 			-c:v copy -c:a copy \
 			-map 0:v:2 -map 0:a:1 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_translated_slides \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_translated_slides \
 			{# Slides Stereo #}
 			-c:v copy -c:a copy \
 			-map 0:v:2 -map 0:a:2 \
-			-f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_stereo_slides \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_stereo_slides \
 			{# Pass the whole mux to an distribution Icecast #}
 			{% if distribution_mode is defined and distribution_mode == 'icedist' %}
 			-c:v copy -c:a copy \
 			-map 0:v:0 -map 0:v:1 -map 0:v:2 \
 			-map 0:a:0 -map 0:a:1 \
-			-f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/s{{ room_number }}_vocto.mkv
+			-f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/{{ streaming_endpoint }}_vocto.mkv
 			{% else %}
 			{# dummy-newline to catch the backslash #}
 
