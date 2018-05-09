@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: gpn18
+  name: gpn18
+  slogan: gpn18
   formats:
     hd: 'yes'
     sd: 'yes'
