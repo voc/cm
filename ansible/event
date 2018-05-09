@@ -67,7 +67,7 @@ encoder-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/
 
 
 [mixers]
-mixer[1:6].lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}"
+mixer[1:7].lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}"
 mixer-muc.lan.c3voc.de
 
 
