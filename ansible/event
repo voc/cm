@@ -95,6 +95,7 @@ deskjet.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/desk
 monitoring.lan.c3voc.de
 router.lan.c3voc.de router_pbl_ip=194.95.66.38 router_pbl_mask=255.255.255.0 router_pbl_gw=194.95.66.1
 phony.lan.c3voc.de
+fempeg.lan.c3voc.de
 web.ber.c3voc.de
 
 # Streaming server
