@@ -1,0 +1,5 @@
+---
+  - hosts: web.c3voc.de
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: letsencrypt, vars: { 'domain': 'c3voc.de'}, tags: ['letsencrypt'] }
