@@ -7,7 +7,7 @@ source "_ansible_keepass_util.sh"
 KEEPASS_DIR=$(dirname "${KEEPASS}")
 if [ -f "${KEEPASS_VERSION_CONFIG}" ]; then
   KEEPASS_REQUIRED_VERSION=$(cat "${KEEPASS_VERSION_CONFIG}")
-  GIT_DIR="${KEEPASS_DIR}/.git" git merge-base --is-ancestor $KEEPASS_REQUIRED_VERSION HEAD
+  ( cd "${KEEPASS_DIR}"; git merge-base --is-ancestor $KEEPASS_REQUIRED_VERSION HEAD )
 
   if [ $? -ne 0 ]; then
     echo "keepass checkout must be newer or equal to ${KEEPASS_REQUIRED_VERSION}, which it isn't"
