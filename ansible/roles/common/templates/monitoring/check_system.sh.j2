@@ -214,7 +214,7 @@ check_temperature () {
 ping () {
   hostname="$(hostname -f)"
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
-  mosquitto_pub --capath /etc/ssl/certs/ -h "mng.ber.c3voc.de" -p 8883 -u "fahrplan" -P "than_feat7apart" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
+  mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
 
   debug_output "ping" $hostname $uptime
 }
