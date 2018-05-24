@@ -13,7 +13,7 @@ ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
 {% endif %}
 	-map 0:a -c:a mp2 -b:a 384k -ac:a 2 -ar:a 48000 \
 	-flags +global_header \
-	-f segment -segment_time 180 -strftime 1 -segment_format mpegts /video/capture/{{ event.acronym }}/{{ room_fahrplan_name | lower | replace(' ', '') }}-%Y-%m-%d_%H-%M-%S-$$.ts
+	-f segment -segment_time 180 -strftime 1 -segment_format mpegts '/video/capture/{{ event.acronym }}/{{ room_fahrplan_name | lower | replace(' ', '') }}-%Y-%m-%d_%H-%M-%S-$$.ts'
 
 ffmpeg_error_code=$?
 if [ "0" -ne "$ffmpeg_error_code" ]; then
