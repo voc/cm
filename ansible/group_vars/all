@@ -1,8 +1,8 @@
 ---
 # Event config
 event:
-  acronym: XXX
-  name: XXX
+  acronym: osc18
+  name: openSUSE Conference 2018
   slogan: XXX
   formats:
     hd: 'yes'
