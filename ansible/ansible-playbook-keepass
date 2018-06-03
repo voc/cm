@@ -26,11 +26,15 @@ else
 fi
 
 #
-# Ask for the keepass file or use the env var
+# Ask for the keepass file, query keychain or use the env var
 #
 if [ -z "${KEEPASS_PW}" ]; then
-  echo -n "Keepass Password (or export KEEPASS_PW): "
-  read -ers KEEPASS_PW
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    KEEPASS_PW=`security find-generic-password  -w -a "${KEEPASS}"`
+  else
+    echo -n "Keepass Password (or export KEEPASS_PW): "
+    read -ers KEEPASS_PW
+  fi
   echo ""
 fi
 
