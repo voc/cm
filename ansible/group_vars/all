@@ -1,8 +1,8 @@
 ---
 # Event config
 event:
-  acronym: XXX
-  name: XXX
+  acronym: forumoe
+  name: Forum Open Education
   slogan: XXX
   formats:
     hd: 'yes'

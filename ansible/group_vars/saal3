@@ -56,10 +56,10 @@ voctomix_audiostreams: 2
 
 voctomix_sources:
   -
-    # Duo Port 2
+    # Mini Recorder links
     name: cam1
     type: decklink-internal
-    devicenumber: 1
+    devicenumber: 4
     video_connection: SDI
     video_mode: "1080i50"
     deinterlace: assume-progressive
