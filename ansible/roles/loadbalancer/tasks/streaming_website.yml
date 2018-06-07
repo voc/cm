@@ -130,6 +130,10 @@
           user=downloader
     tags: install
 
+  - import_tasks: ../../../register/bin_path.yml
+    tags:
+      - thumbnail_downloader
+
   - name: create cronjobs to pull thumbs every minute
     cron: name="download thumbnail for {{ item }}"
           job="flock -xn /srv/nginx/thumbs/{{ item }}.png -c \"{{ ffmpeg_bin.stdout }} -nostdin -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_sd.m3u8 -vf 'scale=213:120' -vframes 1 /srv/nginx/thumbs/{{ item }}.png 2>/dev/null\""
