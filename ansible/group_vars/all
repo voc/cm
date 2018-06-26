@@ -1,12 +1,12 @@
 ---
 # Event config
 event:
-  acronym: XXX
-  name: XXX
+  acronym: fusion18
+  name: Fusion 2018 ConTent
   slogan: XXX
   formats:
     hd: 'yes'
-    sd: 'yes'
+    sd: 'no'
 
 voctomix:
   version: "master"
