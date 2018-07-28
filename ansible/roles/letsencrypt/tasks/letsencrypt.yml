@@ -44,20 +44,20 @@
           src=dehydrated/config
           owner=root group=root mode=0664
 
-  - name: generate dehydrated account
+  - name: generate dehydrated account directory
     file: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}
           state=directory
-          owner=root group=root mode=0775
+          owner=root group=root mode=0750
 
   - name: generate dehydrated account_key.pem
     copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/account_key.pem
           content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_account_key') }}
-          owner=root group=root mode=0775
+          owner=root group=root mode=0640
 
   - name: generate dehydrated registration_info.json
     copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/registration_info.json
           content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_registration_info') }}
-          owner=root group=root mode=0775
+          owner=root group=root mode=0640
 
   - name: ensure domain {{ domain }} is in domains.txt
     lineinfile: path=/etc/dehydrated/domains.txt
