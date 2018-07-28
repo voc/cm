@@ -211,6 +211,19 @@ check_temperature () {
 }
 
 
+# check_updates implements:
+#
+# * runs 'apt update'
+# * parse avaible upgradable packes from output
+#
+check_updates() {
+  updates=$(apt update 2>/dev/null  | grep "can be upgraded")
+  if [ "0" -eq "$?" ]; then
+    send_mqtt_message "error" "system/updates/${TRUNC_HOSTNAME}" "<yellow>$(echo $updates | cut -d '.' -f 1).</yellow> <red>Uptime:</red> <yellow>$(uptime | cut -d ',' -f 1)</yellow>"
+  fi
+}
+
+
 # send system uptime in every run
 ping () {
   hostname="$(hostname -f)"
@@ -220,6 +233,7 @@ ping () {
   debug_output "ping" $hostname $uptime
 }
 
+
 # general checks
 ping
 check_load
@@ -228,6 +242,7 @@ check_raid
 check_logs
 check_interfaces
 
+
 # special cases
 if [ "0" -eq "$(hostnamectl status --static | grep -q "encoder"; echo $?)" ]; then
   check_recording
@@ -235,6 +250,10 @@ fi
 # only check temperature on real hardware
 if [ -z "${HYPERVISOR}" ]; then
   check_temperature
+fi
+# check for updates every month 23rd 20:42
+if [ "232042" = "$(date +'%e%H%M')" ]; then
+  check_updates
 fi
 
 exit 0
