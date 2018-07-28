@@ -1,0 +1,6 @@
+---
+  - hosts: build.c3voc.de
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: letsencrypt, vars: { 'domain': 'build.c3voc.de'}, tags: ['letsencrypt'] }
+      - { role: letsencrypt, vars: { 'domain': 'pkg.c3voc.de'}, tags: ['letsencrypt'] }

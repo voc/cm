@@ -99,6 +99,7 @@ fempeg.lan.c3voc.de
 web.c3voc.de
 mng.c3voc.de  ansible_ssh_host=185.106.84.49
 monitoring.c3voc.de
+build.c3voc.de
 
 # Streaming server
 [relays]
