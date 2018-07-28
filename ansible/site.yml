@@ -9,3 +9,4 @@
   - include: transcoders.yml
   - include: audio-pis.yml
   - include: web.c3voc.de.yml
+  - include: monitoring.c3voc.de.yml

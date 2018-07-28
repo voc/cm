@@ -97,6 +97,8 @@ router.lan.c3voc.de router_pbl_ip=194.95.66.38 router_pbl_mask=255.255.255.0 rou
 phony.lan.c3voc.de
 fempeg.lan.c3voc.de
 web.c3voc.de
+mng.c3voc.de  ansible_ssh_host=185.106.84.49
+monitoring.c3voc.de
 
 # Streaming server
 [relays]
