@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: emf18
+  name: Electromagnetic Field 2018
+  slogan: Electromagnetic Field 2018
   formats:
     hd: 'yes'
     sd: 'yes'

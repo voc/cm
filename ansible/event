@@ -138,6 +138,7 @@ blade3.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade
 blade4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade4.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade4.password') }}"
 
 #desmit.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/desmit.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/desmit.password') }}"
+wombat.lan.c3voc.de ansible_host=141.24.54.8 crs_token="{{ lookup('keepass', 'ansible/worker-groups/wombat.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/wombat.password') }}"
 
 [tracker]
 tracker.c3voc.de
