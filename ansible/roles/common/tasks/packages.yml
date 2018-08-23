@@ -78,3 +78,4 @@
      - bmdtools
      - check-mk-agent
      - munin-node
+     - puppet
