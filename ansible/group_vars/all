@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: froscon2018 
+  name: FrOSCon 2018
+  slogan: Free and Open Source Conference
   formats:
     hd: 'yes'
     sd: 'yes'

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000 \
+	-i http://{{ relay_fanout.pull_endpoint }}/s{{ item }}_h264 \
+	-r 30 -vf scale=-1:720 -c:v libx264 -x264-params keyint=60 -crf 23 \
+	-preset slow -b:v 3000k -minrate 2000k -maxrate 4000k -bufsize 500k \
+	-c:a aac -ar 44100 -ac 1 -f flv "rtmp://live-api.facebook.com/rtmp/{{ lookup('keepass', 'ansible/facebook/s'+item+'.password') }}"
