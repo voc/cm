@@ -1,6 +1,6 @@
 ---
 room_number: 42
-room_fahrplan_name: OpenSUSE 2
+room_fahrplan_name: HS8
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
