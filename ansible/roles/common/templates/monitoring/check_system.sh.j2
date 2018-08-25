@@ -216,7 +216,7 @@ check_temperature () {
 # * runs 'apt update'
 # * parse avaible upgradable packes from output
 #
-check_updates() {
+check_updates () {
   updates=$(apt update 2>/dev/null  | grep "can be upgraded")
   if [ "0" -eq "$?" ]; then
     send_mqtt_message "error" "system/updates/${TRUNC_HOSTNAME}" "<yellow>$(echo $updates | cut -d '.' -f 1).</yellow> <red>Uptime:</red> <yellow>$(uptime | cut -d ',' -f 1)</yellow>"
@@ -234,7 +234,7 @@ ping() {
 }
 
 # Check voc related websites
-check_http() {
+check_http () {
   http_urls="https://streaming.media.ccc.de https://c3voc.de https://c3voc.de/wiki https://tracker.c3voc.de https://c3voc.de/eventkalender"
 
   for url in $(echo $http_urls); do
