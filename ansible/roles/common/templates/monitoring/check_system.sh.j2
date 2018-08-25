@@ -201,7 +201,12 @@ check_temperature () {
         debug_output "temp" $temp $value $limit
         if [ $(echo "${value} > (${limit}*0.95)" | bc) -eq "1" ]; then
           label="$(cat ${hwmon}/${temp}_label)"
-          send_mqtt_message "error" "system/temp/${TRUNC_HOSTNAME}" "<red>${label} temp critical at $(echo "${value}/1000" | bc) °C</red>"
+
+          # Don't send temp messages for minions. Possible occurrence of smoke
+          # from the device is normal and harmless.
+          if [ "1" -eq "$(hostnamectl status --static | grep -q "minion"; echo $?)" ]; then
+            send_mqtt_message "error" "system/temp/${TRUNC_HOSTNAME}" "<red>${label} temp critical at $(echo "${value}/1000" | bc) °C</red>"
+          fi
           break 2
         fi
 
@@ -225,7 +230,7 @@ check_updates () {
 
 
 # send system uptime in every run
-ping() {
+ping () {
   hostname="$(hostname -f)"
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
   mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
