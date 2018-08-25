@@ -12,6 +12,8 @@
     tags:
       - check_recording
       - check_system
+      - encodermode
+      - voctomix
 
   - cron: name="check system and send mqtt message"
           minute="*/1" hour="*" month="*" day="*"
