@@ -225,12 +225,32 @@ check_updates() {
 
 
 # send system uptime in every run
-ping () {
+ping() {
   hostname="$(hostname -f)"
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
   mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
 
   debug_output "ping" $hostname $uptime
+}
+
+# Check voc related websites
+check_http() {
+  http_urls="https://streaming.media.ccc.de https://c3voc.de https://c3voc.de/wiki https://tracker.c3voc.de https://c3voc.de/eventkalender"
+
+  for url in $(echo $http_urls); do
+    error_code=$(curl -I ${url} 2>/dev/null | head -n1 | cut -d ' ' -f 2)
+    if [ -z "${error_code}" ]; then
+      break
+    fi
+
+    # remove unneeded stuff
+    error_code=$(echo $error_code | tr '\r' ' ')
+
+    if [ "$error_code" -gt "302" ]; then
+      echo "Error ${error_code}"
+    fi
+    sleep 1
+  done
 }
 
 
@@ -254,6 +274,10 @@ fi
 # check for updates every month 23rd 20:42
 if [ "232042" = "$(date +'%e%H%M')" ]; then
   check_updates
+fi
+
+if [ "mng.ber.c3voc.de" = "$(hostname -f)" ]; then
+  check_http
 fi
 
 exit 0
