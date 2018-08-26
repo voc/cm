@@ -2,7 +2,7 @@
 
 while true; do
 
-ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 30000000 \
 	-i http://{{ transcoder.pull_endpoint }}/{{ item }} \
 	\
 	\
