@@ -2,7 +2,7 @@
 
 while true; do
 
-ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 30000000 \
 	-i http://{{ transcoder.lounge_pull_endpoint }}/{{ item }}.opus \
 	\
 	-map 0:a:0 \
