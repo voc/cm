@@ -192,27 +192,29 @@ check_interfaces () {
 # check_temperature implements:
 #   * intel cpu temperature with coretemp
 check_temperature () {
-  for hwmon in $(ls -d /sys/class/hwmon/hwmon*); do
-    if [ $(cat ${hwmon}/name) = "coretemp" ]; then
-      for temp in $(ls ${hwmon}/temp*_label | grep -o "temp."); do
-        value="$(cat ${hwmon}/${temp}_input)"
-        limit="$(cat ${hwmon}/${temp}_crit)"
+  if [ -d "/sys/class/hwmon/hwmon0" ]; then
+    for hwmon in $(ls -d /sys/class/hwmon/hwmon*); do
+      if [ $(cat ${hwmon}/name) = "coretemp" ]; then
+        for temp in $(ls ${hwmon}/temp*_label | grep -o "temp."); do
+          value="$(cat ${hwmon}/${temp}_input)"
+          limit="$(cat ${hwmon}/${temp}_crit)"
 
-        debug_output "temp" $temp $value $limit
-        if [ $(echo "${value} > (${limit}*0.95)" | bc) -eq "1" ]; then
-          label="$(cat ${hwmon}/${temp}_label)"
+          debug_output "temp" $temp $value $limit
+          if [ $(echo "${value} > (${limit}*0.95)" | bc) -eq "1" ]; then
+            label="$(cat ${hwmon}/${temp}_label)"
 
-          # Don't send temp messages for minions. Possible occurrence of smoke
-          # from the device is normal and harmless.
-          if [ "1" -eq "$(hostnamectl status --static | grep -q "minion"; echo $?)" ]; then
-            send_mqtt_message "error" "system/temp/${TRUNC_HOSTNAME}" "<red>${label} temp critical at $(echo "${value}/1000" | bc) °C</red>"
+            # Don't send temp messages for minions. Possible occurrence of smoke
+            # from the device is normal and harmless.
+            if [ "1" -eq "$(hostnamectl status --static | grep -q "minion"; echo $?)" ]; then
+              send_mqtt_message "error" "system/temp/${TRUNC_HOSTNAME}" "<red>${label} temp critical at $(echo "${value}/1000" | bc) °C</red>"
+            fi
+            break 2
           fi
-          break 2
-        fi
 
-      done
-    fi
-  done
+        done
+      fi
+    done
+  fi
 }
 
 
