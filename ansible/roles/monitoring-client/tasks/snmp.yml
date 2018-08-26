@@ -1,0 +1,19 @@
+---
+  - name: install snmp stuff
+    apt: name={{ item }} state=present
+    with_items:
+      - snmp
+      - snmp-mibs-downloader
+
+  - name: fix snmp config to be able to use snmp-mibs-downloader
+    lineinfile: dest=/etc/snmp/snmp.conf
+                regexp=".*mibs\ :.*"
+                line="# mibs :"
+                state=present
+
+  - stat: path=/var/lib/snmp/mibs
+    register: mibs_dir
+
+  - name: run snmp-mibs-downloader
+    shell: snmp-mibs-downloader
+    when: not mibs_dir.stat.exists
