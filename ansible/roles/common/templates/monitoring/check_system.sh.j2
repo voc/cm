@@ -253,7 +253,9 @@ check_http () {
     # remove unneeded stuff
     error_code=$(echo $error_code | tr '\r' ' ')
 
-    if [ "$error_code" -gt "302" ]; then
+    if [ "$error_code" = "html>" ]; then
+      send_mqtt_message "error" "system/http/${TRUNC_HOSTNAME}" "<yellow>${url}</yellow><red>: website br0ken</red>"
+    elif  [ "$error_code" -gt "302" ]; then
       send_mqtt_message "error" "system/http/${TRUNC_HOSTNAME}" "<yellow>${url}</yellow><red>: error code </red><yellow>${error_code}</yellow>"
     fi
     sleep 1
