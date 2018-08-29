@@ -11,3 +11,4 @@
   - include: web.c3voc.de.yml
   - include: monitoring.c3voc.de.yml
   - include: build.c3voc.de.yml
+  - include: mng.c3voc.de.yml
