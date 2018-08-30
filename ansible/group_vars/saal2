@@ -1,6 +1,6 @@
 ---
 room_number: 2
-room_fahrplan_name: Saal 2
+room_fahrplan_name: Stage B
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -15,22 +15,22 @@ voctomix_audiostreams: 2
 #    video_mode: "1080p25"
 #
 # für Panasonic:
-#    video_connection: SDI
-#    video_mode: "1080i50"
-#    deinterlace: assume-progressive
+video_connection: SDI
+video_mode: "1080i50"
+deinterlace: assume-progressive
 #
 # für Tronsmart:
-#    video_connection: HDMI
-#    video_mode: "1080p24"
+video_connection: HDMI
+video_mode: "1080p24"
 
 # Audio-Mapping Native-und-Backup
-#  volume: 1.0
-#  audiostream:
+volume: 1.0
+audiostream:
 #    # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
-#    0: 0
+    0: 0
 #
 #    # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
-#    1: 1
+    1: 1
 
 # Audio-Mapping Native-Stereo
 #  volume: 1.0
