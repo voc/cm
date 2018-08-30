@@ -1,0 +1,16 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = voctomix {{ item }}-youtube sink
+After = voctocore.service
+Requires = voctocore.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix/scripts/youtube-sink-{{ item }}.sh
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = voctocore.service

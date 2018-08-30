@@ -267,6 +267,25 @@
 
 
 
+    # youtube sinks
+  - name: create youtube rtmp streaming script
+    template: src="voctomix-scripts/youtube-sink.sh.j2"
+              dest="/opt/voctomix/scripts/youtube-sink-{{ item }}.sh"
+              mode=0755 owner=root group=root
+    with_items: [hd]
+
+  - name: create youtube rtmp streaming systemd-unit
+    template: src="systemd-units/youtube-sink.service.j2"
+              dest="/etc/systemd/system/youtube-sink-{{ item }}.service"
+              mode=0644 owner=root group=root
+    with_items: [hd]
+
+  - name: enable youtube rtmp streaming services
+    service: name=youtube-sink-{{ item }}.service
+             enabled=yes
+    with_items: [hd]
+
+
     # streaming sinks
   - name: create rtmp streaming script
     template: src="voctomix-scripts/streaming-sink.sh.j2"
@@ -302,9 +321,9 @@
               mode=0644 owner=root group=root
     with_items: [mkvonly]
 
-  - name: enable streaming-sink-mkvonly service
+  - name: disable streaming-sink-mkvonly service
     service: name=streaming-sink-mkvonly.service
-             enabled={{ streaming_service_enabled }}
+             enabled=no
 
 
   - name: create framebuffer playout systemd-unit
