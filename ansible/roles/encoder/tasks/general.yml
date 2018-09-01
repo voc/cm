@@ -22,3 +22,7 @@
     copy: src=common.sh
           dest=/etc/service/common.sh
           owner=root group=staff mode=0644
+
+  - name: set timezone to Europe/London
+    timezone:
+      name: Europe/London
