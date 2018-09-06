@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: mrmcd18
+  name: MRMCD 2018
+  slogan: Ganz Grosses Kino
   formats:
     hd: 'yes'
     sd: 'yes'
