@@ -3,4 +3,5 @@
     roles:
       - { role: common, tags: ['common'] }
       - { role: letsencrypt, vars: { 'domain': 'git.c3voc.de'}, tags: ['letsencrypt'] }
+      - { role: letsencrypt, vars: { 'domain': 'lists.c3voc.de'}, tags: ['letsencrypt'] }
       - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }
