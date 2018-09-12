@@ -75,7 +75,7 @@ server {
     fastcgi_no_cache $flag_cache_empty;
     fastcgi_cache_bypass $do_not_cache;
     fastcgi_cache_bypass $flag_cache_empty;
-    fastcgi_cache_key "$http_x_proto$uri$is_args$args";
+    fastcgi_cache_key "$request_method$http_x_proto$uri$is_args$args";
     fastcgi_cache streaming_fcgi;
     fastcgi_cache_valid 200 5m;
     fastcgi_cache_methods GET;
