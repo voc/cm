@@ -133,7 +133,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls/$hls/$file;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -158,7 +158,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls/$hls/$stream;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 6m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -183,7 +183,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls_relive/$hls_relive/$file;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -206,7 +206,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls_relive/$hls_relive/$stream;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 7d;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -229,7 +229,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls_relive/$hls_relive/$stream;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 6d;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -260,7 +260,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls_relive/$1;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 5m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -292,7 +292,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://dash/dash/$manifest;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -319,7 +319,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://dash/dash/$segment;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 3m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
