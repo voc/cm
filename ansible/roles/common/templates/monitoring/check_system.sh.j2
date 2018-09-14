@@ -289,4 +289,12 @@ if [ "mng.ber.c3voc.de" = "$(hostname -f)" ]; then
   check_http
 fi
 
+
+# repeat ping to prevent false alarms due to packet loss
+sleep 1
+ping
+sleep 1
+ping
+
+
 exit 0
