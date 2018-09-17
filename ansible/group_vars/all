@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: suselabs18
+  name: SUSE Labs Conference 2018
+  slogan: ""
   formats:
     hd: 'yes'
     sd: 'yes'
