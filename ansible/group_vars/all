@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: occon18
+  name: ownCloud Conference 2018
+  slogan: 
   formats:
     hd: 'yes'
     sd: 'yes'
