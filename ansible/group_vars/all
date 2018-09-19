@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: DS2018
+  name: Datenspuren 2018
+  slogan: #Machtnix
   formats:
     hd: 'yes'
     sd: 'yes'
