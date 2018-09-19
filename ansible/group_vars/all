@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: np14
+  name: Netzpolitik 14
+  slogan: Das ist Netzpolitik!
   formats:
     hd: 'yes'
     sd: 'yes'
