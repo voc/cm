@@ -2,7 +2,7 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: np14
+  acronym: 14np
   name: Netzpolitik 14
   slogan: Das ist Netzpolitik!
   formats:
