@@ -8,7 +8,7 @@ room_fahrplan_name: Hauptbühne
 encodermode: hd-voctomix
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
-voctomix_audiostreams: 2
+voctomix_audiostreams: 1
 
 # für JVC:
 #    video_connection: SDI
@@ -66,17 +66,17 @@ voctomix_sources:
     volume: 1.0
     audiostream:
       # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
-      0: 0
+      0: 0+1
   
       # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
-      1: 1
-#  -
+      #1: 1
+  -
 #    # Duo Port 4
-#    name: cam2
-#    type: decklink-internal
-#    devicenumber: 0
-#    video_connection: SDI
-#    video_mode: "1080p25"
+    name: cam2
+     type: decklink-internal
+     devicenumber: 0
+     video_connection: SDI
+     video_mode: "1080i50"
 #  -
 #    # Mini Recorder links
 #    name: cam3
@@ -89,6 +89,6 @@ voctomix_sources:
     name: slides
     type: decklink-internal
     devicenumber: 5
-    video_connection: HDMI
-    video_mode: "1080p24"
+    video_connection: SDI
+    video_mode: "1080i50"
     volume: 0.0
