@@ -1,6 +1,6 @@
 ---
 room_number: 4
-room_fahrplan_name: Großer Saal
+room_fahrplan_name: Kabinett
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -8,7 +8,7 @@ room_fahrplan_name: Großer Saal
 encodermode: hd-voctomix
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
-voctomix_audiostreams: 2
+voctomix_audiostreams: 1
 
 # für JVC:
 #    video_connection: SDI
