@@ -133,7 +133,7 @@ users:
   - { name: 'meise', state: 'present' }
   - { name: 'thomic', state: 'present' }
   - { name: 'v0tti', state: 'present' }
-  - { name: 'felixs', state: 'present' } # selfnet, foss4g
+  - { name: 'sophie', state: 'present' } # selfnet, foss4g
   - { name: 'nihilus', state: 'present' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'dedeibel', state: 'present' }
