@@ -133,12 +133,12 @@ users:
   - { name: 'thomic', state: 'present' }
   - { name: 'v0tti', state: 'present' }
   - { name: 'felixs', state: 'present' } # selfnet, foss4g
-  - { name: 'nihilus', state: 'present' } # nobody
+  - { name: 'nihilus', state: 'absent' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'dedeibel', state: 'present' }
   - { name: 'pegro', state: 'present' }
   - { name: 'bix', state: 'present' }  # SHA
-  - { name: 'dave', state: 'present' } # SHA
+  - { name: 'dave', state: 'absent' } # SHA
   - { name: 'arl4223', state: 'absent' } # NOC
   - { name: 'holger', state: 'absent' } # Debian
   - { name: 'zuntrax', state: 'present' } # SHA
