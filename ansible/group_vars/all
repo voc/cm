@@ -131,6 +131,7 @@ users:
   - { name: 'mazdermind', state: 'present' }
   - { name: 'meise', state: 'present' }
   - { name: 'thomic', state: 'present' }
+  - { name: 'thorti', state: 'present' }
   - { name: 'v0tti', state: 'present' }
   - { name: 'felixs', state: 'present' } # selfnet, foss4g
   - { name: 'nihilus', state: 'absent' } # nobody
