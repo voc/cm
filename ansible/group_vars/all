@@ -2,8 +2,8 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
+  acronym: vcfb18
+  name: Vintage Computing Festival 2018
   slogan: XXX
   formats:
     hd: 'yes'
