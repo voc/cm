@@ -4,6 +4,7 @@
 
 # limits
 LIMIT_DISK_USAGE=90
+LIMIT_DISK_MIN_FREE_SPACE_KB=9765625
 LIMIT_LOAD=$(echo "$(grep processor /proc/cpuinfo | wc -l) * 2" | bc)
 
 TRUNC_HOSTNAME=$(hostname -f | cut -d. -f1-2)
@@ -33,16 +34,21 @@ debug_output() {
 
 check_disk_space () {
   df -h | tail -n +2 | while read line; do
-    mount_point=$(echo $line | awk '{ print $1 }')
+    device=$(echo $line | awk '{ print $1 }')
     disk_usage_percent=$(echo $line | awk '{ print $5 }' | tr -d '%')
     disk_space=$(echo $line | awk '{ print $2 }')
     disk_space_avilable=$(echo $line | awk '{ print $4 }')
+    mount_point=$(echo $line | awk '{ print $6 }')
+
 
     if [ "$disk_usage_percent" -ge "$LIMIT_DISK_USAGE" ]; then
-      send_mqtt_message "error" "system/disk/${TRUNC_HOSTNAME}" "<red>$mount_point: disk usage $disk_usage_percent%, only $disk_space_avilable left of $disk_space</red>"
+      space_free_kb=$(df ${mount_point} | tail -n+2 | awk '{ print $4 }')
+      if [ "$space_free_kb" -le "$LIMIT_DISK_MIN_FREE_SPACE_KB" ]; then
+        send_mqtt_message "error" "system/disk/${TRUNC_HOSTNAME}" "<red>$device: disk usage $disk_usage_percent%, only $disk_space_avilable left of $disk_space</red>"
+      fi
     fi
 
-    debug_output "df" $mount_point $disk_usage_percent $disk_space $disk_space_avilable
+    debug_output "df" $device $disk_usage_percent $disk_space $disk_space_avilable
   done
 }
 
