@@ -268,6 +268,19 @@ check_http () {
   done
 }
 
+check_ac_power () {
+  if [ -f "/sys/class/power_supply/AC/online" ]; then
+    ac_online=$(cat /sys/class/power_supply/AC/online)
+    if [ -f "/sys/class/power_supply/BAT0/capacity" ]; then
+      bat0_capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+    else
+      bat0_capacity=""
+    fi
+    [ "0" -eq "$ac_online" ] && send_mqtt_message "error" "system/disk/${TRUNC_HOSTNAME}" "<red>AC power Offile! Battery $bat0_capacity capacity left.</red>"
+  fi
+}
+
+
 
 # general checks
 ping
@@ -276,7 +289,7 @@ check_disk_space
 check_raid
 check_logs
 check_interfaces
-
+check_ac_power
 
 # special cases
 if [ "0" -eq "$(hostnamectl status --static | grep -q "encoder"; echo $?)" ]; then
