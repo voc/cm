@@ -276,7 +276,7 @@ check_ac_power () {
     else
       bat0_capacity=""
     fi
-    [ "0" -eq "$ac_online" ] && send_mqtt_message "error" "system/disk/${TRUNC_HOSTNAME}" "<red>AC power Offile! Battery $bat0_capacity capacity left.</red>"
+    [ "0" -eq "$ac_online" ] && send_mqtt_message "error" "system/power/${TRUNC_HOSTNAME}" "<red>AC power Offile! Battery $bat0_capacity capacity left.</red>"
   fi
 }
 
