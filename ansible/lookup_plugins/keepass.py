@@ -5,8 +5,9 @@ import os
 import sys
 import getpass
 
-reload(sys)
-sys.setdefaultencoding('UTF8')
+if sys.version_info[0] < 3:
+    reload(sys)
+    sys.setdefaultencoding('UTF8')
 
 from ansible.errors import AnsibleError
 from ansible.plugins.lookup import LookupBase

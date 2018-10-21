@@ -2,9 +2,8 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: ece-shd18
+  name: Smart Home Day 2018
   formats:
     hd: 'yes'
     sd: 'yes'

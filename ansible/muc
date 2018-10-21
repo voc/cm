@@ -2,20 +2,29 @@
 
 # Lecture rooms
 [saal-muc]
+#83.133.179.108
 mixer-muc.lan.c3voc.de
 encoder-muc.lan.c3voc.de
+minion-muc.lan.c3voc.de
 #encoder.muc.c3voc.de
-
+#83.133.179.113
+#83.133.179.112
 
 # Host types
 [encoders]
 encoder-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.password') }}"
+#83.133.179.112 crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.password') }}"
 
 [mixers]
 mixer-muc.lan.c3voc.de
+#83.133.179.108
 
 [minions]
 minion-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion-muc.password') }}"
+#83.133.179.113 crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion-muc.password') }}"
 
+#[saal-muc:vars]
+#ansible_python_interpreter=/usr/local/bin/python3
 
-
+[servers]
+10.73.80.201
