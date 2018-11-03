@@ -79,17 +79,15 @@ audio-pi4.lan.c3voc.de stream=a4
 
 # Local RZ
 [servers]
-mng.ber.c3voc.de
 ber.c3voc.de
 dus.c3voc.de
-build.ber.c3voc.de
-mngslave.dus.c3voc.de
-testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 node.lan.c3voc.de
 storage.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/storage.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/storage.password') }}"
 usa.lan.c3voc.de
 dellinger.alb.c3voc.de
 deskjet.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/deskjet.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/deskjet.password') }}"
+aws.lan.c3voc.de # ansible_ssh_port=8000 ansible_ssh_host=127.0.0.1
+mebibyte.c3voc.de
 
 # VMs
 monitoring.lan.c3voc.de
@@ -97,9 +95,13 @@ router.lan.c3voc.de router_pbl_ip=194.95.66.38 router_pbl_mask=255.255.255.0 rou
 phony.lan.c3voc.de
 fempeg.lan.c3voc.de
 web.c3voc.de
-mng.c3voc.de  ansible_ssh_host=185.106.84.49
+mng.c3voc.de
+mng.ber.c3voc.de
+mngslave.dus.c3voc.de
 monitoring.c3voc.de
 build.c3voc.de
+backup.c3voc.de
+testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 
 # Streaming server
 [relays]
