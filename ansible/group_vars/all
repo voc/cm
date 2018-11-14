@@ -2,8 +2,8 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
+  acronym: bub2018
+  name: Bits und Bäume
   slogan: XXX
   formats:
     hd: 'yes'
