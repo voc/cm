@@ -1,5 +1,5 @@
 [mix]
-videocaps=video/x-raw,format=I420,width=1920,height=1080,framerate=25/1,pixel-aspect-ratio=1/1
+videocaps=video/x-raw,format=I420,width=1920,height=1080,framerate=25/1,pixel-aspect-ratio=1/1,interlace-mode=progressive
 audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
 
 ; tcp-ports will be 10000,10001,10002
@@ -50,32 +50,6 @@ deinterlace = assume-progressive
 [source.stream-blanker-nostream]
 deinterlace = assume-progressive
 
-
-[fullscreen]
-default-a=slides
-
-[side-by-side-equal]
-border=10
-gutter=20
-atop=80
-btop=480
-
-default-a=slides
-
-[side-by-side-preview]
-asize=1420x799
-apos=20/160
-bsize=496x279
-bpos=1404/781
-
-default-a=slides
-
-[picture-in-picture]
-pipsize=496x279
-pippos=1404/781
-
-default-a=slides
-
 [previews]
 ; disable if ui & server run on the same computer and can exchange uncompressed video frames
 enabled=true
@@ -93,3 +67,95 @@ vaapi=h264
 [stream-blanker]
 enabled=true
 sources=pause{% if voctomix.nostream_loop %},nostream{% endif %}
+
+[mirrors]
+; disable if not needed
+enabled = true
+
+[composites]
+; fullscreen source A (B is full transparent)
+fs.a                  = *
+fs.b                  = *
+fs.alpha-b            = 0
+fs.noswap             = true
+
+; fullscreen source A (facing picture-in-picture)
+fs-pip.a              = *
+fs-pip.b              = 0.86/0.85 0.0
+fs-pip.alpha-b        = 0
+fs-pip.inter          = true
+
+; fullscreen source A (facing side-by-side)
+fs-sbs.a              = *
+fs-sbs.b              = 1.0/0.5 0.0
+fs-sbs.alpha-b        = 0
+fs-sbs.inter          = true
+
+; fullscreen source A (facing side-by-side-preview)
+fs-sbsp.a             = *
+fs-sbsp.b             = 1.0 0.0
+fs-sbsp.alpha-b       = 0
+fs-sbsp.crop-b        = 0.31/0
+fs-sbsp.inter         = true
+
+; picture-in-picture (fullscreen source A with B as small overlay)
+pip.a                   = *
+pip.b                   = 0.73/0.72 0.26
+pip.noswap              = true
+
+; side-by-side (source A at left and B at right side)
+sbs.a                   = 0.008/0.50 0.49
+sbs.b                   = 0.503/0.10 0.49
+
+; side-by-side-preview (source A bigger and B smaller and cropped beside)
+sbsp.a                  = 0.24/0.1 0.75
+sbsp.b                  = -0.06/0.49 0.36
+sbsp.crop-b             = 0.20/0
+
+; fullscreen source B (overlapping A)
+fs-b.a                  = *
+fs-b.b                  = *
+fs-b.noswap             = true
+
+; fullscreen source B (facing side-by-side)
+fs-b-sbs.a              = 0.3/0.5 0.0
+fs-b-sbs.alpha-a        = 0.0
+fs-b-sbs.b              = *
+fs-b-sbs.inter          = true
+
+; fullscreen source B (facing side-by-side-preview)
+fs-b-sbsp.a             = 0.0/1.0 0.0
+fs-b-sbsp.b             = *
+fs-b-sbsp.inter         = true
+
+# one-opon-the-other (like one-opon-the-other but overlapping)
+oao.a                   = 0.3/0.2 0.4
+oao.alpha-a             = 0.5
+oao.b                   = 0.2/0.3 0.6
+oao.inter               = true
+oao.noswap              = true
+
+
+[transitions]
+; list of transitions each one can be freely named and is a list of composites
+; which will be morphed into an animation. Interpolation will be linear with two
+; composites and B-Splines for more.
+
+; unique name           =   ms, from / [... /] to
+fs-fs                   = 500, fs / fs-b
+fs-pip                  = 500, fs-pip / pip
+fs-sbs                  = 500, fs-sbs / sbs
+fs-b-pip                = 500, fs-b / pip
+fs-b-sbs                = 500, fs-b-sbs / sbs
+fs-sbsp                 = 500, fs-sbsp / sbsp
+fs-b-sbsp               = 500, fs-b-sbsp / sbsp
+pip-pip                 = 1000, pip / sbs / pip
+sbs-sbs                 = 1000, sbs / oao / sbs
+_sbs-sbs                = 1000, ^sbs / ^oao / sbs
+
+; default blending
+; unique name                       =   ms, from / [... /] to
+def                     = 500, * / *
+
+[gamma]
+ms                      = 500

@@ -25,3 +25,22 @@ system=xv
 [misc]
 close=false
 cut=false
+
+[toolbar]
+fs_cam      = fs(cam) : speaker.svg
+fs_slides   = fs(slides) : slides.svg
+
+# speaker left
+s1          = -
+pip1        = |pip(slides,cam1) : speaker-in-slides-left.svg
+speaker     = |sbsp(slides,cam1) : side-by-side-preview-left.svg
+pip2_       = pip(cam1,slides) : slides-in-speaker-left.svg
+sbs         = sbs(cam1,slides) : side-by-side-left.svg
+
+# speaker right
+#s2          = -
+#pip1_       = pip(slides,cam1) : speaker-in-slides.svg
+#speaker_    = sbsp(slides,cam1) : side-by-side-preview.svg
+#pip2        = |pip(cam1,slides) : slides-in-speaker.svg
+#sbs_        = sbs(slides,cam1) : side-by-side.svg
+

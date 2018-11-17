@@ -10,7 +10,7 @@ event:
     sd: 'yes'
 
 voctomix:
-  version: "master"
+  version: "feature/transitions-maroc"
 
   # also record Full-HD Slides into the .ts-Files
   parallel_slide_recording: true
