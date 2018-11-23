@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: rustfest18rome
+  name: RustFest Rome 2018
+  slogan: "Let's meet again at a conference dedicated to the Rust programming language"
   formats:
     hd: 'yes'
     sd: 'yes'
