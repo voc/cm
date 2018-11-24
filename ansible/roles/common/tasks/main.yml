@@ -1,5 +1,6 @@
 ---
   - include: ../../../register/bin_path.yml
+    tags: bin_path
   - include: locale.yml
   - include: resolv.yml
     tags:
