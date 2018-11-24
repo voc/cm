@@ -14,9 +14,9 @@
 # By default this script does nothing.
 
 iptables -F INPUT
-iptables -A INPUT -s 185.106.84.33/32 -p icmp -m icmp --icmp-type 3 -j DROP
-iptables -A INPUT -s 195.54.164.161/32 -p icmp -m icmp --icmp-type 3 -j DROP
-iptables -A INPUT -s 195.54.164.169/32 -p icmp -m icmp --icmp-type 3 -j DROP
+iptables -A INPUT -s 185.106.84.33/32 -p icmp -m icmp --icmp-type 3 -j DROP -m comment --comment "juniper-fuckup-fix"
+iptables -A INPUT -s 195.54.164.161/32 -p icmp -m icmp --icmp-type 3 -j DROP -m comment --comment "juniper-fuckup-fix"
+iptables -A INPUT -s 195.54.164.169/32 -p icmp -m icmp --icmp-type 3 -j DROP -m comment --comment "juniper-fuckup-fix"
 iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 # allow all from trusted ips
