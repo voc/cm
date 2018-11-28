@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: T4AT
+  name: "Tools4AgileTeams 2018"
+  slogan: ""
   formats:
     hd: 'yes'
     sd: 'yes'
