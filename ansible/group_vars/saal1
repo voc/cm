@@ -1,6 +1,6 @@
 ---
 room_number: 1
-room_fahrplan_name: "Großer Saal"
+room_fahrplan_name: "Grosser Saal"
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
