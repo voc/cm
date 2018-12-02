@@ -2,22 +2,16 @@
 # HLS slave caching directories
 proxy_temp_path /srv/nginx/cache/tmp;
 
-proxy_cache_path /srv/nginx/cache/hls
-                 keys_zone=hls:32m
-                 max_size={{ nginx_hls_cache_max_size | default('30g') }}
-                 inactive=1h
-                 loader_threshold=300 loader_files=1024;
-
 proxy_cache_path /srv/nginx/cache/hls_relive
                 keys_zone=hls_relive:32m
                 max_size={{ nginx_hls_relive_cache_max_size | default('200g') }}
                 inactive=7d
                 loader_threshold=300 loader_files=1024;
 
-proxy_cache_path /srv/nginx/cache/dash
-                keys_zone=dash:32m
-                max_size={{ nginx_dash_cache_max_size | default('30g') }}
-                inactive=7d
+proxy_cache_path /srv/nginx/cache/live
+                keys_zone=live:32m
+                max_size={{ nginx_live_cache_max_size | default('10g') }}
+                inactive=1h
                 loader_threshold=300 loader_files=1024;
 
 # Upstreams
@@ -104,12 +98,12 @@ server {
   }
 
 {% if nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' %}
-  location ~* ^/hls/(.+)$ {
+  location ~* ^/hls/(.+)?$ {
     alias /srv/nginx/hls/$1;
     autoindex on;
   }
 
-  location ~* ^/dash/(.+)$ {
+  location ~* ^/dash/(.+)?$ {
     alias /srv/nginx/dash/$1;
     autoindex on;
   }
@@ -135,11 +129,11 @@ server {
   #
   location ~* ^/(?<hls>hls)/(?<file>.+\.m3u8)$ {
       proxy_intercept_errors on;
-      proxy_cache            hls;
+      proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls/$hls/$file;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -160,12 +154,12 @@ server {
   #
   location ~* ^/(?<hls>hls)/(?<stream>.+\.(ts))$ {
       proxy_intercept_errors on;
-      proxy_cache            hls;
+      proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls/$hls/$stream;
-      proxy_cache_methods    GET HEAD;
-      proxy_cache_valid      200 302 30m;
+      proxy_cache_methods    GET;
+      proxy_cache_valid      200 302 6m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;
@@ -189,7 +183,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls_relive/$hls_relive/$file;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -212,7 +206,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls_relive/$hls_relive/$stream;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 7d;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -235,7 +229,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls_relive/$hls_relive/$stream;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 6d;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -266,7 +260,7 @@ server {
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls_relive/$1;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 5m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -294,11 +288,11 @@ server {
   #
   location ~* ^/dash/(?<manifest>.+\.mpd)$ {
       proxy_intercept_errors on;
-      proxy_cache            dash;
+      proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://dash/dash/$manifest;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
@@ -321,11 +315,11 @@ server {
   #
   location ~* ^/dash/(?<segment>.+\.(hdr|chk|m4s))$ {
       proxy_intercept_errors on;
-      proxy_cache            dash;
+      proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://dash/dash/$segment;
-      proxy_cache_methods    GET HEAD;
+      proxy_cache_methods    GET;
       proxy_cache_valid      200 302 3m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;

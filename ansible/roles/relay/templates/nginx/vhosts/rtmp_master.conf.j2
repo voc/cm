@@ -34,38 +34,10 @@ rtmp {
       # enable live streaming
       live on;
       meta copy;
-{% if (nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes') and (rtmp_auto_hls is defined and rtmp_auto_hls == 'yes') %}
-      hls on;
-      hls_path /srv/nginx/hls;
-      hls_fragment 10s;
-      hls_fragment_naming timestamp;
-      hls_fragment_slicing aligned;
-      hls_playlist_length 10m;
-      hls_base_url /hls/;
 
-{% if event.formats.hd is defined and event.formats.hd == 'yes' %}
-      hls_variant _hd BANDWIDTH=3000000;
-{% endif %}
-{% if event.formats.sd is defined and event.formats.sd == 'yes' %}
-      hls_variant _sd BANDWIDTH=1000000;
-{% endif %}
-{% if event.formats.slides is defined and event.formats.slides == 'yes' %}
-      # TODO: rtmp slide stream?
-      hls_variant _slides BANDWIDTH=100000;
-{% endif %}
-{% else %}
       hls off;
-{% endif%}
 
-{% for stream, ip in nginx_streaming_locations.iteritems() %}
-      pull rtmp://{{ ip }}:1935/stream/{{ stream }} name={{ stream }} static live=1;
-{% endfor %}
-
-{% for ip in nginx_ips_allow_to_push %}
-      allow publish {{ ip }};
-{% endfor %}
-      deny publish all;
-
+      allow publish all;
       allow play all;
     }
   }

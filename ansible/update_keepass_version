@@ -2,9 +2,13 @@
 
 source "_ansible_keepass_util.sh"
 
+touch .keepass_version
+VERSION_FILE=$(realpath .keepass_version)
 KEEPASS_DIR=$(dirname "${KEEPASS}")
-export GIT_DIR="${KEEPASS_DIR}/.git" 
+(
+	cd "$KEEPASS_DIR"
+	echo 'Aktualisiere "${VERSION_FILE}" auf: '
+	git --no-pager log -1 --pretty=oneline --abbrev-commit
+	git rev-parse HEAD > ${VERSION_FILE}
+)
 
-echo 'Aktualisiere ".keepass_version" auf: '
-git --no-pager log -1 --pretty=oneline --abbrev-commit
-git rev-parse HEAD > .keepass_version

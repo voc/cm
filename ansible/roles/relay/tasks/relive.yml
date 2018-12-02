@@ -37,7 +37,7 @@
     tags: install
 
   - name: create cronjob to generate pages every two minutes
-    cron: name="get-fahrplan.sh" minute=*/2
-          job="/home/relive/git/scripts/foreach-project.sh 'perl /home/relive/git/hls-relive/genpage.pl'"
+    cron: name="update.sh" minute=*/2
+          job="/home/relive/git/scripts/update.sh"
           user=relive
     tags: install

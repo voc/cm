@@ -23,3 +23,7 @@
     copy: "dest=/home/mixer/.Xresources
           content='XTerm*metaSendsEscape: true'
           owner=mixer group=mixer mode=0755"
+
+  - name: set timezone to Europe/London
+    timezone:
+      name: "{{ event.timezone }}"

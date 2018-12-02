@@ -3,7 +3,7 @@
     copy: src=raidstatus
           dest=/usr/local/sbin/raidstatus
           owner=root group=root mode=0750
-    when: ansible_hostname | match('dellinger|storage')
+    when: ansible_hostname | match('dellinger|storage|aws|berlin-ak')
 
   - name: create check_system script
     template: src="monitoring/check_system.sh.j2"
@@ -12,6 +12,8 @@
     tags:
       - check_recording
       - check_system
+      - encodermode
+      - voctomix
 
   - cron: name="check system and send mqtt message"
           minute="*/1" hour="*" month="*" day="*"

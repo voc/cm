@@ -4,6 +4,7 @@ audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
 
 ; tcp-ports will be 10000,10001,10002
 sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
+slides_source_name={{ (voctomix_sources | last).name }}
 
 {% if voctomix_audio_source is defined %}
 ; set the initial audio source
@@ -54,20 +55,18 @@ deinterlace = assume-progressive
 default-a=slides
 
 [side-by-side-equal]
-border=51
-gutter=-90
-atop=498
-btop=226
+border=10
+gutter=20
+atop=80
+btop=480
 
 default-a=slides
 
 [side-by-side-preview]
-asize=1366x769
-apos=52/148
-
-bsize=407x407
-bcrop=0/840/0/0
-bpos=1462/392
+asize=1420x799
+apos=20/160
+bsize=496x279
+bpos=1404/781
 
 default-a=slides
 
@@ -93,4 +92,4 @@ vaapi=h264
 
 [stream-blanker]
 enabled=true
-sources=pause,nostream
+sources=pause{% if voctomix.nostream_loop %},nostream{% endif %}

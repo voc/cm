@@ -101,9 +101,5 @@
       - install
       - config
 
-  - name: install snmp stuff
-    apt: name={{ item }} state=present
-    with_items:
-      - snmp
-      - snmp-mibs-downloader
+  - include: snmp.yml
     when: ansible_hostname | match('mixer\d+')

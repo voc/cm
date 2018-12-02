@@ -304,7 +304,7 @@
 
   - name: enable streaming-sink-mkvonly service
     service: name=streaming-sink-mkvonly.service
-             enabled=yes
+             enabled={{ streaming_service_enabled }}
 
 
   - name: create framebuffer playout systemd-unit

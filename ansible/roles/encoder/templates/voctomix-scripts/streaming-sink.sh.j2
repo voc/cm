@@ -23,4 +23,4 @@ ffmpeg -y -nostdin \
 	\
 	-ac 1 -c:a aac -b:a 96k -ar 44100 \
 	\
-	-y -f flv rtmp://127.0.0.1:1935/stream/s{{ room_number }}_native_{{ item }}
+	-y -f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_native_{{ item }}

@@ -1,9 +1,10 @@
 ---
 # Event config
 event:
-  acronym: 34c3
-  name: 34c3:tuwat
-  slogan: "tuwat"
+  timezone: Europe/Berlin
+  acronym: XXX
+  name: XXX
+  slogan: XXX
   formats:
     hd: 'yes'
     sd: 'yes'
@@ -20,10 +21,10 @@ voctomix:
   # and set the next variable to true
   static_background_image: true
   music: true
+  nostream_loop: false
 
-youtube: true
-qualities: ['hd', 'sd', 'slides']
-languages: ['native', 'translated', 'translated-2']
+# only enable for congress
+#youtube: true
 
 user_voc_password: "{{ lookup('keepass', 'ansible/logins/voc.password') }}"
 
@@ -52,7 +53,6 @@ mqtt:
   password: "{{ lookup('keepass', 'ansible/mqtt.password') }}"
 
 trusted_ipv4_ips: {
-  # 'allow all TODO: remove me': '0.0.0.0/0',
   'voc internal #3500': '10.73.0.0/16',
   'voc vpn': '10.8.0.0/16',
   'voc public #2241':   '94.45.241.0/24',
@@ -67,12 +67,6 @@ trusted_ipv4_ips: {
   'alb rr1':      '185.1.74.1/32',
   'alb rr2':      '185.1.74.2/32',
   # relays
-  'dedi1.het.c3voc.de': '78.46.43.195',
-  'dedi2.het.c3voc.de': '78.46.45.133',
-  'dedi3.het.c3voc.de': '78.46.45.140',
-  'dedi4.het.c3voc.de': '78.46.47.173',
-  'dedi5.het.c3voc.de': '78.46.53.2',
-  'dedi6.het.c3voc.de': '78.46.53.5',
   'live.bn.c3voc.de': '212.201.68.141',
   'live.fem.c3voc.de': '141.24.220.23',
   'live.alb.c3voc.de': '185.106.84.36',
@@ -83,14 +77,9 @@ trusted_ipv4_ips: {
   'live.ccl.c3voc.de': '31.172.30.138',
   'usa.ccl.c3voc.de': '31.172.30.138',
   'deskjet.ccl.c3voc.de': '31.172.30.138',
-  'live2.s11.c3voc.de': '185.56.132.100',
-  'live3.s11.c3voc.de': '185.56.132.102',
-  'live1.s11.c3voc.de': '185.56.132.101',
-  'dawaschtel.ccl.c3voc.de': '31.172.30.138'
 }
 
 trusted_ipv6_ips: {
-  # 'allow all TODO: remove me': '::/0',
   "31c3 public #2241":  '2001:67c:20a1:2241::/64',
   "voc berlin":   '2001:67c:20a0:e::/64',
   "voc dus":      '2a01:a700:4633::/64',
@@ -102,19 +91,13 @@ trusted_ipv6_ips: {
   "alb rr1":       '2001:7f8:a5::5:7555:1/128',
   "alb rr2":       '2001:7f8:a5::5:7555:2/128',
   # relays
-  'dedi1.het.c3voc.de': '2a01:4f8:110:1248::2',
-  'dedi2.het.c3voc.de': '2a01:4f8:110:3372::2',
-  'dedi3.het.c3voc.de': '2a01:4f8:110:3379::2',
-  'dedi4.het.c3voc.de': '2a01:4f8:110:12d1::2',
-  'dedi5.het.c3voc.de': '2a01:4f8:110:12d5::2',
-  'dedi6.het.c3voc.de': '2a01:4f8:110:12d6::2',
   'live.bn.c3voc.de': '2a00:5ba0:8000:64:3aea:a7ff:fe90:6944',
   'live.fem.c3voc.de': '2001:638:904:ffbf::23',
   'live.alb.c3voc.de': '2001:67c:20a0:e::170',
   'live.dus.c3voc.de': '2a01:a700:4633::138',
   'lb.dus.c3voc.de': '2a01:a700:4633::141',
   'lb.alb.c3voc.de': '2001:67c:20a0:e::169',
-  'live.self.c3voc.de': '2001:7c0:712:c3::42',
+  'live.self.c3voc.de': '2001:7c7:2111::1',
   'live.ccl.c3voc.de': '2a01:a700:4633::138',
   'usa.ccl.c3voc.de': '2a01:a700:4633::138',
   'deskjet.ccl.c3voc.de': '2a01:a700:4633::138',
@@ -149,19 +132,22 @@ users:
   - { name: 'mazdermind', state: 'present' }
   - { name: 'meise', state: 'present' }
   - { name: 'thomic', state: 'present' }
+  - { name: 'thorti', state: 'present' }
   - { name: 'v0tti', state: 'present' }
-  - { name: 'felixs', state: 'present' } # selfnet, foss4g
-  - { name: 'nihilus', state: 'present' } # nobody
+  - { name: 'sophie', state: 'present' } # selfnet, foss4g
+  - { name: 'felixs', state: 'absent' }
+  - { name: 'nihilus', state: 'absent' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'dedeibel', state: 'present' }
   - { name: 'pegro', state: 'present' }
   - { name: 'bix', state: 'present' }  # SHA
-  - { name: 'dave', state: 'present' } # SHA
+  - { name: 'dave', state: 'absent' } # SHA
   - { name: 'arl4223', state: 'absent' } # NOC
   - { name: 'holger', state: 'absent' } # Debian
   - { name: 'zuntrax', state: 'present' } # SHA
   - { name: 'jayjay', state: 'present' } 
   - { name: 'cardno', state: 'absent' } # cristoph fcmc
+  - { name: 'derchris', state: 'present' }
   - { name: 'voc', state: 'present' }
 
 additional_users: []

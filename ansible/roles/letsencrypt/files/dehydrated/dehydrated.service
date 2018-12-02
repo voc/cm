@@ -1,0 +1,6 @@
+[Unit]
+Description=Run dehydrated to renew Let's Encrypt certificated
+
+[Service]
+Type=oneshot
+ExecStart=/opt/dehydrated/dehydrated --cron

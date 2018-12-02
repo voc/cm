@@ -9,6 +9,7 @@ $VERSION = "1.00";
 # anyway. You should still be able to reconnect, join the channel
 # and disable this script for full access.
 my @allowed_commands = (
+  qr(^[^/]),
   qr(^/join #voc-mixer$)i,
   qr(^/connect hackint$)i,
   qr(^/reconnect hackint$)i,

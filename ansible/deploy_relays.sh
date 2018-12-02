@@ -20,7 +20,7 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function get_relay_json() {
-  wget -O $DIR/relays.json https://voc:${PASSWORD}@c3voc.de/34c3/register/relays
+  wget -O $DIR/relays.json https://voc:${PASSWORD}@c3voc.de/relayregister/relays
 }
 
 function deploy_relays() {

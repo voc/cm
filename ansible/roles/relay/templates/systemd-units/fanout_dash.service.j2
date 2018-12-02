@@ -1,0 +1,20 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = Fanout {{ item.1 }} Stream {{ item.0 }}
+Requires = fanout_{{ item.0 }}.target
+After = fanout_{{ item.0 }}.target
+
+[Service]
+Type = simple
+ExecStart = /opt/fanout/scripts/{{ item.1 }}.py \
+	--stream={{ item.0 }} \
+	--pull_endpoint={{ relay_fanout.pull_endpoint }} \
+	--dash_write_path={{ relay_fanout.dash_write_path }}
+
+Restart = always
+RestartSec = 30s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = fanout_{{ item.0 }}.target

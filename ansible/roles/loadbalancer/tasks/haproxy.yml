@@ -12,7 +12,7 @@
       - streaming.media.ccc.de
 
   - name: run certboot-hook once to aggregate haproxy combined cert-files
-    command: /etc/letsencrypt/renewal-hooks/post/20-haproxy-{{ item }}
+    shell: /etc/letsencrypt/renewal-hooks/post/20-haproxy-{{ item }}
     with_items:
       - cdn.c3voc.de
       - streaming.media.ccc.de

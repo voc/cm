@@ -21,7 +21,7 @@ def encrypt(data, password, iv)
 end
 
 # Please change me…
-uri            = URI('http://c3voc.de/31c3/register/register/bandwith')
+uri            = URI('http://c3voc.de/relayregister/register/bandwith')
 api_key        = '{{ lookup("keepass", "ansible/relay-register/api_key.password") }}'
 encryption_key = '{{ lookup("keepass", "ansible/relay-register/encryption_key.password") }}'
 

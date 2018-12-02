@@ -17,65 +17,29 @@ nginx_ips_allow_stats: [
   "10.8.0.0/16"
 ]
 
+thumbnail_downloader_rooms: [s1, s2, s3, s4, s5, s6, s7, s41, s42, s80, q1, q2, "sc3tv", "sjh", "sfsfe", "sfreifunk", "suewagen", "s4k"]
 haproxy_3rdparty_regex: "s(c3tv|jh|fsfe|freifunk|uewagen|4k)"
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
-lb_3rdparty_relays: {
-  "dawaschtel.ccl.c3voc.de": 50,
-}
-
-lb_dash_relays: {
-  "dedi1.het.c3voc.de": 50,
-  "dedi2.het.c3voc.de": 50,
-  "dedi3.het.c3voc.de": 50,
-  "dedi4.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 100,
-  "live.alb.c3voc.de": 100,
+lb_c3voc_owned_relays: {
+  "live.alb.c3voc.de": 75,
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
-  "live.fem.c3voc.de": 50,
-  "live.self.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 50,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
 }
 
-lb_dtag_relays: {
-  "deskjet.ccl.c3voc.de": 100,
-  "live.alb.c3voc.de": 100,
-  "usa.ccl.c3voc.de": 50,
-}
+lb_3rdparty_relays: "{{ lb_c3voc_owned_relays }}"
 
-lb_hls_relays: {
-  "dedi5.het.c3voc.de": 50,
-  "dedi6.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 100,
-  "live.bn.c3voc.de": 50,
-  "live.dus.c3voc.de": 50,
-  "live.fem.c3voc.de": 50,
-  "live.self.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 50,
-}
+lb_dash_relays: "{{ lb_c3voc_owned_relays }}"
 
-lb_icecast_relays: {
-  "dedi1.het.c3voc.de": 50,
-  "dedi2.het.c3voc.de": 50,
-  "dedi3.het.c3voc.de": 50,
-  "dedi4.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 100,
-  "live.alb.c3voc.de": 100,
-  "live.self.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 50,
-}
+lb_dtag_relays: "{{ lb_c3voc_owned_relays }}"
 
-lb_local_relays: {
-  "deskjet.ccl.c3voc.de": 100,
-  "usa.ccl.c3voc.de": 50,
-}
+lb_hls_relays: "{{ lb_c3voc_owned_relays }}"
 
-lb_relive_relays: {
-  "dedi5.het.c3voc.de": 50,
-  "dedi6.het.c3voc.de": 50,
-  "deskjet.ccl.c3voc.de": 100,
-  "live.dus.c3voc.de": 50,
-  "usa.ccl.c3voc.de": 50,
-}
+lb_icecast_relays: "{{ lb_c3voc_owned_relays }}"
+
+lb_local_relays: "{{ lb_c3voc_owned_relays }}"
+
+lb_relive_relays: "{{ lb_c3voc_owned_relays }}"

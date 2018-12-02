@@ -15,7 +15,7 @@ map $upstream_http_content_length $flag_cache_empty {
 server {
   server_name streaming.media.ccc.de;
 
-  listen 127.0.0.1:8080  ipv6only=off;
+  listen 127.0.0.1:8080;
 
   root /srv/nginx/htdocs;
   index index.php;
@@ -75,10 +75,10 @@ server {
     fastcgi_no_cache $flag_cache_empty;
     fastcgi_cache_bypass $do_not_cache;
     fastcgi_cache_bypass $flag_cache_empty;
-    fastcgi_cache_key "$http_x_proto$uri$is_args$args";
+    fastcgi_cache_key "$request_method$http_x_proto$uri$is_args$args";
     fastcgi_cache streaming_fcgi;
     fastcgi_cache_valid 200 5m;
-    fastcgi_cache_methods GET HEAD;
+    fastcgi_cache_methods GET;
     add_header X-Cache "$upstream_cache_status origin";
     add_header Access-Control-Allow-Origin "*";
   }

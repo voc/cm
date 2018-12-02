@@ -1,42 +1,43 @@
 #!/bin/sh
 
-ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 \
-	-i http://{{ transcoder.pull_endpoint }}/s{{ item }} \
-	-map 0:a:0 \
-		-metadata:s:a:0 title="Native MP3" \
+while true; do
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
+	-i http://{{ transcoder.pull_endpoint }}/{{ item }} \
+	\
+	\
+	-map '0:a:0' \
 		-c:a:0 libmp3lame -b:a:0 96k \
+		-metadata:s:a:0 title="Native" \
 	\
-{% if transcoding_capabilities == 'extended' %}
-	-map 0:a:1 \
-		-metadata:s:a:1 title="Translated MP3" \
-		-c:a:1 libmp3lame -b:a:1 96k \
-	\
-	-map 0:a:2 \
-		-metadata:s:a:2 title="Translated-2 MP3" \
-		-c:a:2 libmp3lame -b:a:2 96k \
-	\
-	\
-	\
-	-map 0:a:0 \
-		-metadata:s:a:3 title="Native Opus" \
-		-c:a:3 libopus -vbr:a:3 off -b:a:3 32k \
-	\
-	-map 0:a:1 \
-		-metadata:s:a:4 title="Translated Opus" \
-		-c:a:4 libopus -vbr:a:4 off -b:a:4 32k \
-	\
-	-map 0:a:2 \
-		-metadata:s:a:5 title="Translated-2 Opus" \
-		-c:a:5 libopus -vbr:a:5 off -b:a:5 32k \
-	\
-{% else %}
-	-map 0:a:0 \
-		-metadata:s:a:1 title="Native Opus" \
+	-map '0:a:0' \
 		-c:a:1 libopus -vbr:a:1 off -b:a:1 32k \
+		-metadata:s:a:1 title="Native" \
 	\
-{% endif %}
+	\
+	-map '0:a:1?' \
+		-c:a:2 libmp3lame -b:a:2 96k \
+		-metadata:s:a:2 title="Translated" \
+	\
+	-map '0:a:1?' \
+		-c:a:3 libopus -vbr:a:3 off -b:a:3 32k \
+		-metadata:s:a:3 title="Translated" \
+	\
+	\
+	-map '0:a:2?' \
+		-c:a:4 libmp3lame -b:a:4 96k \
+		-metadata:s:a:4 title="Translated-2" \
+	\
+	-map '0:a:2?' \
+		-c:a:5 libopus -vbr:a:5 off -b:a:5 32k \
+		-metadata:s:a:5 title="Translated-2" \
+	\
+	\
 	-max_muxing_queue_size 400 \
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder.push_endpoint }}/s{{ item }}_audio
+	icecast://{{ transcoder.push_endpoint }}/{{ item }}_audio
+
+sleep 10
+done

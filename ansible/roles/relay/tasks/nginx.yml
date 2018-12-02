@@ -25,10 +25,8 @@
           state=directory mode=0750"
     with_items:
       - "cache/tmp"
-      - "cache/hls"
       - "cache/hls_relive"
-      - "cache/dash"
-      - "dash"
+      - "cache/live"
     notify: reload nginx
     tags: install
 
@@ -103,6 +101,14 @@
   - name: stopp nginx-rtmp
     service: name=nginx-rtmp enabled=no state=stopped
     failed_when: false
+
+  - name: setup certboot-hook to reload nginx when the cert changes
+    template: src=nginx/certbot-renewal-hook.sh.j2
+              dest=/etc/letsencrypt/renewal-hooks/post/20-nginx
+              mode=0755 owner=root group=root
+
+  - name: run certboot-hook once to reload nginx with possibly new cert changes
+    shell: /etc/letsencrypt/renewal-hooks/post/20-nginx
 
   # Cron job to reload nginx after ocsp update
   # TODO: Is there a better solution available?

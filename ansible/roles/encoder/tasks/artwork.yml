@@ -19,9 +19,7 @@
     with_first_found:
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay_slides.png"
       - "../../../artwork/{{ event.acronym }}/overlay_slides.png"
-      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/overlay_hd.png"
-      - "../../../artwork/{{ event.acronym }}/overlay_hd.png"
-      - "artwork/default-overlay.png"
+      - "artwork/default-overlay-slides.png"
 
   - name: uploading background-loop
     copy: src={{ item }}
@@ -55,14 +53,17 @@
           dest=/opt/voc/share/nostream.ts
           owner=root group=staff mode=0644
     with_first_found:
-      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.ts"
-      - "../../../artwork/{{ event.acronym }}/nostream.ts"
-      - "artwork/default-nostream.ts"
+      files:
+        - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.ts"
+        - "../../../artwork/{{ event.acronym }}/nostream.ts"
+        - "artwork/default-nostream.ts"
+      skip: not voctomix.nostream_loop
+    when: voctomix.nostream_loop
 
-  - name: synchronizing default music-files
-    synchronize: src={{ item }}
-                 dest=/opt/voc/share/
-                 delete=yes
+  - name: uploading default music-files
+    copy: src={{ item }}
+          dest=/opt/voc/share/
+          mode=0644 directory_mode=0755 owner=root group=root
     with_first_found:
       - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/pause-music"
       - "../../../artwork/{{ event.acronym }}/pause-music"

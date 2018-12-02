@@ -1,7 +1,4 @@
 ---
-  - set_fact:
-      transcoding_capabilities: extended
-
   - name: create directories
     file: dest={{ item }} state=directory
           owner=root group=root
@@ -10,19 +7,19 @@
 
 
   - name: create h264 transcode-script
-    template: dest=/opt/transcoder/scripts/s{{ item }}_h264.sh
+    template: dest=/opt/transcoder/scripts/{{ item }}_h264.sh
               src=transcoder/h264.sh.j2
               owner=root group=root mode=0755
     with_items: "{{ transcoder_streams }}"
 
   - name: create vpx transcode-script
-    template: dest=/opt/transcoder/scripts/s{{ item }}_vpx.sh
+    template: dest=/opt/transcoder/scripts/{{ item }}_vpx.sh
               src=transcoder/vpx.sh.j2
               owner=root group=root mode=0755
     with_items: "{{ transcoder_streams }}"
 
   - name: create audio transcode-script
-    template: dest=/opt/transcoder/scripts/s{{ item }}_audio.sh
+    template: dest=/opt/transcoder/scripts/{{ item }}_audio.sh
               src=transcoder/audio.sh.j2
               owner=root group=root mode=0755
     with_items: "{{ transcoder_streams }}"
@@ -31,7 +28,7 @@
 
   - name: create transcode systemd-units
     template: src=systemd-units/transcode.service.j2
-              dest="/etc/systemd/system/transcode_s{{ item.0 }}_{{ item.1 }}.service"
+              dest="/etc/systemd/system/transcode_{{ item.0 }}_{{ item.1 }}.service"
               mode=0644 owner=root group=root
     with_nested:
       - "{{ transcoder_streams }}"
@@ -39,7 +36,7 @@
 
   - name: create transcode systemd-target
     template: src=systemd-units/transcode.target.j2
-              dest="/etc/systemd/system/transcode_s{{ item }}.target"
+              dest="/etc/systemd/system/transcode_{{ item }}.target"
               mode=0644 owner=root group=root
     with_items:
       - "{{ transcoder_streams }}"
@@ -51,7 +48,7 @@
     changed_when: false
 
   - name: enable transcode systemd-units
-    service: name=transcode_s{{ item.0 }}_{{ item.1 }}.service
+    service: name=transcode_{{ item.0 }}_{{ item.1 }}.service
              enabled=yes
              state=restarted
     with_nested:
@@ -59,8 +56,23 @@
       - ["h264", "vpx", "audio"]
 
   - name: enable & start transcode systemd-target
-    service: name=transcode_s{{ item }}.target
+    service: name=transcode_{{ item }}.target
              enabled=yes
     with_items:
-      - "{{ transcoder_streams }}"
+      - "{{ transcoder_streams_enabled }}"
+
+   # enabled but stopped, allows control via the targets below
+  - name: disable transcode systemd-units
+    service: name=transcode_{{ item.0 }}_{{ item.1 }}.service
+             enabled=yes
+             state=stopped
+    with_nested:
+      - "{{ transcoder_streams | difference(transcoder_streams_enabled) }}"
+      - ["h264", "vpx", "audio"]
+
+  - name: disable & stop transcode systemd-target
+    service: name=transcode_{{ item }}.target
+             enabled=no
+    with_items:
+      - "{{ transcoder_streams | difference(transcoder_streams_enabled) }}"
 

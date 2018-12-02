@@ -1,13 +1,13 @@
 #MANAGED BY ANSIBLE
 
 [Unit]
-Description = Transcoder Lounge a{{ item }}
+Description = Transcoder Lounge {{ item }}
 
 [Service]
 Type = simple
-ExecStart = /opt/transcoder/scripts/lounge_a{{ item }}.sh
+ExecStart = /opt/transcoder/scripts/lounge_{{ item }}.sh
 Restart = always
-RestartSec = 1s
+RestartSec = 10s
 StartLimitInterval = 0
 
 [Install]
