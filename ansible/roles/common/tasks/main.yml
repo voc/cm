@@ -17,7 +17,7 @@
   - include: grub.yml
     when: system.type == 'pc'
   - include: ntp.yml
-    when: ansible_virtualization_type != 'lxc'
+    when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
   - include: acpi.yml
     when: system.type == 'pc'
   - include: molly-guard.yml
