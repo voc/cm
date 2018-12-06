@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: 35C3
+  name: 35C3
+  slogan: Refreshing Memories
   formats:
     hd: 'yes'
     sd: 'yes'
