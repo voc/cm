@@ -53,12 +53,10 @@
           dest=/opt/voc/share/nostream.ts
           owner=root group=staff mode=0644
     with_first_found:
-      files:
-        - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.ts"
-        - "../../../artwork/{{ event.acronym }}/nostream.ts"
-        - "artwork/default-nostream.ts"
-      skip: not voctomix.nostream_loop
-    when: voctomix.nostream_loop
+      - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.ts"
+      - "../../../artwork/{{ event.acronym }}/nostream.ts"
+      - "artwork/default-nostream.ts"
+    ignore_errors: true
 
   - name: uploading default music-files
     copy: src={{ item }}

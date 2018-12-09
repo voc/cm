@@ -175,7 +175,7 @@
   - name: enable nostream-source service
     service: name=nostream-source.service
              enabled=yes
-    when: (voctomix_no_nostream is not defined) or (not voctomix_no_nostream)
+    when: (voctomix.no_nostream is not defined) or (not voctomix.no_nostream)
 
 
     # music source
