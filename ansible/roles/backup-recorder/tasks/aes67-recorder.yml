@@ -1,6 +1,6 @@
 ---
   # directories & code
-  - name: create aes67-recorder directories
+  - name: create aes67-recorder directories (root)
     file: dest={{ item }} state=directory
           owner=root group=root
     with_items:
@@ -13,11 +13,12 @@
   - name: create backup-recorder user
     user: name=backup-recorder group=backup-recorder state=present system=true
 
-  - name: create aes67-recorder directories
+  - name: create aes67-recorder directories (user)
     file: dest={{ item }} state=directory
           owner=backup-recorder group=backup-recorder
     with_items:
       - /video/audio-backup
+      - /video/audio-backup/{{ room_fahrplan_name | lower | replace(' ', '') }}
 
   - name: checkout aes67-recorder release
     git: repo=https://c3voc.de/git/aes67-recorder
