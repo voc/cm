@@ -133,3 +133,7 @@ aes67_recorder:
     13: "!discard"
     14: "!discard"
     15: "!discard"
+
+sdi_recorder:
+  - device: 1
+    name: "without-audio"

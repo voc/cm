@@ -3,6 +3,8 @@
  - include: packages.yml
  - include: rc-local.yml
  - include: disable-voctomix.yml
-   tags: aes67
+   tags: aes67-backup
  - include: aes67-recorder.yml
-   tags: aes67
+   tags: aes67-backup
+ - include: sdi-recorder.yml
+   tags: sdi-backup
