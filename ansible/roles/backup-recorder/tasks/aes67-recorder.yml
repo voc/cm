@@ -1,0 +1,52 @@
+---
+  # directories & code
+  - name: create aes67-recorder directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /opt/aes67-recorder
+      - /opt/aes67-recorder/release
+
+  - name: create backup-recorder group
+    user: name=backup-recorder state=present system=true
+
+  - name: create backup-recorder user
+    user: name=backup-recorder group=backup-recorder state=present system=true
+
+  - name: create aes67-recorder directories
+    file: dest={{ item }} state=directory
+          owner=backup-recorder group=backup-recorder
+    with_items:
+      - /video/audio-backup
+
+  - name: checkout aes67-recorder release
+    git: repo=https://c3voc.de/git/aes67-recorder
+         dest=/opt/aes67-recorder/release
+         version=master
+         force=yes
+         accept_hostkey=yes
+
+
+
+  # configuration
+  - name: create aes67-recorder config
+    template: src="config/aes67-recorder.yml.j2"
+              dest="/opt/aes67-recorder/aes67-recorder.yml"
+              mode=0644 owner=root group=root
+
+
+
+  # aes67-recorder service
+  - name: create aes67-recorder systemd-unit
+    template: src="systemd-units/aes67-recorder.service.j2"
+              dest="/etc/systemd/system/aes67-recorder.service"
+              mode=0644 owner=root group=root
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: enable & start aes67-recorder service
+    service: name=aes67-recorder.service
+             enabled=yes
+             state=started

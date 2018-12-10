@@ -1,0 +1,8 @@
+---
+ - hosts: backup-recorders
+   roles:
+     - { role: common, tags: ['common'] }
+     - { role: monitoring-client, tags: ['monitoring'] }
+     - { role: backup-recorder, tags: ['backup-recorder'] }
+   vars:
+     ssh_allow_voc_password_login: 'yes'

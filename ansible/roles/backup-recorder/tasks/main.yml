@@ -1,0 +1,8 @@
+---
+ - include: general.yml
+ - include: packages.yml
+ - include: rc-local.yml
+ - include: disable-voctomix.yml
+   tags: aes67
+ - include: aes67-recorder.yml
+   tags: aes67
