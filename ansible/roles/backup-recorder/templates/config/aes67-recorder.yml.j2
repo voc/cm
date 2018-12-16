@@ -50,3 +50,15 @@ status_server:
   bind: '::'
   level_interval_ms: 250
   disk_level_interval_ms: 1000
+
+watchdog:
+  enabled: true
+  check_interval_ms: 1000
+  warn_after_missing_signal_for_ms: 2000
+  restart_after_missing_signal_for_ms: 5000
+  mqtt:
+    enabled: true
+    host: mng.c3voc.de
+    port: 1883
+    username: '{{ lookup('keepass', 'ansible/aes67-backup/aes67-backup.username') }}'
+    password: '{{ lookup('keepass', 'ansible/aes67-backup/aes67-backup.password') }}'
