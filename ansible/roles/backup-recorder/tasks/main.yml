@@ -2,6 +2,7 @@
  - include: general.yml
  - include: packages.yml
  - include: rc-local.yml
+ - include: rsync.yml
 
  - include: disable-voctomix.yml
    tags: [aes67-backup,sdi-backup]
