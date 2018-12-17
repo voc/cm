@@ -49,7 +49,7 @@ status_server:
   port: 9999
   bind: '::'
   level_interval_ms: 250
-  disk_level_interval_ms: 1000
+  system_health_report_interval_ms: 1000
 
 watchdog:
   enabled: true
@@ -60,5 +60,5 @@ watchdog:
     enabled: true
     host: mng.c3voc.de
     port: 1883
-    username: '{{ lookup('keepass', 'ansible/aes67-backup/aes67-backup.username') }}'
-    password: '{{ lookup('keepass', 'ansible/aes67-backup/aes67-backup.password') }}'
+    username: '{{ lookup('keepass', 'ansible/aes67-backup/mqtt.username') }}'
+    password: '{{ lookup('keepass', 'ansible/aes67-backup/mqtt.password') }}'
