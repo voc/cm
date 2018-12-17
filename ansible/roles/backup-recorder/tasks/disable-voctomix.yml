@@ -3,3 +3,4 @@
     service: name=voctocore.service
              enabled=no
              state=stopped
+    ignore_errors: yes
