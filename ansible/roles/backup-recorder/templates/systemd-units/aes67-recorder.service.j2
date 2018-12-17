@@ -1,0 +1,17 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = aes67-recorder
+After=network.target
+
+[Service]
+Type = simple
+ExecStart = /opt/aes67-recorder/release/main.py -i /opt/aes67-recorder/aes67-recorder.yml -v
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+User = backup-recorder
+Group = backup-recorder
+
+[Install]
+WantedBy = multi-user.target

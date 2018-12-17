@@ -1,0 +1,64 @@
+source:
+  # expected sample-format
+  format: S24BE
+
+  # excted sample-rate
+  rate: 48000
+
+sources:
+{% for source in aes67_recorder.sources %}
+- type: udp
+  channels: 8
+  address: {{ source }}
+  iface: {{ aes67_recorder.interface }}
+  port: 5004
+{% endfor %}
+
+clocking:
+  source: system
+
+  #source: ptp
+  #ptp_master: 192.168.178.24
+
+  # in Seconds
+  #jitterbuffer: 20 # for RAVENNA VS
+
+  # for Mediornet Nexus
+  jitterbuffer: false
+
+# name of each channel. unnamed channels will issue a warning and will be named "unnamed/XX"
+# channel-names can contains slashes, denoting folders. a wall-clock-timestamp and the filetype suffix will be added to the name
+# channel-name "s1/mics/head1" might result in a filename like "s1/mics/head1/2018-01-01_10-00-00.wav
+# to *not* record a channel, set its name to the special value "!discard".
+channelmap:
+{% for index, name in aes67_recorder.channelmap.items() %}
+  {{ index }}: "{{ name }}"
+{% endfor %}
+
+capture:
+  # can also be specified via command-line arg
+  folder: /video/audio-backup/{{ room_fahrplan_name | lower | replace(' ', '') }}/
+
+  # length of a segment in seconds
+  segment-length: 900
+
+  # desired capture-format, check supported with `gst-inspect-1.0 wavenc`
+  format: S24LE
+
+status_server:
+  port: 9999
+  bind: '::'
+  level_interval_ms: 250
+  system_health_report_interval_ms: 1000
+
+watchdog:
+  enabled: true
+  check_interval_ms: 1000
+  warn_after_missing_signal_for_ms: 2000
+  restart_after_missing_signal_for_ms: 5000
+  mqtt:
+    enabled: true
+    host: mng.c3voc.de
+    port: 1883
+    username: '{{ lookup('keepass', 'ansible/aes67-backup/mqtt.username') }}'
+    password: '{{ lookup('keepass', 'ansible/aes67-backup/mqtt.password') }}'

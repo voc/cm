@@ -1,0 +1,17 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = sdi-recorder
+After=network.target
+
+[Service]
+Type = simple
+ExecStart = /opt/sdi-recorder/sdi-{{ item.name }}-recorder.sh
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+User = backup-recorder
+Group = backup-recorder
+
+[Install]
+WantedBy = multi-user.target

@@ -4,30 +4,37 @@
 [saal1]
 encoder1.lan.c3voc.de
 mixer1.lan.c3voc.de
+backup-recorder1.lan.c3voc.de
 
 [saal2]
 encoder2.lan.c3voc.de
 mixer2.lan.c3voc.de
+backup-recorder2.lan.c3voc.de
 
 [saal3]
 mixer3.lan.c3voc.de
 encoder3.lan.c3voc.de
+backup-recorder3.lan.c3voc.de
 
 [saal4]
 mixer4.lan.c3voc.de
 encoder4.lan.c3voc.de
+backup-recorder4.lan.c3voc.de
 
 [saal5]
 mixer5.lan.c3voc.de
 encoder5.lan.c3voc.de
+backup-recorder5.lan.c3voc.de
 
 [saal6]
 mixer6.lan.c3voc.de
 encoder6.lan.c3voc.de
+backup-recorder6.lan.c3voc.de
 
 [saal7]
 mixer7.lan.c3voc.de
 encoder7.lan.c3voc.de
+backup-recorder7.lan.c3voc.de
 
 [saal-osc1]
 encoder-osc1.lan.c3voc.de
@@ -65,6 +72,8 @@ encoder-osc1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-group
 encoder-osc2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.password') }}"
 encoder-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.password') }}"
 
+[backup-recorders]
+backup-recorder[1:7].lan.c3voc.de
 
 [mixers]
 mixer[1:7].lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}"

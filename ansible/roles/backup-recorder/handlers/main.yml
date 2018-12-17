@@ -1,0 +1,6 @@
+---
+  - name: reload rc.local
+    command: /etc/rc.local
+
+  - name: reload rsync config
+    service: name=rsync state=restarted
