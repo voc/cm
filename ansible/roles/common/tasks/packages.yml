@@ -79,3 +79,9 @@
      - check-mk-agent
      - munin-node
      - puppet
+
+ - name: add megacli
+   apt: name={{ item }} state=present
+   with_items:
+     - megacli
+   when: ansible_hostname | match('mebibyte')

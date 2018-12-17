@@ -86,3 +86,14 @@
          dest="/etc/apt/preferences.d/voc.pref"
          mode=0644 owner=root group=root
 
+
+#
+# LSI RAID controller specific
+#
+ - name: added hwraid gpg key
+   apt_key: data="{{ lookup('file', 'hwraid_repo.key') }}" state=present
+   when: ansible_hostname | match('mebibyte')
+
+ - name: added hwraid repo for LSI raid controller
+   apt_repository: repo="deb http://hwraid.le-vert.net/debian stretch main" state=present
+   when: ansible_hostname | match('mebibyte')

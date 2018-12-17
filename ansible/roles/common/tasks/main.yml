@@ -8,7 +8,11 @@
       - dns
   - include: apt_proxy.yml
   - include: repos.yml
+    tags:
+      - repos
+      - apt
   - include: packages.yml
+    tags: [packages]
   - include: kernel.yml
     when: system.type == 'pc'
     tags: kernel
