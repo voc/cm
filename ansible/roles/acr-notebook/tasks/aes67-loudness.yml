@@ -2,8 +2,8 @@
   - name: download and unpack static ffmpeg 4.1 build
     unarchive:
       src: https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
-      dest: /opt/ffmpeg-static
-      creates: true
+      dest: /opt/
+      creates: /opt/ffmpeg-4.1-64bit-static
       remote_src: yes
 
   - name: create aes67-loudness-script
