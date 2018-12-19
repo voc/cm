@@ -1,0 +1,24 @@
+---
+  # Create user
+  - name: create mixer group
+    group: name=mixer state=present
+
+  - name: create mixer user
+    user: name=mixer group=mixer state=present
+          shell=/usr/bin/zsh
+          password={{ mixer_user_password }}
+
+  # Crate files and directories
+  - name: create /home/mixer/services directory
+    file: state=directory recurse=yes
+          dest=/home/mixer/services
+          owner=mixer group=mixer
+
+  - name: create .Xresources
+    copy: "dest=/home/mixer/.Xresources
+          content='XTerm*metaSendsEscape: true'
+          owner=mixer group=mixer mode=0755"
+
+  - name: set timezone to Europe/London
+    timezone:
+      name: "{{ event.timezone }}"

@@ -1,0 +1,21 @@
+#!/bin/bash
+set -xe
+
+# MANAGED BY ANSIBLE
+
+while true; do
+	gst-launch-1.0 -q udpsrc multicast-iface={{ aes67_loudness.interface }} address={{ aes67_loudness.source }} port=5004 !\
+		application/x-rtp, clock-rate=48000, channels={{ aes67_loudness.num_channels }} !\
+		rtpL24depay !\
+		audioconvert !\
+		wavenc !\
+		fdsink |\
+			/opt/ffmpeg-4.1-64bit-static/ffmpeg -y -nostdin -i - -filter_complex '
+				[0] pan=2c|c0=c{{ aes67_loudness.analyse_channels[0] }}|c1=c{{ aes67_loudness.analyse_channels[1] }}, ebur128=video=1:target=-16:gauge=shortterm:scale=relative [v][a]
+			' -map '[v]' -map '[a]' \
+			-pix_fmt yuv420p -c:v rawvideo \
+			-c:a pcm_s16le -f matroska - |\
+				ffplay -v 0 -autoexit -exitonkeydown -exitonmousedown -window_title "ebur128 Loudness" -
+
+	sleep 1
+done

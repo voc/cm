@@ -1,0 +1,9 @@
+---
+  - hosts: acr-notebooks
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: acr-notebook, tags: ['acr-notebook'] }
+    vars:
+      ssh_allow_voc_password_login: 'yes'
+      mixer_user_password: "{{ lookup('keepass', 'ansible/logins/mixer.password') }}"

@@ -1,0 +1,9 @@
+---
+  - name: disable & stop voctogui service
+    service: name=voctomix-voctogui
+             enabled=no
+             state=stopped
+
+  - name: delete .xsession
+    file: path=/home/mixer/.xsession
+          state=absent

@@ -1,0 +1,15 @@
+---
+  - name: download and unpack static ffmpeg 4.1 build
+    unarchive:
+      src: https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+      dest: /opt/
+      creates: /opt/ffmpeg-4.1-64bit-static
+      remote_src: yes
+
+  - name: create aes67-loudness-script
+    template:
+      src: aes67-loudness/aes67-loudness.sh.j2
+      dest: /home/mixer/Desktop/aes67-loudness.sh
+      mode: 0755
+      owner: mixer
+      group: mixer

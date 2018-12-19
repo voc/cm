@@ -1,6 +1,7 @@
 ---
   - include: encoders.yml
   - include: mixers.yml
+  - include: acr-notebooks.yml
   - include: backup-recorders.yml
   - include: relays.yml
   - include: servers.yml

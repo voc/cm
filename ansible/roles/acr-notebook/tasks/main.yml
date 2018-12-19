@@ -1,0 +1,13 @@
+---
+  - include: general.yml
+  - include: packages.yml
+  - include: slim.yml
+  - include: x11vnc.yml
+
+  - include: undeploy-voctogui.yml
+  - include: aes67-loudness.yml
+
+  - include: rc.local.yml
+    tags:
+      - iptables
+      - rclocal
