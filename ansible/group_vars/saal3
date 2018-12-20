@@ -102,3 +102,87 @@ voctomix_sources:
 
       # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
       3: 3
+
+
+
+
+# https://birte.txl.one/35C3/AES67/Saal_C.png
+aes67_recorder:
+  interface: eth0.42
+  sources:
+   - {address: '239.3.167.225', channels: 2} # Flow 26
+   - {address: '239.3.142.58.', channels: 4} # Flow 27
+   - {address: '239.3.39.74',   channels: 8} # Flow 28
+   - {address: '239.3.161.94',  channels: 8} # Flow 29
+   - {address: '239.3.162.28',  channels: 8} # Flow 30
+   - {address: '239.3.207.78',  channels: 8} # Flow 31
+   - {address: '239.3.26.165',  channels: 2} # Flow 32
+
+  channelmap:
+    # Flow 26
+    - "dolmetscher/1"
+    - "dolmetscher/2"
+
+    # Flow 27
+    - "laptop/2/l"
+    - "laptop/2/r"
+    - "laptop/3/l"
+    - "laptop/3/r"
+
+    # Flow 28
+    - "headset/1"
+    - "headset/2"
+    - "headset/3"
+    - "hand/1"
+    - "hand/2"
+    - "hand/3"
+    - "laptop/1/l"
+    - "laptop/1/r"
+
+    # Flow 29
+    - "qa/06"
+    - "qa/07"
+    - "qa/08"
+    - "qa/09"
+    - "qa/10"
+    - "!discard"
+    - "atmo/l"
+    - "atmo/r"
+
+    # Flow 30
+    - "podium/3"
+    - "podium/4"
+    - "rednerpult"
+    - "qa/01"
+    - "qa/02"
+    - "qa/03"
+    - "qa/04"
+    - "qa/05"
+
+    # Flow 31
+    - "translation/1/l"
+    - "translation/1/r"
+    - "translation/2/l"
+    - "translation/2/r"
+    - "pa/l"
+    - "pa/r"
+    - "podium/1"
+    - "podium/2"
+
+    # Flow 32
+    - "pgm/l"
+    - "pgm/r"
+
+
+sdi_recorder:
+  - device: 1
+    name: "without-audio"
+
+  - device: 1
+    name: "with-audio"
+
+aes67_loudness:
+  interface: eth0.42
+  source: 239.3.26.165
+  num_channels: 2
+  analyse_channels: [0, 1]

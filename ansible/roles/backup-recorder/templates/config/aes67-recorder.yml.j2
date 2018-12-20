@@ -8,8 +8,8 @@ source:
 sources:
 {% for source in aes67_recorder.sources %}
 - type: udp
-  channels: 8
-  address: {{ source }}
+  channels: {{ source.channels }}
+  address: {{ source.address }}
   iface: {{ aes67_recorder.interface }}
   port: 5004
 {% endfor %}
@@ -31,8 +31,8 @@ clocking:
 # channel-name "s1/mics/head1" might result in a filename like "s1/mics/head1/2018-01-01_10-00-00.wav
 # to *not* record a channel, set its name to the special value "!discard".
 channelmap:
-{% for index, name in aes67_recorder.channelmap.items() %}
-  {{ index }}: "{{ name }}"
+{% for name in aes67_recorder.channelmap %}
+  {{ loop.index }}: "s{{ room_number }}/{{ name }}"
 {% endfor %}
 
 capture:
