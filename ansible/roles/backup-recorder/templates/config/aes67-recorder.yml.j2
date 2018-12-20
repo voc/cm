@@ -32,7 +32,7 @@ clocking:
 # to *not* record a channel, set its name to the special value "!discard".
 channelmap:
 {% for name in aes67_recorder.channelmap %}
-  {{ loop.index0 }}: "s{{ room_number }}/{{ name }}"
+  {{ loop.index0 }}: "{{ name }}"
 {% endfor %}
 
 capture:
