@@ -33,7 +33,7 @@ ffmpeg -y -nostdin -hide_banner \
 	\
 {% endif %}
 {# Shared audio settings #}
-	-c:a aac -b:a 192k -ar 48000 -ac 1 \
+	-c:a aac -b:a 192k -ar 48000 -ac stereo \
 	\
 {# Encode audio #}
 	-map 0:a \
