@@ -1,6 +1,6 @@
 ---
   - name: create rc.local file
-    template: src=rc.local/rc.local.encoder.j2
+    template: src=rc.local/rc.local.backup-recorder.j2
               dest=/etc/rc.local
               mode=0755 owner=root group=root
     notify: reload rc.local

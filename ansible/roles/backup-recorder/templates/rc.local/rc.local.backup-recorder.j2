@@ -12,6 +12,11 @@
 # By default this script does nothing.
 
 iptables -F INPUT
+
+# allow multicast-traffic
+iptables -A INPUT   -m pkttype --pkt-type multicast -j ACCEPT
+iptables -A OUTPUT  -m pkttype --pkt-type multicast -j ACCEPT
+
 iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 
