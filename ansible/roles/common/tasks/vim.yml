@@ -13,5 +13,5 @@
                 line="set background=dark"
 
   - name: disable mouse support in vim
-    lineinfile: dest=/etc/vim/vimrc state=present regexp="^autocmd BufEnter * set mouse=$"
+    lineinfile: dest=/etc/vim/vimrc state=present regexp="^autocmd BufEnter \* set mouse=$"
                 line="autocmd BufEnter * set mouse="
