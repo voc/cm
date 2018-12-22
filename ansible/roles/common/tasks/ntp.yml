@@ -12,7 +12,7 @@
     when: current_timezone.stdout != "Europe/Berlin"
 
   # Timesyncd
-  - shell: "{{ timedatectl_bin.stdout }} status | grep 'NTP enabled' | cut -d ':' -f 2 | cut -d ' ' -f 2"
+  - shell: "{{ timedatectl_bin.stdout }} status | grep -e 'NTP enabled\\|Network time on' | cut -d ':' -f 2 | cut -d ' ' -f 2"
     register: ntp_enabled
     changed_when: false
 
