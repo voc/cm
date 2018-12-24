@@ -1,87 +1,83 @@
 ---
  - name: install a default set of packages
-   apt: name={{ item }} state=latest update_cache=yes
+   apt: name={{ packages|flatten(levels=1) }} state=latest update_cache=yes
    tags: packages
-   with_items:
-    # YES, we are using systemd!!1!
-    - systemd
-    - systemd-sysv
-    - acpid
-    - zsh
-    - vim
-    - htop
-    - iftop
-    - tcpdump
-    - ffmpeg
-    - git
-    - mtr-tiny
-    - tmux
-    - iperf
-    - strace
-    - iotop
-    - screen
-    - build-essential
-    - gdb
-    - bwm-ng
-    - lldpd
-    - mosh
-    - runit
-    - molly-guard
-    - ncdu
-    - debian-goodies
-    - apt-dater-host
-    - dnsutils
-    - dstat
-    - pv
-    - buffer
-    - lm-sensors
-    - moreutils
-    - python
-    - ruby
-    - ruby-dev
-    - libdbi1
-    - libdbd-sqlite3
-    - ethtool
-    - ifenslave-2.6
-    - apt-transport-https
-    - irqbalance
-    - mosquitto-clients
-    - smartmontools
-    - zip
-    - unzip
-    - bc
-    - at
+   vars:
+     packages:
+      # YES, we are using systemd!!1!
+      - systemd
+      - systemd-sysv
+      - acpid
+      - zsh
+      - vim
+      - htop
+      - iftop
+      - tcpdump
+      - ffmpeg
+      - git
+      - mtr-tiny
+      - tmux
+      - iperf
+      - strace
+      - iotop
+      - screen
+      - build-essential
+      - gdb
+      - bwm-ng
+      - lldpd
+      - mosh
+      - runit
+      - molly-guard
+      - ncdu
+      - debian-goodies
+      - apt-dater-host
+      - dnsutils
+      - dstat
+      - pv
+      - buffer
+      - lm-sensors
+      - moreutils
+      - python
+      - ruby
+      - ruby-dev
+      - libdbi1
+      - libdbd-sqlite3
+      - ethtool
+      - ifenslave-2.6
+      - apt-transport-https
+      - irqbalance
+      - mosquitto-clients
+      - smartmontools
+      - zip
+      - unzip
+      - bc
+      - at
 
  # for VMs
  - name: install a vmware specific set of packages
-   apt: name={{ item }} state=present update_cache=yes
-   with_items:
-     - open-vm-tools
+   apt: name=open-vm-tools state=present update_cache=yes
    when: ansible_virtualization_type is defined and ansible_virtualization_type == 'VMware' and ansible_virtualization_role == 'guest'
 
  - name: install special packages for VMs
-   apt: name={{ item }} state=present update_cache=yes
-   with_items:
-     - haveged
+   apt: name=haveged state=present update_cache=yes
    when: ansible_virtualization_type is defined and ansible_virtualization_role == 'guest'
 
  # remove not needed packages
  - name: remove not needed packages
-   apt: name={{ item }} state=absent
-   with_items:
-     - rpcbind
-     - openntpd
-     - rdnssd
-     - dvswitch-voc
-     - dvsource-voc
-     - dvsink-voc
-     - bmdtools
-     - check-mk-agent
-     - munin-node
-     - puppet
+   apt: name={{ packages|flatten(levels=1) }} state=absent
+   vars:
+     packages:
+       - rpcbind
+       - openntpd
+       - rdnssd
+       - dvswitch-voc
+       - dvsource-voc
+       - dvsink-voc
+       - bmdtools
+       - check-mk-agent
+       - munin-node
+       - puppet
 
  - name: add megacli
-   apt: name={{ item }} state=present
-   with_items:
-     - megacli
-   when: ansible_hostname | match('mebibyte')
+   apt: name=megacli state=present
+   when: ansible_hostname is match('mebibyte')
