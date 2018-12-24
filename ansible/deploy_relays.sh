@@ -39,6 +39,7 @@ function deploy_relays() {
   fi
 }
 
+get_relay_json
 deploy_relays
 
 exit $?

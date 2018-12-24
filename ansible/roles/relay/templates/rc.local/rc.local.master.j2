@@ -20,7 +20,7 @@ iptables -A INPUT -s 195.54.164.169/32 -p icmp -m icmp --icmp-type 3 -j DROP -m 
 iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 # allow all from trusted ips
-{% for comment, ip in trusted_ipv4_ips.iteritems() %}
+{% for comment, ip in trusted_ipv4_ips.items() %}
 # {{ comment }}
 iptables -A INPUT -s {{ ip }} -j ACCEPT -m comment --comment "{{ comment }}"
 {% endfor %}
@@ -32,7 +32,7 @@ iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 ip6tables -F INPUT
 ip6tables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 # allow all from trusted ips
-{% for comment, ip in trusted_ipv6_ips.iteritems() %}
+{% for comment, ip in trusted_ipv6_ips.items() %}
 # {{ comment }}
 ip6tables -A INPUT -s {{ ip }} -j ACCEPT -m comment --comment "{{ comment }}"
 {% endfor %}
