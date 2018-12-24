@@ -261,6 +261,8 @@ check_updates () {
 # send system uptime in every run
 ping () {
   hostname="$(hostname -f)"
+  primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
+  hostname=${hostname:-$primary_ip}
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
   mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
 
