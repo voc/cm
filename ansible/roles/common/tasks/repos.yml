@@ -13,7 +13,7 @@
  - name: remove the VOC debian mng.ber repo before any updates are done since it is unavailable now pkg.c3voc is new
    apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ {{ item }} main" state=absent
    when: system.type == 'pc'
-   with_items:
+   loop:
     - jessie
     - stretch
 
@@ -26,7 +26,7 @@
 
  - name: remove /etc/apt/sources.list.d/*
    file: dest=/etc/apt/sources.list.d/{{ item }} state=absent
-   with_items:
+   loop:
     - ftp_debian_org_debian.list
     - raspi.list
 
@@ -50,10 +50,11 @@
    apt: name=apt-transport-https state=latest update_cache=yes
 
  - name: ensure that the debian keyrings are present
-   apt: name={{ item }} state=present update_cache=yes
-   with_items:
-    - debian-keyring
-    - debian-archive-keyring
+   apt: name={{ packages|flatten(levels=1) }} state=present update_cache=yes
+   vars:
+     packages:
+      - debian-keyring
+      - debian-archive-keyring
    when: system.type == 'pc'
 
  - name: setup the VOC debian repo for stretch
@@ -92,8 +93,8 @@
 #
  - name: added hwraid gpg key
    apt_key: data="{{ lookup('file', 'hwraid_repo.key') }}" state=present
-   when: ansible_hostname | match('mebibyte')
+   when: ansible_hostname is match('mebibyte')
 
  - name: added hwraid repo for LSI raid controller
    apt_repository: repo="deb http://hwraid.le-vert.net/debian stretch main" state=present
-   when: ansible_hostname | match('mebibyte')
+   when: ansible_hostname is match('mebibyte')

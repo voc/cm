@@ -9,13 +9,14 @@
     apt: deb="{{ item }}"
     when:
       - linux_kernel_installed|failed and kernel_urls is defined
-    with_items: "{{ system.kernel_urls }}"
+    loop: "{{ system.kernel_urls }}"
 
   - name: install linux specific kernel '{{ system.kernel_package }}'
-    apt: name={{ item }} state=present
-    with_items:
-      - "{{ system.kernel_package }}"
-      - "{{ system.kernel_package | regex_replace('image', 'headers') }}"
+    apt: name={{ packages|flatten(levels=1) }} state=present
+    vars:
+      packages:
+        - "{{ system.kernel_package }}"
+        - "{{ system.kernel_package | regex_replace('image', 'headers') }}"
     when:
       - linux_kernel_installed|failed and kernel_urls is undefined
 

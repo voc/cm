@@ -1,8 +1,6 @@
 ---
   - name: deinstall ntpd
-    apt: name={{ item }} state=absent
-    with_items:
-      - ntp
+    apt: name=ntp state=absent
 
   # Setting timezone
   - shell: "{{ timedatectl_bin.stdout | default('timedatectl') }} status | grep 'Time zone' | cut -d ':' -f 2 | cut -d ' ' -f 2"
