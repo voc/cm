@@ -3,19 +3,13 @@ masters
 edges
 
 [masters]
-dedi5.het.c3voc.de             hidden=yes nginx=yes icecast=no nginx_hls_masters='["185.56.132.101"]' nginx_hls_relive_masters='["185.56.132.101"]' nginx_dash_masters='["185.56.132.101"]' 
-dedi6.het.c3voc.de             hidden=yes nginx=yes icecast=no nginx_hls_masters='["185.56.132.101"]' nginx_hls_relive_masters='["185.56.132.101"]' nginx_dash_masters='["185.56.132.101"]' 
-live.ccl.c3voc.de              hidden=yes nginx=yes icecast=yes icecast_push_master=yes 
-live1.s11.c3voc.de             hidden=yes nginx=yes icecast=yes icecast_master_ip=94.45.241.30 icecast_push_master=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
+#live.ccl.c3voc.de              hidden=yes nginx=yes icecast=yes icecast_push_master=yes 
 
 [edges]
-dedi1.het.c3voc.de             hidden=no nginx=yes icecast=yes icecast_master_ip=185.56.132.101 icecast_push_master=no nginx_hls_masters='["185.56.132.101"]' nginx_hls_relive_masters='["185.56.132.101"]' nginx_dash_masters='["185.56.132.101"]' 
-dedi2.het.c3voc.de             hidden=no nginx=yes icecast=yes icecast_master_ip=185.56.132.101 icecast_push_master=no nginx_hls_masters='["185.56.132.101"]' nginx_hls_relive_masters='["185.56.132.101"]' nginx_dash_masters='["185.56.132.101"]' 
-dedi3.het.c3voc.de             hidden=no nginx=yes icecast=yes icecast_master_ip=185.56.132.101 icecast_push_master=no nginx_hls_masters='["185.56.132.101"]' nginx_hls_relive_masters='["185.56.132.101"]' nginx_dash_masters='["185.56.132.101"]' 
-dedi4.het.c3voc.de             hidden=no nginx=yes icecast=yes icecast_master_ip=185.56.132.101 icecast_push_master=no nginx_hls_masters='["185.56.132.101"]' nginx_hls_relive_masters='["185.56.132.101"]' nginx_dash_masters='["185.56.132.101"]' 
-deskjet.ccl.c3voc.de           hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.30 icecast_push_master=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
+#deskjet.ccl.c3voc.de           hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.30 icecast_push_master=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
+live.alb.c3voc.de              hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.30 icecast_push_master=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
 live.bn.c3voc.de               hidden=no nginx=yes icecast=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
 live.dus.c3voc.de              hidden=no nginx=yes icecast=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
 live.fem.c3voc.de              hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.30 icecast_push_master=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
 live.self.c3voc.de             hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.30 icecast_push_master=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
-usa.ccl.c3voc.de               hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.30 icecast_push_master=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
+#usa.ccl.c3voc.de               hidden=no nginx=yes icecast=yes icecast_master_ip=94.45.241.30 icecast_push_master=no nginx_hls_masters='["94.45.241.30"]' nginx_hls_relive_masters='["94.45.241.30"]' nginx_dash_masters='["94.45.241.30"]' 
