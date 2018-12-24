@@ -2,8 +2,8 @@ options rotate timeout:1 attempts:5
 {% if 'lan.c3voc.de' in ansible_domain and 'router.lan.c3voc.de' not in ansible_fqdn and use_lan_dns %}
 # voc gateway
 nameserver 10.73.0.254
-{% elif 'router.lan.c3voc.de' in ansible_domain or 'mng.ber.c3voc.de' in ansible_domain %}
-# unbound
+{% elif 'router.lan.c3voc.de' in ansible_fqdn or 'mng.ber.c3voc.de' in ansible_fqdn %}
+# unbound / local bind
 nameserver ::1
 {% elif 'dus.c3voc.de' in ansible_domain %}
 # rrbone
