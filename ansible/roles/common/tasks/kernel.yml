@@ -2,6 +2,7 @@
   - name: Check if kernel "{{ system.kernel_package }}" is installed
     command: dpkg-query -W "{{ system.kernel_package }}"
     register: linux_kernel_installed
+    changed_when: False
     ignore_errors: True
     when: system.kernel_package is defined
 
