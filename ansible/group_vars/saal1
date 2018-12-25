@@ -110,56 +110,18 @@ voctomix_sources:
 aes67_recorder:
   interface: eth0.42
   sources:
-   - {address: '239.1.213.220', channels: 2} # Flow 26
-   - {address: '239.1.5.201',   channels: 6} # Flow 27
-   - {address: '239.1.227.79',  channels: 8} # Flow 28
-   - {address: '239.1.231.150', channels: 8} # Flow 29
-   - {address: '239.1.179.146', channels: 8} # Flow 30
-   - {address: '239.1.207.246', channels: 8} # Flow 31
    - {address: '239.1.10.63',   channels: 2} # Flow 32
+   - {address: '239.1.207.246', channels: 8} # Flow 31
+   - {address: '239.1.179.146', channels: 8} # Flow 30
+   - {address: '239.1.231.150', channels: 8} # Flow 29
+   - {address: '239.1.227.79',  channels: 8} # Flow 28
+   - {address: '239.1.5.201',   channels: 6} # Flow 27
+   - {address: '239.1.213.220', channels: 2} # Flow 26
 
   channelmap:
-    # Flow 26
-    - "dolmetscher/1"
-    - "dolmetscher/2"
-
-    # Flow 27
-    - "laptop/1/l"
-    - "laptop/1/r"
-    - "laptop/2/l"
-    - "laptop/2/r"
-    - "laptop/3/l"
-    - "laptop/3/r"
-
-    # Flow 28
-    - "atmo/l"
-    - "atmo/r"
-    - "headset/1"
-    - "headset/2"
-    - "headset/3"
-    - "hand/1"
-    - "hand/2"
-    - "hand/3"
-
-    # Flow 29
-    - "qa/04"
-    - "qa/05"
-    - "qa/06"
-    - "qa/07"
-    - "qa/08"
-    - "qa/09"
-    - "qa/10"
-    - "!discard"
-
-    # Flow 30
-    - "podium/3"
-    - "podium/4"
-    - "podium/5"
-    - "podium/6"
-    - "rednerpult"
-    - "qa/01"
-    - "qa/02"
-    - "qa/03"
+    # Flow 32
+    - "pgm/l"
+    - "pgm/r"
 
     # Flow 31
     - "translation/1/l"
@@ -171,9 +133,47 @@ aes67_recorder:
     - "podium/1"
     - "podium/2"
 
-    # Flow 32
-    - "pgm/l"
-    - "pgm/r"
+    # Flow 30
+    - "podium/3"
+    - "podium/4"
+    - "podium/5"
+    - "podium/6"
+    - "rednerpult"
+    - "qa/01"
+    - "qa/02"
+    - "qa/03"
+
+    # Flow 29
+    - "qa/04"
+    - "qa/05"
+    - "qa/06"
+    - "qa/07"
+    - "qa/08"
+    - "qa/09"
+    - "qa/10"
+    - "zbv/1"
+
+    # Flow 28
+    - "atmo/l"
+    - "atmo/r"
+    - "headset/1"
+    - "headset/2"
+    - "headset/3"
+    - "hand/1"
+    - "hand/2"
+    - "hand/3"
+
+    # Flow 27
+    - "laptop/1/l"
+    - "laptop/1/r"
+    - "laptop/2/l"
+    - "laptop/2/r"
+    - "laptop/3/l"
+    - "laptop/3/r"
+
+    # Flow 26
+    - "dolmetscher/1"
+    - "dolmetscher/2"
 
 
 sdi_recorder:

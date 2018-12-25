@@ -107,41 +107,17 @@ voctomix_sources:
 aes67_recorder:
   interface: eth0.42
   sources:
-   - {address: '239.5.133.22',  channels: 2} # Flow 27
-   - {address: '239.5.164.208', channels: 2} # Flow 28
-   - {address: '239.5.90.100',  channels: 8} # Flow 29
-   - {address: '239.5.65.37',   channels: 8} # Flow 30
-   - {address: '239.5.120.14',  channels: 8} # Flow 31
    - {address: '239.5.125.60',  channels: 2} # Flow 32
+   - {address: '239.5.120.14',  channels: 8} # Flow 31
+   - {address: '239.5.65.37',   channels: 8} # Flow 30
+   - {address: '239.5.90.100',  channels: 8} # Flow 29
+   - {address: '239.5.164.208', channels: 4} # Flow 28
+   - {address: '239.5.133.22',  channels: 2} # Flow 27
 
   channelmap:
-    # Flow 27
-    - "dolmetscher/1"
-    - "dolmetscher/2"
-
-    # Flow 28
-    - "laptop/3/l"
-    - "laptop/3/r"
-
-    # Flow 29
-    - "headset/2"
-    - "hand/1"
-    - "hand/2"
-    - "hand/3"
-    - "laptop/1/l"
-    - "laptop/1/r"
-    - "laptop/2/l"
-    - "laptop/2/r"
-
-    # Flow 30
-    - "rednerpult"
-    - "qa/01"
-    - "qa/02"
-    - "qa/03"
-    - "qa/04"
-    - "atmo/l"
-    - "atmo/r"
-    - "headset/1"
+    # Flow 32
+    - "pgm/l"
+    - "pgm/r"
 
     # Flow 31
     - "translation/1/l"
@@ -153,9 +129,35 @@ aes67_recorder:
     - "podium/1"
     - "podium/2"
 
-    # Flow 32
-    - "pgm/l"
-    - "pgm/r"
+    # Flow 30
+    - "rednerpult"
+    - "qa/01"
+    - "qa/02"
+    - "qa/03"
+    - "qa/04"
+    - "zbv/1"
+    - "atmo/l"
+    - "atmo/r"
+
+    # Flow 29
+    - "headset/1"
+    - "headset/2"
+    - "hand/1"
+    - "hand/2"
+    - "hand/3"
+    - "zbv/2"
+    - "laptop/1/l"
+    - "laptop/1/r"
+
+    # Flow 28
+    - "laptop/2/l"
+    - "laptop/2/r"
+    - "laptop/3/l"
+    - "laptop/3/r"
+
+    # Flow 27
+    - "dolmetscher/1"
+    - "dolmetscher/2"
 
 
 sdi_recorder:
