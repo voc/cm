@@ -1,12 +1,12 @@
 ---
-fanout_streams: ['s1', 's2', 's3', 's4', 's5']
+fanout_streams: ['s1', 's2', 's3', 's4', 's5', 's150', 's151', 'soio']
 
 hidden: 'yes'
 nginx: 'yes'
 nginx_hls_master: 'yes'
 
 icedist: 'yes'
-icedist_pull_streams: ['1', '2', '3', '4', '5']
+icedist_pull_streams: ['1', '2', '3', '4', '5', '150', '151'] # 150: chaoswest, 151: wikipakawg
 
 icecast: 'yes'
 icecast_push_master: 'yes'

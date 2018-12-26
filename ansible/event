@@ -63,10 +63,9 @@ minion5.lan.c3voc.de     transcoder_streams='["s2"]'    transcoder_streams_enabl
 minion6.lan.c3voc.de     transcoder_streams='["s3"]'    transcoder_streams_enabled='["s3"]'
 minion-osc1.lan.c3voc.de transcoder_streams='["s4"]'    transcoder_streams_enabled='["s4"]'
 minion-osc2.lan.c3voc.de transcoder_streams='["s5"]'    transcoder_streams_enabled='["s5"]'
-#minion-muc.lan.c3voc.de transcoder_streams='["s4"]'
 
-#speedy.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "sX", "s23", "s41", "s42", "s80"]' transcoder_streams_enabled='["s1", "s2", "s3", "q1", "sX"]'  transcoder_lounges='["a1", "a2"]'
-#tweety.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "sX", "s23", "s41", "s42", "s80"]' transcoder_streams_enabled='["s4", "s5", "s6", "q2", "s23", "s80"]' transcoder_lounges='["a3", "a4"]'
+speedy.lan.c3voc.de     transcoder_streams='["soio"]' transcoder_streams_enabled='["soio"]'
+tweety.lan.c3voc.de     transcoder_streams='["s150", "s151"]' transcoder_streams_enabled='["s150", "s151"]'
 
 [encoders]
 encoder1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder1.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.password') }}"

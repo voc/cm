@@ -17,7 +17,7 @@ nginx_ips_allow_stats: [
   "10.8.0.0/16"
 ]
 
-thumbnail_downloader_rooms: [s1, s2, s3, s4, s5, s6, s7, s41, s42, s80, q1, q2, "sc3tv", "sjh", "sfsfe", "sfreifunk", "suewagen", "s4k"]
+thumbnail_downloader_rooms: [s1, s2, s3, s4, s5, s6, s7, s41, s42, s80, s150, s151, q1, q2, "sc3tv", "sjh", "sfsfe", "sfreifunk", "suewagen", "s4k", "soio"]
 haproxy_3rdparty_regex: "s(c3tv|jh|fsfe|freifunk|uewagen|4k)"
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE
