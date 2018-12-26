@@ -4,7 +4,7 @@
       - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }
       - { role: common, tags: ['common'] }
       - { role: monitoring-client, tags: ['monitoring'] }
-      - { role: router, when: ansible_fqdn == 'router.lan.c3voc.de' }
+        #      - { role: router, when: ansible_fqdn == 'router.lan.c3voc.de' }
       - { role: pbx, when: ansible_fqdn == 'phony.lan.c3voc.de' }
     vars:
        ssh_allow_voc_password_login: 'yes'
