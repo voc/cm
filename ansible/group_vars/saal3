@@ -113,10 +113,10 @@ aes67_recorder:
    - {address: '239.3.26.165',  channels: 2} # Flow 32
    - {address: '239.3.207.78',  channels: 8} # Flow 31
    - {address: '239.3.162.28',  channels: 8} # Flow 30
-   - {address: '239.3.161.94',  channels: 8} # Flow 29
-   - {address: '239.3.39.74',   channels: 8} # Flow 28
-   - {address: '239.3.142.58.', channels: 2} # Flow 27
-   - {address: '239.3.167.225', channels: 2} # Flow 26
+   - {address: '239.3.251.108', channels: 8} # Flow 29
+   - {address: '239.3.41.195',  channels: 8} # Flow 28
+   - {address: '239.3.159.237', channels: 2} # Flow 27
+   - {address: '239.3.92.12',   channels: 2} # Flow 26
 
   channelmap:
     # Flow 32
@@ -176,7 +176,7 @@ sdi_recorder:
   - device: 1
     name: "without-audio"
 
-  - device: 1
+  - device: 2
     name: "with-audio"
 
 aes67_loudness:
