@@ -108,15 +108,15 @@ voctomix_sources:
 
 # https://birte.txl.one/35C3/AES67/Saal_B.png
 aes67_recorder:
-  interface: eth0.42
+  interface: enp0s31f6.3507
   sources:
    - {address: '239.2.146.66',  channels: 2} # Flow 32
    - {address: '239.2.74.118',  channels: 8} # Flow 31
    - {address: '239.2.110.72',  channels: 8} # Flow 30
-   - {address: '239.2.242.136', channels: 8} # Flow 29
-   - {address: '239.2.198.139', channels: 8} # Flow 28
-   - {address: '239.2.235.26',  channels: 4} # Flow 27
-   - {address: '239.2.89.208',  channels: 2} # Flow 26
+   - {address: '139.2.97.75',   channels: 8} # Flow 29
+   - {address: '239.2.6.223',   channels: 8} # Flow 28
+   - {address: '239.2.285.57',  channels: 4} # Flow 27
+   - {address: '239.2.179.75',  channels: 2} # Flow 26
 
   channelmap:
     # Flow 32
@@ -175,7 +175,7 @@ aes67_recorder:
 
 
 sdi_recorder:
-  - device: 1
+  - device: 0
     name: "without-audio"
 
   - device: 1

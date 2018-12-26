@@ -108,7 +108,7 @@ voctomix_sources:
 
 # https://birte.txl.one/35C3/AES67/Saal_C.png
 aes67_recorder:
-  interface: eth0.42
+  interface: eth0.3507
   sources:
    - {address: '239.3.26.165',  channels: 2} # Flow 32
    - {address: '239.3.207.78',  channels: 8} # Flow 31
