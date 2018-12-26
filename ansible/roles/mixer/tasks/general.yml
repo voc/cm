@@ -20,9 +20,15 @@
               owner=mixer group=mixer mode=0755
 
   - name: create .Xresources
-    copy: "dest=/home/mixer/.Xresources
-          content='XTerm*metaSendsEscape: true'
-          owner=mixer group=mixer mode=0755"
+    template: dest=/home/mixer/.Xresources
+              src=user/.Xresources.j2
+              owner=mixer group=mixer mode=0755
+
+  - name: create vconsole.conf
+    copy: dest=/etc/vconsole.conf
+          content="FONT=latarcyrheb-sun32"
+          owner=root group=root mode=0755
+    tags: fnord
 
   - name: set timezone to Europe/London
     timezone:

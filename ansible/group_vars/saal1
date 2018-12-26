@@ -177,10 +177,10 @@ aes67_recorder:
 
 
 sdi_recorder:
-  - device: 0
+  - device: 1
     name: "without-audio"
 
-  - device: 1
+  - device: 2
     name: "with-audio"
 
 aes67_loudness:

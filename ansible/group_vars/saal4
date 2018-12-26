@@ -109,7 +109,7 @@ voctomix_sources:
 aes67_recorder:
   interface: eth0.3507
   sources:
-   - {address: '239.4.169.135', channels: 2} # Flow 32
+   - {address: '239.4.160.135', channels: 2} # Flow 32
    - {address: '239.4.192.150', channels: 8} # Flow 31
    - {address: '239.4.94.0',    channels: 8} # Flow 30
    - {address: '239.4.109.248', channels: 8} # Flow 29
