@@ -184,7 +184,7 @@ sdi_recorder:
     name: "with-audio"
 
 aes67_loudness:
-  interface: eth0.42
-  source: 239.1.10.63
+  interface: eth0.3507
+  source: 239.1.56.85
   num_channels: 2
   analyse_channels: [0, 1]

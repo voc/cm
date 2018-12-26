@@ -1,6 +1,6 @@
 ---
-  # install general mixer packages
-  - name: install packages required to be a mixer
+  # install general acr-notebook packages
+  - name: install packages required to be a acr-notebook
     apt: name={{ item }} state=latest
     with_items:
       - runit
@@ -21,3 +21,9 @@
       - gnome-themes-standard
       - lxde
       - chromium
+
+  # uninstall general acr-notebook packages
+  - name: uninstall packages not required to be a acr-notebook
+    apt: name={{ item }} state=absent
+    with_items:
+      - xscreensaver

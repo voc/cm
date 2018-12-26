@@ -161,14 +161,14 @@ aes67_recorder:
 
 
 sdi_recorder:
-  - device: 0
+  - device: 1
     name: "without-audio"
 
-  - device: 1
+  - device: 2
     name: "with-audio"
 
 aes67_loudness:
-  interface: eth0.42
+  interface: eth0.3507
   source: 239.4.160.135
   num_channels: 2
   analyse_channels: [0, 1]
