@@ -1,5 +1,5 @@
 ---
-fanout_streams: ['1', '2', '3', '4', '5']
+fanout_streams: ['s1', 's2', 's3', 's4', 's5']
 
 hidden: 'yes'
 nginx: 'yes'
@@ -15,4 +15,4 @@ rtmp: 'no'
 rtmp_auto_hls: 'no'
 nginx_rtmp_hls_master: 'yes'
 
-letsencrypt_fake: "34c3.cdn.c3voc.de"
+#letsencrypt_fake: "34c3.cdn.c3voc.de"
