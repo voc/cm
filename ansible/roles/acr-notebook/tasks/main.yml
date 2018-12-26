@@ -6,6 +6,7 @@
 
   - include: undeploy-voctogui.yml
   - include: aes67-loudness.yml
+    when: aes67_loudness is defined
 
   - include: rc.local.yml
     tags:
