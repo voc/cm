@@ -1,0 +1,7 @@
+# Hosts file
+[wikipakawg]
+encoder-wikipaka.lan.c3voc.de
+
+[encoders]
+encoder-wikipaka.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-wikipaka.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-wikipaka.password') }}"
+mixer-wikipaka.lan.c3voc.de
