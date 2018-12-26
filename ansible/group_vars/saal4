@@ -61,8 +61,7 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 1
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
+    video_mode: "1080p50"
     volume: 0.0
   -
     # Duo Port 4
@@ -70,8 +69,7 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 0
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
+    video_mode: "1080p50"
     volume: 0.0
   -
     # Mini Recorder links
