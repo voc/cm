@@ -1,0 +1,68 @@
+# Config file for collectd(1).
+#
+# Some plugins need additional configuration and are disabled by default.
+# Please read collectd.conf(5) for details.
+#
+# You should also read /usr/share/doc/collectd-core/README.Debian.plugins
+# before enabling any more plugins.
+
+Hostname "{{ inventory_hostname }}"
+Interval {{ monitoring.collectd_interval | default('30') }}
+TypesDB "/usr/share/collectd/types.db"
+TypesDB "/opt/voc/collectd/types.db"
+
+LoadPlugin cpu
+LoadPlugin df
+LoadPlugin disk
+LoadPlugin interface
+LoadPlugin load
+LoadPlugin memory
+LoadPlugin network
+LoadPlugin swap
+LoadPlugin processes
+LoadPlugin tcpconns
+LoadPlugin logfile
+LoadPlugin syslog
+LoadPlugin write_graphite
+
+<Plugin "logfile">
+  LogLevel "info"
+  File "/var/log/collectd.log"
+  Timestamp true
+</Plugin>
+
+<Plugin interface>
+  # collect all interface data!!1!
+</Plugin>
+
+<Plugin network>
+  # server setup
+  <Listen "195.54.164.163">
+    SecurityLevel Encrypt
+    AuthFile "/etc/collectd/passwd"
+  </Listen>
+
+  MaxPacketSize 1024
+  TimeToLive 128
+  Forward true
+</Plugin>
+
+<Plugin write_graphite>
+   <Carbon "example">
+     Host "127.0.0.1"
+     Port "2033"
+     SeparateInstances true
+     StoreRates false
+     AlwaysAppendDS false
+   </Carbon>
+</Plugin>
+
+<Plugin tcpconns>
+  LocalPort "80"
+  LocalPort "443"
+  LocalPort "22"
+</Plugin>
+
+
+Include "/etc/collectd/filters.conf"
+Include "/etc/collectd/thresholds.conf"
