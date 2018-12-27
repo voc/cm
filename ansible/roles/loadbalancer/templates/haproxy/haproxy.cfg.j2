@@ -231,13 +231,6 @@ backend hls_relive_{{ protocol }}
     server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
 {% endif %}
 {% endfor %}
-{% for server, weight in lb_local_relays.items() %}
-{% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
-{% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }}
-{% endif %}
-{% endfor %}
 
 backend icecast_{{ protocol }}
 {% if protocol == "http" %}
@@ -352,10 +345,9 @@ backend hls_relive_local_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance source
     option forwardfor
-{% for server, weight in lb_local_relays.items() %}
+{% for server, weight in lb_relive_relays.items() %}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
@@ -421,7 +413,7 @@ backend hls_relive_dtag_{{ protocol }}
 {% endif %}
     balance source
     option forwardfor
-{% for server, weight in lb_dtag_relays.items() %}
+{% for server, weight in lb_relive_relays.items() %}
 {% if protocol == "http" %}
     server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }}
 {% else %}
