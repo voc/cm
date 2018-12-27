@@ -61,8 +61,9 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 1
     video_connection: SDI
-    video_mode: "1080p25"
+    video_mode: "1080i50"
     volume: 0.0
+    deinterlace: assume-progressive
   -
     # Duo Port 4
     name: cam2
