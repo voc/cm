@@ -49,8 +49,8 @@ frontend icecast_and_nginx_hls_http
     acl is_relive            path_sub   -i index.json thumb.jpg sprites.jpg crossdomain.xml .mp4 relive
     acl hls_fragment         path_end   -i .ts
     acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
-    acl is_cdn               hdr(host)  -i cdn.c3voc.de
-    acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
+    acl is_cdn               hdr_beg(host)  -i cdn.c3voc.de
+    acl is_streaming_website hdr_beg(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
     acl is_streaming_website path_end   -i logo.webm
     acl is_streaming_website path_sub   -i acme-challenge
     {% if haproxy_3rdparty_regex is defined %}
@@ -106,8 +106,8 @@ frontend icecast_and_nginx_hls_https
     acl is_relive            path_sub   -i index.json thumb.jpg sprites.jpg crossdomain.xml .mp4 relive
     acl hls_fragment         path_end   -i .ts
     acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
-    acl is_cdn               hdr(host)  -i cdn.c3voc.de
-    acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
+    acl is_cdn               hdr_beg(host)  -i cdn.c3voc.de
+    acl is_streaming_website hdr_beg(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
     acl is_streaming_website path_end   -i logo.webm
     acl is_streaming_website path_sub   -i acme-challenge
     {% if haproxy_3rdparty_regex is defined %}
