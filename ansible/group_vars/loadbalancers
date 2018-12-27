@@ -22,24 +22,49 @@ haproxy_3rdparty_regex: "s(c3tv|jh|fsfe|freifunk|uewagen|4k)"
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
-lb_c3voc_owned_relays: {
+lb_3rdparty_relays: {
+}
+
+lb_dash_relays: {
+  "deskjet.ccl.c3voc.de": 25,
   "live.alb.c3voc.de": 75,
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
 }
 
-lb_3rdparty_relays: "{{ lb_c3voc_owned_relays }}"
+lb_dtag_relays: {
+  "deskjet.ccl.c3voc.de": 25,
+  "live.alb.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
+}
 
-lb_dash_relays: "{{ lb_c3voc_owned_relays }}"
+lb_hls_relays: {
+  "deskjet.ccl.c3voc.de": 25,
+  "live.bn.c3voc.de": 50,
+  "live.dus.c3voc.de": 50,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
+}
 
-lb_dtag_relays: "{{ lb_c3voc_owned_relays }}"
+lb_icecast_relays: {
+  "deskjet.ccl.c3voc.de": 25,
+  "live.alb.c3voc.de": 75,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+  "usa.ccl.c3voc.de": 25,
+}
 
-lb_hls_relays: "{{ lb_c3voc_owned_relays }}"
+lb_local_relays: {
+  "deskjet.ccl.c3voc.de": 25,
+  "usa.ccl.c3voc.de": 25,
+}
 
-lb_icecast_relays: "{{ lb_c3voc_owned_relays }}"
-
-lb_local_relays: "{{ lb_c3voc_owned_relays }}"
-
-lb_relive_relays: "{{ lb_c3voc_owned_relays }}"
+lb_relive_relays: {
+  "deskjet.ccl.c3voc.de": 25,
+  "live.dus.c3voc.de": 50,
+  "usa.ccl.c3voc.de": 25,
+}

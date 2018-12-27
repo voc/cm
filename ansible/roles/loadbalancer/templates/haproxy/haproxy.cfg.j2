@@ -57,8 +57,8 @@ frontend icecast_and_nginx_hls_http
     acl is_3rdparty          path_reg   -i {{ haproxy_3rdparty_regex }}
     {% endif %}
     # ip address matching
-    #34C3#acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
-    #34C3#acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
+    acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+    acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
     # return 403 if hostname or defined file extensions are not matching
     http-request deny        unless is_cdn or is_streaming_website
     http-request deny        unless hls_playlist or hls_fragment or icecast or is_streaming_website or is_relive or dash_playlist or dash_fragment
@@ -74,16 +74,16 @@ frontend icecast_and_nginx_hls_http
     {% endif %}
 
     # local relay
-    #34C3#use_backend hls_relive_local_http    if is_local is_relive
-    #34C3#use_backend hls_local_http           if is_local hls_playlist or is_local hls_fragment
-    #34C3#use_backend dash_local_http          if is_local dash_playlist or is_local dash_fragment
-    #34C3#use_backend icecast_local_http       if is_local icecast
+    use_backend hls_relive_local_http    if is_local is_relive
+    use_backend hls_local_http           if is_local hls_playlist or is_local hls_fragment
+    use_backend dash_local_http          if is_local dash_playlist or is_local dash_fragment
+    use_backend icecast_local_http       if is_local icecast
 
     # dtag relay
-    #34C3#use_backend hls_relive_dtag_http     if is_dtag is_relive
-    #34C3#use_backend hls_dtag_http            if is_dtag hls_playlist or is_dtag hls_fragment
-    #34C3#use_backend dash_dtag_http           if is_dtag dash_playlist or is_dtag dash_fragment
-    #34C3#use_backend icecast_dtag_http        if is_dtag icecast
+    use_backend hls_relive_dtag_http     if is_dtag is_relive
+    use_backend hls_dtag_http            if is_dtag hls_playlist or is_dtag hls_fragment
+    use_backend dash_dtag_http           if is_dtag dash_playlist or is_dtag dash_fragment
+    use_backend icecast_dtag_http        if is_dtag icecast
 
     # use remote relays
     use_backend hls_relive_http          if is_relive
@@ -176,7 +176,7 @@ backend hls_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_hls_relays.items() %}
 {% if protocol == "http" %}
@@ -199,7 +199,7 @@ backend dash_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_dash_relays.items() %}
 {% if protocol == "http" %}
@@ -222,7 +222,7 @@ backend hls_relive_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_relive_relays.items() %}
 {% if protocol == "http" %}
@@ -245,7 +245,7 @@ backend icecast_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_icecast_relays.items() %}
 {% if protocol == "http" %}
@@ -270,7 +270,7 @@ backend hls_3rdparty_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_3rdparty_relays.items() %}
 {% if protocol == "http" %}
@@ -286,7 +286,7 @@ backend dash_3rdparty_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_3rdparty_relays.items() %}
 {% if protocol == "http" %}
@@ -302,7 +302,7 @@ backend icecast_3rdparty_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_3rdparty_relays.items() %}
 {% if protocol == "http" %}
@@ -320,7 +320,7 @@ backend hls_local_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_local_relays.items() %}
 {% if protocol == "http" %}
@@ -336,7 +336,7 @@ backend dash_local_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_local_relays.items() %}
 {% if protocol == "http" %}
@@ -353,7 +353,7 @@ backend hls_relive_local_{{ protocol }}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_local_relays.items() %}
 {% if protocol == "http" %}
@@ -369,7 +369,7 @@ backend icecast_local_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_local_relays.items() %}
 {% if protocol == "http" %}
@@ -387,7 +387,7 @@ backend hls_dtag_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_dtag_relays.items() %}
 {% if protocol == "http" %}
@@ -403,7 +403,7 @@ backend dash_dtag_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_dtag_relays.items() %}
 {% if protocol == "http" %}
@@ -419,7 +419,7 @@ backend hls_relive_dtag_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_dtag_relays.items() %}
 {% if protocol == "http" %}
@@ -436,7 +436,7 @@ backend icecast_dtag_{{ protocol }}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-    balance roundrobin
+    balance source
     option forwardfor
 {% for server, weight in lb_dtag_relays.items() %}
 {% if protocol == "http" %}
@@ -453,7 +453,7 @@ backend icecast_dtag_{{ protocol }}
 # frontend
 backend streaming_website_http
     bind-process 1
-    balance roundrobin
+    balance source
     option forwardfor
     http-request set-header X-Custom-Header %[url]
     http-request set-header X-Real-IP %[src]
@@ -461,7 +461,7 @@ backend streaming_website_http
 
 backend streaming_website_https
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-    balance roundrobin
+    balance source
     option forwardfor
     http-request set-header X-Custom-Header %[url]
     http-request set-header X-Real-IP %[src]

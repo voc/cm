@@ -61,8 +61,7 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 1
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
+    video_mode: "1080p50"
     volume: 0.0
   -
     # Duo Port 4
@@ -70,8 +69,7 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 0
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
+    video_mode: "1080p50"
     volume: 0.0
   -
     # Mini Recorder links
@@ -163,14 +161,14 @@ aes67_recorder:
 
 
 sdi_recorder:
-  - device: 0
+  - device: 1
     name: "without-audio"
 
-  - device: 1
+  - device: 2
     name: "with-audio"
 
 aes67_loudness:
-  interface: eth0.42
+  interface: eth0.3507
   source: 239.4.160.135
   num_channels: 2
   analyse_channels: [0, 1]
