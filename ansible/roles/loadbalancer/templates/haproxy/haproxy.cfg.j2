@@ -101,10 +101,10 @@ frontend icecast_and_nginx_hls_https
 
     # tag request for the right destination server
     acl hls_playlist         path_end   -i .m3u8
-    acl is_relive            path_sub   -i index.json thumb.jpg sprites.jpg crossdomain.xml .mp4 relive
-    acl hls_fragment         path_end   -i .ts
     acl dash_playlist        path_end   -i .mpd
     acl dash_fragment        path_end   -i .hdr .chk .m4s
+    acl is_relive            path_sub   -i index.json thumb.jpg sprites.jpg crossdomain.xml .mp4 relive
+    acl hls_fragment         path_end   -i .ts
     acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
     acl is_cdn               hdr(host)  -i cdn.c3voc.de
     acl is_streaming_website hdr(host)  -i streaming.media.ccc.de -i www.stream.c3voc.de
