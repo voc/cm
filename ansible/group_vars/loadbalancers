@@ -38,7 +38,6 @@ lb_dash_relays: {
 
 lb_dtag_relays: {
   "deskjet.ccl.c3voc.de": 25,
-  "live.alb.c3voc.de": 50,
   "live2.alb.c3voc.de": 30,
   "usa.ccl.c3voc.de": 25,
 }
