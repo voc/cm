@@ -173,6 +173,13 @@ blade3.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade
 blade4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade4.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade4.password') }}"
 blade5.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade5.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade5.password') }}"
 
+[gatewayed]
+blade1.lan.c3voc.de
+blade2.lan.c3voc.de
+blade3.lan.c3voc.de
+blade4.lan.c3voc.de
+blade5.lan.c3voc.de
+
 #desmit.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/desmit.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/desmit.password') }}"
 
 [tracker]

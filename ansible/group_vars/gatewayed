@@ -1,0 +1,1 @@
+ansible_ssh_common_args: '-o  StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p -q voc@live.ber.c3voc.de"'
