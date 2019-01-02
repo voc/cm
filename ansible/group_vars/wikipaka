@@ -1,6 +1,6 @@
 ---
 room_number: 151 
-room_fahrplan_name: swikipaka
+room_fahrplan_name: wikipaka
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -53,7 +53,6 @@ voctomix_audiostreams: 1
 #    # fill stereo-stream 3 (PA-Backup) with sdi-channel 6 on left and sdi-channel 7 on right
 #    3: 6+7
 
-
 voctomix_sources:
   -
     name: cam1
@@ -68,14 +67,14 @@ voctomix_sources:
   -
     name: cam2
     type: decklink-internal
-    devicenumber: 0
+    devicenumber: 1
     video_connection: SDI
     video_mode: "1080p25"
     volume: 0.0
-
+  -
     name: slides
     type: decklink-internal
-    devicenumber: 1
+    devicenumber: 2
     video_connection: SDI
     video_mode: "1080p25"
     volume: 0.0
