@@ -11,6 +11,7 @@ server {
   }
 
   location / {
+    add_header 'Access-Control-Allow-Origin' '*';
     rewrite     ^ https://static.media.ccc.de$request_uri? permanent;
   }
 }
@@ -32,8 +33,16 @@ server {
   # HSTS (ngx_http_headers_module is required) (15768000 seconds = 6 months)
   add_header Strict-Transport-Security max-age=15768000;
 
+  # Letsencrypt - TODO renewal might not work via ssl? 
+  location /.well-known/ {
+    autoindex on;
+    alias /var/www/.well-known/;
+    allow all;
+  }
+
   # for static.media.ccc.de
   location /media {
+    add_header 'Access-Control-Allow-Origin' '*';
     alias /srv/www/media.ccc.de/media;
     autoindex  on;
   }
