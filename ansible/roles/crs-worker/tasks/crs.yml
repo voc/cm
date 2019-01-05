@@ -4,7 +4,9 @@
     vars:
       packages:
        - libconfig-inifiles-perl
+       - libfile-which-perl
        - libipc-run-perl
+       - libproc-processtable-perl
        - libxml-rpc-fast-perl
        - libxml-simple-perl
        - libmath-round-perl
