@@ -1,0 +1,2 @@
+- src: https://github.com/artefactual-labs/ansible-acmetool.git
+- src: https://github.com/rvm/rvm1-ansible

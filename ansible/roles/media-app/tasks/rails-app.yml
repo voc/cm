@@ -1,0 +1,29 @@
+---
+# - name: Add rails user
+#   user:
+    # name: media
+    # shell: /bin/bash
+
+# - name: Add SSH keys to rails user for cap deployment
+#   authorized_key:
+#     user: media
+#     home: /srv/media
+  #   key: ""
+
+
+
+
+# "create role voctoweb with createdb login password 'voctoweb';" | sudo -u postgres psql
+# sed -i -e 's/#START_DAEMON/START_DAEMON/' /etc/default/elasticsearch
+# systemctl restart elasticsearch
+
+# systemctl enable --now voctoweb-puma
+# systemctl enable --now voctoweb-sidekiq
+# systemctl enable --now nginx
+
+# - checkout app
+# - create systemd units
+
+# - tell user to
+#   upload env file
+#   cap init/deploy
