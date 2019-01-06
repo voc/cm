@@ -321,7 +321,7 @@ check_ac_power () {
 }
 
 # no checks on shutdown
-if [ "$1" -eq "shutdown" ] ; then
+if [ "$1" = "shutdown" ] ; then
 	shutdown
 	exit 0
 fi
