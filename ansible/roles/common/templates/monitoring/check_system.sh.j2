@@ -18,7 +18,9 @@ send_mqtt_message () {
   if [ -n "$DEBUG" ]; then
     echo mosquitto_pub --capath /etc/ssl/certs/ -h \"{{ mqtt.server }}\" -u \"{{ mqtt.username }}\" -P \"{{ mqtt.password }}\" -t \"/voc/alert\" -m \"{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}\"
   else
-    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}"
+    for i in 1 2 3 ; do
+      mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}" && break
+    done
   fi
 }
 
@@ -264,8 +266,9 @@ ping () {
   primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
   hostname=${hostname:-$primary_ip}
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
-  mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
-
+  for i in 1 2 3 ; do
+    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}" && break
+  done
   debug_output "ping" $hostname $uptime
 }
 
@@ -331,13 +334,6 @@ fi
 if [ "mng.ber.c3voc.de" = "$(hostname -f)" ]; then
   check_http
 fi
-
-
-# repeat ping to prevent false alarms due to packet loss
-sleep 1
-ping
-sleep 1
-ping
 
 
 exit 0
