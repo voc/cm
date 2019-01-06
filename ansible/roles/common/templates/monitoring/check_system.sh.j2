@@ -272,6 +272,19 @@ ping () {
   debug_output "ping" $hostname $uptime
 }
 
+# inform watchdog about graceful shutdown
+shutdown () {
+  hostname="$(hostname -f)"
+  primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
+  hostname=${hostname:-$primary_ip}
+
+  for i in 1 2 3 ; do
+    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/shutdown" -m "{ \"name\": \"${hostname}\"}" && break
+  done
+
+  debug_output "shutdown" $hostname
+}
+
 # Check voc related websites
 check_http () {
   http_urls="https://streaming.media.ccc.de https://c3voc.de https://c3voc.de/wiki https://tracker.c3voc.de https://c3voc.de/eventkalender"
@@ -307,7 +320,11 @@ check_ac_power () {
   fi
 }
 
-
+# no checks on shutdown
+if [ "$1" -eq "shutdown" ] ; then
+	shutdown
+	exit 0
+fi
 
 # general checks
 ping
