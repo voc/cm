@@ -1,0 +1,9 @@
+---
+  - import_tasks: packages.yml
+
+  - import_tasks: rails-app.yml
+    tags: app
+
+  - import_tasks: nginx.yml
+    tags:
+      - nginx

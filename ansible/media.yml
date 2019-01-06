@@ -21,6 +21,18 @@
         when: mirror == 1
         tags: ['media-mirror']
 
+      - role: rvm.ruby
+        when: app == 1
+        tags: ['media-app', 'ruby']
+        rvm1_rubies: ['ruby-2.5.3'],
+        rvm1_user: 'media'
+        rvm1_install_path: '/srv/media/.rvm'
+        rvm1_install_flags: '--auto-dotfiles --user-install'
+
+      - role: 'media-app'
+        when: app == 1
+        tags: ['media-app']
+
       - { role: 'logcheck', tags: ['logcheck'] }
 
     vars:
