@@ -18,3 +18,16 @@
   - cron: name="check system and send mqtt message"
           minute="*/1" hour="*" month="*" day="*"
           job="nice -n 19 /usr/local/sbin/check_system.sh >/dev/null"
+
+  - name: deploy systemd unit for shutdown hook
+    copy: src=send-mqtt-shutdown.service
+          dest=/etc/systemd/system/send-mqtt-shutdown.service
+          owner=root group=root mode=0640
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+
+  - name: enable & start shutdown hook
+    service: name=send-mqtt-shutdown
+             enabled=yes
+             state=started
