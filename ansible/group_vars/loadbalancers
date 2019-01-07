@@ -17,29 +17,44 @@ nginx_ips_allow_stats: [
   "10.8.0.0/16"
 ]
 
-thumbnail_downloader_rooms: [s1, s2, s3, s4, s5, s6, s7, s41, s42, s80, q1, q2, "sc3tv", "sjh", "sfsfe", "sfreifunk", "suewagen", "s4k"]
+thumbnail_downloader_rooms: [s1, s2, s3, s4, s5, s6, s7, s23, s41, s42, s80, q1, q2, "sc3tv", "sjh", "sfsfe", "sfreifunk", "suewagen", "s4k"]
 haproxy_3rdparty_regex: "s(c3tv|jh|fsfe|freifunk|uewagen|4k)"
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
-lb_c3voc_owned_relays: {
-  "live.alb.c3voc.de": 75,
+lb_3rdparty_relays: {
+}
+
+lb_dash_relays: {
+  "live.alb.c3voc.de": 50,
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
+  "live2.alb.c3voc.de": 30,
 }
 
-lb_3rdparty_relays: "{{ lb_c3voc_owned_relays }}"
+lb_dtag_relays: {
+  "live2.alb.c3voc.de": 30,
+}
 
-lb_dash_relays: "{{ lb_c3voc_owned_relays }}"
+lb_hls_relays: {
+  "live.bn.c3voc.de": 50,
+  "live.dus.c3voc.de": 50,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+  "live2.alb.c3voc.de": 30,
+}
 
-lb_dtag_relays: "{{ lb_c3voc_owned_relays }}"
+lb_icecast_relays: {
+  "live.alb.c3voc.de": 50,
+  "live.fem.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+}
 
-lb_hls_relays: "{{ lb_c3voc_owned_relays }}"
+lb_local_relays: {
+}
 
-lb_icecast_relays: "{{ lb_c3voc_owned_relays }}"
-
-lb_local_relays: "{{ lb_c3voc_owned_relays }}"
-
-lb_relive_relays: "{{ lb_c3voc_owned_relays }}"
+lb_relive_relays: {
+  "live2.alb.c3voc.de": 30,
+}
