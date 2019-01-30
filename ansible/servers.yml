@@ -6,5 +6,6 @@
       - { role: monitoring-client, tags: ['monitoring'] }
         #      - { role: router, when: ansible_fqdn == 'router.lan.c3voc.de' }
       - { role: pbx, when: ansible_fqdn == 'phony.lan.c3voc.de' }
+      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'], when: letsencrypt }
     vars:
        ssh_allow_voc_password_login: 'yes'

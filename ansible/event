@@ -118,7 +118,7 @@ build.c3voc.de
 releasing.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/releasing.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/releasing.password') }}"
 backup.c3voc.de
 testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
-maps.c3voc.de
+maps.c3voc.de letsencrypt=true
 
 # Streaming server
 [relays]
