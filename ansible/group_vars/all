@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: mm19-talks
+  name: Make-Munich 2019
+  slogan:
   formats:
     hd: 'yes'
     sd: 'yes'
@@ -145,7 +145,7 @@ users:
   - { name: 'arl4223', state: 'absent' } # NOC
   - { name: 'holger', state: 'absent' } # Debian
   - { name: 'zuntrax', state: 'present' } # SHA
-  - { name: 'jayjay', state: 'present' } 
+  - { name: 'jayjay', state: 'present' }
   - { name: 'cardno', state: 'absent' } # cristoph fcmc
   - { name: 'derchris', state: 'present' }
   - { name: 'voc', state: 'present' }
