@@ -1,6 +1,6 @@
 ---
 room_number: 42
-room_fahrplan_name: Maker Stage
+room_fahrplan_name: Future Zone
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
