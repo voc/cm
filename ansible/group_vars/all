@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: fossgis2019
+  name: 'FOSSGIS-Konferenz 2019'
+  slogan: 'Die FOSSGIS-Konferenz ist die führende Konferenz für Freie und Open Source Software Geo-Software und OpenStreetMap.'
   formats:
     hd: 'yes'
     sd: 'yes'
