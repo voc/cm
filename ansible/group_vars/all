@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: eh19
+  name: 'Easterhegg 2019'
+  slogan: 'Bun Intended'
   formats:
     hd: 'yes'
     sd: 'yes'

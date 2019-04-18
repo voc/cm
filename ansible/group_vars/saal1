@@ -1,6 +1,6 @@
 ---
 room_number: 1
-room_fahrplan_name: Saal 1
+room_fahrplan_name: EI 7
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -70,13 +70,14 @@ voctomix_sources:
   
       # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
       1: 1
-#  -
-#    # Duo Port 4
-#    name: cam2
-#    type: decklink-internal
-#    devicenumber: 0
-#    video_connection: SDI
-#    video_mode: "1080p25"
+  -
+    # Duo Port 4
+    name: cam2
+    type: decklink-internal
+    devicenumber: 0
+    video_connection: SDI
+    video_mode: "1080i50"
+    deinterlace: assume-progressive
 #  -
 #    # Mini Recorder links
 #    name: cam3
@@ -89,6 +90,6 @@ voctomix_sources:
     name: slides
     type: decklink-internal
     devicenumber: 5
-    video_connection: HDMI
-    video_mode: "1080p24"
+    video_connection: SDI
+    video_mode: "1080p25"
     volume: 0.0
