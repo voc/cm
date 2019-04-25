@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: glt19
+  name: "Grazer Linuxtage 2019"
+  slogan: "Die Grazer Linuxtage sind eine jährliche Konferenz rund um Open-Source Software und Hardware in Graz."
   formats:
     hd: 'yes'
     sd: 'yes'
