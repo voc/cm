@@ -90,5 +90,5 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 5
     video_connection: SDI
-    video_mode: "1080p25"
+    video_mode: "1080p24"
     volume: 0.0
