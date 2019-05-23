@@ -1,6 +1,7 @@
 ---
 room_number: 42
 room_fahrplan_name: OpenSUSE 2
+room_fahrplan_name: Galerie
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

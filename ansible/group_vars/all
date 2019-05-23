@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: osc19
+  name: openSUSE Conference 2019
+  slogan: ""
   formats:
     hd: 'yes'
     sd: 'yes'

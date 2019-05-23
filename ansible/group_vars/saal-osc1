@@ -1,6 +1,6 @@
 ---
 room_number: 41
-room_fahrplan_name: OpenSUSE 1
+room_fahrplan_name: Saal (Main Hall)
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
