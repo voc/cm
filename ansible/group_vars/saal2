@@ -1,6 +1,6 @@
 ---
 room_number: 2
-room_fahrplan_name: Saal 2
+room_fahrplan_name: HfG_Studio
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

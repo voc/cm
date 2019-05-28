@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: gpn19
+  name: GPN19
+  slogan: Error 405 - Unavailable for legal reasons
   formats:
     hd: 'yes'
     sd: 'yes'
