@@ -1,6 +1,6 @@
 ---
 room_number: 5
-room_fahrplan_name: Saal 5
+room_fahrplan_name: ZKM_OpenHUB
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -87,7 +87,7 @@ voctomix_sources:
     # Mini Recorder rechts
     name: slides
     type: decklink-internal
-    devicenumber: 5
-    video_connection: HDMI
-    video_mode: "1080p24"
+    devicenumber: 3
+    video_connection: SDI
+    video_mode: "1080p25"
     volume: 0.0
