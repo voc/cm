@@ -38,6 +38,7 @@
       - /opt/voctomix/scripts/
       - /opt/voctomix/release/
       - /video/capture/{{ event.acronym }}
+      - /video/capture/{{ event.acronym }}/audio
       - /video/encoded/{{ event.acronym }}
       - /video/tmp/{{ event.acronym }}
       - /video/intros/{{ event.acronym }}
