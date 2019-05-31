@@ -1,0 +1,23 @@
+#!/bin/sh
+mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording started…\"}" &
+
+audio_streams=$(ffprobe -hide_banner tcp://encoder1.lan.c3voc.de:11000 -show_streams -select_streams a -print_format json -loglevel 0 |grep \"codec_type\")
+
+for i in $(seq 1 $audio_streams); do
+  mappings="$mappings \
+            -map 0:a:$i -c:a mp2 -b:a 384k -ac:a 2 -ar:a 48000 \
+            -f segment -segment_time 180 -strftime 1 -segment_format pcm_s32le \"/video/capture/{{ event.acronym }}/{{ room_fahrplan_name | lower | replace(' ', '') }}-%Y-%m-%d_%H-%M-%S-$$.wav\""
+done;
+
+ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
+	-thread_queue_size 512 -i tcp://localhost:11000?timeout=3000 \
+	$mappings
+
+ffmpeg_error_code=$?
+if [ "0" -ne "$ffmpeg_error_code" ]; then
+  mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"error\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording failed!\"}" &
+else
+  mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"warn\",\"component\":\"recording/{{ ansible_hostname }}\",\"msg\":\"Recording <red>stopped</red>! (ffmpeg error code ${ffmpeg_error_code})\"}" &
+fi
+
+exit $ffmpeg_error_code

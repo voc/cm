@@ -236,6 +236,21 @@
     service: name=recording-sink.service
              enabled=yes
 
+    # WAV recording sink
+  - name: create wav recording script
+    template: src="voctomix-scripts/recording-sink-wav.sh.j2"
+              dest="/opt/voctomix/scripts/recording-sink-wav.sh"
+              mode=0750 owner=root group=root
+
+  - name: create recording systemd-unit
+    template: src="systemd-units/recording-sink-wav.service.j2"
+              dest="/etc/systemd/system/recording-sink-wav.service"
+              mode=0644 owner=root group=root
+
+  - name: enable wav recording service
+    service: name=recording-sink-wav.service
+             enabled=yes
+
   # check recording - called via check_system script (common role)
   - name: copy check_recording script
     copy: src="check_recording.pl"
