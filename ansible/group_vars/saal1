@@ -91,5 +91,5 @@ voctomix_sources:
     devicenumber: 5
     video_connection: SDI
     video_mode: "1080i50"
-    deinterlace: yes
+    deinterlace: "yes"
     volume: 0.0
