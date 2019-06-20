@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: jh19-rostock
+  name: "Jugend hackt MV | Rostock"
+  slogan: "Mit Code die Welt verbessern"
   formats:
     hd: 'yes'
     sd: 'yes'

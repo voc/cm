@@ -1,6 +1,6 @@
 ---
 room_number: 4
-room_fahrplan_name: Saal 4
+room_fahrplan_name: Technologiezentrum
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -70,25 +70,26 @@ voctomix_sources:
   
       # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
       1: 1
-#  -
-#    # Duo Port 4
-#    name: cam2
-#    type: decklink-internal
-#    devicenumber: 0
-#    video_connection: SDI
-#    video_mode: "1080p25"
-#  -
-#    # Mini Recorder links
-#    name: cam3
-#    type: decklink-internal
-#    devicenumber: 4
-#    video_connection: SDI
-#    video_mode: "1080p25"
+  -
+    # Duo Port 4
+    name: tisch 
+    type: decklink-internal
+    devicenumber: 0
+    video_connection: SDI
+    video_mode: "1080p25"
+  -
+    # Mini Recorder links
+    name: regie
+    type: decklink-internal
+    devicenumber: 4
+    video_connection: HDMI
+    deinterlace: assume-progressive
+    video_mode: "1080i50"
   -
     # Mini Recorder rechts
     name: slides
     type: decklink-internal
     devicenumber: 5
-    video_connection: HDMI
+    video_connection: SDI
     video_mode: "1080p24"
     volume: 0.0
