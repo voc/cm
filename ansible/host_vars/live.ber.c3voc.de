@@ -1,12 +1,12 @@
 ---
-fanout_streams: ["s1", "s2", "s3", "s4", "s5", "s6", "s23", "s41", "s42", "s80", "q1", "q2", "sX"]
+fanout_streams: ["s1", "s2", "s3", "s4", "s5", "s6", "s23", "s41", "s42", "s80", "s89", "q1", "q2", "sX"]
 rtmp_ingest_streams: ["q1", "q2"]
 
 nginx: 'yes'
 nginx_hls_master: 'yes'
 
 icedist: 'yes'
-icedist_pull_streams: [1, 2, 3, 4, 5, 6, 23, 41, 42, 80]
+icedist_pull_streams: [1, 2, 3, 4, 5, 6, 23, 41, 42, 80, 89]
 
 icecast: 'yes'
 icecast_push_master: 'yes'
