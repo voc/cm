@@ -1,5 +1,5 @@
 ---
-fanout_streams: ["s1", "s2", "s3", "s4", "s5", "s6", "s23", "s41", "s42", "s80", "s89", "q1", "q2", "sX"]
+fanout_streams: ["s1", "s2", "s3", "s4", "s5", "s6", "s23", "s41", "s42", "s80", "s97", "s89", "q1", "q2", "sX"]
 rtmp_ingest_streams: ["q1", "q2"]
 
 nginx: 'yes'
