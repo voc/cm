@@ -1,6 +1,6 @@
 ---
 room_number: 10
-room_fahrplan_name: Saal 10
+room_fahrplan_name: Concerto Room
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

@@ -1,6 +1,6 @@
 ---
 room_number: 8
-room_fahrplan_name: Saal 8
+room_fahrplan_name: Bolero
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

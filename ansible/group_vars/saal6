@@ -1,6 +1,6 @@
 ---
 room_number: 6
-room_fahrplan_name: Saal 6
+room_fahrplan_name: Opereta Room
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
