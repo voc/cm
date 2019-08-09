@@ -1,6 +1,7 @@
 ---
 # Event config
 event:
+  timezone: Europe/Berlin
   acronym: froscon2019
   name: FrOSCon 2019
   slogan: Free and Open Source Conference
@@ -133,7 +134,8 @@ users:
   - { name: 'thomic', state: 'present' }
   - { name: 'thorti', state: 'present' }
   - { name: 'v0tti', state: 'present' }
-  - { name: 'felixs', state: 'present' } # selfnet, foss4g
+  - { name: 'sophie', state: 'present' } # selfnet, foss4g
+  - { name: 'felixs', state: 'absent' }
   - { name: 'nihilus', state: 'absent' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'dedeibel', state: 'present' }

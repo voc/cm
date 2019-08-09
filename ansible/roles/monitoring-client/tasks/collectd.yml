@@ -9,11 +9,12 @@
     ignore_errors: yes
 
   - name: install collectd perl packages
-    apt: name={{ item }} state=latest
-    with_items:
-      - collectd
-      - liblwp-protocol-https-perl
-      - libxml-simple-perl
+    apt: name={{ packages|flatten(levels=1) }} state=latest
+    vars:
+      packages:
+        - collectd
+        - liblwp-protocol-https-perl
+        - libxml-simple-perl
     tags: install
 
   - name: create plugins directory
@@ -101,9 +102,5 @@
       - install
       - config
 
-  - name: install snmp stuff
-    apt: name={{ item }} state=present
-    with_items:
-      - snmp
-      - snmp-mibs-downloader
+  - include: snmp.yml
     when: ansible_hostname | match('mixer\d+')

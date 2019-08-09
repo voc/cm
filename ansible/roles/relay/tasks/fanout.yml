@@ -7,7 +7,7 @@
 
   - name: create directories
     file: dest={{ item }} state=directory
-          owner=root group=root
+          mode=0755 owner=root group=root
     with_items:
       - /opt/fanout/scripts/
       - "{{ relay_fanout.hls_write_path }}"
