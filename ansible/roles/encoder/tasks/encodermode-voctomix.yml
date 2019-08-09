@@ -377,7 +377,7 @@
               dest="/opt/voctomix/voctocore-config.ini"
               mode=0644 owner=root group=root
     when: voctomix_sources is defined
-
+    tags: voctomix_config
 
 
   # voctocore service
