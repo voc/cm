@@ -36,7 +36,15 @@ ffmpeg -y -nostdin -hide_banner \
 	-c:a aac -b:a 192k -ar 48000 -ac 1 \
 	\
 {# Encode audio #}
+{% if voctomix_stream_suppress_audio_tracks %}
+{% for n in range(voctomix_audiostreams) %}
+{% if n not in voctomix_stream_suppress_audio_tracks %}
+	-map 0:a:{{ n }} \
+{% endif %}
+{% endfor %}
+{% else %}
 	-map 0:a \
+{% endif %}
 	\
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
