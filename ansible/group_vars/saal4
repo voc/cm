@@ -2,7 +2,7 @@
 room_number: 4
 room_fahrplan_name: Saal 4
 
-# hd-direct, hd-voctomix
+# hd-direct, hd-voctomix, hd-voctomix2
 # deploy with --tags encodermode
 # reboot encoder after changing
 encodermode: hd-voctomix
