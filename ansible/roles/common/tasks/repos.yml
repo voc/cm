@@ -57,9 +57,9 @@
       - debian-archive-keyring
    when: system.type == 'pc'
 
-   #  - name: setup the VOC debian repo for buster
-   #    apt_repository: repo="deb http://pkg.c3voc.de/ buster main" state=present
-   #    when: system.type == 'pc'
+ - name: setup the VOC debian repo for buster
+   apt_repository: repo="deb http://pkg.c3voc.de/ buster main" state=present
+   when: system.type == 'pc'
 
 
 #
