@@ -1,0 +1,16 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = voctomix2 music-source
+After = voctomix2-voctocore.service
+Requires = voctomix2-voctocore.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix2/scripts/music-source.sh
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = voctomix2-voctocore.service
