@@ -1,0 +1,11 @@
+#!/bin/sh
+
+ffmpeg -y -nostdin \
+	-f decklink -video_input {{ item.1.plug | default('sdi') }} \
+	-i "{{ item.1.device }}@`/opt/voctomix/scripts/ffmpeg-detect-mode-number.sh {{ item.1.device | quote}} {{ item.1.mode | quote}}`" \
+	-c:v rawvideo -c:a pcm_s16le \
+	-pix_fmt yuv420p \
+	-r 25 \
+	-f matroska \
+	-metadata title="{{ item.1.name }}" \
+	tcp://localhost:{{ item.0 + 10000 }}

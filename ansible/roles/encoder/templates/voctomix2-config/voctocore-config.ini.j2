@@ -1,0 +1,95 @@
+[mix]
+videocaps=video/x-raw,format=I420,width=1920,height=1080,framerate=25/1,pixel-aspect-ratio=1/1
+audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
+
+; tcp-ports will be 10000,10001,10002
+sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
+slides_source_name={{ (voctomix_sources | last).name }}
+
+{% if voctomix_audio_source is defined %}
+; set the initial audio source
+audiosource={{ voctomix_audio_source }}
+{% endif %}
+audiostreams = {{ voctomix_audiostreams | default(1) }}
+
+{% for source in voctomix_sources | selectattr("type", "equalto", "decklink-internal") %}
+[source.{{ source.name }}]
+kind=decklink
+devicenumber={{ source.devicenumber }}
+video_connection={{ source.video_connection | default('SDI') | upper }}
+video_mode={{ source.video_mode }}
+audio_connection=embedded
+
+volume={{ source.volume | default('0.0') }}
+
+{% if source.deinterlace is defined %}
+deinterlace={{ source.deinterlace }}
+{% endif %}
+
+{% if source.audiostream is defined  %}
+{% for audiostream, mapping in source.audiostream.items() %}
+audiostream[{{ audiostream }}] = {{ mapping }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% if voctomix.static_background_image %}
+[source.background]
+kind=img
+imguri=file:///opt/voc/share/bg.png
+
+{% else %}
+[source.background]
+deinterlace = assume-progressive
+{% endif %}
+
+[source.stream-blanker-pause]
+deinterlace = assume-progressive
+
+[source.stream-blanker-nostream]
+deinterlace = assume-progressive
+
+
+[fullscreen]
+default-a=slides
+
+[side-by-side-equal]
+border=10
+gutter=20
+atop=80
+btop=480
+
+default-a=slides
+
+[side-by-side-preview]
+asize=1420x799
+apos=20/160
+bsize=496x279
+bpos=1404/781
+
+default-a=slides
+
+[picture-in-picture]
+pipsize=496x279
+pippos=1404/781
+
+default-a=slides
+
+[previews]
+; disable if ui & server run on the same computer and can exchange uncompressed video frames
+enabled=true
+deinterlace=false
+
+; default to mix-videocaps, only applicable if enabled=true
+; you can change the framerate and the width/height, but nothing else
+videocaps=video/x-raw,width=1024,height=576,framerate=25/1
+
+{% if voctomix_vaapi is defined and voctomix_vaapi %}
+# check `vainfo`!
+vaapi=h264
+{% endif %}
+
+[stream-blanker]
+enabled=true
+sources=pause{% if voctomix.nostream_loop %},nostream{% endif %}

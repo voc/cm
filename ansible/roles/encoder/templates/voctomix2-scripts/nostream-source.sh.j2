@@ -1,0 +1,9 @@
+#!/bin/sh
+while true; do cat /opt/voc/share/nostream.ts || exit 1; done |\
+	ffmpeg -y -nostdin -re -i - \
+	-map 0:v \
+	-c:v rawvideo \
+	-pix_fmt yuv420p \
+	-f matroska \
+	-metadata title="nostream" \
+	tcp://localhost:17001
