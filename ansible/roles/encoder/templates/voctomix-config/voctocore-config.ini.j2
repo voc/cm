@@ -208,7 +208,7 @@ buttons = {{ voctomix_sources | map(attribute = 'name') | join(',') }}
 {{ source.name }}.name = {{ source.name }}
 {{ source.name }}.key = F{{ loop.index }}
 {{ source.name }}.tip = Select source {{ source.name }} on channel A
-
+{% endfor %}
 
 [toolbar.sources.b]
 buttons = {{ voctomix_sources | map(attribute = 'name') | join(',') }}
@@ -217,7 +217,7 @@ buttons = {{ voctomix_sources | map(attribute = 'name') | join(',') }}
 {{ source.name }}.name = {{ source.name }}
 {{ source.name }}.key = F{{ loop.index }}
 {{ source.name }}.tip = Select source {{ source.name }} on channel B
-
+{% endfor %}
 [toolbar.composites]
 buttons = fs,sbs,lec
 
