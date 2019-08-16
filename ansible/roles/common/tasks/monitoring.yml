@@ -22,7 +22,7 @@
   - name: deploy systemd unit for shutdown hook
     copy: src=send-mqtt-shutdown.service
           dest=/etc/systemd/system/send-mqtt-shutdown.service
-          owner=root group=root mode=0640
+          owner=root group=root mode=0644
 
   - name: reload systemd daemon
     command: systemctl daemon-reload

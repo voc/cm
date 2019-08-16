@@ -6,7 +6,7 @@
     file: state=absent path="/opt/voctomix2/scripts"
 
   - name: find old units
-    shell: (grep -l "#MANAGED BY ANSIBLE" -r /etc/systemd/system/; find /etc/systemd/system/ -type f -name 'voctomix2-*') | xargs -rl1 basename
+    shell: find /etc/systemd/system/ -type f -name 'voctomix2-*' | xargs -rl1 basename
     register: old_units
 
   - debug: msg="{{ old_units.stdout_lines }}"
