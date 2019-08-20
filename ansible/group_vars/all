@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: camp2019
+  name: Chaos Communication Camp 2019
+  slogan: Chaos Communication Camp
   formats:
     hd: 'yes'
     sd: 'yes'
