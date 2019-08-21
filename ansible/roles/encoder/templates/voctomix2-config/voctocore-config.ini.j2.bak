@@ -3,89 +3,92 @@ videocaps=video/x-raw,format=I420,width=1920,height=1080,framerate=25/1,pixel-as
 audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
 
 ; tcp-ports will be 10000,10001,10002
-sources=cam1,cam2,slides
-slides_source_name=slides
+sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
+slides_source_name={{ (voctomix_sources | last).name }}
 
-audiostreams = 2
+{% if voctomix_audio_source is defined %}
+; set the initial audio source
+audiosource={{ voctomix_audio_source }}
+{% endif %}
+audiostreams = {{ voctomix_audiostreams | default(1) }}
 
-[source.cam1]
+{% for source in voctomix_sources | selectattr("type", "equalto", "decklink-internal") %}
+[source.{{ source.name }}]
 kind=decklink
-devicenumber=1
-video_connection=SDI
-video_mode=1080p25
-#audio_connection=embedded
+devicenumber={{ source.devicenumber }}
+video_connection={{ source.video_connection | default('SDI') | upper }}
+video_mode={{ source.video_mode }}
+audio_connection=embedded
 
-volume=1.0
+volume={{ source.volume | default('0.0') }}
 
-deinterlace=assume-progressive
+{% if source.deinterlace is defined %}
+deinterlace={{ source.deinterlace }}
+{% endif %}
 
-#audiostream[0] = 0
-#audiostream[1] = 1
+{% if source.audiostream is defined  %}
+{% for audiostream, mapping in source.audiostream.items() %}
+audiostream[{{ audiostream }}] = {{ mapping }}
+{% endfor %}
+{% endif %}
 
-[source.cam2]
-kind=decklink
-devicenumber=0
-video_connection=SDI
-video_mode=1080p25
-#audio_connection=embedded
+{% endfor %}
 
-deinterlace=assume-progressive
-
-[source.slides]
-kind=decklink
-devicenumber=5
-video_connection=HDMI
-video_mode=1080p25
-#audio_connection=embedded
-
-volume=0.0
-
-
-
-
+{% if voctomix.static_background_image %}
 [source.background]
 kind=img
 imguri=file:///opt/voc/share/bg.png
+
+{% else %}
+[source.background]
+deinterlace = assume-progressive
+{% endif %}
+
+[source.stream-blanker-pause]
+deinterlace = assume-progressive
+
+[source.stream-blanker-nostream]
+deinterlace = assume-progressive
 
 
 [previews]
 ; disable if ui & server run on the same computer and can exchange uncompressed video frames
 enabled=true
 deinterlace=false
-live=true
+
 ; default to mix-videocaps, only applicable if enabled=true
 ; you can change the framerate and the width/height, but nothing else
 videocaps=video/x-raw,width=1024,height=576,framerate=25/1
 
+{% if voctomix_vaapi is defined and voctomix_vaapi %}
+# check `vainfo`!
+vaapi=h264
+{% endif %}
 
 [stream-blanker]
 enabled=true
-sources=pause
+sources=pause{% if voctomix.nostream_loop %},nostream{% endif %}
 
-[source.sb-pause]
-kind = test
-#kind = tcp
-#deinterlace = assume-progressive
 
-[overlay]
+;[overlay]
 ; default selection for overlay image
-file = watermark.png|Watermark
+;file = watermark.png|Watermark
 ; user selection of overlay images
 ;files = transparency.png|Transparency Test,watermark|Watermark,../voc2bg.png|35c3 Background
-path = ./data/images/overlays
+;path = ./data/images/overlays
 
 ; read user selection from schedule.xml file
-schedule=schedule.xml
+;schedule=schedule.xml
 ; filter by room
-room=HALL 1
+;room=HALL 1
 ; filter by event ID (good for testing)
-event=3
+;event=3
 ; should the user be able to toggle the AUTO-OFF button?
-user-auto-off = true
+;user-auto-off = true
 ; should the AUTO-OFF button be initially be off?
-auto-off = false
+;auto-off = false
 ; set fading time when showing or hiding overlay
-blend-time=300
+;blend-time=300
 
 [mirrors]
 ; disable if not needed
@@ -199,24 +202,22 @@ def                     = 750, * / *
 
 
 [toolbar.sources.a]
-buttons = cam1,slides
+buttons = {{ voctomix_sources | map(attribute = 'name') | join(',') }}
 
-cam1.name = cam1
-cam1.key = F1
-cam1.tip = Select source cam1 on channel A
-slides.name = slides
-slides.key = F2
-slides.tip = Select source slides on channel A
+{% for source in voctomix_sources | selectattr("type", "equalto", "decklink-internal") %}
+{{ source.name }}.name = {{ source.name }}
+{{ source.name }}.key = F{{ loop.index }}
+{{ source.name }}.tip = Select source {{ source.name }} on channel A
+{% endfor %}
 
 [toolbar.sources.b]
-buttons = cam1,slides
+buttons = {{ voctomix_sources | map(attribute = 'name') | join(',') }}
 
-cam1.name = cam1
-cam1.key = F1
-cam1.tip = Select source cam1 on channel B
-slides.name = slides
-slides.key = F2
-slides.tip = Select source slides on channel B
+{% for source in voctomix_sources | selectattr("type", "equalto", "decklink-internal") %}
+{{ source.name }}.name = {{ source.name }}
+{{ source.name }}.key = F{{ loop.index }}
+{{ source.name }}.tip = Select source {{ source.name }} on channel B
+{% endfor %}
 [toolbar.composites]
 buttons = fs,sbs,lec
 
