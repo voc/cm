@@ -49,6 +49,8 @@
          force=yes
          accept_hostkey=yes
 
+  - name: remove voctomix2 default config
+    file: state=absent path=/opt/voctomix2/release/voctocore/default-config.ini
 
 
   # decklink sources
