@@ -2,45 +2,37 @@
 videocaps=video/x-raw,format=I420,width=1920,height=1080,framerate=25/1,pixel-aspect-ratio=1/1,interlace-mode=progressive
 audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
 
-; tcp-ports will be 10000,10001,10002
 sources=cam1,cam2,slides
 slides_source_name=slides
-
 audiostreams = 2
+
 
 [source.cam1]
 kind=decklink
 devicenumber=1
 video_connection=SDI
 video_mode=1080p25
-#audio_connection=embedded
-
-volume=1.0
-
 deinterlace=assume-progressive
-
+volume=1.0
 #audiostream[0] = 0
 #audiostream[1] = 1
+
 
 [source.cam2]
 kind=decklink
 devicenumber=0
 video_connection=SDI
 video_mode=1080p25
-#audio_connection=embedded
-
 deinterlace=assume-progressive
+
 
 [source.slides]
 kind=decklink
 devicenumber=5
 video_connection=HDMI
 video_mode=1080p25
-#audio_connection=embedded
-
+deinterlace=assume-progressive
 volume=0.0
-
-
 
 
 [source.background]
@@ -63,9 +55,9 @@ enabled=true
 sources=pause
 
 [source.sb-pause]
-kind = test
-#kind = tcp
-#deinterlace = assume-progressive
+#kind = test
+kind = tcp
+deinterlace = assume-progressive
 
 [overlay]
 ; default selection for overlay image
