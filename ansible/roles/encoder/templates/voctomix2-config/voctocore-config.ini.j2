@@ -54,8 +54,10 @@ videocaps=video/x-raw,width=1024,height=576,framerate=25/1
 enabled=true
 sources=pause
 
+[source.sb]
+kind = tcp
+
 [source.sb-pause]
-#kind = test
 kind = tcp
 deinterlace = assume-progressive
 
