@@ -11,8 +11,7 @@ audiostreams = 2
 kind=decklink
 devicenumber=1
 video_connection=SDI
-video_mode=1080p25
-deinterlace=assume-progressive
+video_mode=1080i50
 volume=1.0
 #audiostream[0] = 0
 #audiostream[1] = 1
@@ -22,15 +21,14 @@ volume=1.0
 kind=decklink
 devicenumber=0
 video_connection=SDI
-video_mode=1080p25
-deinterlace=assume-progressive
+video_mode=1080i50
 volume = 0.0
 
 
 [source.slides]
 kind=decklink
 devicenumber=5
-video_connection=HDMI
+video_connection=SDI
 video_mode=1080p25
 deinterlace=assume-progressive
 volume=0.0
