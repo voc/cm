@@ -6,6 +6,8 @@
   - include: edid-tools.yml
   - include: voctomix.yml
     tags: encodermode
+  - include: voctomix2.yml
+    tags: encodermode
   - include: irssi.yml
   - include: rc.local.yml
     tags:

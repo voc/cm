@@ -1,0 +1,20 @@
+[Unit]
+Description = voctomix2 gui
+After=network.target
+
+[Service]
+Type = simple
+WorkingDirectory = /opt/voctomix2/release
+ExecStart = /opt/voctomix2/release/voctogui/voctogui.py --ini-file /opt/voctomix2/voctogui-config.ini -vv
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+User=mixer
+Group=mixer
+
+Environment="DISPLAY=:0"
+;Environment="GTK_THEME=Adwaita:dark"
+;Environment="GDK_SCALE=2"
+
+[Install]
+WantedBy = multi-user.target

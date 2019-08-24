@@ -1,0 +1,43 @@
+---
+  # directories & code
+  - name: create voctomix directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /opt/voctomix2/scripts/
+      - /opt/voctomix2/release/
+
+  - name: checkout voctomix release
+    git: repo=https://c3voc.de/git/voctomix
+         dest=/opt/voctomix2/release/
+         version={{ voctomix.version2 }}
+         force=yes
+         accept_hostkey=yes
+
+  # voctogui configuration
+  - name: create voctogui config
+    template: src=voctomix2-config/voctogui-config.ini.j2
+              dest=/opt/voctomix2/voctogui-config.ini
+              mode=0644 owner=root group=root
+
+  # voctogui service
+  - name: create voctogui systemd-unit
+    template: src=systemd-units/voctomix2-voctogui.service.j2
+              dest=/etc/systemd/system/voctomix2-voctogui.service
+              mode=0644 owner=root group=root
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: enable & start voctogui service when in voctomix-mode
+    service: name=voctomix2-voctogui
+             enabled=yes
+             state=started
+    when: encodermode is defined and encodermode == 'hd-voctomix2'
+
+  - name: disable & stop voctogui service when not in voctomix-mode
+    service: name=voctomix2-voctogui
+             enabled=no
+             state=stopped
+    when: encodermode is not defined or encodermode != 'hd-voctomix2'
