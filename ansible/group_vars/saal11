@@ -1,6 +1,6 @@
 ---
 room_number: 11
-room_fahrplan_name: Saal 11
+room_fahrplan_name: Plenary (National Theatre) 
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -56,7 +56,7 @@ voctomix_audiostreams: 2
 
 voctomix_sources:
   -
-    # Duo Port 2
+    # Duo: Port 2
     name: cam1
     type: decklink-internal
     devicenumber: 1
@@ -67,27 +67,20 @@ voctomix_sources:
       # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
       0: 0
   
-      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
+      # fill stereo-stream 1 (backup) with sdi-channel 1 on both sides
       1: 1
 #  -
-#    # Duo Port 4
+#    # Duo: Port 4
 #    name: cam2
 #    type: decklink-internal
-#    devicenumber: 0
+#    devicenumber: 2
 #    video_connection: SDI
-#    video_mode: "1080p25"
-#  -
-#    # Mini Recorder links
-#    name: cam3
-#    type: decklink-internal
-#    devicenumber: 4
-#    video_connection: SDI
-#    video_mode: "1080p25"
+#    video_mode: "1080p25"    
   -
-    # Mini Recorder rechts
+    # Mini Recorder
     name: slides
     type: decklink-internal
-    devicenumber: 5
+    devicenumber: 0
     video_connection: HDMI
-    video_mode: "1080p24"
+    video_mode: "1080p50"
     volume: 0.0
