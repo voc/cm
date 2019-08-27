@@ -1,6 +1,6 @@
 ---
 room_number: 8
-room_fahrplan_name: Bolero
+room_fahrplan_name: Opereta Room
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

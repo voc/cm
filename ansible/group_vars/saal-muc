@@ -1,6 +1,6 @@
 ---
 room_number: 80
-room_fahrplan_name: Concerto Room
+room_fahrplan_name: Plenary (National Theatre) 
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
