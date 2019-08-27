@@ -66,10 +66,20 @@ mixer-muc.lan.c3voc.de
 #minion-muc.lan.c3voc.de transcoder_streams='["s4"]'
 #minion6.lan.c3voc.de
 
-speedy.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "sX", "s23", "s41", "s42", "s80", "s97"]' transcoder_streams_enabled='["s1", "s2", "s3", "q1", "sX"]'  transcoder_lounges='["a1", "a2"]'
-tweety.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "sX", "s23", "s41", "s42", "s80", "s97"]' transcoder_streams_enabled='["s4", "s5", "s6", "q2", "s23", "s80", "s97"]' transcoder_lounges='["a3", "a4"]'
-blade1.lan.c3voc.de     transcoder_streams='["s7", "s8", "s9", "s10", "s11"]' transcoder_streams_enabled='["s7", "s8", "s9"]'
-blade2.lan.c3voc.de     transcoder_streams='["s7", "s8", "s9", "s10", "s11"]' transcoder_streams_enabled='["s10", "s11"]'
+#speedy.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "sX", "s23", "s41", "s42", "s80", "s97"]' transcoder_streams_enabled='["s1", "s2", "s3", "q1", "sX"]'  transcoder_lounges='["a1", "a2"]'
+#tweety.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "sX", "s23", "s41", "s42", "s80", "s97"]' transcoder_streams_enabled='["s4", "s5", "s6", "q2", "s23", "s80", "s97"]' transcoder_lounges='["a3", "a4"]'
+
+# 2x Xeon E5-4650 (2x8x 2.7GHz + HT)
+live2.voc.fslab.de      transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "q1", "q2"]' transcoder_streams_enabled='["s4", "s5", "s6", "s7"]' transcoder_lounges='["a1"]'
+# Core i7 3820 (4x 3.6GHz + HT)
+live3.voc.fslab.de      transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "q1", "q2"]' transcoder_streams_enabled='["s1", "s2", "s3"]' transcoder_lounges='["a2"]'
+# 2x Xeon E5-2623 v4 (2x4x 2.6GHz + HT)
+live4.voc.fslab.de      transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "q1", "q2"]' transcoder_streams_enabled='["s8", "s9", "q1", "q2"]' transcoder_lounges='["a3"]'
+# 2x Xeon E5-2620 (2x6x 2.0GHz + HT)
+live5.voc.fslab.de      transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "q1", "q2"]' transcoder_streams_enabled='["s10", "s11"]' transcoder_lounges='["a4"]'
+
+#blade1.lan.c3voc.de     transcoder_streams='["s7", "s8", "s9", "s10", "s11"]' transcoder_streams_enabled='["s7", "s8", "s9"]'
+#blade2.lan.c3voc.de     transcoder_streams='["s7", "s8", "s9", "s10", "s11"]' transcoder_streams_enabled='["s10", "s11"]'
 
 [encoders]
 encoder1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder1.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.password') }}"
