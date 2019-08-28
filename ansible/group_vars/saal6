@@ -60,7 +60,7 @@ voctomix_sources:
     # Duo Port 1
     name: cam1
     type: decklink-internal
-    devicenumber: 1
+    devicenumber: 0
     video_connection: SDI
     video_mode: "1080p25"
     volume: 1.0
@@ -88,7 +88,7 @@ voctomix_sources:
     # Mini Recorder rechts
     name: slides
     type: decklink-internal
-    devicenumber: 3
+    devicenumber: 1
     video_connection: HDMI
     video_mode: "1080p24"
     volume: 0.0
