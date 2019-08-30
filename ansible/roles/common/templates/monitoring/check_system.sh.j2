@@ -70,7 +70,7 @@ check_load () {
 }
 
 check_recording () {
-  systemctl is-active voctomix-recording-sink.service >/dev/null
+  systemctl is-active recording-sink.service >/dev/null
   if [ "0" -eq "$?" ]; then
     message=$(perl /usr/local/bin/check_recording.pl /video/capture/{{ event.acronym }}/)
     error_code=$?
