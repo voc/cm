@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: mrmcd19
+  name: MRMCD 2019
+  slogan: Gesellschaftsspiele
   formats:
     hd: 'yes'
     sd: 'yes'
