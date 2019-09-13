@@ -1,6 +1,6 @@
 ---
 room_number: 41
-room_fahrplan_name: Room 1
+room_fahrplan_name: "1 - Congress Hall"
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode

@@ -1,6 +1,6 @@
 ---
 room_number: 42
-room_fahrplan_name: Room 2
+room_fahrplan_name: "2 - Blue Meeting Room"
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
