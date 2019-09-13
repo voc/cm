@@ -143,6 +143,16 @@
       - thumbnail_downloader
     with_items: "{{ thumbnail_downloader_rooms }}"
 
+  - name: create cronjobs to pull posters every minute
+    cron: name="download poster for {{ item }}"
+          job="flock -xn /srv/nginx/thumbs/{{ item }}-poster.png -c \"{{ ffmpeg_bin.stdout }} -nostdin -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_hd.m3u8 -vframes 1 /srv/nginx/thumbs/{{ item }}-poster.png 2>/dev/null\""
+          user=downloader
+    tags:
+      - install
+      - thumbnail_downloader
+    with_items: "{{ thumbnail_downloader_rooms }}"
+
+
   # Remove fcgi cache after deployment
   - shell: ls -1 /srv/nginx/cache/streaming_fcgi/
     register: streaming_fcgi_cache

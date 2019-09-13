@@ -21,12 +21,19 @@ LoadPlugin network
 LoadPlugin swap
 LoadPlugin tcpconns
 LoadPlugin curl_json
+{% if ansible_hostname is match('router')  %}
+LoadPlugin conntrack
+{% endif %}
 {% if nginx is defined and nginx == 'yes' %}
 LoadPlugin nginx
 {% endif %}
-{% if ansible_hostname | match('mixer\d+')  %}
+{% if ansible_hostname is match('mixer\d+')  %}
 LoadPlugin snmp
 {% endif %}
+{% if ansible_virtualization_role is match('host') %}
+LoadPlugin ipmi
+{% endif %}
+
 
 <LoadPlugin perl>
   Globals true
@@ -146,7 +153,7 @@ LoadPlugin dbi
 </Plugin>
 {% endif %}
 
-{% if ansible_hostname | match('mixer\d+')  %}
+{% if ansible_hostname is match('mixer\d+')  %}
 <Plugin snmp>
   <Data "if_traffic">
     Type "if_octets"

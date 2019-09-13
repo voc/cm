@@ -1,9 +1,10 @@
 ---
   - name: install snmp stuff
     apt: name={{ item }} state=present
-    with_items:
-      - snmp
-      - snmp-mibs-downloader
+    vars:
+      packages:
+       - snmp
+       - snmp-mibs-downloader
 
   - name: fix snmp config to be able to use snmp-mibs-downloader
     lineinfile: dest=/etc/snmp/snmp.conf

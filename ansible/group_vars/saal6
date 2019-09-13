@@ -1,6 +1,6 @@
 ---
-room_number: 5
-room_fahrplan_name: Saal 5
+room_number: 6
+room_fahrplan_name: Saal 6
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -59,7 +59,7 @@ voctomix_sources:
     # Duo Port 1
     name: cam1
     type: decklink-internal
-    devicenumber: 0
+    devicenumber: 1
     video_connection: SDI
     video_mode: "1080p25"
     volume: 1.0

@@ -1,20 +1,23 @@
 ---
   - name: install dependency packages
-    apt: name={{ item }} state=latest
-    with_items:
-     - libconfig-inifiles-perl
-     - libipc-run-perl
-     - libxml-rpc-fast-perl
-     - libxml-simple-perl
-     - libmath-round-perl
-     - libdatetime-perl
-     - libboolean-perl
-     - libwww-curl-perl
-     - libjson-perl
-     - fuse-ts
-     - fuse
-     - cifs-utils
-     - ntfs-3g
+    apt: name={{ packages|flatten(levels=1) }} state=latest
+    vars:
+      packages:
+       - libconfig-inifiles-perl
+       - libfile-which-perl
+       - libipc-run-perl
+       - libproc-processtable-perl
+       - libxml-rpc-fast-perl
+       - libxml-simple-perl
+       - libmath-round-perl
+       - libdatetime-perl
+       - libboolean-perl
+       - libwww-curl-perl
+       - libjson-perl
+       - fuse-ts
+       - fuse
+       - cifs-utils
+       - ntfs-3g
 
   - name: create /opt/crs/tools
     file: dest=/opt/crs/tools state=directory

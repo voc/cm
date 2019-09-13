@@ -4,6 +4,7 @@
 
 # limits
 LIMIT_DISK_USAGE=90
+LIMIT_DISK_MIN_FREE_SPACE_KB=9765625
 LIMIT_LOAD=$(echo "$(grep processor /proc/cpuinfo | wc -l) * 2" | bc)
 
 TRUNC_HOSTNAME=$(hostname -f | cut -d. -f1-2)
@@ -17,7 +18,9 @@ send_mqtt_message () {
   if [ -n "$DEBUG" ]; then
     echo mosquitto_pub --capath /etc/ssl/certs/ -h \"{{ mqtt.server }}\" -u \"{{ mqtt.username }}\" -P \"{{ mqtt.password }}\" -t \"/voc/alert\" -m \"{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}\"
   else
-    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}"
+    for i in 1 2 3 ; do
+      mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}" && break
+    done
   fi
 }
 
@@ -33,16 +36,21 @@ debug_output() {
 
 check_disk_space () {
   df -h | tail -n +2 | while read line; do
-    mount_point=$(echo $line | awk '{ print $1 }')
+    device=$(echo $line | awk '{ print $1 }')
     disk_usage_percent=$(echo $line | awk '{ print $5 }' | tr -d '%')
     disk_space=$(echo $line | awk '{ print $2 }')
     disk_space_avilable=$(echo $line | awk '{ print $4 }')
+    mount_point=$(echo $line | awk '{ print $6 }')
+
 
     if [ "$disk_usage_percent" -ge "$LIMIT_DISK_USAGE" ]; then
-      send_mqtt_message "error" "system/disk/${TRUNC_HOSTNAME}" "<red>$mount_point: disk usage $disk_usage_percent%, only $disk_space_avilable left of $disk_space</red>"
+      space_free_kb=$(df ${mount_point} | tail -n+2 | awk '{ print $4 }')
+      if [ "$space_free_kb" -le "$LIMIT_DISK_MIN_FREE_SPACE_KB" ]; then
+        send_mqtt_message "error" "system/disk/${TRUNC_HOSTNAME}" "<red>$device: disk usage $disk_usage_percent%, only $disk_space_avilable left of $disk_space</red>"
+      fi
     fi
 
-    debug_output "df" $mount_point $disk_usage_percent $disk_space $disk_space_avilable
+    debug_output "df" $device $disk_usage_percent $disk_space $disk_space_avilable
   done
 }
 
@@ -116,6 +124,20 @@ check_raid () {
 
     debug_output "raid_status" $raid_status $bat_status
   fi
+
+  if [ -e "$(command -v zpool)" ] && [ "$(lsmod | grep -q zfs; echo $?)" -eq "0" ];then
+    zpool list -H | while read line; do
+      pool_name=$(echo $line| awk  '{ print $1 }')
+      pool_health=$(echo $line| awk  '{ print $9 }')
+
+      echo $pool_health | grep -iqE 'online'
+      if [ "$?" -ne "0" ]; then
+        send_mqtt_message "error" "system/zfs/${TRUNC_HOSTNAME}" "<red>ZFS pool '${zfs_pool}' is '${pool_health}' please run 'zpool status' for more information</red>"
+      fi
+
+      debug_output "zfs" $pool_name $pool_health
+    done
+  fi
 }
 
 
@@ -168,7 +190,7 @@ check_logs () {
 #  * no bond status check
 #
 check_interfaces () {
-  for interface in $(grep "iface" /etc/network/interfaces | grep -vE "iface lo |#|br|bond.*\..*|monitoring-ignore-me" | awk '{ print $2 }' | sort | uniq); do
+  for interface in $(grep "iface" /etc/network/interfaces | grep -vE "iface lo |#|br|bond.*\..*|monitoring-ignore-me" | awk '{ print $2 }' | sed 's|:.*$||g' | sort | uniq); do
     if [ "$(systemd-detect-virt)" = "none" ] && [ "$(grep -q up /sys/class/net/${interface}/operstate; echo $?)" -eq "0" ]; then
       # we need at least 1gbit
       if [ -e "/sys/class/net/${interface}/speed" ]; then
@@ -194,8 +216,15 @@ check_interfaces () {
 check_temperature () {
   if [ -d "/sys/class/hwmon/hwmon0" ]; then
     for hwmon in $(ls -d /sys/class/hwmon/hwmon*); do
+      if [ ! -e "${hwmon}/name" ]; then
+        break;
+      fi
       if [ $(cat ${hwmon}/name) = "coretemp" ]; then
         for temp in $(ls ${hwmon}/temp*_label | grep -o "temp."); do
+          if [ ! -e "${hwmon}/${temp}_input" ] || [ ! -e "${hwmon}/${temp}_crit" ]; then
+            break;
+          fi
+
           value="$(cat ${hwmon}/${temp}_input)"
           limit="$(cat ${hwmon}/${temp}_crit)"
 
@@ -234,10 +263,26 @@ check_updates () {
 # send system uptime in every run
 ping () {
   hostname="$(hostname -f)"
+  primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
+  hostname=${hostname:-$primary_ip}
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
-  mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}"
-
+  for i in 1 2 3 ; do
+    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}" && break
+  done
   debug_output "ping" $hostname $uptime
+}
+
+# inform watchdog about graceful shutdown
+shutdown () {
+  hostname="$(hostname -f)"
+  primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
+  hostname=${hostname:-$primary_ip}
+
+  for i in 1 2 3 ; do
+    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/shutdown" -m "{ \"name\": \"${hostname}\"}" && break
+  done
+
+  debug_output "shutdown" $hostname
 }
 
 # Check voc related websites
@@ -262,6 +307,24 @@ check_http () {
   done
 }
 
+# check if system is running on battery and the capacity is <= 30%
+check_ac_power () {
+  if [ -f "/sys/class/power_supply/AC/online" ]; then
+    ac_online=$(cat /sys/class/power_supply/AC/online)
+    if [ -f "/sys/class/power_supply/BAT0/capacity" ]; then
+      bat0_capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+    else
+      bat0_capacity="-1"
+    fi
+    [ "0" -eq "$ac_online" ] && [ "$bat0_capacity" -le 30 ] && send_mqtt_message "error" "system/power/${TRUNC_HOSTNAME}" "<red>AC power Offile! Battery $bat0_capacity % left.</red>"
+  fi
+}
+
+# no checks on shutdown
+if [ "$1" = "shutdown" ] ; then
+	shutdown
+	exit 0
+fi
 
 # general checks
 ping
@@ -270,7 +333,7 @@ check_disk_space
 check_raid
 check_logs
 check_interfaces
-
+check_ac_power
 
 # special cases
 if [ "0" -eq "$(hostnamectl status --static | grep -q "encoder"; echo $?)" ]; then
@@ -288,13 +351,6 @@ fi
 if [ "mng.ber.c3voc.de" = "$(hostname -f)" ]; then
   check_http
 fi
-
-
-# repeat ping to prevent false alarms due to packet loss
-sleep 1
-ping
-sleep 1
-ping
 
 
 exit 0
