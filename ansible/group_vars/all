@@ -2,7 +2,7 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: ds19
+  acronym: DS2019
   name: Datenspuren 2019
   slogan: Patch gehabt
   formats:
