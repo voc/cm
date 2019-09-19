@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: ds19
+  name: Datenspuren 2019
+  slogan: Patch gehabt
   formats:
     hd: 'yes'
     sd: 'yes'
