@@ -90,6 +90,6 @@ voctomix_sources:
     name: slides
     type: decklink-internal
     devicenumber: 5
-    video_connection: SDI
+    video_connection: HDMI
     video_mode: "1080p24"
     volume: 0.0
