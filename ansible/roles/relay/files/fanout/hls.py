@@ -95,15 +95,15 @@ def generate_master_playlists(c):
 {% endif %}
 
 {% if video_track in ['HD'] %}
-#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5000000,RESOLUTION=1920x1080,CODECS="avc1.4d0228,mp4a.40.2",AUDIO="audio"
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5000000,RESOLUTION=1920x1080,CODECS="avc1.4d0028,mp4a.40.2",AUDIO="audio"
 {{ stream }}/chunks_0.m3u8
 {% endif %}
 {% if 'SD' in video_tracks and video_track in ['HD', 'SD'] %}
-#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=800000,RESOLUTION=1024x576,CODECS="avc1.4d0228,mp4a.40.2",AUDIO="audio"
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=800000,RESOLUTION=1024x576,CODECS="avc1.4d0028,mp4a.40.2",AUDIO="audio"
 {{ stream }}/chunks_1.m3u8
 {% endif %}
 {% if 'Slides' in video_tracks and video_track in ['HD', 'SD', 'Slides'] %}
-#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=100000,RESOLUTION=1024x576,CODECS="avc1.4d0228,mp4a.40.2",AUDIO="audio"
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=100000,RESOLUTION=1024x576,CODECS="avc1.4d0028,mp4a.40.2",AUDIO="audio"
 {{ stream }}/chunks_2.m3u8
 {% endif %}
 """)

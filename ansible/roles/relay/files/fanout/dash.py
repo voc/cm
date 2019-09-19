@@ -87,7 +87,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000
 {% endif %}
 
 	-f dash
-	-window_size 20 -extra_window_size 10 -min_seg_duration 6000000
+	-window_size 100 -extra_window_size 10 -min_seg_duration 6000000
 	-init_seg_name 'init_$RepresentationID$.hdr'
 	-media_seg_name 'segment_$RepresentationID$_$Number$.chk'
 	-adaptation_sets '{{ adaptation_sets | join(" ") }}'

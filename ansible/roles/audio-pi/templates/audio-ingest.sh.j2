@@ -3,7 +3,7 @@
 
 exec ffmpeg -hide_banner -nostats -nostdin -loglevel error \
   -f alsa -i hw:audioinjectorpi \
-  -ar 48000 -c:a opus -b:a 128k -bufsize 16M \
+  -ar 48000 -c:a libopus -b:a 128k -bufsize 16M \
   -content_type audio/ogg -f ogg \
   -ice_name "Audio Stream {{ stream }}" -ice_description "Audio Stream {{ stream }}" \
   "icecast://{{ icecast_user }}:{{ icecast_password }}@{{ icecast_server }}/{{ stream }}.opus"
