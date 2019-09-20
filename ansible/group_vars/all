@@ -2,8 +2,8 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: occon18
-  name: ownCloud Conference 2018
+  acronym: asg2019
+  name: All Systems Go 2019
   slogan: 
   formats:
     hd: 'yes'
