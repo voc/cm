@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: jh-ffm
+  name: Jugend Hackt Frankfurt am Main 2019
+  slogan: Mit Code die Welt verbessern
   formats:
     hd: 'yes'
     sd: 'yes'
