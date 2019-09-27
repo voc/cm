@@ -103,4 +103,4 @@
       - config
 
   - include: snmp.yml
-    when: ansible_hostname | match('mixer\d+')
+    when: ansible_hostname is match('mixer\d+')
