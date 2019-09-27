@@ -5,6 +5,6 @@
         - nagios-plugins-basic
         - graphite-api
         - graphite-carbon
-        - gunicorn3
         - grafana
+        - carbon-relay-ng
       state: latest
