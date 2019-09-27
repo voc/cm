@@ -113,7 +113,6 @@ web.c3voc.de
 mng.c3voc.de
 mng.ber.c3voc.de
 mngslave.dus.c3voc.de
-monitoring.c3voc.de
 build.c3voc.de
 releasing.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/releasing.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/releasing.password') }}"
 backup.c3voc.de
@@ -160,3 +159,6 @@ blade4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade
 
 [tracker]
 tracker.c3voc.de
+
+[monitoring]
+monitoring.c3voc.de

@@ -1,0 +1,32 @@
+---
+  - name: install carbon config file
+    template: dest=/etc/carbon/carbon.conf
+              src=graphite/carbon.conf.j2
+              owner=root group=_graphite mode=0640
+    notify: restart carbon-cache
+    tags:
+      - config
+
+  - name: install carbon storage-schemas file
+    template: dest=/etc/carbon/storage-schemas.conf
+              src=graphite/storage-schemas.conf.j2
+              owner=root group=_graphite mode=0640
+    notify: restart carbon-cache
+    tags:
+      - config
+
+  - name: install graphite-api config
+    template: dest=/etc/graphite-api.yaml
+              src=graphite/graphite-api.yaml.j2
+              owner=root group=_graphite mode=0640
+    notify: restart graphite-api
+    tags:
+      - config
+
+  - name: install carbon carbon-relay-ng config
+    template: dest=/etc/carbon-relay-ng/carbon-relay-ng.conf
+              src=graphite/carbon-relay-ng.conf.j2
+              owner=root group=carbon-relay-ng mode=0640
+    notify: restart carbon-relay-ng
+    tags:
+      - config

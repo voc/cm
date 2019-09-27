@@ -1,0 +1,8 @@
+---
+  - name: install grafana config file
+    template: dest=/etc/grafana/grafana.ini
+              src=grafana.ini.j2
+              owner=root group=grafana mode=0640
+    notify: restart grafana-server
+    tags:
+      - config

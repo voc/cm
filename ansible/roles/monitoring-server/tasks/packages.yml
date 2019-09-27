@@ -1,0 +1,10 @@
+---
+  - name: install monitoring packages
+    apt:
+      name:
+        - nagios-plugins-basic
+        - graphite-api
+        - graphite-carbon
+        - gunicorn3
+        - grafana
+      state: latest
