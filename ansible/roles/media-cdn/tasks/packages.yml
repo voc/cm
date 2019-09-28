@@ -1,12 +1,13 @@
 ---
   - name: install default packages
-    apt: name={{ item }} state=latest
-    loop:
-      - zlib1g-dev
-      - libgeoip-dev
-      - unattended-upgrades
+    apt:
+      state: latest
+      name:
+        - zlib1g-dev
+        - libgeoip-dev
+        - unattended-upgrades
 
   - name: install default packages
-    apt: name={{ item }} state=latest default_release=buster-backports
+    apt: name="{{ item }}" state=latest default_release=buster-backports
     loop:
       - redis-server

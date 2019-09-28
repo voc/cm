@@ -1,18 +1,34 @@
 ---
-- file: path=/srv/www/ state=directory
-        owner=www-data group=www-data
-
-- git: repo=https://github.com/voc/voctoweb-static
-       dest=/srv/www/
-       version=master
-
 - group: name="uploaders" state=present
 - group: name="cdn-app" state=present
 
 - user: state=present
         name="cdn-app"
         groups="cdn-app,uploaders"
-        shell="/usr/bin/rssh"
+        shell="/bin/false"
+
+- user: state=absent
+        name="{{ item.name }}"
+        force=true
+        remove=yes
+        group="uploaders"
+        shell="/bin/false"
+        home="/home/uploaders/{{ item.name }}"
+        skeleton=false
+        #ssh_key="{{ (item | dict2items | first).value }}"
+  loop: "{{ uploaders }}"
+  when: (item | dict2items | first).key not in hostvars['new.media'].users
+  tags: ['user']
+
+  # item.state == 'absent'
+
+- file: path=/srv/www/ state=directory
+        owner=www-data group=www-data
+
+
+- git: repo=https://github.com/voc/voctoweb-static
+       dest=/srv/www/
+       version=master
 
 - git: repo=https://github.com/voc/voctoweb-media
        dest=/srv/www/media.ccc.de/media

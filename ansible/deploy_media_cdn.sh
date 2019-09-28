@@ -9,7 +9,7 @@ if [ -z "$KEEPASS_PW" ]; then
   echo "need keepass pw"
   exit 1
 fi
-export KEEPASS=../passwords/voc.kdbx
+
 env KEEPASS="$KEEPASS" KEEPASS_PW="$KEEPASS_PW" $(command -v  python) lookup_plugins/keepass.py
 # --become -u voc
 env KEEPASS="$KEEPASS" KEEPASS_PW="$KEEPASS_PW" ansible-playbook -i media -e '@media.secrets' media.yml -v --ssh-extra-args="-A" $*

@@ -4,7 +4,7 @@
       - { role: 'media-common', tags: ['media-common'] }
 
       - role: 'ansible-acmetool'
-        when: ssl=1 and acmetool_setup == 1
+        when: ssl == 1 and acmetool_setup == 1
         tags: ['ansible-acmetool', 'nginx']
 
       - role: 'media-cdn'
@@ -53,6 +53,8 @@
         - { name: 'meise', state: 'absent' }
         - { name: 'mm', state: 'absent' }
         - { name: 'voc', state: 'present' }
+      uploaders: "{{ lookup('keepass', 'ansible/media/uploaders.notes') | from_yaml }}"
+      downloaders: test.yml
 
       media_mirror_rsync: 'TODO keepass plz'
       google_maps_api_key: 'TODO keepass plz'
