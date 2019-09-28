@@ -4,27 +4,24 @@
       - { role: 'media-common', tags: ['media-common'] }
 
       - role: 'ansible-acmetool'
-        when: inventory_hostname == 'berlin-ak.media.ccc.de' and acmetool_setup == 1
-        vars: { acmetool_want: ["{{ inventory_hostname }} {{ inventory_hostname_short }}.ftp.media.ccc.de"] }
-        tags: ['ansible-acmetool', 'nginx']
-
-      - role: 'ansible-acmetool'
-        when: inventory_hostname == 'koeln.media.ccc.de' and acmetool_setup == 1
-        vars: { acmetool_want: ["{{ inventory_hostname }} cdn.media.ccc.de"] }
+        when: ssl=1 and acmetool_setup == 1
         tags: ['ansible-acmetool', 'nginx']
 
       - role: 'media-cdn'
         when: cdn == 1
         tags: ['media-cdn']
 
+      - role: golang
+        when: cdn == 1
+
       - role: 'media-mirror'
         when: mirror == 1
         tags: ['media-mirror']
 
-      - role: rvm.ruby
+      - role: rvm1-ansible
         when: app == 1
         tags: ['media-app', 'ruby']
-        rvm1_rubies: ['ruby-2.5.3'],
+        rvm1_rubies: ["{{ ruby_version }}"]
         rvm1_user: 'media'
         rvm1_install_path: '/srv/media/.rvm'
         rvm1_install_flags: '--auto-dotfiles --user-install'
@@ -36,6 +33,8 @@
       - { role: 'logcheck', tags: ['logcheck'] }
 
     vars:
+      go_version: 1.13
+      ruby_version: ruby-2.6.1
       # run acmetool setup
       acmetool_setup: 0
       # remove all configuration/state first
@@ -51,8 +50,8 @@
         - { name: 'derpeter', state: 'absent' }
         - { name: 'danimo', state: 'absent' }
         - { name: 'florolf', state: 'absent' }
-        - { name: 'mazdermind', state: 'absent' }
         - { name: 'meise', state: 'absent' }
+        - { name: 'mm', state: 'absent' }
         - { name: 'voc', state: 'present' }
 
       media_mirror_rsync: 'TODO keepass plz'

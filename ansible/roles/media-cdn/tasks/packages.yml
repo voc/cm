@@ -1,24 +1,12 @@
 ---
-  - apt_repository:
-      repo: "ppa:gophers/archive"
-      update_cache: "yes"
-    when: ansible_distribution == "Ubuntu"
-
-  - apt_repository:
-      repo: "ppa:chris-lea/redis-server"
-      update_cache: "yes"
-    when: ansible_distribution == "Ubuntu"
-
-  - name: install defaut packages
+  - name: install default packages
     apt: name={{ item }} state=latest
-    with_items:
-      - golang-1.9-go
+    loop:
       - zlib1g-dev
       - libgeoip-dev
-      - redis-server
       - unattended-upgrades
 
-  - name: remove uneeded
-    apt: name={{ item }} state=absent
-    with_items:
-      - golang-1.6-go
+  - name: install default packages
+    apt: name={{ item }} state=latest default_release=buster-backports
+    loop:
+      - redis-server

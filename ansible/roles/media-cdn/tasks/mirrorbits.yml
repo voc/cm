@@ -1,10 +1,10 @@
 ---
-- shell: /usr/lib/go-1.9/bin/go get github.com/voc/mirrorbits
+- shell: /usr/local/bin/go get github.com/voc/mirrorbits
   environment:
-    GOPATH: /usr/local/
-- shell: /usr/lib/go-1.9/bin/go install github.com/voc/mirrorbits
+    GOPATH: /srv/mirrorbits
+- shell: /usr/local/bin/go install github.com/voc/mirrorbits
   environment:
-    GOPATH: /usr/local/
+    GOPATH: /srv/mirrorbits
 
 - group: name="mirrorbits" state=present
 
