@@ -1,5 +1,5 @@
 ---
-room_number: 192
+room_number: 191
 room_fahrplan_name: Jugendhaus
 
 # hd-direct, hd-voctomix
@@ -60,7 +60,7 @@ voctomix_sources:
     # Mini Recorder unten
     name: cam1
     type: decklink-internal
-    devicenumber: 0
+    devicenumber: 4
     video_connection: SDI
     video_mode: "1080p25"
     volume: 1.0
@@ -74,7 +74,7 @@ voctomix_sources:
     # Mini Recorder oben
     name: slides
     type: decklink-internal
-    devicenumber: 1
-    video_connection: HDMI
-    video_mode: "1080p24"
+    devicenumber: 3
+    video_connection: SDI
+    video_mode: "1080p25"
     volume: 0.0
