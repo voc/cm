@@ -3,8 +3,11 @@
     apt:
       state: latest
       name:
+        - build-essential
+        - pkg-config
         - zlib1g-dev
         - libgeoip-dev
+        - libprotoc-dev
         - unattended-upgrades
 
   - name: install default packages

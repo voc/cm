@@ -4,6 +4,7 @@
     GOPATH: /srv/mirrorbits
 - shell: /usr/local/bin/go install github.com/voc/mirrorbits
   environment:
+    CGO_ENABLED: 0
     GOPATH: /srv/mirrorbits
 
 - group: name="mirrorbits" state=present

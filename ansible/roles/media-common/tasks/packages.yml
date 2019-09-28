@@ -4,6 +4,7 @@
       state: latest
       update_cache: yes
       name:
+        - aptitude
         - build-essential
         - etckeeper
         - ethtool

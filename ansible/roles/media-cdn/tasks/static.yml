@@ -1,5 +1,4 @@
 ---
-- group: name="uploaders" state=present
 - group: name="cdn-app" state=present
 
 - user: state=present
@@ -7,29 +6,17 @@
         groups="cdn-app,uploaders"
         shell="/bin/false"
 
-- user: state=absent
-        name="{{ item.name }}"
-        force=true
-        remove=yes
-        group="uploaders"
-        shell="/bin/false"
-        home="/home/uploaders/{{ item.name }}"
-        skeleton=false
-        #ssh_key="{{ (item | dict2items | first).value }}"
-  loop: "{{ uploaders }}"
-  when: (item | dict2items | first).key not in hostvars['new.media'].users
-  tags: ['user']
+- block:
+  - get_url:
+      url: https://github.com/voc/voctoweb-static/archive/master.tar.gz
+      dest: /tmp/static.tar.gz
+  - unarchive:
+      src: /tmp/static.tar.gz
+      dest: /srv/www
+      remote_src: yes
+      extra_opts: ['--strip-components=1']
 
-  # item.state == 'absent'
-
-- file: path=/srv/www/ state=directory
-        owner=www-data group=www-data
-
-
-- git: repo=https://github.com/voc/voctoweb-static
-       dest=/srv/www/
-       version=master
-
+# TODO scp from koeln
 - git: repo=https://github.com/voc/voctoweb-media
        dest=/srv/www/media.ccc.de/media
        version=master
