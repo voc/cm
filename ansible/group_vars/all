@@ -2,7 +2,7 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: jh-ffm
+  acronym: jh19-ffm
   name: Jugend Hackt Frankfurt am Main 2019
   slogan: Mit Code die Welt verbessern
   formats:

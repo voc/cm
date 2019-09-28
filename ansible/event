@@ -56,6 +56,7 @@ encoder-seibert1.lan.c3voc.de
 
 speedy.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "sX", "s23", "s41", "s42", "s80", "s89", "s97"]' transcoder_streams_enabled='["s1", "s2", "s3", "s89", "q1", "sX"]'  transcoder_lounges='["a1", "a2"]'
 tweety.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "sX", "s23", "s41", "s42", "s80", "s89", "s97"]' transcoder_streams_enabled='["s4", "s5", "s6", "q2", "s23", "s80", "s97"]' transcoder_lounges='["a3", "a4"]'
+blade3.lan.c3voc.de     transcoder_streams='["q1"]' transcoder_streams_enabled='["q1"]'
 
 [encoders]
 encoder1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder1.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.password') }}"
