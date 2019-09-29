@@ -1,8 +1,9 @@
 [cdn]
-berlin-ak.media.ccc.de mirror=1 cdn=1
+berlin-ak.media.ccc.de mirror=1 cdn=0 ssl=1
+new.media mirror=1 cdn=1 ssl=0
 
 [mirror]
 berlin.media.ccc.de mirror=1 cdn=0
 
 [not-yet-in-ansible]
-koeln.media.ccc.de mirror=0 cdn=0
+koeln.media.ccc.de mirror=0 cdn=0 ssl=1

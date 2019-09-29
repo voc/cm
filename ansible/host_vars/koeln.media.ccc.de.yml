@@ -1,0 +1,3 @@
+---
+acmetool_want:
+  - "{{ inventory_hostname }} cdn.media.ccc.de"
