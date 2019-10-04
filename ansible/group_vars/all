@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: jh18-berlin
-  name: Jugend Hackt Berlin 2018
-  slogan: XXX
+  acronym: jh19-berlin
+  name: Jugend Hackt Berlin 2019
+  slogan: 'Mit Code die UM:Welt verbesserm'
   formats:
     hd: 'yes'
     sd: 'yes'
