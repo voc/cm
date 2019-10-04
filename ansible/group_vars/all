@@ -148,6 +148,7 @@ users:
   - { name: 'jayjay', state: 'present' } 
   - { name: 'cardno', state: 'absent' } # cristoph fcmc
   - { name: 'derchris', state: 'present' }
+  - { name: 'mntl', state: 'present' }
   - { name: 'voc', state: 'present' }
 
 additional_users: []
