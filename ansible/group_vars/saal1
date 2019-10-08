@@ -9,7 +9,7 @@ encodermode: hd-voctomix
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
 voctomix_audiostreams: 2
-#voctomix_stream_suppress_audio_tracks: [1]
+voctomix_stream_suppress_audio_tracks: []
 
 # für JVC:
 #    video_connection: SDI
@@ -63,7 +63,7 @@ voctomix_sources:
     devicenumber: 1
     video_connection: SDI
     video_mode: "1080i50"
-    deinterlace: yes
+    deinterlace: "yes"
     volume: 1.0
     audiostream:
       0: 0+1
@@ -88,5 +88,5 @@ voctomix_sources:
     devicenumber: 5
     video_connection: SDI
     video_mode: "1080i50"
-    deinterlace: yes
+    deinterlace: "yes"
     volume: 0.0
