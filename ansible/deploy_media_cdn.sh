@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 [ -d roles/ansible-acmetool ] || git clone https://github.com/artefactual-labs/ansible-acmetool.git roles/
 

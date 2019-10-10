@@ -9,11 +9,12 @@
     ignore_errors: yes
 
   - name: install collectd perl packages
-    apt: name={{ item }} state=latest
-    with_items:
-      - collectd
-      - liblwp-protocol-https-perl
-      - libxml-simple-perl
+    apt: name={{ packages|flatten(levels=1) }} state=latest
+    vars:
+      packages:
+        - collectd
+        - liblwp-protocol-https-perl
+        - libxml-simple-perl
     tags: install
 
   - name: create plugins directory
