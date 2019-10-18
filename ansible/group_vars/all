@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: jh19-hd
+  name:  Jugend Hackt Heidelberg 2019
+  slogan: Mit Code die Umwelt verbessern
   formats:
     hd: 'yes'
     sd: 'yes'
