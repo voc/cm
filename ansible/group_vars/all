@@ -10,7 +10,7 @@ event:
     sd: 'yes'
 
 voctomix:
-  version: "0.6"
+  version: "master"
 
   parallel_slide_recording: true
   # to use a static bg-image place image in

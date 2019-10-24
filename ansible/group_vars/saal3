@@ -62,6 +62,15 @@ voctomix_sources:
     devicenumber: 1
     video_connection: SDI
     video_mode: "1080i50"
+    deinterlace: assume-progressive
+    volume: 1.0
+    audiostream:
+      # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
+      0: 0
+  
+      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
+      1: 1
+
 #  -
 #    # Duo Port 4
 #    name: cam2
