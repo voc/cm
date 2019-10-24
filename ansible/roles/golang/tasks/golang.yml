@@ -1,0 +1,18 @@
+---
+- shell: "go version | grep -q {{ go_version }}"
+  register: installed
+  ignore_errors: true
+
+- block:
+  - get_url:
+      url: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
+      dest: "/tmp/golang{{ go_version }}.tgz"
+  - unarchive:
+      src: "/tmp/golang{{ go_version }}.tgz"
+      dest: /opt/
+      remote_src: yes
+  - command: update-alternatives --quiet --install /usr/local/bin/go go /opt/go/bin/go 1
+  when: installed is failed
+  rescue:
+    - debug:
+        msg: "Did you specify the go_version as --extra-var?"

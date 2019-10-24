@@ -27,11 +27,12 @@
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
   - include: ssl.yml
+  - include: smart.yml
   # realise users
   - include: user.yml user={{ users }}
     tags: user
   - include: monitoring.yml
-    tags: 
+    tags:
       - monitoring
       - check_system
 

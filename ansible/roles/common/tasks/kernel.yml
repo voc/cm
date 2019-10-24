@@ -9,7 +9,7 @@
   - name: install linux specific kernel
     apt: deb="{{ item }}"
     when:
-      - linux_kernel_installed|failed and kernel_urls is defined
+      - linux_kernel_installed is failed and kernel_urls is defined
     loop: "{{ system.kernel_urls }}"
 
   - name: install linux specific kernel '{{ system.kernel_package }}'
@@ -19,7 +19,7 @@
         - "{{ system.kernel_package }}"
         - "{{ system.kernel_package | regex_replace('image', 'headers') }}"
     when:
-      - linux_kernel_installed|failed and kernel_urls is undefined
+      - linux_kernel_installed is failed and kernel_urls is undefined
 
   - name: install microcode package for cpu '{{ ansible_processor[2] }}'
     apt: name=intel-microcode state=present

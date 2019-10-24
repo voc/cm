@@ -37,7 +37,7 @@ LoadPlugin write_graphite
 
 <Plugin network>
   # server setup
-  <Listen "195.54.164.163">
+  <Listen "{{ ansible_default_ipv4.address }}">
     SecurityLevel Encrypt
     AuthFile "/etc/collectd/passwd"
   </Listen>
@@ -48,7 +48,7 @@ LoadPlugin write_graphite
 </Plugin>
 
 <Plugin write_graphite>
-   <Carbon "example">
+   <Carbon "local">
      Host "127.0.0.1"
      Port "2033"
      SeparateInstances true

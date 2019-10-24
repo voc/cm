@@ -8,6 +8,15 @@
     changed_when: false
     ignore_errors: yes
 
+  - name: install collectd config file
+    template: dest=/etc/collectd/collectd.conf
+              src=collectd/collectd.client.conf.j2
+              owner=root group=root mode=0640
+    notify: restart collectd
+    tags:
+      - install
+      - config
+
   - name: install collectd perl packages
     apt: name={{ packages|flatten(levels=1) }} state=latest
     vars:
@@ -63,15 +72,6 @@
     when: haproxy is defined and haproxy
     tags: install
 
-  - name: install collectd config file
-    template: dest=/etc/collectd/collectd.conf
-              src=collectd/collectd.client.conf.j2
-              owner=root group=root mode=0640
-    notify: restart collectd
-    tags:
-      - install
-      - config
-
   - name: adding entries for curl_json php to types.db
     lineinfile: dest=/opt/voc/collectd/types.db
                 regexp="{{ item.regex }}"
@@ -103,4 +103,4 @@
       - config
 
   - include: snmp.yml
-    when: ansible_hostname | match('mixer\d+')
+    when: ansible_hostname is match('mixer\d+')
