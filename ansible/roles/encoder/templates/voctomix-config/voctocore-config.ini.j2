@@ -54,6 +54,7 @@ deinterlace = assume-progressive
 [fullscreen]
 default-a=slides
 
+{% if voctomix_inverted_axis is not defined %}
 [side-by-side-equal]
 border=51
 gutter=0
@@ -75,6 +76,28 @@ pipsize=496x279
 pippos=1404/781
 
 default-a=slides
+{% else %}
+[side-by-side-equal]
+border=10
+gutter=20
+btop=80
+atop=480
+
+default-b=slides
+[side-by-side-preview]
+asize=1420x799
+apos=480/160
+bsize=496x279
+bpos=20/781
+
+default-a=slides
+
+[picture-in-picture]
+pipsize=496x279
+pippos=20/781
+
+default-a=slides
+{% endif %}
 
 [previews]
 ; disable if ui & server run on the same computer and can exchange uncompressed video frames
