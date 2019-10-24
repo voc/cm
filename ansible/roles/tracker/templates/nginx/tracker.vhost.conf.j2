@@ -21,18 +21,18 @@ server {
   listen [::]:443;
   server_name tracker.c3voc.de;
 
-  root /srv/www/cccongress/Public;
+  root /srv/www/cccongress/src/Public;
 
   client_max_body_size 20m;
 
   # TLS certificates
-  ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/cert.pem;
+  ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
   ssl_certificate_key   /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
   # OCSP stapling
   ssl_stapling on;
   ssl_stapling_verify on;
   ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
-  ssl_stapling_file /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp;
+  ssl_stapling_file ssl_stapling_file /etc/dehydrated/certs/{{ ansible_fqdn }}/ocsp.der;
 
 
   # don't allow access to some files or directories

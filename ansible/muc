@@ -1,0 +1,21 @@
+# Hosts/Inventory file
+
+# Lecture rooms
+[saal-muc]
+mixer-muc.lan.c3voc.de
+encoder-muc.lan.c3voc.de
+#encoder.muc.c3voc.de
+
+
+# Host types
+[encoders]
+encoder-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.password') }}"
+
+[mixers]
+mixer-muc.lan.c3voc.de
+
+[minions]
+minion-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion-muc.password') }}"
+
+
+

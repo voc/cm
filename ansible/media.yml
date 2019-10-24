@@ -1,0 +1,47 @@
+---
+  - hosts: cdn
+    roles:
+      - { role: 'media-common', tags: ['media-common'] }
+
+      - role: 'ansible-acmetool'
+        when: inventory_hostname == 'berlin-ak.media.ccc.de' and acmetool_setup == 1
+        vars: { acmetool_want: ["{{ inventory_hostname }} {{ inventory_hostname_short }}.ftp.media.ccc.de"] }
+        tags: ['ansible-acmetool', 'nginx']
+
+      - role: 'ansible-acmetool'
+        when: inventory_hostname == 'koeln.media.ccc.de' and acmetool_setup == 1
+        vars: { acmetool_want: ["{{ inventory_hostname }} cdn.media.ccc.de"] }
+        tags: ['ansible-acmetool', 'nginx']
+
+      - role: 'media-cdn'
+        when: cdn == 1
+        tags: ['media-cdn']
+
+      - role: 'media-mirror'
+        when: mirror == 1
+        tags: ['media-mirror']
+
+      - { role: 'logcheck', tags: ['logcheck'] }
+
+    vars:
+      # run acmetool setup
+      acmetool_setup: 0
+      # remove all configuration/state first
+      acmetool_cleanup: 'false'
+      # will overwrite local files
+      download_logcheck: 'false'
+      # will remove local logcheck rules before upload
+      remove_logcheck: 'false'
+
+      acmetool_websrv: "nginx"
+      redis_bind: 127.0.0.1
+      users:
+        - { name: 'derpeter', state: 'absent' }
+        - { name: 'danimo', state: 'absent' }
+        - { name: 'florolf', state: 'absent' }
+        - { name: 'mazdermind', state: 'absent' }
+        - { name: 'meise', state: 'absent' }
+        - { name: 'voc', state: 'present' }
+
+      media_mirror_rsync: 'TODO keepass plz'
+      google_maps_api_key: 'TODO keepass plz'

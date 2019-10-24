@@ -45,7 +45,7 @@ my $data = get_relays($ARGV[0]);
 # still being depended upon by Ansible roles
 
 my $tags;
-foreach my $tag (qw(dash dtag hls icecast local relive)) {
+foreach my $tag (qw(dash dtag hls icecast local relive 3rdparty)) {
 	$tags->{$tag} = [];
 }
 

@@ -1,19 +1,29 @@
 ---
   # Repo checkout
-  - name: create user for thumb and schedule download
-    user: name=downloader home=/srv/nginx/streaming-website
-          system=yes
-    tags:
-      - install
-
   - name: git checkout streaming-website
-    git: repo=ssh://git@mng.ber.c3voc.de/streaming-website
+    git: repo=http://c3voc.de/git/streaming-website.git
          dest=/srv/nginx/streaming-website
     tags:
       - install
       - deploy_website
       - pull
       - checkout
+
+  - name: create user for thumb and schedule download
+    user: name=downloader home=/srv/nginx/streaming-website
+          system=yes
+    tags:
+      - install
+
+  - name: create mqttfeedback group
+    group: name=mqttfeedback system=yes
+    tags:
+      - install
+
+  - name: create mqttfeedback user
+    user: name=mqttfeedback system=yes group=mqttfeedback
+    tags:
+      - install
 
   - name: change streaming-website permissions
     file: dest=/srv/nginx/streaming-website
@@ -47,17 +57,26 @@
     file: state=directory
           dest=/opt/streaming-feedback
           owner=www-data group=mqttfeedback mode=0771
-    tags: install
+    tags:
+      - install
+      - feedback_password
 
   # Feedback db
   - stat: path=/opt/streaming-feedback/feedback.sqlite3
     register: feedback_db
     tags: install
 
+  - name: set streaming page feedback read password
+    template: src=feedback-password.j2
+              dest=/opt/streaming-feedback/feedback-password
+              owner=www-data group=www-data mode=640
+    tags:
+      - install
+      - config
+      - feedback_password
+
   - name: create feedback db
-    shell: "sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
-    become: www-data
-    become_user: www-data
+    shell: "sudo -uwww-data sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
     when: feedback_db.stat.isreg is not defined or feedback_db.stat.isreg == False
     tags: install
 
@@ -67,7 +86,7 @@
           mode=0660 owner=www-data group=mqttfeedback
     tags: install
 
-  # Feedback client
+ # Feedback client
   - name: clone mqtt repo
     git: repo=ssh://git@mng.ber.c3voc.de/mqtt
          dest=/usr/local/src/mqtt
@@ -75,6 +94,7 @@
       - install
       - checkout
       - pull
+
 
   - stat: path=/usr/local/src/mqtt/provider/feedback/Gemfile.lock
     register: mqtt_feedback_gemlock
@@ -90,13 +110,9 @@
     when: mqtt_feedback_gemlock.stat.isreg is not defined or mqtt_feedback_gemlock.stat.isreg == False
     tags: install
 
-  - name: create mqttfeedback user
-    user: name=mqttfeedback system=yes group=mqttfeedback
-    tags: config
-
   - name: configure systemd to run mqttfeedback client
     template: src=mqttfeedback.service.j2
-              dest=/lib/systemd/system/
+              dest=/lib/systemd/system/mqttfeedback.service
               owner=root mode=640
     notify: reload systemd
     tags:
@@ -114,20 +130,28 @@
           user=downloader
     tags: install
 
+  - import_tasks: ../../../register/bin_path.yml
+    tags:
+      - thumbnail_downloader
+
   - name: create cronjobs to pull thumbs every minute
     cron: name="download thumbnail for {{ item }}"
-          job="{{ ffmpeg_bin.stdout }} -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_sd.m3u8 -vf 'scale=213:120' -vframes 1 /srv/nginx/thumbs/{{ item }}.png 2>/dev/null"
+          job="flock -xn /srv/nginx/thumbs/{{ item }}.png -c \"{{ ffmpeg_bin.stdout }} -nostdin -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_sd.m3u8 -vf 'scale=213:120' -vframes 1 /srv/nginx/thumbs/{{ item }}.png 2>/dev/null\""
           user=downloader
-    tags: install
-    with_items:
-      - s1
-      - s2
-      - s3
-      - s4
-      - s5
-      - q1
-      - cam5
-      - cam6
+    tags:
+      - install
+      - thumbnail_downloader
+    with_items: "{{ thumbnail_downloader_rooms }}"
+
+  - name: create cronjobs to pull posters every minute
+    cron: name="download poster for {{ item }}"
+          job="flock -xn /srv/nginx/thumbs/{{ item }}-poster.png -c \"{{ ffmpeg_bin.stdout }} -nostdin -y -v warning -i http://cdn.c3voc.de/hls/{{ item }}_native_hd.m3u8 -vframes 1 /srv/nginx/thumbs/{{ item }}-poster.png 2>/dev/null\""
+          user=downloader
+    tags:
+      - install
+      - thumbnail_downloader
+    with_items: "{{ thumbnail_downloader_rooms }}"
+
 
   # Remove fcgi cache after deployment
   - shell: ls -1 /srv/nginx/cache/streaming_fcgi/

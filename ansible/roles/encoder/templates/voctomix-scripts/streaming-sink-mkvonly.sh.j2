@@ -1,41 +1,56 @@
 #!/bin/sh
 ffmpeg -y -nostdin -hide_banner \
 {# input from both mix-out and slide-mirror #}
-	-thread_queue_size 512 \
-	-i tcp://localhost:15000 \
-	-thread_queue_size 512 \
-	-i tcp://localhost:13000 \
+	-thread_queue_size 512 -i tcp://localhost:15000?timeout=3000 \
+{% if voctomix.parallel_slide_recording %}
+	-thread_queue_size 512 -i tcp://localhost:15001?timeout=3000 \
+{% endif %}
 	-filter_complex '
 		[0:v] hqdn3d [smooth_hd];
-		[1:v] scale=720:576, fps=5, hqdn3d [smooth_slides];
-
 		movie=/opt/voc/share/overlay_hd.png [logo_hd];
-		[smooth_hd] [logo_hd] overlay=0:0 [hd];
+		[smooth_hd] [logo_hd] overlay=0:0 [hd]
+
+{% if voctomix.parallel_slide_recording %}
+		;
+		[1:v] scale=1024:576, fps=5, hqdn3d [smooth_slides];
 
 		movie=/opt/voc/share/overlay_slides.png [logo_slides];
-		[smooth_slides] [logo_slides] overlay=0:0 [slides];
-
-		[0:a:0] volume={{ room_volume | default('1') }}, asplit=2 [native_in][translated_in];
-		[native_in]     pan=mono|c0=FL [native];
-		[translated_in] pan=mono|c0=FR [translated]
+		[smooth_slides] [logo_slides] overlay=0:0 [slides]
+{% endif %}
 	' \
 {# Shared video settings #}
-	-c:v libx264 -preset:v veryfast -profile:v main -pix_fmt yuv420p \
+	-c:v libx264 -preset:v veryfast -profile:v main -pix_fmt yuv420p -flags +cgop \
 	-threads:v 0 -aspect 16:9 \
 	\
 {# High bitrate and high quality for HD #}
-	-map [hd] -metadata:s:v:0 title="HD"\
-	-r:v:0 25 -g:v:0 25 -crf:v:0 21 -maxrate:v:0 5M -bufsize:v:0 8M \
+	-map [hd] -metadata:s:v:0 title="HD" \
+	-r:v:0 25 -g:v:0 75 -crf:v:0 21 -maxrate:v:0 4M -bufsize:v:0 18M \
 	\
+{% if voctomix.parallel_slide_recording %}
 {# Low bitrate and ok quality for Slides #}
-	-map [slides] -metadata:s:v:1 title="Slides"\
-	-g:v:1 50 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 5M \
+	-map [slides] -metadata:s:v:1 title="Slides" \
+	-g:v:1 15 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 750k \
 	\
+{% endif %}
 {# Shared audio settings #}
-	-c:a libfdk_aac -b:a 192k -ar 48000 -ac 1 \
+	-c:a aac -b:a 192k -ar 48000 -ac 1 \
 	\
 {# Encode audio #}
-	-map [native] -metadata:s:a:0 title="Native" \
-	-map [translated] -metadata:s:a:1 title="Translated" \
+{% if voctomix_stream_suppress_audio_tracks %}
+{% for n in range(voctomix_audiostreams) %}
+{% if n not in voctomix_stream_suppress_audio_tracks %}
+	-map 0:a:{{ n }} \
+{% endif %}
+{% endfor %}
+{% else %}
+	-map 0:a \
+{% endif %}
 	\
-	-f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/s{{ room_number }}
+	-f matroska \
+	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+	-content_type video/webm \
+{% if streaming_endpoint_pulling %}
+	icecast://127.0.0.1:7999/{{ streaming_endpoint }}
+{% else %}
+	icecast://live.ber.c3voc.de:7999/{{ streaming_endpoint }}
+{% endif %}

@@ -4,10 +4,17 @@
 Description = audio-ingest
 After = network.target
 
+# restart-notifier simply checks if the ffmpeg pid is still present after a few seconds
+# and will then notify the channel. It is invoced after a start of restart.
+# Messages are sent using alert-failed.sh or alert-running.sh which will go
+# through a ratelimiter to prevent spam and use a simple perl mqtt client to
+# send the message which will be picked up by a mqtt listener script on mng.ber
+# similar to viri.
+
 [Service]
 Type = simple
 ExecStart = /opt/audio-ingest.sh
-ExecStartPost = /bin/bash -c "sleep 3 ; if ( /bin/kill -0 \"$MAINPID\" &> /dev/null ); then /opt/mqtt/alert-running.sh; else /opt/mqtt/alert-failed.sh; fi"
+ExecStartPost = /opt/mqtt/restart-notifier.sh $MAINPID
 Restart = always
 RestartSec = 1s
 StartLimitInterval = 0

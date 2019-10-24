@@ -27,6 +27,6 @@
     tags: install
 
   - name: create fresh ocsp file
-    command: "/usr/local/bin/update_{{ domain }}_ocsp_stapling.sh 1>/dev/null"
-    failed_when: False
+    command: "sudo -u ocsp-updater /usr/local/bin/update_{{ domain }}_ocsp_stapling.sh 1>/dev/null"
     changed_when: False
+    failed_when: False

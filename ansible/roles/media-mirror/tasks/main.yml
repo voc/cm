@@ -1,0 +1,3 @@
+---
+  - import_tasks: nginx-cdn-node.yml
+  - import_tasks: cdn-sync.yml

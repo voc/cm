@@ -8,7 +8,7 @@ use File::Slurp;
 use JSON;
 
 # HACK
-my $icecast_push_master = "live.cch.c3voc.de";
+my $icecast_push_master = "live.ber.c3voc.de";
 
 sub get_relays {
 	my ($path) = @_;

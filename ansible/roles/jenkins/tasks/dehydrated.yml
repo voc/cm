@@ -1,0 +1,63 @@
+---
+  # Installation
+  - name: install nginx package
+    apt: name=nginx state=latest
+    tags:
+      - install
+
+  - name: start nginx
+    service: name=nginx enabled=yes state=started
+    when: nginx is defined and nginx == 'yes'
+
+  # Create config
+  - name: remove default vhost
+    file: dest=/etc/nginx/sites-enabled/default state=absent
+
+  - include: create_vhost.yml certs_bootstrapped=no
+
+  - name: add host to domains.txt
+    lineinfile:
+      dest: /etc/dehydrated/domains.txt
+      state: present
+      line: "{{item}}"
+      regexp: "^{{item}}"
+      owner: root
+      group: root
+      mode: 0644
+      create: yes
+    with_items:
+      - "{{ vhost }}"
+
+  - stat:
+      path: /etc/nginx/ssl/dhparam.pem
+    register: dhparam
+
+  - name: create custom dhparam
+    shell: mkdir -p /etc/nginx/ssl && openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+    when: not dhparam.stat.exists
+
+  - name: enable vhost
+    file: src=/etc/nginx/sites-available/{{ item }}
+          dest=/etc/nginx/sites-enabled/{{ item }}
+          state=link
+    notify:
+      - restart nginx
+    with_items:
+      - "{{ vhost }}.conf"
+    tags:
+      - config
+      - install
+
+  - name: Install passlib
+    apt: name=python-passlib
+
+  - name: add password protection
+    shell: (PASSWORD="{{ lookup('keepass', 'Management/jenkins.password') }}"; SALT="$(openssl rand -base64 3)"; SHA1="$(printf "%s%s" "$PASSWORD" "$SALT" | openssl dgst -binary -sha1)"; SSHA="$(printf "%s%s" "$SHA1" "$SALT" | base64)"; printf "%s:{SSHA}%s\n" "{{ lookup('keepass', 'Management/jenkins.username') }}" "$SSHA" > /etc/nginx/htpasswd)
+
+  - name: run dehydrated cron job manually
+    command: /usr/bin/dehydrated -c
+
+  - include: create_vhost.yml certs_bootstrapped=yes
+      
+
+ 

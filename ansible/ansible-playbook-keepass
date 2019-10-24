@@ -1,25 +1,55 @@
 #!/usr/bin/env bash
 
-#
-# Read config, use env or ask for keepass file
-# and store it if entered. 
-#
-KEEPASS_FILE_CONFIG=".keepass_file_path"
-if [ -z "${KEEPASS}" -a -r "${KEEPASS_FILE_CONFIG}" ]; then
-  KEEPASS=`cat ${KEEPASS_FILE_CONFIG} | xargs`
-
-  # If the path is empty or does not exist, delete the conf
-  if [ -z "${KEEPASS}" -o ! -f "${KEEPASS}" -o ! -r "${KEEPASS}" ]; then
-    echo "Stored keepass path '${KEEPASS}' is not readable file,"\
-         "deleting configuration file"
-    rm "${KEEPASS_FILE_CONFIG}"
-    unset KEEPASS
-  fi
+if ! git fetch 2> /dev/null ; then
+    echo "Could not fetch latest changes, maybe you are offline?"
+    echo "You might break stuff others just fixed..."
+    echo "Do you still want to deploy? then type yes"
+    read -p "" input
+    if [ "x$input" != "xyes" ]; then
+        exit 2
+    fi
+    echo ""
 fi
 
-if [ -z "${KEEPASS}" ]; then
-  echo -n "Keepass file path (…voc.kdbx): "
-  read -r KEEPASS
+echo ""
+DEPLOY_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+if [ `git rev-parse --verify origin/$DEPLOY_BRANCH` != `git rev-parse --verify $DEPLOY_BRANCH` ]; then
+    echo "You have commits on the $DEPLOY_BRANCH branch not pushed to origin yet. The next operator who deploys ansible will probably break your stuff."
+    echo "do you still want to deploy your unpublished changes? then type yes"
+    read -p "" input
+    if [ "x$input" != "xyes" ]; then
+        exit 2
+    fi
+    echo ""
+fi
+
+if ! (git diff --exit-code >/dev/null && git diff --cached --exit-code >/dev/null); then
+    echo "You have uncomitted changes. The next operator who deploys ansible will probably break your stuff."
+    echo "do you still which to deploy your unpublished changes? then type yes"
+    read -p "" input
+    if [ "x$input" != "xyes" ]; then
+        exit 2
+    fi
+    echo ""
+fi
+
+
+export ANSIBLE_NOCOWS=1
+
+source "_ansible_keepass_util.sh"
+
+KEEPASS_DIR=$(dirname "${KEEPASS}")
+if [ -f "${KEEPASS_VERSION_CONFIG}" ]; then
+  KEEPASS_REQUIRED_VERSION=$(cat "${KEEPASS_VERSION_CONFIG}")
+  ( cd "${KEEPASS_DIR}"; git merge-base --is-ancestor $KEEPASS_REQUIRED_VERSION HEAD )
+
+  if [ $? -ne 0 ]; then
+    echo "keepass checkout must be newer or equal to ${KEEPASS_REQUIRED_VERSION}, which it isn't"
+    echo "do a git pull before continuing"
+
+    exit 1
+  fi
 fi
 
 if [ -z "${KEEPASS_FILE_CONFIG}" -o ! -f "${KEEPASS}" -o ! -r "${KEEPASS}" ]; then
@@ -31,11 +61,15 @@ else
 fi
 
 #
-# Ask for the keepass file or use the env var
+# Ask for the keepass file, query keychain or use the env var
 #
 if [ -z "${KEEPASS_PW}" ]; then
-  echo -n "Keepass Password: "
-  read -ers KEEPASS_PW
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    KEEPASS_PW=`security find-generic-password  -w -a "${KEEPASS}"`
+  else
+    echo -n "Keepass Password (or export KEEPASS_PW): "
+    read -ers KEEPASS_PW
+  fi
   echo ""
 fi
 
@@ -45,9 +79,12 @@ if [ -z "${KEEPASS_PW}" ]; then
 fi
 
 #
+# Test
+#
+echo "using keepass file: '${KEEPASS}'"
+env KEEPASS="${KEEPASS}" KEEPASS_PW="${KEEPASS_PW}" $(which python) lookup_plugins/keepass.py
+
+#
 # Exec
 #
-
-echo "using keepass file: '${KEEPASS}'"
-exec env KEEPASS="${KEEPASS}" KEEPASS_PW="${KEEPASS_PW}" python2 `which ansible-playbook` $*
-
+exec env KEEPASS="${KEEPASS}" KEEPASS_PW="${KEEPASS_PW}" $(which ansible-playbook) --ssh-extra-args="-A" $*

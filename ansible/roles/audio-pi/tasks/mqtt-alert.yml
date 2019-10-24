@@ -19,10 +19,11 @@
         dest=/opt/mqtt/
         owner=root group=staff mode=0755
   with_items:
-   - "mqttsend.pl"
-   - "ratelimit.sh"
+   - "restart-notifier.sh"
    - "alert-failed.sh"
    - "alert-running.sh"
+   - "ratelimit.sh"
+   - "mqttsend.pl"
 
 - name: deploy mqtt config file
   template: src="mqtt.conf.j2"

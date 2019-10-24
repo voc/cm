@@ -26,6 +26,14 @@
                 regexp='^#?\s*dtoverlay=audioinjector.*'
                 line='dtoverlay=audioinjector-wm8731-audio'
 
+  - name: Probe alsa control devices
+    command: amixer controls
+    register: alsa_controls_probe
+
+  - assert:
+      that: "'Output Mixer Line Bypass' in alsa_controls_probe.stdout"
+      msg: "Raspberry Pi Soundcard not active yet, SORRY YOU HAVE TO RESTART THE PI NOW because of changes in /boot/config.txt (unless you already did that, then there seems to be a problem)"
+
   - name: configure soundcard using alsa
     command: amixer set {{ item }}
     with_items:

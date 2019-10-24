@@ -2,11 +2,25 @@
   - name: Check if kernel "{{ system.kernel_package }}" is installed
     command: dpkg-query -W "{{ system.kernel_package }}"
     register: linux_kernel_installed
+    changed_when: False
     ignore_errors: True
     when: system.kernel_package is defined
 
   - name: install linux specific kernel
     apt: deb="{{ item }}"
     when:
-      - linux_kernel_installed|failed
-    with_items: "{{ system.kernel_urls }}"
+      - linux_kernel_installed|failed and kernel_urls is defined
+    loop: "{{ system.kernel_urls }}"
+
+  - name: install linux specific kernel '{{ system.kernel_package }}'
+    apt: name={{ packages|flatten(levels=1) }} state=present
+    vars:
+      packages:
+        - "{{ system.kernel_package }}"
+        - "{{ system.kernel_package | regex_replace('image', 'headers') }}"
+    when:
+      - linux_kernel_installed|failed and kernel_urls is undefined
+
+  - name: install microcode package for cpu '{{ ansible_processor[2] }}'
+    apt: name=intel-microcode state=present
+    when: ansible_virtualization_role == "host" and ansible_processor[2] | regex_search('Intel')

@@ -1,4 +1,7 @@
 ---
+  - name: create relive group
+    group: name=relive
+
   - name: create relive user
     user: name=relive groups="ssh" append=yes group=relive
 
@@ -7,7 +10,7 @@
           owner=relive group=relive mode=0755
 
   - name: checkout relive git repo
-    git: repo=ssh://git@mng.ber.c3voc.de/relive
+    git: repo=https://github.com/voc/hls-relive
          dest=/home/relive/git
     tags:
       - install
@@ -34,7 +37,7 @@
     tags: install
 
   - name: create cronjob to generate pages every two minutes
-    cron: name="get-fahrplan.sh" minute=*/2
-          job="/home/relive/git/scripts/foreach-project.sh 'perl /home/relive/git/hls-relive/genpage.pl'"
+    cron: name="update.sh" minute=*/2
+          job="/home/relive/git/scripts/update.sh"
           user=relive
     tags: install

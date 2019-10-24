@@ -1,0 +1,13 @@
+---
+  - name: "create {{ item }} vhost"
+    template: dest="/etc/nginx/sites-available/{{ item }}"
+              src="roles/jenkins/templates/nginx/vhosts/{{ item }}.j2"
+              mode=0640 owner=root group=root
+    with_items:
+      - "{{ vhost }}.conf"
+    notify:
+      - restart nginx
+    tags:
+      - config
+      - install
+

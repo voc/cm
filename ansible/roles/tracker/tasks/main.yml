@@ -1,5 +1,4 @@
 ---
-  - include: ../../letsencrypt/tasks/main.yml domain=tracker.c3voc.de
   - include: nginx.yml
   - include: php.yml
 
@@ -11,11 +10,20 @@
       - curl
       - libxslt1.1
       - libintl-perl
+      - php-xdiff
+      - autopostgresqlbackup
 
   - name: git checkout tracker repo
-    git: repo=http://git.fem.tu-ilmenau.de/cccongress.git
+    git: repo=https://github.com/crs-tools/tracker
          dest=/srv/www/cccongress
     tags:
       - install
       - pull
       - checkout
+
+  - name: create logrotate config
+    copy: src=tracker dest=/etc/logrotate.d
+
+  - name: create cronjobs for lets encrypt / dehydrated
+    copy: src=dehydrated dest=/etc/cron.d
+

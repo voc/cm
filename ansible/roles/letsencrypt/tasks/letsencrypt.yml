@@ -1,79 +1,95 @@
 ---
-
-  - name: Install dependencies
-    apt:
-      name: "{{ item }}"
-      state: present
-    with_items:
-      - build-essential
-      - libffi-dev
-      - libssl-dev
-      - python-dev
-      - python-pip
-      - git
-      - dialog
-      - python-virtualenv
-      - augeas-lenses
-      - libaugeas0
-
-  - name: Checkout letsencrypt
+  - name: Checkout dehydrated
     git:
-      repo: "https://github.com/letsencrypt/letsencrypt"
-      dest: "/opt/letsencrypt"
+      repo: "https://github.com/lukas2511/dehydrated.git"
+      dest: "/opt/dehydrated"
       version: master
       force: yes
-    register: git_updated
-    tags:
-      - checkout
-      - pull
 
-  - name: Check to see if cert exists
-    stat:
-      path: "/etc/letsencrypt/live/{{ domain }}/cert.pem"
-    register: cert_exists
-    when: domain is defined and domain
-
-  - name: Check if cert is about to expire
-    command: "openssl x509 -checkend {{ 21 * 24 * 60 * 60 }} -noout -in \"/etc/letsencrypt/live/{{ domain }}/cert.pem\""
-    register: openssl_checkend
-    when: cert_exists is defined and cert_exists.stat.exists
-    failed_when: False
-    changed_when: False
-
-  - name: Check if a webserver is already running
-    shell: "netstat -lnt | awk '$6 == \"LISTEN\" && $4 ~ \":631\"'"
-    when: >
-      domain is defined and domain
-      and not cert_exists.stat.exists
-      or cert_exists.stat.exists and openssl_checkend.rc != 0
-    register: port_443_check
-
-  - name: Generate or renew certificate (standalone)
-    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --agree-dev-preview --email=contact@c3voc.de -d {{ domain }} --standalone --renew-by-default --rsa-key-size 4096"
-    when: >
-      not (port_443_check.stdout is defined and port_443_check.stdout)
-      and domain is defined and domain
-      and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
-
-  - stat: path={{ webroot_path }}
-    register: webroot_stat
-    when: webroot_path is defined and webroot_path
-    failed_when: False
-
-  - name: Generate or renew certificate (webroot)
-    shell: "VENV_PATH=/opt/letsencrypt/.venv /opt/letsencrypt/letsencrypt-auto certonly --agree-tos --agree-dev-preview --email=contact@c3voc.de -d {{ domain }} --webroot --webroot-path {{ webroot_path }} --renew-by-default"
-    when: >
-      webroot_stat is defined and webroot_stat.stat is defined and webroot_stat.stat.isdir is defined and webroot_stat.stat.isdir
-      and port_443_check.stdout is defined and port_443_check.stdout
-      and domain is defined and domain
-      and webroot_path is defined and webroot_path
-      and (not cert_exists.stat.exists or cert_exists.stat.exists and openssl_checkend.rc != 0)
-
-  - name: change /etc/letsencrypt permissions
-    file: dest=/etc/letsencrypt/{{ item }}
+  - name: create /etc/letsencrypt hierarchy
+    file: dest=/etc/{{ item }}
           owner=root group=ssl-cert
-          mode=g+rx recurse=yes
-    changed_when: false
+          state=directory mode=0750
     with_items:
-      - live
-      - archive
+      - "letsencrypt"
+      - "letsencrypt/live"
+      - "letsencrypt/live/{{ domain }}"
+      - "letsencrypt/renewal-hooks/"
+      - "letsencrypt/renewal-hooks/post"
+
+  - name: generate dehydrated folders
+    file: dest=/etc/{{ item }}
+          owner=root group=root
+          state=directory
+    with_items:
+      - "dehydrated"
+      - "dehydrated/accounts"
+
+  - name: generate dehydrated hook.sh
+    copy: dest=/etc/dehydrated/hook.sh
+          src=dehydrated/hook.sh
+          owner=root group=root mode=0775
+
+  - name: generate dehydrated dns-01 private & key
+    copy: dest=/etc/dehydrated/dns-01-key.{{ item }}
+          content={{ lookup('keepass', 'ansible/ssl/dns-01/'+ansible_fqdn+'.attr_'+item) }}
+          mode=0640 owner=root group=root
+    with_items:
+      - key
+      - private
+
+
+  - name: generate dehydrated config
+    copy: dest=/etc/dehydrated/config
+          src=dehydrated/config
+          owner=root group=root mode=0664
+
+  - name: generate dehydrated account directory
+    file: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}
+          state=directory
+          owner=root group=root mode=0750
+
+  - name: generate dehydrated account_key.pem
+    copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/account_key.pem
+          content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_account_key') }}
+          owner=root group=root mode=0640
+
+  - name: generate dehydrated registration_info.json
+    copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/registration_info.json
+          content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_registration_info') }}
+          owner=root group=root mode=0640
+
+  - name: ensure domain {{ domain }} is in domains.txt
+    lineinfile: path=/etc/dehydrated/domains.txt
+                state=present
+                regexp='{{ domain }}'
+                line='{{ domain }}'
+                create=yes owner=root group=root mode=0664
+
+  - name: generate or renew certificate (takes up to 5 seconds)
+    shell: "/opt/dehydrated/dehydrated --cron"
+
+  - name: generate dehydrated systemd timer unit
+    copy: dest=/etc/systemd/system/dehydrated.timer
+          src=dehydrated/dehydrated.timer
+          owner=root group=root mode=0664
+
+  - name: generate dehydrated systemd service unit
+    copy: dest=/etc/systemd/system/dehydrated.service
+          src=dehydrated/dehydrated.service
+          owner=root group=root mode=0664
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: disable certbot systemd timer
+    service: name=certbot.timer
+             enabled=no
+             state=stopped
+    ignore_errors: yes
+
+  - name: enable dehydrated systemd timer
+    service: name=dehydrated.timer
+             enabled=yes
+             state=started

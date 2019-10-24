@@ -1,3 +1,5 @@
 *.pyc
 *.retry
 .keepass_file_path
+roles/ansible-acmetool
+group_vars/loadbalancerse

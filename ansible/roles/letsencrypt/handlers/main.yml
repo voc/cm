@@ -1,6 +1,5 @@
 ---
   - name: run letsencrypt ocsp script
-    command: /usr/local/bin/update_{{ domain }}_ocsp_stapling.sh 1>/dev/null
-    become: yes
-    become_user: ocsp-updater
+    command: "sudo -u ocsp-updater /usr/local/bin/update_{{ domain }}_ocsp_stapling.sh 1>/dev/null"
     changed_when: False
+    failed_when: False

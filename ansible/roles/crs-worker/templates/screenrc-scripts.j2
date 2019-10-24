@@ -10,6 +10,9 @@ sessionname tracker-scripts
 hardstatus alwayslastline
 hardstatus string '%{= kG}%-Lw%{= kW}%50> %n%f* %t%{= kG}%+Lw%< %{= kG}'
 
+# enable utf8 output to stdout for python
+setenv LC_ALL en_US.UTF-8
+
 screen -t A-recording-scheduler      bash -c '{% if crs_token_meta is defined and crs_secret_meta is defined %}LOCALFILE=tracker-profile-meta.sh{% endif %} ./bin/crs_run script-A-recording-scheduler.pl'
 screen -t B-mount4cut                bash -c '{% if crs_token_meta is defined and crs_secret_meta is defined %}LOCALFILE=tracker-profile-meta.sh{% endif %} ./bin/crs_run script-B-mount4cut.pl'
 screen -t C-cut-postprocessor        bash -c '{% if crs_token_meta is defined and crs_secret_meta is defined %}LOCALFILE=tracker-profile-meta.sh{% endif %} ./bin/crs_run script-C-cut-postprocessor.pl'

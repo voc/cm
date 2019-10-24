@@ -1,0 +1,56 @@
+server {
+  #listen [::]:80 ipv6only=off;
+  listen [::]:80;
+  server_name static.media.ccc.de {{ inventory_hostname }};
+
+  # Letsencrypt - renewal does not work via ssl
+  location /.well-known/ {
+    autoindex on;
+    alias /var/www/.well-known/;
+    allow all;
+  }
+
+  location / {
+    rewrite     ^ https://static.media.ccc.de$request_uri? permanent;
+  }
+}
+
+server {
+  listen [::]:443;
+  server_name static.media.ccc.de {{ inventory_hostname }};
+
+  root /srv/www/media.ccc.de/root;
+  ssl                         on;
+  ssl_certificate             /var/lib/acme/live/{{ inventory_hostname }}/fullchain;
+  ssl_certificate_key         /var/lib/acme/live/{{ inventory_hostname }}/privkey;
+  ssl_session_timeout         1d;
+  ssl_session_cache           shared:SSL:5m;
+  ssl_protocols               TLSv1.1 TLSv1.2;
+  ssl_ciphers                 ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK;
+  ssl_prefer_server_ciphers   on;
+
+  # HSTS (ngx_http_headers_module is required) (15768000 seconds = 6 months)
+  add_header Strict-Transport-Security max-age=15768000;
+
+  # for static.media.ccc.de
+  location /media {
+    alias /srv/www/media.ccc.de/media;
+    autoindex  on;
+  }
+
+  # for {{ inventory_hostname }}
+  location /stats {
+    alias /srv/www/media.ccc.de/stats/;
+    index  index.html index.htm;
+    auth_basic "Media Stats";
+    auth_basic_user_file /etc/awstats/awstats.htpasswd;
+  }
+
+  # for {{ inventory_hostname }}
+  location /mrtg {
+    alias /srv/www/media.ccc.de/mrtg/;
+    index  index.html index.htm;
+    #auth_basic "Media Stats";
+    #auth_basic_user_file /etc/awstats/awstats.htpasswd;
+  }
+}

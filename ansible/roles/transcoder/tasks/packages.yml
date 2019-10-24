@@ -1,5 +1,5 @@
 ---
- - name: install additional packages for encoder role
+ - name: install additional packages for transcoder role
    apt: name={{ item }} state=latest
    with_items:
     - icecast2

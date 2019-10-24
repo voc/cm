@@ -59,8 +59,8 @@
     <!-- adding static mountpoints for all planed rooms -->
 {% for mount    in icecast_static_streams_meta_data %}
     <!-- {{ mount['saal'] }} - video -->
-{% for language in ["native", "translated"]%}
-{% for quality  in ["sd", "hd"]%}
+{% for language in ["native", "translated", "translated-2"]%}
+{% for quality  in ["sd", "hd", "slides"]%}
     <mount>
       <mount-name>/{{ mount['saal'] }}_{{ language }}_{{ quality }}.webm</mount-name>
       <type>video/webm</type>
@@ -68,7 +68,7 @@
       <hidden>0</hidden>
       <public>1</public>
       <stream-name>{{ mount['stream-name'] }}</stream-name>
-      <stream-description>{{ mount['description'] | default("32st Chaos Communication Congress - December 27th to 30th, 2015 - CCH Congress Center Hamburg, Germany, Earth, Milky Way")}}</stream-description>
+      <stream-description>{{ mount['description'] | default(event.name)}}</stream-description>
       <stream-url>{{ mount['stream-url'] }}</stream-url>
     </mount>
 
@@ -86,7 +86,7 @@
       <hidden>0</hidden>
       <public>1</public>
       <stream-name>{{ mount['stream-name'] }}</stream-name>
-      <stream-description>{{ mount['description'] | default("32st Chaos Communication Congress - December 27th to 30th, 2015 - CCH Congress Center Hamburg, Germany, Earth, Milky Way")}}</stream-description>
+      <stream-description>{{ mount['description'] | default(event.name)}}</stream-description>
       <stream-url>{{ mount['stream-url'] }}</stream-url>
     </mount>
 

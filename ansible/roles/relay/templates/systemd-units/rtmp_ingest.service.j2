@@ -1,0 +1,14 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = RTMP-to-Icedist Ingest for Stream {{ item }}
+
+[Service]
+Type = simple
+ExecStart = /opt/rtmp_ingest/scripts/rtmp_ingest_{{ item }}.sh
+Restart = always
+RestartSec = 30s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = multi-user.target

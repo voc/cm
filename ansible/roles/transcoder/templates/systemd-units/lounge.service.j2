@@ -1,0 +1,14 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = Transcoder Lounge {{ item }}
+
+[Service]
+Type = simple
+ExecStart = /opt/transcoder/scripts/lounge_{{ item }}.sh
+Restart = always
+RestartSec = 10s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = multi-user.target

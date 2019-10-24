@@ -1,0 +1,41 @@
+---
+  - name: setup the jenkins LTS repo key
+    apt_key: data="{{ lookup('file', 'jenkins.io.key') }}" state=present
+
+  - name: setup jenkins repo key
+    apt_key:
+     url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+
+  - name: setup the jenkins lts repo
+    apt_repository: repo="deb https://pkg.jenkins.io/debian-stable binary/" state=present
+
+  - name: add jenkins-debian-glue repo key
+    apt_key:
+      url: https://jenkins.grml.org/debian/C525F56752D4A654.asc
+
+  - name: setup the jenkins-debian-glue repo from grml
+    apt_repository: repo="deb https://jenkins.grml.org/debian jenkins-debian-glue main" state=present
+
+  - name: install packages needed for jenkins
+    apt: name={{ item }} state=present update_cache=yes
+    with_items:
+      - jenkins
+      - cowbuilder
+      - reprepro
+      - sudo
+      - jenkins-debian-glue
+      - jenkins-debian-glue-buildenv
+
+  - name: copy sudoers file
+    copy: src="jenkins.sudo" dest="/etc/sudoers.d/jenkins" mode="440"
+
+  - name: copy jenkins defaults
+    copy: src="jenkins.defaults" dest="/etc/default/jenkins" mode="644"
+    notify:
+      - restart jenkins
+
+  - name: create /srv/repository
+    file: dest=/srv/repository state=directory owner=jenkins
+
+  - name: copy pbuilderrc
+    copy: src="pbuilderrc" dest="/etc/pbuilderrc" mode="644"

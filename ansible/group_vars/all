@@ -1,6 +1,7 @@
 ---
 # Event config
 event:
+  timezone: Europe/Berlin
   acronym: wikidatacon2017
   name: WikiDataCon2017
   slogan: "The conference dedicated to the Wikidata Community"
@@ -17,14 +18,20 @@ voctomix:
   # and set the next variable to true
   static_background_image: true
   music: true
+  nostream_loop: false
+
+# only enable for congress
+#youtube: true
+
+user_voc_password: "{{ lookup('keepass', 'ansible/logins/voc.password') }}"
 
 system:
-  kernel_package: linux-image-4.7.10-040710-generic
-  kernel_urls:
-    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-image-4.7.10-040710-generic_4.7.10-040710.201610220847_amd64.deb
-    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710_4.7.10-040710.201610220847_all.deb
-    - http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.7.10/linux-headers-4.7.10-040710-generic_4.7.10-040710.201610220847_amd64.deb
   type: pc
+  kernel_package: linux-image-4.13.12-041312-generic
+#  kernel_urls:
+#    - http://pkg.c3voc.de/pool/main/l/linux/linux-image-4.13.12-041312-generic_4.13.12-041312.201711080535_amd64.deb
+#    - http://pkg.c3voc.de/pool/main/l/linux/linux-headers-4.13.12-041312_4.13.12-041312.201711080535_all.deb
+#    - http://pkg.c3voc.de/pool/main/l/linux/linux-headers-4.13.12-041312-generic_4.13.12-041312.201711080535_amd64.deb
 
 use_lan_dns: true
 
@@ -99,30 +106,18 @@ trusted_ipv6_ips: {
   "alb rr1":       '2001:7f8:a5::5:7555:1/128',
   "alb rr2":       '2001:7f8:a5::5:7555:2/128',
   # relays
-  'dedi1.het.c3voc.de': '2a01:4f8:10a:143::2',
-  'dedi2.het.c3voc.de': '2a01:4f8:10a:1050::2',
-  'dedi3.het.c3voc.de': '2a01:4f8:10a:1070::2',
-  'dedi4.het.c3voc.de': '2a01:4f8:10a:13c4::2',
-  'dedi5.het.c3voc.de': '2a01:4f8:10a:104b::2',
-  'dedi6.het.c3voc.de': '2a01:4f8:10a:106d::2',
+  'live.bn.c3voc.de': '2a00:5ba0:8000:64:3aea:a7ff:fe90:6944',
+  'live.fem.c3voc.de': '2001:638:904:ffbf::23',
+  'live.alb.c3voc.de': '2001:67c:20a0:e::170',
   'live.dus.c3voc.de': '2a01:a700:4633::138',
   'live.bn.c3voc.de': '2a00:5ba0:8000:64:3aea:a7ff:fe90:6944',
   'lb.dus.c3voc.de': '2a01:a700:4633::141',
-  'vm2.self.c3voc.de': '2001:7c0:712:33c3::',
-  'vm1.self.c3voc.de': '2001:7c0:712:33c3::66',
-  'vm3.self.c3voc.de': '2001:7c0:712:33c3::68',
-  'vm4.self.c3voc.de': '2001:7c0:712:33c3::69',
-  'vm5.self.c3voc.de': '2001:7c0:712:33c3::70',
-  'vm6.self.c3voc.de': '2001:7c0:712:33c3::71',
-  'dellinger.alb.c3voc.de 1': '2a02:8000::1',
-  'dellinger.alb.c3voc.de 2': '2001:7f8:a5::5:472:2',
-  'dellinger.alb.c3voc.de 3': '2a02:8000:ffff:ffff::1',
-  'froscon.het.c3voc.de': '2a01:4f8:161:7ffd:f055:c0:f323:c394',
-  'usa.cch.c3voc.de': '2001:67c:20a1:2241::11',
-  'live.cch.c3voc.de': '2001:67c:20a1:2241::10',
-  'lb.alb.c3voc.de': '2a02:8000:ffff:ffff::2',
-  'dekan.cch.c3voc.de': '2001:67c:20a1:2241::15',
-  'gsa.cch.c3voc.de': '2001:67c:20a1:2241::13'
+  'lb.alb.c3voc.de': '2001:67c:20a0:e::169',
+  'live.self.c3voc.de': '2001:7c7:2111::1',
+  'live.ccl.c3voc.de': '2a01:a700:4633::138',
+  'usa.ccl.c3voc.de': '2a01:a700:4633::138',
+  'deskjet.ccl.c3voc.de': '2a01:a700:4633::138',
+  'dawaschtel.ccl.c3voc.de': '2a01:a700:4633::138'
 }
 
 
@@ -148,25 +143,32 @@ users:
   - { name: 'fxkr', state: 'present' }
   - { name: 'ike', state: 'present' }
   - { name: 'jwacalex', state: 'present' }
+  - { name: 'lhampe', state: 'present' }
   - { name: 'masterbase', state: 'present' }
   - { name: 'mazdermind', state: 'present' }
   - { name: 'meise', state: 'present' }
   - { name: 'thomic', state: 'present' }
+  - { name: 'thorti', state: 'present' }
   - { name: 'v0tti', state: 'present' }
-  - { name: 'felixs', state: 'present' } # selfnet, foss4g
-  - { name: 'nihilus', state: 'present' } # nobody
+  - { name: 'sophie', state: 'present' } # selfnet, foss4g
+  - { name: 'felixs', state: 'absent' }
+  - { name: 'nihilus', state: 'absent' } # nobody
   - { name: 'lukas2511', state: 'present' } # lets encrypt sh mensch
   - { name: 'dedeibel', state: 'present' }
   - { name: 'pegro', state: 'present' }
   - { name: 'bix', state: 'present' }  # SHA
-  - { name: 'dave', state: 'present' } # SHA
+  - { name: 'dave', state: 'absent' } # SHA
   - { name: 'arl4223', state: 'absent' } # NOC
   - { name: 'holger', state: 'absent' } # Debian
   - { name: 'zuntrax', state: 'present' } # SHA
   - { name: 'jayjay', state: 'present' } 
   - { name: 'cardno', state: 'absent' } # cristoph fcmc
+  - { name: 'derchris', state: 'present' }
+  - { name: 'mntl', state: 'present' }
   - { name: 'voc', state: 'present' }
 
 additional_users: []
 
 distribution_mode: icedist
+
+webroot_path: "/var/www"

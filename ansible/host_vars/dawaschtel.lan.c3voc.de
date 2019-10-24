@@ -1,0 +1,27 @@
+---
+transcoder:
+  pull_endpoint: 127.0.0.1:7999
+  push_endpoint: 127.0.0.1:7999
+
+relay_fanout:
+  pull_endpoint: 127.0.0.1:7999
+  push_endpoint: 127.0.0.1:8000
+  hls_write_path: /srv/nginx/hls
+  dash_write_path: /srv/nginx/dash
+
+transcoder_external_streams: ["c3tv", "jh", "fsfe", "freifunk", "uewagen", "4k"]
+fanout_external_streams:     ["c3tv", "jh", "fsfe", "freifunk", "uewagen", "4k"]
+
+nginx: 'yes'
+nginx_hls_master: 'yes'
+
+icedist: 'yes'
+
+icecast: 'yes'
+icecast_push_master: 'yes'
+
+rtmp: 'no'
+rtmp_auto_hls: 'no'
+nginx_rtmp_hls_master: 'yes'
+
+letsencrypt_fake: "34c3.cdn.c3voc.de"

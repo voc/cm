@@ -21,7 +21,19 @@ LoadPlugin network
 LoadPlugin swap
 LoadPlugin tcpconns
 LoadPlugin curl_json
+{% if ansible_hostname is match('router')  %}
+LoadPlugin conntrack
+{% endif %}
+{% if nginx is defined and nginx == 'yes' %}
 LoadPlugin nginx
+{% endif %}
+{% if ansible_hostname is match('mixer\d+')  %}
+LoadPlugin snmp
+{% endif %}
+{% if ansible_virtualization_role is match('host') %}
+LoadPlugin ipmi
+{% endif %}
+
 
 <LoadPlugin perl>
   Globals true
@@ -80,7 +92,7 @@ LoadPlugin "logfile"
   </Module>
 
 {% endif %}
-{% if php is not defined or php != 'yes' %}
+{%  if nginx is defined and nginx == 'yes' %}
   Import NginxHls
   Import NginxDash
 {% endif %}
@@ -141,8 +153,7 @@ LoadPlugin dbi
 </Plugin>
 {% endif %}
 
-{% if ansible_hostname | match('mixer\d+')  %}
-LoadPlugin "snmp"
+{% if ansible_hostname is match('mixer\d+')  %}
 <Plugin snmp>
   <Data "if_traffic">
     Type "if_octets"
@@ -151,15 +162,20 @@ LoadPlugin "snmp"
     Values "IF-MIB::ifInOctets" "IF-MIB::ifOutOctets"
   </Data>
 
+  <Data "if_speed">
+    Type "links"
+    Table true
+    Instance "IF-MIB::ifDescr"
+    Values "IF-MIB::ifSpeed"
+  </Data>
+
+
   <Host "roomswitch{{ room_number  }}">
     Address "10.73.{{ room_number }}.200"
     Version 1
     Community "public"
-    Collect "if_traffic"
+    Collect "if_traffic" "if_speed"
     Interval 120
   </Host>
 </Plugin>
 {% endif %}
-
-Include "/etc/collectd/filters.conf"
-Include "/etc/collectd/thresholds.conf"

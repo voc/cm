@@ -18,11 +18,11 @@
   - name: create /video if not present
     file: dest=/video state=directory
 
-  - name: create /etc/service diretcory
-    file: dest=/etc/service state=directory
-          owner=root group=root mode=0755
-
   - name: create common.sh
     copy: src=common.sh
           dest=/etc/service/common.sh
           owner=root group=staff mode=0644
+
+  - name: set timezone to Europe/London
+    timezone:
+      name: "{{ event.timezone }}"

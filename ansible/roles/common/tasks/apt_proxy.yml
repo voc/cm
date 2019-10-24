@@ -18,7 +18,7 @@
   # Remove manual configured apt proxy stuff
 
   - name: Find files with manual configured apt proxies
-    find: path=/etc/apt/apt.conf.d/
+    find: path=/etc/apt/
           contains="Acquire::http::Proxy"
     register: configured_apt_proxys
     tags:

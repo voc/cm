@@ -1,0 +1,23 @@
+---
+  - name: collecting old fanout-scripts
+    find:
+      paths: /opt/fanout/scripts/
+      patterns: "*.sh"
+    register: old_fanout_scripts
+
+  - name: removing old fanout-scripts
+    file: dest={{ item.path }}
+          state=absent
+    with_items: "{{ old_fanout_scripts.files }}"
+
+  - name: collecting old fanout-units
+    find:
+      paths: /etc/systemd/system/
+      patterns: "fanout_*"
+      file_type: any
+    register: old_fanout_units
+
+  - name: removing old fanout-units
+    file: dest={{ item.path }}
+          state=absent
+    with_items: "{{ old_fanout_units.files }}"

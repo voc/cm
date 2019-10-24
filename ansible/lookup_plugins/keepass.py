@@ -5,9 +5,6 @@ import os
 import sys
 import getpass
 
-reload(sys)
-sys.setdefaultencoding('UTF8')
-
 from ansible.errors import AnsibleError
 from ansible.plugins.lookup import LookupBase
 
@@ -43,7 +40,12 @@ class LookupModule(LookupBase):
 						(path, filename)
 					)
 
-			value = getattr(found, attribute)
+			if attribute.startswith('attr_'):
+				dict = found.custom_properties
+				value = dict[attribute[len('attr_'):]]
+			else:
+				value = getattr(found, attribute)
+
 			ret.append(value)
 
 		return ret
@@ -80,8 +82,9 @@ class LookupModule(LookupBase):
 	def close_stdin(self):
 		sys.stdin.close()
 
-	def test_password(self, file, password):
+	def test_password(self):
 		filename = self.get_filename()
+		password = self.get_password()
 
 		try:
 			kp = PyKeePass(filename, password)
@@ -89,3 +92,9 @@ class LookupModule(LookupBase):
 			return False
 
 		return True
+
+if __name__ == '__main__':
+	module = LookupModule()
+	if not module.test_password():
+		print('Password not valid for Keepass-File')
+		sys.exit(42)

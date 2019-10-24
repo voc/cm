@@ -1,27 +1,7 @@
 ---
-# slide streams are equal for all the sources
-transcoding_mkv_sources:
-  -
-    room: 1
-    stream: "s1_direct.mkv"
-    host: "10.73.1.3"
-  -
-    room: 2
-    stream: "s2_direct.mkv"
-    host: "10.73.2.3"
-  -
-    room: 3
-    stream: "s3_vocto.mkv"
-    host: "10.73.6.3"
-  -
-    room: 4
-    stream: "s4_vocto.mkv"
-    host: "10.73.99.3"
-  -
-    room: 5
-    stream: "s5_vocto.mkv"
-    host: "10.73.170.240"
-  -
-    room: 99
-    stream: "s99_direct.mkv"
-    host: "10.73.5.3"
+transcoder:
+  pull_endpoint: live.ber.c3voc.de:7999
+  push_endpoint: live.ber.c3voc.de:7999
+
+  lounge_pull_endpoint: live.ber.c3voc.de:8000
+  lounge_push_endpoint: live.ber.c3voc.de:8000

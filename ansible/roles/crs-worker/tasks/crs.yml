@@ -1,21 +1,23 @@
 ---
   - name: install dependency packages
-    apt: name={{ item }} state=latest
-    with_items:
-     - libconfig-inifiles-perl
-     - libipc-run-perl
-     - libxml-rpc-fast-perl
-     - libxml-simple-perl
-     - libmath-round-perl
-     - libdatetime-perl
-     - libboolean-perl
-     - libwww-curl-perl
-     - libjson-perl
-     - fuse-vdv
-     - fuse-ts
-     - fuse
-     - cifs-utils
-     - ntfs-3g
+    apt: name={{ packages|flatten(levels=1) }} state=latest
+    vars:
+      packages:
+       - libconfig-inifiles-perl
+       - libfile-which-perl
+       - libipc-run-perl
+       - libproc-processtable-perl
+       - libxml-rpc-fast-perl
+       - libxml-simple-perl
+       - libmath-round-perl
+       - libdatetime-perl
+       - libboolean-perl
+       - libwww-curl-perl
+       - libjson-perl
+       - fuse-ts
+       - fuse
+       - cifs-utils
+       - ntfs-3g
 
   - name: create /opt/crs/tools
     file: dest=/opt/crs/tools state=directory
@@ -26,17 +28,17 @@
   - name: create /opt/crs/fuse
     file: dest=/opt/crs/fuse state=directory
 
-  - name: checkout tools/tracker3.0
-    subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/tracker3.0/
-                dest=/opt/crs/tools/tracker3.0
-                force=yes
-    tags:
-      - checkout
-      - pull
+  - stat: path=/opt/crs/tools/tracker3.0/.svn
+    register: tracker_svn_checkout
 
-  - name: checkout tools/job-control/
-    subversion: repo=http://subversion.fem.tu-ilmenau.de/repository/cccongress/trunk/tools/job-control/
-                dest=/opt/crs/tools/job-control
+  - name: remove tracker svn checkout if present
+    file: dest=/opt/crs/tools/tracker3.0
+          state=absent
+    when: tracker_svn_checkout.stat.exists == True
+
+  - name: checkout tools/tracker3.0
+    git: repo=https://github.com/crs-tools/crs-scripts
+                dest=/opt/crs/tools/tracker3.0
                 force=yes
     tags:
       - checkout
@@ -62,7 +64,6 @@
     file: dest=/usr/local/bin/ffmpeg
           state=absent
 
-  - name: deploy ffmpeg3 static binary
-    copy: src=ffmpeg3-static
-          dest=/usr/local/bin/ffmpeg3
-          mode=0755 owner=root group=root
+  - name: undeploy ffmpeg3 static binary
+    file: dest=/usr/local/bin/ffmpeg3
+          state=absent

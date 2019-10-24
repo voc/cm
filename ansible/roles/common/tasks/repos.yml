@@ -6,64 +6,95 @@
      - repo
      - gpg
 
- - name: ensure that the debian keyrings are present
-   apt: name={{ item }} state=present update_cache=yes
-   with_items:
-    - debian-keyring
-    - debian-archive-keyring
+ #
+ # remove old repos
+ #
 
- - name: ensure that the debian multimedia keyring is present
-   apt:
-     name={{ item }}
-     state=present
-     update_cache=yes
-     cache_valid_time=7200
-     allow_unauthenticated=true
-   with_items:
-    - deb-multimedia-keyring
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
-   tags: packages
+ - name: remove the VOC debian mng.ber repo before any updates are done since it is unavailable now pkg.c3voc is new
+   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ {{ item }} main" state=absent
+   when: system.type == 'pc'
+   loop:
+    - jessie
+    - stretch
 
- # jessie specific
+ - name: remove yate nightly repo if present since it's key is not supported by stretch atm dsa1024 
+   apt_repository: repo="deb http://debian.ctm.ru/nightly/ stable main non-free" state=absent
+
+ # stretch specific
  - name: remove /etc/apt/sources.list
    file: dest=/etc/apt/sources.list state=absent
 
  - name: remove /etc/apt/sources.list.d/*
    file: dest=/etc/apt/sources.list.d/{{ item }} state=absent
-   with_items:
+   loop:
     - ftp_debian_org_debian.list
     - raspi.list
 
- - name: setup the VOC debian repo for jessie
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ jessie main" state=present
-   when: ansible_distribution_release == 'jessie' and system.type == 'pc'
+ #
+ # add repos
+ #
 
- - name: setup the debian backports repo for jessie
-   apt_repository: repo="deb http://ftp.de.debian.org/debian jessie-backports main"
-   when: ansible_distribution_release == 'jessie' and system.type == 'pc'
+ - name: setup the debian backports repo for stretch
+   apt_repository: repo="deb http://ftp.de.debian.org/debian stretch-backports main"
+   when: system.type == 'pc'
 
- - name: ensure that the non-free suite is enabled for jessie
-   apt_repository: repo="deb http://ftp.de.debian.org/debian jessie main contrib non-free"
-   when: ansible_distribution_release == 'jessie' and system.type == 'pc'
+ - name: ensure that the non-free suite is enabled for stretch
+   apt_repository: repo="deb http://ftp.de.debian.org/debian stretch main contrib non-free"
+   when: system.type == 'pc'
 
- - name: ensure that security updates enabled for jessie
-   apt_repository: repo="deb http://security.debian.org/ jessie/updates main contrib non-free"
-   when: ansible_distribution_release == 'jessie' and system.type == 'pc'
+ - name: ensure that security updates enabled for stretch
+   apt_repository: repo="deb http://security.debian.org/ stretch/updates main contrib non-free"
+   when: system.type == 'pc'
 
- - name: setup the raspbian debian repo for jessie
-   apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi" state=present
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
+ - name: make sure apt-transport-https is installed
+   apt: name=apt-transport-https state=latest update_cache=yes
 
- - name: setup the raspbian debian repo for jessie
-   apt_repository: repo="deb http://archive.raspberrypi.org/debian/ jessie main ui" state=present
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
+ - name: ensure that the debian keyrings are present
+   apt: name={{ packages|flatten(levels=1) }} state=present update_cache=yes
+   vars:
+     packages:
+      - debian-keyring
+      - debian-archive-keyring
+   when: system.type == 'pc'
 
- - name: setup the armhf debian multimedia repo for jessie
-   apt_repository: repo="deb http://deb-multimedia.org stable main non-free" state=present
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
+ - name: setup the VOC debian repo for stretch
+   apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
+   when: system.type == 'pc'
 
- - name: pin multimedia packages for arm ffmpeg*
-   template: src="apt-pin-ffmpeg-multimedia.pref.j2"
-             dest="/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref"
-             mode=0644 owner=root group=root
-   when: ansible_distribution_release == 'jessie' and system.type == 'pi'
+
+#
+# raspberry specific
+#
+
+ - name: setup the raspbian debian repo for stretch
+   apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi" state=present
+   when: system.type == 'pi'
+
+ - name: setup the raspbian debian repo for stretch
+   apt_repository: repo="deb http://archive.raspberrypi.org/debian/ stretch main ui" state=present
+   when: system.type == 'pi'
+
+ - name: remove pinning for ffmpeg multimedia repo since it is now in the default repo
+   file: dest=/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref state=absent
+   when: system.type == 'pi'
+
+#
+# Configure pinning
+#
+
+ - name: pin the VOC repo to the highest priority
+   copy: src=voc-repo-pinning
+         dest="/etc/apt/preferences.d/voc.pref"
+         mode=0644 owner=root group=root
+
+
+#
+# LSI RAID controller specific
+#
+ - name: added hwraid gpg key
+   apt_key: data="{{ lookup('file', 'hwraid_repo.key') }}" state=present
+   when: ansible_hostname is match('mebibyte')
+
+ - name: added hwraid repo for LSI raid controller
+   apt_repository: repo="deb http://hwraid.le-vert.net/debian stretch main" state=present
+   when: ansible_hostname is match('mebibyte')

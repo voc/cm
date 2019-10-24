@@ -2,9 +2,9 @@
 # set up distribution icecast
 
   - name: realise icedist config
-    copy: dest=/etc/icecast2/icedist.xml
-          src=icedist/icedist.xml
-          owner=icecast2 group=icecast mode=0660
+    template: dest=/etc/icecast2/icedist.xml
+              src=icedist/icedist.xml.j2
+              owner=icecast2 group=icecast mode=0660
     notify: restart icedist
 
   - name: create icedist systemd unit

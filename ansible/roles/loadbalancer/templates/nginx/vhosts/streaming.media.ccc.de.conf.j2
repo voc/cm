@@ -3,7 +3,7 @@ fastcgi_cache_path /srv/nginx/cache/streaming_fcgi
                    levels=1:2 keys_zone=streaming_fcgi:32m inactive=60m;
 
 upstream php {
-  server unix:/run/php5-fpm-www.sock;
+  server unix:/run/php/php7.0-fpm.sock;
 }
 
 map $upstream_http_content_length $flag_cache_empty {
@@ -15,8 +15,7 @@ map $upstream_http_content_length $flag_cache_empty {
 server {
   server_name streaming.media.ccc.de;
 
-  listen 127.0.0.1:80;
-  listen [::]:8080  ipv6only=off;
+  listen 127.0.0.1:8080;
 
   root /srv/nginx/htdocs;
   index index.php;
@@ -45,7 +44,7 @@ server {
   # Example: http://streaming.media.ccc.de/configs/conferences/gpn15/wolkenbar.png
   #          http://streaming.media.ccc.de/assets/js/lib/jquery.min.js
   #
-  location ~* (.+\/assets|assets|configs\/conferences).+.(jpg|jpeg|gif|png|ico|ttf|svg|woff|swf|mp4|webm)$ {
+  location ~* (.+\/assets|assets|configs\/conferences).+.(jpg|jpeg|gif|png|ico|ttf|svg|woff.*|swf|mp4|webm|xml|ics|html|json)$ {
     expires 24h;
     add_header Cache-Control "public";
   }
@@ -76,11 +75,12 @@ server {
     fastcgi_no_cache $flag_cache_empty;
     fastcgi_cache_bypass $do_not_cache;
     fastcgi_cache_bypass $flag_cache_empty;
-    fastcgi_cache_key "$http_x_proto$uri$is_args$args";
+    fastcgi_cache_key "$request_method$http_x_proto$uri$is_args$args";
     fastcgi_cache streaming_fcgi;
     fastcgi_cache_valid 200 5m;
-    fastcgi_cache_methods GET HEAD;
+    fastcgi_cache_methods GET;
     add_header X-Cache "$upstream_cache_status origin";
+    add_header Access-Control-Allow-Origin "*";
   }
 
   location / {

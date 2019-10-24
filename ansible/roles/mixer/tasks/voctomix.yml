@@ -15,6 +15,12 @@
          accept_hostkey=yes
 
 
+  # alternative gui
+  - name: install alternative gui for 4 sources on a amall display (horizontal layout)
+    copy: src=voctomix-alternative-gui/
+          dest=/opt/voctomix/voctomix-alternative-gui/
+          directory_mode=0755
+          mode=0644 owner=root group=root
 
   # voctogui configuration
   - name: create voctogui config

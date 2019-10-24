@@ -2,9 +2,5 @@
   - name: update grub
     command: /usr/sbin/update-grub
 
-  - name: restart ntpd
-    service: name=ntp state=restarted
-             pattern=/usr/sbin/ntpd
-
   - name: generate locales
     command: /usr/sbin/locale-gen

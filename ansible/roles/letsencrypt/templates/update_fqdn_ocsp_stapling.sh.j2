@@ -1,9 +1,9 @@
 #!/bin/sh
 
-OCSP_URL=`openssl x509 -text < ${DEHYDRATED_DIR}/certs/${BASENAME_DOMAIN}/cert.pem | grep "OCSP - URI" | sed 's/.*http/http/' `
+OCSP_URL=`openssl x509 -text < /etc/letsencrypt/live/{{ domain }}/cert.pem | grep "OCSP - URI" | sed 's/.*http/http/'`
 HOSTNAME=`echo $OCSP_URL | sed -r 's,http.?://,,' | sed 's,/+,,g' `
 
 openssl ocsp -noverify -issuer /etc/letsencrypt/live/{{ domain }}/chain.pem \
   -cert /etc/letsencrypt/live/{{ domain }}/cert.pem \
-  -url $OCSP_URL -no_nonce -header Host $HOSTNAME \
+  -url $OCSP_URL -no_nonce -header Host=$HOSTNAME \
   -respout /etc/ssl/certs/{{ domain }}.pem.ocsp

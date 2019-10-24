@@ -7,13 +7,31 @@
         - "letsencrypt"
         - "letsencrypt/live"
         - "letsencrypt/live/{{ domain }}"
+        - "letsencrypt/renewal-hooks/"
+        - "letsencrypt/renewal-hooks/post"
 
     - name: copy over pregenerated certificate data
-      copy: "dest=/etc/letsencrypt/live/{{ domain }}/{{ item }}
-             src=keys/{{ letsencrypt_fake }}/{{ item }}
+      copy: "dest=/etc/letsencrypt/live/{{ domain }}/{{ item }}.pem
+             content={{ lookup('keepass', 'ansible/ssl/certs/'+letsencrypt_fake+'.attr_'+item) }}
              mode=0640 owner=root group=ssl-cert"
       with_items:
-        - fullchain.pem
-        - chain.pem
-        - cert.pem
-        - privkey.pem
+        - fullchain
+        - chain
+        - cert
+        - privkey
+
+  # Cron jobs to update letsencrypt certs
+    - name: disable letsencrypt update cron job
+      cron: name="update_{{ domain }}" user=letsencrypt state=absent
+
+    - name: disable certbot systemd timer
+      service: name=certbot.timer
+               enabled=no
+               state=stopped
+      ignore_errors: yes
+
+    - name: disable dehydrated systemd timer
+      service: name=dehydrated.timer
+               enabled=no
+               state=stopped
+      ignore_errors: yes

@@ -9,6 +9,12 @@ To manage hosts with [ansible](http://ansible.com/)  you only need to install `a
   sudo aptitude install ansible
 ```
 
+
+```
+  pip2.7 install libkeepass pykeepass
+
+```
+
 # Usage
 
 Syntax validation.
@@ -28,7 +34,7 @@ _On the first call you will be prompted for the location to your keepass file an
 Basic `ansible` call to deploy new config to a set of hosts on an event.
 
 ```
-  ./ansible-playbook-keepass -u voc --sudo -i event -l saal1 site.yml
+  ./ansible-playbook-keepass -u voc --become --become-method=sudo -i event -l saal1 site.yml
 ```
 
 ## Keepass Password
@@ -36,9 +42,13 @@ Basic `ansible` call to deploy new config to a set of hosts on an event.
 In case you need to do a lot of playbook runs you can also set the password using the following although it is not recommended.
 
 ```
-  export KEEPASS_PW='…'
+   export KEEPASS_PW='…'
   ./ansible-playbook-keepass … site.yml
 ```
+
+## Keepass Version
+
+If you use ``./ansible-playbook-keepass`` a sanity check verifies that your passwords checkout is recent enough. to update it, make sure the passsword checkout is correct and run ``./update_keepass_version``
 
 # Host notes
 

@@ -3,10 +3,6 @@
  - include: packages.yml
  - include: artwork.yml
    tags: artwork
- - include: encodermode-dvswitch.yml
-   tags: encodermode
- - include: encodermode-hddirect.yml
-   tags: encodermode
  - include: encodermode-voctomix.yml
    tags:
     - encodermode
