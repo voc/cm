@@ -1,6 +1,6 @@
 ---
 room_number: 3
-room_fahrplan_name: Saal 3
+room_fahrplan_name: Kepler
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -81,6 +81,6 @@ voctomix_sources:
     name: slides
     type: decklink-internal
     devicenumber: 5
-    video_connection: HDMI
-    video_mode: "1080p24"
+    video_connection: SDI 
+    video_mode: "1080p25"
     volume: 0.0
