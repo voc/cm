@@ -1,12 +1,4 @@
 ---
-- shell: /usr/local/bin/go get github.com/voc/mirrorbits
-  environment:
-    GOPATH: /srv/mirrorbits
-- shell: /usr/local/bin/go install github.com/voc/mirrorbits
-  environment:
-    CGO_ENABLED: 0
-    GOPATH: /srv/mirrorbits
-
 - group: name="mirrorbits" state=present
 
 - user: state=present
@@ -16,10 +8,17 @@
 
 - file: path=/srv/mirrorbits state=directory
         mode=0755 owner=root group=root
+
 - file: path=/srv/mirrorbits/logs state=directory
         mode=0755 owner=mirrorbits group=root
 
-- group: name=sudo state=present
+- git:
+    repo: https://github.com/voc/mirrorbits
+    dest: /srv/mirrorbits/mirrorbits
+
+- make:
+    chdir: /srv/mirrorbits/mirrorbits
+    target: install
 
 - template: src=mirrorbits.service
             dest=/etc/systemd/system/mirrorbits.service

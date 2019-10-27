@@ -1,20 +1,28 @@
 ---
+  - hosts: assets
+    roles:
+      - role: media-assets
+        gather_facts: no
+        tags: ['assets']
+
   - hosts: cdn
     roles:
-      - { role: 'media-common', tags: ['media-common'] }
+      - role: media-common
+        tags: ['media-common']
 
-      - role: 'ansible-acmetool'
+      - role: ansible-acmetool
         when: ssl == 1 and acmetool_setup == 1
         tags: ['ansible-acmetool', 'nginx']
 
-      - role: 'media-cdn'
+      - role: golang
+        tags: ['golang']
+        when: cdn == 1
+
+      - role: media-cdn
         when: cdn == 1
         tags: ['media-cdn']
 
-      - role: golang
-        when: cdn == 1
-
-      - role: 'media-mirror'
+      - role: media-mirror
         when: mirror == 1
         tags: ['media-mirror']
 
@@ -26,7 +34,7 @@
         rvm1_install_path: '/srv/media/.rvm'
         rvm1_install_flags: '--auto-dotfiles --user-install'
 
-      - role: 'media-app'
+      - role: media-app
         when: app == 1
         tags: ['media-app']
 

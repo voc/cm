@@ -1,5 +1,9 @@
 ---
 - group: name="uploaders" state=present
+- file:
+    dest: /home/uploaders
+    state: directory
+
 
 - user: state=present
         name="{{ item.name }}"
