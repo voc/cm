@@ -1,0 +1,19 @@
+[Unit]
+Description=Puma application server for voctoweb
+After=network.target vagrant.mount
+Depends=vagrant.mount
+
+[Service]
+WorkingDirectory=/vagrant
+Environment=RAILS_ENV=development
+User=ubuntu
+PIDFile=/vagrant/tmp/pids/puma.pid
+ExecStart=/usr/local/bin/bundle exec rails s -b 0.0.0.0
+Restart=always
+SyslogIdentifier=voctoweb-puma
+RestartSec=5s
+StartLimitInterval=0
+
+[Install]
+WantedBy=default.target
+Depends=vagrant.mount

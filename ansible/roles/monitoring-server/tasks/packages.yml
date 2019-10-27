@@ -1,0 +1,10 @@
+---
+  - name: install monitoring packages
+    apt:
+      name:
+        - nagios-plugins-basic
+        - graphite-api
+        - graphite-carbon
+        - grafana
+        - carbon-relay-ng
+      state: latest

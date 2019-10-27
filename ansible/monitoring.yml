@@ -1,0 +1,6 @@
+---
+  - hosts: monitoring
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-server, tags: ['monitoring'] }
+      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }

@@ -3,7 +3,7 @@
     copy: src=raidstatus
           dest=/usr/local/sbin/raidstatus
           owner=root group=root mode=0750
-    when: ansible_hostname | match('dellinger|storage|aws|berlin-ak|mebibyte')
+    when: ansible_hostname is match('dellinger|storage|aws|berlin-ak|mebibyte')
 
   - name: create check_system script
     template: src="monitoring/check_system.sh.j2"
@@ -26,6 +26,7 @@
 
   - name: reload systemd daemon
     command: systemctl daemon-reload
+    changed_when: false
 
   - name: enable & start shutdown hook
     service: name=send-mqtt-shutdown

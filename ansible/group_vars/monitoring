@@ -1,0 +1,4 @@
+---
+
+grafana:
+  secret_key: "{{ lookup('keepass', 'ansible/monitoring/grafana_key.password') }}"

@@ -1,0 +1,28 @@
+---
+- group: name="uploaders" state=present
+- file:
+    dest: /home/uploaders
+    state: directory
+
+
+- user: state=present
+        name="{{ item.name }}"
+        group="uploaders"
+        shell="/bin/false"
+        home="/home/uploaders/{{ item.name }}"
+        skeleton=false
+        create_home=yes
+  loop: "{{ uploaders }}"
+  when: (item | dict2items | first).key not in hostvars['new.media'].users
+  tags: ['user']
+
+- authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: '{{ item.keydata }}'
+    key_options: "no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty"
+  loop: "{{ uploaders }}"
+
+- file: path=/srv/www/ state=directory
+        owner=www-data group=www-data
+

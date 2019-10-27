@@ -1,0 +1,16 @@
+search_index: /var/lib/graphite-api/index
+finders:
+  - graphite_api.finders.whisper.WhisperFinder
+functions:
+  - graphite_api.functions.SeriesFunctions
+  - graphite_api.functions.PieFunctions
+whisper:
+  directories:
+    - /mnt/data/graphite/whisper
+time_zone: Europe/Berlin
+
+carbon:
+  hosts:
+    - 127.0.0.1:7002
+  retry_delay: 15
+
