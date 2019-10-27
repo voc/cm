@@ -21,7 +21,7 @@
    xml:space="preserve"><metadata
    id="metadata1282"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
    id="defs1280">
 	
 	
@@ -132,7 +132,7 @@
    guidetolerance="10"
    id="namedview2423"
    inkscape:current-layer="Ebene_1"
-   inkscape:cx="1271.0502"
+   inkscape:cx="368.60416"
    inkscape:cy="214.09108"
    inkscape:pageopacity="0"
    inkscape:pageshadow="2"
@@ -3828,55 +3828,105 @@
    points="828.4,224.9 656,124.7 827.2,25.9 999.6,126  " />
 </g>
 <g
-   id="g1261"
-   style="fill:#f57900">
+   id="g1809"
+   style="opacity:0"><g
+     style="fill:#f57900"
+     id="g1261">
 		<g
-   id="g1259"
-   style="fill:#f57900">
-			<path
    style="fill:#f57900"
-   inkscape:connector-curvature="0"
-   id="path1257"
+   id="g1259">
+			<path
+   class="st93"
    d="m 1547,221.4 v 23 24.4 24.4 24.4 24.4 24.4 24.4 25.7 h 24.4 v 24.4 h 24.4 v 24.4 h 47.4 24.4 24.4 24.4 24.4 25.7 v -24.4 h 24.4 v -24.4 h 24.4 v -25.7 -24.4 -24.4 -24.4 -24.4 -24.4 -24.4 -23 h -24.4 V 197 H 1742 v 24.4 h -24.4 v 24.4 h -25.7 -24.4 -23 v -24.4 h -24.4 V 197 h -48.7 v 24.4 z m 24.4,97.5 h 19 v -24.4 h 176 v 24.4 h 24.4 v 23 24.4 25.7 h -24.4 v 24.4 H 1742 v 24.4 h -25.7 -24.4 -24.4 -24.4 -23 v -24.4 h -24.4 V 392 h -24.4 v -25.7 -24.4 -23 z"
-   class="st93" />
+   id="path1257"
+   inkscape:connector-curvature="0"
+   style="fill:#f57900" />
 		</g>
 	</g><g
-   id="g1275">
+     id="g1275"
+     style="">
 		<path
-   style="fill:#ffffff"
-   inkscape:connector-curvature="0"
-   id="path1263"
+   class="st94"
    d="m 1570,320 v 23 24.4 25.6 h 27 v 22 h 22 v 27 h 26.9 24.4 24.4 24.4 24 v -27 h 22 v -22 h 23 V 367.4 343 320 h -23 v -23 h -21.6 -24.5 -24.4 -24.4 -24.4 -57.8 v 23 z"
-   class="st94" />
+   id="path1263"
+   inkscape:connector-curvature="0"
+   style="fill:#ffffff" />
 		<rect
+   x="1743"
+   y="342"
+   width="22"
+   height="27"
    id="rect1265"
-   height="27"
-   width="22"
-   y="342"
-   x="1743" />
+   style="" />
 		<rect
+   x="1597"
+   y="342"
+   width="22"
+   height="27"
    id="rect1267"
-   height="27"
-   width="22"
-   y="342"
-   x="1597" />
+   style="" />
 		<rect
-   id="rect1269"
-   height="24"
+   x="1692"
+   y="369"
    width="23"
-   y="369"
-   x="1692" />
-		<rect
-   id="rect1271"
-   height="22"
-   width="72"
-   y="393"
-   x="1643" />
-		<rect
-   id="rect1273"
    height="24"
-   width="27"
+   id="rect1269"
+   style="" />
+		<rect
+   x="1643"
+   y="393"
+   width="72"
+   height="22"
+   id="rect1271"
+   style="" />
+		<rect
+   x="1643"
    y="369"
-   x="1643" />
-	</g>
-</svg>
+   width="27"
+   height="24"
+   id="rect1273"
+   style="" />
+	</g></g>
+<g
+   id="g1809-4"
+   transform="translate(-1382)"><g
+     style="fill:#f57900"
+     id="g1261-8"><g
+       style="fill:#f57900"
+       id="g1259-0"><path
+         class="st93"
+         d="m 1547,221.4 v 23 24.4 24.4 24.4 24.4 24.4 24.4 25.7 h 24.4 v 24.4 h 24.4 v 24.4 h 47.4 24.4 24.4 24.4 24.4 25.7 v -24.4 h 24.4 v -24.4 h 24.4 v -25.7 -24.4 -24.4 -24.4 -24.4 -24.4 -24.4 -23 h -24.4 V 197 H 1742 v 24.4 h -24.4 v 24.4 h -25.7 -24.4 -23 v -24.4 h -24.4 V 197 h -48.7 v 24.4 z m 24.4,97.5 h 19 v -24.4 h 176 v 24.4 h 24.4 v 23 24.4 25.7 h -24.4 v 24.4 H 1742 v 24.4 h -25.7 -24.4 -24.4 -24.4 -23 v -24.4 h -24.4 V 392 h -24.4 v -25.7 -24.4 -23 z"
+         id="path1257-4"
+         inkscape:connector-curvature="0"
+         style="fill:#f57900" /></g></g><g
+     id="g1275-2"><path
+       class="st94"
+       d="m 1570,320 v 23 24.4 25.6 h 27 v 22 h 22 v 27 h 26.9 24.4 24.4 24.4 24 v -27 h 22 v -22 h 23 V 367.4 343 320 h -23 v -23 h -21.6 -24.5 -24.4 -24.4 -24.4 -57.8 v 23 z"
+       id="path1263-9"
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff" /><rect
+       x="1743"
+       y="342"
+       width="22"
+       height="27"
+       id="rect1265-6" /><rect
+       x="1597"
+       y="342"
+       width="22"
+       height="27"
+       id="rect1267-1" /><rect
+       x="1692"
+       y="369"
+       width="23"
+       height="24"
+       id="rect1269-0" /><rect
+       x="1643"
+       y="393"
+       width="72"
+       height="22"
+       id="rect1271-4" /><rect
+       x="1643"
+       y="369"
+       width="27"
+       height="24"
+       id="rect1273-2" /></g></g></svg>
