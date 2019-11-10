@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: denog11
+  name: DENOG11
+  slogan: German Network Operators Group
   formats:
     hd: 'yes'
     sd: 'yes'
