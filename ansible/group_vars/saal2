@@ -11,6 +11,7 @@ encodermode: hd-voctomix
 voctomix_audiostreams: 2
 voctomix_stream_suppress_audio_tracks: [1]
 
+lossless_audio: false
 # für JVC:
 #    video_connection: SDI
 #    video_mode: "1080p25"
@@ -90,6 +91,6 @@ voctomix_sources:
     name: slides
     type: decklink-internal
     devicenumber: 5
-    video_connection: SDI
-    video_mode: "1080p25"
+    video_connection: HDMI
+    video_mode: "1080p24"
     volume: 0.0
