@@ -6,7 +6,7 @@
   # Install packages
   - name: install packages needed to monitor host
     apt:
-      name: ['nagios-plugins-basic']
+      name: ['nagios-plugins-basic', 'collectd']
       state: latest
     tags: apt
 
