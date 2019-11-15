@@ -10,9 +10,9 @@
   when: item.state != 'absent' and item.name != 'voc'
 
 - file: path=/srv/media/media-site/shared/config state=directory
-				mode=0755 owner=media group=media
+        mode=0755 owner=media group=media
 - file: path=/srv/media/media-site/shared/log state=directory
-				mode=0755 owner=media group=media
+        mode=0755 owner=media group=media
 
 - copy: src=app/{{ item }}
         dest=/srv/media/media-site/shared/{{ item }}
@@ -79,29 +79,3 @@
         job="/srv/media/media-site/shared/update_streaming_config > /dev/null 2>&1"
 - cron: user=media minute="*/9" cron_file="update_relive_config"
         job="/srv/media/media-site/shared/update_relive_config > /dev/null 2>&1"
-
-- copy: src=redis.conf
-        dest=/etc/redis/redis.conf
-        owner=root group=root mode=0640
-
-- debug:
-    msg:
-      - "Manual steps:"
-      - "upload voctoweb config files to /srv/media/media-site/shared"
-      - "and create the gemset:"
-      - "   rvm ruby-2.6.5 do rvm gemset create media-site"
-      - ""
-      - "create database, import data, etc.:"
-      - "   sudo -u postgres pg_dump -F c -b -v -f file media-site"
-      - "   sudo -u postgres createdb media-site"
-      - "   sudo -u postgres pg_restore -d media-site -v file"
-      - ""
-      - "run capistrano:"
-      - "   bundle exec cap app deploy"
-      - "   bundle exec cap app elasticsearch:create_index"
-      - "   bundle exec cap app elasticsearch:update"
-      - ""
-      - "optionally, modify profile of media user:"
-      - "  .bashrc: cd media-site/shared"
-      - "  .bash_profile: export RAILS_ENV=production"
-

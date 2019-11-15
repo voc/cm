@@ -7,7 +7,7 @@
       - libpq-dev
       - libsqlite3-dev
       - libssl-dev
-			- zlib1g-dev
+      - zlib1g-dev
       - nodejs
       # these could be on another host
       - nginx

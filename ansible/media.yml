@@ -47,9 +47,6 @@
         when: ssl == 1 and acmetool_setup == 1
         tags: ['acmetool-install', 'nginx']
 
-      - role: media-app-common
-        tags: ['media-app']
-
       - role: media-app
         tags: ['media-app']
 
