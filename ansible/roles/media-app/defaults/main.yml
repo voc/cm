@@ -1,2 +1,8 @@
 ---
-app: 0
+ruby_version: 2.6.5
+nginx_cache_dir: /srv/media/media-site/cache
+app_api_key: qwerty
+puma_listen: 127.0.0.1:4080
+puma_threads: "0,32"
+puma_workers: "4"
+puma_max_mem: 8196

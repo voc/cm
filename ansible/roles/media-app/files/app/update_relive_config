@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+cd $HOME/media-site/current/
+. $HOME/.rvm/scripts/rvm
+
+export RAILS_ENV="production"
+bundle exec rails voctoweb:relive:update

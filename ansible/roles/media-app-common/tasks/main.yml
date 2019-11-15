@@ -1,0 +1,10 @@
+---
+- name: install defaut packages
+  apt: name={{ item }} state=latest
+  loop:
+    - curl
+
+- copy: src=purge-kernels
+        dest=/usr/local/sbin
+        owner=root group=root mode=0755
+

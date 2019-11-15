@@ -1,29 +1,107 @@
 ---
-# - name: Add rails user
-#   user:
-    # name: media
-    # shell: /bin/bash
+- name: Add SSH keys to rails user for cap deployment
+  authorized_key:
+    user: media
+    manage_dir: true
+    state: present
+    key: "{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes') }}"
+  with_items:
+    - "{{ users }}"
+  when: item.state != 'absent' and item.name != 'voc'
 
-# - name: Add SSH keys to rails user for cap deployment
-#   authorized_key:
-#     user: media
-#     home: /srv/media
-  #   key: ""
+- file: path=/srv/media/media-site/shared/config state=directory
+				mode=0755 owner=media group=media
+- file: path=/srv/media/media-site/shared/log state=directory
+				mode=0755 owner=media group=media
+
+- copy: src=app/{{ item }}
+        dest=/srv/media/media-site/shared/{{ item }}
+        mode=0640 owner=media group=media
+  loop:
+    - clear_caches.sh
+    - console
+    - dump-public-fixtures.sh
+    - reload_puma
+    - update_related
+    - update_relive_config
+    - update_streaming_config
+
+- template: src=app/{{ item }}
+            dest=/srv/media/media-site/shared/{{ item }}
+            mode=0640 owner=media group=media
+  loop:
+    - update_promoted
+    - update_view_counts
+
+- template: src=app/{{ item }}
+            dest=/srv/media/media-site/shared/config/{{ item }}
+            mode=0640 owner=media group=media
+  loop:
+    - database.yml
+    - secrets.yml
+    - puma.rb
+
+- copy: content={{ app_settings }}
+        dest=/srv/media/media-site/shared/config/settings.yml
+        owner=media group=media mode=0640
+
+- copy: content={{ app_dotenv }}
+        dest=/srv/media/media-site/shared/.env.production
+        owner=media group=media mode=0640
+
+- copy: content="ruby-{{ ruby_version }}@media-site"
+        dest=/srv/media/media-site/shared/.ruby-version
+        owner=media group=media mode=0640
+
+- copy: src=logrotate
+        dest=/etc/logrotate.d/local-media-site
+        mode=0644 owner=root group=root
+
+- template: src=voctoweb-puma.service
+            dest=/etc/systemd/system/voctoweb-puma.service
+            mode=0644 owner=root group=root
+
+- template: src=voctoweb-sidekiq.service
+            dest=/etc/systemd/system/voctoweb-sidekiq.service
+            mode=0644 owner=root group=root
+
+- systemd: state=started enabled=yes name=voctoweb-puma.service
+- systemd: state=started enabled=yes name=voctoweb-sidekiq.service
 
 
+- cron: user=media minute="20" cron_file="dump_public_fixtures"
+        job="/srv/media/media-site/shared/dump-public-fixtures.sh"
+- cron: user=media minute="40" cron_file="update_promoted"
+        job="/srv/media/media-site/shared/update_promoted > /dev/null 2>&1"
+- cron: user=media minute="*/15" cron_file="update_view_counts"
+        job="/srv/media/media-site/shared/update_view_counts > /dev/null 2>&1"
+- cron: user=media minute="*/5" cron_file="update_streaming_config"
+        job="/srv/media/media-site/shared/update_streaming_config > /dev/null 2>&1"
+- cron: user=media minute="*/9" cron_file="update_relive_config"
+        job="/srv/media/media-site/shared/update_relive_config > /dev/null 2>&1"
 
+- copy: src=redis.conf
+        dest=/etc/redis/redis.conf
+        owner=root group=root mode=0640
 
-# "create role voctoweb with createdb login password 'voctoweb';" | sudo -u postgres psql
-# sed -i -e 's/#START_DAEMON/START_DAEMON/' /etc/default/elasticsearch
-# systemctl restart elasticsearch
+- debug:
+    msg:
+      - "Manual steps:"
+      - "upload voctoweb config files to /srv/media/media-site/shared"
+      - "and create the gemset:"
+      - "   rvm ruby-2.6.5 do rvm gemset create media-site"
+      - ""
+      - "create database, import data, etc.:"
+      - "   sudo -u postgres pg_dump -F c -b -v -f file media-site"
+      - "   sudo -u postgres createdb media-site"
+      - "   sudo -u postgres pg_restore -d media-site -v file"
+      - ""
+      - "run capistrano:"
+      - "   bundle exec cap app deploy"
+      - "   bundle exec cap app elasticsearch:create_index"
+      - "   bundle exec cap app elasticsearch:update"
+      - ""
+      - "optionally, modify profile of media user:"
+      - "  .bashrc: cd media-site/shared"
+      - "  .bash_profile: export RAILS_ENV=production"
 
-# systemctl enable --now voctoweb-puma
-# systemctl enable --now voctoweb-sidekiq
-# systemctl enable --now nginx
-
-# - checkout app
-# - create systemd units
-
-# - tell user to
-#   upload env file
-#   cap init/deploy

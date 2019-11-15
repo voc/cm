@@ -4,6 +4,7 @@
       state: latest
       update_cache: yes
       name:
+        - apt-transport-https
         - aptitude
         - build-essential
         - etckeeper
@@ -12,20 +13,21 @@
         - htop
         - iftop
         - lockfile-progs
-        - nginx
         - pv
         - rsync
         - smartmontools
         - strace
         - tmux
         - unattended-upgrades
-        - vim
+        - neovim
         - vnstat
         - zip
         - zsh
 
   - name: remove not needed packages
-    apt: name={{ item }} state=absent
-    with_items:
-      - rpcbind
-      - snapd
+    apt:
+      state: absent
+      name:
+        - rpcbind
+        - snapd
+        - vim

@@ -31,12 +31,12 @@
               regexp='^RSYNC_ENABLE.*' state=present
               line="RSYNC_ENABLE=true"
 
-# TODO create rsync secrets from keepass
-# - copy: dest=/etc/{{ item }}
-#       content={{ lookup('keepass', 'ansible/media/'+item+'.notes') }}
-#       mode=0640 owner=root group=root
-#   with_items:
-#     - rsyncd.secrets
-#     - rsyncd-congress.secrets
+- copy: dest=/etc/rsyncd.secrets
+      content={{ rsync_secrets }}
+      mode=0640 owner=root group=root
+
+- copy: dest=/etc/rsyncd-congress.secrets
+      content={{ rsync_secrets_public }}
+      mode=0640 owner=root group=root
 
 - systemd: state=started enabled=yes name=rsync.service

@@ -1,0 +1,2 @@
+# remove all configuration/state first
+acmetool_cleanup: 'false'

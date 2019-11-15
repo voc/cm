@@ -1,5 +1,0 @@
----
-- name: a play with a role to install golang
-  hosts: new.media
-  roles:
-    - /Users/mm/co/cm/ansible/roles/golang/

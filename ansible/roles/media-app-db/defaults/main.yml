@@ -1,0 +1,4 @@
+---
+elasticsearch_host: _local_
+pg_listen_addresses: localhost
+pg_client_net: 127.0.0.1/32
