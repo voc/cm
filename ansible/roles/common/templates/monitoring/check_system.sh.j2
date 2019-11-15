@@ -8,7 +8,15 @@ LIMIT_DISK_MIN_FREE_SPACE_KB=9765625
 LIMIT_LOAD=$(echo "$(grep processor /proc/cpuinfo | wc -l) * 2" | bc)
 
 TRUNC_HOSTNAME=$(hostname -f | cut -d. -f1-2)
-HYPERVISOR=$(dmesg | grep "Hypervisor detected")
+
+HYPERVISOR=$(systemd-detect-virt)
+if [ $? -ne 0 ]; then
+	# When no virtualization is detected, systemd-detect-virt outputs
+	# "none", which is not as nice to check for. Set to empty string
+	# instead.
+
+	HYPERVISOR=""
+fi
 
 send_mqtt_message () {
   error_level=$1
