@@ -41,6 +41,10 @@ mixer-osc2.lan.c3voc.de
 encoder-muc.lan.c3voc.de
 mixer-muc.lan.c3voc.de
 
+[saal-seibert1]
+mixer-seiert1.lan.c3voc.de
+encoder-seibert1.lan.c3voc.de
+
 
 # Host types
 [transcoders]
