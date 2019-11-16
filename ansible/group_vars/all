@@ -2,9 +2,9 @@
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XXX
-  name: XXX
-  slogan: XXX
+  acronym: tools4agileteams2019
+  name: Tools4AgileTeams 2019
+  slogan: A conference to discuss agility in teams and companies at all levels.
   formats:
     hd: 'yes'
     sd: 'yes'
