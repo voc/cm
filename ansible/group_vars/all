@@ -24,6 +24,8 @@ voctomix:
   music: true
   nostream_loop: false
 
+  lossless_audio: true
+
 # only enable for congress
 #youtube: true
 
