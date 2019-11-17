@@ -98,7 +98,7 @@ LoadPlugin ipmi
 {% if transcoder_streams is defined or transcoding_lounge is defined %}
   Import "TranscodingUnits"
   <Module TranscodingUnits>
-    UnitRegex "transcode_(h264|vpx|audio)@[a-zA-Z0-9]{2,2}\.service" 
+    UnitRegex "transcode_(h264|vpx|audio)@[a-zA-Z0-9]+\.service" 
   </Module>
 {% endif %}
 </Plugin>
