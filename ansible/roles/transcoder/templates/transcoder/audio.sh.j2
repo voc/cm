@@ -1,9 +1,14 @@
-#!/bin/sh
+#!/bin/bash
+
+if [[  $# -ne 1 ]] ; then
+    echo "Please give exactly one parameter: name of the streaming endpoint to transcode"
+    exit 1;
+fi
 
 while true; do
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
-	-i http://{{ transcoder.pull_endpoint }}/{{ item }} \
+	-i http://{{ transcoder.pull_endpoint }}/$1 \
 	\
 	\
 	-map '0:a:0' \
@@ -37,7 +42,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder.push_endpoint }}/{{ item }}_audio
+	icecast://{{ transcoder.push_endpoint }}/$1_audio
 
 sleep 10
 done

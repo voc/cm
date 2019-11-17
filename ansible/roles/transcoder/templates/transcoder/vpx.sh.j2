@@ -1,14 +1,19 @@
-#!/bin/sh
+#!/bin/bash
+
+if [[  $# -ne 1 ]] ; then
+    echo "Please give exactly one parameter: name of the streaming endpoint to transcode"
+    exit 1;
+fi
 
 while true; do
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
-	-i http://{{ transcoder.pull_endpoint }}/{{ item }} \
-	-filter_complex '
+	-i http://{{ transcoder.pull_endpoint }}/$1 \
+	-filter_complex "
 		[0:v:0] scale=1024:576 [smooth_sd];
-		movie=/opt/voc/share/overlay_sd_{{ item }}.png [logo_sd];
+		movie=/opt/voc/share/overlay_sd_$1.png [logo_sd];
 		[smooth_sd] [logo_sd] overlay=0:0 [sd]
-	' \
+	" \
 	\
 {# Video settings #}
 	-c:v libvpx-vp9 -flags:v +global_header \
@@ -59,7 +64,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder.push_endpoint }}/{{ item }}_vpx
+	icecast://{{ transcoder.push_endpoint }}/$1_vpx
 
 sleep 10
 done
