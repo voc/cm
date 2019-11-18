@@ -11,11 +11,7 @@ ffmpeg -v verbose -nostats -y -analyzeduration 10000 \
 {% if voctomix.parallel_slide_recording %}
 	-map 1:v -c:v:1 mpeg2video -pix_fmt:v:1 yuv420p -qscale:v:1 4 -qmin:v:1 4 -qmax:v:1 4 -keyint_min:v:1 5 -bf:v:1 0 -g:v:1 5 -me_method:v:1 dia \
 {% endif %}
-{% if voctomix.lossless_audio %}
-	-map 0:a -c:a s302m -strict -2 \
-{% else %}
 	-map 0:a -c:a mp2 -b:a 384k -ac:a 2 -ar:a 48000 \
-{% endif %}
 	-flags +global_header \
 	-f segment -segment_time 180 -strftime 1 -segment_format mpegts "/video/capture/{{ event.acronym }}/{{ room_fahrplan_name | lower | replace(' ', '') }}-%Y-%m-%d_%H-%M-%S-$$.ts"
 
