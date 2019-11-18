@@ -1,6 +1,6 @@
 ---
 room_number: 2
-room_fahrplan_name: 2
+room_fahrplan_name: Studio 1.2 A
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
