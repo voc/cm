@@ -11,7 +11,7 @@ encodermode: hd-voctomix
 voctomix_audiostreams: 2
 voctomix_stream_suppress_audio_tracks: [1]
 
-voctomix_inverted_axis: True
+#voctomix_inverted_axis: True
 
 # für JVC:
 #    video_connection: SDI
