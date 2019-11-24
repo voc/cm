@@ -22,11 +22,11 @@
       - iotop
       - screen
       - build-essential
-      - gdb
+#      - gdb
       - bwm-ng
       - lldpd
       - mosh
-      - runit
+#      - runit
       - molly-guard
       - ncdu
       - debian-goodies
@@ -37,7 +37,7 @@
       - buffer
       - lm-sensors
       - moreutils
-      - python
+      - python3
       - ruby
       - ruby-dev
       - libdbi1
