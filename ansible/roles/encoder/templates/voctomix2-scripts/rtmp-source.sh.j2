@@ -1,0 +1,20 @@
+#!/bin/sh
+
+WIDTH="1920"
+HEIGHT="1080"
+FRAMERATE="25"
+AUDIORATE="48000"
+
+ffmpeg -y -nostdin -xerror \
+        -f flv -i "rtmp://127.0.0.1/{{ item.1.target}}" \
+        -filter_complex "
+                [0:v] scale=$WIDTH:$HEIGHT,fps=$FRAMERATE [v];
+                [0:a] aresample=$AUDIORATE [a]
+        " \
+        -map "[v]" \
+        -c:v rawvideo \
+        -pix_fmt yuv420p \
+        -map "[a]" -ac 2 \
+        -c:a pcm_s16le \
+        -f matroska \
+        tcp://localhost:{{ item.0 + 10000 }}

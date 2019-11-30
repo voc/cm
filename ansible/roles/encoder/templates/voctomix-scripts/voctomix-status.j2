@@ -1,2 +1,2 @@
 #!/bin/sh
-systemctl status -n0 `(grep -l "#MANAGED BY ANSIBLE" -r /etc/systemd/system/; find /etc/systemd/system/ -type f -name 'voctomix-*') | xargs -rl1 basename`
+systemctl status -n0 `grep -l "#MANAGED BY ANSIBLE" -r /etc/systemd/system/ | grep -v 'voctomix2' | xargs -rl1 basename`

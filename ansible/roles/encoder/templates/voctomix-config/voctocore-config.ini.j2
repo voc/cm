@@ -56,24 +56,45 @@ default-a=slides
 
 {% if voctomix_inverted_axis is not defined %}
 [side-by-side-equal]
-border=10
-gutter=20
-atop=80
-btop=480
+border=51
+gutter=0
+atop=499
+btop=186
 
 default-a=slides
 
 [side-by-side-preview]
+asize=1371x771
+apos=475/148
+
+bsize=407x407
+bcrop=0/0/0/840
+bpos=38/510
+
+[picture-in-picture]
+pipsize=496x279
+pippos=1404/781
+
+default-a=slides
+{% else %}
+[side-by-side-equal]
+border=10
+gutter=20
+btop=80
+atop=480
+
+default-b=slides
+[side-by-side-preview]
 asize=1420x799
-apos=20/160
+apos=480/160
 bsize=496x279
-bpos=1404/781
+bpos=20/781
 
 default-a=slides
 
 [picture-in-picture]
 pipsize=496x279
-pippos=1404/781
+pippos=20/781
 
 default-a=slides
 {% else %}

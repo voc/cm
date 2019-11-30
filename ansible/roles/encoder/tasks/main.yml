@@ -7,6 +7,10 @@
    tags:
     - encodermode
     - voctomix
+ - include: encodermode-voctomix2.yml
+   tags:
+    - encodermode
+    - voctomix2
  - include: icedist.yml
    tags: icedist
  - include: nginx.yml

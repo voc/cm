@@ -1,8 +1,8 @@
 ---
   - name: install snmp stuff
-    apt: name={{ item }} state=present
-    vars:
-      packages:
+    apt:
+      state: present
+      pkg:
        - snmp
        - snmp-mibs-downloader
 

@@ -1,0 +1,2 @@
+#!/bin/sh
+systemctl status -n0 `(find /etc/systemd/system/ -type f -name 'voctomix2-*') | xargs -rl1 basename`
