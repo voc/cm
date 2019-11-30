@@ -4,7 +4,7 @@
 
  - name: configure the ssh server
    template: dest=/etc/ssh/sshd_config
-             validate='sshd -T -C user=doesnotexist,host=none,addr=none -f %s'
+             validate='/usr/sbin/sshd -T -C user=doesnotexist,host=none,addr=none -f %s'
              src=sshd_config.j2
              owner=root group=root mode=0644
    notify:

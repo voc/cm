@@ -1,0 +1,6 @@
+#!/bin/sh
+ffmpeg \
+	-i tcp://localhost:{% if item == 'stream' %}15000{% elif item == 'program' %}11000{% endif %} \
+	-c:v rawvideo -c:a pcm_s16le \
+	-pix_fmt uyvy422 \
+	-f decklink '{{ item[1] }}'

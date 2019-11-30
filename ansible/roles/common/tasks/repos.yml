@@ -34,16 +34,16 @@
  # add repos
  #
 
- - name: setup the debian backports repo for stretch
-   apt_repository: repo="deb http://ftp.de.debian.org/debian stretch-backports main"
+ - name: setup the debian backports repo for buster
+   apt_repository: repo="deb http://ftp.de.debian.org/debian buster-backports main"
    when: system.type == 'pc'
 
- - name: ensure that the non-free suite is enabled for stretch
-   apt_repository: repo="deb http://ftp.de.debian.org/debian stretch main contrib non-free"
+ - name: ensure that the non-free suite is enabled for buster
+   apt_repository: repo="deb http://ftp.de.debian.org/debian buster main contrib non-free"
    when: system.type == 'pc'
 
- - name: ensure that security updates enabled for stretch
-   apt_repository: repo="deb http://security.debian.org/ stretch/updates main contrib non-free"
+ - name: ensure that security updates enabled for buster
+   apt_repository: repo="deb http://security.debian.org/ buster/updates main contrib non-free"
    when: system.type == 'pc'
 
  - name: make sure apt-transport-https is installed
@@ -57,8 +57,8 @@
       - debian-archive-keyring
    when: system.type == 'pc'
 
- - name: setup the VOC debian repo for stretch
-   apt_repository: repo="deb http://pkg.c3voc.de/ stretch main" state=present
+ - name: setup the VOC debian repo for buster
+   apt_repository: repo="deb http://pkg.c3voc.de/ buster main" state=present
    when: system.type == 'pc'
 
 

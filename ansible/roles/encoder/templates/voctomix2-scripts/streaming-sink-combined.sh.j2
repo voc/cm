@@ -1,0 +1,108 @@
+#!/bin/sh
+ffmpeg -y -nostdin \
+	{# input from bothmix-out and slide-mirror #}
+	-thread_queue_size 512 \
+	-i tcp://localhost:15000 \
+	-thread_queue_size 512 \
+	-i tcp://localhost:13000 \
+	-threads:0 0 \
+	-aspect 16:9 \
+	-filter_complex '
+		[0:v] yadif=mode=2, hqdn3d, split [deinter_hd] [deinter_hd2];
+		[deinter_hd2] scale=720:576 [deinter_sd];
+		[1:v] scale=720:576, fps=5, hqdn3d [deinter_slides];
+		movie=/opt/voc/share/overlay_hd.png [logo_hd];
+		[deinter_hd] [logo_hd] overlay=0:0 [hd];
+		movie=/opt/voc/share/overlay_sd.png [logo_sd];
+		[deinter_sd] [logo_sd] overlay=0:0 [sd];
+		movie=/opt/voc/share/overlay_slides.png [logo_slides];
+		[deinter_slides] [logo_slides] overlay=0:0 [slides];
+
+
+		[0:a:0] asplit=3 [native_in][translated_in][stereo];
+		[native_in] pan=mono|c0=FL [native];
+		[translated_in] pan=mono|c0=FR [translated]
+	' \
+	-map '[hd]' -map '[sd]' -map '[slides]' \
+	\
+	{# high bitrate and quality for HD #}
+	-maxrate:v:0 3000k -crf:0 21 \
+	\
+	{# low bitrate and quality for SD #}
+	-maxrate:v:1 800k  -crf:1 18 \
+	\
+	{# even lower bitrate but better quality for Slides #}
+	-maxrate:v:2 100k  -crf:2 25 \
+	\
+	-c:v:0 libx264 -preset:v:0 veryfast -bufsize:v:0 8192k -pix_fmt:0 yuv420p -profile:v:0 main \
+	-c:v:1 libx264 -preset:v:0 veryfast -bufsize:v:1 8192k -pix_fmt:1 yuv420p -profile:v:1 main \
+	-c:v:2 libx264 -preset:v:0 veryfast -bufsize:v:2 8192k -pix_fmt:2 yuv420p -profile:v:2 main \
+	\
+	{# GOP-Size of 25 für HD & SD (= 1 Second @ 25fps) #}
+	-g:v:0 25 \
+	-g:v:1 25 \
+	\
+	{# GOP-Size of 50 für Slides (= 10 Second @ 25fps) #}
+	-g:v:2 50 \
+	\
+	{# Pan and Encode Audio, Left Channel -> Native #}
+	-map '[native]' \
+	-c:a:0 aac -b:a:0 96k -ar 44100 \
+	{# Pan and Encode Audio, Righr Channel -> Translated #}
+	-map '[translated]' \
+	-c:a:1 aac -b:a:1 96k -ar 44100 \
+	{# Encode Audio, Both Channels -> Stereo #}
+	-map '[stereo]' \
+	-c:a:2 aac -b:a:2 96k -ar 44100 \
+	\
+	-max_interleave_delta 0 \
+	-f nut pipe: | \
+		ffmpeg -v warning -y -nostdin -f nut -i pipe: \
+			{# HD Native #}
+			-c:v copy -c:a copy \
+			-map 0:v:0 -map 0:a:0 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_native_hd \
+			{# HD Translated #}
+			-c:v copy -c:a copy \
+			-map 0:v:0 -map 0:a:1 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_translated_hd \
+			{# HD Stereo #}
+			-c:v copy -c:a copy \
+			-map 0:v:0 -map 0:a:2 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_stereo_hd \
+			\
+			{# SD Native #}
+			-c:v copy -c:a copy \
+			-map 0:v:1 -map 0:a:0 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_native_sd \
+			{# SD Translated #}
+			-c:v copy -c:a copy \
+			-map 0:v:1 -map 0:a:1 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_translated_sd \
+			{# SD Stereo #}
+			-c:v copy -c:a copy \
+			-map 0:v:1 -map 0:a:2 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_stereo_sd \
+			\
+			{# Slides Native #}
+			-c:v copy -c:a copy \
+			-map 0:v:2 -map 0:a:0 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_native_slides \
+			{# Slides Translated #}
+			-c:v copy -c:a copy \
+			-map 0:v:2 -map 0:a:1 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_translated_slides \
+			{# Slides Stereo #}
+			-c:v copy -c:a copy \
+			-map 0:v:2 -map 0:a:2 \
+			-f flv rtmp://127.0.0.1:1935/stream/{{ streaming_endpoint }}_stereo_slides \
+			{# Pass the whole mux to an distribution Icecast #}
+			{% if distribution_mode is defined and distribution_mode == 'icedist' %}
+			-c:v copy -c:a copy \
+			-map 0:v:0 -map 0:v:1 -map 0:v:2 \
+			-map 0:a:0 -map 0:a:1 \
+			-f matroska -password source -content_type video/webm icecast://127.0.0.1:7999/{{ streaming_endpoint }}_vocto.mkv
+			{% else %}
+			{# dummy-newline to catch the backslash #}
+
+			{% endif %}

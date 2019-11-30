@@ -1,0 +1,9 @@
+#!/bin/sh
+ffmpeg \
+	-hide_banner \
+	-f decklink -list_formats 1 \
+	-i "$1" 2>&1 | \
+		grep "$2" | \
+		sort -r | \
+		head -1 | \
+		awk '{ print $4 }'

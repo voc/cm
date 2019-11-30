@@ -1,0 +1,14 @@
+[Unit]
+Description = voctomix2 {{ item[0] }}-to-{{ item[1] }} playout
+After = voctomix2-voctocore.service
+Requires = voctomix2-voctocore.service
+
+[Service]
+Type = simple
+ExecStart = /opt/voctomix2/scripts/{{ item[0] }}-to-{{ item[1] | lower | replace(' ', '-') | replace('(', '') | replace(')', '') }}-playout.sh
+Restart = always
+RestartSec = 1s
+StartLimitInterval = 0
+
+[Install]
+WantedBy = voctomix2-voctocore.service
