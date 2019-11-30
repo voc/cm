@@ -1,0 +1,8 @@
+- synchronize:
+    mode: pull
+    src: /srv/www/media.ccc.de/media
+    dest: /srv/www/media.ccc.de/media
+  delegate_to: "{{ item }}"
+  loop: "{{ groups.cdn }}"
+  no_log: true
+  tags: ['images']

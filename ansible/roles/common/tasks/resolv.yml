@@ -1,4 +1,9 @@
 ---
+  - name: make resolv.conf writable
+    file:
+      path: /etc/resolv.conf
+      attributes: -i
+
   - name: configure resolv.conf
     template: dest=/etc/resolv.conf
               src=resolv.conf.j2

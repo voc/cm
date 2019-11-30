@@ -1,0 +1,14 @@
+---
+  - name: install defaut packages
+    apt: name={{ item }} state=latest
+    with_items:
+      - unattended-upgrades
+      - elasticsearch
+      - redis-server
+      - postgresql-9.5
+      - nodejs
+      - libssl-dev
+      - build-essential
+      - libpq-dev
+      - libsqlite3-dev
+      - nginx

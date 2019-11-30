@@ -159,7 +159,7 @@ server {
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://hls/$hls/$stream;
       proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 6m;
+      proxy_cache_valid      200 302 11m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;
@@ -320,7 +320,7 @@ server {
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://dash/dash/$segment;
       proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 3m;
+      proxy_cache_valid      200 302 11m;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;

@@ -1,10 +1,10 @@
 ---
-- shell: /usr/lib/go-1.9/bin/go get github.com/manno/mirrorbits-serverlist-api
+- shell: /usr/local/bin/go get github.com/manno/mirrorbits-serverlist-api
   environment:
-    GOPATH: /usr/local/
-- shell: /usr/lib/go-1.9/bin/go install github.com/manno/mirrorbits-serverlist-api
+    GOPATH: /srv/mirrorbits
+- shell: /usr/local/bin/go install github.com/manno/mirrorbits-serverlist-api
   environment:
-    GOPATH: /usr/local/
+    GOPATH: /srv/mirrorbits
 
 - template: src=mirrorbits-serverlist-api.service
             dest=/etc/systemd/system/mirrorbits-serverlist-api.service

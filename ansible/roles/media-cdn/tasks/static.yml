@@ -1,22 +1,20 @@
 ---
-- file: path=/srv/www/ state=directory
-        owner=www-data group=www-data
-
-- git: repo=https://github.com/voc/voctoweb-static
-       dest=/srv/www/
-       version=master
-
-- group: name="uploaders" state=present
 - group: name="cdn-app" state=present
 
 - user: state=present
         name="cdn-app"
         groups="cdn-app,uploaders"
-        shell="/usr/bin/rssh"
+        shell="/bin/false"
 
-- git: repo=https://github.com/voc/voctoweb-media
-       dest=/srv/www/media.ccc.de/media
-       version=master
+- block:
+  - get_url:
+      url: https://github.com/voc/voctoweb-static/archive/master.tar.gz
+      dest: /tmp/static.tar.gz
+  - unarchive:
+      src: /tmp/static.tar.gz
+      dest: /srv/www
+      remote_src: yes
+      extra_opts: ['--strip-components=1']
 
 - file: dest=/srv/www/media.ccc.de/media state=directory recurse=yes
         owner=cdn-app group=cdn-app

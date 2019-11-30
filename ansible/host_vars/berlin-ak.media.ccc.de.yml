@@ -1,0 +1,3 @@
+---
+acmetool_want:
+  - "{{ inventory_hostname }} {{ inventory_hostname_short }}.ftp.media.ccc.de"

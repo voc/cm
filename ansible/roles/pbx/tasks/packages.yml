@@ -6,6 +6,4 @@
     apt_repository: repo="deb http://debian.ctm.ru/nightly/ stretch main non-free" state=present
 
   - name: install packages needed to be a pbx server
-    apt: name={{ item }} state=present update_cache=yes
-    with_items:
-      - yate
+    apt: name=yate state=present update_cache=yes

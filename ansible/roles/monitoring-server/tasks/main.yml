@@ -1,0 +1,12 @@
+---
+  - include: packages.yml
+    tags: [packages]
+
+  - include: graphite.yml
+    tags: [graphite]
+
+  - include: grafana.yml
+    tags: [grafana]
+
+  - include: collectd.yml
+    tags: [collectd]

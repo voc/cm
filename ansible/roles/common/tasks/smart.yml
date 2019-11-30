@@ -1,0 +1,5 @@
+---
+
+- name: disable smartd on VMs
+  service: name=smartd.service enabled=no state=stopped
+  when: ansible_virtualization_role is defined and ansible_virtualization_role == 'guest'

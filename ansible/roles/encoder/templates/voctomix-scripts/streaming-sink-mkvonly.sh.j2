@@ -1,9 +1,9 @@
 #!/bin/sh
 ffmpeg -y -nostdin -hide_banner \
 {# input from both mix-out and slide-mirror #}
-	-thread_queue_size 512 -i tcp://localhost:15000?timeout=3000 \
+	-thread_queue_size 512 -i tcp://localhost:15000?timeout=3000000 \
 {% if voctomix.parallel_slide_recording %}
-	-thread_queue_size 512 -i tcp://localhost:15001?timeout=3000 \
+	-thread_queue_size 512 -i tcp://localhost:15001?timeout=3000000 \
 {% endif %}
 	-filter_complex '
 		[0:v] hqdn3d [smooth_hd];
@@ -24,7 +24,7 @@ ffmpeg -y -nostdin -hide_banner \
 	\
 {# High bitrate and high quality for HD #}
 	-map [hd] -metadata:s:v:0 title="HD" \
-	-r:v:0 25 -g:v:0 75 -crf:v:0 23 -maxrate:v:0 4M -bufsize:v:0 18M \
+	-r:v:0 25 -g:v:0 75 -crf:v:0 21 -maxrate:v:0 4M -bufsize:v:0 18M \
 	\
 {% if voctomix.parallel_slide_recording %}
 {# Low bitrate and ok quality for Slides #}
@@ -36,7 +36,15 @@ ffmpeg -y -nostdin -hide_banner \
 	-c:a aac -b:a 192k -ar 48000 -ac 1 \
 	\
 {# Encode audio #}
+{% if voctomix_stream_suppress_audio_tracks %}
+{% for n in range(voctomix_audiostreams) %}
+{% if n not in voctomix_stream_suppress_audio_tracks %}
+	-map 0:a:{{ n }} \
+{% endif %}
+{% endfor %}
+{% else %}
 	-map 0:a \
+{% endif %}
 	\
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \

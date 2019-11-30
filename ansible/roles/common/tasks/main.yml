@@ -1,5 +1,6 @@
 ---
   - include: ../../../register/bin_path.yml
+    tags: bin_path
   - include: locale.yml
   - include: resolv.yml
     tags:
@@ -7,7 +8,11 @@
       - dns
   - include: apt_proxy.yml
   - include: repos.yml
+    tags:
+      - repos
+      - apt
   - include: packages.yml
+    tags: [packages]
   - include: kernel.yml
     when: system.type == 'pc'
     tags: kernel
@@ -16,17 +21,18 @@
   - include: grub.yml
     when: system.type == 'pc'
   - include: ntp.yml
-    when: ansible_virtualization_type != 'lxc'
+    when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
   - include: acpi.yml
     when: system.type == 'pc'
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
   - include: ssl.yml
+  - include: smart.yml
   # realise users
   - include: user.yml user={{ users }}
     tags: user
   - include: monitoring.yml
-    tags: 
+    tags:
       - monitoring
       - check_system
 

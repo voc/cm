@@ -1,0 +1,12 @@
+---
+  - name: restart collectd
+    service: name=collectd state=restarted
+
+  - name: restart grafana-server
+    service: name=grafana-server state=restarted
+
+  - name: restart carbon-cache
+    service: name=carbon-cache state=restarted
+
+  - name: restart graphite-api
+    service: name=graphite-api state=restarted

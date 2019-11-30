@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 
 if [[ $* != *--deploy* && $* != *--diff* ]]; then
@@ -20,7 +20,7 @@ fi
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function get_relay_json() {
-  wget -O $BASEDIR/relays.json https://voc:${PASSWORD}@c3voc.de/34c3/register/relays
+  wget -O $BASEDIR/relays.json https://voc:${PASSWORD}@c3voc.de/relayregister/relays
 }
 
 function create_lb_cariables() {
@@ -38,14 +38,14 @@ function create_lb_cariables() {
 
 function deploy_lbs() {
   if [[ $DIFF = true ]]; then
-    $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --check --diff
+    $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -b -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --check --diff
   else
     echo
     echo "Deploy new config to loadbalancers? [yes|no]"
     read choice
 
     if [ "$choice" = "yes" ]; then
-      $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -s -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --diff
+      $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -b -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --diff
     else
       echo "Nothing deployed."
     fi

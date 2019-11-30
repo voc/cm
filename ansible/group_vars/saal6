@@ -1,6 +1,6 @@
 ---
-room_number: 5
-room_fahrplan_name: Saal 5
+room_number: 6
+room_fahrplan_name: Saal 6
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -9,6 +9,7 @@ encodermode: hd-voctomix
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
 voctomix_audiostreams: 2
+voctomix_stream_suppress_audio_tracks: [1]
 
 # für JVC:
 #    video_connection: SDI
@@ -59,7 +60,7 @@ voctomix_sources:
     # Duo Port 1
     name: cam1
     type: decklink-internal
-    devicenumber: 0
+    devicenumber: 1
     video_connection: SDI
     video_mode: "1080p25"
     volume: 1.0
