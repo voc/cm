@@ -1,10 +1,10 @@
 ---
 # Event config
 event:
-  timezone: Europe/Bucharest
-  acronym: foss4g2019
-  name: FOSS4G 2019
-  slogan: 44.43555, 26.102347
+  timezone: Europe/Berlin
+  acronym: vocto2mix-test
+  name: Voctomix2 Test
+  slogan: vocto2mix
   formats:
     hd: 'yes'
     sd: 'yes'
@@ -23,7 +23,6 @@ voctomix:
   static_background_image: true
   music: true
   nostream_loop: false
-
   lossless_audio: true
 
 # only enable for congress

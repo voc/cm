@@ -30,6 +30,6 @@
           owner=root group=root mode=0755
     tags: fnord
 
-  - name: set timezone to Europe/London
+  - name: set timezone
     timezone:
       name: "{{ event.timezone }}"
