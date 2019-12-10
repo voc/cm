@@ -1,0 +1,51 @@
+---
+- apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: D27D666CD88E42B4
+
+- apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+    filename: elastic
+    state: present
+
+# elasticsearch needs java installed first
+- apt:
+    state: latest
+    name:
+      - openjdk-8-jre-headless
+
+- apt:
+    state: latest
+    name:
+      - autopostgresqlbackup
+      - elasticsearch
+      - postgresql
+      # for ansible:
+      - libpq-dev
+      - python-psycopg2
+
+- copy: src=default/{{ item }}
+        dest=/etc/default/
+        owner=root group=root mode=0644
+  loop:
+    - elasticsearch
+
+- template: src=elasticsearch.yml
+            dest=/etc/elasticsearch/elasticsearch.yml
+            owner=root group=elasticsearch mode=0640
+
+- template: src={{ item }}
+            dest=/etc/postgresql/10/main/{{ item }}
+            owner=postgres group=postgres mode=0640
+  loop:
+    - postgresql.conf
+    - pg_hba.conf
+
+- systemd: state=started enabled=yes name=elasticsearch
+
+# command: echo "create role {{ pg_user }} with createdb login password '{{ pg_password }}';" | sudo -u postgres psql
+- postgresql_user:
+    name: "{{ pg_user }}"
+    password: "{{ pg_password }}"
+    role_attr_flags: CREATEDB,NOSUPERUSER
+  become_user: postgres

@@ -1,0 +1,2 @@
+cd ../current
+RACK_ENV=production bundle exec rails c

@@ -1,0 +1,12 @@
+/srv/media/media-site/shared/log/sidekiq.log /srv/media/media-site/shared/log/puma.error.log /srv/media/media-site/shared/log/puma.access.log /srv/media/media-site/shared/log/production.log {
+  daily
+  missingok
+  copytruncate
+  rotate 12
+  notifempty
+  compress
+  create 0640 media adm
+  # try to debug load issue with puma
+  #postrotate
+  #systemctl restart voctoweb-puma
+}

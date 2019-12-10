@@ -1,7 +1,7 @@
 ---
 # TODO this is one is required for running acmetool?!
-- shell: /bin/rm -rf /etc/nginx/sites-enabled/*
-  tags: ['ansible-acmetool', 'nginx']
+#- shell: /bin/rm -rf /etc/nginx/sites-enabled/*
+#  tags: ['ansible-acmetool', 'nginx']
 
 - shell: /bin/rm -rf /var/lib/acme
   tags: ansible-acmetool

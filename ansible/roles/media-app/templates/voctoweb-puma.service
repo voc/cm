@@ -1,19 +1,17 @@
 [Unit]
-Description=Puma application server for voctoweb
-After=network.target vagrant.mount
-Depends=vagrant.mount
+Description=Puma application server for media.ccc.de
+After=network.target
 
 [Service]
-WorkingDirectory=/vagrant
-Environment=RAILS_ENV=development
-User=ubuntu
-PIDFile=/vagrant/tmp/pids/puma.pid
-ExecStart=/usr/local/bin/bundle exec rails s -b 0.0.0.0
+WorkingDirectory=/srv/media/media-site/current
+Environment=RAILS_ENV=production
+User=media
+PIDFile=/srv/media/media-site/shared/tmp/pids/puma.pid
+ExecStart=/srv/media/.rvm/bin/rvm {{ ruby_version }}@media-site do bundle exec puma -C /srv/media/media-site/shared/config/puma.rb
+ExecStop=/srv/media/.rvm/bin/rvm {{ ruby_version }}@media-site do bundle exec pumactl stop -p /srv/media/media-site/shared/tmp/pids/puma.pid
+ExecReload=/usr/bin/touch /srv/media/media-site/shared/tmp/restart.txt
 Restart=always
 SyslogIdentifier=voctoweb-puma
-RestartSec=5s
-StartLimitInterval=0
 
 [Install]
 WantedBy=default.target
-Depends=vagrant.mount

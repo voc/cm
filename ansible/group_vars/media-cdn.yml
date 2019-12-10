@@ -1,0 +1,18 @@
+---
+go_version: 1.13.3
+# run acmetool setup
+acmetool_responses_email: media@koeln.ccc.de
+# TODO is this still needed for mirrorbits?
+google_maps_api_key: ''
+
+users:
+  - { name: 'derpeter', state: 'absent' }
+  - { name: 'danimo', state: 'absent' }
+  - { name: 'florolf', state: 'absent' }
+  - { name: 'meise', state: 'absent' }
+  - { name: 'mm', state: 'absent' }
+  - { name: 'voc', state: 'present' }
+uploaders: "{{ lookup('keepass', 'ansible/media/uploaders.notes') | from_yaml }}"
+rsync_password: "{{ lookup('keepass', 'ansible/media/media_mirror_rsync.password') }}"
+rsync_secrets: "{{ lookup('keepass', 'ansible/media/rsync.notes') }}"
+rsync_secrets_public: "{{ lookup('keepass', 'ansible/media/rsync_public.notes') }}"

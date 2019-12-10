@@ -1,9 +1,22 @@
 ---
-  - import_tasks: packages.yml
+- name: Add rails user
+  user:
+    name: media
+    shell: /bin/bash
+    home: /srv/media
+    state: present
 
-  - import_tasks: rails-app.yml
-    tags: app
+# TODO install goaccess
+- copy: src=goaccess.sh
+        dest=/usr/local/bin
+        owner=root group=root mode=0755
 
-  - import_tasks: nginx.yml
-    tags:
-      - nginx
+- import_tasks: packages.yml
+  tags: media-app
+
+- import_tasks: rails-app.yml
+  tags: media-app
+
+- import_tasks: nginx.yml
+  tags:
+    - nginx

@@ -1,0 +1,3 @@
+rsync_password: "{{ lookup('keepass', 'ansible/media/media_mirror_rsync.password') }}"
+rsync_web_url: media-sync@koeln.media.ccc.de:/srv/www/media.ccc.de/
+rsync_cdn_url: rsync://media@cdn.media.ccc.de:/ftp/

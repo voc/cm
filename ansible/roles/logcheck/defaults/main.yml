@@ -1,0 +1,4 @@
+# will overwrite local files
+download_logcheck: 'false'
+# will remove local logcheck rules before upload
+remove_logcheck: 'false'
