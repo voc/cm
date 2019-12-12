@@ -32,9 +32,5 @@
         dest=/srv/mirrorbits/
         owner=mirrorbits group=root
 
-- copy: src=mirrorbits-cli
-        dest=/usr/local/bin
-        owner=root group=root mode=0755
-
 - systemd: state=started enabled=yes name=mirrorbits.service
 - systemd: state=started enabled=yes name=redis.service

@@ -1,0 +1,1 @@
+curl -k -H "CONTENT-TYPE: application/json" -d '{"api_key":"{{ app_api_key }}"}' https://api.media.ccc.de/api/events/update_view_counts

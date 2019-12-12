@@ -9,12 +9,22 @@ server {
   rewrite     ^ https://media.ccc.de$request_uri? permanent;
 }
 
-limit_req_zone $binary_remote_addr zone=graphql:10m rate=1r/s;
-limit_req_zone $binary_remote_addr zone=count:10m rate=10r/m;
+
+# okhttp 2% problem
+map $http_user_agent $isevil_ua {
+  default 0;
+  ~*(okhttp) 1;
+}
+map $isevil_ua $limit_evil {
+  0       "";
+  1       $binary_remote_addr;
+}
+
+{{ nginx_limits }}
 
 proxy_cache_path /srv/media/media-site/cache
 	keys_zone=media_puma:32m
-	max_size=1g
+	max_size=2g
 	inactive=1h
 	loader_threshold=300 loader_files=1024;
 
@@ -56,9 +66,39 @@ server {
     break;
   }
 
+  # remove this?
+  location /ftp {
+    rewrite ^/ftp/(.*)$ http://cdn.media.ccc.de/$1 permanent;
+    autoindex  on;
+  }
+
+  # remove this?
+  location /photos/camp2011 {
+    alias /srv/ftp/events/camp2011/photos/;
+    rewrite ^/photos/camp2011(.*)$ http://cdn.media.ccc.de/events/camp2011/photos$1 permanent;
+    autoindex  on;
+  }
+
   # compatibility until new list is available on cdn
   location /public/torrents {
+    #alias /srv/www/media.ccc.de/torrents.txt;
     rewrite ^/public/torrents$ http://cdn-api.media.ccc.de/public/torrents permanent;
+  }
+
+  # for app.media.ccc.de
+  location /stats {
+    alias /srv/www/media.ccc.de/stats/;
+    index  index.html index.htm;
+    auth_basic "Media Stats";
+    auth_basic_user_file /etc/nginx/htpasswd;
+  }
+
+  # for app.media.ccc.de
+  location /mrtg {
+    alias /var/www/mrtg/;
+    index  index.html index.htm;
+    #auth_basic "Media Stats";
+    #auth_basic_user_file /etc/awstats/awstats.htpasswd;
   }
 
   # REWRITE RULES
@@ -110,6 +150,31 @@ server {
     proxy_pass      http://puma;
   }
 
+  location /public {
+    limit_req zone=evil burst=2;
+
+    set $remote_addr_v4 $remote_addr;
+    if ($remote_addr ~* ^::ffff:(.*)) {
+      set $remote_addr_v4 $1;
+    }
+    proxy_set_header  X-Forwarded-For $remote_addr_v4;
+    proxy_set_header  X-Forwarded-Proto $scheme;
+    proxy_set_header  X-Real-IP  $remote_addr;
+    proxy_set_header  Host $http_host;
+    add_header        Front-End-Https   on;
+    proxy_redirect    off;
+
+    proxy_pass      http://puma;
+
+    proxy_cache            media_puma;
+    proxy_cache_methods    GET HEAD;
+    proxy_cache_valid      200 302 5m;
+    proxy_cache_lock       on;	
+    proxy_ignore_headers   Cache-Control;
+    proxy_cache_bypass     {{ secret_header }};
+    add_header X-Cache     "$upstream_cache_status edge";
+  }
+
   location @puma {
     set $remote_addr_v4 $remote_addr;
     if ($remote_addr ~* ^::ffff:(.*)) {
@@ -131,7 +196,7 @@ server {
     proxy_cache_valid      200 302 5m;
     proxy_cache_lock       on;	
     proxy_ignore_headers   Cache-Control;
-    proxy_cache_bypass     $http_secret_header;
+    proxy_cache_bypass     {{ secret_header }};
     add_header X-Cache     "$upstream_cache_status edge";
   }
 }

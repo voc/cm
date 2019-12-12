@@ -1,68 +1,68 @@
 ---
-  - hosts: assets
+  - hosts: media-assets
     roles:
       - role: media-assets
         gather_facts: no
-        tags: ['assets']
+        tags: ['media-assets']
 
-  - hosts: cdn
+  - hosts: media-cdn
     roles:
       - role: media-common
         tags: ['media-common']
 
-      - role: ansible-acmetool
+      - role: acmetool
         when: ssl == 1 and acmetool_setup == 1
-        tags: ['ansible-acmetool', 'nginx']
+        tags: ['acmetool-install', 'nginx']
 
       - role: golang
         tags: ['golang']
-        when: cdn == 1
 
       - role: media-cdn
-        when: cdn == 1
         tags: ['media-cdn']
 
+      - role: logcheck
+        tags: ['logcheck']
+
+  - hosts: media-mirror
+    roles:
+      - role: media-common
+        tags: ['media-common']
+
+      - role: acmetool
+        when: ssl == 1 and acmetool_setup == 1
+        tags: ['acmetool-install', 'nginx']
+
       - role: media-mirror
-        when: mirror == 1
         tags: ['media-mirror']
 
+      - role: logcheck
+        tags: ['logcheck']
+
+  - hosts: media-app
+    roles:
+      - role: media-common
+        tags: ['media-common']
+
+      - role: acmetool
+        when: ssl == 1 and acmetool_setup == 1
+        tags: ['acmetool-install', 'nginx']
+
+      - role: media-app
+        tags: ['media-app']
+
       - role: rvm1-ansible
-        when: app == 1
         tags: ['media-app', 'ruby']
-        rvm1_rubies: ["{{ ruby_version }}"]
+        rvm1_rubies: ['ruby-{{ ruby_version }}']
         rvm1_user: 'media'
         rvm1_install_path: '/srv/media/.rvm'
         rvm1_install_flags: '--auto-dotfiles --user-install'
+        rvm1_rvm_version: 'stable'
+        rvm1_autolib_mode: 0
 
-      - role: media-app
-        when: app == 1
-        tags: ['media-app']
+  - hosts: media-app-db
+    roles:
+      - role: media-common
+        tags: ['media-common']
 
-      - { role: 'logcheck', tags: ['logcheck'] }
-
-    vars:
-      go_version: 1.13
-      ruby_version: ruby-2.6.1
-      # run acmetool setup
-      acmetool_setup: 0
-      # remove all configuration/state first
-      acmetool_cleanup: 'false'
-      # will overwrite local files
-      download_logcheck: 'false'
-      # will remove local logcheck rules before upload
-      remove_logcheck: 'false'
-
-      acmetool_websrv: "nginx"
-      redis_bind: 127.0.0.1
-      users:
-        - { name: 'derpeter', state: 'absent' }
-        - { name: 'danimo', state: 'absent' }
-        - { name: 'florolf', state: 'absent' }
-        - { name: 'meise', state: 'absent' }
-        - { name: 'mm', state: 'absent' }
-        - { name: 'voc', state: 'present' }
-      uploaders: "{{ lookup('keepass', 'ansible/media/uploaders.notes') | from_yaml }}"
-      downloaders: test.yml
-
-      media_mirror_rsync: 'TODO keepass plz'
-      google_maps_api_key: 'TODO keepass plz'
+      - role: media-app-db
+        tags: ['media-app-db']

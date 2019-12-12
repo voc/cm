@@ -1,14 +1,23 @@
 ---
-  - name: install defaut packages
-    apt: name={{ item }} state=latest
-    with_items:
-      - unattended-upgrades
-      - elasticsearch
-      - redis-server
-      - postgresql-9.5
-      - nodejs
-      - libssl-dev
+- name: install defaut packages
+  apt:
+    state: latest
+    name:
       - build-essential
       - libpq-dev
       - libsqlite3-dev
+      - libssl-dev
+      - zlib1g-dev
+      - nodejs
+      # these could be on another host
       - nginx
+      - redis-server
+
+- apt_key:
+    url: https://deb.goaccess.io/gnugpg.key
+    state: present
+
+- apt_repository:
+    repo: deb http://deb.goaccess.io/ bionic main
+    filename: goaccess
+    state: present

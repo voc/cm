@@ -13,7 +13,7 @@
         skeleton=false
         create_home=yes
   loop: "{{ uploaders }}"
-  when: (item | dict2items | first).key not in hostvars['new.media'].users
+  when: (item | dict2items | first).key not in hostvars[ansible_host].users
   tags: ['user']
 
 - authorized_key:

@@ -1,0 +1,16 @@
+---
+ruby_version: 2.6.5
+app_api_key: "{{ lookup('keepass', 'ansible/media/app_api_key.password') }}"
+app_dotenv: "{{ lookup('keepass', 'ansible/media/app_dotenv.notes') }}"
+app_settings: "{{ lookup('keepass', 'ansible/media/app_settings.notes') }}"
+httpstats: "{{ lookup('keepass', 'ansible/media/httpstats.notes') }}"
+dhparam: "{{ lookup('keepass', 'ansible/media/nginx_dhparam.notes') }}"
+nginx_limits: "{{ lookup('keepass', 'ansible/media/nginx_limits.notes') }}"
+pg_user: "{{ lookup('keepass', 'ansible/media/postgresql.username') }}"
+pg_password: "{{ lookup('keepass', 'ansible/media/postgresql.password') }}"
+pg_db: "{{ lookup('keepass', 'ansible/media/postgresql.url') }}"
+pg_host: 10.0.0.2
+users:
+  - { name: 'mm', state: 'present' }
+  - { name: 'voc', state: 'present' }
+secret_header: "{{ lookup('keepass', 'ansible/media/secret_header.password') }}"

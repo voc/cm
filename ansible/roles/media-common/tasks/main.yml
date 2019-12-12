@@ -1,15 +1,18 @@
 ---
-  - import_tasks: media_locale.yml
-  #- include_tasks: ../../common/tasks/monitoring.yml
-  - import_tasks: media_sudo.yml
-  - import_tasks: timezone.yml
-  - import_tasks: packages.yml
-  - import_tasks: users.yml
-    tags: user
-  - import_tasks: acmetool-cleanup.yml
-    tags: ansible-acmetool
-  - import_tasks: nginx-common.yml
-    tags: nginx
-  # - import_tasks: configs: vim/tmux via skel
-  # - import_tasks: etckeeper logcheck fail2ban mrtg vnstat
-  # - import_tasks: backuppc
+- import_tasks: media_locale.yml
+#- include_tasks: ../../common/tasks/monitoring.yml
+- import_tasks: media_sudo.yml
+- import_tasks: timezone.yml
+- import_tasks: packages.yml
+- import_tasks: users.yml
+  tags: user
+- import_tasks: acmetool-cleanup.yml
+  tags: ansible-acmetool
+- import_tasks: nginx-common.yml
+  tags: nginx
+# - import_tasks: configs: vim/tmux via skel
+# - import_tasks: etckeeper logcheck fail2ban mrtg vnstat
+# - import_tasks: backuppc
+- copy: src=purge-kernels
+        dest=/usr/local/sbin
+        owner=root group=root mode=0755

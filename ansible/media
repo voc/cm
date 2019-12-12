@@ -1,14 +1,21 @@
-[cdn]
-new.media ansible_host=172.23.23.170 mirror=1 cdn=1 ssl=0
+[media-cdn]
+berlin-ak.media.ccc.de ssl=1
+# new.media ansible_host=172.23.23.170 ssl=0
 
-[cdn-done]
-berlin-ak.media.ccc.de mirror=1 cdn=0 ssl=1
+[media-assets]
+koeln.media.ccc.de
 
-[mirror]
-berlin.media.ccc.de mirror=1 cdn=0
+[media-mirror]
+berlin.media.ccc.de
+# new.media ansible_host=172.23.23.170 ssl=0
+
+[media-app]
+#177.y0sh.net ssl=1
+app.media.ccc.de ssl=1
+
+[media-app-db]
+#177.y0sh.net
+db.app.media.ccc.de
 
 [not-yet-in-ansible]
-koeln.media.ccc.de mirror=0 cdn=0 ssl=1
-
-[assets]
-koeln.media.ccc.de
+koeln.media.ccc.de ssl=1

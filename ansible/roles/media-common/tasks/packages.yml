@@ -1,31 +1,35 @@
 ---
-  - name: install defaut packages
-    apt:
-      state: latest
-      update_cache: yes
-      name:
-        - aptitude
-        - build-essential
-        - etckeeper
-        - ethtool
-        - git
-        - htop
-        - iftop
-        - lockfile-progs
-        - nginx
-        - pv
-        - rsync
-        - smartmontools
-        - strace
-        - tmux
-        - unattended-upgrades
-        - vim
-        - vnstat
-        - zip
-        - zsh
+- name: install defaut packages
+  apt:
+    state: latest
+    update_cache: yes
+    name:
+      - apt-transport-https
+      - aptitude
+      - build-essential
+      - curl
+      - etckeeper
+      - ethtool
+      - git
+      - htop
+      - iftop
+      - lockfile-progs
+      - net-tools
+      - pv
+      - rsync
+      - smartmontools
+      - strace
+      - tmux
+      - unattended-upgrades
+      - neovim
+      - vnstat
+      - zip
+      - zsh
 
-  - name: remove not needed packages
-    apt: name={{ item }} state=absent
-    with_items:
+- name: remove not needed packages
+  apt:
+    state: absent
+    name:
       - rpcbind
       - snapd
+      - vim

@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/vagrant
-User=ubuntu
-ExecStart=/usr/local/bin/bundle exec sidekiq --index 0 --environment development
+WorkingDirectory=/srv/media/media-site/current
+User=media
+ExecStart=/srv/media/.rvm/bin/rvm {{ ruby_version }}@media-site do bundle exec sidekiq --index 0 --environment production
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
