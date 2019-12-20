@@ -45,6 +45,9 @@ mixer-osc2.lan.c3voc.de
 encoder-muc.lan.c3voc.de
 mixer-muc.lan.c3voc.de
 
+[saal-zuntrax]
+encoder-zuntrax.lan.c3voc.de
+
 # Host types
 [transcoders]
 #minion1.lan.c3voc.de    transcoder_streams='["s1"]'    transcoder_lounges='["a1", "a2"]'
@@ -68,6 +71,7 @@ encoder11.lan.c3voc.de crs_token="unused" crs_secret="unused" crs_token_meta="un
 encoder-osc1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.password') }}"
 encoder-osc2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.password') }}"
 encoder-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.password') }}"
+encoder-zuntrax.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax-meta.password') }}"
 
 
 [mixers]
