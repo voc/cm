@@ -3,6 +3,9 @@ pg_password: "{{ lookup('keepass', 'ansible/media/postgresql.password') }}"
 elasticsearch_host: _site_
 pg_listen_addresses: localhost,10.0.0.2
 pg_client_net: 10.0.0.1/32
+restic_repo: "{{ lookup('keepass', 'ansible/media/restic.url') }}"
+restic_user: "{{ lookup('keepass', 'ansible/media/restic.user') }}"
+restic_password: "{{ lookup('keepass', 'ansible/media/restic.password') }}"
 users:
   - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }

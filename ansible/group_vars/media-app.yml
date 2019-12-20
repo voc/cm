@@ -10,6 +10,9 @@ pg_user: "{{ lookup('keepass', 'ansible/media/postgresql.username') }}"
 pg_password: "{{ lookup('keepass', 'ansible/media/postgresql.password') }}"
 pg_db: "{{ lookup('keepass', 'ansible/media/postgresql.url') }}"
 pg_host: 10.0.0.2
+restic_repo: "{{ lookup('keepass', 'ansible/media/restic.url') }}"
+restic_user: "{{ lookup('keepass', 'ansible/media/restic.user') }}"
+restic_password: "{{ lookup('keepass', 'ansible/media/restic.password') }}"
 users:
   - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }

@@ -1,6 +1,4 @@
-acmetool_want:
-  - app.media.ccc.de
-restic_host_repo: media-app
+restic_host_repo: media-db
 restic_options: |
   / \
   --exclude-caches \

@@ -59,6 +59,9 @@
         rvm1_rvm_version: 'stable'
         rvm1_autolib_mode: 0
 
+      - role: restic
+        tags: ['restic']
+
   - hosts: media-app-db
     roles:
       - role: media-common
@@ -66,3 +69,6 @@
 
       - role: media-app-db
         tags: ['media-app-db']
+
+      - role: restic
+        tags: ['restic']

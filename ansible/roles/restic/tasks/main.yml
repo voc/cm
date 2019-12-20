@@ -1,0 +1,29 @@
+- name: install defaut packages
+  apt:
+    state: latest
+    update_cache: yes
+    name:
+      - restic
+
+- name: copy restic wrapper
+  template: src=restic-backup.sh
+        dest=/usr/local/sbin/restic-backup.sh
+        owner=root group=root mode=750
+
+- name: copy restic excludes
+  template: src=restic-excludes.txt
+        dest=/etc/restic-excludes.txt
+        owner=root group=root mode=640
+
+- name: create cron job
+  cron: name=restic user=root cron_file="local-restic"
+        hour="{{ 4 |random(seed=inventory_hostname) }}"
+        minute="{{ 60 |random(seed=inventory_hostname) }}"
+        job="if [ -x /usr/local/sbin/restic-backup.sh ]; then /usr/local/sbin/restic-backup.sh; fi;"
+
+- name: create clean cron job
+  cron: name=restic-clean user=root cron_file="local-restic"
+        day="{{ 28 |random(seed=inventory_hostname) }}"
+        hour="{{ 4 |random(seed=inventory_hostname) }}"
+        minute="{{ 60 |random(seed=inventory_hostname) }}"
+        job="if [ -x /usr/local/sbin/restic-backup.sh ]; then /usr/local/sbin/restic-backup.sh check --with-cache; fi;"
