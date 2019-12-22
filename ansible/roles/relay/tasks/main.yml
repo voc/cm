@@ -4,9 +4,11 @@
 
   # Install packages needed for each relay
   - name: install streaming relay dependencies
-    apt: name={{ item }} state=present
-    with_items:
-      - oggfwd-voc
+    apt:
+      name:
+        - oggfwd-voc
+      state: latest
+    tags: packages
 
   - include: nginx.yml
     tags: nginx
@@ -19,6 +21,7 @@
 
   - include: relive.yml
     when: nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes'
+    tags: relive
 
   - include: icedist.yml
     when: icedist is defined and icedist == 'yes'
