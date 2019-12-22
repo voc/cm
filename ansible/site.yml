@@ -12,3 +12,4 @@
   - import_playbook: monitoring.yml
   - import_playbook: build.c3voc.de.yml
   - import_playbook: mng.c3voc.de.yml
+  - import_playbook: ingest.yml

@@ -169,3 +169,6 @@ tracker.c3voc.de
 
 [monitoring]
 monitoring.c3voc.de
+
+[ingest]
+ingest.c3voc.de

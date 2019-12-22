@@ -1,0 +1,8 @@
+---
+  - hosts: ingest
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: nginx, tags: ['nginx'] }
+      - { role: ingest, tags: ['ingest'] }
+      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'], when: letsencrypt is defined and letsencrypt }
