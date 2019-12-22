@@ -98,7 +98,7 @@
     service: name=nginx enabled=yes state=started
     when: nginx is defined and nginx == 'yes'
 
-  - name: stopp nginx-rtmp
+  - name: stop nginx-rtmp
     service: name=nginx-rtmp enabled=no state=stopped
     failed_when: false
 
@@ -107,12 +107,13 @@
               dest=/etc/letsencrypt/renewal-hooks/post/20-nginx
               mode=0755 owner=root group=root
 
-  - name: run certboot-hook once to reload nginx with possibly new cert changes
+  - name: run certbot-hook once to reload nginx with possibly new cert changes
     shell: /etc/letsencrypt/renewal-hooks/post/20-nginx
+    changed_when: false
 
   # Cron job to reload nginx after ocsp update
   # TODO: Is there a better solution available?
-  - name: reaload nginx every morning for ocsp updates
+  - name: reload nginx every morning for ocsp updates
     cron: name="reload nginx for ocsp update" hour=5 minute=5
           job="systemctl reload nginx" user=root
     tags: install

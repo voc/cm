@@ -1,9 +1,11 @@
 ---
   - name: install packages required to fanout streams
-    apt: name={{ item }} state=latest update_cache=yes
+    apt:
+      name:
+        - python3-jinja2
+      state: latest
+      update_cache: yes
     tags: packages
-    with_items:
-     - python3-jinja2
 
   - name: create directories
     file: dest={{ item }} state=directory
