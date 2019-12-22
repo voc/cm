@@ -1,0 +1,5 @@
+  - name: restart icecast2
+    service: name=icecast2 state=restarted
+
+  - name: restart icedist
+    service: name=icedist state=restarted
