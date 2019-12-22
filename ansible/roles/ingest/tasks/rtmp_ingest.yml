@@ -1,0 +1,27 @@
+---
+  - name: create directories
+    file: dest={{ item }} state=directory
+          owner=root group=root
+    with_items:
+      - /opt/ingest/scripts/
+
+  - name: template rtmp_ingest script
+    template: dest=/opt/ingest/scripts/rtmp_ingest.sh
+              src=rtmp_ingest/rtmp_ingest.sh.j2
+              owner=root group=root mode=0755
+
+  - name: create rtmp_ingest systemd-unit
+    template: src=systemd-units/rtmp_ingest@.service.j2
+              dest="/etc/systemd/system/rtmp_ingest@.service"
+              mode=0644 owner=root group=root
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
+
+  - name: enable rtmp_ingest systemd-units
+    service: name=rtmp_ingest@{{ item }}.service
+             enabled=yes
+             state=restarted
+    with_items:
+      - "{{ rtmp_ingest_streams }}"
