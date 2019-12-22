@@ -2,6 +2,7 @@
     <hostname>{{ ansible_fqdn }}</hostname>
     <location>{{ icecast_location | default('voc') }}</location>
     <admin>{{ icecast_admin_email | default('contact@c3voc.de') }}</admin>
+    <server-id>Icecast 2</server-id>
 
     <limits>
         <clients>{{ icecast_client_limit | default('4096') }}</clients>
