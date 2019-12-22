@@ -52,3 +52,4 @@
   - name: (re)start php-fpm
     service: name=php7.3-fpm enabled=yes state=restarted
     tags: install
+    changed_when: false

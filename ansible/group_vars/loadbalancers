@@ -1,4 +1,5 @@
 haproxy_nbproc: 4
+nginx: 'yes'
 
 # define push ips
 nginx_ips_allow_to_push: [
