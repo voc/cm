@@ -112,6 +112,8 @@ else
   alias ls='ls -G'
 fi
 
+alias ip='ip --color'
+
 alias l='ls -lh'
 alias ll='ls -lah'
 alias c='clear'
