@@ -19,9 +19,11 @@
       - checkout
 
   - name: install relive dependencies
-    apt: name={{ item }} state=latest
-    with_items:
-      - imagemagick
+    apt:
+      name:
+        - imagemagick
+      state: latest
+    tags: packages
 
   # Cron jobs
   - name: create cronjob to get releases every 10 minutes
