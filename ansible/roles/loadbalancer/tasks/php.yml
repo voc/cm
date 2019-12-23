@@ -3,10 +3,10 @@
   - name: install streaming page packages
     apt: name={{ item }} state=latest
     with_items:
-      - php7.0-fpm
-      - php7.0-curl
-      - php7.0-sqlite3
-      - php7.0-xml
+      - php7.3-fpm
+      - php7.3-curl
+      - php7.3-sqlite3
+      - php7.3-xml
       - libsqlite3-dev
       - sqlite3
     tags: install
@@ -16,7 +16,7 @@
     template: dest=/etc/php/7.0/fpm/pool.d/www.conf
               src=php_fpm/www.conf.j2
               mode=0644 owner=root group=root
-    notify: reload php7.0-fpm
+    notify: reload php7.3-fpm
     tags:
       - install
       - config
@@ -26,7 +26,7 @@
     lineinfile: dest=/etc/php/7.0/fpm/php.ini
                 regexp="expose_php.*=.*"
                 line="expose_php = Off"
-    notify: reload php7.0-fpm
+    notify: reload php7.3-fpm
     tags:
       - install
       - config
@@ -35,7 +35,7 @@
     lineinfile: dest=/etc/php/7.0/fpm/php.ini
                 regexp="short_open_tag.*=.*"
                 line="short_open_tag = On"
-    notify: reload php7.0-fpm
+    notify: reload php7.3-fpm
     tags:
       - install
       - config
@@ -50,5 +50,5 @@
 
   # Enable service
   - name: (re)start php-fpm
-    service: name=php7.0-fpm enabled=yes state=restarted
+    service: name=php7.3-fpm enabled=yes state=restarted
     tags: install
