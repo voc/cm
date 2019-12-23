@@ -18,11 +18,6 @@
   - name: create /video if not present
     file: dest=/video state=directory
 
-  - name: create common.sh
-    copy: src=common.sh
-          dest=/etc/service/common.sh
-          owner=root group=staff mode=0644
-
-  - name: set timezone to Europe/London
+  - name: set timezone
     timezone:
       name: "{{ event.timezone }}"
