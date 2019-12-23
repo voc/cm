@@ -17,7 +17,10 @@
       - trigger register_relay
 
   - name: ensure relay register service is enabled
-    service: state=enabled name=send_relay_report
+    service:
+      name: send_relay_report
+      enabled: yes
+      state: started
 
   - name: install register bandwith measure client
     template: dest=/usr/local/sbin/register_bw_measure
