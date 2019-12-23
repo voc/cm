@@ -7,7 +7,7 @@
     when: nginx is defined and nginx == 'yes'
 
   - name: trigger register_relay
-    service: name=register_relay state=restarted
+    service: name=send_relay_report state=restarted
 
   - name: reload php-fpm
     service: name=php5-fpm state=reloaded
