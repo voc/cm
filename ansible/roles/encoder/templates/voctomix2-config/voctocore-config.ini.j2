@@ -1,87 +1,69 @@
 [mix]
 videocaps=video/x-raw,format=I420,width=1920,height=1080,framerate=25/1,pixel-aspect-ratio=1/1,interlace-mode=progressive
-audiocaps=audio/x-raw,format=S16LE,channels=2,layout=interleaved,rate=48000
+audiocaps=audio/x-raw,format=S16LE,channels=8,layout=interleaved,rate=48000
 
-sources=cam1,cam2,slides
-slides_source_name=slides
-audiostreams = 2
+sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
+livesources={{ (voctomix_sources | last).name }}
 
 
-[source.cam1]
+{% for source in voctomix_sources | selectattr("type", "equalto", "decklink-internal") %}
+[source.{{ source.name }}]
 kind=decklink
-devicenumber=1
-video_connection=SDI
-video_mode=1080i50
-deinterlace=assume-progressive
-volume=1.0
-#audiostream[0] = 0
-#audiostream[1] = 1
+devicenumber={{ source.devicenumber }}
+video_connection={{ source.video_connection | default('SDI') | upper }}
+video_mode={{ source.video_mode }}
+volume={{ source.volume | default('0.0') }}
+audio.original=0+1
+audio.translated=3+4
+audio.translated2=5+6
 
 
-[source.cam2]
-kind=decklink
-devicenumber=0
-video_connection=SDI
-video_mode=1080i50
-deinterlace=assume-progressive
-volume = 0.0
-
-
-[source.slides]
-kind=decklink
-devicenumber=5
-video_connection=SDI
-video_mode=1080p25
-deinterlace=assume-progressive
-volume=0.0
-
-
+{% if voctomix.static_background_image %}
 [source.background]
 kind=img
 imguri=file:///opt/voc/share/bg.png
+{% endif %}
+#TODO: Animated backgrounds
 
+[source.break]
+kind=file
+location=/opt/voc/share/pause.ts
 
 [previews]
 ; disable if ui & server run on the same computer and can exchange uncompressed video frames
 enabled=true
 deinterlace=false
 live=true
-; default to mix-videocaps, only applicable if enabled=true
-; you can change the framerate and the width/height, but nothing else
 videocaps=video/x-raw,width=1024,height=576,framerate=25/1
+{% if voctomix_vaapi is defined and voctomix_vaapi %}
+# check `vainfo`!
+vaapi=h264
+{% endif %}
 
 
-[stream-blanker]
+[blinder]
 enabled=true
-sources=pause
+videos=break
 
-[source.sb]
-kind = tcp
-volume = 1.0
+[source.blinder]
+audio.original=0+1
+audio.translated=3+4
+audio.translated2=5+6
+kind=file
+location=/opt/voc/share/pause-music/Irish-Coffee.mp3
 
-[source.sb-pause]
-kind = tcp
-deinterlace = assume-progressive
-
-;[overlay]
-;; default selection for overlay image
-;file = watermark.png|Watermark
-;; user selection of overlay images
-;;files = transparency.png|Transparency Test,watermark|Watermark,../voc2bg.png|35c3 Background
-;path = ./data/images/overlays
-;
-;; read user selection from schedule.xml file
-;schedule=schedule.xml
-;; filter by room
-;room=HALL 1
-;; filter by event ID (good for testing)
-;event=3
-;; should the user be able to toggle the AUTO-OFF button?
-;user-auto-off = true
-;; should the AUTO-OFF button be initially be off?
-;auto-off = false
-;; set fading time when showing or hiding overlay
-;blend-time=300
+[overlay]
+path = ./data/images/overlays
+; read user selection from schedule.xml file
+schedule=schedule.xml
+; filter by room
+room={{ room_fahrplan_name }}
+; should the user be able to toggle the AUTO-OFF button?
+user-auto-off = true
+; should the AUTO-OFF button be initially be off?
+auto-off = true
+; set fading time when showing or hiding overlay
+blend-time=300
 
 [mirrors]
 ; disable if not needed
@@ -193,29 +175,22 @@ pip-pip_                = 750, |pip / sbs / |pip
 ; unique name                       =   ms, from / [... /] to
 def                     = 750, * / *
 
-
 [toolbar.sources.a]
-buttons = cam1,cam2,slides
+buttons = cam1,slides
 
 cam1.name = cam1
 cam1.key = F1
 cam1.tip = Select source cam1 on channel A
-cam2.name = cam2
-cam2.key = F2
-cam2.tip = Select source cam2 on channel A
 slides.name = slides
 slides.key = F3
 slides.tip = Select source slides on channel A
 
 [toolbar.sources.b]
-buttons = cam1,cam2,slides
+buttons = cam1,slides
 
 cam1.name = cam1
 cam1.key = 1
 cam1.tip = Select source cam1 on channel B
-cam2.name = cam2
-cam2.key = 2
-cam2.tip = Select source cam2 on channel B
 slides.name = slides
 slides.key = 3
 slides.tip = Select source slides on channel B
