@@ -1,6 +1,6 @@
 ---
  - name: install additional packages for transcoder role
-   apt: name={{ item }} state=latest
-   with_items:
-    - icecast2
-    - oggfwd-voc
+   apt:
+    name:
+      - icecast2
+    state: latest
