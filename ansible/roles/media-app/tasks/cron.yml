@@ -1,0 +1,32 @@
+- copy: src=app/{{ item }}
+        dest=/srv/media/media-site/shared/{{ item }}
+        mode=0640 owner=media group=media
+  loop:
+    - dump-public-fixtures.sh
+    - update_related
+    - update_relive_config
+    - update_streaming_config
+
+- template: src=app/{{ item }}
+            dest=/srv/media/media-site/shared/{{ item }}
+            mode=0640 owner=media group=media
+  loop:
+    - update_promoted
+    - update_view_counts
+
+- cron: user=media minute="20" cron_file="dump_public_fixtures"
+        job="/srv/media/media-site/shared/dump-public-fixtures.sh"
+        name="dump public database"
+- cron: user=media minute="*/9" cron_file="update_relive_config"
+        job="/srv/media/media-site/shared/update_relive_config > /dev/null 2>&1"
+        name="update relive config"
+- cron: user=media minute="*/5" cron_file="update_streaming_config"
+        job="/srv/media/media-site/shared/update_streaming_config > /dev/null 2>&1"
+        name="update streaming config"
+
+- cron: user=media minute="40" cron_file="update_promoted"
+        job="/srv/media/media-site/shared/update_promoted > /dev/null 2>&1"
+        name="update promoted videos"
+- cron: user=media minute="*/15" cron_file="update_view_counts"
+        job="/srv/media/media-site/shared/update_view_counts > /dev/null 2>&1"
+        name="update view counts"

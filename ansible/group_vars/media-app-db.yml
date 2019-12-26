@@ -6,3 +6,5 @@ pg_client_net: 10.0.0.1/32
 users:
   - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }
+  - { name: 'andi', state: 'present' }
+  - { name: 'derpeter', state: 'present' }

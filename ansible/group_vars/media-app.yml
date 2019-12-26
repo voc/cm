@@ -13,4 +13,6 @@ pg_host: 10.0.0.2
 users:
   - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }
+  - { name: 'andi', state: 'present' }
+  - { name: 'derpeter', state: 'present' }
 secret_header: "{{ lookup('keepass', 'ansible/media/secret_header.password') }}"
