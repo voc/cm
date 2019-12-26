@@ -3,6 +3,7 @@
     file:
       path: /etc/resolv.conf
       attributes: -i
+    changed_when: false
 
   - name: configure resolv.conf
     template: dest=/etc/resolv.conf
