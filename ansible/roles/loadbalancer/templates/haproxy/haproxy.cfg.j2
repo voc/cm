@@ -427,7 +427,6 @@ backend icecast_dtag_{{ protocol }}
 {% else %}
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
 {% endif %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance source
     option forwardfor
 {% for server, weight in lb_dtag_relays.items() %}
