@@ -1,3 +1,3 @@
 #!/bin/bash
 
-exec x11vnc -display :0 -loop0 -shared -nopw
+exec x11vnc -display :0 -loop0 -shared -nopw -scale 1/2
