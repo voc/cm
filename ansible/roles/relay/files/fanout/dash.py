@@ -32,9 +32,7 @@ def cleanup(c):
 		fanout_utils.remove_glob(os.path.join(
 			c.dash_write_path, "%s/manifest.mpd" % c.stream))
 		fanout_utils.remove_glob(os.path.join(
-			c.dash_write_path, "%s/*.hdr" % c.stream))
-		fanout_utils.remove_glob(os.path.join(
-			c.dash_write_path, "%s/*.chk" % c.stream))
+			c.dash_write_path, "%s/*.webm" % c.stream))
 
 
 def calculate_adaptation_sets(c):
@@ -87,9 +85,10 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000
 {% endif %}
 
 	-f dash
-	-window_size 100 -extra_window_size 10 -min_seg_duration 6000000
-	-init_seg_name 'init_$RepresentationID$.hdr'
-	-media_seg_name 'segment_$RepresentationID$_$Number$.chk'
+	-window_size 100 -extra_window_size 10 -seg_duration 6000000
+	-dash_segment_type webm
+	-init_seg_name 'init_$RepresentationID$.webm'
+	-media_seg_name 'segment_$RepresentationID$_$Number$.webm'
 	-adaptation_sets '{{ adaptation_sets | join(" ") }}'
 	{{ dash_write_path }}/{{ stream }}/manifest.mpd
 """)
