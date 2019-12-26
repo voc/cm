@@ -1,6 +1,6 @@
 ---
 room_number: 4
-room_fahrplan_name: fnord
+room_fahrplan_name: Dijkstra
 
 # hd-direct, hd-voctomix, hd-voctomix2
 # deploy with --tags encodermode

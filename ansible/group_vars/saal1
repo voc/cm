@@ -1,6 +1,6 @@
 ---
 room_number: 1
-room_fahrplan_name: Saal 1
+room_fahrplan_name: Ada
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
