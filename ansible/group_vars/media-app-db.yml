@@ -9,3 +9,5 @@ restic_password: "{{ lookup('keepass', 'ansible/media/restic.password') }}"
 users:
   - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }
+  - { name: 'andi', state: 'present' }
+  - { name: 'derpeter', state: 'present' }
