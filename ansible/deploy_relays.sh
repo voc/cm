@@ -40,6 +40,7 @@ function deploy_relays() {
 }
 
 get_relay_json
+perl register2ansible.pl relays.json > relays
 deploy_relays
 
 exit $?

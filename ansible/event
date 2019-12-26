@@ -131,7 +131,7 @@ maps.c3voc.de letsencrypt=true
 # Streaming server
 [relays]
 # master
-#live.lan.c3voc.de
+live.lan.c3voc.de
 live.ber.c3voc.de
 
 # edge
