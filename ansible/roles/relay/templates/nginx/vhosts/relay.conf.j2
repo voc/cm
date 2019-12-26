@@ -309,11 +309,11 @@ server {
   }
   # proxy cache dash segments (live)
   #
-  # init-segment:     /dash/s2-i1.chk or /dash/s2-i1.hdr
-  # chunk-segments:   /dash/s2-s1-00041.chk for WebM-dash or
+  # init-segment:     /dash/s2-i1.hdr
+  # chunk-segments:   /dash/s2-s1-00041.webm for WebM-dash or
   #                   /dash/s2-s1-00041.m4s for MP4-dash
   #
-  location ~* ^/dash/(?<segment>.+\.(hdr|chk|m4s))$ {
+  location ~* ^/dash/(?<segment>.+\.(hdr|webm|m4s))$ {
       proxy_intercept_errors on;
       proxy_cache            live;
       proxy_set_header       Host $host;
