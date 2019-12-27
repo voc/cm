@@ -39,6 +39,14 @@
       - "../../../artwork/{{ event.acronym }}/bg.png"
       - "artwork/bg.png"
 
+# TODO: Make work with saal precedence as above
+  - name: uploading position dependent background-images
+    copy: src={{ item }}
+          dest=/opt/voc/share/
+          owner=root group=staff mode=0644
+    with_fileglob:
+      - "../../../artwork/{{ event.acronym }}/bg_*.png"
+
   - name: uploading pause-loop
     copy: src={{ item }}
           dest=/opt/voc/share/pause.ts

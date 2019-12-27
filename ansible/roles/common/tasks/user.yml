@@ -63,7 +63,7 @@
     when: item.state != 'absent' and item.name != 'voc'
 
   - name: add user's authorized_keys to voc
-    authorized_key: user="voc" manage_dir=true key="{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes') }}"
+    authorized_key: user=voc manage_dir=true key="{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes') }}"
                     state=present
     with_items:
       - "{{ users }}"
