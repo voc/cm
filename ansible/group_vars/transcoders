@@ -1,7 +1,7 @@
 ---
-transcoder:
-  pull_endpoint: live.ccl.c3voc.de:7999
-  push_endpoint: live.ccl.c3voc.de:7999
+transcoder_pull_endpoint: live.ccl.c3voc.de:7999
+transcoder_push_endpoint: live.ccl.c3voc.de:7999
 
+transcoder:
   lounge_pull_endpoint: live.ccl.c3voc.de:8000
   lounge_push_endpoint: live.ccl.c3voc.de:8000
