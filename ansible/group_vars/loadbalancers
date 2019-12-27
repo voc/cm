@@ -19,11 +19,13 @@ nginx_ips_allow_stats: [
 ]
 
 thumbnail_downloader_rooms: [s1, s2, s3, s4, s5, s6, s7, s23, s41, s42, s80, s89, s150, q1, q2, q3, q4, "oio", "cdc"]
-haproxy_3rdparty_regex: "(oio|cdc|s80|s89|s150)"
+haproxy_3rdparty_regex: "(oio|cdc|s89|s150)"
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
 lb_3rdparty_relays: {
+  "deskjet.ccl.c3voc.de": 25,
+  "usa.ccl.c3voc.de": 25,
 }
 
 lb_dash_relays: {
