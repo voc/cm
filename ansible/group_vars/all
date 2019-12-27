@@ -25,20 +25,20 @@ voctomix:
     -
       name: lec
       kind: "img"
-      path: "/opt/voc/share/bg_lec.png"
+      file: "/opt/voc/share/bg_lec.png"
       composites: "lec"
     -
       name: lecm
       kind: "img"
-      path: "/opt/voc/share/bg_lecm.png"
+      file: "/opt/voc/share/bg_lecm.png"
       composites: "|lec"
     -
       name: sbs
       kind: "img"
-      path: "/opt/voc/share/bg_sbs.png"
+      file: "/opt/voc/share/bg_sbs.png"
       composites: "sbs"
     -
-      name: sbs
+      name: fs
       kind: "test"
       pattern: "black"
       composites: "fs"

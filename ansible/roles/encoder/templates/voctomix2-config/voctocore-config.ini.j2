@@ -4,8 +4,8 @@ audiocaps=audio/x-raw,format=S16LE,channels=8,layout=interleaved,rate=48000
 
 sources={{ voctomix_sources | map(attribute = 'name') | join(',') }}
 livesources={{ (voctomix_sources | last).name }}
-{% if backgrounds is defined %}
-backgrounds={{ backgrounds | map(attribute = 'name') | join(',') }}
+{% if voctomix.backgrounds %}
+backgrounds={{ voctomix.backgrounds | map(attribute = 'name') | join(',') }}
 {% endif %}
 
 {% for source in voctomix_sources | selectattr("type", "equalto", "decklink-internal") %}
@@ -17,17 +17,17 @@ video_mode={{ source.video_mode }}
 volume={{ source.volume | default('0.0') }}
 {% if source.scan is defined %}
 scan={{ source.scan }}
+{% endif %}
 {% if source.audiostream is defined  %}
 {% for audiostream, mapping in source.audiostream.items() %}
 audio.{{ source.stream_names[audiostream] }} = {{ mapping }}
 {% endfor %}
 {% endif %}
-{% endif %}
 
 {% endfor %}
 
-{% if backgrounds is defined %}
-{% for source in backgrounds %}
+{% if voctomix.backgrounds %}
+{% for source in voctomix.backgrounds %}
 [source.{{ source.name }}]
 {% for name, value in source.items() %}
 {{name}}={{value}}
