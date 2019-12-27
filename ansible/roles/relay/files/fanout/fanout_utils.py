@@ -134,7 +134,7 @@ def mainloop(name, transcoding_stream, calback, args=None):
 		'http://' + args.pull_endpoint,
 		"%s_%s" % (args.stream, transcoding_stream))
 
-	print("Staring loop for %s-transcoding of Stream %s (%s)" % (name, args.stream, pull_url))
+	print("Starting loop for %s-transcoding of Stream %s (%s)" % (name, args.stream, pull_url))
 
 	try:
 		while True:

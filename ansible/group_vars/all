@@ -101,6 +101,8 @@ trusted_ipv4_ips: {
   'live.ccl.c3voc.de': '31.172.30.138',
   'usa.ccl.c3voc.de': '31.172.30.138',
   'deskjet.ccl.c3voc.de': '31.172.30.138',
+  # loudness-lukas
+  'stw.kurz.pw': '212.201.68.92',
 }
 
 trusted_ipv6_ips: {
