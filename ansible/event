@@ -128,6 +128,7 @@ releasing.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/releas
 backup.c3voc.de
 testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 maps.c3voc.de letsencrypt=true
+librenms.lan.c3voc.de
 
 # Streaming server
 [relays]
