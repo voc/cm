@@ -6,7 +6,7 @@
 
     <limits>
         <clients>{{ icecast_client_limit | default('4096') }}</clients>
-        <sources>{{ icecast_source_limit | default('100')  }}</sources>
+        <sources>{{ icecast_source_limit | default('250')  }}</sources>
         <threadpool>{{ icecast_threadpool | default('10') }}</threadpool>
         <queue-size>{{ icecast_queue_size | default('4055040') }}</queue-size>
         <client-timeout>{{ icecast_client_timeout | default('30') }}</client-timeout>
