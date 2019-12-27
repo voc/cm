@@ -1,9 +1,23 @@
-#!/bin/sh
+#!/bin/bash
+
+if [[  $# -ne 1 ]] ; then
+	echo "Please pass exactly one parameter: name of the streaming endpoint to transcode"
+	exit 1;
+fi
+
+endpoint=$1
+
+# Lounge passwords
+{% for stream_key in transcoder_lounges %}
+PASSWORD_{{ stream_key }}="{{ lookup('keepass', 'ansible/audio-pi/icecast_'+ stream_key +'.password') }}"
+{% endfor %}
+
+password=PASSWORD_${endpoint}
 
 while true; do
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
-	-i http://{{ transcoder_lounge_pull_endpoint }}/{{ item }}.opus \
+	-i http://{{ transcoder_lounge_pull_endpoint }}/${endpoint}.opus \
 	\
 	-map 0:a:0 \
 		-metadata:s:a:0 title="Lounge MP3" \
@@ -11,8 +25,8 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	\
 	-f mp3 \
 	-content_type audio/mp3 \
-	-password "{{ lookup('keepass', 'ansible/audio-pi/icecast_{{ item }}.password') }}" \
-	icecast://{{ transcoder_lounge_push_endpoint }}/{{ item }}.mp3
+	-password "${!password}" \
+	icecast://{{ transcoder_lounge_push_endpoint }}/${endpoint}.mp3
 
 sleep 10
 done
