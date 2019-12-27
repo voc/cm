@@ -3,4 +3,4 @@
 encoder-cwest.lan.c3voc.de
 
 [encoders]
-encoder-cwest.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-cwest.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-cwest.password') }}" ansible_host=luna.jankoppe.de ansible_port=4223
+encoder-cwest.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-cwest.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-cwest.password') }}"
