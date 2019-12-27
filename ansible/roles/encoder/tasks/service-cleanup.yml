@@ -1,0 +1,10 @@
+---
+  - stat:
+      path: "/etc/systemd/system/{{ service }}"
+    register: servicefile
+  - systemd:
+      name: "{{ service }}"
+      enabled: no
+      state: stopped
+      daemon-reload: yes
+    when: servicefile.stat.exists
