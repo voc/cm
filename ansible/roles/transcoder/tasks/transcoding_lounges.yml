@@ -7,23 +7,19 @@
 
 
   - name: create lounge transcode-script
-    template: dest=/opt/transcoder/scripts/lounge_{{ item }}.sh
+    template: dest=/opt/transcoder/scripts/lounge.sh
               src=transcoder/lounge.sh.j2
               owner=root group=root mode=0755
-    with_items: "{{ transcoder_lounges }}"
 
   - name: create lounge systemd-units
     template: src=systemd-units/lounge.service.j2
-              dest="/etc/systemd/system/transcode_lounge_{{ item }}.service"
+              dest="/etc/systemd/system/transcode_lounge@.service"
               mode=0644 owner=root group=root
-    with_items: "{{ transcoder_lounges }}"
-
-  - name: reload systemd daemon
-    command: systemctl daemon-reload
-    changed_when: false
 
   - name: enable & start lounge systemd-units
-    service: name=transcode_lounge_{{ item }}.service
-             enabled=yes
-             state=restarted
+    systemd: 
+      name: transcode_lounge@{{ item }}.service
+      enabled: yes
+      state: restarted
+      daemon_reload: yes
     with_items: "{{ transcoder_lounges }}"
