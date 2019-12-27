@@ -46,6 +46,7 @@ frontend icecast_and_nginx_hls_http
     acl hls_playlist         path_end   -i .m3u8
     acl dash_playlist        path_end   -i .mpd
     acl dash_fragment        path_end   -i .hdr .webm .m4s
+    acl dash_path            path_dir   -i dash
     acl is_relive            path_sub   -i index.json thumb.jpg sprites.jpg crossdomain.xml .mp4 relive
     acl hls_fragment         path_end   -i .ts
     acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
@@ -69,26 +70,26 @@ frontend icecast_and_nginx_hls_http
     {% if haproxy_3rdparty_regex is defined %}
     # 3rd party streams
     use_backend hls_3rdparty_http        if is_3rdparty hls_playlist or is_3rdparty hls_fragment
-    use_backend dash_3rdparty_http       if is_3rdparty dash_playlist or is_3rdparty dash_fragment
+    use_backend dash_3rdparty_http       if is_3rdparty dash_playlist dash_path or is_3rdparty dash_fragment dash_path
     use_backend icecast_3rdparty_http    if is_3rdparty icecast
     {% endif %}
 
     # local relay
     use_backend hls_relive_local_http    if is_local is_relive
     use_backend hls_local_http           if is_local hls_playlist or is_local hls_fragment
-    use_backend dash_local_http          if is_local dash_playlist or is_local dash_fragment
+    use_backend dash_local_http          if is_local dash_playlist dash_path or is_local dash_fragment dash_path
     use_backend icecast_local_http       if is_local icecast
 
     # dtag relay
     use_backend hls_relive_dtag_http     if is_dtag is_relive
     use_backend hls_dtag_http            if is_dtag hls_playlist or is_dtag hls_fragment
-    use_backend dash_dtag_http           if is_dtag dash_playlist or is_dtag dash_fragment
+    use_backend dash_dtag_http           if is_dtag dash_playlist dash_path or is_dtag dash_fragment dash_path
     use_backend icecast_dtag_http        if is_dtag icecast
 
     # use remote relays
     use_backend hls_relive_http          if is_relive
     use_backend hls_http                 if hls_playlist or hls_fragment
-    use_backend dash_http                if dash_playlist or dash_fragment
+    use_backend dash_http                if dash_playlist dash_path or dash_fragment dash_path
     use_backend icecast_http             if icecast
 
 frontend icecast_and_nginx_hls_https
@@ -103,6 +104,7 @@ frontend icecast_and_nginx_hls_https
     acl hls_playlist         path_end   -i .m3u8
     acl dash_playlist        path_end   -i .mpd
     acl dash_fragment        path_end   -i .hdr .webm .m4s
+    acl dash_path            path_dir   -i dash
     acl is_relive            path_sub   -i index.json thumb.jpg sprites.jpg crossdomain.xml .mp4 relive
     acl hls_fragment         path_end   -i .ts
     acl icecast              path_end   -i .webm .opus .mp3 .ogg .ogv .oga
@@ -126,26 +128,26 @@ frontend icecast_and_nginx_hls_https
     {% if haproxy_3rdparty_regex is defined %}
     # 3rd party streams
     use_backend hls_3rdparty_https        if is_3rdparty hls_playlist  { ssl_fc } or is_3rdparty hls_fragment { ssl_fc }
-    use_backend dash_3rdparty_https       if is_3rdparty dash_playlist { ssl_fc } or is_3rdparty dash_fragment { ssl_fc }
+    use_backend dash_3rdparty_https       if is_3rdparty dash_playlist dash_path { ssl_fc } or is_3rdparty dash_fragment dash_path { ssl_fc }
     use_backend icecast_3rdparty_https    if is_3rdparty icecast
     {% endif %}
 
     # local relay
     use_backend hls_relive_local_https    if is_local is_relive     { ssl_fc }
     use_backend hls_local_https           if is_local hls_playlist  { ssl_fc } or is_local hls_fragment { ssl_fc }
-    use_backend dash_local_https          if is_local dash_playlist { ssl_fc } or is_local dash_fragment { ssl_fc }
+    use_backend dash_local_https          if is_local dash_playlist dash_path { ssl_fc } or is_local dash_fragment dash_path { ssl_fc }
     use_backend icecast_local_https       if is_local icecast       { ssl_fc }
 
     # dtag relay
     use_backend hls_relive_dtag_https     if is_dtag is_relive      { ssl_fc }
     use_backend hls_dtag_https            if is_dtag hls_playlist   { ssl_fc } or is_dtag hls_fragment { ssl_fc }
-    use_backend dash_dtag_https           if is_dtag dash_playlist  { ssl_fc } or is_dtag dash_fragment { ssl_fc }
+    use_backend dash_dtag_https           if is_dtag dash_playlist dash_path  { ssl_fc } or is_dtag dash_fragment dash_path { ssl_fc }
     use_backend icecast_dtag_https        if is_dtag icecast        { ssl_fc }
 
     # use remote relays
     use_backend hls_relive_https          if is_relive              { ssl_fc }
     use_backend hls_https                 if hls_playlist           { ssl_fc } or hls_fragment { ssl_fc }
-    use_backend dash_https                if dash_playlist          { ssl_fc } or dash_fragment { ssl_fc }
+    use_backend dash_https                if dash_playlist dash_path { ssl_fc } or dash_fragment dash_path { ssl_fc }
     use_backend icecast_https             if icecast                { ssl_fc }
 
 
