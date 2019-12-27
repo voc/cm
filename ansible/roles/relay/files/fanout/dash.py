@@ -62,7 +62,7 @@ def calculate_adaptation_sets(c):
 
 def fanout(c):
 	command = fanout_utils.format_and_strip(c, """
-ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000
 	-i {{ pull_url }}
 
 	-c:a copy
