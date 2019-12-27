@@ -1,56 +1,92 @@
 #!/bin/sh
+
+### Filter Parameter 
+## PA 
+# parameter dynaudnorm 
+para_pa_leveler="p=0.35:r=1:f=300" 
+ 
+## TRANSLATOR 
+# parameter compand as gate 
+para_trans_gate="attacks=0:points=-80/-115|-55.1/-80|-55/-55|20/20" 
+# parameter compand as limiter 
+para_trans_limiter="attacks=0:points=-80/-80|-12/-12|20/-12" 
+# parameter dynaudnorm 
+para_trans_leveler="p=0.35:r=1:f=300" 
+ 
+## MIX 
+# parameter volume for both tracks 
+para_mix_vol_pa="0.2" 
+para_mix_vol_trans="1.0" 
+# parameter dynaudnorm 
+para_mix_leveler="p=0.35:r=1:f=30" 
+# paramter loudnorm 
+para_mix_loudnorm="i=-23.0:lra=12.0:tp=-3.0"
+
+
 ffmpeg -y -nostdin -hide_banner \
+    -init_hw_device vaapi=streaming:/dev/dri/renderD128 \
+    -hwaccel vaapi \
+    -hwaccel_output_format vaapi \
+    -hwaccel_device streaming \
 {# input from both mix-out and slide-mirror #}
-	-thread_queue_size 512 -i tcp://localhost:15000?timeout=3000000 \
+    -thread_queue_size 512 -i tcp://localhost:15000?timeout=3000000 \
 {% if voctomix.parallel_slide_recording %}
-	-thread_queue_size 512 -i tcp://localhost:15001?timeout=3000000 \
+    -thread_queue_size 512 -i tcp://localhost:15001?timeout=3000000 \
 {% endif %}
-	-filter_complex '
-		[0:v] hqdn3d [smooth_hd];
-		movie=/opt/voc/share/overlay_hd.png [logo_hd];
-		[smooth_hd] [logo_hd] overlay=0:0 [hd]
-
+    -filter_hw_device streaming \
+    -filter_complex " 
+[0:v] hqdn3d, format=nv12,hwupload [hd];\
+    \
 {% if voctomix.parallel_slide_recording %}
-		;
-		[1:v] scale=1024:576, fps=5, hqdn3d [smooth_slides];
-
-		movie=/opt/voc/share/overlay_slides.png [logo_slides];
-		[smooth_slides] [logo_slides] overlay=0:0 [slides]
+    [1:v] fps=5, hqdn3d, format=nv12,hwupload,scale_vaapi=w=1024:h=576 [slides];\
+    \
+{# TODO: parameterize #}
+    [0:a]pan=stereo|c0=c0|c1=c1[s_pgm];\
+    [0:a]pan=stereo|c0=c2|c1=c2[s_trans_1];\
+    [0:a]pan=stereo|c0=c3|c1=c3[s_trans_2];\
+    \
+    [s_pgm] asplit=2 [pgm_1] [pgm_2] ;\
+    [pgm_2] dynaudnorm=$para_pa_leveler [pgm_lev] ;\
+    \
+    [s_trans_1] compand=$para_trans_gate [trans_gate_1] ;\
+    [trans_gate_1] compand=$para_trans_limiter [trans_lim_1] ;\
+    [trans_lim_1] dynaudnorm=$para_trans_leveler [trans_lev_1] ;\
+    \
+    [s_trans_2 ] compand=$para_trans_gate [trans_gate_2] ;\
+    [trans_gate_2] compand=$para_trans_limiter [trans_lim_2] ;\
+    [trans_lim_2] dynaudnorm=$para_trans_leveler [trans_lev_2] ;\
+    \
+    [pgm_lev] volume=$para_mix_vol_pa,asplit [mix_int_1][mix_int_2] ;\
+    [trans_lev_1] volume=$para_mix_vol_trans [mix_trans_1] ;\
+    [trans_lev_2] volume=$para_mix_vol_trans [mix_trans_2] ;\
+    [mix_int_1][mix_trans_1] amix=inputs=2:duration=longest [mix_out_1] ;\
+    [mix_int_2][mix_trans_2] amix=inputs=2:duration=longest [mix_out_2] ;\
+    [pgm_1] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [pgm]; \
+    [mix_out_1] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [duck_out_1]; \
+    [mix_out_2] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [duck_out_2] \
 {% endif %}
-	' \
-{# Shared video settings #}
-	-c:v libx264 -preset:v veryfast -profile:v main -pix_fmt yuv420p -flags +cgop \
-	-threads:v 0 -aspect 16:9 \
-	\
-{# High bitrate and high quality for HD #}
-	-map [hd] -metadata:s:v:0 title="HD" \
-	-r:v:0 25 -g:v:0 75 -crf:v:0 21 -maxrate:v:0 4M -bufsize:v:0 18M \
-	\
+    " \
+    -c:v h264_vaapi -flags +cgop -aspect 16:9 \
 {% if voctomix.parallel_slide_recording %}
-{# Low bitrate and ok quality for Slides #}
-	-map [slides] -metadata:s:v:1 title="Slides" \
-	-g:v:1 15 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 750k \
-	\
+              -g:v:1 15 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 750k \
 {% endif %}
-{# Shared audio settings #}
-	-c:a aac -b:a 192k -ar 48000 -ac 1 \
-	\
-{# Encode audio #}
-{% if voctomix_stream_suppress_audio_tracks %}
-{% for n in range(voctomix_audiostreams) %}
-{% if n not in voctomix_stream_suppress_audio_tracks %}
-	-map 0:a:{{ n }} \
+    -r:v:0 25 -g:v:0 75 -crf:v:0 21 -maxrate:v:0 4M -bufsize:v:0 18M \
+    -c:a aac -b:a 192k -ar 48000 \
+    -map "[hd]" \
+{% if voctomix.parallel_slide_recording %}
+    -map "[slides]" \
 {% endif %}
-{% endfor %}
-{% else %}
-	-map 0:a \
-{% endif %}
-	\
-	-f matroska \
-	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
-	-content_type video/webm \
+    -metadata:s:v:0 title="HD" \
+    -metadata:s:v:0 title="Slides" \
+    -map "[pgm]" -metadata:s:a:0 title="native" \
+    -map "[duck_out_1]" -metadata:s:a:1 title="translated" \
+    -map "[duck_out_2]" -metadata:s:a:2 title="translated-2" \
+    \
+    -f matroska \
+    -password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+    -content_type video/webm \
 {% if streaming_endpoint_pulling %}
-	icecast://127.0.0.1:7999/{{ streaming_endpoint }}
+    icecast://127.0.0.1:7999/{{ streaming_endpoint }}
 {% else %}
-	icecast://live.ber.c3voc.de:7999/{{ streaming_endpoint }}
+    icecast://live.ber.c3voc.de:7999/{{ streaming_endpoint }}
 {% endif %}
