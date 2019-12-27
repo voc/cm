@@ -5,7 +5,7 @@ room_fahrplan_name: schaoswest
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
-encodermode: hd-voctomix
+encodermode: hd-voctomix2
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
 voctomix_audiostreams: 1
@@ -61,17 +61,19 @@ voctomix_sources:
     name: cam1
     type: decklink-internal
     devicenumber: 0
-    video_connection: SDI
+    video_connection: HDMI
     video_mode: "1080p25"
     volume: 1.0
     audiostream:
-       0: 0+1
+      0: 0+1
+    stream_names:
+      0: original
   -
     # Mini Recorder 1
     name: cam2
     type: decklink-internal
     devicenumber: 1
-    video_connection: SDI
+    video_connection: HDMI 
     video_mode: "1080p25"
     volume: 0.0
 #  -
@@ -87,6 +89,9 @@ voctomix_sources:
     name: slides
     type: decklink-internal
     devicenumber: 3
-    video_connection: SDI
+    video_connection: HDMI 
     video_mode: "1080p25"
     volume: 0.0
+
+blinder_audio:
+    original: 0+1
