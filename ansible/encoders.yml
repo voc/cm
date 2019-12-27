@@ -1,8 +1,8 @@
 ---
  - hosts: encoders
    roles:
-     - { role: common, tags: ['common'] }
-     - { role: monitoring-client, tags: ['monitoring'] }
+#     - { role: common, tags: ['common'] }
+#     - { role: monitoring-client, tags: ['monitoring'] }
      - { role: encoder, tags: ['encoder'] }
      - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }
    vars:
