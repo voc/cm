@@ -1,6 +1,6 @@
 - copy: src=app/{{ item }}
         dest=/srv/media/media-site/shared/{{ item }}
-        mode=0640 owner=media group=media
+        mode=0750 owner=media group=media
   loop:
     - dump-public-fixtures.sh
     - update_related
@@ -9,7 +9,7 @@
 
 - template: src=app/{{ item }}
             dest=/srv/media/media-site/shared/{{ item }}
-            mode=0640 owner=media group=media
+            mode=0750 owner=media group=media
   loop:
     - update_promoted
     - update_view_counts
