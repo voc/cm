@@ -3,7 +3,7 @@
 while true; do
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
-	-i http://{{ transcoder.lounge_pull_endpoint }}/{{ item }}.opus \
+	-i http://{{ transcoder_lounge_pull_endpoint }}/{{ item }}.opus \
 	\
 	-map 0:a:0 \
 		-metadata:s:a:0 title="Lounge MP3" \
@@ -12,7 +12,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	-f mp3 \
 	-content_type audio/mp3 \
 	-password "{{ lookup('keepass', 'ansible/audio-pi/icecast_{{ item }}.password') }}" \
-	icecast://{{ transcoder.lounge_push_endpoint }}/{{ item }}.mp3
+	icecast://{{ transcoder_lounge_push_endpoint }}/{{ item }}.mp3
 
 sleep 10
 done

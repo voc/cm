@@ -3,7 +3,7 @@
 while true; do
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
-	-i http://{{ transcoder.pull_endpoint }}/{{ item }} \
+	-i http://{{ transcoder_pull_endpoint }}/{{ item }} \
 	-filter_complex '
 		[0:v:0] scale=1024:576 [smooth_sd];
 		movie=/opt/voc/share/overlay_sd_{{ item }}.png [logo_sd];
@@ -42,7 +42,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder.push_endpoint }}/{{ item }}_h264
+	icecast://{{ transcoder_push_endpoint }}/{{ item }}_h264
 
 sleep 10
 done

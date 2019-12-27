@@ -3,7 +3,7 @@
 while true; do
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
-	-i http://{{ transcoder.pull_endpoint }}/{{ item }} \
+	-i http://{{ transcoder_pull_endpoint }}/{{ item }} \
 	\
 	\
 	-map '0:a:0' \
@@ -37,7 +37,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder.push_endpoint }}/{{ item }}_audio
+	icecast://{{ transcoder_push_endpoint }}/{{ item }}_audio
 
 sleep 10
 done
