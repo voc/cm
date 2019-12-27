@@ -1,12 +1,12 @@
 ---
 # rtmp endpoints
-rtmp_ingest_streams: ["q1", "q2", "q3", "q4"]
+rtmp_ingest_streams: ["oio", "cdc"]
 
 # icecast endpoints
-icecast_additional_mounts: [{
+#icecast_additional_mounts: [{
 #  "mount-name": "/test",
 #  "type": "video/webm",
 #  "username": "source",
 #  "password": "foobar",
 #  "stream-name": "foobar test"
-}]
+#}]
