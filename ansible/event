@@ -167,6 +167,10 @@ blade4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade
 
 encoder-zuntrax.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax.password') }}"
 
+voc-dus-enc01.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/voc-duc-enc01.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/voc-dus-enc01.password') }}"
+voc-dus-enc02.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/voc-duc-enc02.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/voc-dus-enc02.password') }}"
+voc-dus-enc03.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/voc-duc-enc03.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/voc-dus-enc03.password') }}"
+
 [tracker]
 tracker.c3voc.de
 
