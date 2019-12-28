@@ -1,5 +1,5 @@
 ---
-fanout_streams: ['s1', 's2', 's3', 's4', 's5', 's80', 's89', 's150', 'oio', 'cdc']
+fanout_streams: ['s1', 's2', 's3', 's4', 's5', 's41', 's80', 's89', 's150', 'oio', 'cdc']
 
 hidden: 'yes'
 nginx: 'yes'
@@ -7,6 +7,7 @@ nginx_hls_master: 'yes'
 
 icedist: 'yes'
 icedist_pull_streams: [1, 2, 3, 4, 5, 80, 89, 150]
+icedist_pull_ingest: [oio, cdc]
 
 icecast: 'yes'
 icecast_push_master: 'yes'
