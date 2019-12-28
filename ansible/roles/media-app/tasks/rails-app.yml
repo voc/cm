@@ -16,7 +16,7 @@
 
 - copy: src=app/{{ item }}
         dest=/srv/media/media-site/shared/{{ item }}
-        mode=0640 owner=media group=media
+        mode=0750 owner=media group=media
   loop:
     - clear_caches.sh
     - console
@@ -56,3 +56,18 @@
 
 - systemd: state=started enabled=yes name=voctoweb-puma.service
 - systemd: state=started enabled=yes name=voctoweb-sidekiq.service
+
+- copy: src=app/{{ item }}
+        dest=/srv/media/media-site/shared/{{ item }}
+        mode=0750 owner=media group=media
+  loop:
+    - dump-public-fixtures.sh
+
+- cron: user=media minute="20" cron_file="dump_public_fixtures"
+        job="/srv/media/media-site/shared/dump-public-fixtures.sh"
+        name="dump public database"
+
+- template: src=postfix.conf
+            dest=/etc/postfix/main.cf
+            mode=0644 owner=root group=root
+

@@ -7,28 +7,25 @@
     state: present
 
 - import_tasks: packages.yml
-  tags: media-app
-
-- copy: src=goaccess.sh
-        dest=/usr/local/bin
-        owner=root group=root mode=0755
-
-- template: src=postfix.conf
-            dest=/etc/postfix/main.cf
-            mode=0644 owner=root group=root
-
-- import_tasks: rails-app.yml
-  tags: media-app
-
-# TODO only run on one puma node
-- import_tasks: cron.yml
   tags:
     - media-app
+    - nginx
+
+- import_tasks: rails-app.yml
+  tags:
+    - media-app
+
+# TODO only run cron on one node
+- import_tasks: cron.yml
+  tags:
+    - nginx
     - cron
 
 - copy: src=redis.conf
         dest=/etc/redis/redis.conf
         owner=root group=root mode=0640
+  tags:
+    - nginx
 
 - import_tasks: nginx.yml
   tags:

@@ -38,3 +38,8 @@
 - file: path={{ nginx_cache_dir }} state=directory
 
 - systemd: state=started enabled=yes name=nginx
+
+- copy: src=goaccess.sh
+        dest=/usr/local/bin
+        owner=root group=root mode=0755
+
