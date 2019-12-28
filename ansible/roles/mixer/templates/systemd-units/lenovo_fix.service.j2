@@ -1,9 +1,9 @@
 [Unit]
-Description=Stop Intel throttling 
+Description=Stop Intel throttling
 
 [Service]
 Type=simple
-ExecStart=/opt/lenovo_fix/bin/venv/bin/python3 /opt/lenovo_fix/bin/lenovo_fix.py
+ExecStart=/usr/bin/python3 /opt/lenovo_fix/bin/lenovo_fix.py
 # Setting PYTHONUNBUFFERED is necessary to see the output of this service in the journal
 Environment=PYTHONUNBUFFERED=1
 StandardOutput=syslog

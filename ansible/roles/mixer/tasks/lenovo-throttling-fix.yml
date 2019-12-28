@@ -1,19 +1,19 @@
 ---
   # delete bin dir before deployment
   - name: Ansible delete bin directory
-    file:
-      path: /opt/lenovo-throttling-fix/bin/
-      state: absent
+      file:
+        path: /opt/lenovo-throttling-fix/bin/
+        state: absent
 
   # directories & code
   - name: create lenovo-throttling-fix directories
-    file: dest={{ item }} state=directory
-          owner=root group=root
-    with_items:
-      - /opt/lenovo-throttling-fix/
-      - /opt/lenovo-throttling-fix/bin/
+      file: dest={{ item }} state=directory
+            owner=root group=root
+      with_items:
+        - /opt/lenovo-throttling-fix/
+        - /opt/lenovo-throttling-fix/bin/
 
-  - name: get lenovo-throttling-latest-release-URL 
+  - name: get lenovo-throttling-latest-release-URL
       uri:
         url: https://api.github.com/repos/erpalma/throttled/releases/latest
         return_content: true
@@ -29,38 +29,30 @@
         src: /opt/lenovo-throttling-fix/throttled_latest.tar.gz
         dest: /opt/lenovo-throttling-fix/bin/
 
-  - name: Manually create the initial virtualenv
-    command:
-      cmd: chdir=/opt/lenovo-throttling-fix/bin/ {{ item }}
-      with_items:
-      - /usr/bin/python3 -m venv venv
-      - . venv/bin/activate
-      - pip install -r requirements.txt
-
   # lenovo-throttling-fix configuration
   - name: create lenovo-throttling-fix config
-    template: src=lenovo-throttling-fix/lenovo-throttling-fix.conf.j2
-              dest=/etc/lenovo_fix.conf
-              mode=0644 owner=root group=root
+      template: src=lenovo-throttling-fix/lenovo-throttling-fix.conf.j2
+                dest=/etc/lenovo_fix.conf
+                mode=0644 owner=root group=root
 
   # lenovo-throttling-fix service
   - name: create lenovo-throttling-fix systemd-unit
-    template: src=systemd-units/lenovo_fix.service.j2
-              dest=/etc/systemd/system/lenovo_fix.service
-              mode=0644 owner=root group=root
+      template: src=systemd-units/lenovo_fix.service.j2
+                dest=/etc/systemd/system/lenovo_fix.service
+                mode=0644 owner=root group=root
 
   - name: reload systemd daemon
-    command: systemctl daemon-reload
-    changed_when: false
+      command: systemctl daemon-reload
+      changed_when: false
 
   - name: enable & start lenovo-throttling-fix service when in voctomix-mode
-    service: name=lenovo_fix
-             enabled=yes
-             state=started
-    when: encodermode is defined and encodermode == 'hd-voctomix2'
+      service: name=lenovo_fix
+               enabled=yes
+               state=started
+      when: encodermode is defined and encodermode == 'hd-voctomix2'
 
   - name: disable & stop voctogui service when not in voctomix-mode
-    service: name=lenovo_fix
-             enabled=no
-             state=stopped
-    when: encodermode is not defined or encodermode != 'hd-voctomix2'
+      service: name=lenovo_fix
+               enabled=no
+               state=stopped
+      when: encodermode is not defined or encodermode != 'hd-voctomix2'
