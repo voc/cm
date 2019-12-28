@@ -60,6 +60,7 @@ lb_icecast_relays: {
   "live.alb.c3voc.de": 50,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
+  "live2.alb.c3voc.de": 30,
   "usa.ccl.c3voc.de": 25,
 }
 
@@ -69,5 +70,6 @@ lb_local_relays: {
 }
 
 lb_relive_relays: {
+  "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 30,
 }
