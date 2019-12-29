@@ -45,6 +45,9 @@ mixer-osc2.lan.c3voc.de
 encoder-muc.lan.c3voc.de
 mixer-muc.lan.c3voc.de
 
+[chaoswest]
+chaoswest-voc-cube.lan.c3voc.de ansible_host="10.73.150.3"
+
 # Host types
 [transcoders]
 minion1.lan.c3voc.de transcoder_streams='["s1"]' transcoder_streams_enabled='["s1"]'
@@ -52,7 +55,7 @@ minion5.lan.c3voc.de transcoder_streams='["s2"]' transcoder_streams_enabled='["s
 minion6.lan.c3voc.de transcoder_streams='["s3"]' transcoder_streams_enabled='["s3"]'
 minion4.lan.c3voc.de transcoder_streams='["s4"]' transcoder_streams_enabled='["s4"]'
 minion3.lan.c3voc.de transcoder_streams='["s5"]' transcoder_streams_enabled='["s5"]'
-minion2.lan.c3voc.de transcoder_streams='["s150"]' transcoder_streams_enabled='["s150"]'
+minion2.lan.c3voc.de transcoder_streams='["s150"]' transcoder_streams_enabled='["s150"]' transcoder_pull_endpoint="ingest.c3voc.de:8000"
 minion-muc.lan.c3voc.de transcoder_streams='["oio", "cdc"]' transcoder_streams_enabled='["oio", "cdc"]' transcoder_pull_endpoint="ingest.c3voc.de:8000"
 encoder-zuntrax.lan.c3voc.de transcoder_streams='["s80", "s89"]' transcoder_streams_enabled='["s80", "s89"]'
 
@@ -73,6 +76,7 @@ encoder-osc1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-group
 encoder-osc2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.password') }}"
 encoder-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.password') }}"
 #encoder-zuntrax.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder-zuntrax-meta.password') }}"
+chaoswest-voc-cube.lan.c3voc.de ansible_host="10.73.150.3"
 
 [mixers]
 mixer[1:7].lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/mixer.username') }}"

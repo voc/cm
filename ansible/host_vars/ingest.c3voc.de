@@ -1,6 +1,6 @@
 ---
 # rtmp endpoints
-rtmp_ingest_streams: ["oio", "cdc"]
+rtmp_ingest_streams: ["oio", "cdc", "s150"]
 
 # icecast endpoints
 #icecast_additional_mounts: [{
