@@ -50,14 +50,14 @@ chaoswest-voc-cube.lan.c3voc.de ansible_host="10.73.150.3"
 
 # Host types
 [transcoders]
-minion1.lan.c3voc.de transcoder_streams='["s1"]' transcoder_streams_enabled='["s1"]'
+minion1.lan.c3voc.de transcoder_streams='["s1", "s89"]' transcoder_streams_enabled='["s1", "s89"]'
 minion5.lan.c3voc.de transcoder_streams='["s2"]' transcoder_streams_enabled='["s2"]'
-minion6.lan.c3voc.de transcoder_streams='["s3"]' transcoder_streams_enabled='["s3"]'
+minion6.lan.c3voc.de transcoder_streams='["s3", "s80"]' transcoder_streams_enabled='["s3", "s80"]'
 minion4.lan.c3voc.de transcoder_streams='["s4"]' transcoder_streams_enabled='["s4"]'
 minion3.lan.c3voc.de transcoder_streams='["s5"]' transcoder_streams_enabled='["s5"]'
 minion2.lan.c3voc.de transcoder_streams='["s150"]' transcoder_streams_enabled='["s150"]' transcoder_pull_endpoint="ingest.c3voc.de:8000"
 minion-muc.lan.c3voc.de transcoder_streams='["oio", "cdc"]' transcoder_streams_enabled='["oio", "cdc"]' transcoder_pull_endpoint="ingest.c3voc.de:8000"
-encoder-zuntrax.lan.c3voc.de transcoder_streams='["s80", "s89"]' transcoder_streams_enabled='["s80", "s89"]'
+encoder-zuntrax.lan.c3voc.de transcoder_streams='[]' transcoder_streams_enabled='[]'
 
 #speedy.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "q3", "q4", "sX", "s23", "s41", "s42", "s80", "s89", "s97"]' transcoder_streams_enabled='["s1", "s2", "s3", "s89", "q1", "q3", "sX"]'  transcoder_lounges='["a1", "a2"]'
 #tweety.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "q3", "q4", "sX", "s23", "s41", "s42", "s80", "s89", "s97"]' transcoder_streams_enabled='["s4", "s5", "s6", "q2", "q4", "s23", "s80", "s97"]' transcoder_lounges='["a3", "a4"]'
