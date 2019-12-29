@@ -29,6 +29,7 @@
       src: /opt/lenovo-throttling-fix/throttled_latest.tar.gz
       dest: /opt/lenovo-throttling-fix/bin/
       copy: no
+      extra_opts: [--strip-components=1]
 
   # lenovo-throttling-fix configuration
   - name: create lenovo-throttling-fix config
