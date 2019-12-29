@@ -2,6 +2,7 @@
   - name: create /opt/voc/share/ directory
     file: dest=/opt/voc/share/ state=directory
           owner=root group=root mode=0755
+    tags: artwork
 
   - name: add sd-overlay image
     copy: src={{ item }}
@@ -11,3 +12,4 @@
       - "../../../artwork/{{ event.acronym }}/{{ transcoder_stream }}/overlay_sd.png"
       - "../../../artwork/{{ event.acronym }}/overlay_sd.png"
       - "../../encoder/files/artwork/default-overlay-sd.png"
+    tags: artwork
