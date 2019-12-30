@@ -34,12 +34,18 @@
     - restart nginx
 
 
-# TODO mount on tmpfs
 - file: path={{ nginx_cache_dir }} state=directory
+
+# tmpfs /srv/media/media-site/cache tmpfs defaults,size=512M 0 0
+- mount:
+    fstype: tmpfs
+    path: "{{ nginx_cache_dir }}"
+    opts: "defaults,size=512M"
+    src: tmpfs
+    state: mounted
 
 - systemd: state=started enabled=yes name=nginx
 
 - copy: src=goaccess.sh
         dest=/usr/local/bin
         owner=root group=root mode=0755
-
