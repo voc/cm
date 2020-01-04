@@ -40,7 +40,7 @@
 - mount:
     fstype: tmpfs
     path: "{{ nginx_cache_dir }}"
-    opts: "defaults,size=512M"
+    opts: "defaults,size=2048M"
     src: tmpfs
     state: mounted
 
