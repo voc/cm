@@ -3,4 +3,6 @@
    apt:
     name:
       - icecast2
+      - vainfo
+      - i965-va-driver-shaders
     state: latest
