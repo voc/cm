@@ -31,52 +31,46 @@
 
 
   - name: create fanout systemd-units
-    template: src=systemd-units/fanout_{{ item.1 }}.service.j2
-              dest="/etc/systemd/system/fanout_{{ item.0 }}_{{ item.1 }}.service"
+    template: src=systemd-units/fanout_{{ item }}.service.j2
+              dest="/etc/systemd/system/fanout_{{ item }}@.service"
               mode=0644 owner=root group=root
-    with_nested:
-      - "{{ fanout_streams }}"
-      - ["hls", "dash", "webm", "audio"]
+    with_items: ["hls", "dash", "webm", "audio", "thumbnail"]
 
   - name: create youtube systemd-units
-    template: src=systemd-units/fanout_{{ item.1 }}.service.j2
-              dest="/etc/systemd/system/fanout_{{ item.0 }}_{{ item.1 }}.service"
+    template: src=systemd-units/fanout_{{ item }}.service.j2
+              dest="/etc/systemd/system/fanout_{{ item }}@.service"
               mode=0644 owner=root group=root
-    with_nested:
-      - "{{ fanout_streams }}"
-      - ["youtube"]
+    with_items: ["youtube"]
     when: youtube is defined and youtube
 
-  - name: create fanout systemd-target (room {{item}})
+  - name: create fanout systemd-target
     template: src=systemd-units/fanout.target.j2
-              dest="/etc/systemd/system/fanout_{{ item }}.target"
+              dest="/etc/systemd/system/fanout@.target"
               mode=0644 owner=root group=root
-    with_items:
-      - "{{ fanout_streams }}"
 
   - name: reload systemd daemon
     command: systemctl daemon-reload
     changed_when: false
 
   - name: enable fanout systemd-units
-    service: name=fanout_{{ item.0 }}_{{ item.1 }}.service
+    service: name=fanout_{{ item.0 }}@{{ item.1 }}.service
              enabled=yes
              state=restarted
     with_nested:
+      - ["hls", "dash", "webm", "audio", "thumbnail"]
       - "{{ fanout_streams }}"
-      - ["hls", "dash", "webm", "audio"]
 
   - name: enable youtube systemd-units
-    service: name=fanout_{{ item.0 }}_{{ item.1 }}.service
+    service: name=fanout_{{ item.0 }}@{{ item.1 }}.service
              enabled=yes
              state=restarted
     with_nested:
-      - "{{ fanout_streams }}"
       - ["youtube"]
+      - "{{ fanout_streams }}"
     when: youtube is defined and youtube
 
   - name: enable & start fanout systemd-target
-    service: name=fanout_{{ item }}.target
+    service: name=fanout@{{ item }}.target
              enabled=yes
     with_items:
       - "{{ fanout_streams }}"

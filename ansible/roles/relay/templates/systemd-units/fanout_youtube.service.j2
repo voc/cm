@@ -1,16 +1,16 @@
 #MANAGED BY ANSIBLE
 
 [Unit]
-Description = Fanout HLS Stream %I
+Description = Fanout Youtube Stream %I
 Requires = fanout@%i.target
 After = fanout@%i.target
 
 [Service]
 Type = simple
-ExecStart = /opt/fanout/scripts/hls.py \
+ExecStart = /opt/fanout/scripts/thumbnail.py \
 	--stream=%i \
 	--pull_endpoint={{ relay_fanout.pull_endpoint }} \
-	--hls_write_path={{ relay_fanout.hls_write_path }}
+	--youtube_stream_key={{ youtube_stream_key }}
 
 Restart = always
 RestartSec = 30s

@@ -1,14 +1,14 @@
 #MANAGED BY ANSIBLE
 
 [Unit]
-Description = Fanout {{ item.1 }} Stream {{ item.0 }}
-Requires = fanout_{{ item.0 }}.target
-After = fanout_{{ item.0 }}.target
+Description = Fanout WebM Stream %I
+Requires = fanout@%i.target
+After = fanout@%i.target
 
 [Service]
 Type = simple
-ExecStart = /opt/fanout/scripts/{{ item.1 }}.py \
-	--stream={{ item.0 }} \
+ExecStart = /opt/fanout/scripts/webm.py \
+	--stream=%i \
 	--pull_endpoint={{ relay_fanout.pull_endpoint }} \
 	--push_endpoint={{ relay_fanout.push_endpoint }} \
 	--icecast_password={{ lookup('keepass', 'ansible/icecast/source.password') }}
@@ -18,4 +18,4 @@ RestartSec = 30s
 StartLimitInterval = 0
 
 [Install]
-WantedBy = fanout_{{ item.0 }}.target
+WantedBy = fanout@%i.target

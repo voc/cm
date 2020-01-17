@@ -7,6 +7,7 @@ relay_fanout:
   push_endpoint: 127.0.0.1:8000
   hls_write_path: /srv/nginx/hls
   dash_write_path: /srv/nginx/dash
+  thumbnail_write_path: /srv/nginx/thumbnail
 
 rtmp_ingest:
   pull_endpoint: 127.0.0.1:1935/stream
