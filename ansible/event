@@ -45,6 +45,9 @@ mixer-osc2.lan.c3voc.de
 encoder-muc.lan.c3voc.de
 mixer-muc.lan.c3voc.de
 
+[saal-loop]
+loop-encoder ansible_host=141.24.220.5 ansible_port=10022
+
 # Host types
 [transcoders]
 #minion1.lan.c3voc.de    transcoder_streams='["s1"]'    transcoder_lounges='["a1", "a2"]'
@@ -55,6 +58,8 @@ mixer-muc.lan.c3voc.de
 
 speedy.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "q3", "q4", "sX", "s23", "s41", "s42", "s80", "s89", "s97"]' transcoder_streams_enabled='["s1", "s2", "s3", "s89", "q1", "q3", "sX"]'  transcoder_lounges='["a1", "a2"]'
 tweety.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "q3", "q4", "sX", "s23", "s41", "s42", "s80", "s89", "s97"]' transcoder_streams_enabled='["s4", "s5", "s6", "q2", "q4", "s23", "s80", "s97"]' transcoder_lounges='["a3", "a4"]'
+
+loop-transcoder ansible_host=141.24.220.5 ansible_port=10023
 
 [encoders]
 encoder1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder1.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.password') }}"
@@ -68,6 +73,7 @@ encoder11.lan.c3voc.de crs_token="unused" crs_secret="unused" crs_token_meta="un
 encoder-osc1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.password') }}"
 encoder-osc2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.password') }}"
 encoder-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.password') }}"
+loop-encoder
 
 
 [mixers]
