@@ -12,7 +12,4 @@ icecast: 'yes'
 icecast_push_master: 'yes'
 
 rtmp: 'no'
-rtmp_auto_hls: 'no'
 nginx_rtmp_hls_master: 'yes'
-
-#letsencrypt_fake: "34c3.cdn.c3voc.de"
