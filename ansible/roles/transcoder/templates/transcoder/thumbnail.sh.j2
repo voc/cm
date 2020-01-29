@@ -1,0 +1,31 @@
+#!/bin/bash
+
+check_env() {
+	if [ -z "${!1}" ]; then
+		echo "\$$1 must be set!"
+		exit 1
+	fi
+}
+
+check_env stream_key
+check_env transcoding_source
+check_env transcoding_sink
+
+while true; do
+
+ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 10000000 \
+	-i "http://${transcoding_source}/${stream_key}" \
+    \
+    -map '0:v:0' \
+        -vf:v:0 "framestep=step=500,scale=w=213:h=-1" \
+        -metadata:s:v:0 title="Thumbnail" \
+        -c:v:0 mjpeg \
+    -an \
+    \
+	-f matroska \
+	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+	-content_type video/webm \
+	"icecast://${transcoding_sink}/${stream_key}_thumbnail"
+
+sleep 5
+done

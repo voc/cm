@@ -1,96 +1,105 @@
 #!/bin/bash
 
-if [[  $# -ne 1 ]] ; then
-	echo "Please pass exactly one parameter: name of the streaming endpoint to transcode"
-	exit 1;
-fi
+check_env() {
+	if [ -z "${!1}" ]; then
+		echo "\$$1 must be set!"
+		exit 1
+	fi
+}
 
-endpoint=$1
+check_env stream_key
+check_env transcoding_source
+check_env transcoding_sink
+check_env artwork_base
 
 while true; do
 
-/usr/bin/ffmpeg  -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
-      -init_hw_device vaapi=transcode:/dev/dri/renderD128 \
-      -hwaccel vaapi \
-      -hwaccel_output_format vaapi \
-      -hwaccel_device transcode \
-        -i http://{{ transcoder_pull_endpoint }}/${endpoint} \
-      -filter_hw_device transcode \
-        -filter_complex '
-                movie=/opt/voc/share/overlay_sd_${endpoint}.png,format=nv12,hwupload,scale_vaapi=w=1024:h=576 [logo_sd];
-                [0:v:0] split[hdvpx][hdinter];
-                [hdinter] scale_vaapi=w=1024:h=576 [smooth_sd];
-                [smooth_sd] [logo_sd] overlay=0:0,split[sd1][sd2]
-        ' \
-        \
-        -map '0:v:0' \
-                -metadata:s:v:0 title="HD" \
-                -c:v:0 copy \
-        \
-        -map '[sd1]' \
-                -metadata:s:v:1 title="SD" \
-                -c:v:1 h264_vaapi \
-                        -maxrate:v:1 800k \
-                        -bufsize:v:1 3600k \
-                        -g:v:1 75 \
-                        -flags:v:1 +cgop \
-        \
-        -map '0:v:1?' \
-                -metadata:s:v:2 title="Slides" \
-                -c:v:2 copy \
-        \
-        -c:a copy \
-        \
-        -map '0:a:0' -metadata:s:a:0 title="Native" \
-        -map '0:a:1?' -metadata:s:a:1 title="Translated" \
-        -map '0:a:2?' -metadata:s:a:2 title="Translated-2" \
-        \
-        -max_muxing_queue_size 400 \
-        -f matroska \
-        -password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
-        -content_type video/webm \
-        icecast://{{ transcoder_push_endpoint }}/${endpoint}_h264 \
-        \
-        -map '[hdvpx]' \
-                -metadata:s:v:0 title="HD" \
-                -c:v vp9_vaapi \
-                    -flags:v +global_header \
-                    -threads:v:0 8 \
-                    -keyint_min:v:0 75 \
-                    -g:v:0 75 \
-                    -b:v:0 2800k \
-                    -bufsize:v:0 12000k \
-        -map '[sd2]' \
-                -metadata:s:v:1 title="SD" \
-                -c:v vp9_vaapi \
-                    -flags:v +global_header \
-                    -keyint_min:v:1 75 \
-                    -g:v:1 75 \
-                    -b:v:1 800k \
-                    -bufsize:v:1 4500k \
-        \
-        -map '0:v:1?' \
-                -metadata:s:v:2 title="Slides" \
-                -c:v vp9_vaapi \
-                    -flags:v +global_header \
-                    -g:v:2 15 \
-                    -keyint_min:v:2 15 \
-                    -b:v:2 100k \
-                    -bufsize:v:2 750k \
-        \
-        -c:a libopus -ac:a 2 -b:a 128k \
-        \
-        -map '0:a:0' -metadata:s:a:0 title="Native" \
-        -map '0:a:1?' -metadata:s:a:1 title="Translated" \
-        -map '0:a:2?' -metadata:s:a:2 title="Translated-2" \
-        \
-        -fflags +genpts \
-        -max_muxing_queue_size 1000 \
-        -f matroska \
-        -password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
-        -content_type video/webm \
-        icecast://{{ transcoder_push_endpoint }}/${endpoint}_vpx \
-        	\
+# download overlay
+overlay="/tmp/${stream_key}_vaapi_overlay.png"
+curl -o "${overlay}" "${artwork_base}/overlay_sd.png"
+
+/usr/bin/ffmpeg -nostdin -y -analyzeduration 50000000 -timeout 10000000 \
+	-init_hw_device vaapi=transcode:/dev/dri/renderD128 \
+	-hwaccel vaapi \
+	-hwaccel_output_format vaapi \
+	-hwaccel_device transcode \
+	-i "http://${transcoding_source}/${stream_key}" \
+	-filter_hw_device transcode \
+	-filter_complex "
+		[0:v:0] split [hd1][_hd2];
+		[_hd2] hwdownload [hd2];
+		[hd1] scale_vaapi=1024:576,split [sd1][sd2]
+	" \
+	\
+	-map '0:v:0' \
+		-metadata:s:v:0 title="HD" \
+		-c:v:0 copy \
+	\
+	-map '[sd1]' \
+		-metadata:s:v:1 title="SD" \
+		-c:v:1 h264_vaapi \
+			-g:v:1 75 \
+			-b:v:1 800k \
+			-bufsize:v:1 2400k \
+			-flags:v:1 +cgop \
+	\
+	-map '0:v:1?' \
+		-metadata:s:v:2 title="Slides" \
+		-c:v:2 copy \
+	\
+	-c:a copy \
+	\
+	-map '0:a:0' -metadata:s:a:0 title="Native" \
+	-map '0:a:1?' -metadata:s:a:1 title="Translated" \
+	-map '0:a:2?' -metadata:s:a:2 title="Translated-2" \
+	\
+	-max_muxing_queue_size 400 \
+	-f matroska \
+	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+	-content_type video/webm \
+	"icecast://${transcoding_sink}/${stream_key}_h264" \
+	\
+	-map '[hd2]' \
+		-metadata:s:v:0 title="HD" \
+		-c:v:0 libvpx-vp9 \
+			-deadline:v:0 realtime \
+			-cpu-used:v:0 8 \
+			-threads:v:0 4 \
+			-frame-parallel:v:0 1 \
+			-tile-columns:v:0 2 \
+			-crf:v:0 23 \
+			\
+			-g:v:0 75 \
+			-b:v:0 2800k \
+			-bufsize:v:0 8400k \
+\
+	-map '[sd2]' \
+		-metadata:s:v:1 title="SD" \
+		-c:v:1 vp9_vaapi \
+			-g:v:1 75 \
+			-b:v:1 800k \
+			-bufsize:v:1 2400k \
+	\
+	-map '0:v:1?' \
+		-metadata:s:v:2 title="Slides" \
+		-c:v:2 vp9_vaapi \
+			-g:v:2 15 \
+			-b:v:2 100k \
+			-bufsize:v:2 750k \
+	\
+	-c:a libopus -ac:a 2 -b:a 128k \
+	\
+	-map '0:a:0' -metadata:s:a:0 title="Native" \
+	-map '0:a:1?' -metadata:s:a:1 title="Translated" \
+	-map '0:a:2?' -metadata:s:a:2 title="Translated-2" \
+	\
+	-fflags +genpts \
+	-max_muxing_queue_size 400 \
+	-f matroska \
+	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
+	-content_type video/webm \
+	"icecast://${transcoding_sink}/${stream_key}_vpx" \
+		\
 	-map '0:a:0' \
 		-c:a:0 libmp3lame -b:a:0 96k \
 		-metadata:s:a:0 title="Native" \
@@ -121,6 +130,6 @@ while true; do
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder_pull_endpoint }}/${endpoint}_audio
-sleep 10
+	"icecast://${transcoding_sink}/${stream_key}_audio"
+sleep 5
 done

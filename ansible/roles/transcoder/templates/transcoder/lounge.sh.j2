@@ -1,11 +1,15 @@
 #!/bin/bash
 
-if [[  $# -ne 1 ]] ; then
-	echo "Please pass exactly one parameter: name of the streaming endpoint to transcode"
-	exit 1;
-fi
+check_env() {
+	if [ -z "${$1}" ]; then
+		echo "\$$1 must be set!"
+		exit 1
+	fi
+}
 
-endpoint=$1
+check_env stream_key
+check_env transcoding_source
+check_env transcoding_sink
 
 # Lounge passwords
 {% for stream_key in transcoder_lounges %}
@@ -28,5 +32,5 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	-password "${!password}" \
 	icecast://{{ transcoder_lounge_push_endpoint }}/${endpoint}.mp3
 
-sleep 10
+sleep 5
 done

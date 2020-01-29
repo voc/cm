@@ -1,16 +1,14 @@
 #MANAGED BY ANSIBLE
 
 [Unit]
-Description = Transcoder {{ item }} Stream %I
+Description = Transcode {{ item }} Stream %I
 Requires = transcode@%i.target
 After = transcode@%i.target
 
 [Service]
 Type = simple
-ExecStart = /opt/transcoder/scripts/{{ item }}.sh %i
+EnvironmentFile = /opt/transcoder/config/%i
+ExecStart = /opt/transcoder/scripts/{{ item }}.sh
 Restart = always
-RestartSec = 30s
+RestartSec = 5s
 StartLimitInterval = 0
-
-[Install]
-WantedBy = transcode@%i.target

@@ -2,17 +2,12 @@
  - include: packages.yml
  - include: undeploy.yml
 
- - include: artwork.yml
-   tags: artwork
-   with_items: "{{ transcoder_streams }}"
-   when: transcoder_streams is defined
-   loop_control:
-     loop_var: transcoder_stream
+ # - include: artwork.yml
+ #   tags: artwork
+ #   with_items: "{{ transcoder_streams }}"
+ #   when: transcoder_streams is defined
+ #   loop_control:
+ #     loop_var: transcoder_stream
 
  - include: transcoding.yml
-   when: transcoder_streams is defined
-   tags: transcoding
-
- - include: transcoding_lounges.yml
-   when: transcoder_lounges is defined
    tags: transcoding

@@ -1,17 +1,22 @@
 #!/bin/bash
 
-if [[  $# -ne 1 ]] ; then
-	echo "Please pass exactly one parameter: name of the streaming endpoint to transcode"
-	exit 1;
-fi
+check_env() {
+	if [ -z "${!1}" ]; then
+		echo "\$$1 must be set!"
+		exit 1
+	fi
+}
 
-endpoint=$1
+check_env stream_key
+check_env transcoding_source
+check_env transcoding_sink
 
 while true; do
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
-	-i http://{{ transcoder_pull_endpoint }}/${endpoint} \
+	-i "http://${transcoding_source}/${stream_key}" \
 	\
+	-vn \
 	\
 	-map '0:a:0' \
 		-c:a:0 libmp3lame -b:a:0 96k \
@@ -44,7 +49,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
-	icecast://{{ transcoder_push_endpoint }}/${endpoint}_audio
+	"icecast://${transcoding_sink}/${stream_key}_audio"
 
 sleep 5
 done

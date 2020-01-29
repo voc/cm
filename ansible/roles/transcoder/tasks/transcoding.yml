@@ -1,7 +1,8 @@
 ---
   - name: check if system is capable of vaapi with vp9
-    command: 'vainfo 2>/dev/null|grep " VAProfileVP9Profile" && echo true'
-    register: vainfo
+    shell: 'vainfo 2>/dev/null|grep " VAProfileVP9Profile" > /dev/null && echo true || echo false'
+    register: vaapi_present
+    changed_when: false
 
   - name: create directories
     file: dest={{ item }} state=directory
@@ -24,25 +25,27 @@
       state: absent
     with_items: "{{ old_systemd_transcoding_files.files }}"
 
-  - name: create h264 transcode-script
-    template: dest=/opt/transcoder/scripts/h264.sh
-              src=transcoder/h264.sh.j2
-              owner=root group=root mode=0755
+  - name: create transcode-scripts
+    template:
+      src: "transcoder/{{ item }}.sh.j2"
+      dest: "/opt/transcoder/scripts/{{ item }}.sh"
+      mode: 0755
+      owner: root
+      group: root
+    with_items:
+      - h264
+      - vpx
+      - audio
+      - vaapi
+      - thumbnail
 
-  - name: create vpx transcode-script
-    template: dest=/opt/transcoder/scripts/vpx.sh
-              src=transcoder/vpx.sh.j2
-              owner=root group=root mode=0755
-
-  - name: create audio transcode-script
-    template: dest=/opt/transcoder/scripts/audio.sh
-              src=transcoder/audio.sh.j2
-              owner=root group=root mode=0755
-
-  - name: create vaapi transcode-script
-    template: dest=/opt/transcoder/scripts/vaapi.sh
-              src=transcoder/vaapi.sh.j2
-              owner=root group=root mode=0755
+  - name: create transcode-update script
+    template:
+      src: transcoder/update_transcoding.py
+      dest: /opt/transcoder/scripts/update_transcoding.py
+      mode: 0755
+      owner: root
+      group: root
 
   - name: create transcode systemd-units
     template: src=systemd-units/transcode.service.j2
@@ -53,35 +56,31 @@
       - "vpx"
       - "audio"
       - "vaapi"
+      - "thumbnail"
 
-  - name: create transcode systemd-targets
+  - name: create transcode systemd-target
     template:
       src: systemd-units/transcode.target.j2
-      dest: "/etc/systemd/system/transcode@.target"
+      dest: /etc/systemd/system/transcode@.target
       mode: 0644
       owner: root
       group: root
 
-  - name: enable and (re)start software-based systemd-units
+  - name: create transcoding update service and timer
+    template:
+      src: "systemd-units/update_transcoding.{{ item }}.j2"
+      dest: "/etc/systemd/system/update_transcoding.{{ item }}"
+      mode: 0644
+      owner: root
+      group: root
+    with_items:
+      - service
+      - timer
+
+  - name: enable transcoding update timer
     systemd:
-      name: "transcode_{{ item.1 }}@{{ item.0 }}.service"
+      name: update_transcoding.timer
+      state: started
       enabled: yes
       daemon_reload: yes
-      state: restarted 
-    with_nested:
-      - "{{ transcoder_streams_enabled }}"
-      - ["h264", "vpx", "audio"]
-    when: vainfo.rc == 1
-
-  - name: enable and (re)start vaapi-based systemd-units
-    systemd:
-      name: "transcode_{{ item.1 }}@{{ item.0 }}.service"
-      enabled: yes
-      daemon_reload: yes
-      state: restarted
-    with_nested:
-      - "{{ transcoder_streams_enabled }}"
-      - ["vaapi"]
-    when: vainfo.rc == 0
-
-
+    changed_when: false

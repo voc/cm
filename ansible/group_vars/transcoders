@@ -3,3 +3,8 @@ transcoder_pull_endpoint: live.ber.c3voc.de:7999
 transcoder_push_endpoint: live.ber.c3voc.de:7999
 transcoder_lounge_pull_endpoint: live.ber.c3voc.de:7999
 transcoder_lounge_push_endpoint: live.ber.c3voc.de:7999
+
+stream_api:
+  user: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.username') }}"
+  password: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.password') }}"
+  url: https://live.ber.c3voc.de/stream_info.json
