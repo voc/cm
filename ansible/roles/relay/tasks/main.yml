@@ -20,7 +20,7 @@
     tags: sysctl
 
   - include: relive.yml
-    when: nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes'
+    when: nginx_master is defined and nginx_master == 'yes'
     tags: relive
 
   - include: icedist.yml

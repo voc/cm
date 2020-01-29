@@ -1,4 +1,4 @@
-{% if not (nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes') %}
+{% if not (nginx_master is defined and nginx_master == 'yes') %}
 # HLS slave caching directories
 proxy_temp_path /srv/nginx/cache/tmp;
 
@@ -97,7 +97,7 @@ server {
     deny  all;
   }
 
-{% if nginx_rtmp_hls_master is defined and nginx_rtmp_hls_master == 'yes' %}
+{% if nginx_master is defined and nginx_master == 'yes' %}
   location ~* ^/hls/(.+)?$ {
     alias /srv/nginx/hls/$1;
     autoindex on;
