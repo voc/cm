@@ -23,6 +23,10 @@
     when: fanout_streams is defined
     tags: fanout
 
+  - include: stream_master.yml
+    when: stream_master is defined
+    tags: stream_master
+
   - include: rtmp_ingest.yml
     when: rtmp_ingest_streams is defined
     tags: rtmp_ingest

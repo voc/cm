@@ -97,6 +97,19 @@ server {
     deny  all;
   }
 
+{% if stream_master is defined %}
+  location /stream_info.json {
+    auth_basic           "voc login";
+    auth_basic_user_file htpasswd;
+    alias /srv/nginx/stream_info.json;
+  }
+
+  location ~* ^/artwork/(.+)?$ {
+    alias /srv/nginx/artwork/$1;
+    autoindex on;
+  }
+{% endif %}
+
 {% if nginx_master is defined and nginx_master == 'yes' %}
   location ~* ^/hls/(.+)?$ {
     alias /srv/nginx/hls/$1;

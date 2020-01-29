@@ -1,0 +1,38 @@
+# stream name RegExp
+stream-match = '^s[0-9a-zA-Z]+$'
+
+# stream timeout in seconds
+timeout = 300
+
+# transcoding sink
+sink = "live.ber.c3voc.de:7999"
+
+# artwork base directory
+artwork_base = "http://live.ber.c3voc.de/artwork"
+
+
+# stream backends to parse streams from
+{% for address in streaming_sources %}
+[[ backends ]]
+address = "{{ address }}"
+
+{% endfor %}
+
+
+# transcoders to assign streams to
+#   host - transcoder hostname
+#   capacity - max streams on that transcoder
+#   allow - exclusively schedule those streams
+{% for host in groups["transcoders"] %}
+[[ transcoders ]]
+host = "{{ host }}"
+{% if "transcoder_capacity" in hostvars[host] %}
+capacity = {{ hostvars[host]["transcoder_capacity"] }}
+{% else %}
+capacity = 2
+{% endif %}
+{% if "transcoder_streams" in hostvars[host] %}
+allow = ["{{ hostvars[host]["transcoder_streams"]|join('", "') }}"]
+{% endif %}
+
+{% endfor %}

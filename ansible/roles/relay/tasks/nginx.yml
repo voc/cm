@@ -18,6 +18,26 @@
     tags: install
     when: not (rtmp is defined and rtmp == 'yes')
 
+
+  # Create stream_master htpasswd
+  - name: install additional dependencies
+    apt:
+      package: python-passlib
+      state: latest
+    when: stream_master|bool
+    tags: stream_master
+
+  - name: create stream_master htpasswd
+    htpasswd:
+      path: /etc/nginx/htpasswd
+      name: "{{ stream_api.user }}"
+      password: "{{ stream_api.password }}"
+      owner: root
+      group: www-data
+      mode: 0640
+    when: stream_master|bool
+    tags: stream_master
+
   # Create directories
   - name: added nginx htdocs and caching directories
     file: "dest=/srv/nginx/{{ item }}
