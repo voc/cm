@@ -2,14 +2,6 @@
   - include: ../../../register/bin_path.yml
   - include: undeploy.yml
 
-  # Install packages needed for each relay
-  - name: install streaming relay dependencies
-    apt:
-      name:
-        - oggfwd-voc
-      state: latest
-    tags: packages
-
   - include: nginx.yml
     tags: nginx
   - include: icecast.yml
