@@ -67,6 +67,12 @@
         job="/srv/media/media-site/shared/dump-public-fixtures.sh"
         name="dump public database"
 
+- file: path=/etc/postfix/maps state=directory
+
+- copy: content="{{ postfix_generic_map }}"
+        dest=/etc/postfix/maps/generic
+        owner=root group=root mode=0644
+
 - template: src=postfix.conf
             dest=/etc/postfix/main.cf
             mode=0644 owner=root group=root

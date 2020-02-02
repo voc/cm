@@ -10,6 +10,7 @@ pg_user: "{{ lookup('keepass', 'ansible/media/postgresql.username') }}"
 pg_password: "{{ lookup('keepass', 'ansible/media/postgresql.password') }}"
 pg_db: "{{ lookup('keepass', 'ansible/media/postgresql.url') }}"
 pg_host: 10.0.0.2
+postfix_generic_map: "{{ lookup('keepass', 'ansible/media/postfix_generic.notes') }}"
 users:
   - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }
