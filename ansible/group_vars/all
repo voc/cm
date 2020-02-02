@@ -48,6 +48,11 @@ monitoring:
   collectd_password: "{{ lookup('keepass', 'ansible/collectd.password') }}"
   collectd_interval: 30
 
+stream_api:
+  user: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.username') }}"
+  password: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.password') }}"
+  url: https://live.ber.c3voc.de/stream_info.json
+
 tracker_url: "https://tracker.c3voc.de/rpc"
 
 mqtt:

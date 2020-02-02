@@ -7,15 +7,13 @@ After = fanout@%i.target
 
 [Service]
 Type = simple
+EnvironmentFile = /opt/fanout/config/%i
 ExecStart = /opt/fanout/scripts/webm.py \
 	--stream=%i \
-	--pull_endpoint={{ relay_fanout.pull_endpoint }} \
+	--pull_endpoint=${fanout_source} \
 	--push_endpoint={{ relay_fanout.push_endpoint }} \
 	--icecast_password={{ lookup('keepass', 'ansible/icecast/source.password') }}
 
 Restart = always
-RestartSec = 30s
+RestartSec = 10s
 StartLimitInterval = 0
-
-[Install]
-WantedBy = fanout@%i.target

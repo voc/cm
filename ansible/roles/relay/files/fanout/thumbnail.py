@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
-import fanout_utils
+import os
+import contextlib
 
+import fanout_utils
 
 def fanout_thumbnail(context):
 	cleanup(context)

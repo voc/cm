@@ -2,6 +2,14 @@
 
 [Unit]
 Description = All Fanouts of Stream %I
+Wants = fanout_dash@%i.service
+Wants = fanout_hls@%i.service
+Wants = fanout_webm@%i.service
+Wants = fanout_audio@%i.service
+Wants = fanout_thumbnail@%i.service
+{% if youtube is defined and youtube %}
+Wants = fanout_youtube@%i.service
+{% endif %}
 
 [Install]
 WantedBy = multi-user.target

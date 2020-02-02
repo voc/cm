@@ -14,6 +14,7 @@
       - /opt/fanout/scripts/
       - "{{ relay_fanout.hls_write_path }}"
       - "{{ relay_fanout.dash_write_path }}"
+      - "{{ relay_fanout.thumbnail_write_path }}"
 
   - name: copying fanout-scripts
     copy: dest=/opt/fanout/scripts/{{ item }}
@@ -24,10 +25,17 @@
       - dash.py
       - hls.py
       - webm.py
+      - thumbnail.py
       - youtube.py
       - fanout_utils.py
 
-
+  - name: create fanout-update script
+    copy:
+      src: fanout/update_fanout.py
+      dest: /opt/fanout/scripts/update_fanout.py
+      mode: 0755
+      owner: root
+      group: root
 
 
   - name: create fanout systemd-units
@@ -48,29 +56,21 @@
               dest="/etc/systemd/system/fanout@.target"
               mode=0644 owner=root group=root
 
-  - name: reload systemd daemon
-    command: systemctl daemon-reload
-    changed_when: false
-
-  - name: enable fanout systemd-units
-    service: name=fanout_{{ item.0 }}@{{ item.1 }}.service
-             enabled=yes
-             state=restarted
-    with_nested:
-      - ["hls", "dash", "webm", "audio", "thumbnail"]
-      - "{{ fanout_streams }}"
-
-  - name: enable youtube systemd-units
-    service: name=fanout_{{ item.0 }}@{{ item.1 }}.service
-             enabled=yes
-             state=restarted
-    with_nested:
-      - ["youtube"]
-      - "{{ fanout_streams }}"
-    when: youtube is defined and youtube
-
-  - name: enable & start fanout systemd-target
-    service: name=fanout@{{ item }}.target
-             enabled=yes
+  - name: create fanout update service and timer
+    template:
+      src: "systemd-units/update_fanout.{{ item }}.j2"
+      dest: "/etc/systemd/system/update_fanout.{{ item }}"
+      mode: 0644
+      owner: root
+      group: root
     with_items:
-      - "{{ fanout_streams }}"
+      - service
+      - timer
+
+  - name: enable fanout update timer
+    systemd:
+      name: update_fanout.timer
+      state: started
+      enabled: yes
+      daemon_reload: yes
+    changed_when: false

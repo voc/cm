@@ -7,14 +7,12 @@ After = fanout@%i.target
 
 [Service]
 Type = simple
+EnvironmentFile = /opt/fanout/config/%i
 ExecStart = /opt/fanout/scripts/thumbnail.py \
 	--stream=%i \
-	--pull_endpoint={{ relay_fanout.pull_endpoint }} \
+	--pull_endpoint=${fanout_source} \
 	--youtube_stream_key={{ youtube_stream_key }}
 
 Restart = always
-RestartSec = 30s
+RestartSec = 10s
 StartLimitInterval = 0
-
-[Install]
-WantedBy = fanout@%i.target

@@ -3,7 +3,6 @@ system:
   kernel_package: linux-image-4.13.12-041312-generic
 
 relay_fanout:
-  pull_endpoint: 127.0.0.1:7999
   push_endpoint: 127.0.0.1:8000
   hls_write_path: /srv/nginx/hls
   dash_write_path: /srv/nginx/dash
@@ -137,14 +136,9 @@ nginx_hls_masters:
 nginx_dash_masters:
   - '195.54.164.164'
 
-streaming_master: live.ber.c3voc.de
 streaming_sources:
   - "live.ber.c3voc.de:7999"
   - "ingest.c3voc.de:8000"
-
-stream_api:
-  user: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.username') }}"
-  password: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.password') }}"
 
 loadbalancer:
   frontend:

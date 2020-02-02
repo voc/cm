@@ -2,9 +2,6 @@
 
 import os
 import time
-import shlex
-import itertools
-import subprocess
 import contextlib
 
 import fanout_utils

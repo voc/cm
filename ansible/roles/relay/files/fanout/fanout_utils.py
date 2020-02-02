@@ -95,7 +95,12 @@ def analyze_tracks(pull_url):
 	return list(set(video_track_names)), list(set(audio_track_names))
 
 
-def validate_stream_configuration(video_tracks, audio_tracks, audio_only=False):
+def validate_stream_configuration(video_tracks, audio_tracks, audio_only=False, thumbnail=False):
+	if thumbnail:
+		if "Thumbnail" not in video_tracks:
+			raise Exception("Thumbnail Track missing")
+		return
+
 	if not audio_only:
 		if "HD" not in video_tracks:
 			raise Exception("HD-Video-Track missing")
@@ -149,7 +154,8 @@ def mainloop(name, transcoding_stream, calback, args=None):
 			print("Found stream with video_tracks=%s and audio_tracks=%s" %
 				(str(video_tracks), str(audio_tracks)))
 
-			validate_stream_configuration(video_tracks, audio_tracks, audio_only=(transcoding_stream == 'audio'))
+			validate_stream_configuration(video_tracks, audio_tracks, audio_only=(transcoding_stream == 'audio'),
+				thumbnail=(transcoding_stream == "thumbnail"))
 
 			print("Starting fanout")
 			ctx = Context({
