@@ -26,7 +26,14 @@ def fanout(context):
 	command = fanout_utils.format_and_strip(context, """
 ffmpeg -v warning -nostats -nostdin -y
 	-i {{ pull_url }}
-	-c:v copy -an -f image2 -update 1 {{ thumbnail_write_path }}/{{ stream }}/thumb.jpeg
+
+	-map 0:v:0
+	-c:v copy -an
+	-f image2 -update 1 {{ thumbnail_write_path }}/{{ stream }}/poster.jpeg
+
+	-map 0:v:1
+	-c:v copy -an
+	-f image2 -update 1 {{ thumbnail_write_path }}/{{ stream }}/thumb.jpeg
 """)
 	fanout_utils.call(command)
 

@@ -15,19 +15,19 @@ proxy_cache_path /srv/nginx/cache/live
                 loader_threshold=300 loader_files=1024;
 
 # Upstreams
-upstream hls {
-{% for server in nginx_hls_masters %}
+upstream stream {
+{% for server in nginx_stream_masters %}
   server {{ server }};
 {% endfor %}
-{% if nginx_hls_masters_backup is defined %}
-{% for server in nginx_hls_masters_backup %}
+{% if nginx_stream_masters_backup is defined %}
+{% for server in nginx_stream_masters_backup %}
   server {{ server }} backup;
 {% endfor %}
 {% endif %}
   keepalive 32;
 }
 
-upstream hls_relive {
+upstream relive {
 {% for server in nginx_hls_relive_masters %}
   server {{ server }};
 {% endfor %}
@@ -40,18 +40,6 @@ upstream hls_relive {
   keepalive 32;
 }
 {% endif %}
-
-upstream dash {
-{% for server in nginx_dash_masters %}
-  server {{ server }};
-{% endfor %}
-{% if nginx_dash_masters_backup is defined %}
-{% for server in nginx_dash_masters_backup %}
-  server {{ server }} backup;
-{% endfor %}
-{% endif %}
-  keepalive 32;
-}
 
 upstream icecast {
   server localhost:8000;
@@ -111,13 +99,8 @@ server {
 {% endif %}
 
 {% if nginx_master is defined and nginx_master == 'yes' %}
-  location ~* ^/hls/(.+)?$ {
-    alias /srv/nginx/hls/$1;
-    autoindex on;
-  }
-
-  location ~* ^/dash/(.+)?$ {
-    alias /srv/nginx/dash/$1;
+  location ~* ^/(hls|dash|thumbnail)/(.+)?$ {
+    alias /srv/nginx/$1/$2;
     autoindex on;
   }
 
@@ -145,7 +128,7 @@ server {
       proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://hls/$hls/$file;
+      proxy_pass             http://stream/$hls/$file;
       proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
@@ -170,7 +153,7 @@ server {
       proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://hls/$hls/$stream;
+      proxy_pass             http://stream/$hls/$stream;
       proxy_cache_methods    GET;
       proxy_cache_valid      200 302 11m;
       proxy_cache_key        "$uri";
@@ -195,7 +178,7 @@ server {
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://hls_relive/$hls_relive/$file;
+      proxy_pass             http://relive/$hls_relive/$file;
       proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
@@ -218,7 +201,7 @@ server {
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://hls_relive/$hls_relive/$stream;
+      proxy_pass             http://relive/$hls_relive/$stream;
       proxy_cache_methods    GET;
       proxy_cache_valid      200 302 7d;
       proxy_cache_key        "$uri";
@@ -241,7 +224,7 @@ server {
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://hls_relive/$hls_relive/$stream;
+      proxy_pass             http://relive/$hls_relive/$stream;
       proxy_cache_methods    GET;
       proxy_cache_valid      200 302 6d;
       proxy_cache_key        "$uri";
@@ -272,7 +255,7 @@ server {
       proxy_cache            hls_relive;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://hls_relive/$1;
+      proxy_pass             http://relive/$1;
       proxy_cache_methods    GET;
       proxy_cache_valid      200 302 5m;
       proxy_cache_key        "$uri";
@@ -295,7 +278,7 @@ server {
       proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://dash/dash/$manifest;
+      proxy_pass             http://stream/dash/$manifest;
       proxy_cache_methods    GET;
       proxy_cache_valid      200 302 1s;
       proxy_cache_key        "$uri";
@@ -322,7 +305,7 @@ server {
       proxy_cache            live;
       proxy_set_header       Host $host;
       proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://dash/dash/$segment;
+      proxy_pass             http://stream/dash/$segment;
       proxy_cache_methods    GET;
       proxy_cache_valid      200 302 11m;
       proxy_cache_key        "$uri";
@@ -335,6 +318,31 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+  }
+  # proxy thumbnails/posters (live)
+  #
+  # live:   /thumbnail/s1/poster.jpeg
+  #
+  location ~* ^/thumbnail/(?<thumbnail>.+\.jpeg)$ {
+      proxy_intercept_errors on;
+      proxy_cache            live;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://stream/thumbnail/$thumbnail;
+      proxy_cache_methods    GET;
+      proxy_cache_valid      200 302 5s;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      proxy_ignore_headers   Cache-Control;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
   }
   # Icecast direkt proxy path for https streaming
   #

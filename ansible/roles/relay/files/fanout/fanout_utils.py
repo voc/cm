@@ -97,6 +97,8 @@ def analyze_tracks(pull_url):
 
 def validate_stream_configuration(video_tracks, audio_tracks, audio_only=False, thumbnail=False):
 	if thumbnail:
+		if "Poster" not in video_tracks:
+			raise Exception("Poster Track missing")
 		if "Thumbnail" not in video_tracks:
 			raise Exception("Thumbnail Track missing")
 		return

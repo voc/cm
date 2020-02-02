@@ -12,6 +12,12 @@ rtmp_ingest:
   pull_endpoint: 127.0.0.1:1935/stream
   push_endpoint: 127.0.0.1:7999
 
+# sources to monitor from stream_master
+streaming_sources:
+  - "live.ber.c3voc.de:7999"
+  - "ingest.c3voc.de:8000"
+
+
 # icecast
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
 icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"
@@ -126,19 +132,6 @@ nginx_ips_allow_stats: [
   "10.73.0.0/16",
   "10.8.0.0/16"
 ]
-# frontend server
-nginx_frontend_masters:
-  - '195.54.164.164'
-
-nginx_hls_masters:
-  - '195.54.164.164'
-
-nginx_dash_masters:
-  - '195.54.164.164'
-
-streaming_sources:
-  - "live.ber.c3voc.de:7999"
-  - "ingest.c3voc.de:8000"
 
 loadbalancer:
   frontend:

@@ -1,0 +1,29 @@
+---
+# defaults vars for relay role
+
+### Common variables
+# use nginx
+nginx: yes
+
+# use icecast
+icecast: yes
+
+
+### Master-Relay variables
+# distribute local files via nginx, also controls fanout
+nginx_master: no
+
+# setup icedist for accepting streams
+icedist: no
+
+# accept some external streams pushed to icecast
+icecast_push_master: no
+
+# fanout to youtube
+youtube: no
+
+# host stream-info api
+stream_master: no
+
+# legacy nginx-rtmp
+rtmp: no
