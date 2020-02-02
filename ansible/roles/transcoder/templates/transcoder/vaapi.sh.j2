@@ -26,9 +26,11 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 	-i "http://${transcoding_source}/${stream_key}" \
 	-filter_hw_device transcode \
 	-filter_complex "
-		[0:v:0] split [hd1][_hd2];
+		[0:v:0] split=3 [hd1][_hd2][_hd3];
 		[_hd2] hwdownload [hd2];
-		[hd1] scale_vaapi=1024:576,split [sd1][sd2]
+		[hd1] scale_vaapi=1024:576,split [sd1][sd2];
+		[_hd3] framestep=step=500,split [poster1][poster2];
+		[poster2] scale_vaapi=w=213:h=-1 [thumb]
 	" \
 	\
 {# H.264 Stream #}
@@ -103,10 +105,11 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 	"icecast://${transcoding_sink}/${stream_key}_vpx" \
 	\
 {# Thumbnail Stream #}
-    -map '0:v:0' \
-            -metadata:s:v:0 title="Thumbnail" \
-            -vf:v:0 "framestep=step=500,scale_vaapi=w=213:h=-1" \
-            -c:v:0 mjpeg_vaapi \
+	-c:v mjpeg_vaapi
+    -map '[poster1]' \
+        -metadata:s:v:0 title="Poster" \
+    -map '[thumb]' \
+        -metadata:s:v:1 title="Thumbnail" \
     \
 	-fflags +genpts \
 	-max_muxing_queue_size 400 \
@@ -114,7 +117,7 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
 	"icecast://${transcoding_sink}/${stream_key}_thumbnail"
-    \
+	\
 {# Music Stream #}
 	-map '0:a:0' \
 		-c:a:0 libmp3lame -b:a:0 96k \
