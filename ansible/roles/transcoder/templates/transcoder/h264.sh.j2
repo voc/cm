@@ -15,15 +15,13 @@ check_env artwork_base
 while true; do
 
 # download overlay
-overlay="/tmp/${stream_key}_h264_overlay.png"
-curl -o "${overlay}" "${artwork_base}/overlay_sd.png"
+#overlay="/tmp/${stream_key}_h264_overlay.png"
+#curl -o "${overlay}" "${artwork_base}/overlay_sd.png"
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 10000000 \
 	-i "http://${transcoding_source}/${stream_key}" \
 	-filter_complex "
-		[0:v:0] scale=1024:576 [smooth_sd];
-		movie=${overlay} [logo_sd];
-		[smooth_sd] [logo_sd] overlay=0:0 [sd]
+		[0:v:0] scale=1024:576 [sd]
 	" \
 	\
 {# Video settings #}
