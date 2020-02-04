@@ -1,7 +1,13 @@
 ---
+- name: install defaut packages
+  apt: name={{ item }} state=latest
+  loop:
+    - golang
+    - libcap-dev
+
 - name: Install acmetool package (Debian/Binary)
   block:
-  - shell: /usr/local/bin/go get github.com/hlandau/acme/cmd/acmetool
+  - shell: /usr/bin/go get github.com/hlandau/acme/cmd/acmetool
     environment:
       GOPATH: /usr/local
       GOPROXY: https://proxy.golang.org
@@ -17,8 +23,6 @@
             dest=/var/lib/acme/conf/responses
             mode=0644 owner=root group=root
   tags: acmetool-install
-  vars:
-    acmetool_responses_method: listen
 
 - name: run quickstart
   command: acmetool quickstart
@@ -29,11 +33,3 @@
   loop: "{{ acmetool_want }}"
   tags: acmetool-websrv
   when: acmetool_want is defined
-
-- name: create response file
-  template: src=response-file.yml.j2
-            dest=/var/lib/acme/conf/responses
-            mode=0644 owner=root group=root
-  tags: acmetool-install
-  vars:
-    acmetool_responses_method: webroot
