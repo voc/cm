@@ -88,9 +88,8 @@ sub generate {
 	}
 
 	if($master) {
-		printf 'nginx_hls_masters=\'["%s"]\' ', get_ip($data, $master);
 		printf 'nginx_hls_relive_masters=\'["%s"]\' ', get_ip($data, $master);
-		printf 'nginx_dash_masters=\'["%s"]\' ', get_ip($data, $master);
+		printf 'nginx_stream_masters=\'["%s"]\' ', get_ip($data, $master);
 	}
 
 	say "";
