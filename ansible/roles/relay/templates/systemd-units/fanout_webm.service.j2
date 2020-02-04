@@ -4,6 +4,7 @@
 Description = Fanout WebM Stream %I
 Requires = fanout@%i.target
 After = fanout@%i.target
+StartLimitIntervalSec = 0
 
 [Service]
 Type = simple
@@ -16,4 +17,3 @@ ExecStart = /opt/fanout/scripts/webm.py \
 
 Restart = always
 RestartSec = 10s
-StartLimitInterval = 0

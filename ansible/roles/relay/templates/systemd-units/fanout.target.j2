@@ -7,7 +7,7 @@ Wants = fanout_hls@%i.service
 Wants = fanout_webm@%i.service
 Wants = fanout_audio@%i.service
 Wants = fanout_thumbnail@%i.service
-{% if youtube is defined and youtube %}
+{% if youtube|bool %}
 Wants = fanout_youtube@%i.service
 {% endif %}
 

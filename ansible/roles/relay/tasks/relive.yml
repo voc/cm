@@ -17,6 +17,7 @@
       - config
       - pull
       - checkout
+    failed_when: false
 
   - name: install relive dependencies
     apt:
@@ -32,7 +33,7 @@
           user=relive
     tags: install
 
-  - name: create cronjob to get get fahrlan
+  - name: create cronjob to get fahrplan
     cron: name="get-fahrplan.sh" minute=0
           job="/home/relive/git/scripts/foreach-project.sh /home/relive/git/scripts/get-fahrplan.sh"
           user=relive

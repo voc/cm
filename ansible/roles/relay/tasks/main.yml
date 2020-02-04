@@ -12,20 +12,20 @@
     tags: sysctl
 
   - include: relive.yml
-    when: nginx_master is defined and nginx_master == 'yes'
+    when: stream_master|bool
     tags: relive
 
   - include: icedist.yml
-    when: icedist is defined and icedist == 'yes'
+    when: stream_master|bool
     tags: icedist
 
   - include: fanout.yml
-    when: fanout_streams is defined
+    when: stream_master|bool
     tags: fanout
 
   - include: stream_master.yml
-    when: stream_master is defined
-    tags: stream_master
+    when: stream_master|bool
+    tags: stream_api
 
   - include: rtmp_ingest.yml
     when: rtmp_ingest_streams is defined

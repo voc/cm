@@ -57,20 +57,6 @@
 {% endfor %}
 {% endif %}
 
-{% if icedist_pull_ingest is defined %}
-{% for endpoint in icedist_pull_ingest %}
-    <relay>
-        <server>ingest.c3voc.de</server>
-        <port>8000</port>
-        <mount>/{{ endpoint }}</mount>
-        <username>relay</username>
-        <password>{{ lookup('keepass', 'ansible/icecast/icedist/relay.password') }}</password>
-        <relay-shoutcast-metadata>0</relay-shoutcast-metadata>
-        <on-demand>0</on-demand>
-    </relay>
-{% endfor %}
-{% endif %}
-
     <logging>
       <accesslog>access.log</accesslog>
       <errorlog>error.log</errorlog>

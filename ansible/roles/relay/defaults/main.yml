@@ -8,22 +8,21 @@ nginx: yes
 # use icecast
 icecast: yes
 
+# firewalled from public access
+hidden: no
 
 ### Master-Relay variables
-# distribute local files via nginx, also controls fanout
-nginx_master: no
-
-# setup icedist for accepting streams
-icedist: no
+# - host stream-info api
+# - do fanout
+# - distribute local files via nginx
+# - setup icedist for accepting streams
+stream_master: no
 
 # accept some external streams pushed to icecast
 icecast_push_master: no
 
 # fanout to youtube
 youtube: no
-
-# host stream-info api
-stream_master: no
 
 # legacy nginx-rtmp
 rtmp: no

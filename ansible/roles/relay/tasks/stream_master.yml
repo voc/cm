@@ -15,7 +15,7 @@
     dest: /opt/stream_master/update_streams.py
     mode: 0755
 
-- name: copy stream_master config
+- name: template stream_master config
   template:
     src: stream_master/config.toml.j2
     dest: /opt/stream_master/config.toml

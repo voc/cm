@@ -33,14 +33,14 @@
 
     <!-- define master server to fetch from -->
 {% if icecast_master_ip is defined %}
-    <master-server>{{ icecast_master_ip }}</master-server>
+    <master-server>{{ icecast_master_ip | ipaddr }}</master-server>
     <master-server-port>{{ icecast_master_port | default('8000') }}</master-server-port>
     <master-update-interval>{{ icecast_master_update_interval | default('10') }}</master-update-interval>
     <master-password>{{ icecast_master_password }}</master-password>
     <relays-on-demand>{{ icecast_relay_on_demand | default('1') }}</relays-on-demand>
 {% endif %}
 
-{% if icecast_push_master is defined and icecast_push_master == 'yes' and icecast_additional_mounts is defined %}
+{% if icecast_push_master|bool and icecast_additional_mounts is defined %}
     <!-- additional mount points with separate authentication -->
 {% for mount in icecast_additional_mounts %}
     <mount>
@@ -97,7 +97,7 @@
 {% endif %}
 
     <!-- metadate fix for mount points -->
-{% if icecast_push_master is defined and icecast_push_master == 'yes' and icecast_fix_mount_metadata is defined %}
+{% if icecast_push_master|bool and icecast_fix_mount_metadata is defined %}
 {% for mount in icecast_fix_mount_metadata %}
     <mount>
       <mount-name>{{ mount['mount-name'] }}</mount-name>

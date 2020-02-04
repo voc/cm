@@ -1,9 +1,5 @@
 ---
   # Install packages
-  - name: uninstall nginx-rtmp package
-    apt: name=nginx-rtmp state=absent
-    tags: install
-
   - name: install nginx package
     apt: name=nginx state=latest
     tags: install
@@ -11,12 +7,12 @@
   - name: install libnginx-mod-rtmp package
     apt: name=libnginx-mod-rtmp state=latest
     tags: install
-    when: (rtmp is defined and rtmp == 'yes')
+    when: rtmp|bool
 
   - name: uninstall libnginx-mod-rtmp package
     apt: name=libnginx-mod-rtmp state=absent
     tags: install
-    when: not (rtmp is defined and rtmp == 'yes')
+    when: not rtmp|bool
 
 
   # Create stream_master htpasswd
@@ -95,7 +91,7 @@
     with_items:
       - /etc/nginx/sites-enabled/rtmp_master.conf
       - /etc/nginx/sites-available/rtmp_master.conf
-    when: not (rtmp is defined and rtmp == 'yes')
+    when: not rtmp|bool
     notify:
       - reload nginx
     tags:
@@ -106,7 +102,7 @@
     template: dest="/etc/nginx/conf.d/rtmp_master.conf"
               src="nginx/vhosts/rtmp_master.conf.j2"
               mode=0640 owner=root group=root
-    when: rtmp is defined and rtmp == 'yes'
+    when: rtmp|bool
     notify:
       - reload nginx
     tags:
@@ -114,13 +110,14 @@
       - install
 
   # Enable service
-  - name: start nginx
+  - name: enable/start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx is defined and nginx == 'yes'
+    when: nginx|bool
 
-  - name: stop nginx-rtmp
-    service: name=nginx-rtmp enabled=no state=stopped
-    failed_when: false
+  # Stop service
+  - name: disable/stop nginx
+    service: name=nginx enabled=no state=stopped
+    when: not nginx|bool
 
   - name: setup certboot-hook to reload nginx when the cert changes
     template: src=nginx/certbot-renewal-hook.sh.j2

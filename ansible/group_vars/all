@@ -65,6 +65,7 @@ trusted_ipv4_ips: {
   'voc vpn': '10.8.0.0/16',
   'voc public #2241':   '94.45.241.0/24',
   'voc berlin':   '195.54.164.160/29',
+  'ccc berlin':   '195.160.172.39',
   'voc dus':      '31.172.30.136/29',
   '3st.be':       '188.40.235.220',
   'luusa.org':    '212.201.69.24',
@@ -78,6 +79,7 @@ trusted_ipv4_ips: {
   'live.bn.c3voc.de': '212.201.68.141',
   'live.fem.c3voc.de': '141.24.220.23',
   'live.alb.c3voc.de': '185.106.84.36',
+  'live2.alb.c3voc.de': '185.106.84.53',
   'live.dus.c3voc.de': '31.172.30.138',
   'lb.dus.c3voc.de': '31.172.30.141',
   'lb.alb.c3voc.de': '185.106.84.35',
@@ -102,14 +104,14 @@ trusted_ipv6_ips: {
   'live.bn.c3voc.de': '2a00:5ba0:8000:64:3aea:a7ff:fe90:6944',
   'live.fem.c3voc.de': '2001:638:904:ffbf::23',
   'live.alb.c3voc.de': '2001:67c:20a0:e::170',
+  'live2.alb.c3voc.de': '2001:67c:20a0:e::182',
   'live.dus.c3voc.de': '2a01:a700:4633::138',
   'lb.dus.c3voc.de': '2a01:a700:4633::141',
   'lb.alb.c3voc.de': '2001:67c:20a0:e::169',
   'live.self.c3voc.de': '2001:7c7:2111::1',
   'live.ccl.c3voc.de': '2a01:a700:4633::138',
   'usa.ccl.c3voc.de': '2a01:a700:4633::138',
-  'deskjet.ccl.c3voc.de': '2a01:a700:4633::138',
-  'dawaschtel.ccl.c3voc.de': '2a01:a700:4633::138'
+  'deskjet.ccl.c3voc.de': '2a01:a700:4633::138'
 }
 
 

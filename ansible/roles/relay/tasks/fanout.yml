@@ -49,7 +49,7 @@
               dest="/etc/systemd/system/fanout_{{ item }}@.service"
               mode=0644 owner=root group=root
     with_items: ["youtube"]
-    when: youtube is defined and youtube
+    when: youtube|bool
 
   - name: create fanout systemd-target
     template: src=systemd-units/fanout.target.j2

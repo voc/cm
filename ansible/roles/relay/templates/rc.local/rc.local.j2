@@ -26,11 +26,17 @@ iptables -A INPUT -s {{ ip }} -j ACCEPT -m comment --comment "{{ comment }}"
 {% endfor %}
 
 iptables -A INPUT -p tcp --sport 1024:65535 --dport 22   -j ACCEPT
+{% if not hidden|bool %}
+iptables -A INPUT -p tcp --sport 1024:65535 --dport 80   -j ACCEPT
+iptables -A INPUT -p tcp --sport 1024:65535 --dport 443  -j ACCEPT
+iptables -A INPUT -p tcp --sport 1024:65535 --dport 8000 -j ACCEPT
+{% endif %}
 iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 # ip6tables
 ip6tables -F INPUT
 ip6tables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+ip6tables -A INPUT -i lo -j ACCEPT
 # allow all from trusted ips
 {% for comment, ip in trusted_ipv6_ips.items() %}
 # {{ comment }}
@@ -38,6 +44,11 @@ ip6tables -A INPUT -s {{ ip }} -j ACCEPT -m comment --comment "{{ comment }}"
 {% endfor %}
 
 ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 22   -j ACCEPT
+{% if not hidden|bool %}
+ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 80   -j ACCEPT
+ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 8000 -j ACCEPT
+ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 443  -j ACCEPT
+{% endif %}
 ip6tables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 exit 0

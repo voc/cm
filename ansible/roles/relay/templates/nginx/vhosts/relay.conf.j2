@@ -1,4 +1,4 @@
-{% if not (nginx_master is defined and nginx_master == 'yes') %}
+{% if not stream_master %}
 # HLS slave caching directories
 proxy_temp_path /srv/nginx/cache/tmp;
 
@@ -85,21 +85,16 @@ server {
     deny  all;
   }
 
-{% if stream_master is defined %}
+{% if stream_master %}
+  # stream-api
   location /stream_info.json {
     auth_basic           "voc login";
     auth_basic_user_file htpasswd;
     alias /srv/nginx/stream_info.json;
   }
 
-  location ~* ^/artwork/(.+)?$ {
-    alias /srv/nginx/artwork/$1;
-    autoindex on;
-  }
-{% endif %}
-
-{% if nginx_master is defined and nginx_master == 'yes' %}
-  location ~* ^/(hls|dash|thumbnail)/(.+)?$ {
+  # live-cdn files
+  location ~* ^/(hls|dash|thumbnail|artwork)/(.+)?$ {
     alias /srv/nginx/$1/$2;
     autoindex on;
   }
@@ -116,6 +111,13 @@ server {
 
   location ~* ^/relive/(.*) {
     alias /srv/nginx/relive/$1;
+    autoindex on;
+  }
+
+  location /aws/ {
+    auth_basic           "voc login";
+    auth_basic_user_file htpasswd;
+    alias /opt/aws/;
     autoindex on;
   }
 {% else %}

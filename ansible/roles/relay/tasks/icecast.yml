@@ -7,7 +7,7 @@
   - name: create dump file directory for icecast
     file: dest=/srv/icecastdumps state=directory
           owner=icecast2 group=icecast mode=0755
-    when: icecast_push_master is defined and icecast_push_master == 'yes'
+    when: icecast_push_master|bool
 
   # Configure
   - name: configure the icecast streaming server
@@ -31,16 +31,11 @@
       - restart icecast2
 
   # Start service
-  - name: enable icecast2 on boot
-    service: name=icecast2.service enabled=yes state=started
-    failed_when: False
-    changed_when: False
-    when: icecast is defined and icecast == 'yes'
+  - name: enable/start icecast2
+    service: name=icecast2 enabled=yes state=started
+    when: icecast|bool
 
-  # Start service
-  - name: enable icecast2 on boot
-    service: name=icecast2.service enabled=no state=stoped
-    failed_when: False
-    changed_when: False
-    when: >
-      icecast is not defined or (iceast is defined and icecast == 'yes')
+  # Stop service
+  - name: disable/stop icecast2
+    service: name=icecast2 enabled=no state=stopped
+    when: not icecast|bool

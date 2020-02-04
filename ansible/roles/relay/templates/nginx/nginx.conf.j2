@@ -100,7 +100,7 @@ http {
       deny all;
     }
 
-{% if rtmp is defined and rtmp == 'yes' %}
+{% if rtmp is defined and rtmp|bool %}
     location ~* ^/stats/rtmp {
       rtmp_stat all;
       access_log off;
@@ -112,7 +112,7 @@ http {
     }
 {% endif %}
 
-{% if php is defined and php == 'yes' %}
+{% if php is defined and php|bool %}
     location ~* ^/stats/php {
       access_log off;
 

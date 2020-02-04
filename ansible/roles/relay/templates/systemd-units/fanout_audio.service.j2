@@ -4,6 +4,7 @@
 Description = Fanout Audio Stream %I
 Requires = fanout@%i.target
 After = fanout@%i.target
+StartLimitIntervalSec = 0
 
 [Service]
 Type = simple
@@ -16,7 +17,6 @@ ExecStart = /opt/fanout/scripts/audio.py \
 
 Restart = always
 RestartSec = 10s
-StartLimitInterval = 0
 
 [Install]
 WantedBy = fanout@%i.target
