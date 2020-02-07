@@ -4,9 +4,9 @@ ansible_python_interpreter: /usr/bin/python3
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XYZ
-  name: XYZ
-  slogan: ""
+  acronym: jhjue20
+  name: Jugend Hackt Jülich
+  slogan: 44.43555, 26.102347
   formats:
     hd: 'yes'
     sd: 'yes'

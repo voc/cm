@@ -1,6 +1,6 @@
 ---
 room_number: 5
-room_fahrplan_name: Eliza
+room_fahrplan_name: Hörsaal Zentralbibliothek
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -65,7 +65,7 @@ voctomix_sources:
     video_mode: "1080i50"
     deinterlace: assume-progressive
     scan: psf
-    volume: 0.0
+    volume: 1.0
     audiostream:
       0: 0+1
     stream_names:
@@ -76,7 +76,6 @@ voctomix_sources:
     devicenumber: 0
     video_connection: SDI
     video_mode: "1080p25"
-    scan: psf
     volume: 0.0
   -
     name: slides
