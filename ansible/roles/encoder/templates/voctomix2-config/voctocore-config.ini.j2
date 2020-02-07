@@ -13,10 +13,7 @@ devicenumber={{ source.devicenumber }}
 video_connection={{ source.video_connection | default('SDI') | upper }}
 video_mode={{ source.video_mode }}
 volume={{ source.volume | default('0.0') }}
-audio.original=0+1
-audio.translated=3+4
-audio.translated2=5+6
-
+{% endfor %}
 
 {% if voctomix.static_background_image %}
 [source.background]
