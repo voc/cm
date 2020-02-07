@@ -1,9 +1,9 @@
 ---
 # Event config
 event:
-  timezone: Europe/Bucharest
-  acronym: foss4g2019
-  name: FOSS4G 2019
+  timezone: Europe/Berlin
+  acronym: jhjue20
+  name: Jugend Hackt Jülich
   slogan: 44.43555, 26.102347
   formats:
     hd: 'yes'
