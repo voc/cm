@@ -1,4 +1,14 @@
 ---
+ - name: install packages needed for repos
+   apt:
+     name:
+      - apt-transport-https
+      - gpg
+     state: latest
+     update_cache: yes
+   tags:
+     - gpg
+
  # general
  - name: setup the VOC debian repo key
    apt_key: data="{{ lookup('file', 'voc_repo.key') }}" state=present
@@ -45,9 +55,6 @@
  - name: ensure that security updates enabled for buster
    apt_repository: repo="deb http://security.debian.org/ buster/updates main contrib non-free" update_cache=false
    when: system.type == 'pc'
-
- - name: make sure apt-transport-https is installed
-   apt: name=apt-transport-https state=latest update_cache=yes
 
  - name: ensure that the debian keyrings are present
    apt: name={{ packages|flatten(levels=1) }} state=present update_cache=yes
