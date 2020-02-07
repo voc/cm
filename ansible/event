@@ -56,8 +56,8 @@ loop-encoder ansible_host=141.24.220.5 ansible_port=10022
 #minion-muc.lan.c3voc.de transcoder_streams='["s4"]'
 #minion6.lan.c3voc.de
 
-speedy.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "q3", "q4", "sX", "s23", "s41", "s42", "s80", "s89", "s97"]' transcoder_capacity=2
-#tweety.lan.c3voc.de     transcoder_streams='["s1", "s2", "s3", "s4", "s5", "s6", "q1", "q2", "q3", "q4", "sX", "s23", "s41", "s42", "s80", "s89", "s97"]' transcoder_capacity=2
+#speedy.lan.c3voc.de transcoder_capacity=2
+tweety.lan.c3voc.de transcoder_capacity=2 ansible_python_interpreter=/usr/bin/python3
 
 loop-transcoder ansible_host=141.24.220.5 ansible_port=10023 transcoder_capacity=1 transcoder_streams='["sloop"]'
 
