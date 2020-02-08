@@ -1,6 +1,6 @@
 ---
 room_number: 5
-room_fahrplan_name: Hörsaal Zentralbibliothek
+room_fahrplan_name: Hoersaal
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
