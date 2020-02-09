@@ -163,7 +163,7 @@
               mode=0644 owner=root group=root
 
   - name: enable recording service
-    service: name=recording-sink.service
+    service: name=voctomix2-recording-sink.service
              enabled=yes
 
   # check recording - called via check_system script (common role)
