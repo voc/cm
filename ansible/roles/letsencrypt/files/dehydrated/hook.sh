@@ -41,9 +41,6 @@ case "$1" in
     "exit_hook")
         # do nothing for now
         ;;
-    *)
-        echo "Warning: Unknown hook '$1'"
-        ;;
 esac
 
 exit 0
