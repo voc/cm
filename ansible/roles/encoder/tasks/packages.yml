@@ -6,6 +6,7 @@
     - libnginx-mod-rtmp
     - icecast2
     - samba
+#   - i965-va-driver-shaders
     - gstreamer1.0-plugins-bad
     - gstreamer1.0-plugins-base
     - gstreamer1.0-plugins-good
