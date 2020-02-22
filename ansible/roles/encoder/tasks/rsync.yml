@@ -1,6 +1,6 @@
 ---
   - name: install rsync
-    apt: name=rsync state=installed
+    apt: name=rsync state=present
 
   - name: enable rsyncd
     lineinfile: dest=/etc/default/rsync
@@ -14,4 +14,4 @@
     notify: reload rsync config
 
   - name: enable rsyncd
-    service: name=rsync enabled=yes state=started
+    systemd: name=rsync enabled=yes state=started

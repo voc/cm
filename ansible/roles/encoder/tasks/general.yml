@@ -17,7 +17,12 @@
   # Create common files and directories
   - name: create /video if not present
     file: dest=/video state=directory
-
+  
+  - name: create /etc/service if not present
+    file:
+      path: /etc/service
+      state: directory
+  
   - name: create common.sh
     copy: src=common.sh
           dest=/etc/service/common.sh
