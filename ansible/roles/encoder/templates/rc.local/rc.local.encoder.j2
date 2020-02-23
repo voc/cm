@@ -16,8 +16,9 @@ iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 
 # allow all from trusted ips
-iptables -A INPUT -s 10.73.0.0/16 -j ACCEPT -m comment --comment "voc subnet"
-iptables -A INPUT -s 10.8.0.0/16 -j ACCEPT -m comment --comment "voc vpn subnet"
+{% for name in trusted_subnets %}
+iptables -A INPUT -s {{trusted_subnets[name]}} -j ACCEPT -m comment --comment "{{name}} subnet"
+{% endfor %}
 
 # allow ssh
 iptables -A INPUT -p tcp --sport 1024:65535 --dport 22 -j ACCEPT
