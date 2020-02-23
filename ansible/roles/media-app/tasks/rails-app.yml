@@ -4,9 +4,10 @@
     user: media
     manage_dir: true
     state: present
-    key: "{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes') }}"
+    key: "{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes', errors='warn') }}"
   with_items:
     - "{{ users }}"
+    - "{{ additional_users }}"
   when: item.state != 'absent' and item.name != 'voc'
 
 - file: path=/srv/media/media-site/shared/config state=directory
