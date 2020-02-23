@@ -1,0 +1,52 @@
+---
+room_number: 97
+room_fahrplan_name: C4
+
+#TODO: is this even still needed?
+grabbersource_url_path: stream.mjpg
+
+encodermode: hd-voctomix2
+
+# Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
+voctomix_audiostreams: 2
+voctomix_stream_suppress_audio_tracks: [1]
+
+voctomix_vaapi: true
+
+additional_users:
+    - { name: 'necro', state: 'present' }
+    - { name: 'nils', state: 'present' }
+    - { name: 'twix', state: 'present' }
+    - { name: 'yanosz', state: 'present' }
+
+voctomix_sources:
+  -
+    name: cam1
+    type: decklink-internal
+    devicenumber: 0
+    video_connection: SDI
+    video_mode: "1080i50"
+    volume: 1.0
+    deinterlace: "yes"
+    scan: interlaced
+    stream_names:
+        - original
+    audiostream:
+        0: "0+1"
+  -
+    name: slides
+    type: decklink-internal
+    devicenumber: 1
+    video_connection: HDMI
+    video_mode: "1080p60"
+
+voctomix_inverted_axis: true
+voctomix_shifted_sbs:   true
+
+blinder_audio:
+    original: "0+1"
+
+trusted_subnets:
+  "voc"    : "10.73.0.0/16"
+  "voc vpn": "10.8.0.0/16"
+  "c4"     : "172.23.22.0/23"

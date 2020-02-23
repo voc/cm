@@ -1,0 +1,5 @@
+[c4]
+encoderc4.lan.c3voc.de ansible_ssh_host=encoderc4.labor.koeln.ccc.de
+
+[encoders]
+encoderc4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoderC4.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoderC4.password') }}"
