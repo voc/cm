@@ -14,7 +14,7 @@ check_env transcoding_sink
 while true; do
 
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 10000000 \
-	\
+	-i "http://${transcoding_source}/${stream_key}" \
 	-filter_complex "
 		[0:v:0] framestep=step=500,split [poster][poster2];
 		[poster2] scale=w=213:h=-1 [thumb]
