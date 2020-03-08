@@ -24,6 +24,11 @@
       - libgirepository1.0-dev
       - libgstreamer1.0-0
       - lxde
+      - lxde-core 
+      - lxde-session 
+      - lxsession 
+      - lxsession-logout 
+      - policykit-1
       - python3
       - python3-dbus
       - python3-dev
