@@ -62,8 +62,7 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 0
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
+    video_mode: "1080p25"
     scan: psf
     volume: 1.0
     audiostream:
