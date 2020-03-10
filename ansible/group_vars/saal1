@@ -54,7 +54,6 @@ voctomix_stream_suppress_audio_tracks: [1]
 #    # fill stereo-stream 3 (PA-Backup) with sdi-channel 6 on left and sdi-channel 7 on right
 #    3: 6+7
 
-
 voctomix_sources:
   -
     # Duo Port 2
