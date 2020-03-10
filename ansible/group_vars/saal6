@@ -60,7 +60,7 @@ voctomix_sources:
     # Duo Port 1
     name: cam1
     type: decklink-internal
-    devicenumber: 1
+    devicenumber: 0
     video_connection: SDI
     scan: psf
     video_mode: "1080i50"
