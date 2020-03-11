@@ -1,6 +1,6 @@
 ---
 room_number: 2
-room_fahrplan_name: HS Anatomie
+room_fahrplan_name: HS Weismannhaus
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
