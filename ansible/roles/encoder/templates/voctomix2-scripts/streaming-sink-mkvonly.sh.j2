@@ -23,7 +23,7 @@ para_mix_leveler="p=0.35:r=1:f=30"
 para_mix_loudnorm="i=-23.0:lra=12.0:tp=-3.0"
 
 
-ffmpeg -y -nostdin -hide_banner \
+ffmpeg -y -nostdin -hide_banner -re \
     -init_hw_device vaapi=streaming:/dev/dri/renderD128 \
     -hwaccel vaapi \
     -hwaccel_output_format vaapi \
