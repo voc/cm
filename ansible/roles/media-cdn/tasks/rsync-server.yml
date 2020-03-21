@@ -18,9 +18,11 @@
 
 - cron: user=root minute="13" cron_file="local_mkindex"
         job="if [ -x /usr/local/bin/mkindex.sh ]; then /usr/local/bin/mkindex.sh; fi;"
+        name="update mkindex"
 
 - cron: user=root minute="30" cron_file="local_mkindex"
         job="if [ -x /usr/local/bin/mkindex_local.sh ]; then /usr/local/bin/mkindex_local.sh; fi;"
+        name="update mkindex local"
 
 - template: src=rsyncd.conf
             dest=/etc/rsyncd.conf

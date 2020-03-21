@@ -1,2 +1,4 @@
+- src: https://github.com/manno/ansible-golang
+- src: https://github.com/manno/ansible-acmetool
 - src: https://github.com/rvm/rvm1-ansible
   version: v2.1.2

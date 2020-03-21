@@ -23,12 +23,8 @@
     tags:
       - nginx
 
-  # serve ftp root directly
-  # - import_tasks: ../../media-mirror/tasks/nginx-cdn-node.yml
-  #   when: cdn_node is defined
+  - import_tasks: ../../media-mirror/tasks/nginx-cdn-node.yml
+    when: cdn_node is defined
 
-  # - import_tasks: vsftpd
-  # - import_tasks: uploader-sftp
-  # - import_tasks: uploader-users
-
-  # - import_tasks: rsync-from-master
+  - import_tasks: ../../media-mirror/tasks/vsftpd.yml
+    when: cdn_node is defined

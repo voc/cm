@@ -33,6 +33,7 @@
       - rpcbind
       - snapd
       - vim
+      - logcheck
 
 - copy: src=auto-upgrades
         dest=/etc/apt/apt.conf.d/20auto-upgrades

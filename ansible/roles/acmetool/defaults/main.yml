@@ -1,9 +1,0 @@
----
-acmetool_setup: 0
-acmetool_responses_method: "webroot"
-acmetool_responses_email: "hostmaster@example.com"
-acmetool_responses_install_cronjob: "true"
-acmetool_responses_install_haproxy_script: "false"
-acmetool_responses_install_redirector_systemd: "false"
-acmetool_responses_agreement: "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf"
-acmetool_responses_webroot_path: "/var/www/.well-known/acme-challenge"  # only when acmetool_responses_method == "webroot"

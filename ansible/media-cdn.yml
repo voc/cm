@@ -1,0 +1,23 @@
+---
+  # copy image assets to each host in media-cdn group (static.media.ccc.de)
+  - hosts: media-assets
+    roles:
+      - role: media-assets
+        gather_facts: no
+        tags: ['media-assets']
+
+  # media cdn master (cdn.media.ccc.de)
+  - hosts: media-cdn
+    roles:
+      - role: media-common
+        tags: ['media-common']
+
+      - role: ansible-golang
+        tags: ['golang']
+
+      - role: ansible-acmetool
+        when: acmetool_setup == 1
+        tags: ['acmetool-install', 'nginx']
+
+      - role: media-cdn
+        tags: ['media-cdn']

@@ -1,4 +1,10 @@
 ---
-  # TODO rsyncd configuration for mirrorbits checks is done in media-cdn role, extract to rsyncd server role someday
+  - apt:
+      state: latest
+      name:
+        - rsync
+        - vsftpd
   - import_tasks: nginx-cdn-node.yml
   - import_tasks: cdn-sync.yml
+  - import_tasks: vsftpd
+  # TODO rsyncd configuration for mirrorbits checks is done in media-cdn role, extract to rsyncd server role someday

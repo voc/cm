@@ -15,6 +15,7 @@
 - git:
     repo: https://github.com/voc/mirrorbits
     dest: /srv/mirrorbits/mirrorbits
+  name: git clone mirrorbits repo
 
 - make:
     chdir: /srv/mirrorbits/mirrorbits

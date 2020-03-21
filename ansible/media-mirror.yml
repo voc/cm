@@ -1,0 +1,12 @@
+---
+  - hosts: media-mirror
+    roles:
+      - role: media-common
+        tags: ['media-common']
+
+      - role: ansible-acmetool
+        when: ssl == 1 and acmetool_setup == 1
+        tags: ['acmetool-install', 'nginx']
+
+      - role: media-mirror
+        tags: ['media-mirror']

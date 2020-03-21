@@ -1,0 +1,2 @@
+- template: src=vsftpd.conf dest=/etc/vsftpd.conf
+            mode=0644 owner=root group=root
