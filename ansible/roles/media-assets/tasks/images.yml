@@ -4,5 +4,5 @@
     dest: /srv/www/media.ccc.de/media/
   delegate_to: "{{ item }}"
   loop: "{{ groups['media-cdn'] }}"
-  no_log: false
+  no_log: true
   tags: ['images']

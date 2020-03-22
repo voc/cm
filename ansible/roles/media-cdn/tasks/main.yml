@@ -22,9 +22,3 @@
   - import_tasks: nginx.yml
     tags:
       - nginx
-
-  - import_tasks: ../../media-mirror/tasks/nginx-cdn-node.yml
-    when: cdn_node is defined
-
-  - import_tasks: ../../media-mirror/tasks/vsftpd.yml
-    when: cdn_node is defined

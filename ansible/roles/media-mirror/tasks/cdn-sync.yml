@@ -14,7 +14,9 @@
 
 - cron: user=ftp minute="*/15" cron_file="local_mirror"
         job="if [ -x /usr/local/bin/sync-cdn.sh ]; then /usr/local/bin/sync-cdn.sh; fi;"
+        name="sync cdn files"
 
 # TODO remove this script, update voctoweb-static repo instead, sync web root as www-data
 - cron: user=cdn-app minute="*/3" cron_file="local_mirror"
         job="if [ -x /usr/local/bin/sync-webroot.sh ]; then /usr/local/bin/sync-webroot.sh; fi;"
+        name="sync webroot"

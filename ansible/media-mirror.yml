@@ -10,3 +10,6 @@
 
       - role: media-mirror
         tags: ['media-mirror']
+
+      - role: media-cdn-node
+        tags: ['cdn-node']

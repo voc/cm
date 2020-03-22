@@ -1,0 +1,7 @@
+---
+  - apt:
+      state: latest
+      name:
+        - rsync
+  - import_tasks: nginx-cdn-node.yml
+  - import_tasks: vsftpd.yml
