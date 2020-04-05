@@ -24,3 +24,12 @@
 
 - file: path=/srv/www/ state=directory
         owner=www-data group=www-data
+
+- name: bind mount uploader
+  mount:
+    path: "/home/uploaders/{{ item.name }}/ftp"
+    src: /srv/ftp
+    opts: bind,nofail
+    state: mounted
+    fstype: none
+  loop: "{{ uploaders }}"

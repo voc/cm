@@ -5,3 +5,18 @@
         groups="cdn-app,uploaders"
         shell="/bin/false"
 
+- name: bind mount cdn-app
+  mount:
+    path: /home/uploaders/cdn-app/cdn.media.ccc.de
+    src: /srv/ftp
+    opts: bind,nofail
+    state: mounted
+    fstype: none
+
+- name: bind mount cdn-app static
+  mount:
+    path: /home/uploaders/cdn-app/static.media.ccc.de none bind,nofail 0 0
+    src: /srv/www/media.ccc.de/media
+    opts: bind,nofail
+    state: mounted
+    fstype: none
