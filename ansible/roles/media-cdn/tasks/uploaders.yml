@@ -1,4 +1,15 @@
 ---
+- name: add uploaders sftp to ssh config
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      Match group uploaders
+        ChrootDirectory %h
+        X11Forwarding no
+        AllowTcpForwarding no
+        ForceCommand internal-sftp
+
+# the user accounts
 - group: name="uploaders" state=present
 - file:
     dest: /home/uploaders
@@ -22,9 +33,6 @@
     key_options: "no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty"
   loop: "{{ uploaders }}"
 
-- file: path=/srv/www/ state=directory
-        owner=www-data group=www-data
-
 - name: bind mount uploader
   mount:
     path: "/home/uploaders/{{ item.name }}/ftp"
@@ -32,4 +40,12 @@
     opts: bind,nofail
     state: mounted
     fstype: none
+  loop: "{{ uploaders }}"
+
+- name: change uploaders home folder owner
+  file:
+    path: "/home/uploaders/{{ item.name }}"
+    owner: root
+    group: root
+    mode: '0755'
   loop: "{{ uploaders }}"

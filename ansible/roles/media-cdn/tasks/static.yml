@@ -11,5 +11,9 @@
       remote_src: yes
       extra_opts: ['--strip-components=1']
 
+- file: path=/srv/www/ state=directory
+        owner=www-data group=www-data
+
 - file: dest=/srv/www/media.ccc.de/media state=directory recurse=yes
         owner=cdn-app group=cdn-app
+

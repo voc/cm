@@ -2,8 +2,16 @@
 
 - user: state=present
         name="cdn-app"
+        home="/home/uploaders/cdn-app"
         groups="cdn-app,uploaders"
-        shell="/bin/false"
+        shell="/bin/sh"
+
+- name: change cdn-app home folder owner
+  file:
+    path: "/home/uploaders/cdn-app"
+    owner: root
+    group: root
+    mode: '0755'
 
 - name: bind mount cdn-app
   mount:
@@ -15,7 +23,7 @@
 
 - name: bind mount cdn-app static
   mount:
-    path: /home/uploaders/cdn-app/static.media.ccc.de none bind,nofail 0 0
+    path: /home/uploaders/cdn-app/static.media.ccc.de
     src: /srv/www/media.ccc.de/media
     opts: bind,nofail
     state: mounted

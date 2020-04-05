@@ -4,6 +4,9 @@
       - mirrorbits
       - rsync
 
+  - import_tasks: ftp.yml
+    tags: users
+
   - import_tasks: rsync-server.yml
     tags: rsync
 
@@ -14,10 +17,14 @@
     tags: mirrorbits
 
   - import_tasks: uploaders.yml
-    tags: uploaders
+    tags:
+      - users
+      - uploaders
 
   - import_tasks: cdn-app.yml
-    tags: cdn-app
+    tags:
+      - users
+      - cdn-app
 
   - import_tasks: static.yml
     tags: static
