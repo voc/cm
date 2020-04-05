@@ -9,7 +9,6 @@ acmetool_want:
   - ftp.ccc.de
   - koeln.ftp.media.ccc.de
   - koeln.media.ccc.de
-  - search.media.ccc.de
   - static.media.ccc.de
 cdn_node: yes
 go_version: 1.13.8

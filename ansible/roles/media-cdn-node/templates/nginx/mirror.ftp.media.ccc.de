@@ -36,8 +36,8 @@ server {
   #listen [::]:443 ipv6only=off;
   listen [::]:443;
   ssl                         on;
-  ssl_certificate             /var/lib/acme/live/{{ inventory_hostname }}/fullchain;
-  ssl_certificate_key         /var/lib/acme/live/{{ inventory_hostname }}/privkey;
+  ssl_certificate             /var/lib/acme/live/{{ inventory_hostname_short }}.ftp.media.ccc.de/fullchain;
+  ssl_certificate_key         /var/lib/acme/live/{{ inventory_hostname_short }}.ftp.media.ccc.de/privkey;
   ssl_session_timeout         5m;
   ssl_session_cache           shared:SSL:5m;
   ssl_protocols               TLSv1.1 TLSv1.2;
