@@ -1,2 +1,14 @@
 - template: src=vsftpd.conf dest=/etc/vsftpd.conf
             mode=0644 owner=root group=root
+
+- copy: dest=/etc/vsftpd.banner
+      src=vsftpd.banner
+      mode=0640 owner=root group=root
+
+- copy: dest=/etc/logrotate.d/vsftpd
+      src=vsftpd
+      mode=0640 owner=root group=root
+
+- file: src=/srv/ftp
+        dest=/home/ftp
+        state=link

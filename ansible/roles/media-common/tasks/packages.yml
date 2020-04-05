@@ -21,7 +21,7 @@
       - strace
       - tmux
       - unattended-upgrades
-      - neovim
+      #- neovim
       - vnstat
       - zip
       - zsh

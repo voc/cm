@@ -1,0 +1,7 @@
+- group: name="cdn-app" state=present
+
+- user: state=present
+        name="cdn-app"
+        groups="cdn-app,uploaders"
+        shell="/bin/false"
+

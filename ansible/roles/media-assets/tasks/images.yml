@@ -4,5 +4,7 @@
     dest: /srv/www/media.ccc.de/media/
   delegate_to: "{{ item }}"
   loop: "{{ groups['media-cdn'] }}"
+  # TODO try to avoid copying to self
+  when: "item != {{ inventory_hostname }}"
   no_log: true
   tags: ['images']

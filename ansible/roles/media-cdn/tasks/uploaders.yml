@@ -24,4 +24,3 @@
 
 - file: path=/srv/www/ state=directory
         owner=www-data group=www-data
-

@@ -1,12 +1,11 @@
-[media-cdn]
-new.koeln.media.ccc.de ansible_host=192.168.88.10 ansible_user=root
-
-[media-assets]
+[media-asset-src]
 koeln.media.ccc.de
 
+[media-cdn]
+koeln.media.ccc.de ansible_user=root
+
 [media-mirror]
-berlin-ak.media.ccc.de ssl=1
-new.koeln.media.ccc.de ansible_host=192.168.88.10
+berlin-ak.media.ccc.de ssl=1 ansible_user=voc ansible_become=true
 
 [media-app]
 app.media.ccc.de ssl=1

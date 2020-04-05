@@ -1,11 +1,6 @@
 ---
-- group: name="cdn-app" state=present
 
-- user: state=present
-        name="cdn-app"
-        groups="cdn-app,uploaders"
-        shell="/bin/false"
-
+# the http dir index images and favicon
 - block:
   - get_url:
       url: https://github.com/voc/voctoweb-static/archive/master.tar.gz

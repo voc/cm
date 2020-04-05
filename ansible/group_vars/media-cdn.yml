@@ -6,11 +6,14 @@ acmetool_responses_email: media@koeln.ccc.de
 google_maps_api_key: ''
 
 users:
-  - { name: 'derpeter', state: 'absent' }
-  - { name: 'danimo', state: 'absent' }
+  - { name: 'andi', state: 'absent' }
+  - { name: 'danimo', state: 'present' }
+  - { name: 'derchris', state: 'present' }
+  - { name: 'derpeter', state: 'present' }
   - { name: 'florolf', state: 'absent' }
+  - { name: 'mazdermind', state: 'absent' }
   - { name: 'meise', state: 'absent' }
-  - { name: 'mm', state: 'absent' }
+  - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }
 uploaders: "{{ lookup('keepass', 'ansible/media/uploaders.notes') | from_yaml }}"
 rsync_password: "{{ lookup('keepass', 'ansible/media/media_mirror_rsync.password') }}"

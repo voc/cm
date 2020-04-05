@@ -1,0 +1,13 @@
+/var/log/xferlog
+{
+  create 640 root adm
+  # ftpd doesn't handle SIGHUP properly
+  compress
+  missingok
+  notifempty
+  prerotate
+      /usr/bin/perl -ani -e '$F[6]="127.0.0.1"; print join(" ", @F)."\n"' /var/log/xferlog
+  endscript
+  rotate 4
+  weekly
+}

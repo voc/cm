@@ -1,10 +1,10 @@
 ---
   # copy image assets to each host in media-cdn group (static.media.ccc.de)
-  - hosts: media-assets
-    roles:
-      - role: media-assets
-        gather_facts: no
-        tags: ['media-assets']
+  # - hosts: media-asset-src
+  #   roles:
+  #     - role: media-assets
+  #       gather_facts: no
+  #       tags: ['media-assets']
 
   # media cdn master (cdn.media.ccc.de)
   - hosts: media-cdn
@@ -24,4 +24,7 @@
 
       - role: media-cdn-node
         when: cdn_node is defined
+        tags: ['cdn-node']
+
+      - role: media-cdn-node
         tags: ['cdn-node']

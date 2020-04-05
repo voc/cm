@@ -7,4 +7,4 @@
   - import_tasks: cdn-sync.yml
   # TODO add rsyncd configuration
   #   mirrorbits checks via rsync, config is done in media-cdn role,
-  #   extract to rsyncd server role someday
+  #   extract to rsyncd server role someday so it can be included here for mirrors (?)

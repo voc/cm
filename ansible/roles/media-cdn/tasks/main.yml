@@ -16,6 +16,9 @@
   - import_tasks: uploaders.yml
     tags: uploaders
 
+  - import_tasks: cdn-app.yml
+    tags: uploaders
+
   - import_tasks: static.yml
     tags: static
 

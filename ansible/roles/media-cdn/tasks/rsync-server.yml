@@ -4,10 +4,11 @@
 - user: state=present
         name="ftp"
         groups="ftp"
+        create_home="no"
         shell="/bin/false"
 
 - file: path=/srv/ftp state=directory
-        mode=0755 owner=root group=root
+        mode=0755 owner=cdn-app group=root
 
 - copy: src={{ item }}
         dest=/usr/local/bin
