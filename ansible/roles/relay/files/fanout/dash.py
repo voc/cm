@@ -82,8 +82,8 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000
 {% endif %}
 
 	-f dash
-	-window_size 100 -extra_window_size 10
-	-seg_duration 6
+	-window_size 201 -extra_window_size 10
+	-seg_duration 3
 	-dash_segment_type webm
 	-init_seg_name 'init_$RepresentationID$.webm'
 	-media_seg_name 'segment_$RepresentationID$_$Number$.webm'
