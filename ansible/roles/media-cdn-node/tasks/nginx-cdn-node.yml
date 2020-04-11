@@ -6,12 +6,12 @@
         dest=/etc/nginx/sites-available/{{ item }}
         owner=root group=root mode=0640
   with_items:
-    - "mirror.ftp.media.ccc.de"
+    - "node.cdn.media.ccc.de"
 
 - file: src=/etc/nginx/sites-available/{{ item }}
         dest=/etc/nginx/sites-enabled/{{ item }}
         state=link
   with_items:
-    - "mirror.ftp.media.ccc.de"
+    - "node.cdn.media.ccc.de"
   notify:
     - restart nginx
