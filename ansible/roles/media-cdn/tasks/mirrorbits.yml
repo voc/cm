@@ -21,17 +21,13 @@
     chdir: /srv/mirrorbits/mirrorbits
     target: install
 
-- template: src=mirrorbits.service
-            dest=/etc/systemd/system/mirrorbits.service
-            mode=0644 owner=root group=root
-
 - template: src=mirrorbits.conf
             dest=/etc/mirrorbits.conf
             mode=0640 owner=mirrorbits group=root
 
-- copy: src=mirrorbits/templates
-        dest=/srv/mirrorbits/
-        owner=mirrorbits group=root
+- copy: dest=/usr/lib/tmpfiles.d/mirrorbits.conf
+      content="d /run/mirrorbits 0755 mirrorbits mirrorbits -"
+      mode=0640 owner=root group=root
 
 - systemd: state=started enabled=yes name=mirrorbits.service
 - systemd: state=started enabled=yes name=redis.service
