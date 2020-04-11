@@ -23,6 +23,8 @@
     apt:
       name:
         - imagemagick
+        - montage
+        - python3-pip
       state: latest
     tags: packages
 

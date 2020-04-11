@@ -13,3 +13,6 @@ live.fem.c3voc.de
 [loadbalancers]
 lb.dus.c3voc.de
 lb.alb.c3voc.de
+
+[relive]
+live.alb.c3voc.de

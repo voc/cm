@@ -7,4 +7,4 @@ icecast_push_master: 'yes'
 rtmp: 'yes'
 rtmp_ingest_streams: ["q1", "q2", "q3", "q4"]
 
-nginx_hls_relive_masters: ['127.0.0.1']
+nginx_hls_relive_masters: ['185.106.84.36']
