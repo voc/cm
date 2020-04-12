@@ -63,9 +63,17 @@ frontend icecast_and_nginx_hls_http
     http-request deny        unless is_cdn or is_streaming_website
     http-request deny        unless stream_file or icecast or is_streaming_website or is_relive
 
+    ##
     # Backend usage
+    ##
+{% if ssl == "" %}
+    # Redirect to https
+    redirect scheme https code 302      if is_streaming_website {{ ssl }}
+    redirect scheme https code 302      if is_relive {{ ssl }}
+{% else %}
     use_backend streaming_website_{{ proto }}   if is_streaming_website {{ ssl }}
     use_backend relive_{{ proto }}              if is_relive {{ ssl }}
+{% endif %}
 
 {% if haproxy_3rdparty_regex is defined %}
     # 3rd party streams
