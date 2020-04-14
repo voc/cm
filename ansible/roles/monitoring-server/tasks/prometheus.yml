@@ -1,0 +1,8 @@
+---
+
+
+  - name: template prometheus config
+    template:
+      dest: /etc/prometheus/prometheus.yml
+      src: prometheus/prometheus.yml.j2
+    notify: reload prometheus

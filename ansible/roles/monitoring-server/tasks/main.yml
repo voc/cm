@@ -10,3 +10,6 @@
 
   - include: collectd.yml
     tags: [collectd]
+
+  - include: prometheus.yml
+    tags: [prometheus]

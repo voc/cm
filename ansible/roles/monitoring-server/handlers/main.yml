@@ -10,3 +10,6 @@
 
   - name: restart graphite-api
     service: name=graphite-api state=restarted
+
+  - name: reload prometheus
+    service: name=prometheus state=reloaded
