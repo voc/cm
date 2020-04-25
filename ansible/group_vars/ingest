@@ -1,11 +1,6 @@
 ---
 # nginx-rtmp
 rtmp: 'yes'
-rtmp_ingest:
-  pull_endpoint: "127.0.0.1:1935/stream"
-  push_endpoint: "127.0.0.1:8000"
-  push_password: "{{ lookup('keepass', 'ansible/icecast/source.password') }}"
-rtmp_ingest_streams: []
 
 # icecast
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
