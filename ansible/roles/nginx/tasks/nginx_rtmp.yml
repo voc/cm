@@ -1,8 +1,9 @@
 ---
   # RTMP vhost
   - name: remove old rtmp master vhost
-    file: dest="{{ item }}"
-          state=absent
+    file:
+      path: "{{ item }}"
+      state: absent
     with_items:
       - /etc/nginx/sites-enabled/rtmp_master.conf
       - /etc/nginx/sites-available/rtmp_master.conf
@@ -18,6 +19,17 @@
               src="conf.d/rtmp.conf.j2"
               mode=0640 owner=root group=root
     when: rtmp is defined and rtmp == 'yes'
+    notify:
+      - reload nginx
+    tags:
+      - config
+      - install
+
+  - name: remove rtmp master config
+    file:
+      path: /etc/nginx/conf.d/rtmp_master.conf
+      state: absent
+    when: not (rtmp is defined and rtmp == 'yes')
     notify:
       - reload nginx
     tags:

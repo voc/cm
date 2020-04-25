@@ -3,10 +3,10 @@
 
 ### Common variables
 # use nginx
-nginx: yes
+nginx: 'yes'
 
 # use icecast
-icecast: yes
+icecast: 'yes'
 
 # firewalled from public access
 hidden: no
@@ -17,6 +17,9 @@ hidden: no
 # - distribute local files via nginx
 # - setup icedist for accepting streams
 stream_master: no
+
+# Generate relive snippets locally
+relive_master: no
 
 # accept some external streams pushed to icecast
 icecast_push_master: no

@@ -1,5 +1,10 @@
 ansible_python_interpreter: /usr/bin/python3
 
+nginx_hls_relive_masters: ['185.106.84.36']
+
+# workaround until relive lb config does something useful
+nginx_hls_relive_cache_max_size: '10g'
+
 relay_fanout:
   push_endpoint: 127.0.0.1:8000
   hls_write_path: /srv/nginx/hls

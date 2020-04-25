@@ -137,19 +137,17 @@ testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 maps.c3voc.de letsencrypt=true
 librenms.lan.c3voc.de
 
-# Streaming server
+# Streaming cdn
 [relays:children]
-masters
-edges
+master_relays
+edge_relays
 
-# master
-[masters]
+[master_relays]
 live.lan.c3voc.de
 live.ber.c3voc.de
 
-# edge
-[edges]
-live.alb.c3voc.de
+[edge_relays]
+live.alb.c3voc.de relive_master='yes'
 live2.alb.c3voc.de
 live.self.c3voc.de
 live.dus.c3voc.de

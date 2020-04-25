@@ -1,0 +1,3 @@
+# override register2ansible config (for when it's not congress, u know)
+icecast_master_ip: 195.54.164.164
+nginx_stream_masters: ['195.54.164.164']

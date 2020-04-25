@@ -45,7 +45,7 @@ scrape_configs:
       # This is how job security looks
       # Add role labels to allow easy selection in queries
       - source_labels: ["exported_instance"]
-        regex: "({% for host in groups["masters"] -%}
+        regex: "({% for host in groups["master_relays"] -%}
           {{ host | replace(".","\\\\.") -}}
           {% if loop.index < loop.length -%}
             |
@@ -55,7 +55,7 @@ scrape_configs:
         replacement: "master-relay"
 
       - source_labels: ["exported_instance"]
-        regex: "({% for host in groups["edges"] -%}
+        regex: "({% for host in groups["edge_relays"] -%}
           {{ host | replace(".","\\\\.") -}}
           {% if loop.index < loop.length -%}
             |

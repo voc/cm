@@ -1,6 +1,6 @@
 ---
-  - include: nginx.yml
-    tags: [nginx]
-
   - include: nginx_rtmp.yml
     tags: [nginx, rtmp]
+
+  - include: nginx.yml
+    tags: [nginx]

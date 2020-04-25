@@ -71,7 +71,7 @@ LoadPlugin "logfile"
   IncludeDir "/opt/voc/collectd/plugins/"
   BaseName "Collectd::Plugins"
 
-{% if icecast is defined and icecast == 'yes' %}
+{% if icecast is defined and icecast == 'yes' and inventory_hostname in groups['relays'] %}
   # include icecast perl plugin
   LoadPlugin Icecast2
 {% endif %}
@@ -92,7 +92,7 @@ LoadPlugin "logfile"
   </Module>
 
 {% endif %}
-{%  if nginx is defined and nginx == 'yes' %}
+{%  if nginx is defined and nginx == 'yes' and inventory_hostname in groups['relays'] %}
   Import NginxHls
   Import NginxDash
 {% endif %}

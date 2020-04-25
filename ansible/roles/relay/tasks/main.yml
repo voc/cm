@@ -11,7 +11,7 @@
     tags: sysctl
 
   - include: relive.yml
-    when: stream_master|bool
+    when: relive_master|bool
     tags: relive
 
   - include: icedist.yml
