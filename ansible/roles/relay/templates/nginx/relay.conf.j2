@@ -55,15 +55,15 @@ server {
   listen [{{ nginx_bind_ipv6 }}]:80 default_server ipv6only=off;
   listen {{ nginx_bind_ipv4 }}:80 default_server;
   # https
-  listen [{{ nginx_bind_ipv6 }}]:443 default_server ipv6only=off ssl;
-  listen {{ nginx_bind_ipv4 }}:443 default_server ssl;
+  listen [{{ nginx_bind_ipv6 }}]:443 default_server ipv6only=off ssl http2;
+  listen {{ nginx_bind_ipv4 }}:443 default_server ssl http2;
   # stats
   listen 127.0.0.1:80 default_server;
 {% else %}
   # http
   listen [::]:80 default_server ipv6only=off;
   # https
-  listen [::]:443 default_server ipv6only=off ssl;
+  listen [::]:443 default_server ipv6only=off ssl http2;
 {% endif %}
 
   root /var/www;
@@ -95,21 +95,6 @@ server {
   # live-cdn files
   location ~* ^/(hls|dash|thumbnail|artwork)/(.+)?$ {
     alias /srv/nginx/$1/$2;
-    autoindex on;
-  }
-
-  # relive
-  location ~ ^/crossdomain.xml {
-    alias /srv/nginx/relive/crossdomain.xml;
-    include /etc/nginx/mime.types;
-  }
-
-  location ~* ^/relive/(.+\.ts)$ {
-    alias /srv/nginx/relive/$1;
-  }
-
-  location ~* ^/relive/(.*) {
-    alias /srv/nginx/relive/$1;
     autoindex on;
   }
 
@@ -168,6 +153,112 @@ server {
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
   }
+  # proxy cache dash manifests (live)
+  #
+  # live:   /dash/s2.mpd
+  #
+  location ~* ^/dash/(?<manifest>.+\.mpd)$ {
+      proxy_intercept_errors on;
+      proxy_cache            live;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://stream/dash/$manifest;
+      proxy_cache_methods    GET;
+      proxy_cache_valid      200 302 1s;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      proxy_ignore_headers   Cache-Control;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
+  }
+  # proxy cache dash segments (live)
+  #
+  # init-segment:     /dash/s2-i1.hdr
+  # chunk-segments:   /dash/s2-s1-00041.webm for WebM-dash or
+  #                   /dash/s2-s1-00041.m4s for MP4-dash
+  #
+  location ~* ^/dash/(?<segment>.+\.(hdr|webm|m4s))$ {
+      proxy_intercept_errors on;
+      proxy_cache            live;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://stream/dash/$segment;
+      proxy_cache_methods    GET;
+      proxy_cache_valid      200 302 11m;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      proxy_ignore_headers   Cache-Control;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+  }
+  # proxy thumbnails/posters (live)
+  #
+  # live:   /thumbnail/s1/poster.jpeg
+  #
+  location ~* ^/thumbnail/(?<thumbnail>.+\.jpeg)$ {
+      proxy_intercept_errors on;
+      proxy_cache            live;
+      proxy_set_header       Host $host;
+      proxy_set_header       X-Real-IP $remote_addr;
+      proxy_pass             http://stream/thumbnail/$thumbnail;
+      proxy_cache_methods    GET;
+      proxy_cache_valid      200 302 5s;
+      proxy_cache_key        "$uri";
+      proxy_cache_lock       on;
+      proxy_ignore_headers   Cache-Control;
+      # keepalive to upstream server
+      proxy_http_version          1.1;
+      proxy_set_header Connection "";
+
+      # client caching
+      add_header Cache-Control no-cache;
+      add_header X-Cache     "$upstream_cache_status edge";
+      add_header Access-Control-Expose-Headers "X-Host";
+      add_header X-Host "{{ vars.ansible_fqdn }}";
+  }
+  # Icecast direkt proxy path for https streaming
+  #
+  location ~* ^/.*\.(webm|mp3|opus)$ {
+      proxy_redirect            off;
+      proxy_set_header          X-Host $http_host;
+      proxy_set_header          X-Forwarded-For $remote_addr;
+      proxy_buffering           off;
+      proxy_pass                http://icecast;
+  }
+{% endif %}
+
+
+{% if relive_master is defined and relive_master == 'yes' %}
+
+  # relive
+  location ~ ^/crossdomain.xml {
+    alias /srv/nginx/relive/crossdomain.xml;
+    include /etc/nginx/mime.types;
+  }
+
+  location ~* ^/relive/(.+\.ts)$ {
+    alias /srv/nginx/relive/$1;
+  }
+
+  location ~* ^/relive/(.*) {
+    alias /srv/nginx/relive/$1;
+    autoindex on;
+  }
+
+{% else %}
+
   # proxy cache m3u8 (relive) and index.json (relive)
   #
   # relive: /relive/nixcon2015/19/index.m3u8
@@ -270,89 +361,6 @@ server {
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
   }
-  # proxy cache dash manifests (live)
-  #
-  # live:   /dash/s2.mpd
-  #
-  location ~* ^/dash/(?<manifest>.+\.mpd)$ {
-      proxy_intercept_errors on;
-      proxy_cache            live;
-      proxy_set_header       Host $host;
-      proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://stream/dash/$manifest;
-      proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 1s;
-      proxy_cache_key        "$uri";
-      proxy_cache_lock       on;
-      proxy_ignore_headers   Cache-Control;
-      # keepalive to upstream server
-      proxy_http_version          1.1;
-      proxy_set_header Connection "";
-
-      # client caching
-      add_header Cache-Control no-cache;
-      add_header X-Cache     "$upstream_cache_status edge";
-      add_header Access-Control-Expose-Headers "X-Host";
-      add_header X-Host "{{ vars.ansible_fqdn }}";
-  }
-  # proxy cache dash segments (live)
-  #
-  # init-segment:     /dash/s2-i1.hdr
-  # chunk-segments:   /dash/s2-s1-00041.webm for WebM-dash or
-  #                   /dash/s2-s1-00041.m4s for MP4-dash
-  #
-  location ~* ^/dash/(?<segment>.+\.(hdr|webm|m4s))$ {
-      proxy_intercept_errors on;
-      proxy_cache            live;
-      proxy_set_header       Host $host;
-      proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://stream/dash/$segment;
-      proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 11m;
-      proxy_cache_key        "$uri";
-      proxy_cache_lock       on;
-      proxy_ignore_headers   Cache-Control;
-      # keepalive to upstream server
-      proxy_http_version          1.1;
-      proxy_set_header Connection "";
-
-      # client caching
-      add_header Cache-Control no-cache;
-      add_header X-Cache     "$upstream_cache_status edge";
-  }
-  # proxy thumbnails/posters (live)
-  #
-  # live:   /thumbnail/s1/poster.jpeg
-  #
-  location ~* ^/thumbnail/(?<thumbnail>.+\.jpeg)$ {
-      proxy_intercept_errors on;
-      proxy_cache            live;
-      proxy_set_header       Host $host;
-      proxy_set_header       X-Real-IP $remote_addr;
-      proxy_pass             http://stream/thumbnail/$thumbnail;
-      proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 5s;
-      proxy_cache_key        "$uri";
-      proxy_cache_lock       on;
-      proxy_ignore_headers   Cache-Control;
-      # keepalive to upstream server
-      proxy_http_version          1.1;
-      proxy_set_header Connection "";
-
-      # client caching
-      add_header Cache-Control no-cache;
-      add_header X-Cache     "$upstream_cache_status edge";
-      add_header Access-Control-Expose-Headers "X-Host";
-      add_header X-Host "{{ vars.ansible_fqdn }}";
-  }
-  # Icecast direkt proxy path for https streaming
-  #
-  location ~* ^/.*\.(webm|mp3|opus)$ {
-      proxy_redirect            off;
-      proxy_set_header          X-Host $http_host;
-      proxy_set_header          X-Forwarded-For $remote_addr;
-      proxy_buffering           off;
-      proxy_pass                http://icecast;
-  }
 {% endif %}
+
 }
