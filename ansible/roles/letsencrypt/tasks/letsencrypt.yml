@@ -1,7 +1,7 @@
 ---
   - name: Checkout dehydrated
     git:
-      repo: "https://github.com/lukas2511/dehydrated.git"
+      repo: "https://github.com/dehydrated-io/dehydrated.git"
       dest: "/opt/dehydrated"
       version: master
       force: yes
