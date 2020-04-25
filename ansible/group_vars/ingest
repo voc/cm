@@ -1,4 +1,5 @@
----
+ansible_python_interpreter: /usr/bin/python3
+
 # nginx-rtmp
 rtmp: 'yes'
 
@@ -9,7 +10,6 @@ icecast_source_password: "{{ lookup('keepass', 'ansible/icecast/source.password'
 icecast_relay_password:  "{{ lookup('keepass', 'ansible/icecast/relay.password') }}"
 icecast_master_password: "{{ lookup('keepass', 'ansible/icecast/master.password') }}"
 icecast_admin_email:     "{{ lookup('keepass', 'ansible/icecast/admin.url') }}"
-icecast_relay_on_demand: 0 # relay-on-demand triggers an icecast bug
 
 icecast_push_master: 'yes'
 icecast_additional_mounts: []
