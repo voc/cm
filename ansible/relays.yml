@@ -4,4 +4,5 @@
       - { role: common, tags: ['common'] }
       - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }
       - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: nginx, tags: ['nginx'] }
       - { role: relay, tags: ['relay'] }

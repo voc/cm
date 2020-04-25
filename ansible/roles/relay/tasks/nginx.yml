@@ -1,20 +1,4 @@
 ---
-  # Install packages
-  - name: install nginx package
-    apt: name=nginx state=latest
-    tags: install
-
-  - name: install libnginx-mod-rtmp package
-    apt: name=libnginx-mod-rtmp state=latest
-    tags: install
-    when: rtmp|bool
-
-  - name: uninstall libnginx-mod-rtmp package
-    apt: name=libnginx-mod-rtmp state=absent
-    tags: install
-    when: not rtmp|bool
-
-
   # Create stream_master htpasswd
   - name: install additional dependencies
     apt:
@@ -46,25 +30,10 @@
     notify: reload nginx
     tags: install
 
-  # Configure
-  - name: configure nginx
-    template: dest=/etc/nginx/nginx.conf
-              src=nginx/nginx.conf.j2
-              mode=0640 owner=root group=root
-    notify:
-      - reload nginx
-    tags:
-      - config
-      - install
-
   # Manage vhost
-  - name: remove default vhost
-    file: dest=/etc/nginx/sites-enabled/default state=absent
-    notify: reload nginx
-
   - name: create relay vhost
     template: dest="/etc/nginx/sites-available/{{ item }}"
-              src="nginx/vhosts/{{ item }}.j2"
+              src="nginx/{{ item }}.j2"
               mode=0640 owner=root group=root
     with_items:
       - relay.conf
@@ -83,57 +52,6 @@
     tags:
       - config
       - install
-
-  # RTMP vhost
-  - name: remove old rtmp master vhost
-    file: dest="{{ item }}"
-          state=absent
-    with_items:
-      - /etc/nginx/sites-enabled/rtmp_master.conf
-      - /etc/nginx/sites-available/rtmp_master.conf
-    when: not rtmp|bool
-    notify:
-      - reload nginx
-    tags:
-      - config
-      - install
-
-  - name: create rtmp master config
-    template: dest="/etc/nginx/conf.d/rtmp_master.conf"
-              src="nginx/vhosts/rtmp_master.conf.j2"
-              mode=0640 owner=root group=root
-    when: rtmp|bool
-    notify:
-      - reload nginx
-    tags:
-      - config
-      - install
-
-  # Enable service
-  - name: enable/start nginx
-    service: name=nginx enabled=yes state=started
-    when: nginx|bool
-
-  # Stop service
-  - name: disable/stop nginx
-    service: name=nginx enabled=no state=stopped
-    when: not nginx|bool
-
-  - name: setup certboot-hook to reload nginx when the cert changes
-    template: src=nginx/certbot-renewal-hook.sh.j2
-              dest=/etc/letsencrypt/renewal-hooks/post/20-nginx
-              mode=0755 owner=root group=root
-
-  - name: run certbot-hook once to reload nginx with possibly new cert changes
-    shell: /etc/letsencrypt/renewal-hooks/post/20-nginx
-    changed_when: false
-
-  # Cron job to reload nginx after ocsp update
-  # TODO: Is there a better solution available?
-  - name: reload nginx every morning for ocsp updates
-    cron: name="reload nginx for ocsp update" hour=5 minute=5
-          job="systemctl reload nginx" user=root
-    tags: install
 
   # TODO: remove me
   - name: remove access-log-truncating cronjob

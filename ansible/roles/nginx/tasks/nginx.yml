@@ -1,9 +1,5 @@
 ---
   # Install packages
-  - name: uninstall nginx-rtmp package
-    apt: name=nginx-rtmp state=absent
-    tags: install
-
   - name: install nginx package
     apt: name=nginx state=latest
     tags: install
@@ -34,26 +30,35 @@
     file: dest=/etc/nginx/sites-enabled/default state=absent
     notify: reload nginx
 
-  # Enable service
-  - name: start nginx
+  # Enable/Disable service
+  - name: enable/start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx is defined and nginx == 'yes'
+    when: nginx|bool
 
-  - name: stop nginx-rtmp
-    service: name=nginx-rtmp enabled=no state=stopped
-    failed_when: false
+  - name: disable/stop nginx
+    service: name=nginx enabled=no state=stopped
+    when: not nginx|bool
 
-  # - name: setup certbot-hook to reload nginx when the cert changes
-  #   template: src=certbot-renewal-hook.sh.j2
-  #             dest=/etc/letsencrypt/renewal-hooks/post/20-nginx
-  #             mode=0755 owner=root group=root
+  # Certbot hooks/reloads
+  - name: Check whether letsencrypt hookdir exists
+    stat:
+      path: /etc/letsencrypt/renewal-hooks/post/
+    register: letsencrypt_hookdir
 
-  # - name: run certbot-hook once to reload nginx with possibly new cert changes
-  #   shell: /etc/letsencrypt/renewal-hooks/post/20-nginx
+  - name: setup certbot-hook to reload nginx when the cert changes
+    template: src=certbot-renewal-hook.sh.j2
+              dest=/etc/letsencrypt/renewal-hooks/post/20-nginx
+              mode=0755 owner=root group=root
+    when: letsencrypt_hookdir.stat.exists
+
+  - name: run certbot-hook once to reload nginx with possibly new cert changes
+    shell: /etc/letsencrypt/renewal-hooks/post/20-nginx
+    when: letsencrypt_hookdir.stat.exists
 
   # Cron job to reload nginx after ocsp update
   # TODO: Is there a better solution available?
   - name: reload nginx every morning for ocsp updates
     cron: name="reload nginx for ocsp update" hour=5 minute=5
           job="systemctl reload nginx" user=root
+    when: letsencrypt_hookdir.stat.exists
     tags: install

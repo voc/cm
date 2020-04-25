@@ -23,6 +23,3 @@ icecast_push_master: no
 
 # fanout to youtube
 youtube: no
-
-# legacy nginx-rtmp
-rtmp: no

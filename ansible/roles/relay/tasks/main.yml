@@ -26,9 +26,5 @@
     when: stream_master|bool
     tags: stream_api
 
-  - include: rtmp_ingest.yml
-    when: rtmp_ingest_streams is defined
-    tags: rtmp_ingest
-
   - include: register_relay.yml
     tags: register_relay
