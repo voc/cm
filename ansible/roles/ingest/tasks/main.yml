@@ -1,8 +1,6 @@
 ---
+  - include: undeploy.yml
+    tags: undeploy
 
   - include: icecast.yml
     tags: icecast
-
-  - include: rtmp_ingest.yml
-    when: rtmp_ingest_streams is defined
-    tags: rtmp_ingest

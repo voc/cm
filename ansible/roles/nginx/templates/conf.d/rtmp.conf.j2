@@ -6,7 +6,7 @@ include /usr/share/nginx/modules-available/mod-rtmp.conf;
 rtmp_auto_push on;
 
 rtmp {
-  log_format rtmp '"$remote_addr [$time_local] $command "$app" "$name" "$args" - $bytes_received $bytes_sent "$pageurl" "$flashver" "$swfurl" "$tcurl" ($session_readable_time)"';
+  log_format rtmp '"$remote_addr [$time_local] $command "$app" "$name" "$args" - $bytes_received $bytes_sent ($session_readable_time)"';
   access_log /var/log/nginx/rtmp_access.log rtmp;
 
   server {
@@ -24,14 +24,33 @@ rtmp {
     publish_notify on;
 
     # Synchronize audio and video streams. If subscriber bandwidth is not
-    # enough to receive data at ublisher rate some frames are dropped by
-    # server. This leads to synchronization problem. When timestamp
+    # enough to receive data at publisher rate some frames are dropped by
+    # the server. This leads to synchronization problem. When timestamp
     # difference exceeds the value specified as sync argument an absolute
     # frame is sent fixing that. Default is 300ms.
     sync 10ms;
 
+    # stream with forward to icecast
     application stream {
       # enable live streaming
+      live on;
+      meta copy;
+
+      hls off;
+
+      allow publish all;
+      allow play all;
+      #on_publish http://127.0.0.1:8080/publish;
+      #on_publish_done http://127.0.0.1:8080/unpublish;
+      exec ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000
+        -i rtmp://127.0.0.1/$app/$name
+        -c copy -map 0:v:0 -map 0:a:0
+        -f matroska -content_type video/webm -password {{ icecast_source_password }}
+        icecast://127.0.0.1:8000/${name};
+    }
+
+    # relay only
+    application relay {
       live on;
       meta copy;
 

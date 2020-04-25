@@ -1,0 +1,8 @@
+---
+  - name: removing ingest scripts
+    file: dest=/opt/ingest/scripts/
+          state=absent
+
+  - name: removing old rtmp_ingest unit
+    file: dest=/etc/systemd/system/rtmp_ingest@.service
+          state=absent
