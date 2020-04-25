@@ -6,5 +6,7 @@
         - graphite-api
         - graphite-carbon
         - grafana
-        - carbon-relay-ng
+        - prometheus
+        - prometheus-node-exporter
+        - prometheus-blackbox-exporter
       state: latest

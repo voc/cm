@@ -1,0 +1,69 @@
+upstream graphite-api {
+  server unix:/run/graphite-api.sock;
+}
+
+upstream grafana {
+  server 127.0.0.1:3000;
+}
+
+upstream prometheus {
+  server 127.0.0.1:9090;
+}
+
+server {
+  listen [::]:80;
+
+  server_name monitoring.c3voc.de;
+  server_tokens off;
+
+  return 301 https://$server_name$request_uri;
+}
+
+server {
+  server_name monitoring.c3voc.de;
+
+  # https
+  listen [::]:443 default_server ipv6only=off ssl http2;
+
+  root /srv/www/monitoring.c3voc.de/htdocs;
+  index index.html;
+
+  access_log off;
+
+  # TLS certificates
+  ssl_certificate       /etc/letsencrypt/live/monitoring.c3voc.de/fullchain.pem;
+  ssl_certificate_key   /etc/letsencrypt/live/monitoring.c3voc.de/privkey.pem;
+  # OCSP stapling
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  ssl_trusted_certificate /etc/letsencrypt/live/monitoring.c3voc.de/fullchain.pem;
+  ssl_stapling_file /etc/ssl/certs/monitoring.c3voc.de.pem.ocsp;
+
+  auth_basic "voc login";
+  auth_basic_user_file htpasswd;
+
+  # don't allow access to some files or directories
+  location ~* /.*\.(ht|sh|git|htaccess|php|inc|rb|py|pl|db|sqlite|sqlite3)$ {
+    deny  all;
+  }
+  
+  location /metrics {
+    auth_basic          off;
+    proxy_pass http://prometheus/prometheus/federate?match%5B%5D=%7B__name__%3D~%22(stream%3Acollectd_users%3Alive%7Ccdn%3A.*)%22%7D;
+  }
+
+  location /graphite {
+    rewrite /graphite/(.*) /$1 break;
+    proxy_pass http://graphite-api;
+  }
+
+  location /grafana {
+    rewrite /grafana/(.*) /$1 break;
+    proxy_set_header X-WEBAUTH-USER admin;
+    proxy_pass http://grafana;
+  }
+
+  location /prometheus/ {
+    proxy_pass http://prometheus;
+  }
+}

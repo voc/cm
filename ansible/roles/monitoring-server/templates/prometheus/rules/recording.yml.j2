@@ -1,0 +1,42 @@
+groups:
+  - name: viewers
+    interval: 30s
+    rules:
+    # per instance+transport
+    - record: instance_transport:collectd_users:sum
+      expr: sum without(stream,hls,icecast2,dash,role,language,quality)(collectd_users{role="edge-relay"}) > 0
+
+    # per stream+transport
+    - record: stream_transport:collectd_users:sum
+      expr: sum without(instance,exported_instance,hls,icecast2,dash,role,language,quality)(collectd_users{role="edge-relay"}) > 0
+
+    # per transport
+    - record: transport:collectd_users:sum
+      expr: sum without(stream)(stream_transport:collectd_users:sum)
+
+    # live metrics only
+    - record: stream_transport:collectd_users:live
+      expr: stream_transport:collectd_users:sum{transport!="relive"}
+    - record: stream:collectd_users:live
+      expr: sum without(transport)(stream_transport:collectd_users:live)
+
+    # relive metrics only
+    - record: stream:collectd_users:relive
+      expr: sum without(transport)(stream_transport:collectd_users:sum{transport="relive"})
+
+  - name: traffic
+    interval: 30s
+    rules:
+    - record: instance:collectd_bandwidth_outgoing_bytes:rate
+      expr: sum without(interface,role)(rate(collectd_interface_if_octets_1_total{role="edge-relay",interface=~"(eth.*|en.*)"}[1m]))
+    - record: cdn:collectd_bandwidth_outgoing_bytes:rate
+      expr: sum without(instance,exported_instance)(instance:collectd_bandwidth_outgoing_bytes:rate)
+
+    # connections
+    - record: relay_port_type:collectd_tcpconns_tcp_connections
+      expr: sum without(role)(collectd_tcpconns_tcp_connections{role="edge-relay",type=~"(ESTABLISHED|CLOSE_WAIT)"})
+    - record: relay:collectd_tcpconns_tcp_connections:http_close_wait
+      expr: sum without(type,tcpconns)(relay_port_type:collectd_tcpconns_tcp_connections{tcpconns=~"(80-local|443-local)",type="CLOSE_WAIT"})
+    - record: port:collectd_tcpconns_tcp_connections:established
+      expr: sum without(instance,exported_instance,type)(relay_port_type:collectd_tcpconns_tcp_connections{type="ESTABLISHED"})
+

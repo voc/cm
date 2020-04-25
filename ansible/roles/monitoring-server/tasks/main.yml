@@ -13,3 +13,6 @@
 
   - include: prometheus.yml
     tags: [prometheus]
+
+  - include: nginx.yml
+    tags: [nginx]

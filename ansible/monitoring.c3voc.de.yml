@@ -1,5 +1,0 @@
----
-  - hosts: monitoring.c3voc.de
-    roles:
-      - { role: common, tags: ['common'] }
-      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }

@@ -1,0 +1,10 @@
+[Unit]
+Description=Export collectd metrics to prometheus
+
+[Service]
+User=nobody
+ExecStart=/usr/local/bin/collectd-exporter --collectd.listen-address="127.0.0.1:25827"
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+---
+  # Manage vhost
+  - name: template monitoring vhost
+    template:
+      src: nginx/monitoring.conf.j2
+      dest: /etc/nginx/sites-enabled/monitoring.c3voc.de.conf
+    notify:
+      - reload nginx
+    tags:
+      - config
+      - install

@@ -42,6 +42,9 @@ LoadPlugin write_graphite
     AuthFile "/etc/collectd/passwd"
   </Listen>
 
+  # Forward to collectd-exporter
+  Server "127.0.0.1" "25827"
+
   MaxPacketSize 1024
   TimeToLive 128
   Forward true
@@ -50,7 +53,7 @@ LoadPlugin write_graphite
 <Plugin write_graphite>
    <Carbon "local">
      Host "127.0.0.1"
-     Port "2033"
+     Port "2003"
      SeparateInstances true
      StoreRates false
      AlwaysAppendDS false

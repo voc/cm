@@ -1,4 +1,4 @@
----
-
+ansible_python_interpreter: /usr/bin/python3
 grafana:
-  secret_key: "{{ lookup('keepass', 'ansible/monitoring/grafana_key.password') }}"
+  secret_key: "{{ lookup('keepass', 'ansible/monitoring/grafana_secret.password') }}"
+nginx: yes
