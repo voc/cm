@@ -1,6 +1,5 @@
 ---
   - include: ../../../register/bin_path.yml
-  - include: undeploy.yml
 
   - include: nginx.yml
     tags: nginx

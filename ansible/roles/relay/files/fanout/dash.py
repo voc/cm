@@ -73,7 +73,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000
 	-map 0:v:2 -b:v:2 100k
 {% endif %}
 
-	-map 0:a:0 -b:a:0 96k -metadata:s:a:0 language="Native"
+	-map 0:a:0 -b:a:0 96k -metadata:s:a:0 language="Untranslated"
 {% if 'Translated' in audio_tracks %}
 	-map 0:a:1 -b:a:1 96k -metadata:s:a:1 language="Translated"
 {% endif %}

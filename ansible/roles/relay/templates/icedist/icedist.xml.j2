@@ -1,7 +1,7 @@
 <icecast>
-	<hostname>live.dus.c3voc.de</hostname>
-	<location>voc</location>
-	<admin>contact@c3voc.de</admin>
+	<hostname>{{ ansible_fqdn }}</hostname>
+	<location>{{ icecast_location | default('voc') }}</location>
+	<admin>{{ icecast_admin_email | default('contact@c3voc.de') }}</admin>
 
 
     <limits>
@@ -15,6 +15,7 @@
 	<!-- sources can be a bit slow to start, wait longer than usual -->
         <source-timeout>30</source-timeout>
 
+        <burst-on-connect>1</burst-on-connect>
         <burst-size>524280</burst-size>
     </limits>
 

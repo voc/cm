@@ -37,7 +37,7 @@
     <master-server-port>{{ icecast_master_port | default('8000') }}</master-server-port>
     <master-update-interval>{{ icecast_master_update_interval | default('10') }}</master-update-interval>
     <master-password>{{ icecast_master_password }}</master-password>
-    <relays-on-demand>{{ icecast_relay_on_demand | default('1') }}</relays-on-demand>
+    <relays-on-demand>0</relays-on-demand>
 {% endif %}
 
 {% if icecast_push_master|bool and icecast_additional_mounts is defined %}
@@ -54,54 +54,6 @@
 {% if mount['dump-file'] is defined %}
       <dump-file>{{ mount['dump-file'] }}</dump-file>
 {% endif %}
-    </mount>
-{% endfor %}
-
-    <!-- adding static mountpoints for all planed rooms -->
-{% for mount    in icecast_static_streams_meta_data %}
-    <!-- {{ mount['saal'] }} - video -->
-{% for language in ["native", "translated", "translated-2"]%}
-{% for quality  in ["sd", "hd", "slides"]%}
-    <mount>
-      <mount-name>/{{ mount['saal'] }}_{{ language }}_{{ quality }}.webm</mount-name>
-      <type>video/webm</type>
-      <subtype>vp8/vorbis</subtype>
-      <hidden>0</hidden>
-      <public>1</public>
-      <stream-name>{{ mount['stream-name'] }}</stream-name>
-      <stream-description>{{ mount['description'] | default(event.name)}}</stream-description>
-      <stream-url>{{ mount['stream-url'] }}</stream-url>
-    </mount>
-
-{% endfor %}
-
-    <!-- audio -->
-{% for format in [{ "format": "mp3",  "type": "audio/mpeg" },
-                  { "format": "opus", "type": "audio/ogg",  "subtype": "opus" }] %}
-    <mount>
-      <mount-name>/{{ mount['saal'] }}_{{ language }}.{{ format['format'] }}</mount-name>
-      <type>{{ format['type']}}</type>
-{% if format['subtype'] is defined %}
-      <subtype>{{ format['subtype']}}</subtype>
-{% endif %}
-      <hidden>0</hidden>
-      <public>1</public>
-      <stream-name>{{ mount['stream-name'] }}</stream-name>
-      <stream-description>{{ mount['description'] | default(event.name)}}</stream-description>
-      <stream-url>{{ mount['stream-url'] }}</stream-url>
-    </mount>
-
-{% endfor %}
-{% endfor %}
-{% endfor %}
-{% endif %}
-
-    <!-- metadate fix for mount points -->
-{% if icecast_push_master|bool and icecast_fix_mount_metadata is defined %}
-{% for mount in icecast_fix_mount_metadata %}
-    <mount>
-      <mount-name>{{ mount['mount-name'] }}</mount-name>
-      <type>{{ mount['type'] }}</type>
     </mount>
 {% endfor %}
 {% endif %}

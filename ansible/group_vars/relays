@@ -1,6 +1,4 @@
-system:
-  type: pc
-  kernel_package: linux-image-4.13.12-041312-generic
+ansible_python_interpreter: /usr/bin/python3
 
 relay_fanout:
   push_endpoint: 127.0.0.1:8000
@@ -25,7 +23,6 @@ icecast_source_password: "{{ lookup('keepass', 'ansible/icecast/source.password'
 icecast_relay_password:  "{{ lookup('keepass', 'ansible/icecast/relay.password') }}"
 icecast_master_password: "{{ lookup('keepass', 'ansible/icecast/master.password') }}"
 icecast_admin_email:     "{{ lookup('keepass', 'ansible/icecast/admin.url') }}"
-icecast_relay_on_demand: 0 # relay-on-demand triggers an icecast bug
 
 icecast_additional_mounts: [
   {
@@ -90,40 +87,6 @@ icecast_additional_mounts: [
   }
 ]
 
-icecast_fix_mount_metadata: [
-  # { "mount-name": "/example.opus", "type": "audio/ogg" },
-  # { "mount-name": "/example.mp3",  "type": "audio/mpeg" },
-]
-
-icecast_static_streams_meta_data: [
-#  { "saal": "s1", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
-#  { "saal": "s2", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
-#  { "saal": "s3", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
-#  { "saal": "s4", stream-name: "{{ event.name }} - {{ event.slogan }}", "stream-url": "http://streaming.media.ccc.de", "description": "{{ event.name }} - {{ event.slogan }}" },
-]
-
-# nginx
-nginx_streaming_locations: {
-  "s1_native_sd": "{{ nginx_master_ip | default('10.73.1.3') }}",
-  "s1_native_hd": "{{ nginx_master_ip | default('10.73.1.3') }}",
-
-  "s2_native_sd": "{{ nginx_master_ip | default('10.73.2.3') }}",
-  "s2_native_hd": "{{ nginx_master_ip | default('10.73.2.3') }}",
-
-  "s3_native_sd": "{{ nginx_master_ip | default('10.73.3.3') }}",
-  "s3_native_hd": "{{ nginx_master_ip | default('10.73.3.3') }}",
-
-  "s4_native_sd": "{{ nginx_master_ip | default('10.73.4.3') }}",
-  "s4_native_hd": "{{ nginx_master_ip | default('10.73.4.3') }}",
-}
-# define push ips
-nginx_ips_allow_to_push: [
-  "::1",
-  "127.0.0.1",
-  "195.54.164.160/29",
-  "10.73.0.0/16",
-  "10.8.0.0/16"
-]
 # allow stats ip
 nginx_ips_allow_stats: [
   "::1",
@@ -132,13 +95,3 @@ nginx_ips_allow_stats: [
   "10.73.0.0/16",
   "10.8.0.0/16"
 ]
-
-loadbalancer:
-  frontend:
-    match_urls:
-      is_streaming_website:
-        - streaming.media.ccc.de
-        - www.stream.c3voc.de
-      is_cdn:
-        - cdn.c3voc.de
-
