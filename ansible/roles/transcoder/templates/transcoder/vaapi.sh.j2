@@ -36,8 +36,11 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 {# H.264 Stream #}
 	-map '0:v:0' \
 		-metadata:s:v:0 title="HD" \
-		-c:v:0 copy \
-	\
+		-c:v:0 h264_vaapi \
+			-g:v:0 75 \
+			-b:v:0 2800k \
+			-bufsize:v:0 5600k \
+			-flags:v:0 +cgop \
 	-map '[sd1]' \
 		-metadata:s:v:1 title="SD" \
 		-c:v:1 h264_vaapi \
