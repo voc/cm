@@ -13,6 +13,15 @@ server {
     alias /srv/www/cdn.media.ccc.de/images/;
   }
 
+  location ~ \.srt$ {
+    if (-f $request_filename) {
+        break;
+    }
+
+    rewrite ^/(.*\.srt)$ $scheme://mirror.selfnet.de/c3subtitles/$1 last;
+    break;
+  }
+
   location /.well-known/ {
     #autoindex on;
     alias /var/www/.well-known/;
@@ -59,6 +68,15 @@ server {
 
   location /images/ {
     alias /srv/www/cdn.media.ccc.de/images/;
+  }
+
+  location ~ \.srt$ {
+    if (-f $request_filename) {
+        break;
+    }
+
+    rewrite ^/(.*\.srt)$ $scheme://mirror.selfnet.de/c3subtitles/$1 last;
+    break;
   }
 
   location / {
