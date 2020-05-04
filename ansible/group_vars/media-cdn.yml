@@ -6,7 +6,7 @@ acmetool_responses_email: media@koeln.ccc.de
 google_maps_api_key: ''
 
 users:
-  - { name: 'andi', state: 'absent' }
+  - { name: 'andi', state: 'present' }
   - { name: 'danimo', state: 'present' }
   - { name: 'derchris', state: 'present' }
   - { name: 'derpeter', state: 'present' }
