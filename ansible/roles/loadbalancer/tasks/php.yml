@@ -1,14 +1,15 @@
 ---
   # Install PHP + stuff
   - name: install streaming page packages
-    apt: name={{ item }} state=latest
-    with_items:
+    apt:
+      name:
       - php7.3-fpm
       - php7.3-curl
       - php7.3-sqlite3
       - php7.3-xml
       - libsqlite3-dev
       - sqlite3
+      state: latest
     tags: install
 
   # Create default pool

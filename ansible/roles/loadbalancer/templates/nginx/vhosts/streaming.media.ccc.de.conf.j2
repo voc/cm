@@ -49,11 +49,6 @@ server {
     add_header Cache-Control "public";
   }
 
-  location ~* thumbs.+.png$ {
-    expires 10m;
-    add_header Cache-Control "public";
-  }
-
   location ~* (assets|configs\/conferences).+.(js|css|css.map)$ {
     expires 1h;
   }

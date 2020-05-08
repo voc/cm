@@ -31,6 +31,16 @@
     file: dest=/etc/systemd/system/letsencrypt.timer
           state=absent
 
+  - name: undeploy thumbs directory
+    file: state=absent
+          dest=/srv/nginx/thumbs
+    tags: install
+
+  - name: undeploy htdocs/thumbs symlink
+    file: dest=/srv/nginx/htdocs/thumbs
+          state=absent
+    tags: install
+
   - name: reload systemd daemon
     command: systemctl daemon-reload
     changed_when: false

@@ -9,7 +9,7 @@
       - pull
       - checkout
 
-  - name: create user for thumb and schedule download
+  - name: create user for schedule download
     user: name=downloader home=/srv/nginx/streaming-website
           system=yes
     tags:
@@ -38,18 +38,6 @@
   - name: create htdocs symlink
     file: src=/srv/nginx/streaming-website
           dest=/srv/nginx/htdocs
-          state=link
-    tags: install
-
-  - name: create thumbs directory
-    file: state=directory
-          dest=/srv/nginx/thumbs
-          owner=downloader group=root mode=0755
-    tags: install
-
-  - name: create htdocs/thumbs symlink
-    file: src=/srv/nginx/thumbs
-          dest=/srv/nginx/htdocs/thumbs
           state=link
     tags: install
 
@@ -132,14 +120,16 @@
 
 
   # Remove fcgi cache after deployment
-  - shell: ls -1 /srv/nginx/cache/streaming_fcgi/
+  - name: get fcgi-cache files
+    shell: ls -1 /srv/nginx/cache/streaming_fcgi/
     register: streaming_fcgi_cache
+    changed_when: false
     tags:
       - deploy_website
       - install
       - config
 
-  - name: remove fcgi cache
+  - name: remove fcgi-cache
     file: path=/srv/nginx/cache/streaming_fcgi/{{ item }} state=absent
     with_items: streaming_fcgi_cache.stdout_lines
     when: streaming_fcgi_cache != ''
