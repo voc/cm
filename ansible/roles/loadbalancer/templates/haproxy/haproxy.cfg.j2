@@ -68,11 +68,11 @@ frontend icecast_and_nginx_hls_http
     ##
 {% if ssl == "" %}
     # Redirect to https
-    redirect scheme https code 302      if is_streaming_website {{ ssl }}
-    redirect scheme https code 302      if is_relive {{ ssl }}
+    redirect scheme https code 301      if is_streaming_website {{ ssl }}
+    redirect scheme https code 301      if is_relive {{ ssl }}
 {% else %}
-    use_backend streaming_website_{{ proto }}   if is_streaming_website {{ ssl }}
-    use_backend relive_{{ proto }}              if is_relive {{ ssl }}
+    use_backend streaming_website_https if is_streaming_website {{ ssl }}
+    use_backend relive_https            if is_relive {{ ssl }}
 {% endif %}
 
 {% if haproxy_3rdparty_regex is defined %}
@@ -102,6 +102,8 @@ frontend icecast_and_nginx_hls_https
 
     # add special header for protocol version
     http-request add-header X-Proto https if  { ssl_fc }
+    # HSTS
+    http-response set-header Strict-Transport-Security "max-age=31536000" if  { ssl_fc }
 
     {{ frontend_acls("https", "{ ssl_fc }") }}
 
@@ -231,16 +233,6 @@ backend dtag_{{ protocol }}
 
 
 {% endfor %}
-
-
-# frontend
-backend streaming_website_http
-    bind-process 1
-    balance source
-    option forwardfor
-    http-request set-header X-Custom-Header %[url]
-    http-request set-header X-Real-IP %[src]
-    server localhost 127.0.0.1:8080 maxconn 2048
 
 backend streaming_website_https
     bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
