@@ -33,11 +33,11 @@
   # Enable/Disable service
   - name: enable/start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx|bool
+    when: (nginx is defined and nginx == 'yes')
 
   - name: disable/stop nginx
     service: name=nginx enabled=no state=stopped
-    when: not nginx|bool
+    when: not (nginx is defined and nginx == 'yes')
 
   # Certbot hooks/reloads
   - name: Check whether letsencrypt hookdir exists
