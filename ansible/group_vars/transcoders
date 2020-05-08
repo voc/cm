@@ -1,4 +1,2 @@
-ansible_python_interpreter: /usr/bin/python3
-
 transcoder_lounge_pull_endpoint: live.ber.c3voc.de:7999
 transcoder_lounge_push_endpoint: live.ber.c3voc.de:7999
