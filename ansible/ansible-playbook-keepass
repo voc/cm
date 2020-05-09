@@ -73,6 +73,13 @@ else
 fi
 
 #
+# Try to decrypt keepass password on-the-fly using GPG-keyring
+#
+if [ -z "${KEEPASS_PW}" ]; then
+  KEEPASS_PW=`gpg -d "${KEEPASS_DIR}/keepass_password.asc" 2> /dev/null`
+fi
+
+#
 # Ask for the keepass file, query keychain or use the env var
 #
 if [ -z "${KEEPASS_PW}" ]; then
