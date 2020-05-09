@@ -41,28 +41,21 @@
     template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/Icecast2.pm
               src=collectd/plugins/Icecast2.pm
     notify: restart collectd
-    when: icecast is defined and icecast == 'yes'
-    tags: install
-
-  - name: remove nginx rtmp collectd plugin
-    file: dest=/opt/voc/collectd/plugins/Collectd/Plugins/NginxRtmp.pm
-          state=absent
-    notify: restart collectd
-    when: rtmp is defined and rtmp
+    when: icecast is defined and icecast == 'yes' and inventory_hostname in groups['relays']
     tags: install
 
   - name: add nginx hls collectd plugin
     template: dest=/opt/voc/collectd/plugins/NginxHls.py
               src=collectd/plugins/NginxHls.py
     notify: restart collectd
-    when: nginx is defined and nginx
+    when: nginx is defined and nginx|bool and inventory_hostname in groups['relays']
     tags: install
 
   - name: add nginx dash collectd plugin
     template: dest=/opt/voc/collectd/plugins/NginxDash.py
               src=collectd/plugins/NginxDash.py
     notify: restart collectd
-    when: nginx is defined and nginx
+    when: nginx is defined and nginx|bool and inventory_hostname in groups['relays']
     tags: install
 
   - name: add haproxy collectd plugin
