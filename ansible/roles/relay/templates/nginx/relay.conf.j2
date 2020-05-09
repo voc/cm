@@ -1,13 +1,14 @@
-{% if not stream_master %}
 # HLS slave caching directories
 proxy_temp_path /srv/nginx/cache/tmp;
 
+{% if not (relive_master is defined and relive_master|bool) %}
 proxy_cache_path /srv/nginx/cache/hls_relive
                 keys_zone=hls_relive:32m
                 max_size={{ nginx_hls_relive_cache_max_size | default('200g') }}
                 inactive=7d
                 loader_threshold=300 loader_files=1024;
-
+{% endif %}
+{% if not stream_master %}
 proxy_cache_path /srv/nginx/cache/live
                 keys_zone=live:32m
                 max_size={{ nginx_live_cache_max_size | default('10g') }}
@@ -240,7 +241,7 @@ server {
 {% endif %}
 
 
-{% if relive_master is defined and relive_master == 'yes' %}
+{% if relive_master is defined and relive_master|bool %}
 
   # relive
   location ~ ^/crossdomain.xml {
