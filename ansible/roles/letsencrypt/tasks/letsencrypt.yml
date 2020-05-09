@@ -66,7 +66,7 @@
                 line='{{ domain }}'
                 create=yes owner=root group=root mode=0664
 
-  - name: generate or renew certificate (takes up to 5 seconds)
+  - name: generate or renew certificate (takes some time)
     shell: "/opt/dehydrated/dehydrated --cron"
 
   - name: generate dehydrated systemd timer unit
