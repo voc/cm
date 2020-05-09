@@ -26,11 +26,12 @@ iptables -A INPUT -s {{ ip }} -j ACCEPT -m comment --comment "{{ comment }}"
 {% endfor %}
 
 iptables -A INPUT -p tcp --sport 1024:65535 --dport 22   -j ACCEPT
-{% if hidden is not defined or hidden != 'yes' %}
+{% if stream_master is defined and stream_master|bool %}
+iptables -A INPUT -p tcp --sport 1024:65535 --dport 7999 -j ACCEPT
+{% endif %}
 iptables -A INPUT -p tcp --sport 1024:65535 --dport 80   -j ACCEPT
 iptables -A INPUT -p tcp --sport 1024:65535 --dport 443  -j ACCEPT
 iptables -A INPUT -p tcp --sport 1024:65535 --dport 8000 -j ACCEPT
-{% endif %}
 iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 # ip6tables
@@ -44,11 +45,12 @@ ip6tables -A INPUT -s {{ ip }} -j ACCEPT -m comment --comment "{{ comment }}"
 {% endfor %}
 
 ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 22   -j ACCEPT
-{% if hidden is not defined or hidden != 'yes' %}
+{% if stream_master is defined and stream_master|bool %}
+ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 7999 -j ACCEPT
+{% endif %}
 ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 80   -j ACCEPT
 ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 8000 -j ACCEPT
 ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 443  -j ACCEPT
-{% endif %}
 ip6tables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 exit 0
