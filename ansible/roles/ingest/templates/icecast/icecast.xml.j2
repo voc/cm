@@ -31,7 +31,7 @@
         <bindv6only>0</bindv6only>
     </listen-socket>
 
-{% if icecast_push_master is defined and icecast_push_master == 'yes' and icecast_additional_mounts is defined %}
+{% if icecast_push_master is defined and icecast_push_master|bool and icecast_additional_mounts is defined %}
     <!-- additional mount points with separate authentication -->
 {% for mount in icecast_additional_mounts %}
     <mount>

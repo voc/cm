@@ -9,6 +9,6 @@ icecast_relay_password:  "{{ lookup('keepass', 'ansible/icecast/relay.password')
 icecast_master_password: "{{ lookup('keepass', 'ansible/icecast/master.password') }}"
 icecast_admin_email:     "{{ lookup('keepass', 'ansible/icecast/admin.url') }}"
 
-icecast_push_master: 'yes'
+icecast_push_master: yes
 icecast_additional_mounts: []
 

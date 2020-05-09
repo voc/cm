@@ -155,8 +155,8 @@ live.bn.c3voc.de
 live.fem.c3voc.de
 
 [loadbalancers]
-lb.dus.c3voc.de hidden='no'
-lb.alb.c3voc.de hidden='no'
+lb.dus.c3voc.de
+lb.alb.c3voc.de
 
 [minions]
 minion1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion1.password') }}"

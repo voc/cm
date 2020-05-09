@@ -7,7 +7,7 @@
   - name: create dump file directory for icecast
     file: dest=/srv/icecastdumps state=directory
           owner=icecast2 group=icecast mode=0755
-    when: icecast_push_master is defined and icecast_push_master == 'yes'
+    when: icecast_push_master is defined and icecast_push_master|bool
 
   # Configure
   - name: configure the icecast streaming server

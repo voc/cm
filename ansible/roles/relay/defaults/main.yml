@@ -8,9 +8,6 @@ nginx: 'yes'
 # use icecast
 icecast: 'yes'
 
-# firewalled from public access
-hidden: no
-
 ### Master-Relay variables
 # - host stream-info api
 # - do fanout

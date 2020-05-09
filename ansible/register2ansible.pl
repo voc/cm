@@ -61,8 +61,6 @@ sub generate {
 
 	my $relay = $data->{$host};
 
-	my $hidden = ! $relay->{public};
-
 	return if not $relay->{cm_deploy};
 	return if has_tag($relay, 'voc');
 
@@ -76,8 +74,7 @@ sub generate {
 
 	my $master = $relay->{master};
 
-	printf "%-30s hidden=%s nginx=%s icecast=%s ", $host, yesno($hidden),
-	       yesno($nginx), yesno($icecast);
+	printf "%-30s nginx=%s icecast=%s ", $host, yesno($nginx), yesno($icecast);
 
 	if($icecast) {
 		if($master) {
