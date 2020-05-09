@@ -16,6 +16,7 @@
     with_items:
       - cdn.c3voc.de
       - streaming.media.ccc.de
+    changed_when: false
 
   # configure haproxy
   - name: create haproxy chroot directory

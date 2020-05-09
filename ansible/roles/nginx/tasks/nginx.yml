@@ -54,6 +54,7 @@
   - name: run certbot-hook once to reload nginx with possibly new cert changes
     shell: /etc/letsencrypt/renewal-hooks/post/20-nginx
     when: letsencrypt_hookdir.stat.exists
+    changed_when: false
 
   # Cron job to reload nginx after ocsp update
   # TODO: Is there a better solution available?
