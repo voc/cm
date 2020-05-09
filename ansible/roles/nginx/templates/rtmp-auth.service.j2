@@ -1,0 +1,14 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = RTMP-Auth Backend
+StartLimitIntervalSec = 0
+
+[Service]
+ExecStart = /opt/voc/rtmp-auth -store /opt/stream-api/store.db -app stream -subpath /backend
+User = stream-api
+Restart = always
+RestartSec = 3s
+
+[Install]
+WantedBy = multi-user.target

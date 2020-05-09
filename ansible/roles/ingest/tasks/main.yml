@@ -4,3 +4,6 @@
 
   - include: icecast.yml
     tags: icecast
+
+  - include: nginx.yml
+    tags: nginx

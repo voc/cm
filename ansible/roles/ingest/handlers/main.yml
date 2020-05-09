@@ -3,3 +3,5 @@
 
   - name: restart icedist
     service: name=icedist state=restarted
+
+  - include: ../../../handlers/nginx.yml

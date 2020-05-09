@@ -100,7 +100,7 @@ http {
       deny all;
     }
 
-{% if rtmp is defined and rtmp == 'yes' %}
+{% if rtmp is defined and rtmp|bool %}
     location ~* ^/stats/rtmp {
       rtmp_stat all;
       access_log off;

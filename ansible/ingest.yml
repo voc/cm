@@ -3,6 +3,6 @@
     roles:
       - { role: common, tags: ['common'] }
       - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: letsencrypt, vars: {'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt']}
       - { role: nginx, tags: ['nginx'] }
       - { role: ingest, tags: ['ingest'] }
-      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'], when: letsencrypt is defined and letsencrypt }

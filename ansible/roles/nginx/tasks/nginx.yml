@@ -4,16 +4,6 @@
     apt: name=nginx state=latest
     tags: install
 
-  - name: install libnginx-mod-rtmp package
-    apt: name=libnginx-mod-rtmp state=latest
-    tags: install
-    when: (rtmp is defined and rtmp == 'yes')
-
-  - name: uninstall libnginx-mod-rtmp package
-    apt: name=libnginx-mod-rtmp state=absent
-    tags: install
-    when: not (rtmp is defined and rtmp == 'yes')
-
   # Configure
   - name: configure nginx
     template: dest=/etc/nginx/nginx.conf
@@ -33,11 +23,11 @@
   # Enable/Disable service
   - name: enable/start nginx
     service: name=nginx enabled=yes state=started
-    when: (nginx is defined and nginx == 'yes')
+    when: (nginx is defined and nginx|bool)
 
   - name: disable/stop nginx
     service: name=nginx enabled=no state=stopped
-    when: not (nginx is defined and nginx == 'yes')
+    when: not (nginx is defined and nginx|bool)
 
   # Certbot hooks/reloads
   - name: Check whether letsencrypt hookdir exists

@@ -1,5 +1,7 @@
 # nginx-rtmp
-rtmp: 'yes'
+rtmp: yes
+nginx: yes
+rtmp_auth: yes
 
 # icecast
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"

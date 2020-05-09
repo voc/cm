@@ -1,0 +1,31 @@
+---
+- name: Add stream-api user
+  user:
+    name: stream-api
+    home: /opt/stream-api/
+    state: present
+
+- name: install additional dependencies
+  apt:
+    package: python3-passlib
+    state: latest
+
+- name: create stream-api htpasswd
+  htpasswd:
+    path: /etc/nginx/htpasswd
+    name: "{{ stream_api.user }}"
+    password: "{{ stream_api.password }}"
+    owner: root
+    group: www-data
+    mode: 0640
+
+- name: add rtmp-auth service file
+  template:
+    src: rtmp-auth.service.j2
+    dest: /etc/systemd/system/rtmp-auth.service
+
+- name: enable rtmp-auth service
+  systemd:
+    state: started
+    enabled: yes
+    name: rtmp-auth
