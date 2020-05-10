@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 LimitNOFILE=65536
 ExecStart=/usr/bin/icecast2 -c /etc/icecast2/icecast.xml
-ExecReload=/usr/bin/kill -HUP $MAINPID
+ExecReload=/usr/bin/env kill -HUP $MAINPID
 
 [Install]
 WantedBy=multi-user.target

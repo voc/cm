@@ -1,11 +1,11 @@
 [Unit]
-Description=distribution Icecast
+Description=Distribution Icecast
 After=network.target
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/icecast2 -c /etc/icecast2/icedist.xml
-ExecReload=/usr/bin/kill -HUP $MAINPID
+ExecReload=/usr/bin/env kill -HUP $MAINPID
 
 [Install]
 WantedBy=multi-user.target
