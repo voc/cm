@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source "_ansible_keepass_util.sh"
+set_keepass_dir
 
 touch .keepass_version
 VERSION_FILE=$(realpath .keepass_version)

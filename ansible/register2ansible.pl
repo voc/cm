@@ -7,9 +7,6 @@ use warnings;
 use File::Slurp;
 use JSON;
 
-# HACK
-my $icecast_push_master = "live.ccl.c3voc.de";
-
 sub get_relays {
 	my ($path) = @_;
 
@@ -74,26 +71,24 @@ sub generate {
 
 	my $master = $relay->{master};
 
-	printf "%-30s nginx=%s icecast=%s ", $host, yesno($nginx), yesno($icecast);
+	printf "%-30s nginx=%s icecast=%s", $host, yesno($nginx), yesno($icecast);
 
 	if($icecast) {
 		if($master) {
-			printf "icecast_master_ip=%s ", get_ip($data, $master);
+			printf " icecast_master_ip=%s", get_ip($data, $master);
 		}
-
-		printf "icecast_push_master=%s ", yesno($host eq $icecast_push_master);
 	}
 
 	if($master) {
-		printf 'nginx_hls_relive_masters=\'["%s"]\' ', get_ip($data, $master);
-		printf 'nginx_stream_masters=\'["%s"]\' ', get_ip($data, $master);
+		#printf ' nginx_hls_relive_masters=\'["%s"]\'', get_ip($data, $master);
+		printf ' nginx_stream_masters=\'["%s"]\'', get_ip($data, $master);
 	}
 
 	say "";
 }
 
 if(@ARGV != 1) {
-	say STDERR "usage: $0 relays.json > relays";
+	say STDERR "usage: $0 relays.json > inventory/relays.yml";
 	exit 1;
 }
 
@@ -102,13 +97,14 @@ my $data = get_relays($ARGV[0]);
 my $cnt = 0;
 
 print <<EOF;
+# managed by register2ansible.pl
 [relays:children]
-masters
-edges
+master_relays
+edge_relays
 
 EOF
 
-say "[masters]";
+say "[master_relays]";
 foreach my $host (grep { not $data->{$_}->{public}}
 	sort keys %$data) {
 	generate($data, $host);
@@ -117,7 +113,7 @@ foreach my $host (grep { not $data->{$_}->{public}}
 }
 say "";
 
-say "[edges]";
+say "[edge_relays]";
 foreach my $host (grep { $data->{$_}->{public}}
 	sort keys %$data) {
 	generate($data, $host);

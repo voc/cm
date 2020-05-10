@@ -95,6 +95,10 @@ class LookupModule(LookupBase):
 
 if __name__ == '__main__':
 	module = LookupModule()
-	if not module.test_password():
-		print('Password not valid for Keepass-File')
-		sys.exit(42)
+	if len(sys.argv) < 2:
+		if not module.test_password():
+			print('Password not valid for Keepass-File')
+			sys.exit(42)
+	else:
+		print(module.run([sys.argv[1]], None)[0])
+
