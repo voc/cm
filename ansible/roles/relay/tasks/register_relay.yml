@@ -6,21 +6,19 @@
     template: dest=/usr/local/sbin/register_relay
               src=register_relay/client.rb
               mode=0750 owner=root group=root
-    notify:
-      - trigger register_relay
+    notify: trigger register_relay
 
-  - name: install init script
-    template: dest=/etc/init.d/send_relay_report
-              src=register_relay/init.sh
-              mode=0755 owner=root group=root
-    notify:
-      - trigger register_relay
+  - name: add register_relay systemd unit
+    template:
+      src: register_relay/register_relay.service.j2
+      dest: /etc/systemd/system/register_relay.service
+    notify: trigger register_relay
 
   - name: ensure relay register service is enabled
-    service:
-      name: send_relay_report
+    systemd:
+      name: register_relay
+      daemon_reload: yes
       enabled: yes
-      state: started
 
   - name: install register bandwith measure client
     template: dest=/usr/local/sbin/register_bw_measure

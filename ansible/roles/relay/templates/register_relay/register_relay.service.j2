@@ -1,0 +1,12 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = Register Relay service
+Type = oneshot
+RemainAfterExit = yes
+
+[Service]
+ExecStart = /usr/local/sbin/register_relay
+
+[Install]
+WantedBy = multi-user.target

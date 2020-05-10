@@ -8,7 +8,7 @@
     when: nginx|bool
 
   - name: trigger register_relay
-    service: name=send_relay_report state=restarted
+    service: name=register_relay state=restarted
 
   - name: reload php-fpm
     service: name=php5-fpm state=reloaded
