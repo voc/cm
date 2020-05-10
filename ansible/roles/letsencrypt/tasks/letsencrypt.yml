@@ -83,12 +83,6 @@
     command: systemctl daemon-reload
     changed_when: false
 
-  - name: disable certbot systemd timer
-    service: name=certbot.timer
-             enabled=no
-             state=stopped
-    ignore_errors: yes
-
   - name: enable dehydrated systemd timer
     service: name=dehydrated.timer
              enabled=yes
