@@ -1,14 +1,15 @@
 ---
 room_number: 6
-room_fahrplan_name: Saal 6
+room_fahrplan_name: Saal6
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
-encodermode: hd-voctomix
+encodermode: hd-voctomix2
+mixer_highdpi: yes
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
-voctomix_audiostreams: 2
+voctomix_audiostreams: 1
 voctomix_stream_suppress_audio_tracks: [1]
 
 # für JVC:
@@ -57,38 +58,40 @@ voctomix_stream_suppress_audio_tracks: [1]
 
 voctomix_sources:
   -
-    # Duo Port 1
     name: cam1
+    type: decklink-internal
+    devicenumber: 0
+    video_connection: SDI
+    video_mode: "1080i50"
+    deinterlace: assume-progressive
+    scan: psf
+    volume: 0.0
+  -
+    name: cam2
     type: decklink-internal
     devicenumber: 1
     video_connection: SDI
-    video_mode: "1080p25"
+    video_mode: "1080i50"
+    deinterlace: assume-progressive
+    scan: psf
+    volume: 0.0
+  -
+    name: cam3
+    type: decklink-internal
+    devicenumber: 2
+    video_connection: SDI
+    video_mode: "1080i50"
+    deinterlace: assume-progressive
+    scan: psf
     volume: 1.0
     audiostream:
-      # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
       0: 0
-  
-      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
-      1: 1
-#  -
-#    # Duo Port 4
-#    name: cam2
-#    type: decklink-internal
-#    devicenumber: 1
-#    video_connection: SDI
-#    video_mode: "1080p25"
-#  -
-#    # Mini Recorder links
-#    name: cam3
-#    type: decklink-internal
-#    devicenumber: 2
-#    video_connection: SDI
-#    video_mode: "1080p25"
+    stream_names:
+      0: original
   -
-    # Mini Recorder rechts
-    name: slides
+    name: cam4
     type: decklink-internal
     devicenumber: 3
-    video_connection: HDMI
-    video_mode: "1080p24"
+    video_connection: SDI
+    video_mode: "1080p25"
     volume: 0.0
