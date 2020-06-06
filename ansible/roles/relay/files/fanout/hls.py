@@ -83,7 +83,7 @@ def generate_master_playlists(c):
 #EXTM3U
 #EXT-X-VERSION:3
 
-#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="Native",DEFAULT={{ 'YES' if audio_track == 'Native' else 'NO' }}
+#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="Untranslated",DEFAULT={{ 'YES' if audio_track == 'Native' else 'NO' }}
 
 {% if 'Translated' in audio_tracks %}
 #EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="Translation 1",DEFAULT={{ 'YES' if audio_track == 'Translated' else 'NO' }},URI="{{ stream }}/chunks_{{ first_audio_stream_index+0 }}.m3u8"
@@ -129,7 +129,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000
 	-hls_time 6
 	-hls_list_size 200
 	-hls_segment_filename "{{ hls_write_path }}/{{ stream }}/{{ starttime }}-%d_%v.ts"
-	-hls_flags +delete_segments+omit_endlist
+	-hls_flags +delete_segments+omit_endlist+split_by_time
 	-var_stream_map '{{ varmaps | join(" ") }}'
 	"{{ hls_write_path }}/{{ stream }}/chunks_%v.m3u8"
 """)
