@@ -5,7 +5,7 @@ room_fahrplan_name: Saal6
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
 # reboot encoder after changing
-encodermode: hd-voctomix2
+encodermode: hd-voctomix
 mixer_highdpi: yes
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
@@ -65,15 +65,13 @@ voctomix_sources:
     video_mode: "1080i50"
     deinterlace: assume-progressive
     scan: psf
-    volume: 0.0
+    volume: 1.0
   -
     name: cam2
     type: decklink-internal
     devicenumber: 1
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
-    scan: psf
+    video_mode: "1080p25"
     volume: 0.0
   -
     name: cam3
@@ -83,13 +81,9 @@ voctomix_sources:
     video_mode: "1080i50"
     deinterlace: assume-progressive
     scan: psf
-    volume: 1.0
-    audiostream:
-      0: 0
-    stream_names:
-      0: original
+    volume: 0.0
   -
-    name: cam4
+    name: laptop
     type: decklink-internal
     devicenumber: 3
     video_connection: SDI
