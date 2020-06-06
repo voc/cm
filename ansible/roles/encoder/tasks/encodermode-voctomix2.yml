@@ -206,12 +206,6 @@
              enabled=no
     with_items: [hd, sd]
 
-
-  - name: create -inactive- combined streaming script
-    template: src="voctomix2-scripts/streaming-sink-combined.sh.j2"
-              dest="/opt/voctomix2/scripts/streaming-sink-combined.sh"
-              mode=0755 owner=root group=root
-
   - name: create mkv-only streaming script
     template: src="voctomix2-scripts/streaming-sink-mkvonly.sh.j2"
               dest="/opt/voctomix2/scripts/streaming-sink-mkvonly.sh"
