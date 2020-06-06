@@ -72,7 +72,7 @@ def count_hls_viewers():
 	# - count the set keys
 
 	# regex to parse interesting parts of ngix access-log
-	exp = '^([^ ]+) ([^ ]+) ([^ ]+) \[([^\]]+)\] "([A-Z]+) ([^ "]+) HTTP\/1.[01]" ([0-9]{3})'
+	exp = '^([^ ]+) ([^ ]+) ([^ ]+) \[([^\]]+)\] "([A-Z]+) ([^ "]+) HTTP\/[\d\.]+" ([0-9]{3})'
 
 	# compare timestamp
 	now = datetime.datetime.today()
