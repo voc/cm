@@ -59,6 +59,7 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 	-map '0:a:1?' -metadata:s:a:1 title="Translated" \
 	-map '0:a:2?' -metadata:s:a:2 title="Translated-2" \
 	\
+	-fflags +genpts \
 	-max_muxing_queue_size 400 \
 	-f matroska \
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
@@ -95,6 +96,7 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 			-bufsize:v:2 750k \
 	\
 	-c:a libopus -ac:a 2 -b:a 128k \
+	-af "aresample=async=1:min_hard_comp=0.100000:first_pts=0" \
 	\
 	-map '0:a:0' -metadata:s:a:0 title="Native" \
 	-map '0:a:1?' -metadata:s:a:1 title="Translated" \
