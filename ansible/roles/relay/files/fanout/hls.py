@@ -125,11 +125,10 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000
 
 	{{ maps | join("\n\t") }}
 
-	-hls_init_time 6
 	-hls_time 6
 	-hls_list_size 200
 	-hls_segment_filename "{{ hls_write_path }}/{{ stream }}/{{ starttime }}-%d_%v.ts"
-	-hls_flags +delete_segments+omit_endlist+split_by_time
+	-hls_flags +delete_segments+omit_endlist+independent_segments
 	-var_stream_map '{{ varmaps | join(" ") }}'
 	"{{ hls_write_path }}/{{ stream }}/chunks_%v.m3u8"
 """)
