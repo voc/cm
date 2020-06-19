@@ -3,10 +3,10 @@ ansible_python_interpreter: /usr/bin/python3
 
 # Event config
 event:
-  timezone: Europe/Bucharest
-  acronym: foss4g2019
-  name: FOSS4G 2019
-  slogan: 44.43555, 26.102347
+  timezone: Europe/Berlin
+  acronym: XYZ
+  name: XYZ
+  slogan: ""
   formats:
     hd: 'yes'
     sd: 'yes'
