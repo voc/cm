@@ -34,6 +34,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 		-metadata:s:v:0 title="HD" \
 		-threads:v:0 4 \
 		-tile-columns:v:0 2 \
+		-keyint_min:v:0 75 \
 		-g:v:0 75 \
 		-crf:v:0 23 \
 		-b:v:0 2800k \
@@ -42,6 +43,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 		-metadata:s:v:1 title="SD" \
 		-threads:v:1 4 \
 		-tile-columns:v:1 1 \
+		-keyint_min:v:1 75 \
 		-g:v:1 75 \
 		-crf:v:1 23 \
 		-b:v:1 800k \
@@ -51,6 +53,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 		-metadata:s:v:2 title="Slides" \
 		-threads:v:2 4 \
 		-tile-columns:v:2 1 \
+		-keyint_min:v:2 15 \
 		-g:v:2 15 \
 		-crf:v:2 27 \
 		-b:v:2 100k \

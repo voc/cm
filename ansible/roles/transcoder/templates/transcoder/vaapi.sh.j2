@@ -37,13 +37,15 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 	-map '0:v:0' \
 		-metadata:s:v:0 title="HD" \
 		-c:v:0 h264_vaapi \
+			-keyint_min:v:0 75 \
 			-g:v:0 75 \
 			-b:v:0 2800k \
-			-bufsize:v:0 5600k \
+			-bufsize:v:0 8400k \
 			-flags:v:0 +cgop \
 	-map '[sd1]' \
 		-metadata:s:v:1 title="SD" \
 		-c:v:1 h264_vaapi \
+			-keyint_min:v:1 75 \
 			-g:v:1 75 \
 			-b:v:1 800k \
 			-bufsize:v:1 2400k \
@@ -75,8 +77,8 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 			-threads:v:0 4 \
 			-frame-parallel:v:0 1 \
 			-tile-columns:v:0 2 \
-			-crf:v:0 23 \
 			\
+			-keyint_min:v:0 75 \
 			-g:v:0 75 \
 			-b:v:0 2800k \
 			-bufsize:v:0 8400k \
@@ -84,6 +86,7 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 	-map '[sd2]' \
 		-metadata:s:v:1 title="SD" \
 		-c:v:1 vp9_vaapi \
+			-keyint_min:v:1 75 \
 			-g:v:1 75 \
 			-b:v:1 800k \
 			-bufsize:v:1 2400k \
@@ -91,6 +94,7 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 	-map '0:v:1?' \
 		-metadata:s:v:2 title="Slides" \
 		-c:v:2 vp9_vaapi \
+			-keyint_min:v:2 15 \
 			-g:v:2 15 \
 			-b:v:2 100k \
 			-bufsize:v:2 750k \

@@ -33,6 +33,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 			-bufsize:v:0 5600k \
 			-pix_fmt:v:0 yuv420p \
 			-profile:v:0 main \
+			-keyint_min:v:0 75 \
 			-g:v:0 75 \
 			-flags:v:0 +cgop \
 			-preset:v:0 veryfast \
@@ -45,6 +46,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 			-bufsize:v:1 3600k \
 			-pix_fmt:v:1 yuv420p \
 			-profile:v:1 main \
+			-keyint_min:v:1 75 \
 			-g:v:1 75 \
 			-flags:v:1 +cgop \
 			-preset:v:1 veryfast \
