@@ -1,26 +1,21 @@
 #!/bin/bash
 
-
-if [[ $* != *--deploy* && $* != *--diff* ]]; then
-  echo "Generate loadbalancer config and deploy it."
+if [[ $* != *--deploy* && $* != *--pretend* ]]; then
+  echo "Generate relay configs and deploy it."
   echo
-  echo "Usage: $0 --deploy or --diff"
+  echo "Usage: $0 --deploy or --pretend"
   exit 1
 fi
 
-if [ -z "${PASSWORD}" ]; then
-  echo -n "Relay register voc password: "
-  read -rs PASSWORD
-fi
-
-if [[ $* = *--diff* ]]; then
-  DIFF=true
+if [[ $* = *--pretend* ]]; then
+  PRETEND=true
 fi
 
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function get_relay_json() {
-  wget -O $BASEDIR/relays.json https://voc:${PASSWORD}@c3voc.de/relayregister/relays
+  pass=$(KEEPASS_PW=${KEEPASS_PW} python ${DIR}/lookup_plugins/keepass.py ansible/stream-api/relay-register.password)
+  wget -O $DIR/relays.json https://voc:${pass}@c3voc.de/relayregister/relays
 }
 
 function create_lb_cariables() {
@@ -37,7 +32,7 @@ function create_lb_cariables() {
 }
 
 function deploy_lbs() {
-  if [[ $DIFF = true ]]; then
+  if [[ $PRETEND = true ]]; then
     $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -b -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --check --diff
   else
     echo
@@ -51,6 +46,11 @@ function deploy_lbs() {
     fi
   fi
 }
+
+# get keepass info
+source _ansible_keepass_util.sh
+set_keepass_dir
+ask_keepass_password
 
 get_relay_json
 create_lb_cariables
