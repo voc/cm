@@ -18,7 +18,11 @@ nginx_ips_allow_stats: [
   "10.8.0.0/16"
 ]
 
+# serve 3rdparty-streams via extra-relays
 #haproxy_3rdparty_regex: "(s80|s89|s150)"
+
+# serve dtag clients via extra-relays
+haproxy_dtag_extrawurst: false
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
@@ -26,18 +30,18 @@ lb_3rdparty_relays: {
 }
 
 lb_dash_relays: {
-  "live.alb.c3voc.de": 50,
+  "live.alb.c3voc.de": 75,
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
   "live.fem.c3voc.de": 75,
-  "live.s11.c3voc.de": 0,
+  "live.s11.c3voc.de": 10,
   "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
 }
 
 lb_dtag_relays: {
-  "live.alb.c3voc.de": 50,
-  "live.s11.c3voc.de": 0,
+  "live.alb.c3voc.de": 75,
+  "live.s11.c3voc.de": 10,
   "live2.alb.c3voc.de": 50,
 }
 
@@ -45,15 +49,15 @@ lb_hls_relays: {
   "live.bn.c3voc.de": 50,
   "live.dus.c3voc.de": 50,
   "live.fem.c3voc.de": 75,
-  "live.s11.c3voc.de": 0,
+  "live.s11.c3voc.de": 10,
   "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
 }
 
 lb_icecast_relays: {
-  "live.alb.c3voc.de": 50,
+  "live.alb.c3voc.de": 75,
   "live.fem.c3voc.de": 75,
-  "live.s11.c3voc.de": 0,
+  "live.s11.c3voc.de": 10,
   "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
 }
@@ -62,6 +66,6 @@ lb_local_relays: {
 }
 
 lb_relive_relays: {
-  "live.alb.c3voc.de": 50,
+  "live.alb.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
 }

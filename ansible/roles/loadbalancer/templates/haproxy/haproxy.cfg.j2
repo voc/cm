@@ -57,7 +57,11 @@ frontend icecast_and_nginx_hls_http
 {% endif %}
     # ip address matching
     acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+
+{% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
+    # dtag address matching
     acl is_dtag              src        -f /etc/haproxy/dtag_subnetworks.txt
+{% endif %}
 
     # return 403 if hostname or defined file extensions are not matching
     http-request deny        unless is_cdn or is_streaming_website
@@ -85,9 +89,11 @@ frontend icecast_and_nginx_hls_http
     use_backend local_{{ proto }}       if is_local stream_path stream_file {{ ssl }}
     use_backend local_{{ proto }}       if is_local icecast {{ ssl }}
 
+{% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
     # dtag relay
     use_backend dtag_{{ proto }}        if is_dtag stream_path stream_file {{ ssl }}
     use_backend dtag_{{ proto }}        if is_dtag icecast {{ ssl }}
+{% endif %}
 
     # use remote relays
     use_backend nginx_{{ proto }}       if stream_path stream_file {{ ssl }}
@@ -214,6 +220,7 @@ backend local_{{ protocol }}
 {% endfor %}
 
 
+{% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
 # DTAG EXTRAWURST
 backend dtag_{{ protocol }}
 {% if protocol == "http" %}
@@ -230,6 +237,7 @@ backend dtag_{{ protocol }}
     server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }} check port 443
 {% endif %}
 {% endfor %}
+{% endif %}
 
 
 {% endfor %}

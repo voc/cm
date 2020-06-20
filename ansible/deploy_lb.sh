@@ -14,8 +14,8 @@ fi
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function get_relay_json() {
-  pass=$(KEEPASS_PW=${KEEPASS_PW} python ${DIR}/lookup_plugins/keepass.py ansible/stream-api/relay-register.password)
-  wget -O $DIR/relays.json https://voc:${pass}@c3voc.de/relayregister/relays
+  pass=$(KEEPASS_PW=${KEEPASS_PW} python ${BASEDIR}/lookup_plugins/keepass.py ansible/stream-api/relay-register.password)
+  wget -O ${BASEDIR}/relays.json https://voc:${pass}@c3voc.de/relayregister/relays
 }
 
 function create_lb_cariables() {
