@@ -60,8 +60,9 @@ loop-encoder ansible_host=141.24.220.5 ansible_port=10022
 #minion-muc.lan.c3voc.de transcoder_streams='["s4"]'
 #minion6.lan.c3voc.de
 
-#speedy.lan.c3voc.de transcoder_capacity=2
+speedy.lan.c3voc.de transcoder_capacity=4
 tweety.lan.c3voc.de transcoder_capacity=4
+blade1.lan.c3voc.de transcoder_capacity=2
 
 loop-transcoder ansible_host=141.24.220.5 ansible_port=10023 transcoder_capacity=1 transcoder_streams='["sloop"]'
 
