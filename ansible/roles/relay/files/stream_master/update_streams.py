@@ -155,7 +155,7 @@ def read_state(path):
 # write new state atomically
 def write_state(state, path):
     with tempfile.NamedTemporaryFile("w", delete=False) as f:
-        json.dump(state, f)
+        json.dump(state, f, indent=2)
         tmp = f.name
     os.chmod(tmp, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
     os.replace(tmp, path)
