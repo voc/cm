@@ -1,0 +1,30 @@
+---
+  # Create user
+  - name: create mixer group
+    group: name=mixer state=present
+
+  - name: create mixer user
+    user: name=mixer group=mixer state=present
+          shell=/usr/bin/zsh
+          password={{ mixer_user_password }}
+
+
+  - name: create .xsession
+    template: dest=/home/mixer/.xsession
+              src=user/.xsession.j2
+              owner=mixer group=mixer mode=0755
+
+  - name: create .Xresources
+    template: dest=/home/mixer/.Xresources
+              src=user/.Xresources.j2
+              owner=mixer group=mixer mode=0755
+
+  - name: create vconsole.conf
+    copy: dest=/etc/vconsole.conf
+          content="FONT=latarcyrheb-sun32"
+          owner=root group=root mode=0755
+    tags: fnord
+
+  - name: set timezone
+    timezone:
+      name: "{{ event.timezone }}"

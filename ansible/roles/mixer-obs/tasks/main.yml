@@ -1,0 +1,7 @@
+---
+    - include: general.yml
+    - include: packages.yml
+    - include: x11vnc.yml
+    - include: ../mixer/tasks/irssi.yml
+    # TODO: nomachine
+    # - include: nomachine.yml

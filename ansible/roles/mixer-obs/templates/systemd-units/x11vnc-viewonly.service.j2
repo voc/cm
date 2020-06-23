@@ -1,0 +1,10 @@
+[Unit]
+Description=x11vnc
+
+[Service]
+ExecStart=/usr/bin/x11vnc -display :0 -alwaysshared -dontdisconnect -shared -forever -viewonly -listen 127.0.0.1 -rfbport 5900 -no6 -noipv6 -listen6 ""
+User=voc
+Group=voc
+
+[Install]
+WantedBy=multi-user.target

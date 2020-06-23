@@ -1,0 +1,16 @@
+---
+  # install general mixer packages
+  - name: install packages required to be a mixer
+    apt: name={{ item }} state=latest
+    with_items:
+      - chromium
+      - fonts-roboto
+      - irssi
+      - obs-studio 
+      - python3
+      - slim
+      - x11vnc
+      - x11-xserver-utils
+      - xserver-xorg
+      - xserver-xorg-video-ast
+      - xterm

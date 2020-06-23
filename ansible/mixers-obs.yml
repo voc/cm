@@ -1,0 +1,9 @@
+---
+  - hosts: mixers-obs
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: mixer-obs, tags: ['mixerobs'] }
+      - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }
+    vars:
+      mixer_user_password: "{{ lookup('keepass', 'ansible/logins/mixer.password') }}"
