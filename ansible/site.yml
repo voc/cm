@@ -1,6 +1,7 @@
 ---
   - import_playbook: encoders.yml
   - import_playbook: mixers.yml
+  - import_playbook: mixers-obs.yml
   - import_playbook: relays.yml
   - import_playbook: servers.yml
   - import_playbook: loadbalancers.yml

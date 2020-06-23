@@ -1,0 +1,17 @@
+---
+  # see packages.yml for x11vnc package installation
+
+  # x11vnc configuration
+  - name: create x11vnc viewonly systemd-unit
+    template: src=systemd-units/x11vnc-viewonly.service.j2
+              dest=/etc/systemd/system/x11vnc-viewonly.service
+              mode=0644 owner=root group=root
+
+  - name: create x11vnc mouseable systemd-unit
+    template: src=systemd-units/x11vnc-mouseable.service.j2
+              dest=/etc/systemd/system/x11vnc-mouseable.service
+              mode=0644 owner=root group=root
+
+  - name: reload systemd daemon
+    command: systemctl daemon-reload
+    changed_when: false
