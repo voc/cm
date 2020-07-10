@@ -8,5 +8,6 @@ acmetool_want:
     cdn.media.ccc.de ftp.ccc.de
     cdn-api.media.ccc.de
     static.media.ccc.de koeln.media.ccc.de
+    upload.media.ccc.de
 cdn_node: yes
 go_version: 1.13.8
