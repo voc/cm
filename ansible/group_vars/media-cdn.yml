@@ -15,6 +15,9 @@ users:
   - { name: 'meise', state: 'absent' }
   - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }
+  - { name: 'thee', state: 'present' }
+  - { name: 'y0sh', state: 'present' }
+  - { name: 'necro', state: 'present' }
 uploaders: "{{ lookup('keepass', 'ansible/media/uploaders.notes') | from_yaml }}"
 rsync_password: "{{ lookup('keepass', 'ansible/media/media_mirror_rsync.password') }}"
 rsync_secrets: "{{ lookup('keepass', 'ansible/media/rsync.notes') }}"
