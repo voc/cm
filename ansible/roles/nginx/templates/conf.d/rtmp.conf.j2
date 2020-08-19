@@ -34,9 +34,9 @@ rtmp {
     application stream {
       # enable live streaming
       live on;
-      meta copy;
 
-      hls off;
+      # copy breaks relaying, on pollutes downstream
+      meta off;
 
       allow publish all;
       allow play all;
@@ -58,9 +58,7 @@ rtmp {
     # relay only
     application relay {
       live on;
-      meta copy;
-
-      hls off;
+      meta off;
 
       allow publish all;
       allow play all;
