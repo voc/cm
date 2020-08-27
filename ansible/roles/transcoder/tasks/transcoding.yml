@@ -23,7 +23,7 @@
     file:
       path: "{{ item.path }}"
       state: absent
-    with_items: "{{ old_systemd_transcoding_files.files }}"
+    loop: "{{ old_systemd_transcoding_files.files }}"
 
   - name: create transcode-scripts
     template:
@@ -32,12 +32,9 @@
       mode: 0755
       owner: root
       group: root
-    with_items:
-      - h264
-      - vpx
-      - audio
+    loop:
       - vaapi
-      - thumbnail
+      - software
 
   - name: create transcode-update script
     template:
@@ -51,12 +48,9 @@
     template: src=systemd-units/transcode.service.j2
               dest="/etc/systemd/system/transcode_{{ item }}@.service"
               mode=0644 owner=root group=root
-    with_items:
-      - "h264"
-      - "vpx"
-      - "audio"
-      - "vaapi"
-      - "thumbnail"
+    loop:
+      - vaapi
+      - software
 
   - name: create transcode systemd-target
     template:
@@ -73,7 +67,7 @@
       mode: 0644
       owner: root
       group: root
-    with_items:
+    loop:
       - service
       - timer
 

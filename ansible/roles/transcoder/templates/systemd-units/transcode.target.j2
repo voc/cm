@@ -5,10 +5,7 @@ Description = All Transcoders of Stream %I
 {% if vaapi_present.stdout == "true" %}
 Wants = transcode_vaapi@%i.service
 {% else %}
-Wants = transcode_h264@%i.service
-Wants = transcode_audio@%i.service
-Wants = transcode_vpx@%i.service
-Wants = transcode_thumbnail@%i.service
+Wants = transcode_software@%i.service
 {% endif %}
 
 [Install]
