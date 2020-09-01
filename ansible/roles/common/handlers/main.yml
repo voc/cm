@@ -4,3 +4,6 @@
 
   - name: generate locales
     command: /usr/sbin/locale-gen
+
+  - name: c_rehash
+    command: c_rehash /etc/ssl/certs/
