@@ -17,6 +17,15 @@
       - install
       - config
 
+  - name: install pip packages for systemd exporter
+    pip:
+      name:
+        - pydbus
+        - collectd
+      state: present
+    when: transcoder_streams is defined or transcoder_lounges is defined
+    tags: install
+
   - name: install collectd perl packages
     apt: name={{ packages|flatten(levels=1) }} state=latest
     vars:
@@ -63,6 +72,13 @@
               src=collectd/plugins/haproxy.py
     notify: restart collectd
     when: haproxy is defined and haproxy
+    tags: install
+
+  - name: add systemd unit collectd plugin
+    template:
+      src: collectd/plugins/TranscodingUnits.py
+      dest: /opt/voc/collectd/plugins/TranscodingUnits.py
+    when: transcoder_streams is defined or transcoder_lounges is defined
     tags: install
 
   - name: adding entries for curl_json php to types.db
