@@ -35,6 +35,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
                         -bufsize:v:0 5600k \
                         -pix_fmt:v:0 yuv420p \
                         -profile:v:0 main \
+                        -r:v:0 25 \
                         -keyint_min:v:0 75 \
                         -g:v:0 75 \
                         -flags:v:0 +cgop \
@@ -48,6 +49,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
                         -bufsize:v:1 3600k \
                         -pix_fmt:v:1 yuv420p \
                         -profile:v:1 main \
+                        -r:v:1 25 \
                         -keyint_min:v:1 75 \
                         -g:v:1 75 \
                         -flags:v:1 +cgop \
@@ -71,12 +73,13 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 	\
 	-c:v libvpx-vp9 \
 		-deadline:v realtime -cpu-used:v 8 \
-		-frame-parallel:v 1 -crf:v 23 \
+		-frame-parallel:v 1 -crf:v 23 -row-mt:v 1 \
 	\
 		-map '0:v:0' \
 		-metadata:s:v:0 title="HD" \
 		-threads:v:0 4 \
 		-tile-columns:v:0 2 \
+                -r:v:0 25 \
 		-keyint_min:v:0 75 \
 		-g:v:0 75 \
 		-b:v:0 2800k -maxrate:v:0 2800k \
@@ -85,6 +88,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 		-metadata:s:v:1 title="SD" \
 		-threads:v:1 4 \
 		-tile-columns:v:1 1 \
+                -r:v:1 25 \
 		-keyint_min:v:1 75 \
 		-g:v:1 75 \
 		-b:v:1 800k -maxrate:v:1 800k \
