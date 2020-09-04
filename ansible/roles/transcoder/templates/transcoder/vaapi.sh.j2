@@ -84,7 +84,7 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 			-keyint_min:v:0 75 \
 			-g:v:0 75 \
 			-crf:v:0 23 \
-			-row-mt:v 1 \
+			-row-mt:v:0 1 \
 			-b:v:0 2800k -maxrate:v:0 2800k \
 			-bufsize:v:0 8400k \
 \
