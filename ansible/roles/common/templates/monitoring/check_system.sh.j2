@@ -360,5 +360,12 @@ if [ "mng.ber.c3voc.de" = "$(hostname -f)" ]; then
   check_http
 fi
 
+# execute subchecks
+for file in /usr/local/sbin/check_system.d/*.sh
+do
+  if [ -x "${file}" ]; then
+    . "${file}"
+  fi
+done
 
 exit 0

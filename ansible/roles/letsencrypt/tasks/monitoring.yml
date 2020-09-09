@@ -1,0 +1,6 @@
+---
+- name: template check_letsencrypt.sh
+  template:
+    src: check_letsencrypt.sh
+    dest: /usr/local/sbin/check_system.d/
+    mode: 0750

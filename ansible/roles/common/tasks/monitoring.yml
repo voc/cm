@@ -15,6 +15,14 @@
       - encodermode
       - voctomix
 
+  - name: create check_system.d subdir
+    file:
+      path: /usr/local/sbin/check_system.d
+      mode: 0750
+      state: directory
+    tags:
+      - check_system
+
   - cron: name="check system and send mqtt message"
           minute="*/1" hour="*" month="*" day="*"
           job="nice -n 19 /usr/local/sbin/check_system.sh >/dev/null"
