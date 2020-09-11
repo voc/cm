@@ -77,12 +77,6 @@ LoadPlugin "logfile"
 {% endif %}
 </Plugin>
 
-<LoadPlugin python>
-  Globals true
-</LoadPlugin>
-<Plugin python>
-  ModulePath "/opt/voc/collectd/plugins/"
-  LogTraces true
 {% if haproxy is defined and haproxy == 'yes' %}
   Import "haproxy"
   <Module haproxy>
@@ -90,13 +84,7 @@ LoadPlugin "logfile"
     Socket "/var/run/haproxy_stats_{{ i }}.sock"
 {% endfor %}
   </Module>
-
 {% endif %}
-{%  if nginx is defined and nginx == 'yes' and inventory_hostname in groups['relays'] %}
-  Import NginxHls
-  Import NginxDash
-{% endif %}
-</Plugin>
 
 {% if ansible_virtualization_role == 'host' and libvirtd_bin.stdout != '' %}
 LoadPlugin libvirt
@@ -179,3 +167,5 @@ LoadPlugin dbi
   </Host>
 </Plugin>
 {% endif %}
+
+include "/etc/collectd/collectd.conf.d/*.conf"

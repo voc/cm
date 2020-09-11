@@ -9,6 +9,8 @@
     tags: iptables
   - include: sysctl.yml
     tags: sysctl
+  - include: collectd.yml
+    tags: [collectd, monitoring]
 
   - include: relive.yml
     when: relive_master|bool

@@ -1,0 +1,23 @@
+---
+- name: add viewcounter plugins
+  template:
+    src: "collectd/plugins/{{ item }}"
+    dest: "/opt/voc/collectd/plugins/{{ item }}"
+    mode: 0640
+  loop:
+    - NginxHls.py
+    - NginxDash.py
+  register: collectd_relay_plugins
+
+- name: template collectd config
+  template:
+    src: collectd/relay.conf
+    dest: /etc/collectd/collectd.conf.d/relay.conf
+    mode: 0640
+  register: collectd_relay_config
+
+- name: restart collectd
+  service:
+    name: collectd
+    state: restarted
+  when: collectd_relay_plugins.changed or collectd_relay_config.changed

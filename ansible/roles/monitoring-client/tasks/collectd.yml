@@ -44,20 +44,6 @@
     when: icecast is defined and icecast == 'yes' and inventory_hostname in groups['relays']
     tags: install
 
-  - name: add nginx hls collectd plugin
-    template: dest=/opt/voc/collectd/plugins/NginxHls.py
-              src=collectd/plugins/NginxHls.py
-    notify: restart collectd
-    when: nginx is defined and nginx|bool and inventory_hostname in groups['relays']
-    tags: install
-
-  - name: add nginx dash collectd plugin
-    template: dest=/opt/voc/collectd/plugins/NginxDash.py
-              src=collectd/plugins/NginxDash.py
-    notify: restart collectd
-    when: nginx is defined and nginx|bool and inventory_hostname in groups['relays']
-    tags: install
-
   - name: add haproxy collectd plugin
     template: dest=/opt/voc/collectd/plugins/haproxy.py
               src=collectd/plugins/haproxy.py
