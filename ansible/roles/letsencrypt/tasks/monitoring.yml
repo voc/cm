@@ -1,6 +1,6 @@
 ---
-- name: template check_letsencrypt.sh
+- name: template check_cert_{{ domain }}
   template:
-    src: check_letsencrypt.sh
-    dest: /usr/local/sbin/check_system.d/
+    src: check_cert.sh
+    dest: "/usr/local/sbin/check_system.d/check_cert_{{ domain }}.sh"
     mode: 0750
