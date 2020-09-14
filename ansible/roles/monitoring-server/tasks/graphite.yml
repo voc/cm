@@ -18,6 +18,6 @@
     template: dest=/etc/graphite-api.yaml
               src=graphite/graphite-api.yaml.j2
               owner=root group=_graphite mode=0640
-    notify: restart graphite-api
+    # notify: restart graphite-api
     tags:
       - config

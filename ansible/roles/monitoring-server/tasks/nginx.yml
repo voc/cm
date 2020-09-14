@@ -4,8 +4,13 @@
     template:
       src: nginx/monitoring.conf.j2
       dest: /etc/nginx/sites-enabled/monitoring.c3voc.de.conf
-    notify:
-      - reload nginx
+    register: monitoring_vhost
     tags:
       - config
       - install
+
+  - name: reload nginx
+    service:
+      name: nginx
+      state: reloaded
+    when: monitoring_vhost.changed

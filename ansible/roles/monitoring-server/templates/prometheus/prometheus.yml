@@ -35,6 +35,13 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9100']
 
+  # telegraf
+  - job_name: telegraf
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9273']
+
+  # collectd exporter
   - job_name: collectd
     scrape_interval: 30s
     static_configs:

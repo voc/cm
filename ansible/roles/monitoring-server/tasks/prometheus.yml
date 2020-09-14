@@ -15,9 +15,15 @@
 
   - name: template prometheus configs
     template:
-      src: prometheus/{{ item }}.j2
+      src: prometheus/{{ item }}
       dest: /etc/prometheus/{{ item }}
     with_items:
       - prometheus.yml
       - rules/recording.yml
-    notify: reload prometheus
+    register: prometheus_config
+
+  - name: reload prometheus
+    service:
+      name: prometheus
+      state: reloaded
+    when: prometheus_config.changed
