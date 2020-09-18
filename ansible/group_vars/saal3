@@ -8,7 +8,7 @@ room_fahrplan_name: Saal 3
 encodermode: hd-voctomix
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
-voctomix_audiostreams: 2
+voctomix_audiostreams: 1
 voctomix_stream_suppress_audio_tracks: [1]
 
 voctomix_inverted_axis: True
@@ -64,15 +64,15 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 1
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
+    video_mode: "1080p25"
     volume: 1.0
     audiostream:
       # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
       0: 0
   
       # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
-      1: 1
+    stream_names:
+      0: original
 #  -
 #    # Duo Port 4
 #    name: cam2
@@ -93,5 +93,8 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 5
     video_connection: HDMI
-    video_mode: "1080p24"
+    video_mode: "1080p25"
     volume: 0.0
+
+blinder_audio:
+    original: 0
