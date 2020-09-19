@@ -4,7 +4,7 @@ ansible_python_interpreter: /usr/bin/python3
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: ds2020
+  acronym: DS2020
   name: Datenspuren 2020
   slogan: 44.43555, 26.102347
   formats:

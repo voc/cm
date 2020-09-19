@@ -1,6 +1,6 @@
 ---
 room_number: 5
-room_fahrplan_name: Hoersaal
+room_fahrplan_name: Vortrag
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
