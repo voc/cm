@@ -11,7 +11,8 @@ To manage hosts with [ansible](http://ansible.com/)  you only need to install `a
 
 
 ```
-  pip2.7 install libkeepass pykeepass
+  # You can optionally do this inside a virtualenv to avoid polluting your python installation
+  pip3 install libkeepass pykeepass
 
 ```
 
@@ -20,13 +21,13 @@ To manage hosts with [ansible](http://ansible.com/)  you only need to install `a
 Syntax validation.
 
 ```
-  ansible-playbook -i event -l mixers site.yml --syntax-check
+  ansible-playbook site.yml -l mixers --syntax-check
 ```
 
 Basic `ansible` call to deploy new config to a specific host. Passwords will be pulled from keepass.
 
 ```
-  ./ansible-playbook-keepass --ask-pass --ask-become-pass -u voc --become --become-method=su -i event -l mazdermind.lan.c3voc.de site.yml
+  ./ansible-playbook-keepass site.yml -l mazdermind.lan.c3voc.de
 ```
 
 _On the first call you will be prompted for the location to your keepass file and password. The keepass file location will be stored in ``.keepass_file_path`` the password obviously not._
@@ -34,16 +35,17 @@ _On the first call you will be prompted for the location to your keepass file an
 Basic `ansible` call to deploy new config to a set of hosts on an event.
 
 ```
-  ./ansible-playbook-keepass -u voc --become --become-method=sudo -i event -l saal1 site.yml
+  ./ansible-playbook-keepass site.yml -l saal1
 ```
 
 ## Keepass Password
 
-In case you need to do a lot of playbook runs you can also set the password using the following although it is not recommended.
+The Keepass password will be automatically derived using your GPG-keyring or MacOS Keychain when available. It is recommended that you set up one of these options if you need to do a lot of playbook runs.
+
+To test whether decrypting on-the-fly via GPG works you can do the following:
 
 ```
-   export KEEPASS_PW='…'
-  ./ansible-playbook-keepass … site.yml
+gpg -d <path-to-password-repo>/keepass_password.asc
 ```
 
 ## Keepass Version
@@ -61,11 +63,6 @@ What you need:
 * make sure you have two network interfaces configured with names
   `pbl` (public) and `int` (internal)
 * run ansible to deploy config
-
-## monitoring.lan.c3voc.de
-
-You have to name the monitoring host `monitoring.lan.c3voc.de`. After
-deployment, you have to run `check_mk -I && check_mk -O` inventory each host.
 
 # TODO
 
