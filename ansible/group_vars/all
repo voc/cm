@@ -70,6 +70,10 @@ monitoring:
   collectd_username: "{{ lookup('keepass', 'ansible/collectd.username') }}"
   collectd_password: "{{ lookup('keepass', 'ansible/collectd.password') }}"
   collectd_interval: 30
+  telegraf_server:
+    - "{{ lookup('keepass', 'ansible/monitoring/write_htpasswd.url')}}"
+  telegraf_username: "{{ lookup('keepass', 'ansible/monitoring/write_htpasswd.username') }}"
+  telegraf_password: "{{ lookup('keepass', 'ansible/monitoring/write_htpasswd.password') }}"
 
 stream_api:
   user: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.username') }}"

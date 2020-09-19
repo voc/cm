@@ -64,74 +64,12 @@ LoadPlugin "logfile"
   TimeToLive 128
 </Plugin>
 
-<LoadPlugin perl>
-  Globals true
-</LoadPlugin>
-<Plugin perl>
-  IncludeDir "/opt/voc/collectd/plugins/"
-  BaseName "Collectd::Plugins"
-
-{% if icecast is defined and icecast == 'yes' and inventory_hostname in groups['relays'] %}
-  # include icecast perl plugin
-  LoadPlugin Icecast2
-{% endif %}
-</Plugin>
-
-{% if haproxy is defined and haproxy == 'yes' %}
-  Import "haproxy"
-  <Module haproxy>
-{% for i in  range(1, haproxy_nbproc+1) %}
-    Socket "/var/run/haproxy_stats_{{ i }}.sock"
-{% endfor %}
-  </Module>
-{% endif %}
-
 {% if ansible_virtualization_role == 'host' and libvirtd_bin.stdout != '' %}
 LoadPlugin libvirt
 <Plugin "libvirt">
   Connection "qemu:///system"
   RefreshInterval 7200
   HostnameFormat "uuid"
-</Plugin>
-{% endif %}
-
-{% if php is defined and php == 'yes' %}
-LoadPlugin curl_json
-<Plugin curl_json>
-  <URL "http://127.0.0.1:8999/stats/php?json">
-    Instance "fpm"
-    <Key "accepted conn">
-        Type "http_requests"
-    </Key>
-    <Key "listen queue len">
-        Type "listen_queue"
-    </Key>
-    <Key "active processes">
-        Type "active_processes"
-    </Key>
-    <Key "total processes">
-        Type "total_processes"
-    </Key>
-  </URL>
-</Plugin>
-{% endif %}
-
-{% if nginx is defined and nginx == 'yes' and php is defined and php == 'yes' %}
-LoadPlugin dbi
-<Plugin dbi>
-  <Query "streaming_issues">
-    Statement "SELECT COUNT(*) AS value FROM feedback;"
-    <Result>
-      Type "counter"
-      ValuesFrom "value"
-    </Result>
-  </Query>
-  <Database "feedback">
-    Driver "sqlite3"
-    DriverOption "sqlite3_dbdir" "/opt/streaming-feedback/"
-    DriverOption "dbname" "feedback.sqlite3"
-    Query "streaming_issues"
-  </Database>
 </Plugin>
 {% endif %}
 

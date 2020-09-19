@@ -1,0 +1,14 @@
+---
+  - name: template telegraf config
+    template:
+      src: telegraf/telegraf.conf
+      dest: /etc/telegraf/
+      group: telegraf
+      mode: 0640
+    register: telegraf_config
+
+  - name: reload telegraf
+    service:
+      name: telegraf
+      state: reloaded
+    when: telegraf_config.changed
