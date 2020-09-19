@@ -35,12 +35,12 @@
     service: name=icecast2.service enabled=yes state=started
     failed_when: False
     changed_when: False
-    when: icecast is defined and icecast == 'yes'
+    when: icecast is defined and icecast|bool
 
-  # Start service
-  - name: enable icecast2 on boot
-    service: name=icecast2.service enabled=no state=stoped
+  # Stop service
+  - name: disable icecast2 on boot
+    service: name=icecast2.service enabled=no state=stopped
     failed_when: False
     changed_when: False
     when: >
-      icecast is not defined or (iceast is defined and icecast == 'yes')
+      icecast is not defined or (iceast is defined and not icecast|bool)

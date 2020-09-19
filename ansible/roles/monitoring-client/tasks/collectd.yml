@@ -41,7 +41,7 @@
     template: dest=/opt/voc/collectd/plugins/Collectd/Plugins/Icecast2.pm
               src=collectd/plugins/Icecast2.pm
     notify: restart collectd
-    when: icecast is defined and icecast == 'yes' and inventory_hostname in groups['relays']
+    when: icecast is defined and icecast|bool and inventory_hostname in groups['relays']
     tags: install
 
   - name: add haproxy collectd plugin

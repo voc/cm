@@ -112,7 +112,7 @@ http {
     }
 {% endif %}
 
-{% if php is defined and php == 'yes' %}
+{% if php is defined and php|bool %}
     location ~* ^/stats/php {
       access_log off;
 

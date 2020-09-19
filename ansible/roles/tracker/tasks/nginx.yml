@@ -60,4 +60,4 @@
 
   - name: start nginx
     service: name=nginx enabled=yes state=started
-    when: nginx is defined and nginx == 'yes'
+    when: nginx is defined and nginx|bool

@@ -3,10 +3,10 @@
 
 ### Common variables
 # use nginx
-nginx: 'yes'
+nginx: yes
 
 # use icecast
-icecast: 'yes'
+icecast: yes
 
 ### Master-Relay variables
 # - host stream-info api
