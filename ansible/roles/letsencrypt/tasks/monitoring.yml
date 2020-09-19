@@ -4,3 +4,20 @@
     src: check_cert.sh
     dest: "/usr/local/sbin/check_system.d/check_cert_{{ domain }}.sh"
     mode: 0750
+
+- name: template telegraf cert_{{domain}}
+  template:
+    src: telegraf_cert.conf
+    dest: "/etc/telegraf/telegraf.d/cert_{{domain}}.conf"
+    group: telegraf
+    mode: 0640
+  register: telegraf_cert_config
+  tags: telegraf
+
+- name: reload telegraf
+  service:
+    name: telegraf
+    state: reloaded
+  when: telegraf_cert_config.changed
+  tags: telegraf
+
