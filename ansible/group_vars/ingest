@@ -3,6 +3,9 @@ rtmp: yes
 nginx: yes
 rtmp_auth: yes
 
+# workaround for general nginx-rtmp bugginess
+nginx_worker_processes: 1
+
 # icecast
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
 icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"

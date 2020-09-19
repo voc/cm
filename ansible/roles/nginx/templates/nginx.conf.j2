@@ -110,6 +110,15 @@ http {
 {% endfor %}
       deny all;
     }
+
+    location /control {
+      rtmp_control all;
+      access_log off;
+
+      allow ::1;
+      allow 127.0.0.1;
+      deny all;
+    }
 {% endif %}
 
 {% if php is defined and php|bool %}
