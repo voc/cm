@@ -11,15 +11,15 @@ global:
     source: 'C3VOC'
 
 # Alertmanager configuration
-#alerting:
-#  alertmanagers:
-#  - static_configs:
-#    - targets: ['localhost:9093']
+alerting:
+ alertmanagers:
+ - static_configs:
+   - targets: ['localhost:9093']
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
   - "rules/recording.yml"
-  # - "second_rules.yml"
+  - "rules/alerting.yml"
 
 # A scrape configuration containing exactly one endpoint to scrape:
 scrape_configs:
@@ -37,9 +37,20 @@ scrape_configs:
 
   # telegraf
   - job_name: telegraf
-    scrape_interval: 10s
+    scrape_interval: 15s
     static_configs:
       - targets: ['localhost:9273']
+    metric_relabel_configs:
+      # Relabel our local telegraf metrics
+      - source_labels: ["host"]
+        regex: "{{ ansible_host | replace(".","\\\\.") }}"
+        target_label: "exported_instance"
+        replacement: "{{ ansible_host }}"
+
+      - source_labels: ["host"]
+        regex: "{{ ansible_host | replace(".","\\\\.") }}"
+        target_label: "role"
+        replacement: "monitoring-server"
 
   # collectd exporter
   - job_name: collectd

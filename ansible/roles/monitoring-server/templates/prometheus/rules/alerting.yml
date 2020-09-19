@@ -1,0 +1,10 @@
+groups:
+- name: certificates
+  rules:
+  - alert: CertificateExpiring
+    expr: x509_cert_expiry < 20*24*3600
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: Certificate for {{ $labels.common_name }} on {{ $labels.host}} expires in {{ $value | humanizeDuration }}

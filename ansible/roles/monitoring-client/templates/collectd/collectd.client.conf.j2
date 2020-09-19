@@ -11,14 +11,17 @@ Interval {{ monitoring.collectd_interval | default('30') }}
 TypesDB "/usr/share/collectd/types.db"
 TypesDB "/opt/voc/collectd/types.db"
 
+# also covered by telegraf
 LoadPlugin cpu
-LoadPlugin df
-LoadPlugin disk
-LoadPlugin interface
-LoadPlugin load
 LoadPlugin memory
-LoadPlugin network
 LoadPlugin swap
+LoadPlugin disk
+LoadPlugin df
+LoadPlugin load
+###
+
+LoadPlugin interface
+LoadPlugin network
 LoadPlugin tcpconns
 LoadPlugin curl_json
 {% if ansible_hostname is match('router')  %}
