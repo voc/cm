@@ -1,5 +1,6 @@
 haproxy_nbproc: 4
 nginx: yes
+php: yes
 monitoring_role: loadbalancer
 
 # define push ips

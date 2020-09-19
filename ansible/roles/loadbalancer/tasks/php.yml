@@ -3,10 +3,10 @@
   - name: install streaming page packages
     apt:
       name:
-      - php7.3-fpm
-      - php7.3-curl
-      - php7.3-sqlite3
-      - php7.3-xml
+      - "php{{ php_version }}-fpm"
+      - "php{{ php_version }}-curl"
+      - "php{{ php_version }}-sqlite3"
+      - "php{{ php_version }}-xml"
       - libsqlite3-dev
       - sqlite3
       state: latest
@@ -14,43 +14,45 @@
 
   # Create default pool
   - name: configure php-fpm
-    template: dest=/etc/php/7.0/fpm/pool.d/www.conf
-              src=php_fpm/www.conf.j2
-              mode=0644 owner=root group=root
-    notify: reload php7.3-fpm
+    template:
+      src: php_fpm/www.conf.j2
+      dest: "/etc/php/{{ php_version }}/fpm/pool.d/www.conf"
+      mode: 0644
+    register: fpm_config
     tags:
       - install
       - config
 
   # Change php.ini settings
-  - name: disable php version expose
-    lineinfile: dest=/etc/php/7.0/fpm/php.ini
-                regexp="expose_php.*=.*"
-                line="expose_php = Off"
-    notify: reload php7.3-fpm
-    tags:
-      - install
-      - config
-
-  - name: enable php short_open_tag
-    lineinfile: dest=/etc/php/7.0/fpm/php.ini
-                regexp="short_open_tag.*=.*"
-                line="short_open_tag = On"
-    notify: reload php7.3-fpm
+  - name: adapt php ini settings
+    lineinfile:
+      dest: "/etc/php/{{ php_version }}/fpm/php.ini"
+      regexp: "{{ item.regex }}"
+      line: "{{ item.line }}"
+    loop:
+      # don't expose version
+      - { regex: 'expose_php.*=.*', line: 'expose_php = Off' }
+      # short open tag
+      - { regex: 'short_open_tag.*=.*', line: 'short_open_tag = On'}
+    register: php_ini
     tags:
       - install
       - config
 
   - name: enable php short_open_tag on cli
-    lineinfile: dest=/etc/php/7.0/cli/php.ini
-                regexp="short_open_tag.*=.*"
-                line="short_open_tag = On"
+    lineinfile:
+      dest: "/etc/php/{{ php_version }}/cli/php.ini"
+      regexp: "short_open_tag.*=.*"
+      line: "short_open_tag = On"
     tags:
       - install
       - config
 
   # Enable service
   - name: (re)start php-fpm
-    service: name=php7.3-fpm enabled=yes state=restarted
+    service:
+      name: "php{{ php_version }}-fpm"
+      enabled: yes
+      state: restarted
+    when: fpm_config.changed or php_ini.changed
     tags: install
-    changed_when: false

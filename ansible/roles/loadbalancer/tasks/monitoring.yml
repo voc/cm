@@ -1,0 +1,32 @@
+---
+# Setup telegraf plugin
+- name: template haproxy telegraf check
+  template:
+    src: telegraf_haproxy.conf
+    dest: /etc/telegraf/telegraf.d/haproxy.conf
+    mode: 0644
+  register: telegraf_haproxy
+  tags: telegraf
+
+- name: reload telegraf
+  service:
+    name: telegraf
+    state: reloaded
+  when: telegraf_haproxy.changed
+  tags: telegraf
+
+# Collectd stuff
+- name: template collectd lb config
+  template:
+    src: collectd.loadbalancer.conf
+    dest: /etc/collectd/collectd.conf.d/loadbalancer.conf
+    mode: 0640
+  register: collectd_lb_config
+  tags: collectd
+
+- name: restart collectd
+  service:
+    name: collectd
+    state: restarted
+  when: collectd_lb_config.changed
+  tags: collectd

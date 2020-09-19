@@ -2,14 +2,23 @@
   - include: ../../../register/bin_path.yml
   - include: undeploy.yml
     tags: undeploy
+
   - include: nginx.yml
     tags: nginx
+
   - include: php.yml
     tags: php
+
   - include: streaming_website.yml
+
   - include: haproxy.yml
     tags: haproxy
+
   - include: sysctl.yml
     tags: sysctl
+
   - include: iptables.yml
     tags: iptables
+
+  - include: monitoring.yml
+    tags: monitoring

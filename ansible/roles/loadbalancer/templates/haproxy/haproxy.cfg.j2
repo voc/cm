@@ -8,7 +8,7 @@ global
     group   haproxy
     # stats sockets
 {% for nr in range(1, haproxy_nbproc+1) %}
-    stats socket /var/run/haproxy_stats_{{ nr }}.sock level operator process {{ nr}}
+    stats socket /var/run/haproxy/stats_{{ nr }}.sock level operator group telegraf mode 0770 process {{ nr}}
 {% endfor %}
     daemon
     log     /dev/log local0 notice

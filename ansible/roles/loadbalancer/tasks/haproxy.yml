@@ -45,12 +45,21 @@
               dest=/etc/haproxy/haproxy.cfg
               owner=root group=root mode=0640
               validate='haproxy -f %s -c'
-    notify: reload haproxy
+    register: haproxy_config
     tags:
       - install
       - config
       - haproxy_deploy
 
+  - name: reload haproxy
+    service:
+      name: haproxy
+      state: reloaded
+    when: haproxy_config.changed
+
   - name: autostart haproxy
-    service: name=haproxy state=started enabled=yes
+    service:
+      name: haproxy
+      state: started
+      enabled: yes
     tags: install
