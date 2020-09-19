@@ -1,10 +1,12 @@
 ---
   - include: nginx_rtmp.yml
-    tags: [nginx, rtmp]
+    tags: rtmp
 
   - include: rtmp_auth.yml
     when: rtmp is defined and rtmp|bool and rtmp_auth is defined and rtmp_auth|bool
-    tags: [nginx, rtmp]
+    tags: rtmp
 
   - include: nginx.yml
-    tags: [nginx]
+
+  - include: monitoring.yml
+    tags: monitoring

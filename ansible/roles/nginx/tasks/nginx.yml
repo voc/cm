@@ -53,19 +53,3 @@
           job="systemctl reload nginx" user=root
     when: letsencrypt_hookdir.stat.exists
     tags: install
-
-  # Setup telegraf plugin
-  - name: template nginx telegraf check
-    template:
-      src: telegraf_nginx.conf
-      dest: /etc/telegraf/telegraf.d/nginx.conf
-      mode: 0644
-    register: telegraf_nginx
-    tags: [monitoring, telegraf]
-
-  - name: reload telegraf
-    service:
-      name: telegraf
-      state: reloaded
-    when: telegraf_nginx.changed
-    tags: [monitoring, telegraf]
