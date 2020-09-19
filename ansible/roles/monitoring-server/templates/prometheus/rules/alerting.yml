@@ -1,10 +1,11 @@
+{% raw %}
 groups:
 - name: certificates
   rules:
   - alert: CertificateExpiring
-    expr: x509_cert_expiry < 20*24*3600
-    for: 1m
+    expr: telegraf_x509_cert_expiry < 20*24*3600
     labels:
       severity: warning
     annotations:
-      summary: Certificate for {{ $labels.common_name }} on {{ $labels.host}} expires in {{ $value | humanizeDuration }}
+      summary: Certificate for {{ $labels.common_name }} on {{ $labels.host }} expires in {{ $value | humanizeDuration }}
+{% endraw %}

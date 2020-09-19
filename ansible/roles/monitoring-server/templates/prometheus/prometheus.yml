@@ -41,6 +41,12 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9273']
     metric_relabel_configs:
+      # Prefix telegraf metrics with telegraf_
+      - source_labels: ["__name__"]
+        regex: "(.*)"
+        target_label: "__name__"
+        replacement: "telegraf_$1"
+
       # Relabel our local telegraf metrics
       - source_labels: ["host"]
         regex: "{{ ansible_host | replace(".","\\\\.") }}"

@@ -20,6 +20,7 @@
     with_items:
       - prometheus.yml
       - rules/recording.yml
+      - rules/alerting.yml
     register: prometheus_config
 
   - name: reload prometheus
