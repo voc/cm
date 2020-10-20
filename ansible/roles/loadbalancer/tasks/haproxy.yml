@@ -1,6 +1,6 @@
 ---
   - name: install haproxy package
-    apt: name=haproxy state=latest
+    apt: name=haproxy state=present
     tags: install
 
   - name: setup certboot-hook to aggregate haproxy combined cert-files
@@ -56,10 +56,11 @@
       name: haproxy
       state: reloaded
     when: haproxy_config.changed
+    tags: haproxy_deploy
 
   - name: autostart haproxy
     service:
       name: haproxy
       state: started
       enabled: yes
-    tags: install
+    tags: [install, haproxy_deploy]
