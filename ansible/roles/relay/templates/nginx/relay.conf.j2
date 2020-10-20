@@ -97,6 +97,13 @@ server {
   location ~* ^/(hls|dash|thumbnail|artwork)/(.+)?$ {
     alias /srv/nginx/$1/$2;
     autoindex on;
+
+    # allow transcoder uploads
+    dav_methods PUT DELETE;
+    limit_except GET {
+      auth_basic           "voc login";
+      auth_basic_user_file htpasswd;
+    }
   }
 
   location /aws/ {
