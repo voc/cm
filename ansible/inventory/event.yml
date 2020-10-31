@@ -115,7 +115,7 @@ dus.c3voc.de
 node.lan.c3voc.de
 storage.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/storage.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/storage.password') }}"
 usa.lan.c3voc.de
-dellinger.alb.c3voc.de
+dellinger.dort.c3voc.de
 deskjet.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/deskjet.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/deskjet.password') }}"
 aws.lan.c3voc.de # ansible_ssh_port=8000 ansible_ssh_host=127.0.0.1
 mebibyte.c3voc.de
