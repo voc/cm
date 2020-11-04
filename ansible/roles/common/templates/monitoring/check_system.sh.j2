@@ -315,6 +315,18 @@ check_http () {
   done
 }
 
+# check for failed systemd services
+check_systemd () {
+  res="$(systemctl list-units --state=failed --no-legend --no-pager)"
+  if [ -n "${res}" ]; then
+    echo "${res}" | while read line; do
+      service="$(echo "${line}" | awk '{print $1}')"
+      debug_output "systemd" "${TRUNC_HOSTNAME}" "${service}"
+      send_mqtt_message "error" "system/systemd/${TRUNC_HOSTNAME}" "<red>systemd unit ${service} failed</red>"
+    done
+  fi
+}
+
 # check if system is running on battery and the capacity is <= 30%
 check_ac_power () {
   if [ -f "/sys/class/power_supply/AC/online" ]; then
@@ -341,6 +353,7 @@ check_disk_space
 check_raid
 check_logs
 check_interfaces
+check_systemd
 check_ac_power
 
 # special cases
