@@ -29,9 +29,9 @@ defaults
     timeout server  10s
     timeout client  30s
     # constum error filter
-    errorfile 500 /srv/nginx/htdocs/50x.html
-    errorfile 502 /srv/nginx/htdocs/50x.html
-    errorfile 503 /srv/nginx/htdocs/50x.html
+    errorfile 500 /var/lib/haproxy/500.http
+    errorfile 502 /var/lib/haproxy/502.http
+    errorfile 503 /var/lib/haproxy/503.http
     log     /dev/log local0 notice
 
 frontend icecast_and_nginx_hls_http

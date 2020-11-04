@@ -18,6 +18,15 @@
       - streaming.media.ccc.de
     changed_when: false
 
+  - name: install http error files
+    copy:
+      src: "error/{{ item }}"
+      dest: "/var/lib/haproxy/{{ item }}"
+    with_items:
+      - 500.http
+      - 502.http
+      - 503.http
+
   # configure haproxy
   - name: create haproxy chroot directory
     file: dest=/usr/share/haproxy state=directory
