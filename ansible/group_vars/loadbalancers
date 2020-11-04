@@ -34,7 +34,7 @@ lb_3rdparty_relays: {
 lb_dash_relays: {
   "live.alb.c3voc.de": 75,
   "live.bn.c3voc.de": 50,
-  "live.dus.c3voc.de": 50,
+  "live.dus.c3voc.de": 15,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
@@ -47,7 +47,7 @@ lb_dtag_relays: {
 
 lb_hls_relays: {
   "live.bn.c3voc.de": 50,
-  "live.dus.c3voc.de": 50,
+  "live.dus.c3voc.de": 15,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
@@ -65,5 +65,4 @@ lb_local_relays: {
 
 lb_relive_relays: {
   "live.alb.c3voc.de": 75,
-  "live2.alb.c3voc.de": 50,
 }
