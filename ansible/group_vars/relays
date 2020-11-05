@@ -9,10 +9,6 @@ relay_fanout:
   dash_write_path: /srv/nginx/dash
   thumbnail_write_path: /srv/nginx/thumbnail
 
-rtmp_ingest:
-  pull_endpoint: 127.0.0.1:1935/stream
-  push_endpoint: 127.0.0.1:7999
-
 # sources to monitor from stream_master
 streaming_sources:
   - "live.ber.c3voc.de:7999"
