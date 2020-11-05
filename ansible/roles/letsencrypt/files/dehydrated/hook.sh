@@ -26,11 +26,9 @@ case "$1" in
         printf "server %s\nupdate delete _acme-challenge.%s. %d in TXT \"%s\"\nsend\n" "${DNSSERVER}" "${DOMAIN}" "${TTL}" "${4}" | $NSUPDATE
         ;;
     "deploy_cert")
-        # optional:
-        # /path/to/deploy_cert.sh "$@"
         DOMAIN="${2}"
+        # allow read for ssl-cert group
         chmod g+r /etc/letsencrypt/live/${DOMAIN}/*
-        for f in /etc/letsencrypt/renewal-hooks/post/*; do $f; done
         ;;
     "unchanged_cert")
         # do nothing for now
@@ -42,5 +40,12 @@ case "$1" in
         # do nothing for now
         ;;
 esac
+
+# call custom sub-hooks
+for file in /etc/dehydrated/hook.d/*.sh; do
+  if [ -x "${file}" ]; then
+    "${file}" "$@"
+  fi
+done
 
 exit 0

@@ -7,23 +7,23 @@
       force: yes
 
   - name: create /etc/letsencrypt hierarchy
-    file: dest=/etc/{{ item }}
-          owner=root group=ssl-cert
-          state=directory mode=0750
+    file:
+      dest: /etc/{{ item }}
+      owner: root
+      group: ssl-cert
+      state: directory
+      mode: 0750
     with_items:
-      - "letsencrypt"
-      - "letsencrypt/live"
       - "letsencrypt/live/{{ domain }}"
-      - "letsencrypt/renewal-hooks/"
-      - "letsencrypt/renewal-hooks/post"
 
   - name: generate dehydrated folders
-    file: dest=/etc/{{ item }}
-          owner=root group=root
-          state=directory
+    file:
+      dest: /etc/{{ item }}
+      state: directory
+      mode: 0750
     with_items:
-      - "dehydrated"
-      - "dehydrated/accounts"
+      - dehydrated/accounts
+      - dehydrated/hook.d
 
   - name: generate dehydrated hook.sh
     copy: dest=/etc/dehydrated/hook.sh
@@ -68,22 +68,22 @@
 
   - name: generate or renew certificate (takes some time)
     shell: "/opt/dehydrated/dehydrated --cron"
-
-  - name: generate dehydrated systemd timer unit
-    copy: dest=/etc/systemd/system/dehydrated.timer
-          src=dehydrated/dehydrated.timer
-          owner=root group=root mode=0664
-
-  - name: generate dehydrated systemd service unit
-    copy: dest=/etc/systemd/system/dehydrated.service
-          src=dehydrated/dehydrated.service
-          owner=root group=root mode=0664
-
-  - name: reload systemd daemon
-    command: systemctl daemon-reload
     changed_when: false
 
+  - name: deploy dehydrated systemd units
+    copy:
+      dest: /etc/systemd/system/
+      src: "dehydrated/{{ item }}"
+      mode: 0644
+    loop:
+      - dehydrated.service
+      - dehydrated.timer
+    register: dehydrated_units
+
   - name: enable dehydrated systemd timer
-    service: name=dehydrated.timer
-             enabled=yes
-             state=started
+    systemd:
+      name: dehydrated.timer
+      daemon_reload: yes
+      enabled: yes
+      state: started
+    when: dehydrated_units.changed

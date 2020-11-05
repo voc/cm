@@ -1,8 +1,8 @@
 [Unit]
-Description=Run dehydrated weekly to renew Let's Encrypt certificated
+Description=Run dehydrated daily to renew Let's Encrypt certificates
 
 [Timer]
-OnCalendar=weekly
+OnCalendar=daily
 Persistent=true
 
 [Install]
