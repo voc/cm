@@ -60,11 +60,13 @@
           owner=root group=root mode=0640
 
   - name: ensure domain {{ domain }} is in domains.txt
-    lineinfile: path=/etc/dehydrated/domains.txt
-                state=present
-                regexp='{{ domain }}'
-                line='{{ domain }}'
-                create=yes owner=root group=root mode=0664
+    lineinfile:
+      path: /etc/dehydrated/domains.txt
+      state: present
+      regexp: '^{{ domain }}$'
+      line: '{{ domain }}'
+      create: yes
+      mode: 0644
 
   - name: generate or renew certificate (takes some time)
     shell: "/opt/dehydrated/dehydrated --cron"
