@@ -34,25 +34,28 @@ def cleanup(c):
 
 def calculate_adaptation_sets(c):
 	first_audio_stream_index = len(c.video_tracks)
+	set_id = 0
 
 	# Video Tracks
-	sets = ["id=1,streams=v"]
+	sets = [f"id={set_id},streams=v"]
+	set_id += 1
 
 	# Native
-	sets += ["id=2,streams=%d" % (first_audio_stream_index+0)]
+	sets += [f"id={set_id},streams={first_audio_stream_index+0}"]
+	set_id += 1
 
 	if 'Translated' in c.audio_tracks:
-		# Translated
-		sets += ["id=3,streams=%d" % (first_audio_stream_index+1)]
+			# Translated
+			sets += [f"id={set_id},streams={first_audio_stream_index+1}"]
+			set_id += 1
 
 	if 'Translated-2' in c.audio_tracks:
-		# Translated-2
-		sets += ["id=4,streams=%d" % (first_audio_stream_index+2)]
-
+			# Translated-2
+			sets += [f"id={set_id},streams={first_audio_stream_index+2}"]
+			set_id += 1
 
 	return {
 		"adaptation_sets": sets,
-
 		"first_audio_stream_index": first_audio_stream_index,
 	}
 
