@@ -14,9 +14,6 @@ pid /var/run/nginx.pid;
 
 events {
   worker_connections  {{ nginx_worker_connections | default('4096') }};
-
-  # required by per_worker
-  accept_mutex off;
 }
 
 http {

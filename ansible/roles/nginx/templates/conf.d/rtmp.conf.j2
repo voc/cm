@@ -1,6 +1,6 @@
 # HLS-Master configuration
 
-include /usr/share/nginx/modules-available/mod-http-flv-live.conf;
+include /usr/share/nginx/modules-available/{{ nginx_rtmp_mod }}.conf;
 
 # important for multi worker processes!!1!
 rtmp_auto_push on;
@@ -11,10 +11,10 @@ rtmp {
 
   server {
 {% if nginx_bind_ipv4 is defined and nginx_bind_ipv6 is defined %}
-    listen [{{ nginx_bind_ipv6 }}]:1935 ipv6only=off reuseport;
-    listen {{ nginx_bind_ipv4 }}:1935 ipv6only=off reuseport;
+    listen [{{ nginx_bind_ipv6 }}]:1935 ipv6only=off;
+    listen {{ nginx_bind_ipv4 }}:1935 ipv6only=off;
 {% else %}
-    listen [::]:1935 ipv6only=off reuseport;
+    listen [::]:1935 ipv6only=off;
 {% endif %}
     ping 30s;
 
@@ -49,7 +49,7 @@ rtmp {
 
       # forward streams to local icecast
       exec ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000
-        -i rtmp://127.0.0.1/$app/$name
+        -f live_flv -i rtmp://127.0.0.1/$app/$name
         -c copy -map 0:v:0 -map 0:a:0
         -f matroska -content_type video/webm -password {{ icecast_source_password }}
         icecast://127.0.0.1:8000/${name};

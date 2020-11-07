@@ -1,6 +1,6 @@
 ---
-  - name: install libnginx-mod-http-flv-live package
-    apt: name=libnginx-mod-http-flv-live state=latest
+  - name: install nginx rtmp mod package
+    apt: name="libnginx-{{ nginx_rtmp_mod }}" state=latest
     tags: install
     when: (rtmp is defined and rtmp|bool)
 
