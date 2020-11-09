@@ -1,3 +1,4 @@
 README.html
 ansible/relays.json
 *.DS_Store
+venv/

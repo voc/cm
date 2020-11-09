@@ -24,7 +24,7 @@ send_mqtt_message () {
   message=$3
 
   if [ -n "$DEBUG" ]; then
-    echo mosquitto_pub --capath /etc/ssl/certs/ -h \"{{ mqtt.server }}\" -u \"{{ mqtt.username }}\" -P \"{{ mqtt.password }}\" -t \"/voc/alert\" -m \"{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}\"
+    echo mosquitto_pub --capath /etc/ssl/certs/ -h \"{{ mqtt.server }}\" -u \"{{ mqtt.username }}\" -P \"{{ mqtt.password }}\" -t \"/voc/alert\" -m \"{\\\"level\\\":\\\"${error_level}\\\",\\\"component\\\":\\\"${component}\\\",\\\"msg\\\":\\\"${message}\\\"}\"
   else
     for i in 1 2 3 ; do
       mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}" && break

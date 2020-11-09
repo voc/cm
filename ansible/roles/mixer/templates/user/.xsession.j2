@@ -3,7 +3,9 @@
 xset -dpms
 xset s off
 
+{% if mixer_touchpad is not defined or mixer_touchpad != yes %}
 synclient TouchpadOff=1
+{% endif %}
 
 xrdb -load /home/mixer/.Xresources
 
