@@ -77,6 +77,7 @@
        - check-mk-agent
        - munin-node
        - puppet
+   when: "'proxmox' not in group_names"
 
  - name: add megacli
    apt: name=megacli state=present

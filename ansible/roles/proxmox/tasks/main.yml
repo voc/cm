@@ -1,0 +1,11 @@
+---
+ - name: ensure that pve-no-subscription sources are enabled
+   apt_repository: repo="deb http://download.proxmox.com/debian/pve buster pve-no-subscription" update_cache=false
+
+ - name: remove proxmox ui no-subscription warning message
+   replace:
+     # not sure about version 5
+     path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+     regexp: "data.status !== 'Active'"
+     replace: 'false'
+

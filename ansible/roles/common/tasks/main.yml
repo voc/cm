@@ -14,18 +14,19 @@
   - include: packages.yml
     tags: [packages]
   - include: kernel.yml
-    when: system.type == 'pc'
+    when: "system.type == 'pc' and 'proxmox' not in group_names"
     tags: kernel
   - include: vim.yml
   - include: sudo.yml
   - include: grub.yml
-    when: system.type == 'pc'
+    when: "system.type == 'pc' and 'proxmox' not in group_names"
   - include: ntp.yml
     when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
   - include: acpi.yml
     when: system.type == 'pc'
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
+    when: "'proxmox' not in group_names"
   - include: ssl.yml
   - include: smart.yml
   # realise users
