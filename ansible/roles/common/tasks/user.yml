@@ -48,6 +48,13 @@
       - "{{ additional_users }}"
     when: item.state != 'absent'
 
+  - name: install vimrc
+    copy: dest="/home/{{ item.name }}/.vimrc" src="{{ lookup('first_found', ['user/' + item.name + '/vimrc', 'user/default/vimrc']) }}"
+    with_items: 
+      - "{{ users }}"
+      - "{{ additional_users }}"
+    when: item.state != 'absent'
+
   - name: install screenrc
     copy: dest="/home/{{ item.name }}/.screenrc" src="{{ lookup('first_found', ['user/' + item.name + '/screenrc', 'user/default/screenrc']) }}"
     with_items: 

@@ -1,0 +1,138 @@
+set nocompatible
+set runtimepath+=~/.dotfiles/vim
+
+" Disable loading of zip plugin
+let g:loaded_zipPlugin= 1
+let g:loaded_zip      = 1
+
+autocmd CursorMoved,CursorMovedI * diffupdate
+autocmd InsertEnter,InsertLeave * diffupdate
+
+" Enable syntax highlighting
+syntax on
+
+" Colorscheme
+let g:rehash256 = 1
+colorscheme slate
+
+" Visual autocomplete for command menu
+set wildmenu
+
+" Add line numbers
+set number
+set ruler
+
+" Set encoding
+set encoding=utf-8
+
+" Whitespace stuff
+set nowrap
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set noexpandtab
+filetype plugin indent on
+
+" Show trailing spaces and highlight hard tabs
+set list listchars=tab:»·,trail:·
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" Home/End Keys
+map <ESC>[H ^
+map <ESC>[F $
+
+" Chromebook: Shift + Left/Right as Home/End
+map <ESC>[1;2D ^
+map <ESC>[1;2C $
+
+" Search related settings
+set incsearch
+set hlsearch
+
+" Map Ctrl+l to clear highlighted searches
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+
+set viminfo='20,<1000,s1000
+set pastetoggle=<F10>
+
+nnoremap <ESC>Oa :wincmd k<CR>
+nnoremap <ESC>Ob :wincmd j<CR>
+nnoremap <ESC>[1;5D :wincmd h<CR>
+nnoremap <ESC>[1;5C :wincmd l<CR>
+nnoremap <ESC>[1;3A :wincmd k<CR>
+nnoremap <ESC>[1;3B :wincmd j<CR>
+nnoremap <ESC>[1;3D :wincmd h<CR>
+nnoremap <ESC>[1;3C :wincmd l<CR>
+
+nnoremap <ESC>q :qa<CR>
+nnoremap <ESC>w :wa<CR>
+nnoremap <ESC>1 :b1<CR>
+nnoremap <ESC>2 :b2<CR>
+nnoremap <ESC>3 :b3<CR>
+nnoremap <ESC>4 :b4<CR>
+nnoremap <ESC>5 :b5<CR>
+nnoremap <ESC>6 :b6<CR>
+nnoremap <ESC>7 :b7<CR>
+nnoremap <ESC>8 :b8<CR>
+nnoremap <ESC>9 :b9<CR>
+nnoremap <ESC>0 :b10<CR>
+
+
+nnoremap <ESC>q :qa<CR>
+nnoremap <ESC>w :wa<CR>
+
+" Disable code folding
+set nofoldenable
+
+" Additional syntax highlighting
+au BufRead,BufNewFile *.rsc set filetype=rsc 
+au BufNewFile,BufRead PKGBUILD    set filetype=PKGBUILD
+au BufNewFile,BufRead [Dd]ockerfile,Dockerfile.*,*.Dockerfile set filetype=dockerfile
+au BufNewFile,BufRead *.automount set filetype=systemd
+au BufNewFile,BufRead *.mount     set filetype=systemd
+au BufNewFile,BufRead *.path      set filetype=systemd
+au BufNewFile,BufRead *.service   set filetype=systemd
+au BufNewFile,BufRead *.socket    set filetype=systemd
+au BufNewFile,BufRead *.swap      set filetype=systemd
+au BufNewFile,BufRead *.target    set filetype=systemd
+au BufNewFile,BufRead *.timer     set filetype=systemd
+
+" Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+
+" md, markdown, and mk are markdown and define buffer-local preview
+function s:setupMarkup()
+  map <buffer> <Leader>p :Mm <CR>
+endfunction
+au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
+
+" try to detect indention style
+fu Select_tab_style()
+  if search('^ ', 'n', 150)
+    set expandtab
+  en
+endf
+
+au BufRead,BufNewFile * call Select_tab_style()
+
+" add json syntax highlighting
+au BufNewFile,BufRead *.json set ft=javascript
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" ctrp custom ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.eunit$',
+  \ 'file': '\.exe$\|\.so$\|\.dll\|\.beam$\|\.DS_Store$'
+  \ }
+
+" disable welcome-message
+set shortmess+=I
+
+set laststatus=2
+if !has('gui_running')
+  set t_Co=256
+endif
