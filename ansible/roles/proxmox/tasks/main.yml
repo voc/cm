@@ -12,4 +12,4 @@
    replace:
      path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
      regexp: ".data.status.toLowerCase.. !== 'active'"
-     replace: ".data.status.toLowerCase() !== 'NotFound'"
+     replace: ".data.status.toLowerCase() !== 'notfound'"
