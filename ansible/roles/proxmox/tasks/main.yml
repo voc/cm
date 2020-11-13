@@ -4,8 +4,12 @@
 
  - name: remove proxmox ui no-subscription warning message
    replace:
-     # not sure about version 5
      path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
      regexp: "data.status !== 'Active'"
      replace: 'false'
 
+ - name: remove proxmox ui no-subscription warning message
+   replace:
+     path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+     regexp: ".data.status.toLowerCase.. !== 'active'"
+     replace: ".data.status.toLowerCase() !== 'NotFound'"
