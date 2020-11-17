@@ -1,9 +1,23 @@
-# HLS-Master configuration
+error_log  /var/log/nginx/rtmp-error.log;
+pid /var/run/nginx-rtmp.pid;
 
-include /usr/share/nginx/modules-available/{{ nginx_rtmp_mod }}.conf;
+# HLS-Master configuration
+include /usr/share/nginx/modules-available/mod-rtmp.conf;
+
+events {
+  worker_connections  4096;
+}
+
+user  www-data;
+
+# Specifies the value for maximum file descriptors that can be opened by this process.
+worker_rlimit_nofile 65536;
+
+# multiple worker
+worker_processes  1;
 
 # important for multi worker processes!!1!
-rtmp_auto_push on;
+rtmp_auto_push off;
 
 rtmp {
   log_format rtmp '"$remote_addr [$time_local] $command "$app" "$name" "$args" - $bytes_received $bytes_sent ($session_readable_time)"';
@@ -16,6 +30,7 @@ rtmp {
 {% else %}
     listen [::]:1935 ipv6only=off;
 {% endif %}
+
     ping 30s;
 
     # Disable audio until first video frame is sent.
@@ -62,6 +77,53 @@ rtmp {
 
       allow publish all;
       allow play all;
+    }
+  }
+}
+
+
+http {
+  server_tokens off;
+  sendfile on;
+
+  types_hash_max_size 2048;
+
+  log_format ip '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+  access_log off;
+
+  # mime-types
+  default_type application/octet-stream;
+
+  types {
+    application/dash+xml mpd;
+  }
+
+  # gzip settings
+  gzip off;
+
+  # disable directory listing
+  autoindex off;
+
+  # vhost for stats
+  server {
+    server_name _;
+
+    listen 127.0.0.1:9999;
+    allow ::1;
+    allow 127.0.0.1;
+
+    # stats
+    location ~* ^/stats/nginx {
+      stub_status on;
+    }
+
+    location ~* ^/stats/rtmp {
+      rtmp_stat all;
+      rtmp_stat_stylesheet /stat.xsl;
+    }
+
+    location /control {
+      rtmp_control all;
     }
   }
 }

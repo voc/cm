@@ -4,4 +4,3 @@
     src: nginx/ingest.conf.j2
     dest: "/etc/nginx/sites-enabled/{{ ansible_fqdn }}"
   notify: reload nginx
-

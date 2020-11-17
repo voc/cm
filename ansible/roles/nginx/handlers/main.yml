@@ -7,5 +7,8 @@
     service: name=nginx state=reloaded
     when: nginx is defined and nginx|bool
 
+  - name: restart nginx-rtmp
+    systemd: name=nginx-rtmp state=restarted daemon_reload=yes
+
   - include: ../../../handlers/systemd.yml
   - include: ../../../roles/letsencrypt/handlers/main.yml domain={{ ansible_fqdn }}

@@ -78,9 +78,6 @@ http {
   include /etc/nginx/sites-enabled/*;
 
   # vhost for stats
-  # Example:
-  #   http://127.0.0.1:8999/stats/nginx → nginx stats for all workers
-  #   http://127.0.0.1:9000/stats/nginx → nginx stats for worker 1
   server {
     server_name _;
 
@@ -99,22 +96,20 @@ http {
 
 {% if rtmp is defined and rtmp|bool %}
     location ~* ^/stats/rtmp {
-      rtmp_stat all;
-      access_log off;
-
 {% for ip in nginx_ips_allow_stats %}
       allow {{ ip }};
 {% endfor %}
       deny all;
+      access_log   off;
+      proxy_pass http://127.0.0.1:9999;
     }
 
     location /control {
-      rtmp_control all;
-      access_log off;
-
       allow ::1;
       allow 127.0.0.1;
       deny all;
+      access_log   off;
+      proxy_pass http://127.0.0.1:9999;
     }
 {% endif %}
 
