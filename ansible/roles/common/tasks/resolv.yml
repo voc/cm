@@ -1,11 +1,21 @@
 ---
-  - name: make resolv.conf writable
-    file:
-      path: /etc/resolv.conf
-      attributes: -i
-    changed_when: false
+- name: deploy systemd-resolved config
+  template:
+    src: resolved.conf
+    dest: /etc/systemd/resolved.conf
+    mode: 0644
+  register: resolved_conf
 
-  - name: configure resolv.conf
-    template: dest=/etc/resolv.conf
-              src=resolv.conf.j2
-              owner=root group=root mode=0644
+- name: enable and start resolved
+  service:
+    name: systemd-resolved
+    state: restarted
+    enabled: true
+  when: resolved_conf.changed
+
+- name: make resolv.conf a symlink to /lib/systemd/resolv.conf
+  file:
+    path: /etc/resolv.conf
+    state: link
+    src: /lib/systemd/resolv.conf
+    force: yes
