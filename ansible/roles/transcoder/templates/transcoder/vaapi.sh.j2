@@ -14,6 +14,8 @@ check_env artwork_base
 
 while true; do
 
+mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"transcoding/{{ ansible_hostname }}\",\"msg\":\"Transcoding (VAAPI) for ${stream_key} started…\"}" &
+
 # download overlay
 #overlay="/tmp/${stream_key}_vaapi_overlay.png"
 #curl -o "${overlay}" "${artwork_base}/overlay_sd.png"
@@ -165,5 +167,8 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 	-password {{ lookup('keepass', 'ansible/icecast/icedist/source.password') }} \
 	-content_type video/webm \
 	"icecast://${transcoding_sink}/${stream_key}_audio"
+
+mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"transcoding/{{ ansible_hostname }}\",\"msg\":\"Transcoding (VAAPI) for ${stream_key} stopped with exit code ${?}…\"}" &
+
 sleep 5
 done

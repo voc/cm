@@ -20,6 +20,8 @@ password=PASSWORD_${endpoint}
 
 while true; do
 
+mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"transcoding/{{ ansible_hostname }}\",\"msg\":\"Transcoding (Audio-Only) for ${stream_key} started…\"}" &
+
 ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 10000000 \
 	-i http://{{ transcoder_lounge_pull_endpoint }}/${endpoint}.opus \
 	\
@@ -31,6 +33,8 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000 -timeout 1000000
 	-content_type audio/mp3 \
 	-password "${!password}" \
 	icecast://{{ transcoder_lounge_push_endpoint }}/${endpoint}.mp3
+
+mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"info\",\"component\":\"transcoding/{{ ansible_hostname }}\",\"msg\":\"Transcoding (Audio-Only) for ${stream_key} stopped with exit code ${?}…\"}" &
 
 sleep 5
 done
