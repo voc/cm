@@ -1,52 +1,47 @@
 ---
-  # Install PHP + stuff
-  - name: install streaming page packages
-    apt: name={{ item }} state=latest
-    with_items:
-      - php5-fpm
-      - php5-xdiff
-      - php5-apcu
-      - php5-xsl
-      - php5-xmlrpc
-      - php5-readline
-      - php5-pgsql
-      - php5-json
-      - php5-intl
-      - php5-curl
-      - php-pear
-      - php5-dev
-    tags: install
+# Install PHP + stuff
+- name: install tracker php packages
+  apt:
+    name:
+      - "php{{ php_version }}-fpm"
+      - "php{{ php_version }}-apcu"
+      - "php{{ php_version }}-xsl"
+      - "php{{ php_version }}-xmlrpc"
+      - "php{{ php_version }}-readline"
+      - "php{{ php_version }}-pgsql"
+      - "php{{ php_version }}-json"
+      - "php{{ php_version }}-intl"
+      - "php{{ php_version }}-curl"
+      - "php{{ php_version }}-dev"
+      - "php-xdiff"
+      - "php-pear"
+    state: latest
 
-  # Create default pool
-  - name: configure php-fpm
-    template: dest=/etc/php5/fpm/pool.d/www.conf
-              src=php_fpm/www.conf.j2
-              mode=0644 owner=root group=root
-    notify: reload php5-fpm
-    tags:
-      - install
-      - config
+# Create default pool
+- name: configure php-fpm
+  template:
+    src: php_fpm/www.conf.j2
+    dest: "/etc/php/{{ php_version }}/fpm/pool.d/www.conf"
+    mode: 0644
+  register: fpm_config
 
-  # Change php.ini settings
-  - name: disable php version expose
-    lineinfile: dest=/etc/php5/fpm/php.ini
-                regexp="expose_php.*=.*"
-                line="expose_php = Off"
-    notify: reload php5-fpm
-    tags:
-      - install
-      - config
+# Change php.ini settings
+- name: adapt php ini settings
+  lineinfile:
+    dest: "/etc/php/{{ php_version }}/fpm/php.ini"
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
+  loop:
+    # don't expose version
+    - { regex: 'expose_php.*=.*', line: 'expose_php = Off' }
+    # short open tag
+    - { regex: 'short_open_tag.*=.*', line: 'short_open_tag = On'}
+  register: php_ini
 
-  - name: enable php short_open_tag
-    lineinfile: dest=/etc/php5/fpm/php.ini
-                regexp="short_open_tag.*=.*"
-                line="short_open_tag = On"
-    notify: reload php5-fpm
-    tags:
-      - install
-      - config
-
-  # Enable service
-  - name: start php-fpm
-    service: name=php5-fpm enabled=yes state=started
-    tags: install
+# Enable service
+- name: (re)start php-fpm
+  service:
+    name: "php{{ php_version }}-fpm"
+    enabled: yes
+    state: restarted
+  when: fpm_config.changed or php_ini.changed

@@ -1,17 +1,20 @@
 ---
   - include: nginx.yml
+    tags: nginx
   - include: php.yml
+    tags: php
 
   - name: install tracker specific packages
-    apt: name={{ item }} state=latest
-    with_items:
-      - libxdiff0
-      - mgdiff
-      - curl
-      - libxslt1.1
-      - libintl-perl
-      - php-xdiff
-      - autopostgresqlbackup
+    apt:
+      name:
+        - libxdiff0
+        - mgdiff
+        - curl
+        - libxslt1.1
+        - libintl-perl
+        - php-xdiff
+        - autopostgresqlbackup
+      state: latest
 
   - name: git checkout tracker repo
     git: repo=https://github.com/crs-tools/tracker
@@ -22,8 +25,5 @@
       - checkout
 
   - name: create logrotate config
-    copy: src=tracker dest=/etc/logrotate.d
-
-  - name: create cronjobs for lets encrypt / dehydrated
-    copy: src=dehydrated dest=/etc/cron.d
+    copy: src=logrotate dest=/etc/logrotate.d/tracker
 
