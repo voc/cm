@@ -3,6 +3,7 @@
   file:
     path: /etc/nginx-rtmp/nginx.conf
     state: absent
+  register: nginx_rtmp_conf
 
 - name: stop and disable nginx-rtmp service
   systemd:
@@ -10,6 +11,7 @@
     state: stopped
     enabled: no
     daemon_reload: yes
+  when: nginx_rtmp_conf.changed
 
 - name: remove nginx-rtmp service
   file:
