@@ -101,10 +101,13 @@ CONTACT_EMAIL=contact@c3voc.de
 #LOCKFILE="${BASEDIR}/lock"
 
 # Option to add CSR-flag indicating OCSP stapling to be mandatory (default: no)
-OCSP_MUST_STAPLE="no"
+#OCSP_MUST_STAPLE="no"
 
 # Fetch OCSP responses (default: no)
-OCSP_FETCH="yes"
+#OCSP_FETCH="no"
+
+# OCSP refresh interval (default: 5 days)
+#OCSP_DAYS=5
 
 # Issuer chain cache directory (default: $BASEDIR/chains)
 #CHAINCACHE="${BASEDIR}/chains"

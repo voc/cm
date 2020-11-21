@@ -26,9 +26,7 @@ case "$1" in
         printf "server %s\nupdate delete _acme-challenge.%s. %d in TXT \"%s\"\nsend\n" "${DNSSERVER}" "${DOMAIN}" "${TTL}" "${4}" | $NSUPDATE
         ;;
     "deploy_cert")
-        DOMAIN="${2}"
-        # allow read for ssl-cert group
-        chmod g+r /etc/letsencrypt/live/${DOMAIN}/*
+        # do nothing for now
         ;;
     "unchanged_cert")
         # do nothing for now

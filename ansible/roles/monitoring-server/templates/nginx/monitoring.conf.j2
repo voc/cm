@@ -37,11 +37,9 @@ server {
   # TLS certificates
   ssl_certificate       /etc/letsencrypt/live/monitoring.c3voc.de/fullchain.pem;
   ssl_certificate_key   /etc/letsencrypt/live/monitoring.c3voc.de/privkey.pem;
+
   # OCSP stapling
-  ssl_stapling on;
-  ssl_stapling_verify on;
-  ssl_trusted_certificate /etc/letsencrypt/live/monitoring.c3voc.de/fullchain.pem;
-  ssl_stapling_file /etc/ssl/certs/monitoring.c3voc.de.pem.ocsp;
+  ssl_trusted_certificate /etc/letsencrypt/live/monitoring.c3voc.de/chain.pem;
 
   auth_basic "voc login";
   auth_basic_user_file htpasswd;

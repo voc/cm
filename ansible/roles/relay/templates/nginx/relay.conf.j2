@@ -75,10 +75,7 @@ server {
   ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
   ssl_certificate_key   /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
   # OCSP stapling
-  ssl_stapling on;
-  ssl_stapling_verify on;
-  ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
-  ssl_stapling_file /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp;
+  ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/chain.pem;
 
   # don't allow access to some files or directories
   location ~* /.*\.(ht|sh|git|htaccess|php|inc|rb|py|pl|db|sqlite|sqlite3)$ {

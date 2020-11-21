@@ -68,6 +68,7 @@ http {
 
   ssl_stapling on;
   ssl_stapling_verify on;
+  resolver 127.0.0.53;
 
   map $http_x_proto $use_https {
     default off;

@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 
-deploy_ocsp() {
-  local DOMAIN="${1}" OCSPFILE="${2}"
-  local DEPLOYPATH="/etc/ssl/certs/${DOMAIN}.pem.ocsp"
-  cp "${OCSPFILE}" "${DEPLOYPATH}"
-  chown root:ssl-cert "${DEPLOYPATH}"
-  chmod g+r "${DEPLOYPATH}"
+deploy_cert() {
+  DOMAIN="${1}"
+  # allow read for ssl-cert group
+  chmod g+r /etc/letsencrypt/live/${DOMAIN}/*
   systemctl reload nginx
 }
 
 HANDLER="$1"; shift
-if [[ "${HANDLER}" =~ ^(deploy_ocsp)$ ]]; then
+if [[ "${HANDLER}" =~ ^(deploy_cert)$ ]]; then
   "$HANDLER" "$@"
 fi

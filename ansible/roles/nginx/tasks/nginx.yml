@@ -1,11 +1,13 @@
 ---
   # Install packages
   - name: install nginx package
-    apt: name=nginx state=latest
+    apt:
+      name: nginx
+      state: latest
     tags: install
 
   # Configure
-  - name: configure nginx
+  - name: deploy nginx config
     template:
       src: nginx.conf.j2
       dest: /etc/nginx/nginx.conf
@@ -14,7 +16,9 @@
 
   # Manage vhost
   - name: remove default vhost
-    file: dest=/etc/nginx/sites-enabled/default state=absent
+    file:
+      dest: /etc/nginx/sites-enabled/default
+      state: absent
     register: nginx_vhost
 
   # Letsencrypt hooks/reloads
@@ -24,7 +28,7 @@
       user: root
       state: absent
 
-  - name: remove old letsencrypt hook
+  - name: remove letsencrypt hooks
     file:
       path: /etc/letsencrypt/renewal-hooks/post/20-nginx
       state: absent
@@ -37,9 +41,21 @@
 
   # Enable/Disable service
   - name: enable/start nginx
-    service: name=nginx enabled=yes state=started
+    service:
+      name: nginx
+      enabled: yes
+      state: started
     when: (nginx is defined and nginx|bool)
 
+  - name: reload nginx
+    service:
+      name: nginx
+      state: reloaded
+    when: (nginx is defined and nginx|bool) and (nginx_conf.changed or nginx_vhost.changed)
+
   - name: disable/stop nginx
-    service: name=nginx enabled=no state=stopped
+    service:
+      name: nginx
+      enabled: no
+      state: stopped
     when: not (nginx is defined and nginx|bool)
