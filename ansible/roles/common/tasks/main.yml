@@ -1,26 +1,33 @@
 ---
   - include: ../../../register/bin_path.yml
     tags: bin_path
+
   - include: locale.yml
+    tags: locales
+
   - include: resolv.yml
-    tags:
-      - resolv
-      - dns
+    tags: [resolv, dns]
+
   - include: apt_proxy.yml
+    tags: apt
+
   - include: repos.yml
-    tags:
-      - repos
-      - apt
+    tags: [apt, repos]
+
   - include: packages.yml
-    tags: [packages]
+    tags: packages
+
   - include: kernel.yml
     when: "system.type == 'pc' and 'proxmox' not in group_names"
     tags: kernel
+
   - include: vim.yml
   - include: sudo.yml
   - include: grub.yml
     when: "system.type == 'pc' and 'proxmox' not in group_names"
+
   - include: ntp.yml
+    tags: ntp
     when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
 
   - include: acpi_undeploy.yml
@@ -35,17 +42,15 @@
   - include: ssh_known_hosts.yml
     when: "'proxmox' not in group_names"
   - include: ssl.yml
-  - include: smart.yml
-  # realise users
+
+  # deploy users
   - include: user.yml user={{ users }}
     tags: user
+
   - include: monitoring.yml
     tags:
       - monitoring
       - check_system
-
-
-
 
   - name: setting voc password
     user: name=voc

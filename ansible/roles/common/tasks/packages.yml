@@ -1,9 +1,9 @@
 ---
- - name: install a default set of packages
-   apt: name={{ packages|flatten(levels=1) }} state=latest update_cache=yes
-   tags: packages
-   vars:
-     packages:
+  - name: install a default set of packages
+    apt: name={{ packages|flatten(levels=1) }} state=latest update_cache=yes
+    tags: packages
+    vars:
+      packages:
       # YES, we are using systemd!!1!
       - systemd
       - systemd-sysv
@@ -21,11 +21,9 @@
       - iotop
       - screen
       - build-essential
-#      - gdb
       - bwm-ng
       - lldpd
       - mosh
-#      - runit
       - molly-guard
       - ncdu
       - debian-goodies
@@ -46,38 +44,51 @@
       - apt-transport-https
       - irqbalance
       - mosquitto-clients
-      - smartmontools
       - zip
       - unzip
       - bc
       - at
 
- # for VMs
- - name: install a vmware specific set of packages
-   apt: name=open-vm-tools state=present update_cache=yes
-   when: ansible_virtualization_type is defined and ansible_virtualization_type == 'VMware' and ansible_virtualization_role == 'guest'
+  # packages for physical hosts
+  - name: install packages for physical hosts
+    apt:
+      name:
+        - smartmontools
+      state: latest
+    when: ansible_virtualization_role != 'guest'
 
- - name: install special packages for VMs
-   apt: name=haveged state=present update_cache=yes
-   when: ansible_virtualization_type is defined and ansible_virtualization_role == 'guest'
+  - name: add megacli
+    apt: name=megacli state=present
+    when: ansible_hostname is match('mebibyte')
 
- # remove not needed packages
- - name: remove not needed packages
-   apt: name={{ packages|flatten(levels=1) }} state=absent
-   vars:
-     packages:
-       - rpcbind
-       - openntpd
-       - rdnssd
-       - dvswitch-voc
-       - dvsource-voc
-       - dvsink-voc
-       - bmdtools
-       - check-mk-agent
-       - munin-node
-       - puppet
-   when: "'proxmox' not in group_names"
+  # packages for VMs
+  - name: install a vmware specific set of packages
+    apt: name=open-vm-tools state=present
+    when: ansible_virtualization_type is defined and ansible_virtualization_type == 'VMware' and ansible_virtualization_role == 'guest'
 
- - name: add megacli
-   apt: name=megacli state=present
-   when: ansible_hostname is match('mebibyte')
+  - name: install special packages for VMs
+    apt: name=haveged state=present
+    when: ansible_virtualization_type is defined and ansible_virtualization_role == 'guest'
+
+  - name: install qemu-aguest-agent
+    apt:
+      name: qemu-guest-agent
+      state: present
+    when: ansible_virtualization_role == 'guest' and ansible_virtualization_type == 'kvm'
+
+  # remove not needed packages
+  - name: remove not needed packages
+    apt: name={{ packages|flatten(levels=1) }} state=absent
+    vars:
+      packages:
+        - rpcbind
+        - openntpd
+        - rdnssd
+        - dvswitch-voc
+        - dvsource-voc
+        - dvsink-voc
+        - bmdtools
+        - check-mk-agent
+        - munin-node
+        - puppet
+    when: "'proxmox' not in group_names"
