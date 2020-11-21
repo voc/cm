@@ -7,7 +7,6 @@
       # YES, we are using systemd!!1!
       - systemd
       - systemd-sysv
-      - acpid
       - zsh
       - vim
       - htop
