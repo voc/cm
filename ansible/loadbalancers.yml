@@ -6,5 +6,4 @@
       - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }
       - { role: letsencrypt, vars: { 'domain': 'cdn.c3voc.de'}, tags: ['letsencrypt'] }
       - { role: letsencrypt, vars: { 'domain': 'streaming.media.ccc.de'}, tags: ['letsencrypt'] }
-      - { role: nginx, tags: ['nginx'] }
       - { role: loadbalancer, tags: ['loadbalancer'] }

@@ -1,0 +1,6 @@
+---
+dependencies:
+  - role: nginx
+    tags: nginx
+    vars:
+      php: yes

@@ -1,16 +1,21 @@
 ---
+  - include: php.yml
+    tags: php
+    when: php|bool
+
   - include: nginx.yml
 
   - include: nginx_rtmp.yml
     tags: rtmp
-    when: (rtmp is defined and rtmp|bool)
+    when: rtmp|bool
 
   - include: remove_nginx_rtmp.yml
     tags: rtmp
-    when: not (rtmp is defined and rtmp|bool)
+    when: not rtmp|bool
+
 
   - include: rtmp_auth.yml
-    when: rtmp is defined and rtmp|bool and rtmp_auth is defined and rtmp_auth|bool
+    when: rtmp|bool and rtmp_auth is defined and rtmp_auth|bool
     tags: rtmp
 
   - include: monitoring.yml

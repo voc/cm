@@ -78,6 +78,12 @@ http {
   # include vhosts
   include /etc/nginx/sites-enabled/*;
 
+{% if php|bool %}
+  upstream php {
+    server unix:/run/php/php{{ php_version }}-fpm.sock;
+  }
+{% endif %}
+
   # vhost for stats
   server {
     server_name _;
@@ -95,7 +101,7 @@ http {
       deny all;
     }
 
-{% if rtmp is defined and rtmp|bool %}
+{% if rtmp|bool %}
     location ~* ^/stats/rtmp {
 {% for ip in nginx_ips_allow_stats %}
       allow {{ ip }};
@@ -114,7 +120,7 @@ http {
     }
 {% endif %}
 
-{% if php is defined and php|bool %}
+{% if php|bool %}
     location ~* ^/stats/php {
       access_log off;
 

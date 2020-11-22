@@ -1,3 +1,9 @@
-# rtmp module
-nginx_rtmp_mod: mod-rtmp
 nginx: yes
+
+# php-fpm deployment
+php: no
+
+# rtmp module
+rtmp: no
+rtmp_auth: no
+nginx_rtmp_mod: mod-rtmp

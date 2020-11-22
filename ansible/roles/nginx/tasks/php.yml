@@ -1,0 +1,41 @@
+---
+# Install PHP fpm
+- name: install php packages
+  apt:
+    name: "php{{ php_version }}-fpm"
+    state: latest
+
+# Create default pool
+- name: configure php-fpm
+  template:
+    src: php_fpm/www.conf
+    dest: "/etc/php/{{ php_version }}/fpm/pool.d/www.conf"
+    mode: 0644
+  register: fpm_config
+
+# Change php.ini settings
+- name: adapt php ini settings
+  lineinfile:
+    dest: "/etc/php/{{ php_version }}/fpm/php.ini"
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
+  loop:
+    # don't expose version
+    - { regex: 'expose_php.*=.*', line: 'expose_php = Off' }
+    # short open tag
+    - { regex: 'short_open_tag.*=.*', line: 'short_open_tag = On'}
+  register: php_ini
+
+- name: enable php short_open_tag on cli
+  lineinfile:
+    dest: "/etc/php/{{ php_version }}/cli/php.ini"
+    regexp: "short_open_tag.*=.*"
+    line: "short_open_tag = On"
+
+# Enable service
+- name: (re)start php-fpm
+  service:
+    name: "php{{ php_version }}-fpm"
+    enabled: yes
+    state: restarted
+  when: fpm_config.changed or php_ini.changed

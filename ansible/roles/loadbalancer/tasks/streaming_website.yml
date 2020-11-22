@@ -1,38 +1,36 @@
 ---
+  - name: install streaming-website dependencies
+    apt:
+      name:
+      - "php{{ php_version }}-curl"
+      - "php{{ php_version }}-sqlite3"
+      - "php{{ php_version }}-xml"
+      - libsqlite3-dev
+      - sqlite3
+      state: latest
+
   # Repo checkout
   - name: git checkout streaming-website
     git: repo=http://c3voc.de/git/streaming-website.git
          dest=/srv/nginx/streaming-website
-    tags:
-      - install
-      - deploy_website
-      - pull
-      - checkout
+    tags: deploy_website
 
   - name: create user for schedule download
     user: name=downloader home=/srv/nginx/streaming-website
           system=yes
-    tags:
-      - install
 
   - name: create mqttfeedback group
     group: name=mqttfeedback system=yes
-    tags:
-      - install
 
   - name: create mqttfeedback user
     user: name=mqttfeedback system=yes group=mqttfeedback
-    tags:
-      - install
 
   - name: change streaming-website permissions
     file: dest=/srv/nginx/streaming-website
           owner=root group=downloader
           mode=g+rw recurse=yes
     changed_when: false
-    tags:
-      - install
-      - deploy_website
+    tags: deploy_website
 
   # Create directories and symlinks
   - name: create htdocs symlink
@@ -45,9 +43,7 @@
     file: state=directory
           dest=/opt/streaming-feedback
           owner=www-data group=mqttfeedback mode=0771
-    tags:
-      - install
-      - feedback_password
+    tags: feedback_password
 
   # Feedback db
   - stat: path=/opt/streaming-feedback/feedback.sqlite3
@@ -58,10 +54,7 @@
     template: src=feedback-password.j2
               dest=/opt/streaming-feedback/feedback-password
               owner=www-data group=www-data mode=640
-    tags:
-      - install
-      - config
-      - feedback_password
+    tags: feedback_password
 
   - name: create feedback db
     shell: "sudo -uwww-data sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
@@ -72,21 +65,14 @@
     file: state=file
           dest=/opt/streaming-feedback/feedback.sqlite3
           mode=0660 owner=www-data group=mqttfeedback
-    tags: install
 
- # Feedback client
-  - name: clone mqtt repo
-    git: repo=ssh://git@mng.c3voc.de/mqtt
-         dest=/usr/local/src/mqtt
-    tags:
-      - install
-      - checkout
-      - pull
-
+  # Feedback client
+  # - name: clone mqtt repo
+  #   git: repo=ssh://git@mng.c3voc.de/mqtt
+  #        dest=/usr/local/src/mqtt
 
   - stat: path=/usr/local/src/mqtt/provider/feedback/Gemfile.lock
     register: mqtt_feedback_gemlock
-    tags: install
 
   - name: install mqttfeedback client dependencies
     shell: "{{ item }}"
@@ -96,44 +82,37 @@
       - gem install bundler
       - bundle
     when: mqtt_feedback_gemlock.stat.isreg is not defined or mqtt_feedback_gemlock.stat.isreg == False
-    tags: install
 
-  - name: configure systemd to run mqttfeedback client
-    template: src=mqttfeedback.service.j2
-              dest=/lib/systemd/system/mqttfeedback.service
-              owner=root mode=640
-    notify: reload systemd
-    tags:
-      - install
-      - config
+  - name: deploy mqttfeedback unit
+    template:
+      src: mqttfeedback.service.j2
+      dest: /lib/systemd/system/mqttfeedback.service
+      mode: 640
+    register: feedback_unit
 
-  - name: start mqttfeedback service
-    service: state=started enabled=yes name=mqttfeedback
-    tags: install
+  - name: restart/enable mqttfeedback service
+    systemd:
+      name: mqttfeedback
+      state: restarted
+      enabled: yes
+      daemon_reload: yes
+    when: feedback_unit.changed
 
   # Cron jobs
   - name: create cronjob to pull upcoming events json every 15 minutes
     cron: name="download upcoming events json" minute=*/15
           job="/usr/bin/env php /srv/nginx/streaming-website/index.php download >/dev/null"
           user=downloader
-    tags: install
-
 
   # Remove fcgi cache after deployment
   - name: get fcgi-cache files
     shell: ls -1 /srv/nginx/cache/streaming_fcgi/
     register: streaming_fcgi_cache
     changed_when: false
-    tags:
-      - deploy_website
-      - install
-      - config
+    tags: deploy_website
 
   - name: remove fcgi-cache
     file: path=/srv/nginx/cache/streaming_fcgi/{{ item }} state=absent
     with_items: streaming_fcgi_cache.stdout_lines
     when: streaming_fcgi_cache != ''
-    tags:
-      - config
-      - install
-      - deploy_website
+    tags: deploy_website

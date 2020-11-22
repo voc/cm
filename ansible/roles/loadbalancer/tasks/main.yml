@@ -6,10 +6,8 @@
   - include: nginx.yml
     tags: nginx
 
-  - include: php.yml
-    tags: php
-
   - include: streaming_website.yml
+    tags: streaming_website
 
   - include: haproxy.yml
     tags: haproxy
