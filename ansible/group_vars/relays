@@ -9,12 +9,6 @@ relay_fanout:
   dash_write_path: /srv/nginx/dash
   thumbnail_write_path: /srv/nginx/thumbnail
 
-# sources to monitor from stream_master
-streaming_sources:
-  - "live.ber.c3voc.de:7999"
-  - "ingest.c3voc.de:8000"
-
-
 # icecast
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
 icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"

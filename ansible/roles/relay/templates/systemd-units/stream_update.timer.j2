@@ -2,7 +2,8 @@
 Description=Update stream info every minute
 
 [Timer]
-OnCalendar=*-*-* *:*:00
+OnCalendar=*-*-* *:*:00/30
+AccuracySec=10s
 
 [Install]
 WantedBy=timers.target
