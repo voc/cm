@@ -12,7 +12,7 @@
 - apt:
     state: latest
     name:
-      - openjdk-8-jre-headless
+      - default-jre-headless
 
 - apt:
     state: latest
@@ -22,7 +22,7 @@
       - postgresql
       # for ansible:
       - libpq-dev
-      - python-psycopg2
+      - python3-psycopg2
 
 - copy: src=default/{{ item }}
         dest=/etc/default/
@@ -35,7 +35,7 @@
             owner=root group=elasticsearch mode=0640
 
 - template: src={{ item }}
-            dest=/etc/postgresql/10/main/{{ item }}
+            dest=/etc/postgresql/11/main/{{ item }}
             owner=postgres group=postgres mode=0640
   loop:
     - postgresql.conf
