@@ -17,10 +17,6 @@
   - include: packages.yml
     tags: packages
 
-  - include: kernel.yml
-    when: "system.type == 'pc' and 'proxmox' not in group_names"
-    tags: kernel
-
   - include: vim.yml
   - include: sudo.yml
   - include: grub.yml
