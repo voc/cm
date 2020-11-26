@@ -26,9 +26,10 @@
       - dehydrated/hook.d
 
   - name: generate dehydrated hook.sh
-    copy: dest=/etc/dehydrated/hook.sh
-          src=dehydrated/hook.sh
-          owner=root group=root mode=0775
+    template:
+      dest: /etc/dehydrated/hook.sh
+      src: dehydrated/hook.sh
+      mode: 0775
 
   - name: generate dehydrated dns-01 private & key
     copy: dest=/etc/dehydrated/dns-01-key.{{ item }}
@@ -37,12 +38,20 @@
     with_items:
       - key
       - private
+    when: use_dns
 
+  - name: create well-known directory
+    file:
+      path: /var/www/dehydrated
+      state: directory
+      mode: 0775
+    when: not use_dns
 
   - name: generate dehydrated config
-    copy: dest=/etc/dehydrated/config
-          src=dehydrated/config
-          owner=root group=root mode=0664
+    template:
+      dest: /etc/dehydrated/config
+      src: dehydrated/config
+      mode: 0664
 
   - name: generate dehydrated account directory
     file: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}

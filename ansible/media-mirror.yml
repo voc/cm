@@ -1,15 +1,9 @@
 ---
   - hosts: media-mirror
     roles:
-      - role: media-common
-        tags: ['media-common']
-
-      - role: ansible-acmetool
-        when: ssl == 1 and acmetool_setup == 1
-        tags: ['acmetool-install', 'nginx']
-
-      - role: media-mirror
-        tags: ['media-mirror']
-
-      - role: media-cdn-node
-        tags: ['cdn-node']
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: nginx, vars: { 'anonymize_logs': true }, tags: ['nginx'] }
+      - { role: letsencrypt, vars: { 'domain': 'dortmund.media.ccc.de'}, tags: ['letsencrypt'] }
+      - { role: media-cdn-node, tags: ['cdn-node'] }
+      - { role: media-mirror, tags: ['media-mirror'] }

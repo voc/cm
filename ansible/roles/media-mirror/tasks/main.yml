@@ -2,7 +2,6 @@
   - apt:
       state: latest
       name:
-        - rsync
         - vsftpd
   - import_tasks: cdn-sync.yml
   # TODO add rsyncd configuration

@@ -21,7 +21,19 @@ http {
 
   types_hash_max_size 2048;
 
+  {% if anonymize_logs %}
   log_format ip '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+  {% else %}
+  map $remote_addr $remote_addr_anon {
+      ~(?P<ip>\d+\.\d+\.\d+)\.    $ip.0;
+      ~(?P<ip>[^:]+:[^:]+):       $ip::;
+      127.0.0.1                   $remote_addr;
+      ::1                         $remote_addr;
+      default                     0.0.0.0;
+  }
+  log_format ip '$remote_addr_anon - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+  {% endif %}
+
   access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
 
   # mime-types
@@ -81,6 +93,21 @@ http {
 {% if php|bool %}
   upstream php {
     server unix:/run/php/php{{ php_version }}-fpm.sock;
+  }
+{% endif %}
+
+{% if default_server %}
+  server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    location ^~ /.well-known/acme-challenge {
+      alias /var/www/dehydrated;
+    }
+
+    location / {
+      return 307 https://$host$request_uri;
+    }
   }
 {% endif %}
 

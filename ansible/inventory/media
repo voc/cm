@@ -5,7 +5,8 @@ koeln.media.ccc.de
 koeln.media.ccc.de ansible_user=root
 
 [media-mirror]
-berlin-ak.media.ccc.de ssl=1 ansible_user=voc ansible_become=true
+berlin-ak.media.ccc.de domain=berlin-ak.media.ccc.de ansible_user=voc ansible_become=true
+dortmund.media.ccc.de domain=dortmund.media.ccc.de ansible_user=voc ansible_become=true
 
 [media-app]
 app.media.ccc.de ssl=1

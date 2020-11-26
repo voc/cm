@@ -19,11 +19,15 @@ fi
 
 case "$1" in
     "deploy_challenge")
+        {% if use_dns %}
         printf "server %s\nupdate add _acme-challenge.%s. %d in TXT \"%s\"\nsend\n" "${DNSSERVER}" "${DOMAIN}" "${TTL}" "${4}" | $NSUPDATE
         sleep 5
+        {% endif %}
         ;;
     "clean_challenge")
+        {% if use_dns %}
         printf "server %s\nupdate delete _acme-challenge.%s. %d in TXT \"%s\"\nsend\n" "${DNSSERVER}" "${DOMAIN}" "${TTL}" "${4}" | $NSUPDATE
+        {% endif %}
         ;;
     "deploy_cert")
         # do nothing for now

@@ -32,7 +32,11 @@ IP_VERSION=4
 LICENSE="https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf"
 
 # Which challenge should be used? Currently http-01 and dns-01 are supported
+{% if use_dns %}
 CHALLENGETYPE="dns-01"
+{% else %}
+CHALLENGETYPE="http-01"
+{% endif %}
 
 # Path to a directory containing additional config files, allowing to override
 # the defaults found in the main configuration file. Additional config files

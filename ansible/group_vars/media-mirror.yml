@@ -6,5 +6,9 @@ users:
   - { name: 'danimo', state: 'absent' }
   - { name: 'florolf', state: 'absent' }
   - { name: 'meise', state: 'absent' }
+  - { name: 'andi', state: 'present' }
   - { name: 'mm', state: 'present' }
+  - { name: 'thee', state: 'present' }
+  - { name: 'y0sh', state: 'present' }
+  - { name: 'necro', state: 'present' }
   - { name: 'voc', state: 'present' }
