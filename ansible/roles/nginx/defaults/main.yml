@@ -1,6 +1,7 @@
 nginx: yes
 
-anonymize_logs: no
+anonymize_logs: yes
+default_access_log: yes
 default_server: yes
 
 # php-fpm deployment

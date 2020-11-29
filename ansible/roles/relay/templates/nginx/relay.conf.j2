@@ -82,6 +82,11 @@ server {
     deny  all;
   }
 
+  # ACME http challenge
+  location ^~ /.well-known/acme-challenge {
+    alias /var/www/dehydrated;
+  }
+
 {% if stream_master %}
   # stream-api
   location /stream_info.json {
@@ -134,6 +139,9 @@ server {
       add_header X-Cache     "$upstream_cache_status edge";
       add_header Access-Control-Expose-Headers "X-Host";
       add_header X-Host "{{ vars.ansible_fqdn }}";
+
+      # log for viewer counting
+      access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
   }
   # proxy cache ts files (live)
   #
@@ -182,6 +190,9 @@ server {
       add_header X-Cache     "$upstream_cache_status edge";
       add_header Access-Control-Expose-Headers "X-Host";
       add_header X-Host "{{ vars.ansible_fqdn }}";
+
+      # log for viewer counting
+      access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
   }
   # proxy cache dash segments (live)
   #
@@ -288,6 +299,9 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+
+      # log for viewer counting
+      access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
   }
   # proxy cache ts files (relive)
   #
