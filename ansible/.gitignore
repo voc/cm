@@ -3,4 +3,5 @@
 .keepass_file_path
 roles/ansible-acmetool
 roles/ansible-golang
+roles/rvm1-ansible
 group_vars/loadbalancerse
