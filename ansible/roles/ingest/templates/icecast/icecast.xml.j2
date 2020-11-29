@@ -13,7 +13,7 @@
         <header-timeout>{{ icecast_header_timeout | default('15') }}</header-timeout>
         <source-timeout>{{ icecast_source_timeout | default('10') }}</source-timeout>
 
-        <burst-on-connect>{{ icecast_burst_on_connect | default('1') }}</burst-on-connect>
+        <burst-on-connect>{{ icecast_burst_on_connect | default('0') }}</burst-on-connect>
         <burst-size>{{ icecast_burst_size | default('524280') }}</burst-size>
     </limits>
 
