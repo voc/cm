@@ -13,7 +13,7 @@
         - libxslt1.1
         - libintl-perl
         - php-xdiff
-        - autopostgresqlbackup
+#        - autopostgresqlbackup
       state: latest
 
   - name: git checkout tracker repo

@@ -25,12 +25,12 @@
     when: not item.state == 'absent'
 
   # additional groups
-  - name: append libvirt and kvm group to user
-    user: name={{ item.name }} append=yes groups=libvirt,kvm
-    with_items: 
-      - "{{ users }}"
-      - "{{ additional_users }}"
-    when: libvirtd_bin.stdout != '' and not remove is defined and ansible_virtualization_role == 'host'
+  #- name: append libvirt and kvm group to user
+  #  user: name={{ item.name }} append=yes groups=libvirt,kvm
+  #  with_items: 
+  #    - "{{ users }}"
+  #    - "{{ additional_users }}"
+  #  when: libvirtd_bin.stdout != '' and not remove is defined and ansible_virtualization_role == 'host'
 
   - name: append special groups on systemd systems
     user: name={{ item.name }} append=yes

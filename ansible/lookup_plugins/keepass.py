@@ -5,7 +5,7 @@ import os
 import sys
 import getpass
 
-from ansible.errors import AnsibleError
+from ansible.errors import AnsibleError, AnsibleParserError, AnsibleAssertionError
 from ansible.plugins.lookup import LookupBase
 
 try:

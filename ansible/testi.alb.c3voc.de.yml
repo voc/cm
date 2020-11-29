@@ -1,0 +1,7 @@
+---
+  - hosts: testi.alb.c3voc.de
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: letsencrypt, vars: { 'domain': '*.test.c3voc.de'}, tags: ['letsencrypt'] }
+      - { role: letsencrypt, vars: { 'domain': '*.dev.c3voc.de'}, tags: ['letsencrypt'] }
+      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }

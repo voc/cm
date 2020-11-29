@@ -1,0 +1,23 @@
+# Hosts file
+
+[servers]
+
+# VMs
+testi.alb.c3voc.de 
+
+# Test - Container
+media.test.c3voc.de 	ansible_ssh_host=195.54.164.162
+web.test.c3voc.de	ansible_ssh_host=195.54.164.162
+
+
+# Dev - Container
+media.dev.c3voc.de 	ansible_ssh_host=195.54.164.162
+web.dev.c3voc.de	ansible_ssh_host=195.54.164.162
+
+
+[tracker]
+tracker.test.c3voc.de	ansible_ssh_host=192.168.122.180
+
+[loadbalancers]
+lb.test.c3voc.de 
+
