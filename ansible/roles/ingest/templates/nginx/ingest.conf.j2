@@ -1,10 +1,4 @@
 server {
-  listen [::]:80 default_server ipv6only=off;
-	server_name _;
-	return 302 https://$host$request_uri;
-}
-
-server {
   server_name _;
   listen [::]:443 default_server ipv6only=off ssl http2;
 
@@ -33,5 +27,10 @@ server {
     auth_basic "stream-api login";
     auth_basic_user_file htpasswd;
     proxy_pass http://127.0.0.1:9999;
+  }
+  location /stats/srt {
+    auth_basic "stream-api login";
+    auth_basic_user_file htpasswd;
+    proxy_pass http://127.0.0.1:8084/streams;
   }
 }
