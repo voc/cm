@@ -5,6 +5,6 @@ acmetool_setup: 0
 acmetool_responses_method: webroot
 acmetool_responses_email: "hostmaster@example.com"
 acmetool_want:
-  - app.media.ccc.de
-  - api.media.ccc.de
-  - media.ccc.de
+  - app.media.test.c3voc.de
+  - api.media.test.c3voc.de
+  - media.test.c3voc.de

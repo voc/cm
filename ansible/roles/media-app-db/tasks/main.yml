@@ -17,7 +17,7 @@
 - apt:
     state: latest
     name:
-      - autopostgresqlbackup
+      # - autopostgresqlbackup
       - elasticsearch
       - postgresql
       # for ansible:

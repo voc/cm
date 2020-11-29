@@ -4,9 +4,9 @@ upstream puma {
 
 server {
   listen [::]:80 ipv6only=off;
-  server_name app.media.ccc.de api.media.ccc.de media.ccc.de;
+  server_name app.media.test.c3voc.dede api.media.test.c3voc.de media.test.c3voc.de;
 
-  rewrite     ^ https://media.ccc.de$request_uri? permanent;
+  rewrite     ^ https://media.test.c3voc.de$request_uri? permanent;
 }
 
 
@@ -31,8 +31,8 @@ proxy_cache_path /srv/media/media-site/cache
 server {
   listen [::]:443 ipv6only=off ssl http2;
   ssl                         on;
-  ssl_certificate             /var/lib/acme/live/app.media.ccc.de/fullchain;
-  ssl_certificate_key         /var/lib/acme/live/app.media.ccc.de/privkey;
+  ssl_certificate             /var/lib/acme/live/app.media.test.c3voc.de/fullchain;
+  ssl_certificate_key         /var/lib/acme/live/app.media.test.c3voc.de/privkey;
   ssl_session_timeout         1d;
   ssl_session_cache           shared:SSL:5m;
   ssl_protocols               TLSv1.1 TLSv1.2;
@@ -50,7 +50,7 @@ server {
     allow all;
   }
 
-  server_name app.media.ccc.de api.media.ccc.de media.ccc.de;
+  server_name app.media.test.c3voc.de api.media.test.c3voc.de media.test.c3voc.de;
   root /srv/media/media-site/current/public;
 
   location ~* ^/assets/|favicon.ico|robots.txt {
@@ -64,41 +64,6 @@ server {
     #add_header Last-Modified "";
     #add_header ETag "";
     break;
-  }
-
-  # remove this?
-  location /ftp {
-    rewrite ^/ftp/(.*)$ http://cdn.media.ccc.de/$1 permanent;
-    autoindex  on;
-  }
-
-  # remove this?
-  location /photos/camp2011 {
-    alias /srv/ftp/events/camp2011/photos/;
-    rewrite ^/photos/camp2011(.*)$ http://cdn.media.ccc.de/events/camp2011/photos$1 permanent;
-    autoindex  on;
-  }
-
-  # compatibility until new list is available on cdn
-  location /public/torrents {
-    #alias /srv/www/media.ccc.de/torrents.txt;
-    rewrite ^/public/torrents$ http://cdn-api.media.ccc.de/public/torrents permanent;
-  }
-
-  # for app.media.ccc.de
-  location /stats {
-    alias /srv/www/media.ccc.de/stats/;
-    index  index.html index.htm;
-    auth_basic "Media Stats";
-    auth_basic_user_file /etc/nginx/htpasswd;
-  }
-
-  # for app.media.ccc.de
-  location /mrtg {
-    alias /var/www/mrtg/;
-    index  index.html index.htm;
-    #auth_basic "Media Stats";
-    #auth_basic_user_file /etc/awstats/awstats.htpasswd;
   }
 
   # REWRITE RULES
