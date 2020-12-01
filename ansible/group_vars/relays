@@ -1,7 +1,7 @@
 nginx_hls_relive_masters: ['185.106.84.36']
 
 # workaround until relive lb config does something useful
-nginx_hls_relive_cache_max_size: '10g'
+nginx_hls_relive_cache_max_size: '30g'
 
 relay_fanout:
   push_endpoint: 127.0.0.1:8000

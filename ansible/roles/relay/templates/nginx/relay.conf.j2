@@ -4,14 +4,14 @@ proxy_temp_path /srv/nginx/cache/tmp;
 {% if not (relive_master is defined and relive_master|bool) %}
 proxy_cache_path /srv/nginx/cache/hls_relive
                 keys_zone=hls_relive:32m
-                max_size={{ nginx_hls_relive_cache_max_size | default('200g') }}
+                max_size={{ nginx_hls_relive_cache_max_size | default('30g') }}
                 inactive=7d
                 loader_threshold=300 loader_files=1024;
 {% endif %}
 {% if not stream_master %}
 proxy_cache_path /srv/nginx/cache/live
                 keys_zone=live:32m
-                max_size={{ nginx_live_cache_max_size | default('10g') }}
+                max_size={{ nginx_live_cache_max_size | default('30g') }}
                 inactive=1h
                 loader_threshold=300 loader_files=1024;
 
@@ -100,6 +100,15 @@ server {
   # live:   /hls/s2_native_sd.m3u8 -> /hls/s2/native_sd.m3u8
   #
   rewrite ^/hls/(?<stream>[^/_]+)_(?<file>[^/]+\.m3u8)$ /hls/$stream/$file redirect;
+
+  location /upload/cw {
+    alias /srv/nginx/cw;
+    autoindex on;
+    auth_basic           "upload login";
+    auth_basic_user_file uploadpasswd;
+    client_max_body_size 50M;
+    dav_methods PUT DELETE;
+  }
 
   # live-cdn files
   location ~* ^/(hls|dash|thumbnail|artwork)/(.+)?$ {

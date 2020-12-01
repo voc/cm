@@ -80,6 +80,10 @@ stream_api:
   password: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.password') }}"
   url: https://live.ber.c3voc.de/stream_info.json
 
+stream_upload:
+  user: "{{ lookup('keepass', 'ansible/stream-api/upload.username') }}"
+  password: "{{ lookup('keepass', 'ansible/stream-api/upload.password') }}"
+
 tracker_url: "https://tracker.c3voc.de/rpc"
 
 mqtt:

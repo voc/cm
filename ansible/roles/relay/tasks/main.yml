@@ -1,6 +1,10 @@
 ---
   - include: ../../../register/bin_path.yml
 
+  - include: upload.yml
+    tags: [nginx, upload, stream_master]
+    when: stream_master|bool
+
   - include: nginx.yml
     tags: nginx
   - include: icecast.yml

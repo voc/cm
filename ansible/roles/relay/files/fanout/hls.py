@@ -132,7 +132,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 3000000
 	{{ maps | join("\n\t") }}
 
 	-hls_time 6
-	-hls_list_size 200
+	-hls_list_size 100
 	-hls_segment_filename "{{ hls_write_path }}/{{ stream }}/{{ starttime }}-%d_%v.ts"
 	-hls_flags +delete_segments+omit_endlist+independent_segments
 	-var_stream_map '{{ varmaps | join(" ") }}'
