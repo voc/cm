@@ -13,23 +13,33 @@ def fanout_dash(context):
 	}
 
 	cleanup(context)
-
+	prepare(context)
 	context += calculate_adaptation_sets(context)
-	fanout(context)
 
-	print("Cleaning up")
+	try:
+		fanout(context)
+	except fanout_utils.ExitException:
+		print("Cleaning up")
+		cleanup(context)
+		raise
+
 	cleanup(context)
 
-
-def cleanup(c):
+def prepare(c):
 	with contextlib.suppress(FileExistsError):
 		os.mkdir(os.path.join(c.dash_write_path, c.stream))
 
+def cleanup(c):
 	with contextlib.suppress(FileNotFoundError):
 		fanout_utils.remove_glob(os.path.join(
 			c.dash_write_path, "%s/manifest.mpd" % c.stream))
 		fanout_utils.remove_glob(os.path.join(
 			c.dash_write_path, "%s/*.webm" % c.stream))
+		fanout_utils.remove_glob(os.path.join(
+			c.dash_write_path, "%s/*.webm.tmp" % c.stream))
+
+	with contextlib.suppress(OSError):
+		os.rmdir(os.path.join(c.dash_write_path, c.stream))
 
 
 def calculate_adaptation_sets(c):

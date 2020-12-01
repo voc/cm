@@ -95,6 +95,12 @@ server {
     alias /srv/nginx/stream_info.json;
   }
 
+  # rewrite old m3u8 playlist urls
+  #
+  # live:   /hls/s2_native_sd.m3u8 -> /hls/s2/native_sd.m3u8
+  #
+  rewrite ^/hls/(?<stream>[^/_]+)_(?<file>[^/]+\.m3u8)$ /hls/$stream/$file redirect;
+
   # live-cdn files
   location ~* ^/(hls|dash|thumbnail|artwork)/(.+)?$ {
     alias /srv/nginx/$1/$2;
@@ -145,7 +151,7 @@ server {
   }
   # proxy cache ts files (live)
   #
-  # live:   /hls/s2_native_sd-13026687480.ts
+  # live:   /hls/s2/1606696682-1049_2.ts
   #
   location ~* ^/(?<hls>hls)/(?<stream>.+\.(ts))$ {
       proxy_intercept_errors on;

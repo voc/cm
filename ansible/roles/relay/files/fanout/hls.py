@@ -14,27 +14,32 @@ def fanout_hls(context):
 	}
 
 	cleanup(context)
-
+	prepare(context)
 	context += calculate_map_and_varmap(context)
 	generate_master_playlists(context)
-	fanout(context)
 
-	print("Cleaning up")
+	try:
+		fanout(context)
+	except fanout_utils.ExitException:
+		print("Cleaning up")
+		cleanup(context)
+		raise
+
 	cleanup(context)
 
-
-def cleanup(c):
+def prepare(c):
 	with contextlib.suppress(FileExistsError):
 		os.mkdir(os.path.join(c.hls_write_path, c.stream))
 
+def cleanup(c):
 	with contextlib.suppress(FileNotFoundError):
 		fanout_utils.remove_glob(os.path.join(
 			c.hls_write_path, c.stream, "*.ts"))
 		fanout_utils.remove_glob(os.path.join(
 			c.hls_write_path, "%s/*.m3u8" % c.stream))
-		fanout_utils.remove_glob(os.path.join(
-			c.hls_write_path, "%s_*.m3u8" % c.stream))
 
+	with contextlib.suppress(OSError):
+		os.rmdir(os.path.join(c.hls_write_path, c.stream))
 
 def calculate_map_and_varmap(c):
 	first_audio_stream_index = len(c.video_tracks)
@@ -86,29 +91,30 @@ def generate_master_playlists(c):
 #EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="Untranslated",DEFAULT={{ 'YES' if audio_track == 'Native' else 'NO' }}
 
 {% if 'Translated' in audio_tracks %}
-#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="Translation 1",DEFAULT={{ 'YES' if audio_track == 'Translated' else 'NO' }},URI="{{ stream }}/chunks_{{ first_audio_stream_index+0 }}.m3u8"
+#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="Translation 1",DEFAULT={{ 'YES' if audio_track == 'Translated' else 'NO' }},URI="chunks_{{ first_audio_stream_index+0 }}.m3u8"
 {% endif %}
 {% if 'Translated-2' in audio_tracks %}
-#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="Translation 2",DEFAULT={{ 'YES' if audio_track == 'Translated-2' else 'NO' }},URI="{{ stream }}/chunks_{{ first_audio_stream_index+1 }}.m3u8"
+#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="Translation 2",DEFAULT={{ 'YES' if audio_track == 'Translated-2' else 'NO' }},URI="chunks_{{ first_audio_stream_index+1 }}.m3u8"
 {% endif %}
 
 {% if video_track in ['HD'] %}
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5000000,RESOLUTION=1920x1080,CODECS="avc1.4d0028,mp4a.40.2",AUDIO="audio"
-{{ stream }}/chunks_0.m3u8
+chunks_0.m3u8
 {% endif %}
 {% if 'SD' in video_tracks and video_track in ['HD', 'SD'] %}
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=800000,RESOLUTION=1024x576,CODECS="avc1.4d0028,mp4a.40.2",AUDIO="audio"
-{{ stream }}/chunks_1.m3u8
+chunks_1.m3u8
 {% endif %}
 {% if 'Slides' in video_tracks and video_track in ['HD', 'SD', 'Slides'] %}
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=100000,RESOLUTION=1024x576,CODECS="avc1.4d0028,mp4a.40.2",AUDIO="audio"
-{{ stream }}/chunks_2.m3u8
+chunks_2.m3u8
 {% endif %}
 """)
 
 		master_playlist_file = os.path.join(
 			c.hls_write_path,
-			"%s_%s_%s.m3u8" % (c.stream, audio_track.lower(), video_track.lower())
+			c.stream,
+			"%s_%s.m3u8" % (audio_track.lower(), video_track.lower())
 		)
 
 		print("Writing Master Playlist-File %s" % master_playlist_file)
