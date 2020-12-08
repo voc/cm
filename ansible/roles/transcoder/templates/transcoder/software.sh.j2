@@ -79,7 +79,7 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 	\
 		-map '0:v:0' \
 		-metadata:s:v:0 title="HD" \
-		-threads:v:0 4 \
+		-threads:v:0 6 \
 		-tile-columns:v:0 2 \
                 -r:v:0 25 \
 		-keyint_min:v:0 75 \
@@ -88,8 +88,8 @@ ffmpeg -v warning -nostats -nostdin -y -analyzeduration 50000000 -timeout 100000
 		-bufsize:v:0 8400k \
 	-map '[sd2]' \
 		-metadata:s:v:1 title="SD" \
-		-threads:v:1 4 \
-		-tile-columns:v:1 1 \
+		-threads:v:1 6 \
+		-tile-columns:v:1 2 \
                 -r:v:1 25 \
 		-keyint_min:v:1 75 \
 		-g:v:1 75 \

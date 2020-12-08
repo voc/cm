@@ -78,7 +78,7 @@ ffmpeg -v warning -nostats  -nostdin -y -analyzeduration 50000000 -timeout 10000
 		-c:v:0 libvpx-vp9 \
 			-deadline:v:0 realtime \
 			-cpu-used:v:0 8 \
-			-threads:v:0 4 \
+			-threads:v:0 6 \
 			-frame-parallel:v:0 1 \
 			-tile-columns:v:0 2 \
 			\
