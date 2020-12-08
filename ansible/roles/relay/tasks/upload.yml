@@ -11,7 +11,7 @@
 
 - name: create upload directories
   file:
-    path: "/srv/nginx/cw/{{ item }}"
+    path: "/srv/nginx/cwtv/{{ item }}"
     state: directory
     group: www-data
     mode: 0775
@@ -22,8 +22,8 @@
 
 - name: create upload symlinks
   file:
-    src: "/srv/nginx/cw/{{ item }}"
-    dest: "/srv/nginx/{{ item }}/cw"
+    src: "/srv/nginx/cwtv/{{ item }}"
+    dest: "/srv/nginx/{{ item }}/cwtv"
     state: link
   loop:
     - dash

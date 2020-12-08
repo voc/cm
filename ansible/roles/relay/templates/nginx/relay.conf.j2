@@ -101,8 +101,8 @@ server {
   #
   rewrite ^/hls/(?<stream>[^/_]+)_(?<file>[^/]+\.m3u8)$ /hls/$stream/$file redirect;
 
-  location /upload/cw {
-    alias /srv/nginx/cw;
+  location /upload/cwtv {
+    alias /srv/nginx/cwtv;
     autoindex on;
     auth_basic           "upload login";
     auth_basic_user_file uploadpasswd;
