@@ -62,4 +62,4 @@ env KEEPASS="${KEEPASS}" KEEPASS_PW="${KEEPASS_PW}" $(which python) lookup_plugi
 #
 # Exec
 #
-exec env KEEPASS="${KEEPASS}" KEEPASS_PW="${KEEPASS_PW}" $(which ansible-playbook) --ssh-extra-args="-A" $*
+exec env KEEPASS="${KEEPASS}" KEEPASS_PW="${KEEPASS_PW}" $(which ansible-playbook) $*
