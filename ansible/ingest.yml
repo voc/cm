@@ -3,5 +3,4 @@
     roles:
       - { role: common, tags: ['common'] }
       - { role: monitoring-client, tags: ['monitoring'] }
-      - { role: letsencrypt, vars: {'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt']}
       - { role: ingest, tags: ['ingest'] }

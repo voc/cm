@@ -170,4 +170,5 @@ tracker.c3voc.de
 monitoring.c3voc.de
 
 [ingest]
-ingest.c3voc.de
+ingest.c3voc.de rtmp_auth_relay=yes
+ingest2.c3voc.de

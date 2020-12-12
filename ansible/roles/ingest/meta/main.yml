@@ -2,3 +2,7 @@
 dependencies:
   - role: nginx
     tags: nginx
+  - role: letsencrypt
+    vars:
+      domain: "{{ ansible_fqdn }}"
+    tags: letsencrypt
