@@ -56,7 +56,7 @@ rtmp {
       allow publish all;
       allow play all;
 
-      {% if rtmp_auth is defined and rtmp_auth|bool -%}
+      {% if rtmp_auth|bool -%}
       # authenticate stream publish against backend
       on_publish http://127.0.0.1:8080/publish;
       on_publish_done http://127.0.0.1:8080/unpublish;
@@ -77,6 +77,12 @@ rtmp {
 
       allow publish all;
       allow play all;
+
+      {% if rtmp_auth|bool and rtmp_auth_relay|bool -%}
+      # authenticate stream publish against backend
+      on_publish http://127.0.0.1:8080/publish;
+      on_publish_done http://127.0.0.1:8080/unpublish;
+      {% endif %}
     }
   }
 }

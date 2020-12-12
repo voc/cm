@@ -13,7 +13,6 @@
     tags: rtmp
     when: not rtmp|bool
 
-
   - include: rtmp_auth.yml
     when: rtmp|bool and rtmp_auth is defined and rtmp_auth|bool
     tags: rtmp
