@@ -87,6 +87,12 @@ server {
     alias /var/www/dehydrated;
   }
 
+  # rewrite old m3u8 playlist urls
+  #
+  # live:   /hls/s2_native_sd.m3u8 -> /hls/s2/native_sd.m3u8
+  #
+  rewrite ^/hls/(?<stream>[^/_]+)_(?<file>[^/]+\.m3u8)$ /hls/$stream/$file redirect;
+
 {% if stream_master %}
   # stream-api
   location /stream_info.json {
@@ -94,12 +100,6 @@ server {
     auth_basic_user_file htpasswd;
     alias /srv/nginx/stream_info.json;
   }
-
-  # rewrite old m3u8 playlist urls
-  #
-  # live:   /hls/s2_native_sd.m3u8 -> /hls/s2/native_sd.m3u8
-  #
-  rewrite ^/hls/(?<stream>[^/_]+)_(?<file>[^/]+\.m3u8)$ /hls/$stream/$file redirect;
 
   location /upload/cwtv {
     alias /srv/nginx/cwtv;
