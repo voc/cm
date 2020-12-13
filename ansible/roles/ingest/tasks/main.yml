@@ -1,9 +1,3 @@
 ---
-  - include: undeploy.yml
-    tags: undeploy
-
-  - include: icecast.yml
-    tags: icecast
-
   - include: nginx.yml
     tags: nginx
