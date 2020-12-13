@@ -6,7 +6,7 @@
 
     <limits>
         <clients>{{ icecast_client_limit | default('4096') }}</clients>
-        <sources>{{ icecast_source_limit | default('100')  }}</sources>
+        <sources>{{ icecast_source_limit | default('500')  }}</sources>
         <threadpool>{{ icecast_threadpool | default('10') }}</threadpool>
         <queue-size>{{ icecast_queue_size | default('4055040') }}</queue-size>
         <client-timeout>{{ icecast_client_timeout | default('30') }}</client-timeout>
@@ -31,6 +31,15 @@
         <bindv6only>0</bindv6only>
     </listen-socket>
 
+{% if icecast_master_ip != "" %}
+    <!-- fetch streams from master -->
+    <master-server>{{ icecast_master_ip | ipaddr }}</master-server>
+    <master-server-port>{{ icecast_master_port | default('8000') }}</master-server-port>
+    <master-update-interval>{{ icecast_master_update_interval | default('10') }}</master-update-interval>
+    <master-password>{{ icecast_master_password }}</master-password>
+    <relays-on-demand>0</relays-on-demand>
+{% endif %}
+
 {% if icecast_push_master is defined and icecast_push_master|bool and icecast_additional_mounts is defined %}
     <!-- additional mount points with separate authentication -->
 {% for mount in icecast_additional_mounts %}
@@ -40,7 +49,7 @@
       <username>{{ mount['username'] }}</username>
       <password>{{ mount['password'] }}</password>
       <hidden>0</hidden>
-      <public>0</public>
+      <public>1</public>
       <stream-name>{{ mount['stream-name'] }}</stream-name>
 {% if mount['dump-file'] is defined %}
       <dump-file>{{ mount['dump-file'] }}</dump-file>
@@ -62,7 +71,6 @@
     </paths>
 
     <logging>
-      <accesslog>{{ icecast_access_log | default('access.log') }}</accesslog>
       <errorlog>{{ icecast_error_log | default('error.log') }}</errorlog>
 
       <loglevel>{{ icecast_log_level | default('3') }}</loglevel> <!-- 4 Debug, 3 Info, 2 Warn, 1 Error -->

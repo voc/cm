@@ -44,7 +44,6 @@
         <alias source="/" destination="/status.xsl"/>
     </paths>
 
-{% if icedist_pull_streams is defined %}
 {% for room in icedist_pull_streams %}
     <relay>
         <server>10.73.{{ room }}.3</server>
@@ -56,7 +55,6 @@
         <on-demand>0</on-demand>
     </relay>
 {% endfor %}
-{% endif %}
 
     <logging>
       <accesslog>access.log</accesslog>

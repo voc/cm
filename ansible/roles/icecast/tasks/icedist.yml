@@ -1,0 +1,33 @@
+---
+# Set up distribution icecast
+- name: deploy icedist configuration
+  template:
+    src: icedist.xml
+    dest: /etc/icecast2/icedist.xml
+    owner: icecast2
+    group: icecast
+    mode: 0660
+  register: icedist_conf
+
+- name: create icedist systemd unit
+  template:
+    src: icedist.service
+    dest: /etc/systemd/system/icedist.service
+    mode: 0644
+  register: icedist_service
+
+- name: create icedist logging directory
+  file:
+    dest: /var/log/icedist
+    state: directory
+    mode: 755
+    owner: icecast2
+    group: icecast
+
+- name: restart icedist service
+  systemd:
+    name: icedist.service
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+  when: icedist_conf.changed or icedist_service.changed

@@ -18,6 +18,5 @@
 
   - include: ../../../handlers/nginx.yml
   - include: ../../../handlers/rc_local.yml
-  - include: ../../../handlers/sysctl.yml
   - include: ../../../handlers/systemd.yml
   - include: ../../../roles/letsencrypt/handlers/main.yml domain={{ ansible_fqdn }}

@@ -3,6 +3,4 @@
     roles:
       - { role: common, tags: ['common'] }
       - { role: monitoring-client, tags: ['monitoring'] }
-      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }
-      - { role: nginx, tags: ['nginx'], vars: { 'anonymize_logs': no, 'default_server': no, 'default_access_log': no } }
       - { role: relay, tags: ['relay'] }

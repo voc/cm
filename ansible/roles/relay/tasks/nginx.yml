@@ -52,8 +52,3 @@
     tags:
       - config
       - install
-
-  # TODO: remove me
-  - name: remove access-log-truncating cronjob
-    file: dest=/etc/cron.hourly/truncate-nginx-accesslog
-          state=absent
