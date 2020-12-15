@@ -1,22 +1,7 @@
+# default relive master
 nginx_hls_relive_masters: ['185.106.84.36']
 
-# workaround until relive lb config does something useful
-nginx_hls_relive_cache_max_size: '30g'
-
-relay_fanout:
-  push_endpoint: 127.0.0.1:8000
-  hls_write_path: /srv/nginx/hls
-  dash_write_path: /srv/nginx/dash
-  thumbnail_write_path: /srv/nginx/thumbnail
-
-# icecast
-icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
-icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"
-icecast_source_password: "{{ lookup('keepass', 'ansible/icecast/source.password') }}"
-icecast_relay_password:  "{{ lookup('keepass', 'ansible/icecast/relay.password') }}"
-icecast_master_password: "{{ lookup('keepass', 'ansible/icecast/master.password') }}"
-icecast_admin_email:     "{{ lookup('keepass', 'ansible/icecast/admin.url') }}"
-
+# push mounts for icecast master
 icecast_additional_mounts: [
   {
     "mount-name": '/a1.opus',
@@ -77,6 +62,18 @@ icecast_additional_mounts: [
     "password": "{{ lookup('keepass', 'ansible/audio-pi/icecast_a4.password') }}",
     "stream-name": "Audio-Pi 4 MP3",
     "dump-file": "/srv/icecastdumps/a4-%F_%H-%M-%S_%s.mp3"
+  }, {
+    "mount-name": '/ambientlounge.mp3',
+    "type": 'audio/mpeg',
+    "username": 'source',
+    "password": "{{ lookup('keepass', 'ansible/icecast/mounts/ambientlounge.password') }}",
+    "stream-name": "rC3 Ambient Lounge"
+  }, {
+    "mount-name": '/ambientlounge.opus',
+    "type": 'application/ogg',
+    "username": 'source',
+    "password": "{{ lookup('keepass', 'ansible/icecast/mounts/ambientlounge.password') }}",
+    "stream-name": "rC3 Ambient Lounge"
   }
 ]
 

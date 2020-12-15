@@ -1,3 +1,6 @@
+# workaround until relive lb config does something useful
+nginx_hls_relive_cache_max_size: '30g'
+
 ### Master-Relay variables
 # - host stream-info api
 # - do fanout
@@ -10,3 +13,9 @@ relive_master: no
 
 # fanout to youtube
 youtube: no
+
+relay_fanout:
+  push_endpoint: 127.0.0.1:8000
+  hls_write_path: /srv/nginx/hls
+  dash_write_path: /srv/nginx/dash
+  thumbnail_write_path: /srv/nginx/thumbnail

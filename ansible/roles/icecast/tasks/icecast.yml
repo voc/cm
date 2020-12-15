@@ -32,13 +32,6 @@
     mode: 0644
   register: icecast_service
 
-- name: restart icecast2 service
-  systemd:
-    name: icecast2.service
-    state: restarted
-    daemon_reload: yes
-  when: icecast_conf.changed or icecast_service.changed
-
 # Start service
 - name: enable icecast2 on boot
   service:
@@ -46,6 +39,13 @@
     enabled: yes
     state: started
   when: icecast|bool
+
+- name: reload icecast2 service
+  systemd:
+    name: icecast2.service
+    state: reloaded
+    daemon_reload: yes
+  when: icecast|bool and icecast_conf.changed
 
 # Stop service
 - name: disable icecast2 on boot
