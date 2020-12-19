@@ -22,7 +22,6 @@
       - screen
       - build-essential
       - bwm-ng
-      - lldpd
       - mosh
       - molly-guard
       - ncdu
@@ -54,6 +53,7 @@
     apt:
       name:
         - smartmontools
+        - lldpd
       state: latest
     when: ansible_virtualization_role != 'guest'
 
