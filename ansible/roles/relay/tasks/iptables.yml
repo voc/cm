@@ -1,6 +1,11 @@
 ---
   - name: create rc.local
-    template: dest=/etc/rc.local
-              src=rc.local/rc.local.j2
-              mode=0755 owner=root group=root
-    notify: reload rc.local
+    template:
+      src: rc.local/rc.local.j2
+      dest: /etc/rc.local
+      mode: 0755
+    register: rc_local
+
+  - name: reload rc.local
+    command: /etc/rc.local
+    when: rc_local.changed

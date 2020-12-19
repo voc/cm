@@ -4,15 +4,20 @@ proxy_temp_path /srv/nginx/cache/tmp;
 {% if not (relive_master is defined and relive_master|bool) %}
 proxy_cache_path /srv/nginx/cache/hls_relive
                 keys_zone=hls_relive:32m
-                max_size={{ nginx_hls_relive_cache_max_size | default('30g') }}
+                max_size={{ nginx_hls_relive_cache_max_size }}
                 inactive=7d
                 loader_threshold=300 loader_files=1024;
 {% endif %}
 {% if not stream_master %}
 proxy_cache_path /srv/nginx/cache/live
                 keys_zone=live:32m
-                max_size={{ nginx_live_cache_max_size | default('30g') }}
-                inactive=1h
+                max_size={{ nginx_live_cache_max_size }}
+                inactive=10m
+                loader_threshold=300 loader_files=1024;
+proxy_cache_path /srv/nginx/cache/mediastatic
+                keys_zone=mediastatic:32m
+                max_size={{ nginx_media_static_cache_max_size }}
+                inactive=6h
                 loader_threshold=300 loader_files=1024;
 
 # Upstreams
@@ -39,6 +44,12 @@ upstream relive {
 {% endif %}
 
   keepalive 32;
+}
+
+upstream mediastatic {
+{% for server in nginx_media_static_masters %}
+  server {{ server }}:443;
+{% endfor %}
 }
 {% endif %}
 
@@ -169,7 +180,8 @@ server {
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://stream/$hls/$stream;
       proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 11m;
+      proxy_cache_valid      200 302 5m;
+      proxy_cache_revalidate on;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;
@@ -222,7 +234,8 @@ server {
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://stream/dash/$segment;
       proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 11m;
+      proxy_cache_valid      200 302 5m;
+      proxy_cache_revalidate on;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;
@@ -267,6 +280,35 @@ server {
       proxy_set_header          X-Forwarded-For $remote_addr;
       proxy_buffering           off;
       proxy_pass                http://icecast;
+  }
+
+  # proxy cache static media files
+  #
+  # relive: /media/congress/2019/11224-hd.jpg
+  #
+  location ~* ^/(?<media>media)/(?<file>.+)$ {
+    proxy_intercept_errors on;
+    proxy_cache            mediastatic;
+    proxy_set_header       Host static.media.ccc.de;
+    proxy_set_header       X-Real-IP $remote_addr;
+    proxy_pass             https://mediastatic/$media/$file;
+    proxy_cache_methods    GET;
+    proxy_cache_valid      200 302 1d;
+    proxy_cache_revalidate on;
+    proxy_cache_key        "$uri";
+    proxy_cache_lock       on;
+    proxy_ignore_headers   Cache-Control;
+    # allow stale
+    proxy_cache_use_stale error timeout updating http_500 http_502
+                          http_503 http_504;
+    proxy_cache_background_update on;
+    # keepalive to upstream server
+    proxy_http_version          1.1;
+    proxy_set_header Connection "";
+
+    # client caching
+    add_header Cache-Control no-cache;
+    add_header X-Cache     "$upstream_cache_status edge";
   }
 {% endif %}
 

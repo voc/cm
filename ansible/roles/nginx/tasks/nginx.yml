@@ -33,6 +33,12 @@
       path: /etc/letsencrypt/renewal-hooks/post/20-nginx
       state: absent
 
+  - name: make sure letsencrypt hookdir is present
+    file:
+      dest: /etc/dehydrated/hook.d
+      state: directory
+      mode: 0750
+
   - name: deploy letsencrypt hook
     template:
       src: letsencrypt-hook.sh
