@@ -62,7 +62,7 @@ loop-transcoder ansible_host=141.24.220.5 ansible_port=10023 transcoder_capacity
 
 transcoder1.vpn.c3voc.de transcoder_capacity=1
 transcoder2.vpn.c3voc.de transcoder_capacity=1
-transcoder3.vpn.c3voc.de transcoder_capacity=1
+transcoder3.vpn.c3voc.de transcoder_capacity=0
 transcoder4.vpn.c3voc.de transcoder_capacity=1
 transcoder5.vpn.c3voc.de transcoder_capacity=1
 

@@ -115,6 +115,14 @@ def update_state(state, conf):
     regex = re.compile(conf["stream-match"])
     valid_stream = lambda s: "key" in s and regex.match(s["key"]) is not None
 
+    options = []
+    if "options" in conf:
+        for option in conf["options"]:
+            options.append({
+                "regex": re.compile(option["stream-match"]),
+                "set": option["set"],
+            })
+
     # Setup dict for transcoder lookup
     transcoders = {}
     for transcoder in conf["transcoders"]:
@@ -151,6 +159,13 @@ def update_state(state, conf):
             stream["artwork"] = {
                 "base": conf["artwork_base"]
             }
+
+            # apply type options
+            stream["options"] = {}
+            for option in options:
+                if option["regex"].match(key) is not None:
+                    for key, val in option["set"].items():
+                        stream["options"][key] = val
 
             if not "transcoding" in stream:
                 t = find_transcoder(stream["key"], transcoders, state)
