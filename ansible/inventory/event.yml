@@ -129,8 +129,8 @@ aws.lan.c3voc.de # ansible_ssh_port=8000 ansible_ssh_host=127.0.0.1
 mebibyte.c3voc.de
 
 # VMs
+kevin.c3voc.de letsencrypt=true
 peertube.c3voc.de
-ninja.c3voc.de
 monitoring.lan.c3voc.de
 router.lan.c3voc.de
 phony.lan.c3voc.de
