@@ -57,9 +57,15 @@ loop-encoder ansible_host=141.24.220.5 ansible_port=10022
 speedy.lan.c3voc.de transcoder_capacity=3
 tweety.lan.c3voc.de transcoder_capacity=3
 daffy.lan.c3voc.de transcoder_capacity=4
-sylvester.lan.c3voc.de transcode_capacity=4
-
+sylvester.lan.c3voc.de transcoder_capacity=4
 loop-transcoder ansible_host=141.24.220.5 ansible_port=10023 transcoder_capacity=1 transcoder_streams='["sloop"]'
+
+transcoder1.vpn.c3voc.de transcoder_capacity=1
+transcoder2.vpn.c3voc.de transcoder_capacity=1
+transcoder3.vpn.c3voc.de transcoder_capacity=1
+transcoder4.vpn.c3voc.de transcoder_capacity=1
+transcoder5.vpn.c3voc.de transcoder_capacity=1
+
 
 [encoders]
 encoder1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder1.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.password') }}"
