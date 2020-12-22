@@ -156,6 +156,7 @@ def update_state(state, conf):
                 stream = candidate
                 state["streams"].append(stream)
 
+            stream["lastUpdated"] = int(time.time())
             stream["artwork"] = {
                 "base": conf["artwork_base"]
             }
@@ -169,14 +170,15 @@ def update_state(state, conf):
 
             if not "transcoding" in stream:
                 t = find_transcoder(stream["key"], transcoders, state)
-                if t:
-                    stream["transcoding"] = {
-                        "worker": t["host"],
-                        "sink": conf["sink"]
-                    }
-                    t["jobs"] += 1
+                if t is None:
+                    print(f"No transcoder available for {stream['key']}, capacity reached")
+                    continue
 
-            stream["lastUpdated"] = int(time.time())
+                stream["transcoding"] = {
+                    "worker": t["host"],
+                    "sink": conf["sink"]
+                }
+                t["jobs"] += 1
 
     # Remove old streams
     now = time.time()
