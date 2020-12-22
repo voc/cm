@@ -5,6 +5,10 @@
   - include: locale.yml
     tags: locales
 
+  - include: lxc.yml
+    tags: lxc
+    when: ansible_virtualization_type is defined and ansible_virtualization_type == 'lxc'
+
   - include: resolv.yml
     tags: [resolv, dns]
     # work around systemd bug #10032
