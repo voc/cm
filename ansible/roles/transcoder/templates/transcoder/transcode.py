@@ -9,33 +9,6 @@ defines = {
     "icecast_password": "{{ lookup('keepass', 'ansible/icecast/icedist/source.password') }}",
 }
 
-def get_dri_devices():
-    try:
-        entries = os.listdir("/sys/kernel/debug/dri")
-    except PermissionError:
-        print("Not running with privileges, no hardware acceleration available")
-        return []
-    return entries
-
-
-def get_vaapi_drivers(devicenum):
-    try:
-        with open(f"/sys/kernel/debug/dri/{devicenum}/name", "r") as f:
-            res = f.read()
-    except FileNotFoundError:
-        return []
-
-    driver = res.split(" ")[0]
-    if driver == "i915":
-        return ["iHD", "i965"]
-    elif driver == "amdgpu":
-        return ["radeonsi"]
-    elif driver == "nouveau":
-        return ["nouveau"]
-    else:
-        return []
-
-
 def parse_vainfo(driver: str, device: str):
     """
     calls vainfo for a specific device and driver and returns a list of en/decoder
@@ -60,6 +33,8 @@ def parse_vainfo(driver: str, device: str):
             line = line.strip().replace(" ", "").replace("\t", "")
             if line == "VAProfileH264High:VAEntrypointEncSlice":
                 features.append("h264-enc")
+            elif line == "VAProfileJPEGBaseline:VAEntrypointEncPicture":
+                features.append("jpeg-enc")
             elif line == "VAProfileVP9Profile0:VAEntrypointEncSlice":
                 features.append("vp9-enc")
     return features
@@ -68,11 +43,19 @@ def parse_vainfo(driver: str, device: str):
 def vainfo():
     devnum = 128
     dev = f"/dev/dri/renderD{devnum}"
+    bestdriver = None
+    bestfeatures = []
     for driver in ["iHD", "i965", "radeonsi", "nouveau"]:
         features = parse_vainfo(driver, dev)
-        if len(features) > 0:
-            return dev, driver, features
-    return None, None, []
+        if len(features) <= len(bestfeatures):
+            continue
+        bestdriver = driver
+        bestfeatures = features
+
+    if bestdriver is None:
+        return None, None, []
+
+    return dev, bestdriver, bestfeatures
 
 
 def check_arg(env, key, flag):
@@ -187,7 +170,7 @@ def transcode_all(env, output):
         ]
 
     # h264 + software vp9
-    elif vaapi_dev is not None and "h264-enc" in vaapi_features:
+    elif vaapi_dev is not None and "h264-enc" in vaapi_features and "jpeg-enc" in vaapi_features:
         print("falling back to software transcode with software vp9")
         return [
             f"""
@@ -245,7 +228,7 @@ def transcode_h264(env, output):
     vaapi_features = env["vaapi_features"]
 
     # vaapi
-    if vaapi_dev is not None and "h264-enc" in vaapi_features:
+    if vaapi_dev is not None and "h264-enc" in vaapi_features and "jpeg-enc" in vaapi_features:
         return [
             f"""
             -init_hw_device vaapi=transcode:{vaapi_dev}
