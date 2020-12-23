@@ -6,7 +6,7 @@
 
     <limits>
         <clients>4096</clients>
-        <sources>100</sources>
+        <sources>300</sources>
         <threadpool>10</threadpool>
         <queue-size>4055040</queue-size>
         <client-timeout>30</client-timeout>
