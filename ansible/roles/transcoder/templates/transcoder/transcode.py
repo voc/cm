@@ -6,10 +6,10 @@ import subprocess
 import sys
 import time
 import random
+import signal
 
-defines = {
-    "icecast_password": "{{ lookup('keepass', 'ansible/icecast/icedist/source.password') }}",
-}
+import mqtt
+import config
 
 def main():
     env = dict()
@@ -17,7 +17,7 @@ def main():
     env["source"] = os.getenv("transcoding_source")
     env["sink"] = os.getenv("transcoding_sink")
     env["type"] = os.getenv("type", "all")
-    env["vaapi_dev"], env["vaapi_driver"], env["vaapi_features"] = vainfo()
+    env["vaapi_dev"], env["vaapi_driver"], env["vaapi_features"] = select_vaapi_dev()
 
     parser = argparse.ArgumentParser(description="Transcode voc stream")
     parser.add_argument("--stream", help="stream key")
@@ -37,6 +37,13 @@ def main():
                         default=False, action="store_true")
     args = parser.parse_args()
 
+    # override environment with arguments
+    enable_mqtt = True
+    check_arg(env, "output", args.output)
+    if env["output"] == "null":
+        enable_mqtt = False
+        env["stream"] = ""
+        env["sink"] = ""
     check_arg(env, "stream", args.stream)
     check_arg(env, "source", args.source)
     check_arg(env, "sink", args.sink)
@@ -48,6 +55,7 @@ def main():
         print("using progress", args.progress)
         progress = f"-progress {args.progress}"
 
+    # override vaapi variables
     if args.vaapi_device is not None:
         print("override vaapi device", args.vaapi_device)
         env["vaapi_dev"] = args.vaapi_device
@@ -60,22 +68,23 @@ def main():
     env_vars = {"LIBVA_DRIVER_NAME": env["vaapi_driver"]}
     os.environ.update(env_vars)
 
-    # choose output
-    output = output_icecast
-    if args.output == "null":
-        output = output_null
+    with mqtt.Client(enable_mqtt) as client:
+        client.info(f"Transcoding for {env['stream']} started…")
+        try:
+            mainloop(env, args.restart, progress, args.verbose)
+        except ExitException:
+            pass
+        client.info(f"Transcoding for {env['stream']} stopped…")
 
-    # build arguments
-    arguments = []
-    if env["type"] == "h264-only":
-        arguments = transcode_h264(env, output)
-    else:
-        arguments = transcode_all(env, output)
 
-    arguments.insert(0, f"""/usr/bin/env ffmpeg -hide_banner -v {args.verbose} {progress} -nostdin -y
-            -analyzeduration 50000000 -timeout 10000000""")
-    call = shlex.split(" ".join(arguments))
-    mainloop(call, args.restart)
+def check_arg(env, key, flag):
+    """Selectively overwrite environment variables if flag is set"""
+    if flag is not None:
+        env[key] = flag
+    if env[key] is None:
+        print(f"Param {key} must be set")
+        sys.exit(1)
+
 
 def parse_vainfo(driver: str, device: str):
     """
@@ -108,7 +117,10 @@ def parse_vainfo(driver: str, device: str):
     return features
 
 
-def vainfo():
+def select_vaapi_dev():
+    """
+    Selects and returns the most appropriate VAAPI device and driver.
+    """
     devnum = 128
     dev = f"/dev/dri/renderD{devnum}"
     bestdriver = None
@@ -126,17 +138,44 @@ def vainfo():
     return dev, bestdriver, bestfeatures
 
 
-def check_arg(env, key, flag):
-    if flag is not None:
-        env[key] = flag
-    if env[key] is None:
-        print(f"Param {key} must be set")
-        sys.exit(1)
+class ExitException(Exception):
+    def __init__(self, signum):
+        super(ExitException, self).__init__(f"Caught signal {signum}")
 
 
-def mainloop(call, do_restart):
+def signal_handler(signum, frame):
+    raise ExitException(signum)
+
+
+def mainloop(env, do_restart, progress="", verbosity="warning"):
+    """
+    Runs ffmpeg in a loop with
+    """
     timer = 0
     sleep_time = 0
+
+    # install signal handlers
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    signal.signal(signal.SIGQUIT, signal_handler)
+
+    # choose output
+    output = output_icecast
+    if env["output"] == "null":
+        output = output_null
+
+    # build command
+    arguments = []
+    if env["type"] == "h264-only":
+        arguments = transcode_h264(env, output)
+    else:
+        arguments = transcode_all(env, output)
+
+    arguments.insert(0, f"""/usr/bin/env ffmpeg -hide_banner {progress} -v {verbosity} -nostdin -y
+            -analyzeduration 50000000 -timeout 10000000""")
+    call = shlex.split(" ".join(arguments))
+
+    # run ffmpeg
     while True:
         try:
             timer = time.time()
@@ -527,7 +566,7 @@ def output_icecast(env, slug):
     -fflags +genpts
     -max_muxing_queue_size 400
     -f matroska
-    -password {defines["icecast_password"]}
+    -password {config.icecast_password}
     -content_type video/webm
     "icecast://{env["sink"]}/{slug}"
 """

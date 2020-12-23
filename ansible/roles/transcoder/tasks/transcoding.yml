@@ -27,9 +27,13 @@
 
   - name: create transcode-script
     template:
-      src: "transcoder/transcode.py"
+      src: "transcoder/{{ item }}"
       dest: "/opt/transcoder/scripts/"
       mode: 0755
+    loop:
+      - transcode.py
+      - mqtt.py
+      - config.py
 
   - name: create transcode-update script
     template:

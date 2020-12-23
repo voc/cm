@@ -8,7 +8,7 @@ After = transcode@%i.target
 [Service]
 Type = simple
 EnvironmentFile = /opt/transcoder/config/%i
-ExecStart = /opt/transcoder/scripts/transcode.py
+ExecStart = /opt/transcoder/scripts/transcode.py --restart
 Restart = always
 RestartSec = 5s
 StartLimitInterval = 0

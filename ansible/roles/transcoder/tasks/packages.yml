@@ -6,4 +6,5 @@
       - vainfo
       - i965-va-driver-shaders
       - python3-dbus
+      - python3-paho-mqtt
     state: latest
