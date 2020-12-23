@@ -3,6 +3,7 @@
       state: latest
       name:
         - vsftpd
+        - lockfile-progs
   - import_tasks: cdn-sync.yml
   # TODO add rsyncd configuration
   #   mirrorbits checks via rsync, config is done in media-cdn role,
