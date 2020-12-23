@@ -1,3 +1,4 @@
 ---
 telegraf_interfaces:
-  - "eth0"
+  - enp2s0f0
+  - enp2s0f1
