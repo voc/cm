@@ -54,8 +54,8 @@ loop-encoder ansible_host=141.24.220.5 ansible_port=10022
 
 # Host types
 [transcoders]
-speedy.lan.c3voc.de transcoder_capacity=3
-tweety.lan.c3voc.de transcoder_capacity=3
+speedy.lan.c3voc.de transcoder_capacity=2
+tweety.lan.c3voc.de transcoder_capacity=2
 daffy.lan.c3voc.de transcoder_capacity=4
 sylvester.lan.c3voc.de transcoder_capacity=4
 loop-transcoder ansible_host=141.24.220.5 ansible_port=10023 transcoder_capacity=1 transcoder_streams='["sloop"]'
@@ -67,13 +67,13 @@ transcoder4.vpn.c3voc.de transcoder_capacity=1
 transcoder5.vpn.c3voc.de transcoder_capacity=1
 transcoder6.vpn.c3voc.de transcoder_capacity=1
 
-minion1.lan.c3voc.de transcoder_capacity=2
+minion1.lan.c3voc.de transcoder_capacity=1
 minion4.lan.c3voc.de transcoder_capacity=1
-minion6.lan.c3voc.de transcoder_capacity=2
+minion6.lan.c3voc.de transcoder_capacity=1
 
-encoder1.lan.c3voc.de transcoder_capacity=2
-encoder4.lan.c3voc.de transcoder_capacity=2
-encoder5.lan.c3voc.de transcoder_capacity=2
+encoder1.lan.c3voc.de transcoder_capacity=3
+encoder4.lan.c3voc.de transcoder_capacity=3
+encoder5.lan.c3voc.de transcoder_capacity=3
 
 [encoders]
 encoder1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder1.password') }}" crs_token_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.username') }}" crs_secret_meta="{{ lookup('keepass', 'ansible/worker-groups/encoder1-meta.password') }}"
