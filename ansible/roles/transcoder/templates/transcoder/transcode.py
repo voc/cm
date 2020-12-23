@@ -4,10 +4,78 @@ import argparse
 import shlex
 import subprocess
 import sys
+import time
+import random
 
 defines = {
     "icecast_password": "{{ lookup('keepass', 'ansible/icecast/icedist/source.password') }}",
 }
+
+def main():
+    env = dict()
+    env["stream"] = os.getenv("stream_key")
+    env["source"] = os.getenv("transcoding_source")
+    env["sink"] = os.getenv("transcoding_sink")
+    env["type"] = os.getenv("type", "all")
+    env["vaapi_dev"], env["vaapi_driver"], env["vaapi_features"] = vainfo()
+
+    parser = argparse.ArgumentParser(description="Transcode voc stream")
+    parser.add_argument("--stream", help="stream key")
+    parser.add_argument("--source", help="transcoding input")
+    parser.add_argument("--sink", help="transcoding sink host")
+    parser.add_argument("--type", help="transcode type",
+                        choices=["h264-only", "all"])
+    parser.add_argument("-o", "--output", help="output type",
+                        default="icecast", choices=["icecast", "null"])
+    parser.add_argument("-progress", help="pass to ffmpeg progress")
+    parser.add_argument("--vaapi-features", action="append",
+                        help="override vaapi features")
+    parser.add_argument("--vaapi-device", help="override vaapi device")
+    parser.add_argument("-v", "--verbose", help="set verbosity",
+                        default="warning")
+    parser.add_argument("--restart", help="restart on failure",
+                        default=False, action="store_true")
+    args = parser.parse_args()
+
+    check_arg(env, "stream", args.stream)
+    check_arg(env, "source", args.source)
+    check_arg(env, "sink", args.sink)
+    check_arg(env, "type", args.type)
+
+    # handle external ffmpeg-progress
+    progress = ""
+    if args.progress is not None:
+        print("using progress", args.progress)
+        progress = f"-progress {args.progress}"
+
+    if args.vaapi_device is not None:
+        print("override vaapi device", args.vaapi_device)
+        env["vaapi_dev"] = args.vaapi_device
+
+    if args.vaapi_features is not None:
+        print("override", args.vaapi_features)
+        env["vaapi_features"] = args.vaapi_features
+
+    print("using vaapi driver", env["vaapi_driver"])
+    env_vars = {"LIBVA_DRIVER_NAME": env["vaapi_driver"]}
+    os.environ.update(env_vars)
+
+    # choose output
+    output = output_icecast
+    if args.output == "null":
+        output = output_null
+
+    # build arguments
+    arguments = []
+    if env["type"] == "h264-only":
+        arguments = transcode_h264(env, output)
+    else:
+        arguments = transcode_all(env, output)
+
+    arguments.insert(0, f"""/usr/bin/env ffmpeg -hide_banner -v {args.verbose} {progress} -nostdin -y
+            -analyzeduration 50000000 -timeout 10000000""")
+    call = shlex.split(" ".join(arguments))
+    mainloop(call, args.restart)
 
 def parse_vainfo(driver: str, device: str):
     """
@@ -53,7 +121,7 @@ def vainfo():
         bestfeatures = features
 
     if bestdriver is None:
-        return None, None, []
+        return "", "", []
 
     return dev, bestdriver, bestfeatures
 
@@ -66,75 +134,40 @@ def check_arg(env, key, flag):
         sys.exit(1)
 
 
-def main():
-    env = dict()
-    env["stream"] = os.getenv("stream_key")
-    env["source"] = os.getenv("transcoding_source")
-    env["sink"] = os.getenv("transcoding_sink")
-    env["type"] = os.getenv("type", "all")
-    env["vaapi_dev"], env["vaapi_driver"], env["vaapi_features"] = vainfo()
+def mainloop(call, do_restart):
+    timer = 0
+    sleep_time = 0
+    while True:
+        try:
+            timer = time.time()
+            subprocess.check_call(call, stdout=sys.stdout, stderr=sys.stderr)
+        except subprocess.CalledProcessError:
+            pass
 
-    parser = argparse.ArgumentParser(description="Transcode voc stream")
-    parser.add_argument("--stream", help="stream key")
-    parser.add_argument("--source", help="transcoding input")
-    parser.add_argument("--sink", help="transcoding sink host")
-    parser.add_argument("--type", help="transcode type",
-                        choices=["h264-only", "all"])
-    parser.add_argument("-o", "--output", help="output type",
-                        default="icecast", choices=["icecast", "null"])
-    parser.add_argument("-progress", help="pass to ffmpeg progress")
-    parser.add_argument("--vaapi-features", action="append",
-                        help="override vaapi features")
-    parser.add_argument("--vaapi-device", help="override vaapi device")
-    parser.add_argument("-v", "--verbose", help="set verbosity",
-                        default="warning")
-    args = parser.parse_args()
+        if not do_restart:
+            return
 
-    check_arg(env, "stream", args.stream)
-    check_arg(env, "source", args.source)
-    check_arg(env, "sink", args.sink)
-    check_arg(env, "type", args.type)
+        sleep_time = do_sleep(timer, sleep_time)
 
-    # handle external ffmpeg-progress
-    progress = ""
-    if args.progress is not None:
-        print("using progress", args.progress)
-        progress = f"-progress {args.progress}"
 
-    if args.vaapi_device is not None:
-        print("override vaapi device", args.vaapi_device)
-        env["vaapi_dev"] = args.vaapi_device
+def random_duration():
+    return 2 + random.random()
 
-    if args.vaapi_features is not None:
-        print("override", args.vaapi_features)
-        env["vaapi_features"] = args.vaapi_features
 
-    print("using vaapi driver", env["vaapi_driver"])
-    env_vars = {"LIBVA_DRIVER_NAME": env["vaapi_driver"]}
-    os.environ.update(env_vars)
-
-    # choose output
-    output = output_icecast
-    if args.output == "null":
-        output = output_null
-
-    # build arguments
-    arguments = []
-    if env["type"] == "h264-only":
-        arguments = transcode_h264(env, output)
+def do_sleep(timer, sleep_time):
+    now = time.time()
+    if now - timer < 10:
+        sleep_time = min(10, sleep_time + random_duration())
     else:
-        arguments = transcode_all(env, output)
-
-    arguments.insert(0, f"""/usr/bin/env ffmpeg -hide_banner -v {args.verbose} {progress} -nostdin -y
-            -analyzeduration 50000000 -timeout 10000000""")
-    call = shlex.split(" ".join(arguments))
-    try:
-        subprocess.check_call(call, stdout=sys.stdout, stderr=sys.stderr)
-    except subprocess.CalledProcessError:
-        # print(e)
-        sys.exit(1)
+        sleep_time = random_duration()
+    print(f"sleeping for {sleep_time:0.1f}s")
+    time.sleep(sleep_time)
+    return sleep_time
 
 
+##
+# Transcoding Presets
+##
 def transcode_all(env, output):
     source = env["source"]
     stream = env["stream"]
@@ -142,7 +175,7 @@ def transcode_all(env, output):
     vaapi_features = env["vaapi_features"]
 
     # all vaapi
-    if vaapi_dev is not None and "vp9-enc" in vaapi_features:
+    if "vp9-enc" in vaapi_features:
         print("running all vaapi transcode")
         return [
             f"""
@@ -170,8 +203,8 @@ def transcode_all(env, output):
         ]
 
     # h264 + software vp9
-    elif vaapi_dev is not None and "h264-enc" in vaapi_features and "jpeg-enc" in vaapi_features:
-        print("falling back to software transcode with software vp9")
+    elif "h264-enc" in vaapi_features and "jpeg-enc" in vaapi_features:
+        print("falling back to vaapi transcode with software vp9")
         return [
             f"""
             -init_hw_device vaapi=transcode:{vaapi_dev}
@@ -228,7 +261,7 @@ def transcode_h264(env, output):
     vaapi_features = env["vaapi_features"]
 
     # vaapi
-    if vaapi_dev is not None and "h264-enc" in vaapi_features and "jpeg-enc" in vaapi_features:
+    if "h264-enc" in vaapi_features and "jpeg-enc" in vaapi_features:
         return [
             f"""
             -init_hw_device vaapi=transcode:{vaapi_dev}
