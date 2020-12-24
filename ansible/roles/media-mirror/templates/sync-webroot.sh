@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOCK=/run/lock/media-sync.lock
+LOCK=/run/lock/webroot-sync.lock
 
 if ! lockfile-create -p -l $LOCK ; then
     /usr/bin/logger -t "$(basename $0)[$$]" "Lock file for pid $(cat $LOCK) exists."
@@ -13,9 +13,9 @@ BADGER="$!"
 trap "kill $BADGER ; lockfile-remove -l $LOCK" INT TERM EXIT
 
   # begin
-  RSYNC_PASSWORD={{ rsync_cdn_password }} rsync -Pa --bwlimit=42230 -x -4 \
+  RSYNC_PASSWORD={{ rsync_web_password }} rsync -Pa --bwlimit=42230 -x -4 \
     --exclude "lost+found" \
-    {{ rsync_cdn_url }} /srv/ftp
+    {{ rsync_web_url }} /srv/www/media.ccc.de
   # end
 
 kill $BADGER
