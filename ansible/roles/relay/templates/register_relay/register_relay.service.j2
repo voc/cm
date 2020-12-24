@@ -2,11 +2,11 @@
 
 [Unit]
 Description = Register Relay service
-Type = oneshot
-RemainAfterExit = yes
 
 [Service]
 ExecStart = /usr/local/sbin/register_relay
+Type = oneshot
+RemainAfterExit = yes
 
 [Install]
 WantedBy = multi-user.target
