@@ -229,7 +229,7 @@ def transcode_all(env, output):
                 [_hd2] hwdownload [hd_vp9];
                 [_hd1] scale_vaapi=1024:576,split [sd_h264][sd_vp9];
                 [_hd3] framestep=step=500,split [poster][_poster];
-                [_poster] scale_vaapi=w=213:h=-1 [thumb]"
+                [_poster] scale_vaapi=w=288:h=-1 [thumb]"
             """,
             encode_h264_vaapi(),
             output(env, f"{stream}_h264"),
@@ -258,7 +258,7 @@ def transcode_all(env, output):
                 [_hd1] scale_vaapi=1024:576,split [sd_h264][_sd2];
                 [_sd2] hwdownload [sd_vp9];
                 [_hd3] framestep=step=500,split [poster][_poster];
-                [_poster] scale_vaapi=w=213:h=-1 [thumb]"
+                [_poster] scale_vaapi=w=288:h=-1 [thumb]"
             """,
             encode_h264_vaapi(),
             output(env, f"{stream}_h264"),
@@ -280,7 +280,7 @@ def transcode_all(env, output):
                 [0:v:0] split [_hd1][_hd2];
                 [_hd1] scale=1024:576,split [sd_h264][sd_vp9];
                 [_hd2] framestep=step=500,split [poster][_poster];
-                [_poster] scale=w=213:h=-1 [thumb]"
+                [_poster] scale=w=288:h=-1 [thumb]"
             """,
             encode_h264_software(),
             output(env, f"{stream}_h264"),
@@ -313,7 +313,7 @@ def transcode_h264(env, output):
                 [0:v:0] split [_hd1][_hd2];
                 [_hd1] scale_vaapi=1024:576 [sd_h264];
                 [_hd2] framestep=step=500,split [poster][_poster];
-                [_poster] scale_vaapi=w=213:h=-1 [thumb]"
+                [_poster] scale_vaapi=w=288:h=-1 [thumb]"
             """,
             encode_h264_vaapi(),
             output(env, f"{stream}_h264"),
@@ -331,7 +331,7 @@ def transcode_h264(env, output):
                 [0:v:0] split [_hd1][_hd2];
                 [_hd1] scale_vaapi=1024:576 [sd_h264];
                 [_hd2] framestep=step=500,split [poster][_poster];
-                [_poster] scale_vaapi=w=213:h=-1 [thumb]"
+                [_poster] scale_vaapi=w=288:h=-1 [thumb]"
             """,
             encode_h264_software(),
             output(env, f"{stream}_h264"),
