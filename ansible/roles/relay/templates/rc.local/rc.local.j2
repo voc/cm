@@ -16,7 +16,7 @@
 iptables -F INPUT
 
 iptables -N RATELIMIT 2>/dev/null || iptables -F RATELIMIT
-iptables -A RATELIMIT -m conntrack --ctstate NEW -m hashlimit --hashlimit-mode srcip --hashlimit-upto 30/sec --hashlimit-srcmask 27 --hashlimit-burst 10 --hashlimit-name conn_rate_limit -j ACCEPT
+iptables -A RATELIMIT -m conntrack --ctstate NEW -m hashlimit --hashlimit-mode srcip --hashlimit-upto 50/sec --hashlimit-srcmask 27 --hashlimit-burst 20 --hashlimit-name conn_rate_limit -j ACCEPT
 iptables -A RATELIMIT -j REJECT
 
 iptables -A INPUT -s 185.106.84.33/32 -p icmp -m icmp --icmp-type 3 -j DROP -m comment --comment "juniper-fuckup-fix"
@@ -43,7 +43,7 @@ iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 ip6tables -F INPUT
 
 ip6tables -N RATELIMIT 2>/dev/null || ip6tables -F RATELIMIT
-ip6tables -A RATELIMIT -m conntrack --ctstate NEW -m hashlimit --hashlimit-mode srcip --hashlimit-srcmask 56 --hashlimit-upto 30/sec --hashlimit-burst 10 --hashlimit-name conn_rate_limit -j ACCEPT
+ip6tables -A RATELIMIT -m conntrack --ctstate NEW -m hashlimit --hashlimit-mode srcip --hashlimit-srcmask 56 --hashlimit-upto 50/sec --hashlimit-burst 20 --hashlimit-name conn_rate_limit -j ACCEPT
 ip6tables -A RATELIMIT -j REJECT
 
 ip6tables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
