@@ -158,6 +158,8 @@ librenms.lan.c3voc.de
 lb.dus.c3voc.de
 lb.alb.c3voc.de
 lb.dort.c3voc.de
+blade17.fra.c3voc.de
+blade19.fra.c3voc.de
 
 [minions]
 minion1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion1.password') }}"

@@ -14,6 +14,11 @@
 # By default this script does nothing.
 
 iptables -F INPUT
+
+iptables -N RATELIMIT 2>/dev/null || iptables -F RATELIMIT
+iptables -A RATELIMIT -m conntrack --ctstate NEW -m hashlimit --hashlimit-mode srcip --hashlimit-upto 30/sec --hashlimit-srcmask 27 --hashlimit-burst 10 --hashlimit-name conn_rate_limit -j ACCEPT
+iptables -A RATELIMIT -j REJECT
+
 iptables -A INPUT -s 185.106.84.33/32 -p icmp -m icmp --icmp-type 3 -j DROP -m comment --comment "juniper-fuckup-fix"
 iptables -A INPUT -s 195.54.164.161/32 -p icmp -m icmp --icmp-type 3 -j DROP -m comment --comment "juniper-fuckup-fix"
 iptables -A INPUT -s 195.54.164.169/32 -p icmp -m icmp --icmp-type 3 -j DROP -m comment --comment "juniper-fuckup-fix"
@@ -29,13 +34,18 @@ iptables -A INPUT -p tcp --sport 1024:65535 --dport 22   -j ACCEPT
 {% if stream_master is defined and stream_master|bool %}
 iptables -A INPUT -p tcp --sport 1024:65535 --dport 7999 -j ACCEPT
 {% endif %}
-iptables -A INPUT -p tcp --sport 1024:65535 --dport 80   -j ACCEPT
-iptables -A INPUT -p tcp --sport 1024:65535 --dport 443  -j ACCEPT
+iptables -A INPUT -p tcp --sport 1024:65535 --dport 80   -j RATELIMIT
+iptables -A INPUT -p tcp --sport 1024:65535 --dport 443  -j RATELIMIT
 iptables -A INPUT -p tcp --sport 1024:65535 --dport 8000 -j ACCEPT
 iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 # ip6tables
 ip6tables -F INPUT
+
+ip6tables -N RATELIMIT 2>/dev/null || ip6tables -F RATELIMIT
+ip6tables -A RATELIMIT -m conntrack --ctstate NEW -m hashlimit --hashlimit-mode srcip --hashlimit-srcmask 56 --hashlimit-upto 30/sec --hashlimit-burst 10 --hashlimit-name conn_rate_limit -j ACCEPT
+ip6tables -A RATELIMIT -j REJECT
+
 ip6tables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 ip6tables -A INPUT -i lo -j ACCEPT
 # allow all from trusted ips
@@ -48,9 +58,9 @@ ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 22   -j ACCEPT
 {% if stream_master is defined and stream_master|bool %}
 ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 7999 -j ACCEPT
 {% endif %}
-ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 80   -j ACCEPT
+ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 80   -j RATELIMIT
 ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 8000 -j ACCEPT
-ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 443  -j ACCEPT
+ip6tables -A INPUT -p tcp --sport 1024:65535 --dport 443  -j RATELIMIT
 ip6tables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 exit 0

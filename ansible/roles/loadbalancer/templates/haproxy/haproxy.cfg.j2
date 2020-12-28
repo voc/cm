@@ -1,8 +1,23 @@
 global
-    nbproc  {{ haproxy_nbproc | default('4') }}
+    ulimit-n 200000
+    maxconn 2500000
+    maxconnrate 2500000
+    maxcomprate 0
+    maxcompcpuusage 100
+    maxsessrate 2500000
+    nbproc 1
+    nbthread {{ ansible_processor_vcpus -1 }}
+    cpu-map auto:1/1-{{ ansible_processor_vcpus -1 }} 0-{{ ansible_processor_vcpus -2}}
+    # TCP and Request Bufferfing
+    tune.bufsize 262144
+    tune.chksize 262144
+    tune.rcvbuf.client 262144
+    tune.rcvbuf.server 2097152
+    tune.sndbuf.client 2097152
+    tune.sndbuf.server 262144
+
     chroot  /usr/share/haproxy
     pidfile /run/haproxy.pid
-    maxconn  32768
     ulimit-n 65604
     user    haproxy
     group   haproxy
@@ -35,7 +50,6 @@ defaults
     log     /dev/log local0 notice
 
 frontend icecast_and_nginx_hls_http
-    bind-process 1
     bind 0.0.0.0:80
     bind :::80
 
@@ -102,7 +116,6 @@ frontend icecast_and_nginx_hls_http
     {{ frontend_acls("http", "") }}
 
 frontend icecast_and_nginx_hls_https
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     bind 0.0.0.0:443 ssl crt /etc/letsencrypt/live/streaming.media.ccc.de/haproxy.pem crt /etc/letsencrypt/live/cdn.c3voc.de/haproxy.pem # <cert+privkey+intermediate+dhparam>
     bind :::443 ssl crt /etc/letsencrypt/live/streaming.media.ccc.de/haproxy.pem crt /etc/letsencrypt/live/cdn.c3voc.de/haproxy.pem # <cert+privkey+intermediate+dhparam>
 
@@ -125,7 +138,6 @@ frontend icecast_and_nginx_hls_https
 # enable statistics and basic admin support for localhost
 {% for nr in range(1, haproxy_nbproc+1) %}
 listen stats_process_{{ nr }}
-    bind-process {{ nr }}
     bind 127.0.0.1:910{{ nr }}
     mode http
     stats enable
@@ -144,11 +156,6 @@ listen stats_process_{{ nr }}
 # {{ protocol }}
 # REMOTE
 backend nginx_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_dash_relays.items() %}
@@ -160,11 +167,6 @@ backend nginx_{{ protocol }}
 {% endfor %}
 
 backend relive_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_relive_relays.items() %}
@@ -176,11 +178,6 @@ backend relive_{{ protocol }}
 {% endfor %}
 
 backend icecast_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_icecast_relays.items() %}
@@ -194,11 +191,6 @@ backend icecast_{{ protocol }}
 
 # 3rd party
 backend 3rdparty_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_3rdparty_relays.items() %}
@@ -212,11 +204,6 @@ backend 3rdparty_{{ protocol }}
 
 # LOCAL
 backend local_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_local_relays.items() %}
@@ -231,11 +218,6 @@ backend local_{{ protocol }}
 {% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
 # DTAG EXTRAWURST
 backend dtag_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_dtag_relays.items() %}
@@ -251,7 +233,6 @@ backend dtag_{{ protocol }}
 {% endfor %}
 
 backend streaming_website_https
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance source
     option forwardfor
     http-request set-header X-Custom-Header %[url]
