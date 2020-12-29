@@ -1,10 +1,10 @@
 global
     ulimit-n 200000
-    maxconn 2500000
-    maxconnrate 2500000
+    maxconn 500000
+    maxconnrate 500000
     maxcomprate 0
     maxcompcpuusage 100
-    maxsessrate 2500000
+    maxsessrate 500000
     nbproc 1
     nbthread {{ ansible_processor_vcpus -1 }}
     cpu-map auto:1/1-{{ ansible_processor_vcpus -1 }} 0-{{ ansible_processor_vcpus -2}}
@@ -21,9 +21,7 @@ global
     user    haproxy
     group   haproxy
     # stats sockets
-{% for nr in range(1, haproxy_nbproc+1) %}
-    stats socket /var/run/haproxy/stats_{{ nr }}.sock level operator group telegraf mode 0770 process {{ nr}}
-{% endfor %}
+    stats socket /var/run/haproxy/stats_1.sock level operator group telegraf mode 0770 process 1
     daemon
     log     /dev/log local0 notice
     # tls
@@ -31,8 +29,11 @@ global
     ssl-default-bind-ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK
 
 defaults
+    log     global
+    maxconn 500000
     mode    http
-    # enable some usefull options
+    # enable some useful options
+    option  socket-stats
     option  httplog
     option  dontlognull
     option  http-server-close
@@ -236,4 +237,4 @@ backend streaming_website_https
     option forwardfor
     http-request set-header X-Custom-Header %[url]
     http-request set-header X-Real-IP %[src]
-    server localhost 127.0.0.1:8080 maxconn 2048
+    server localhost 127.0.0.1:8080 maxconn 500000
