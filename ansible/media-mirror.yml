@@ -2,7 +2,7 @@
   - hosts: media-mirror
     roles:
       - { role: common, tags: ['common'] }
-      - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: monitoring-client, vars: { 'monitoring_role': 'media-mirror' }, tags: ['monitoring'] }
       - { role: nginx, vars: { 'anonymize_logs': true }, tags: ['nginx'] }
       - { role: letsencrypt, tags: ['letsencrypt'] }
       - { role: media-cdn-node, tags: ['cdn-node'] }
