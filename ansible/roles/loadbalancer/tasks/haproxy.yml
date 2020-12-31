@@ -18,7 +18,7 @@
 
   - name: install http error files
     copy:
-      src: "error/{{ item }}"
+      src: "haproxy/error/{{ item }}"
       dest: "/var/lib/haproxy/{{ item }}"
     with_items:
       - 500.http
@@ -40,6 +40,13 @@
           dest=/etc/haproxy/dtag_subnetworks.txt
           mode=0755 owner=haproxy group=haproxy
 
+  - name: install haproxy cors script
+    copy:
+      src: "haproxy/cors.lua"
+      dest: "/etc/haproxy/cors.lua"
+    register: haproxy_scripts
+    tags: haproxy_deploy
+
   - name: create haproxy config
     template: src=haproxy/haproxy.cfg.j2
               dest=/etc/haproxy/haproxy.cfg
@@ -53,5 +60,5 @@
       name: haproxy
       state: reloaded
       enabled: yes
-    when: haproxy_config.changed
+    when: haproxy_config.changed or haproxy_scripts.changed
     tags: haproxy_deploy

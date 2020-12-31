@@ -1,0 +1,8 @@
+core.register_service("cors-response", "http", function(applet)
+    applet:set_status(200)
+    applet:add_header("Content-Length", "0")
+    applet:add_header("Access-Control-Allow-Origin", "*")
+    applet:add_header("Access-Control-Allow-Methods", "GET")
+    applet:add_header("Access-Control-Max-Age", "31536000")
+    applet:start_response()
+end)

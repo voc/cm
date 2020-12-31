@@ -16,6 +16,9 @@ global
     tune.sndbuf.client 2097152
     tune.sndbuf.server 262144
 
+    # cors responder
+    lua-load /etc/haproxy/cors.lua
+
     chroot  /usr/share/haproxy
     pidfile /run/haproxy.pid
     user    haproxy
@@ -89,6 +92,7 @@ frontend icecast_and_nginx_hls_http
     redirect scheme https code 301      if is_streaming_website {{ ssl }}
     redirect scheme https code 301      if is_relive {{ ssl }}
 {% else %}
+    http-request use-service lua.cors-response if METH_OPTIONS { req.hdr(origin) -m found } { ssl_fc }
     use_backend streaming_website_https if is_streaming_website {{ ssl }}
     use_backend relive_https            if is_relive {{ ssl }}
 {% endif %}
