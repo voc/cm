@@ -140,7 +140,6 @@ phony.lan.c3voc.de
 fempeg.lan.c3voc.de
 web.c3voc.de
 mng.c3voc.de
-mngslave.dus.c3voc.de
 build.c3voc.de
 releasing.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/releasing.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/releasing.password') }}"
 backup.c3voc.de
