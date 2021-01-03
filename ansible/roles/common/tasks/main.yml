@@ -12,7 +12,7 @@
   - include: resolv.yml
     tags: [resolv, dns]
     # work around systemd bug #10032
-    when:  ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
+    when:  ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc' and 'nameservers' not in group_names
 
   - include: apt_proxy.yml
     tags: apt

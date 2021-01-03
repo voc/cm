@@ -4,6 +4,10 @@
       - { role: common, tags: ['common'] }
       - { role: proxmox, tags: ['proxmox'] }
       - { role: monitoring-client, tags: ['monitoring'] }
+  - hosts: nameservers
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
   - hosts: servers
     roles:
       - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }
