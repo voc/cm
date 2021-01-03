@@ -11,22 +11,27 @@ shopt -s nullglob
 
 TTL=300
 
-if [ "$1" = "deploy_challenge" -o "$1" = "clean_challenge" ]; then
-        DOMAIN="${2}"
-        NSUPDATE="nsupdate -d -k /etc/dehydrated/dns-01-key.private"
-        DNSSERVER="mngslave.dus.c3voc.de"
-fi
-
 case "$1" in
     "deploy_challenge")
-        {% if use_dns %}
-        printf "server %s\nupdate add _acme-challenge.%s. %d in TXT \"%s\"\nsend\n" "${DNSSERVER}" "${DOMAIN}" "${TTL}" "${4}" | $NSUPDATE
-        sleep 5
+        {% if use_lednsapi %}
+        echo " + Adding challenge token to DNS..."
+        response="$(curl -s "https://lednsapi.c3voc.de/lednsapi/set" -F "secret=@/etc/dehydrated/lednsapi.secret" -F "domain=${2}" -F "token=${4}")"
+        if [ ! "${response}" = "OK" ]; then
+            echo "Error deploying tokens:"
+            echo "${response}"
+            exit 1
+        fi
         {% endif %}
         ;;
     "clean_challenge")
-        {% if use_dns %}
-        printf "server %s\nupdate delete _acme-challenge.%s. %d in TXT \"%s\"\nsend\n" "${DNSSERVER}" "${DOMAIN}" "${TTL}" "${4}" | $NSUPDATE
+        {% if use_lednsapi %}
+        echo " + Deleting challenge token from DNS..."
+        response="$(curl -s "https://lednsapi.c3voc.de/lednsapi/clear" -F "secret=@/etc/dehydrated/lednsapi.secret" -F "domain=${2}" -F "token=${4}")"
+        if [ ! "${response}" = "OK" ]; then
+            echo "Error deleting tokens:"
+            echo "${response}"
+            exit 1
+        fi
         {% endif %}
         ;;
     "deploy_cert")

@@ -32,7 +32,7 @@ IP_VERSION=4
 LICENSE="https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf"
 
 # Which challenge should be used? Currently http-01 and dns-01 are supported
-{% if use_dns %}
+{% if use_lednsapi %}
 CHALLENGETYPE="dns-01"
 {% else %}
 CHALLENGETYPE="http-01"
