@@ -4,9 +4,6 @@ directory '/srv/media/media-site/current'
 rackup "/srv/media/media-site/current/config.ru"
 environment 'production'
 
-# systemd requires process not to detach
-daemonize       false
-
 pidfile "/srv/media/media-site/shared/tmp/pids/puma.pid"
 state_path "/srv/media/media-site/shared/tmp/pids/puma.state"
 stdout_redirect '/srv/media/media-site/current/log/puma.error.log', '/srv/media/media-site/current/log/puma.access.log', true
