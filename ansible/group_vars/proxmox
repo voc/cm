@@ -1,0 +1,3 @@
+proxmox:
+  user: "{{ lookup('keepass', 'ansible/services/proxmox.username') }}"
+  password: "{{ lookup('keepass', 'ansible/services/proxmox.password') }}"

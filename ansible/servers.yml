@@ -2,8 +2,10 @@
   - hosts: proxmox
     roles:
       - { role: common, tags: ['common'] }
-      - { role: proxmox, tags: ['proxmox'] }
       - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: nginx, tags: ['nginx'] }
+      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }
+      - { role: proxmox, tags: ['proxmox'] }
   - hosts: nameservers
     roles:
       - { role: common, tags: ['common'] }

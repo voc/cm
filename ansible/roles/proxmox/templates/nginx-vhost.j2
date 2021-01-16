@@ -1,0 +1,64 @@
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    gzip off;
+
+    ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
+    ssl_certificate_key   /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
+
+    server_name {{ ansible_fqdn }};
+
+    auth_basic "{{ ansible_fqdn }}";
+    auth_basic_user_file /etc/nginx/htpasswd;
+
+    # Verifizierungsdateien für automatische SSL-Verlängerung
+    # Verwendet https://github.com/dehydrated-io/dehydrated
+    location /.well-known/acme-challenge {
+        alias /var/www/dehydrated;
+    }
+
+    location / {
+        # Entfernt jegliche "No Subscription"-Warnungen aus der Oberfläche
+        sub_filter ".data.status.toLowerCase() !== 'active'" ".data.status.toLowerCase() !== 'notfound'";
+
+        # Im Assistenten zur Erstellung neuer VMs ist normalerweise die "Firewall" checkbox ausgewählt,
+        # da wir dieses Feature aber nie benutzt haben ersetzt die Folgende Zeile den Default-Wert, so dass
+        # die Firewall by default nicht genutzt wird.
+        sub_filter "\t\tname: 'firewall',\n\t\tchecked: (me.insideWizard || me.isCreate)" "\t\tname: 'firewall',\n\t\tchecked: 0";
+
+        # Um im unterliegenden ZFS nicht benutzten Speicherplatz wieder freizugeben muss die Discard-Option
+        # aktiviert sein. Da dies normalerweise nicht der Fall ist überschreibt diese Zeile das Verhalten.
+        sub_filter "name: 'discard'" "name: 'discard', checked: 1";
+
+        # Host-Protection
+        sub_filter "text: gettext('Reboot'),\n	    disabled: !caps.nodes['Sys.PowerMgmt']," "text: gettext('DO NOT TOUCH!'),\n	    disabled: !caps.nodes['Sys.PowerMgmt'],";
+        sub_filter "text: gettext('Shutdown'),\n	    disabled: !caps.nodes['Sys.PowerMgmt']," "text: gettext('REALLY DANGEROUS!'),\n	    disabled: !caps.nodes['Sys.PowerMgmt'],";
+
+        # Setzt die Standardanzahl von CPU-Kernen auf 2 statt der üblichen 1.
+        sub_filter "\t    value: '1',\n\t    fieldLabel: gettext('Cores')" "\t    value: '2',\n\t    fieldLabel: gettext('Cores')";
+        sub_filter "\t    name: 'totalcores',\n\t    value: '1'" "\t    name: 'totalcores',\n\t    value: '2'";
+
+        # Setzt die Standardmenge für Arbeitsspeicher auf 1024MB statt der üblichen 512.
+        #sub_filter "value: '512', // qm default" "value: '1024', // qm default";
+
+        # Die Ersetzungsregeln finden nur in Javascript und HTML-Dateien statt. HTML ist immer aktiv, JS muss extra definiert werden.
+        sub_filter_types application/javascript;
+
+        # Adresse des Proxmox1-Servers
+        proxy_pass https://127.0.0.1:8006/;
+
+        # Standard Proxy-Konfiguration mit deaktiviertem Buffering (alle Requests und Replies werden nahezu 1:1 weitergeleitet)
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Accept-Encoding "";
+        proxy_buffering off;
+        proxy_request_buffering off;
+        client_body_buffer_size 0;
+        client_max_body_size 0;
+        proxy_connect_timeout  3600s;
+        proxy_read_timeout  3600s;
+        proxy_send_timeout  3600s;
+        send_timeout  3600s;
+    }
+}

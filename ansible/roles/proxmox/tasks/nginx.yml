@@ -1,0 +1,36 @@
+---
+  # Create htpasswd
+  - name: install additional dependencies
+    apt:
+      package: python3-passlib
+      state: latest
+
+  - name: create proxmox htpasswd
+    htpasswd:
+      path: /etc/nginx/htpasswd
+      name: "{{ proxmox.user }}"
+      password: "{{ proxmox.password }}"
+      owner: root
+      group: www-data
+      mode: 0640
+
+  # Manage vhost
+  - name: create proxmox vhost
+    template: dest="/etc/nginx/sites-available/{{ item }}"
+              src="nginx-vhost.j2"
+              mode=0640 owner=root group=root
+    with_items:
+      - proxmox.conf
+    register: proxmox_vhost
+
+  - name: enable proxmox vhost
+    file: src=/etc/nginx/sites-available/proxmox.conf
+          dest=/etc/nginx/sites-enabled/proxmox.conf
+          state=link
+    register: proxmox_vhost_link
+
+  - name: reload nginx
+    service:
+      name: nginx
+      state: reloaded
+    when: proxmox_vhost.changed or proxmox_vhost_link.changed
