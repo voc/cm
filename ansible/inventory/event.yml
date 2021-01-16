@@ -148,7 +148,7 @@ testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 maps.c3voc.de letsencrypt=true
 librenms.lan.c3voc.de
 
-pretalx.c3voc.de nginx=true letsencrypt=true lednsapi=true
+pretalx.c3voc.de nginx=true letsencrypt=true
 
 [nameservers]
 ns100.c3voc.de monitoring_role=dns
