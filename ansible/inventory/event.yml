@@ -132,6 +132,7 @@ mebibyte.c3voc.de
 gumball.vpn.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/gumball.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/gumball.password') }}"
 
 # VMs
+observium.c3voc.de letsencrypt=true nginx=true php=true php_version=7.3
 kevin.c3voc.de letsencrypt=true
 peertube.c3voc.de
 monitoring.lan.c3voc.de
