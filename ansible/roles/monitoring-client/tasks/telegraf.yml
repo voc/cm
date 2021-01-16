@@ -9,7 +9,7 @@
 
   - name: copy dns script
     copy: src=dns-stats.py dest=/opt/dns-stats.py mode=0755
-    when: monitoring_role == "dns"
+    when: monitoring_role is defined and monitoring_role == "dns"
 
   - name: reload telegraf
     service:
