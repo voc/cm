@@ -64,19 +64,19 @@ icecast_additional_mounts: [
     "stream-name": "Audio-Pi 4 MP3",
     "dump-file": "/srv/icecastdumps/a4-%F_%H-%M-%S_%s.mp3"
   }, {
-    "mount-name", '/adventure1.mp3',
+    "mount-name": '/adventure1.mp3',
     "type": 'audio/mpeg',
     "username": 'source',
     "password": "{{ lookup('keepass', 'ansible/icecast/mounts/adventure.password') }}",
     "stream-name": "Adventure 1",
   }, {
-    "mount-name", '/adventure2.mp3',
+    "mount-name": '/adventure2.mp3',
     "type": 'audio/mpeg',
     "username": 'source',
     "password": "{{ lookup('keepass', 'ansible/icecast/mounts/adventure.password') }}",
     "stream-name": "Adventure 2",
   }, {
-    "mount-name", '/adventure3.mp3',
+    "mount-name": '/adventure3.mp3',
     "type": 'audio/mpeg',
     "username": 'source',
     "password": "{{ lookup('keepass', 'ansible/icecast/mounts/adventure.password') }}",
