@@ -1,0 +1,16 @@
+[media-app]
+app.media.test.c3voc.de ssl=1 domain=test.c3voc.de rails_env=test
+
+[media-app-db]
+db.media.test.c3voc.de ansible_port=2222 ansible_host=127.0.0.1
+
+#[media-asset-src]
+#media.test.c3voc.de 
+
+#[media-cdn]
+#cdn.media.test.c3voc.de
+
+#[media-mirror]
+#cdn.media.test.c3voc.de
+
+

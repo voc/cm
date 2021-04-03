@@ -6,3 +6,5 @@ puma_listen: 127.0.0.1:4080
 puma_threads: "0,32"
 puma_workers: "4"
 puma_max_mem: 8196
+domain: "ccc.de"
+rails_env: "production"

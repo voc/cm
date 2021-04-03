@@ -19,3 +19,5 @@
 
   - include: monitoring.yml
     tags: monitoring
+    when: not no_monitoring|bool
+
