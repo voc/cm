@@ -42,7 +42,7 @@ set_keepass_dir
 ask_keepass_password
 
 get_relay_json
-perl register2ansible.pl relays.json > inventory/relays.yml
+perl register2ansible.pl relays.json > inventory/relays.ini
 deploy_relays
 
 exit $?

@@ -88,7 +88,7 @@ sub generate {
 }
 
 if(@ARGV != 1) {
-	say STDERR "usage: $0 relays.json > inventory/relays.yml";
+	say STDERR "usage: $0 relays.json > inventory/relays.ini";
 	exit 1;
 }
 
