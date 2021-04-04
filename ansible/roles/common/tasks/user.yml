@@ -69,6 +69,7 @@
       - "{{ users }}"
       - "{{ additional_users }}"
     when: item.state != 'absent' and item.name != 'voc'
+    tags: authorized_keys
 
   - name: add user's authorized_keys to voc
     authorized_key: user=voc manage_dir=true key="{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes', errors='warn') }}"
@@ -77,3 +78,4 @@
       - "{{ users }}"
       - "{{ additional_users }}"
     when: item.state != 'absent' and item.name != 'voc'
+    tags: authorized_keys
