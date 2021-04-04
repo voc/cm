@@ -173,6 +173,7 @@ users:
   - { name: 'masterbase', state: 'present' }
   - { name: 'mazdermind', state: 'present' }
   - { name: 'meise', state: 'present' }
+  - { name: 'n0emis', state: 'present' }
   - { name: 'thomic', state: 'present' }
   - { name: 'thorti', state: 'present' }
   - { name: 'v0tti', state: 'present' }
