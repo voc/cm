@@ -46,7 +46,7 @@
   - include: ssl.yml
 
   # deploy users
-  - include: user.yml user={{ users }}
+  - include: user.yml
     tags: user
 
   - include: monitoring.yml
@@ -55,8 +55,9 @@
       - check_system
 
   - name: setting voc password
-    user: name=voc
-          password={{ user_voc_password }}
+    user:
+      name: voc
+      password: "{{ user_voc_password }}"
     tags: user
 
   # Modify message of the day
