@@ -50,8 +50,8 @@ server {
 server {
   listen [::]:443 ssl http2;
   listen 443 ssl http2;
-  ssl_certificate             /var/lib/acme/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/fullchain;
-  ssl_certificate_key         /var/lib/acme/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/privkey;
+  ssl_certificate             /etc/letsencrypt/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/fullchain.pem;
+  ssl_certificate_key         /etc/letsencrypt/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/privkey.pem;
   ssl_session_timeout         5m;
   ssl_session_cache           shared:SSL:5m;
   ssl_protocols               TLSv1.1 TLSv1.2;

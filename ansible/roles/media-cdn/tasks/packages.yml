@@ -16,6 +16,8 @@
       state: present
 
   - name: install default packages
-    apt: name="{{ item }}" state=latest default_release=buster-backports
-    loop:
+    apt: name={{ packages|flatten(levels=1) }} state=latest update_cache=yes
+    tags: packages
+    vars:
+      packages:
       - redis-server

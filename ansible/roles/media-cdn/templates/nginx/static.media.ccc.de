@@ -22,8 +22,8 @@ server {
   server_name static.media.ccc.de {{ inventory_hostname_short }}.media.ccc.de;
 
   root /srv/www/media.ccc.de/root;
-  ssl_certificate             /var/lib/acme/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/fullchain;
-  ssl_certificate_key         /var/lib/acme/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/privkey;
+  ssl_certificate             /etc/letsencrypt/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/fullchain.pem;
+  ssl_certificate_key         /etc/letsencrypt/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/privkey.pem;
   ssl_session_timeout         1d;
   ssl_session_cache           shared:SSL:5m;
   ssl_protocols               TLSv1.1 TLSv1.2;
