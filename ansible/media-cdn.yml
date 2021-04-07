@@ -9,22 +9,9 @@
   # media cdn master (cdn.media.ccc.de)
   - hosts: media-cdn
     roles:
-      - role: media-common
-        tags: ['media-common']
-
-      - role: ansible-golang
-        tags: ['golang']
-
-      - role: ansible-acmetool
-        when: acmetool_setup == 1
-        tags: ['acmetool-install', 'nginx']
-
-      - role: media-cdn
-        tags: ['media-cdn']
-
-      - role: media-cdn-node
-        when: cdn_node is defined
-        tags: ['cdn-node']
-
-      - role: media-cdn-node
-        tags: ['cdn-node']
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, vars: { 'monitoring_role': 'media-cdn' }, tags: ['monitoring'] }
+      - { role: nginx, vars: { 'anonymize_logs': true }, tags: ['nginx'] }
+      - { role: letsencrypt, tags: ['letsencrypt'], vars: {'use_lednsapi': true} }
+      - { role: media-cdn-node, tags: ['cdn-node'] }
+      - { role: media-cdn, tags: ['cdn-node'] }

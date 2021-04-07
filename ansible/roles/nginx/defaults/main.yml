@@ -25,3 +25,6 @@ rtmp_auth: no
 
 # use auth backend for rtmp relay application
 rtmp_auth_relay: no
+
+# monitoring deployment
+no_monitoring: no
