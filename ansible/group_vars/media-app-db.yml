@@ -11,3 +11,4 @@ users:
   - { name: 'thee', state: 'present' }
   - { name: 'y0sh', state: 'present' }
   - { name: 'necro', state: 'present' }
+  - { name: 'lukas2511', state: 'present' }

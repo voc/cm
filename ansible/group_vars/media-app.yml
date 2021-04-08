@@ -19,4 +19,5 @@ users:
   - { name: 'thee', state: 'present' }
   - { name: 'y0sh', state: 'present' }
   - { name: 'necro', state: 'present' }
+  - { name: 'lukas2511', state: 'present' }
 secret_header: "{{ lookup('keepass', 'ansible/media/secret_header.password') }}"
