@@ -14,3 +14,4 @@ users:
   - { name: 'y0sh', state: 'present' }
   - { name: 'necro', state: 'present' }
   - { name: 'voc', state: 'present' }
+  - { name: 'lukas2511', state: 'present' }
