@@ -1,8 +1,10 @@
 ---
-- shell: /usr/local/bin/go get github.com/manno/mirrorbits-serverlist-api
-  environment:
-    GOPATH: /usr/local
-    GOPROXY: https://proxy.golang.org
+
+# TODO: package for mirrorbits server list
+# - shell: /usr/local/bin/go get github.com/manno/mirrorbits-serverlist-api
+#  environment:
+#    GOPATH: /usr/local
+#    GOPROXY: https://proxy.golang.org
 
 - template: src=mirrorbits-serverlist-api.service
             dest=/etc/systemd/system/mirrorbits-serverlist-api.service

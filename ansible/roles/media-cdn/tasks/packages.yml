@@ -1,23 +1,9 @@
 ---
   - name: install default packages
-    apt:
-      state: latest
-      name:
-        - build-essential
-        - pkg-config
-        - zlib1g-dev
-        - libgeoip-dev
-        - libprotoc-dev
-        - unattended-upgrades
-        - rsync
-
-  - apt_repository:
-      repo: deb http://deb.debian.org/debian buster-backports main
-      state: present
-
-  - name: install default packages
     apt: name={{ packages|flatten(levels=1) }} state=latest update_cache=yes
     tags: packages
     vars:
       packages:
+      - mirrorbits
+      - rsync
       - redis-server

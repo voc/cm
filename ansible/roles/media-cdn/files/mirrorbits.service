@@ -1,0 +1,20 @@
+[Unit]
+Description=Mirrorbits redirector
+Documentation=https://github.com/etix/mirrorbits
+After=network.target
+
+[Service]
+Type=notify
+DynamicUser=yes
+LogsDirectory=mirrorbits
+RuntimeDirectory=mirrorbits
+PIDFile=/run/mirrorbits/mirrorbits.pid
+ExecStart=/usr/local/bin/mirrorbits daemon -p /run/mirrorbits/mirrorbits.pid
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=-/bin/kill -QUIT $MAINPID
+TimeoutStopSec=5
+KillMode=mixed
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
