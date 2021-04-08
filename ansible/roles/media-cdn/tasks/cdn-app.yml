@@ -1,10 +1,15 @@
-- group: name="cdn-app" state=present
 
+
+- group: name="cdn-app" state=present
 - user: state=present
         name="cdn-app"
         home="/home/uploaders/cdn-app"
         groups="cdn-app,uploaders"
         shell="/bin/sh"
+
+
+- file: path=/srv/ftp state=directory
+        mode=0755 owner=cdn-app group=root
 
 - name: change cdn-app home folder owner
   file:

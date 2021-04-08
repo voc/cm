@@ -1,6 +1,5 @@
 ---
 - file: path=/etc/nginx/sites-enabled/default state=absent
-- file: path=/etc/nginx/sites-enabled/00-acmetool.conf state=absent
 
 - template: src=nginx/{{ item }}
         dest=/etc/nginx/sites-available/{{ item }}
