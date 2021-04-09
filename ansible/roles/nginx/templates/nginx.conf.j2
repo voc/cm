@@ -6,9 +6,6 @@ worker_rlimit_nofile 65536;
 # multiple worker
 worker_processes  {{ nginx_worker_processes | default('auto') }};
 
-# dynamic config
-include /etc/nginx/conf.d/*;
-
 error_log  /var/log/nginx/error.log;
 pid /var/run/nginx.pid;
 
@@ -93,6 +90,9 @@ http {
 
   # include vhosts
   include /etc/nginx/sites-enabled/*;
+
+  # dynamic config
+  include /etc/nginx/conf.d/*;
 
 {% if php|bool %}
   upstream php {
