@@ -1,13 +1,22 @@
 ---
 
 # TODO: package for mirrorbits server list
-# - shell: /usr/local/bin/go get github.com/manno/mirrorbits-serverlist-api
-#  environment:
-#    GOPATH: /usr/local
-#    GOPROXY: https://proxy.golang.org
+- name: create mirrorbits-serverlist-api systemd unit
+  template:
+    src: mirrorbits-serverlist-api.service
+    dest: /etc/systemd/system/mirrorbits-serverlist-api.service
+    mode: 0644
+    owner: root
+    group: root
+  register: mirrorbits_serverlist_api_unit
 
-- template: src=mirrorbits-serverlist-api.service
-            dest=/etc/systemd/system/mirrorbits-serverlist-api.service
-            mode=0644 owner=root group=root
+- name: reload daemons
+  systemd:
+        daemon-reload: yes
+  when: mirrorbits_serverlist_api_unit.changed
 
-- systemd: state=started enabled=yes name=mirrorbits-serverlist-api.service
+- name: start and enable mirrorbits-serverlist-api
+  systemd:
+    name: mirrorbits-serverlist-api.service
+    state: started
+    enabled: yes
