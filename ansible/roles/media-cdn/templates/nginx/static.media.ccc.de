@@ -1,6 +1,6 @@
 server {
-  #listen [::]:80 ipv6only=off;
   listen [::]:80;
+  listen 80;
   server_name static.media.ccc.de {{ inventory_hostname_short }}.media.ccc.de;
 
   # Letsencrypt - renewal does not work via ssl
@@ -17,11 +17,11 @@ server {
 }
 
 server {
-  listen [::]:443;
+  listen [::]:443 ssl http2;
+  listen 443 ssl http2;
   server_name static.media.ccc.de {{ inventory_hostname_short }}.media.ccc.de;
 
   root /srv/www/media.ccc.de/root;
-  ssl                         on;
   ssl_certificate             /var/lib/acme/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/fullchain;
   ssl_certificate_key         /var/lib/acme/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/privkey;
   ssl_session_timeout         1d;
