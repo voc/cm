@@ -4,6 +4,7 @@
     tags: packages
     vars:
       packages:
-      - mirrorbits
+      - mirrorbits #voc package
+      - mirrorbits-serverlist-api #voc package
       - rsync
       - redis-server
