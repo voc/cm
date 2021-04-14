@@ -3,3 +3,9 @@
     systemd:
       name: nginx.service
       state: restarted
+
+  - name: reload nftables
+    systemd:
+      name: nftables.service
+      enabled: yes
+      state: restarted

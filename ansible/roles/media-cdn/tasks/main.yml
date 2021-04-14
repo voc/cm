@@ -4,6 +4,10 @@
       - mirrorbits
       - rsync
 
+  - import_tasks: nftables.yml
+    tags:
+      - firewall
+
   - import_tasks: sanity.yml
     tags: users
 
