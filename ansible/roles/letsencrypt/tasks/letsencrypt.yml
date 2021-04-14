@@ -8,13 +8,12 @@
 
   - name: create /etc/letsencrypt hierarchy
     file:
-      dest: /etc/{{ item }}
+      dest: /etc/letsencrypt/live/{{ item }}
       owner: root
       group: ssl-cert
       state: directory
       mode: 0750
-    with_items:
-      - "letsencrypt/live/{{ domain }}"
+    loop: "{{ [domain] + group_domains + host_domains }}"
 
   - name: generate dehydrated folders
     file:
@@ -64,15 +63,16 @@
     copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/registration_info.json
           content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_registration_info') }}
           owner=root group=root mode=0640
-
-  - name: ensure domain {{ domain }} is in domains.txt
+  
+  - name: ensure all domains are in domains.txt
     lineinfile:
       path: /etc/dehydrated/domains.txt
       state: present
-      regexp: '^{{ domain }}$'
-      line: '{{ domain }}'
+      regexp: '^{{ item }}$'
+      line: '{{ item }}'
       create: yes
       mode: 0644
+    loop: "{{ [domain] + group_domains + host_domains }}"
 
   - name: generate or renew certificate (takes some time)
     shell: "/opt/dehydrated/dehydrated --cron"
