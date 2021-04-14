@@ -43,3 +43,5 @@
     opts: bind,nofail
     state: mounted
     fstype: none
+
+#TODO: authorized keys for cdn-app user
