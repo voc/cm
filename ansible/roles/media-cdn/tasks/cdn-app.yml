@@ -13,8 +13,13 @@
         groups="cdn-app,uploaders"
         shell="/bin/sh"
 
-- file: path=/srv/ftp state=directory
-        mode=0755 owner=cdn-app group=root
+- name: create /srv/ftp directory
+  file:
+    path: /srv/ftp
+    state: directory
+    mode: 0755
+    owner: cdn-app
+    group: root
 
 - name: change cdn-app home folder owner
   file:

@@ -1,3 +1,4 @@
+# sanity checks, create the users and groups below!
 - name: check if cdn-app(UID:1001,GID:100) exists
   shell: grep "cdn-app:x:1001:100::/home/uploaders/cdn-app:/bin/sh" /etc/passwd
 - name: check if ftp(UID:1022,GID:100) exists
