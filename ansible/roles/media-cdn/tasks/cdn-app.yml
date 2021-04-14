@@ -1,4 +1,10 @@
 
+- group: name=ftp
+- user: state=present
+        name="ftp"
+        groups="ftp"
+        create_home="no"
+        shell="/bin/false"
 
 - group: name="cdn-app" state=present
 - user: state=present
@@ -6,7 +12,6 @@
         home="/home/uploaders/cdn-app"
         groups="cdn-app,uploaders"
         shell="/bin/sh"
-
 
 - file: path=/srv/ftp state=directory
         mode=0755 owner=cdn-app group=root

@@ -5,6 +5,10 @@ acmetool_responses_email: media@koeln.ccc.de
 # TODO is this still needed for mirrorbits?
 google_maps_api_key: ''
 
+group_domains:
+  - cdn-api.media.ccc.de
+  - static.media.ccc.de
+
 users:
   - { name: 'andi', state: 'present' }
   - { name: 'danimo', state: 'present' }

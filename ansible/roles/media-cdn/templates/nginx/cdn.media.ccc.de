@@ -1,8 +1,8 @@
 server {
+  server_name berlin-ak.cdn.media.ccc.de berlin-ak.ftp.media.ccc.de cdn.media.ccc.de ftp.media.ccc.de ftp.ccc.de;
+
   listen [::]:80;
   listen 80;
-
-  server_name cdn.media.ccc.de ftp.ccc.de;
 
   root /srv/ftp;
 
@@ -48,10 +48,13 @@ server {
 }
 
 server {
+  server_name berlin-ak.cdn.media.ccc.de berlin-ak.ftp.media.ccc.de cdn.media.ccc.de ftp.media.ccc.de ftp.ccc.de;
+
   listen [::]:443 ssl http2;
   listen 443 ssl http2;
-  ssl_certificate             /etc/letsencrypt/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/fullchain.pem;
-  ssl_certificate_key         /etc/letsencrypt/live/{{ inventory_hostname_short }}.cdn.media.ccc.de/privkey.pem;
+
+  ssl_certificate             /etc/letsencrypt/live/cdn.media.ccc.de/fullchain.pem;
+  ssl_certificate_key         /etc/letsencrypt/live/cdn.media.ccc.de/privkey.pem;
   ssl_session_timeout         5m;
   ssl_session_cache           shared:SSL:5m;
 
@@ -60,8 +63,6 @@ server {
   ssl_prefer_server_ciphers   on;
   
   add_header Strict-Transport-Security max-age=15768000;
-
-  server_name cdn.media.ccc.de ftp.ccc.de;
 
   root /srv/ftp;
 

@@ -4,16 +4,13 @@
       - mirrorbits
       - rsync
 
-  - import_tasks: ftp.yml
+  - import_tasks: sanity.yml
     tags: users
 
   - import_tasks: rsync-server.yml
     tags: rsync
 
   - import_tasks: mirrorbits.yml
-    tags: mirrorbits
-
-  - import_tasks: mirrorbits-api.yml
     tags: mirrorbits
 
   - import_tasks: uploaders.yml

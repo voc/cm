@@ -37,7 +37,7 @@
   mount:
     path: "/home/uploaders/{{ item.name }}/ftp"
     src: /srv/ftp
-    opts: bind,nofail
+    opts: bind,nofail,x-system.after=zfs-mount.service
     state: mounted
     fstype: none
   loop: "{{ uploaders }}"

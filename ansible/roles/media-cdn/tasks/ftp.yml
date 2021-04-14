@@ -1,7 +1,0 @@
----
-- group: name=ftp
-- user: state=present
-        name="ftp"
-        groups="ftp"
-        create_home="no"
-        shell="/bin/false"

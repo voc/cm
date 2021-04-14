@@ -14,4 +14,4 @@
       - { role: nginx, vars: { 'anonymize_logs': true }, tags: ['nginx'] }
       - { role: letsencrypt, tags: ['letsencrypt'], vars: {'use_lednsapi': true} }
       - { role: media-cdn-node, tags: ['cdn-node'] }
-      - { role: media-cdn, tags: ['cdn-node'] }
+      - { role: media-cdn, tags: ['media-cdn'] }
