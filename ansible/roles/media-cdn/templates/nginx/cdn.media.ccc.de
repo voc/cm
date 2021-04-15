@@ -1,5 +1,5 @@
 server {
-  server_name berlin-ak.cdn.media.ccc.de berlin-ak.ftp.media.ccc.de cdn.media.ccc.de ftp.media.ccc.de ftp.ccc.de;
+  server_name {{ inventory_hostname_short }}.cdn.media.ccc.de cdn.media.ccc.de ftp.media.ccc.de ftp.ccc.de;
 
   listen [::]:80;
   listen 80;
@@ -48,7 +48,7 @@ server {
 }
 
 server {
-  server_name berlin-ak.cdn.media.ccc.de berlin-ak.ftp.media.ccc.de cdn.media.ccc.de ftp.media.ccc.de ftp.ccc.de;
+  server_name {{ inventory_hostname_short }}.cdn.media.ccc.de cdn.media.ccc.de ftp.media.ccc.de ftp.ccc.de;
 
   listen [::]:443 ssl http2;
   listen 443 ssl http2;

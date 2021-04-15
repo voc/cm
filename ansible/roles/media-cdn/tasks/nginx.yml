@@ -11,6 +11,7 @@
   with_items:
     - "cdn-api.media.ccc.de"
     - "cdn.media.ccc.de"
+    - "mirror.ftp.media.ccc.de"
     - "static.media.ccc.de"
   notify:
     - restart nginx
@@ -22,6 +23,7 @@
   with_items:
     - "cdn-api.media.ccc.de"
     - "cdn.media.ccc.de"
+    - "mirror.ftp.media.ccc.de"
     - "static.media.ccc.de"
   notify:
     - restart nginx
