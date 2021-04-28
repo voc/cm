@@ -4,11 +4,11 @@ elasticsearch_host: _site_
 pg_listen_addresses: localhost,10.0.0.2
 pg_client_net: 10.0.0.1/32
 users:
-  - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }
+  - { name: 'mm', state: 'present' }
   - { name: 'andi', state: 'present' }
   - { name: 'derpeter', state: 'present' }
   - { name: 'thee', state: 'present' }
   - { name: 'y0sh', state: 'present' }
-  - { name: 'necro', state: 'present' }
+  - { name: 'qb', state: 'present' }
   - { name: 'lukas2511', state: 'present' }

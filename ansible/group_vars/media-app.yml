@@ -12,12 +12,12 @@ pg_db: "{{ lookup('keepass', 'ansible/media/postgresql.url') }}"
 pg_host: 10.0.0.2
 postfix_generic_map: "{{ lookup('keepass', 'ansible/media/postfix_generic.notes') }}"
 users:
-  - { name: 'mm', state: 'present' }
   - { name: 'voc', state: 'present' }
+  - { name: 'mm', state: 'present' }
   - { name: 'andi', state: 'present' }
   - { name: 'derpeter', state: 'present' }
   - { name: 'thee', state: 'present' }
   - { name: 'y0sh', state: 'present' }
-  - { name: 'necro', state: 'present' }
+  - { name: 'qb', state: 'present' }
   - { name: 'lukas2511', state: 'present' }
 secret_header: "{{ lookup('keepass', 'ansible/media/secret_header.password') }}"
