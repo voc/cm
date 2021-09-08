@@ -14,7 +14,7 @@
 
   - name: add influxdata repository
     apt_repository:
-      repo: deb https://repos.influxdata.com/debian buster stable
+      repo: deb https://repos.influxdata.com/debian bullseye stable
       state: present
     tags: apt
 
