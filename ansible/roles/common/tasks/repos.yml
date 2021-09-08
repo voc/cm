@@ -32,6 +32,7 @@
    loop:
     - jessie
     - stretch
+    - buster
 
  - name: remove yate nightly repo if present since it's key is not supported by stretch atm dsa1024 
    apt_repository: repo="deb http://debian.ctm.ru/nightly/ stable main non-free" state=absent
@@ -50,16 +51,16 @@
  # add repos
  #
 
- - name: setup the debian backports repo for buster
-   apt_repository: repo="deb http://ftp.de.debian.org/debian buster-backports main contrib non-free" update_cache=false
+ - name: setup the debian backports repo for bullseye
+   apt_repository: repo="deb http://ftp.de.debian.org/debian bullseye-backports main contrib non-free" update_cache=false
    when: system.type == 'pc'
 
- - name: ensure that the non-free suite is enabled for buster
-   apt_repository: repo="deb http://ftp.de.debian.org/debian buster main contrib non-free" update_cache=false
+ - name: ensure that the non-free suite is enabled for bullseye
+   apt_repository: repo="deb http://ftp.de.debian.org/debian bullseye main contrib non-free" update_cache=false
    when: system.type == 'pc'
 
- - name: ensure that security updates enabled for buster
-   apt_repository: repo="deb http://security.debian.org/ buster/updates main contrib non-free" update_cache=false
+ - name: ensure that security updates enabled for bullseye
+   apt_repository: repo="deb http://security.debian.org/ bullseye-security main contrib non-free" update_cache=false
    when: system.type == 'pc'
 
  - name: ensure that the debian keyrings are present
@@ -70,20 +71,20 @@
       - debian-archive-keyring
    when: system.type == 'pc'
 
- - name: setup the VOC debian repo for buster
-   apt_repository: repo="deb http://pkg.c3voc.de/ buster main" state=present
+ - name: setup the VOC debian repo for bullseye
+   apt_repository: repo="deb http://pkg.c3voc.de/ bullseye main" state=present
    when: "system.type == 'pc' and 'proxmox' not in group_names"
 
 #
 # raspberry specific
 #
 
- - name: setup the raspbian debian repo for stretch
-   apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi" state=present
+ - name: setup the raspbian debian repo for bullseye
+   apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ bullseye main contrib non-free rpi" state=present
    when: system.type == 'pi'
 
- - name: setup the raspbian debian repo for stretch
-   apt_repository: repo="deb http://archive.raspberrypi.org/debian/ stretch main ui" state=present
+ - name: setup the raspbian debian repo for bullseye
+   apt_repository: repo="deb http://archive.raspberrypi.org/debian/ bullseye main ui" state=present
    when: system.type == 'pi'
 
  - name: remove pinning for ffmpeg multimedia repo since it is now in the default repo
@@ -108,5 +109,5 @@
    when: ansible_hostname is match('mebibyte')
 
  - name: added hwraid repo for LSI raid controller
-   apt_repository: repo="deb http://hwraid.le-vert.net/debian stretch main" state=present
+   apt_repository: repo="deb http://hwraid.le-vert.net/debian bullseye main" state=present
    when: ansible_hostname is match('mebibyte')

@@ -4,9 +4,6 @@
     tags: packages
     vars:
       packages:
-      # YES, we are using systemd!!1!
-      - systemd
-      - systemd-sysv
       - zsh
       - vim
       - htop
