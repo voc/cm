@@ -93,3 +93,6 @@ voctomix_sources:
     video_connection: HDMI
     video_mode: "1080p24"
     volume: 0.0
+
+blinder_audio:
+    original: "0+1"
