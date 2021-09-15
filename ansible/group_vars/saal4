@@ -99,7 +99,5 @@ voctomix_sources:
     video_mode: "1080p24"
     volume: 0.0
 
-voctomix_vaapi: true
-
 blinder_audio:
     original: "0+1"
