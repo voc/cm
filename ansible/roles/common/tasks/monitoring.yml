@@ -6,9 +6,10 @@
     when: ansible_hostname is match('dellinger|storage|aws|berlin-ak|mebibyte')
 
   - name: create check_system script
-    template: src="monitoring/check_system.sh.j2"
-              dest="/usr/local/sbin/check_system.sh"
-              mode=0750 owner=root group=root
+    template:
+      src: monitoring/check_system.sh.j2
+      dest: /usr/local/sbin/check_system.sh
+      mode: 0750
     tags:
       - check_recording
       - check_system
@@ -28,15 +29,16 @@
           job="nice -n 19 /usr/local/sbin/check_system.sh >/dev/null"
 
   - name: deploy systemd unit for shutdown hook
-    copy: src=send-mqtt-shutdown.service
-          dest=/etc/systemd/system/send-mqtt-shutdown.service
-          owner=root group=root mode=0644
-
-  - name: reload systemd daemon
-    command: systemctl daemon-reload
-    changed_when: false
+    copy:
+      src: send-mqtt-shutdown.service
+      dest: /etc/systemd/system/send-mqtt-shutdown.service
+      mode: 0644
+    register: shutdown_hook
 
   - name: enable & start shutdown hook
-    service: name=send-mqtt-shutdown
-             enabled=yes
-             state=started
+    systemd:
+      name: send-mqtt-shutdown
+      state: started
+      enabled: yes
+      daemon_reload: yes
+    when: shutdown_hook.changed

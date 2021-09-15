@@ -23,9 +23,12 @@
   template:
     src: rtmp-auth.service.j2
     dest: /etc/systemd/system/rtmp-auth.service
+  register: rtmp_auth_service
 
-- name: enable rtmp-auth service
+- name: restart/enable rtmp-auth service
   systemd:
-    state: started
-    enabled: yes
     name: rtmp-auth
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+  when: rtmp_auth_service.changed

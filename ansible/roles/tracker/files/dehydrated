@@ -1,5 +1,0 @@
-MAILTO=voc@c3voc.de
-# refresh certs and ocsp response on disk
-33 8 * * * root /usr/local/bin/dehydrated -c -f /etc/dehydrated/config > /dev/null
-# reload nginx for ocsp update
-51 8 * * * root /bin/systemctl reload nginx

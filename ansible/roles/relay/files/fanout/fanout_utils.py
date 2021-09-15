@@ -6,6 +6,8 @@ import glob
 import time
 import json
 import shlex
+import signal
+import random
 import argparse
 import subprocess
 import collections
@@ -71,9 +73,9 @@ def setup_argparse(name):
 def call(command):
 	print("Starting command: \n----\n%s\n----\n" % command)
 	try:
-		subprocess.check_call(shlex.split(command));
-	except KeyboardInterrupt:
-		return
+		subprocess.check_call(shlex.split(command))
+	except subprocess.CalledProcessError:
+		pass
 
 
 def remove_glob(pattern):
@@ -131,6 +133,25 @@ def format_and_strip(context, template_string):
 	rendered = format(context, template_string)
 	return rendered.lstrip()
 
+class ExitException(Exception):
+	def __init__(self, signum):
+		super(ExitException, self).__init__(f"Caught signal {signum}")
+
+def signal_handler(signum, frame):
+	raise ExitException(signum)
+
+def random_duration():
+	return 2 + random.random()
+
+def do_sleep(timer, sleep_time):
+	now = time.time()
+	if now - timer < 10:
+		sleep_time = min(10, sleep_time + random_duration())
+	else:
+		sleep_time = random_duration()
+	print(f"sleeping for {sleep_time:0.1f}s")
+	time.sleep(sleep_time)
+	return sleep_time
 
 def mainloop(name, transcoding_stream, calback, args=None):
 	if args is None:
@@ -143,14 +164,22 @@ def mainloop(name, transcoding_stream, calback, args=None):
 
 	print("Starting loop for %s-transcoding of Stream %s (%s)" % (name, args.stream, pull_url))
 
+	# install signal handlers
+	signal.signal(signal.SIGINT, signal_handler)
+	signal.signal(signal.SIGTERM, signal_handler)
+	signal.signal(signal.SIGQUIT, signal_handler)
+
+	timer = 0
+	sleep_time = 0
 	try:
 		while True:
 			try:
 				print("Analyzing Tracks of %s" % pull_url)
+				timer = time.time()
 				video_tracks, audio_tracks = analyze_tracks(pull_url)
-			except Exception:
+			except subprocess.CalledProcessError:
 				print("Analyzing Tracks failed, sleeping")
-				time.sleep(10)
+				sleep_time = do_sleep(timer, sleep_time)
 				continue
 
 			print("Found stream with video_tracks=%s and audio_tracks=%s" %
@@ -167,10 +196,13 @@ def mainloop(name, transcoding_stream, calback, args=None):
 				"audio_tracks": audio_tracks,
 			})
 			ctx += args.__dict__
-			calback(ctx)
-			time.sleep(10)
 
-	except KeyboardInterrupt:
+			timer = time.time()
+			calback(ctx)
+			print("Fanout failed, sleeping")
+			sleep_time = do_sleep(timer, sleep_time)
+
+	except ExitException:
 		pass
 
 	print("Terminating")

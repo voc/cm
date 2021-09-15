@@ -65,6 +65,9 @@
         - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.ts"
         - "../../../artwork/{{ event.acronym }}/nostream.ts"
         - "artwork/default-nostream.ts"
+        - "../../../artwork/{{ event.acronym }}/saal{{ room_number }}/nostream.png"
+        - "../../../artwork/{{ event.acronym }}/nostream.png"
+        - "artwork/default-nostream.png"
       skip: not voctomix.nostream_loop
     when: voctomix.nostream_loop
 

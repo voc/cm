@@ -1,47 +1,63 @@
 ---
   - include: ../../../register/bin_path.yml
     tags: bin_path
+
   - include: locale.yml
+    tags: locales
+
+  - include: lxc.yml
+    tags: lxc
+    when: ansible_virtualization_type is defined and ansible_virtualization_type == 'lxc'
+
   - include: resolv.yml
-    tags:
-      - resolv
-      - dns
+    tags: [resolv, dns]
+    # work around systemd bug #10032
+    when:  ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc' and 'nameservers' not in group_names
+
   - include: apt_proxy.yml
+    tags: apt
+
   - include: repos.yml
-    tags:
-      - repos
-      - apt
+    tags: [apt, repos]
+
   - include: packages.yml
-    tags: [packages]
-  - include: kernel.yml
-    when: system.type == 'pc'
-    tags: kernel
+    tags: packages
+
   - include: vim.yml
   - include: sudo.yml
   - include: grub.yml
-    when: system.type == 'pc'
+    when: "system.type == 'pc' and 'proxmox' not in group_names and ansible_virtualization_type != 'lxc'"
+
   - include: ntp.yml
+    tags: ntp
     when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
+
+  - include: acpi_undeploy.yml
+    when: system.type == 'pc' and ansible_virtualization_role == 'guest'
+    tags: acpi
+
   - include: acpi.yml
-    when: system.type == 'pc'
+    when: system.type == 'pc' and ansible_virtualization_role != 'guest'
+    tags: acpi
+
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
+    when: "'proxmox' not in group_names"
   - include: ssl.yml
-  - include: smart.yml
-  # realise users
-  - include: user.yml user={{ users }}
+
+  # deploy users
+  - include: user.yml
     tags: user
+
   - include: monitoring.yml
     tags:
       - monitoring
       - check_system
 
-
-
-
   - name: setting voc password
-    user: name=voc
-          password={{ user_voc_password }}
+    user:
+      name: voc
+      password: "{{ user_voc_password }}"
     tags: user
 
   # Modify message of the day

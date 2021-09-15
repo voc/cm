@@ -10,13 +10,8 @@ upstream prometheus {
   server 127.0.0.1:9090;
 }
 
-server {
-  listen [::]:80;
-
-  server_name monitoring.c3voc.de;
-  server_tokens off;
-
-  return 301 https://$server_name$request_uri;
+upstream telegraf {
+  server 127.0.0.1:8186;
 }
 
 server {
@@ -28,16 +23,12 @@ server {
   root /srv/www/monitoring.c3voc.de/htdocs;
   index index.html;
 
-  access_log off;
-
   # TLS certificates
   ssl_certificate       /etc/letsencrypt/live/monitoring.c3voc.de/fullchain.pem;
   ssl_certificate_key   /etc/letsencrypt/live/monitoring.c3voc.de/privkey.pem;
+
   # OCSP stapling
-  ssl_stapling on;
-  ssl_stapling_verify on;
-  ssl_trusted_certificate /etc/letsencrypt/live/monitoring.c3voc.de/fullchain.pem;
-  ssl_stapling_file /etc/ssl/certs/monitoring.c3voc.de.pem.ocsp;
+  ssl_trusted_certificate /etc/letsencrypt/live/monitoring.c3voc.de/chain.pem;
 
   auth_basic "voc login";
   auth_basic_user_file htpasswd;
@@ -65,5 +56,9 @@ server {
 
   location /prometheus/ {
     proxy_pass http://prometheus;
+  }
+
+  location /write {
+    proxy_pass http://telegraf;
   }
 }

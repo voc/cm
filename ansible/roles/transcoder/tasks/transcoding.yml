@@ -25,16 +25,15 @@
       state: absent
     loop: "{{ old_systemd_transcoding_files.files }}"
 
-  - name: create transcode-scripts
+  - name: create transcode-script
     template:
-      src: "transcoder/{{ item }}.sh.j2"
-      dest: "/opt/transcoder/scripts/{{ item }}.sh"
+      src: "transcoder/{{ item }}"
+      dest: "/opt/transcoder/scripts/"
       mode: 0755
-      owner: root
-      group: root
     loop:
-      - vaapi
-      - software
+      - transcode.py
+      - mqtt.py
+      - config.py
 
   - name: create transcode-update script
     template:
@@ -46,11 +45,8 @@
 
   - name: create transcode systemd-units
     template: src=systemd-units/transcode.service.j2
-              dest="/etc/systemd/system/transcode_{{ item }}@.service"
+              dest="/etc/systemd/system/transcode@.service"
               mode=0644 owner=root group=root
-    loop:
-      - vaapi
-      - software
 
   - name: create transcode systemd-target
     template:

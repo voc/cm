@@ -2,7 +2,9 @@
   - hosts: tracker
     roles:
       - { role: common, tags: ['common'] }
+      - { role: letsencrypt, vars: { 'domain': 'tracker.c3voc.de' }, tags: ['letsencrypt']}
+      - { role: nginx, tags: ['nginx'] }
       - { role: tracker, tags: ['tracker'] }
-      - { role: letsencrypt, vars: { 'domain': 'tracker.c3voc.de' }}
+      - { role: monitoring-client, tags: ['monitoring'] }
     vars:
       ssh_allow_voc_password_login: 'yes'

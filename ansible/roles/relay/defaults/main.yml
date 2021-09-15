@@ -1,13 +1,3 @@
----
-# defaults vars for relay role
-
-### Common variables
-# use nginx
-nginx: 'yes'
-
-# use icecast
-icecast: 'yes'
-
 ### Master-Relay variables
 # - host stream-info api
 # - do fanout
@@ -18,8 +8,21 @@ stream_master: no
 # Generate relive snippets locally
 relive_master: no
 
-# accept some external streams pushed to icecast
-icecast_push_master: no
+# default cache sizes
+nginx_hls_relive_cache_max_size: '30g'
+nginx_live_cache_max_size: '30g'
+nginx_media_static_cache_max_size: '20g'
+
+# backends
+nginx_media_static_masters: []
+nginx_hls_relive_masters: []
+nginx_stream_masters: []
 
 # fanout to youtube
 youtube: no
+
+relay_fanout:
+  push_endpoint: 127.0.0.1:8000
+  hls_write_path: /srv/nginx/hls
+  dash_write_path: /srv/nginx/dash
+  thumbnail_write_path: /srv/nginx/thumbnail

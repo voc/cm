@@ -70,11 +70,19 @@ monitoring:
   collectd_username: "{{ lookup('keepass', 'ansible/collectd.username') }}"
   collectd_password: "{{ lookup('keepass', 'ansible/collectd.password') }}"
   collectd_interval: 30
+  telegraf_server:
+    - "{{ lookup('keepass', 'ansible/monitoring/write_htpasswd.url')}}"
+  telegraf_username: "{{ lookup('keepass', 'ansible/monitoring/write_htpasswd.username') }}"
+  telegraf_password: "{{ lookup('keepass', 'ansible/monitoring/write_htpasswd.password') }}"
 
 stream_api:
   user: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.username') }}"
   password: "{{ lookup('keepass', 'ansible/stream-api/htpasswd.password') }}"
   url: https://live.ber.c3voc.de/stream_info.json
+
+stream_upload:
+  user: "{{ lookup('keepass', 'ansible/stream-api/upload.username') }}"
+  password: "{{ lookup('keepass', 'ansible/stream-api/upload.password') }}"
 
 tracker_url: "https://tracker.c3voc.de/rpc"
 
@@ -165,6 +173,7 @@ users:
   - { name: 'masterbase', state: 'present' }
   - { name: 'mazdermind', state: 'present' }
   - { name: 'meise', state: 'present' }
+  - { name: 'n0emis', state: 'present' }
   - { name: 'thomic', state: 'present' }
   - { name: 'thorti', state: 'present' }
   - { name: 'v0tti', state: 'present' }

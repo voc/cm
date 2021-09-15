@@ -1,10 +1,23 @@
 ---
-  - include: nginx_rtmp.yml
-    tags: [nginx, rtmp]
-
-  - include: rtmp_auth.yml
-    when: rtmp is defined and rtmp|bool and rtmp_auth is defined and rtmp_auth|bool
-    tags: [nginx, rtmp]
+  - include: php.yml
+    tags: php
+    when: php|bool
 
   - include: nginx.yml
-    tags: [nginx]
+
+  - include: nginx_rtmp.yml
+    tags: rtmp
+    when: rtmp|bool
+
+  - include: remove_nginx_rtmp.yml
+    tags: rtmp
+    when: not rtmp|bool
+
+  - include: rtmp_auth.yml
+    when: rtmp|bool and rtmp_auth is defined and rtmp_auth|bool
+    tags: rtmp
+
+  - include: monitoring.yml
+    tags: monitoring
+    when: not no_monitoring|bool
+

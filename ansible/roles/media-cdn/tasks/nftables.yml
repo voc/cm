@@ -1,0 +1,12 @@
+---
+
+- name: Ensure nftables is installed
+  apt: name=nftables
+
+- name: Install nftables rules
+  copy:
+    src: nftables.conf
+    dest: /etc/nftables.conf
+    owner: root
+    mode: 0755
+  notify: reload nftables

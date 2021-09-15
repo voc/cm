@@ -1,0 +1,4 @@
+---
+telegraf_interfaces:
+- "ens4f1np1"
+- "ens4f0np0"

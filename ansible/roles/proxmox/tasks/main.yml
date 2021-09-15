@@ -1,0 +1,6 @@
+---
+ - name: ensure that pve-no-subscription sources are enabled
+   apt_repository: repo="deb http://download.proxmox.com/debian/pve buster pve-no-subscription" update_cache=false
+
+ - include: nginx.yml
+   tags: nginx

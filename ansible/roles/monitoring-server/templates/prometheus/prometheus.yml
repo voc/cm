@@ -1,0 +1,198 @@
+# Sample config for Prometheus.
+
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    source: 'C3VOC'
+
+# Alertmanager configuration
+alerting:
+ alertmanagers:
+ - static_configs:
+   - targets: ['localhost:9093']
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "rules/recording.yml"
+  - "rules/alerting.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    metrics_path: /prometheus/metrics
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # node exporter
+  - job_name: node
+    static_configs:
+      - targets: ['localhost:9100']
+
+  # telegraf
+  - job_name: telegraf
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:9273']
+    metric_relabel_configs:
+      # Prefix telegraf metrics with telegraf_
+      - source_labels: ["__name__"]
+        regex: "(.*)"
+        target_label: "__name__"
+        replacement: "telegraf_$1"
+
+      # Relabel our local telegraf metrics
+      - source_labels: ["host"]
+        regex: "{{ ansible_host | replace(".","\\\\.") }}"
+        target_label: "exported_instance"
+        replacement: "{{ ansible_host }}"
+
+      - source_labels: ["host"]
+        regex: "{{ ansible_host | replace(".","\\\\.") }}"
+        target_label: "role"
+        replacement: "monitoring-server"
+
+  # collectd exporter
+  - job_name: collectd
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['localhost:9103']
+
+    # **** Advanced Magic ****
+    metric_relabel_configs:
+      # This is how job security looks
+      # Add role labels to allow easy selection in queries
+      - source_labels: ["exported_instance"]
+        regex: "({% for host in groups["master_relays"] -%}
+          {{ host | replace(".","\\\\.") -}}
+          {% if loop.index < loop.length -%}
+            |
+          {%- endif -%}
+        {% endfor %})"
+        target_label: "role"
+        replacement: "master-relay"
+
+      - source_labels: ["exported_instance"]
+        regex: "({% for host in groups["edge_relays"] -%}
+          {{ host | replace(".","\\\\.") -}}
+          {% if loop.index < loop.length -%}
+            |
+          {%- endif -%}
+        {% endfor %})"
+        target_label: "role"
+        replacement: "edge-relay"
+
+      - source_labels: ["exported_instance"]
+        regex: "({% for host in groups["loadbalancers"] -%}
+          {{ host | replace(".","\\\\.") -}}
+          {% if loop.index < loop.length -%}
+            |
+          {%- endif -%}
+        {% endfor %})"
+        target_label: "role"
+        replacement: "loadbalancer"
+
+      - source_labels: ["exported_instance"]
+        regex: "({% for host in groups["encoders"] -%}
+          {{ host | replace(".","\\\\.") -}}
+          {% if loop.index < loop.length -%}
+            |
+          {%- endif -%}
+        {% endfor %})"
+        target_label: "role"
+        replacement: "encoder"
+
+      # Transform dash/hls/icecast2 labels into stream
+      - source_labels: ["dash", "icecast2", "hls"]
+        separator: ""
+        regex: "([a-zA-Z0-9]+)_.*"
+        target_label: "stream"
+        replacement: "$1"
+
+      # Transform dash/hls/icecast2 labels into transport
+      - source_labels: ["dash"]
+        regex: ".+"
+        target_label: "transport"
+        replacement: "dash"
+      - source_labels: ["icecast2"]
+        regex: ".+"
+        target_label: "transport"
+        replacement: "icecast2"
+
+      # label hls-live and relive separately
+      - source_labels: ["hls"]
+        regex: "([a-zA-Z][a-zA-Z0-9]+)_.*"
+        target_label: "transport"
+        replacement: "hls"
+      - source_labels: ["hls"]
+        regex: "([0-9]+)_.*"
+        target_label: "transport"
+        replacement: "relive"
+
+      # Label icecast2 substreams
+      - source_labels: ["icecast2"]
+        regex: "[a-zA-Z0-9]+_(.*?)[\\._].*"
+        target_label: "language"
+        replacement: "$1"
+      - source_labels: ["icecast2"]
+        regex: "[a-zA-Z0-9]+_.*?[\\._](.*?)(|\\.webm)"
+        target_label: "quality"
+        replacement: "$1"
+
+      # Remove extra labels
+      #- regex: "(dash|hls|icecast2)"
+      #  action: labeldrop
+
+      # Rewrite different stream metrics to collectd_users
+      - source_labels: ["__name__"]
+        regex: "collectd_(dash|icecast2|hls)_users"
+        target_label: "__name__"
+        replacement: "collectd_users"
+
+  - job_name: blackbox-hls
+    file_sd_configs:
+    - files:  [/var/lib/prometheus/streams.yml]
+      refresh_interval: 1m
+    metrics_path: /probe
+    params:
+      module: [http]
+    relabel_configs:
+    - source_labels: [__address__]
+      replacement: http://live.ber.c3voc.de/hls/$1/chunks_0.m3u8
+      target_label: __param_target
+    - source_labels: [__address__]
+      target_label: stream
+    - target_label: __address__
+      replacement: 127.0.0.1:9115 # The blackbox exporter.
+
+  - job_name: blackbox-dash
+    file_sd_configs:
+    - files: [/var/lib/prometheus/streams.yml]
+      refresh_interval: 1m
+    metrics_path: /probe
+    params:
+      module: [http]
+    relabel_configs:
+    - source_labels: [__address__]
+      replacement: http://live.ber.c3voc.de/dash/$1/manifest.mpd
+      target_label: __param_target
+    - source_labels: [__address__]
+      target_label: stream
+    - target_label: __address__
+      replacement: 127.0.0.1:9115 # The blackbox exporter.
+
+      #- job_name: blackbox-icecast
+      #  metrics_path: /probe
+      #  params:
+      #    module: [http]
+      #  static_configs:
+      #   - targets: []
+      #  relabel_configs:
+      #   - source_labels: [__address__]
+      #     replacement: https://live.ber.c3voc.de/

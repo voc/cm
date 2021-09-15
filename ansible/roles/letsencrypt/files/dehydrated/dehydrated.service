@@ -1,5 +1,5 @@
 [Unit]
-Description=Run dehydrated to renew Let's Encrypt certificated
+Description=Run dehydrated to renew Let's Encrypt certificates
 
 [Service]
 Type=oneshot

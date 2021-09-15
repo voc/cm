@@ -1,11 +1,11 @@
 ---
   - name: restart nginx
     service: name=nginx state=restarted
-    when: nginx is defined and nginx == 'yes'
+    when: nginx is defined and nginx|bool
 
   - name: reload nginx
     service: name=nginx state=reloaded
-    when: nginx is defined and nginx == 'yes'
+    when: nginx is defined and nginx|bool
 
   - include: ../../../handlers/systemd.yml
   - include: ../../../roles/letsencrypt/handlers/main.yml domain={{ ansible_fqdn }}

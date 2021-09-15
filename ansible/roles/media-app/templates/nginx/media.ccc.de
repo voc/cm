@@ -4,9 +4,9 @@ upstream puma {
 
 server {
   listen [::]:80 ipv6only=off;
-  server_name app.media.ccc.de api.media.ccc.de media.ccc.de;
+  server_name app.media.{domain} api.media.{domain} media.{domain};
 
-  rewrite     ^ https://media.ccc.de$request_uri? permanent;
+  rewrite     ^ https://media.{domain}$request_uri? permanent;
 }
 
 
@@ -31,8 +31,8 @@ proxy_cache_path /srv/media/media-site/cache
 server {
   listen [::]:443 ipv6only=off ssl http2;
   ssl                         on;
-  ssl_certificate             /var/lib/acme/live/app.media.ccc.de/fullchain;
-  ssl_certificate_key         /var/lib/acme/live/app.media.ccc.de/privkey;
+  ssl_certificate             /var/lib/acme/live/app.media.{domain}/fullchain;
+  ssl_certificate_key         /var/lib/acme/live/app.media.{domain}/privkey;
   ssl_session_timeout         1d;
   ssl_session_cache           shared:SSL:5m;
   ssl_protocols               TLSv1.1 TLSv1.2;
@@ -50,9 +50,14 @@ server {
     allow all;
   }
 
-  server_name app.media.ccc.de api.media.ccc.de media.ccc.de;
+  server_name app.media.{domain} api.media.{domain} media.{domain};
   root /srv/media/media-site/current/public;
 
+{% if rails_env != "production" %}
+  location ~* robots.txt {
+    return 200 "User-agent: *\nDisallow: /\n";
+  }
+{% else %}
   location ~* ^/assets/|favicon.ico|robots.txt {
     # Per RFC2616 - 1 year maximum expiry
     expires 1w;
@@ -100,6 +105,7 @@ server {
     #auth_basic "Media Stats";
     #auth_basic_user_file /etc/awstats/awstats.htpasswd;
   }
+{% endif %}
 
   # REWRITE RULES
   rewrite ^/browse/(.*)/index.html /b/$1 permanent;

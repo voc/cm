@@ -6,17 +6,11 @@ worker_rlimit_nofile 65536;
 # multiple worker
 worker_processes  {{ nginx_worker_processes | default('auto') }};
 
-# dynamic config
-include /etc/nginx/conf.d/*;
-
 error_log  /var/log/nginx/error.log;
 pid /var/run/nginx.pid;
 
 events {
   worker_connections  {{ nginx_worker_connections | default('4096') }};
-
-  # required by per_worker
-  accept_mutex off;
 }
 
 http {
@@ -24,8 +18,24 @@ http {
 
   types_hash_max_size 2048;
 
+{% if anonymize_logs %}
+  map $remote_addr $remote_addr_anon {
+      ~(?P<ip>\d+\.\d+\.\d+)\.    $ip.0;
+      ~(?P<ip>[^:]+:[^:]+):       $ip::;
+      127.0.0.1                   $remote_addr;
+      ::1                         $remote_addr;
+      default                     0.0.0.0;
+  }
+  log_format ip '$remote_addr_anon - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+{% else %}
   log_format ip '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+{% endif %}
+
+{% if default_access_log %}
   access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
+{% else %}
+  access_log off;
+{% endif %}
 
   # mime-types
   default_type application/octet-stream;
@@ -71,6 +81,7 @@ http {
 
   ssl_stapling on;
   ssl_stapling_verify on;
+  resolver 127.0.0.53;
 
   map $http_x_proto $use_https {
     default off;
@@ -80,10 +91,31 @@ http {
   # include vhosts
   include /etc/nginx/sites-enabled/*;
 
+  # dynamic config
+  include /etc/nginx/conf.d/*;
+
+{% if php|bool %}
+  upstream php {
+    server unix:/run/php/php{{ php_version }}-fpm.sock;
+  }
+{% endif %}
+
+{% if default_server %}
+  server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    location ^~ /.well-known/acme-challenge {
+      alias /var/www/dehydrated;
+    }
+
+    location / {
+      return 307 https://$host$request_uri;
+    }
+  }
+{% endif %}
+
   # vhost for stats
-  # Example:
-  #   http://127.0.0.1:8999/stats/nginx → nginx stats for all workers
-  #   http://127.0.0.1:9000/stats/nginx → nginx stats for worker 1
   server {
     server_name _;
 
@@ -100,19 +132,26 @@ http {
       deny all;
     }
 
-{% if rtmp is defined and rtmp|bool %}
+{% if rtmp|bool %}
     location ~* ^/stats/rtmp {
-      rtmp_stat all;
-      access_log off;
-
 {% for ip in nginx_ips_allow_stats %}
       allow {{ ip }};
 {% endfor %}
       deny all;
+      access_log   off;
+      proxy_pass http://127.0.0.1:9999;
+    }
+
+    location /control {
+      allow ::1;
+      allow 127.0.0.1;
+      deny all;
+      access_log   off;
+      proxy_pass http://127.0.0.1:9999;
     }
 {% endif %}
 
-{% if php is defined and php == 'yes' %}
+{% if php|bool %}
     location ~* ^/stats/php {
       access_log off;
 

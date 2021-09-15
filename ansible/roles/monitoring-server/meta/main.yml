@@ -1,0 +1,10 @@
+---
+dependencies:
+  - role: letsencrypt
+    tags: letsencrypt
+    vars:
+      domain: "{{ ansible_fqdn }}"
+  - role: nginx
+    tags: nginx
+    vars:
+      default_access_log: no

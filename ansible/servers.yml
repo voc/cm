@@ -1,4 +1,15 @@
 ---
+  - hosts: proxmox
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: nginx, tags: ['nginx'] }
+      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }
+      - { role: proxmox, tags: ['proxmox'] }
+  - hosts: nameservers
+    roles:
+      - { role: common, tags: ['common'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
   - hosts: servers
     roles:
       - { role: crs-worker, tags: ['crsworker'], when: crs_token is defined and crs_secret is defined }
@@ -6,6 +17,7 @@
       - { role: monitoring-client, tags: ['monitoring'] }
         #      - { role: router, when: ansible_fqdn == 'router.lan.c3voc.de' }
       - { role: pbx, when: ansible_fqdn == 'phony.lan.c3voc.de' }
+      - { role: nginx, tags: ['nginx'], when: nginx is defined and nginx }
       - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'], when: letsencrypt is defined and letsencrypt }
     vars:
        ssh_allow_voc_password_login: 'yes'

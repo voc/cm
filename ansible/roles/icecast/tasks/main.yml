@@ -1,0 +1,6 @@
+---
+- include: icecast.yml
+
+- include: icedist.yml
+  tags: icedist
+  when: icedist|bool

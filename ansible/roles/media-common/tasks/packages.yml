@@ -32,7 +32,6 @@
     name:
       - rpcbind
       - snapd
-      - vim
       - logcheck
 
 - copy: src=auto-upgrades

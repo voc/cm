@@ -7,19 +7,28 @@ import fanout_utils
 
 def fanout_thumbnail(context):
 	cleanup(context)
-	fanout(context)
+	prepare(context)
+	try:
+		fanout(context)
+	except fanout_utils.ExitException:
+		print("Cleaning up")
+		cleanup(context)
+		raise
 
-	print("Cleaning up")
-	cleanup(context)
 
-
-def cleanup(c):
+def prepare(c):
 	with contextlib.suppress(FileExistsError):
 		os.mkdir(os.path.join(c.thumbnail_write_path, c.stream))
 
+def cleanup(c):
 	with contextlib.suppress(FileNotFoundError):
 		fanout_utils.remove_glob(os.path.join(
 			c.thumbnail_write_path, "%s/thumb.jpeg" % c.stream))
+		fanout_utils.remove_glob(os.path.join(
+			c.thumbnail_write_path, "%s/poster.jpeg" % c.stream))
+
+	with contextlib.suppress(OSError):
+		os.rmdir(os.path.join(c.thumbnail_write_path, c.stream))
 
 
 def fanout(context):

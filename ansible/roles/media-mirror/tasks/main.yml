@@ -2,8 +2,8 @@
   - apt:
       state: latest
       name:
-        - rsync
         - vsftpd
+        - lockfile-progs
   - import_tasks: cdn-sync.yml
   # TODO add rsyncd configuration
   #   mirrorbits checks via rsync, config is done in media-cdn role,

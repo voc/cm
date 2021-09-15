@@ -3,7 +3,6 @@
    apt: name={{ item }} state=latest
    with_items:
     - nginx
-    - libnginx-mod-rtmp
     - icecast2
     - samba
     - i965-va-driver-shaders

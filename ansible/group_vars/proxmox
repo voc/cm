@@ -1,0 +1,7 @@
+monitoring_role: proxmox
+proxmox:
+  user: "{{ lookup('keepass', 'ansible/services/proxmox.username') }}"
+  password: "{{ lookup('keepass', 'ansible/services/proxmox.password') }}"
+
+  telegraf_user: "{{ lookup('keepass', 'ansible/monitoring/proxmox_telegraf.username') }}"
+  telegraf_token: "{{ lookup('keepass', 'ansible/monitoring/proxmox_telegraf.password') }}"

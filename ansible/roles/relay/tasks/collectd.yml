@@ -11,7 +11,7 @@
 
 - name: template collectd config
   template:
-    src: collectd/relay.conf
+    src: collectd/collectd.relay.conf
     dest: /etc/collectd/collectd.conf.d/relay.conf
     mode: 0640
   register: collectd_relay_config

@@ -1,15 +1,30 @@
 global
-    nbproc  {{ haproxy_nbproc | default('4') }}
+    ulimit-n 200000
+    maxconn 500000
+    maxconnrate 500000
+    maxcomprate 0
+    maxcompcpuusage 100
+    maxsessrate 500000
+    nbproc 1
+    nbthread {{ ansible_processor_vcpus -1 }}
+    cpu-map auto:1/1-{{ ansible_processor_vcpus -1 }} 0-{{ ansible_processor_vcpus -2}}
+    # TCP and Request Bufferfing
+    tune.bufsize 262144
+    tune.chksize 262144
+    tune.rcvbuf.client 262144
+    tune.rcvbuf.server 2097152
+    tune.sndbuf.client 2097152
+    tune.sndbuf.server 262144
+
+    # cors responder
+    lua-load /etc/haproxy/cors.lua
+
     chroot  /usr/share/haproxy
     pidfile /run/haproxy.pid
-    maxconn  32768
-    ulimit-n 65604
     user    haproxy
     group   haproxy
     # stats sockets
-{% for nr in range(1, haproxy_nbproc+1) %}
-    stats socket /var/run/haproxy_stats_{{ nr }}.sock level operator process {{ nr}}
-{% endfor %}
+    stats socket /var/run/haproxy/stats_1.sock level operator group telegraf mode 0770 process 1
     daemon
     log     /dev/log local0 notice
     # tls
@@ -17,8 +32,11 @@ global
     ssl-default-bind-ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK
 
 defaults
+    log     global
+    maxconn 500000
     mode    http
-    # enable some usefull options
+    # enable some useful options
+    option  socket-stats
     option  httplog
     option  dontlognull
     option  http-server-close
@@ -29,13 +47,12 @@ defaults
     timeout server  10s
     timeout client  30s
     # constum error filter
-    errorfile 500 /srv/nginx/htdocs/50x.html
-    errorfile 502 /srv/nginx/htdocs/50x.html
-    errorfile 503 /srv/nginx/htdocs/50x.html
+    errorfile 500 /var/lib/haproxy/500.http
+    errorfile 502 /var/lib/haproxy/502.http
+    errorfile 503 /var/lib/haproxy/503.http
     log     /dev/log local0 notice
 
 frontend icecast_and_nginx_hls_http
-    bind-process 1
     bind 0.0.0.0:80
     bind :::80
 
@@ -75,6 +92,7 @@ frontend icecast_and_nginx_hls_http
     redirect scheme https code 301      if is_streaming_website {{ ssl }}
     redirect scheme https code 301      if is_relive {{ ssl }}
 {% else %}
+    http-request use-service lua.cors-response if METH_OPTIONS { req.hdr(origin) -m found } { ssl_fc }
     use_backend streaming_website_https if is_streaming_website {{ ssl }}
     use_backend relive_https            if is_relive {{ ssl }}
 {% endif %}
@@ -102,9 +120,16 @@ frontend icecast_and_nginx_hls_http
     {{ frontend_acls("http", "") }}
 
 frontend icecast_and_nginx_hls_https
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     bind 0.0.0.0:443 ssl crt /etc/letsencrypt/live/streaming.media.ccc.de/haproxy.pem crt /etc/letsencrypt/live/cdn.c3voc.de/haproxy.pem # <cert+privkey+intermediate+dhparam>
     bind :::443 ssl crt /etc/letsencrypt/live/streaming.media.ccc.de/haproxy.pem crt /etc/letsencrypt/live/cdn.c3voc.de/haproxy.pem # <cert+privkey+intermediate+dhparam>
+
+    tcp-request inspect-delay 5s
+    tcp-request content accept if { req_ssl_hello_type 1 }
+
+    stick-table type ip size 200k expire 1m store conn_rate(10s)
+    tcp-request content track-sc0 src
+    acl conn_rate_abuse sc0_conn_rate gt 50
+    tcp-request content reject if conn_rate_abuse
 
     # add special header for protocol version
     http-request add-header X-Proto https if  { ssl_fc }
@@ -117,7 +142,6 @@ frontend icecast_and_nginx_hls_https
 # enable statistics and basic admin support for localhost
 {% for nr in range(1, haproxy_nbproc+1) %}
 listen stats_process_{{ nr }}
-    bind-process {{ nr }}
     bind 127.0.0.1:910{{ nr }}
     mode http
     stats enable
@@ -136,11 +160,6 @@ listen stats_process_{{ nr }}
 # {{ protocol }}
 # REMOTE
 backend nginx_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_dash_relays.items() %}
@@ -152,11 +171,6 @@ backend nginx_{{ protocol }}
 {% endfor %}
 
 backend relive_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_relive_relays.items() %}
@@ -168,11 +182,6 @@ backend relive_{{ protocol }}
 {% endfor %}
 
 backend icecast_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_icecast_relays.items() %}
@@ -186,11 +195,6 @@ backend icecast_{{ protocol }}
 
 # 3rd party
 backend 3rdparty_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_3rdparty_relays.items() %}
@@ -204,11 +208,6 @@ backend 3rdparty_{{ protocol }}
 
 # LOCAL
 backend local_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_local_relays.items() %}
@@ -223,11 +222,6 @@ backend local_{{ protocol }}
 {% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
 # DTAG EXTRAWURST
 backend dtag_{{ protocol }}
-{% if protocol == "http" %}
-    bind-process 1
-{% else %}
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
-{% endif %}
     balance source
     option forwardfor
 {% for server, weight in lb_dtag_relays.items() %}
@@ -243,9 +237,8 @@ backend dtag_{{ protocol }}
 {% endfor %}
 
 backend streaming_website_https
-    bind-process {{ range(2, haproxy_nbproc+1) | join(' ') }}
     balance source
     option forwardfor
     http-request set-header X-Custom-Header %[url]
     http-request set-header X-Real-IP %[src]
-    server localhost 127.0.0.1:8080 maxconn 2048
+    server localhost 127.0.0.1:8080 maxconn 500000

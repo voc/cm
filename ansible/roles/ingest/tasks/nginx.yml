@@ -3,5 +3,10 @@
   template:
     src: nginx/ingest.conf.j2
     dest: "/etc/nginx/sites-enabled/{{ ansible_fqdn }}"
-  notify: reload nginx
+  register: ingest_vhost
 
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+  when: ingest_vhost.changed

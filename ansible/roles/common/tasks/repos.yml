@@ -1,4 +1,9 @@
 ---
+ - name: remove pve enterprise list
+   file:
+     path: /etc/apt/sources.list.d/pve-enterprise.list
+     state: absent
+
  - name: install packages needed for repos
    apt:
      name:
@@ -15,6 +20,7 @@
    tags:
      - repo
      - gpg
+   when: "system.type == 'pc' and 'proxmox' not in group_names"
 
  #
  # remove old repos
@@ -45,7 +51,7 @@
  #
 
  - name: setup the debian backports repo for buster
-   apt_repository: repo="deb http://ftp.de.debian.org/debian buster-backports main" update_cache=false
+   apt_repository: repo="deb http://ftp.de.debian.org/debian buster-backports main contrib non-free" update_cache=false
    when: system.type == 'pc'
 
  - name: ensure that the non-free suite is enabled for buster
@@ -66,8 +72,7 @@
 
  - name: setup the VOC debian repo for buster
    apt_repository: repo="deb http://pkg.c3voc.de/ buster main" state=present
-   when: system.type == 'pc'
-
+   when: "system.type == 'pc' and 'proxmox' not in group_names"
 
 #
 # raspberry specific

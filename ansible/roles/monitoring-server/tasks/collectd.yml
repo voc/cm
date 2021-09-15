@@ -1,15 +1,19 @@
 ---
   - name: install collectd config file
-    template: dest=/etc/collectd/collectd.conf
-              src=collectd/collectd.server.conf.j2
-              owner=root group=root mode=0640
-    notify: restart collectd
-    tags:
-      - config
+    template:
+      src: collectd/collectd.server.conf.j2
+      dest: /etc/collectd/collectd.conf
+      mode: 0640
+    register: collectd_config
 
   - name: install collectd auth file
-    template: dest=/etc/collectd/passwd
-              src=collectd/passwd.j2
-              owner=root group=root mode=0600
-    tags:
-      - config
+    template:
+      src: collectd/passwd.j2
+      dest: /etc/collectd/passwd
+      mode: 0600
+
+  - name: restart collectd
+    service:
+      name: collectd
+      state: restarted
+    when: collectd_config.changed

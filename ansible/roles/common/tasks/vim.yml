@@ -3,6 +3,11 @@
   - name: vim is our editor
     alternatives: name=editor path=/usr/bin/vim.basic
 
+  - name: replace root vimrc
+    copy:
+      src: user/default/vimrc
+      dest: /root/.vimrc
+
   # Adding content to files
   - name: enable syntax highlighting in vim
     lineinfile: dest=/etc/vim/vimrc regexp="^syntax "

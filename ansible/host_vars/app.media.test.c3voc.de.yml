@@ -1,0 +1,10 @@
+acmetool_setup: 0
+# initial
+# acmetool_responses_method: listen
+# when nginx is running
+acmetool_responses_method: webroot
+acmetool_responses_email: "hostmaster@example.com"
+acmetool_want:
+  - app.media.test.c3voc.de
+  - api.media.test.c3voc.de
+  - media.test.c3voc.de

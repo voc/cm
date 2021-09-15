@@ -1,3 +1,5 @@
 ---
-acmetool_want:
-  - "{{ inventory_hostname }} {{ inventory_hostname_short }}.ftp.media.ccc.de"
+
+host_domains:
+  - cdn.media.ccc.de ftp.media.ccc.de berlin-ak.cdn.media.ccc.de berlin-ak.ftp.media.ccc.de
+  #TODO: add ftp.ccc.de

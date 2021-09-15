@@ -1,5 +1,6 @@
 haproxy_nbproc: 4
-nginx: 'yes'
+php_version: 7.3
+monitoring_role: loadbalancer
 
 # define push ips
 nginx_ips_allow_to_push: [
@@ -30,38 +31,36 @@ lb_3rdparty_relays: {
 }
 
 lb_dash_relays: {
-  "live.alb.c3voc.de": 75,
   "live.bn.c3voc.de": 50,
-  "live.dus.c3voc.de": 50,
+  "live.dort.c3voc.de": 75,
+  "live.dus.c3voc.de": 75,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
+  "usa.alb.c3voc.de": 75,
 }
 
 lb_dtag_relays: {
-  "live.alb.c3voc.de": 75,
+  "live.dort.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
-}
-
-lb_hls_relays: {
-  "live.bn.c3voc.de": 50,
-  "live.dus.c3voc.de": 50,
-  "live.fem.c3voc.de": 75,
-  "live.self.c3voc.de": 75,
-  "live2.alb.c3voc.de": 50,
+  "relive.c3voc.de": 75,
+  "usa.alb.c3voc.de": 75,
 }
 
 lb_icecast_relays: {
-  "live.alb.c3voc.de": 75,
+  "live.dort.c3voc.de": 75,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
-  "live2.alb.c3voc.de": 50,
 }
 
 lb_local_relays: {
 }
 
+lb_mediastatic_relays: {
+  "live.dort.c3voc.de": 75,
+  "live.self.c3voc.de": 75,
+}
+
 lb_relive_relays: {
-  "live.alb.c3voc.de": 75,
-  "live2.alb.c3voc.de": 50,
+  "relive.c3voc.de": 75,
 }

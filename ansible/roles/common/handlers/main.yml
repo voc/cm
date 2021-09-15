@@ -1,6 +1,0 @@
----
-  - name: update grub
-    command: /usr/sbin/update-grub
-
-  - name: generate locales
-    command: /usr/sbin/locale-gen

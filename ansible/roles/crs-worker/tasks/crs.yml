@@ -5,7 +5,7 @@
       packages:
        - libconfig-inifiles-perl
        - libfile-which-perl
-       - libipc-run-perl
+       - libipc-run3-perl
        - libproc-processtable-perl
        - libxml-rpc-fast-perl
        - libxml-simple-perl

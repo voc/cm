@@ -50,16 +50,6 @@ LoadPlugin write_graphite
   Forward true
 </Plugin>
 
-<Plugin write_graphite>
-   <Carbon "local">
-     Host "127.0.0.1"
-     Port "2003"
-     SeparateInstances true
-     StoreRates false
-     AlwaysAppendDS false
-   </Carbon>
-</Plugin>
-
 <Plugin tcpconns>
   LocalPort "80"
   LocalPort "443"

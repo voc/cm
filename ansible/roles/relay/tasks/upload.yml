@@ -1,0 +1,31 @@
+---
+# currently just rc3 sonderlocke, maybe more in the future
+- name: create uploader htpasswd
+  htpasswd:
+    path: /etc/nginx/uploadpasswd
+    name: "{{ stream_upload.user }}"
+    password: "{{ stream_upload.password }}"
+    owner: root
+    group: www-data
+    mode: 0640
+
+- name: create upload directories
+  file:
+    path: "/srv/nginx/cwtv/{{ item }}"
+    state: directory
+    group: www-data
+    mode: 0775
+  loop:
+    - dash
+    - hls
+    - thumbnail
+
+- name: create upload symlinks
+  file:
+    src: "/srv/nginx/cwtv/{{ item }}"
+    dest: "/srv/nginx/{{ item }}/cwtv"
+    state: link
+  loop:
+    - dash
+    - hls
+    - thumbnail

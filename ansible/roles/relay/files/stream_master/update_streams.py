@@ -12,7 +12,10 @@ from collections import namedtuple
 # Map Icecast stream source
 def map_icecast(source, backend):
     url = source["listenurl"]
-    return url.split("/")[-1]
+    return {
+        "key": url.split("/")[-1],
+        "source": url,
+    }
 
 # Get streams from icecast2
 def fetch_icecast(backend):
@@ -43,6 +46,31 @@ def fetch_icecast(backend):
         return []
 
     return sources
+
+# Map Icecast stream source
+def map_srtrelay(source, backend):
+    name = source["name"]
+    address = backend["relay"]
+    return {
+        "key": name,
+        "source": f"srt://{address}?streamid=play/{name}",
+    }
+
+def fetch_srtrelay(backend):
+    sources = []
+    url = f"http://{backend['api']}/streams"
+
+    try:
+        f = urllib.request.urlopen(url)
+        streams = json.load(f)
+        sources = [map_srtrelay(stream, backend) for stream in streams]
+
+    except URLError:
+        print("Error: Could not fetch from", url)
+        return []
+
+    return sources
+
 
 # select transcoder for a stream
 # prefer empty transcoders
@@ -77,15 +105,23 @@ def find_transcoder(key, transcoders, state):
     print("selected", selected)
     return selected
 
-def find_stream(key, source, state):
+def find_stream(key, state):
     for stream in state["streams"]:
-        if stream["key"] == key and stream["source"] == source:
+        if stream["key"] == key:
             return stream
     return None
 
 def update_state(state, conf):
     regex = re.compile(conf["stream-match"])
-    valid_stream = lambda s: regex.match(s) is not None
+    valid_stream = lambda s: "key" in s and regex.match(s["key"]) is not None
+
+    options = []
+    if "options" in conf:
+        for option in conf["options"]:
+            options.append({
+                "regex": re.compile(option["stream-match"]),
+                "set": option["set"],
+            })
 
     # Setup dict for transcoder lookup
     transcoders = {}
@@ -104,32 +140,45 @@ def update_state(state, conf):
 
     # Assign new streams
     for backend in conf["backends"]:
-        sources = filter(valid_stream, fetch_icecast(backend))
+        streams = []
+        if backend["type"] == "icecast":
+            streams = filter(valid_stream, fetch_icecast(backend))
+        elif backend["type"] == "srtrelay":
+            streams = filter(valid_stream, fetch_srtrelay(backend))
+        else:
+            print("invalid backend type", "type" in backend and backend["type"])
 
         # merge source info into streams
-        for key in sources:
-            stream = find_stream(key, backend["address"], state)
+        for candidate in streams:
+            key = candidate["key"]
+            stream = find_stream(key, state)
             if stream is None:
-                stream = {
-                    "key": key,
-                    "source": backend["address"],
-                }
+                stream = candidate
                 state["streams"].append(stream)
 
+            stream["lastUpdated"] = int(time.time())
             stream["artwork"] = {
                 "base": conf["artwork_base"]
             }
 
+            # apply type options
+            stream["options"] = {}
+            for option in options:
+                if option["regex"].match(key) is not None:
+                    for key, val in option["set"].items():
+                        stream["options"][key] = val
+
             if not "transcoding" in stream:
                 t = find_transcoder(stream["key"], transcoders, state)
-                if t:
-                    stream["transcoding"] = {
-                        "worker": t["host"],
-                        "sink": conf["sink"]
-                    }
-                    t["jobs"] += 1
+                if t is None:
+                    print(f"No transcoder available for {stream['key']}, capacity reached")
+                    continue
 
-            stream["lastUpdated"] = int(time.time())
+                stream["transcoding"] = {
+                    "worker": t["host"],
+                    "sink": conf["sink"]
+                }
+                t["jobs"] += 1
 
     # Remove old streams
     now = time.time()

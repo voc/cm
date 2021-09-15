@@ -1,32 +1,8 @@
+# default relive master
 nginx_hls_relive_masters: ['185.106.84.36']
+nginx_media_static_masters: ['212.201.68.132']
 
-# workaround until relive lb config does something useful
-nginx_hls_relive_cache_max_size: '10g'
-
-relay_fanout:
-  push_endpoint: 127.0.0.1:8000
-  hls_write_path: /srv/nginx/hls
-  dash_write_path: /srv/nginx/dash
-  thumbnail_write_path: /srv/nginx/thumbnail
-
-rtmp_ingest:
-  pull_endpoint: 127.0.0.1:1935/stream
-  push_endpoint: 127.0.0.1:7999
-
-# sources to monitor from stream_master
-streaming_sources:
-  - "live.ber.c3voc.de:7999"
-  - "ingest.c3voc.de:8000"
-
-
-# icecast
-icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
-icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"
-icecast_source_password: "{{ lookup('keepass', 'ansible/icecast/source.password') }}"
-icecast_relay_password:  "{{ lookup('keepass', 'ansible/icecast/relay.password') }}"
-icecast_master_password: "{{ lookup('keepass', 'ansible/icecast/master.password') }}"
-icecast_admin_email:     "{{ lookup('keepass', 'ansible/icecast/admin.url') }}"
-
+# push mounts for icecast master
 icecast_additional_mounts: [
   {
     "mount-name": '/a1.opus',
@@ -87,6 +63,24 @@ icecast_additional_mounts: [
     "password": "{{ lookup('keepass', 'ansible/audio-pi/icecast_a4.password') }}",
     "stream-name": "Audio-Pi 4 MP3",
     "dump-file": "/srv/icecastdumps/a4-%F_%H-%M-%S_%s.mp3"
+  }, {
+    "mount-name": '/adventure1.mp3',
+    "type": 'audio/mpeg',
+    "username": 'source',
+    "password": "{{ lookup('keepass', 'ansible/icecast/mounts/adventure.password') }}",
+    "stream-name": "Adventure 1",
+  }, {
+    "mount-name": '/adventure2.mp3',
+    "type": 'audio/mpeg',
+    "username": 'source',
+    "password": "{{ lookup('keepass', 'ansible/icecast/mounts/adventure.password') }}",
+    "stream-name": "Adventure 2",
+  }, {
+    "mount-name": '/adventure3.mp3',
+    "type": 'audio/mpeg',
+    "username": 'source',
+    "password": "{{ lookup('keepass', 'ansible/icecast/mounts/adventure.password') }}",
+    "stream-name": "Adventure 3",
   }
 ]
 

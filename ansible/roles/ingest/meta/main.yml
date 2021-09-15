@@ -1,0 +1,15 @@
+---
+dependencies:
+  - role: nginx
+    vars:
+      rtmp: yes
+      rtmp_auth: yes
+    tags: nginx
+  - role: letsencrypt
+    vars:
+      domain: "{{ ansible_fqdn }}"
+    tags: letsencrypt
+  - role: icecast
+    vars:
+      icecast_push_master: yes
+    tags: icecast

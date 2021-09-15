@@ -4,15 +4,20 @@ proxy_temp_path /srv/nginx/cache/tmp;
 {% if not (relive_master is defined and relive_master|bool) %}
 proxy_cache_path /srv/nginx/cache/hls_relive
                 keys_zone=hls_relive:32m
-                max_size={{ nginx_hls_relive_cache_max_size | default('200g') }}
+                max_size={{ nginx_hls_relive_cache_max_size }}
                 inactive=7d
                 loader_threshold=300 loader_files=1024;
 {% endif %}
 {% if not stream_master %}
 proxy_cache_path /srv/nginx/cache/live
                 keys_zone=live:32m
-                max_size={{ nginx_live_cache_max_size | default('10g') }}
-                inactive=1h
+                max_size={{ nginx_live_cache_max_size }}
+                inactive=10m
+                loader_threshold=300 loader_files=1024;
+proxy_cache_path /srv/nginx/cache/mediastatic
+                keys_zone=mediastatic:32m
+                max_size={{ nginx_media_static_cache_max_size }}
+                inactive=6h
                 loader_threshold=300 loader_files=1024;
 
 # Upstreams
@@ -39,6 +44,12 @@ upstream relive {
 {% endif %}
 
   keepalive 32;
+}
+
+upstream mediastatic {
+{% for server in nginx_media_static_masters %}
+  server {{ server }}:443;
+{% endfor %}
 }
 {% endif %}
 
@@ -75,15 +86,23 @@ server {
   ssl_certificate       /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
   ssl_certificate_key   /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
   # OCSP stapling
-  ssl_stapling on;
-  ssl_stapling_verify on;
-  ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
-  ssl_stapling_file /etc/ssl/certs/{{ ansible_fqdn }}.pem.ocsp;
+  ssl_trusted_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/chain.pem;
 
   # don't allow access to some files or directories
   location ~* /.*\.(ht|sh|git|htaccess|php|inc|rb|py|pl|db|sqlite|sqlite3)$ {
     deny  all;
   }
+
+  # ACME http challenge
+  location ^~ /.well-known/acme-challenge {
+    alias /var/www/dehydrated;
+  }
+
+  # rewrite old m3u8 playlist urls
+  #
+  # live:   /hls/s2_native_sd.m3u8 -> /hls/s2/native_sd.m3u8
+  #
+  rewrite ^/hls/(?<stream>[^/_]+)_(?<file>[^/]+\.m3u8)$ /hls/$stream/$file redirect;
 
 {% if stream_master %}
   # stream-api
@@ -93,10 +112,26 @@ server {
     alias /srv/nginx/stream_info.json;
   }
 
+  location /upload/cwtv {
+    alias /srv/nginx/cwtv;
+    autoindex on;
+    auth_basic           "upload login";
+    auth_basic_user_file uploadpasswd;
+    client_max_body_size 50M;
+    dav_methods PUT DELETE;
+  }
+
   # live-cdn files
   location ~* ^/(hls|dash|thumbnail|artwork)/(.+)?$ {
     alias /srv/nginx/$1/$2;
     autoindex on;
+
+    # allow transcoder uploads
+    dav_methods PUT DELETE;
+    limit_except GET {
+      auth_basic           "voc login";
+      auth_basic_user_file htpasswd;
+    }
   }
 
   location /aws/ {
@@ -130,10 +165,13 @@ server {
       add_header X-Cache     "$upstream_cache_status edge";
       add_header Access-Control-Expose-Headers "X-Host";
       add_header X-Host "{{ vars.ansible_fqdn }}";
+
+      # log for viewer counting
+      access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
   }
   # proxy cache ts files (live)
   #
-  # live:   /hls/s2_native_sd-13026687480.ts
+  # live:   /hls/s2/1606696682-1049_2.ts
   #
   location ~* ^/(?<hls>hls)/(?<stream>.+\.(ts))$ {
       proxy_intercept_errors on;
@@ -142,7 +180,8 @@ server {
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://stream/$hls/$stream;
       proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 11m;
+      proxy_cache_valid      200 302 5m;
+      proxy_cache_revalidate on;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;
@@ -178,6 +217,9 @@ server {
       add_header X-Cache     "$upstream_cache_status edge";
       add_header Access-Control-Expose-Headers "X-Host";
       add_header X-Host "{{ vars.ansible_fqdn }}";
+
+      # log for viewer counting
+      access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
   }
   # proxy cache dash segments (live)
   #
@@ -192,7 +234,8 @@ server {
       proxy_set_header       X-Real-IP $remote_addr;
       proxy_pass             http://stream/dash/$segment;
       proxy_cache_methods    GET;
-      proxy_cache_valid      200 302 11m;
+      proxy_cache_valid      200 302 5m;
+      proxy_cache_revalidate on;
       proxy_cache_key        "$uri";
       proxy_cache_lock       on;
       proxy_ignore_headers   Cache-Control;
@@ -237,6 +280,35 @@ server {
       proxy_set_header          X-Forwarded-For $remote_addr;
       proxy_buffering           off;
       proxy_pass                http://icecast;
+  }
+
+  # proxy cache static media files
+  #
+  # relive: /media/congress/2019/11224-hd.jpg
+  #
+  location ~* ^/(?<media>media)/(?<file>.+)$ {
+    proxy_intercept_errors on;
+    proxy_cache            mediastatic;
+    proxy_set_header       Host static.media.ccc.de;
+    proxy_set_header       X-Real-IP $remote_addr;
+    proxy_pass             https://mediastatic/$media/$file;
+    proxy_cache_methods    GET;
+    proxy_cache_valid      200 302 1d;
+    proxy_cache_revalidate on;
+    proxy_cache_key        "$uri";
+    proxy_cache_lock       on;
+    proxy_ignore_headers   Cache-Control;
+    # allow stale
+    proxy_cache_use_stale error timeout updating http_500 http_502
+                          http_503 http_504;
+    proxy_cache_background_update on;
+    # keepalive to upstream server
+    proxy_http_version          1.1;
+    proxy_set_header Connection "";
+
+    # client caching
+    add_header Cache-Control no-cache;
+    add_header X-Cache     "$upstream_cache_status edge";
   }
 {% endif %}
 
@@ -284,6 +356,9 @@ server {
       # client caching
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
+
+      # log for viewer counting
+      access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
   }
   # proxy cache ts files (relive)
   #

@@ -1,0 +1,30 @@
+# whether to start/enable nginx by default
+nginx: yes
+
+# anonymize access log IPs
+anonymize_logs: yes
+
+# whether to setup a log handler by default
+default_access_log: yes
+
+# setup a http server on port 80 which handles letsencrypt
+# http-challenge and redirects to https
+default_server: yes
+
+# php-fpm deployment
+php: no
+
+# setup separate nginx for rtmp
+rtmp: no
+
+# module to use for
+nginx_rtmp_mod: mod-rtmp
+
+# setup backend for rtmp auth
+rtmp_auth: no
+
+# use auth backend for rtmp relay application
+rtmp_auth_relay: no
+
+# monitoring deployment
+no_monitoring: no

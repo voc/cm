@@ -1,4 +1,7 @@
 ---
+ - include: kernel.yml
+   when: "system.type == 'pc' and 'proxmox' not in group_names"
+   tags: kernel
  - include: general.yml
  - include: packages.yml
  - include: artwork.yml

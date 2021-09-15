@@ -1,0 +1,4 @@
+---
+telegraf_interfaces:
+  - "ens2f0"
+  - "ens2f1"

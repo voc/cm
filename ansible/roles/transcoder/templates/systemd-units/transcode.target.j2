@@ -2,11 +2,7 @@
 
 [Unit]
 Description = All Transcoders of Stream %I
-{% if vaapi_present.stdout == "true" %}
-Wants = transcode_vaapi@%i.service
-{% else %}
-Wants = transcode_software@%i.service
-{% endif %}
+Wants = transcode@%i.service
 
 [Install]
 WantedBy = multi-user.target

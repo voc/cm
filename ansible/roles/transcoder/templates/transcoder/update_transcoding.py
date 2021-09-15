@@ -53,12 +53,16 @@ def filter_streams(data, name):
     return ret
 
 def template_config(stream):
-    return f"""\
+    res = f"""\
 stream_key={stream["key"]}
 transcoding_source={stream["source"]}
 transcoding_sink={stream["transcoding"]["sink"]}
 artwork_base={stream["artwork"]["base"]}
 """
+    if "options" in stream:
+        for (key, value) in stream["options"].items():
+            res += f"{key}={value}"
+    return res
 
 def gen_config(stream):
     path = CONF_DIR

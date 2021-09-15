@@ -1,21 +1,29 @@
 ---
-- file: path=/etc/nginx/sites-enabled/default state=absent
-- file: path=/etc/nginx/sites-enabled/00-acmetool.conf state=absent
+- name: ensure nginx default is absent
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
 
-- template: src=nginx/{{ item }}
+- name: create nginx cdn site configs
+  template: src=nginx/{{ item }}
         dest=/etc/nginx/sites-available/{{ item }}
         owner=root group=root mode=0640
   with_items:
     - "cdn-api.media.ccc.de"
     - "cdn.media.ccc.de"
+    - "mirror.ftp.media.ccc.de"
     - "static.media.ccc.de"
+  notify:
+    - restart nginx
 
-- file: src=/etc/nginx/sites-available/{{ item }}
+- name: enable nginx cdn sites
+  file: src=/etc/nginx/sites-available/{{ item }}
         dest=/etc/nginx/sites-enabled/{{ item }}
         state=link
   with_items:
     - "cdn-api.media.ccc.de"
     - "cdn.media.ccc.de"
+    - "mirror.ftp.media.ccc.de"
     - "static.media.ccc.de"
   notify:
     - restart nginx

@@ -1,43 +1,35 @@
 ---
-  - name: install libnginx-mod-rtmp package
-    apt: name=libnginx-mod-rtmp state=latest
-    tags: install
-    when: (rtmp is defined and rtmp|bool)
+- name: install nginx-rtmp module
+  apt:
+    name: "libnginx-{{ nginx_rtmp_mod }}"
+    state: latest
+  register: nginx_rtmp_module
 
+- name: create nginx-rtmp config directory
+  file:
+    path: /etc/nginx-rtmp
+    state: directory
 
-  # RTMP vhost
-  - name: remove old rtmp master vhost
-    file:
-      path: "{{ item }}"
-      state: absent
-    with_items:
-      - /etc/nginx/sites-enabled/rtmp_master.conf
-      - /etc/nginx/sites-available/rtmp_master.conf
-    when: not (rtmp is defined and rtmp|bool)
-    notify:
-      - reload nginx
-    tags:
-      - config
-      - install
+- name: create nginx-rtmp config
+  template:
+    dest: /etc/nginx-rtmp/nginx.conf
+    src: nginx-rtmp.conf.j2
+    mode: 0640
+    owner: root
+    group: root
+  register: nginx_rtmp_config
 
-  - name: create rtmp master config
-    template: dest="/etc/nginx/conf.d/rtmp_master.conf"
-              src="conf.d/rtmp.conf.j2"
-              mode=0640 owner=root group=root
-    when: rtmp is defined and rtmp|bool
-    notify:
-      - reload nginx
-    tags:
-      - config
-      - install
+- name: install nginx-rtmp service
+  copy:
+    src: nginx-rtmp.service
+    dest: /etc/systemd/system/nginx-rtmp.service
+  register: nginx_rtmp_service
 
-  - name: remove rtmp master config
-    file:
-      path: /etc/nginx/conf.d/rtmp_master.conf
-      state: absent
-    when: not (rtmp is defined and rtmp|bool)
-    notify:
-      - reload nginx
-    tags:
-      - config
-      - install
+- name: restart/enable nginx-rtmp service
+  systemd:
+    name: nginx-rtmp
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+  when: nginx_rtmp_module.changed or nginx_rtmp_config.changed or nginx_rtmp_service.changed
+

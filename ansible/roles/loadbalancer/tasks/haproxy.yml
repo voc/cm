@@ -1,56 +1,64 @@
 ---
   - name: install haproxy package
-    apt: name=haproxy state=latest
-    tags: install
+    apt: name=haproxy state=present
 
-  - name: setup certboot-hook to aggregate haproxy combined cert-files
-    template: src=haproxy/certbot-renewal-hook.sh.j2
-              dest=/etc/letsencrypt/renewal-hooks/post/20-haproxy-{{ item }}
-              mode=0755 owner=root group=root
-    with_items:
+  - name: setup dehydrated hook to combine certs for haproxy
+    template:
+      src: haproxy/letsencrypt-hook.sh
+      dest: /etc/dehydrated/hook.d/25-haproxy.sh
+      mode: 0755
+    register: letsencrypt_hook
+
+  - name: run dehydrated hook once to combine certs for haproxy
+    command: /etc/dehydrated/hook.d/25-haproxy.sh deploy_cert "{{ item }}"
+    loop:
       - cdn.c3voc.de
       - streaming.media.ccc.de
+    when: letsencrypt_hook.changed
 
-  - name: run certbot-hook once to aggregate haproxy combined cert-files
-    shell: /etc/letsencrypt/renewal-hooks/post/20-haproxy-{{ item }}
+  - name: install http error files
+    copy:
+      src: "haproxy/error/{{ item }}"
+      dest: "/var/lib/haproxy/{{ item }}"
     with_items:
-      - cdn.c3voc.de
-      - streaming.media.ccc.de
-    changed_when: false
+      - 500.http
+      - 502.http
+      - 503.http
 
   # configure haproxy
   - name: create haproxy chroot directory
     file: dest=/usr/share/haproxy state=directory
           mode=0750 owner=haproxy group=haproxy
-    tags: install
 
   - name: copy usa ip list
     copy: src=usa_subnetworks.txt
           dest=/etc/haproxy/usa_subnetworks.txt
           mode=0755 owner=haproxy group=haproxy
-    tags:
-      - install
-      - config
 
   - name: copy dtag ip list
     copy: src=dtag_subnetworks.txt
           dest=/etc/haproxy/dtag_subnetworks.txt
           mode=0755 owner=haproxy group=haproxy
-    tags:
-      - install
-      - config
+
+  - name: install haproxy cors script
+    copy:
+      src: "haproxy/cors.lua"
+      dest: "/etc/haproxy/cors.lua"
+    register: haproxy_scripts
+    tags: haproxy_deploy
 
   - name: create haproxy config
     template: src=haproxy/haproxy.cfg.j2
               dest=/etc/haproxy/haproxy.cfg
               owner=root group=root mode=0640
               validate='haproxy -f %s -c'
-    notify: reload haproxy
-    tags:
-      - install
-      - config
-      - haproxy_deploy
+    register: haproxy_config
+    tags: haproxy_deploy
 
-  - name: autostart haproxy
-    service: name=haproxy state=started enabled=yes
-    tags: install
+  - name: reload and enable haproxy
+    service:
+      name: haproxy
+      state: reloaded
+      enabled: yes
+    when: haproxy_config.changed or haproxy_scripts.changed
+    tags: haproxy_deploy

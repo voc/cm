@@ -7,9 +7,11 @@ edge_relays
 live.ber.c3voc.de              nginx=yes icecast=yes
 
 [edge_relays]
-live.alb.c3voc.de              nginx=yes icecast=yes icecast_master_ip=195.54.164.164 nginx_stream_masters='["195.54.164.164"]'
-live.bn.c3voc.de               nginx=yes icecast=no nginx_stream_masters='["195.54.164.164"]'
-live.dus.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["195.54.164.164"]'
-live.fem.c3voc.de              nginx=yes icecast=yes icecast_master_ip=195.54.164.164 nginx_stream_masters='["195.54.164.164"]'
-live.self.c3voc.de             nginx=yes icecast=yes icecast_master_ip=195.54.164.164 nginx_stream_masters='["195.54.164.164"]'
-live2.alb.c3voc.de             nginx=yes icecast=yes icecast_master_ip=195.54.164.164 nginx_stream_masters='["195.54.164.164"]'
+live.bn.c3voc.de               nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
+live.dort.c3voc.de             nginx=yes icecast=yes icecast_master_ip=185.106.84.40 nginx_stream_masters='["185.106.84.40"]'
+live.dus.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
+live.fem.c3voc.de              nginx=yes icecast=yes icecast_master_ip=185.106.84.40 nginx_stream_masters='["185.106.84.40"]'
+live.self.c3voc.de             nginx=yes icecast=yes icecast_master_ip=185.106.84.40 nginx_stream_masters='["185.106.84.40"]'
+live2.alb.c3voc.de             nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
+relive.c3voc.de                nginx=yes icecast=no
+usa.alb.c3voc.de               nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'

@@ -2,8 +2,8 @@
   - hosts: loadbalancers
     roles:
       - { role: common, tags: ['common'] }
-      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}'}, tags: ['letsencrypt'] }
-      - { role: letsencrypt, vars: { 'domain': 'cdn.c3voc.de'}, tags: ['letsencrypt'] }
-      - { role: letsencrypt, vars: { 'domain': 'streaming.media.ccc.de'}, tags: ['letsencrypt'] }
-      - { role: nginx, tags: ['nginx'] }
+      - { role: monitoring-client, tags: ['monitoring'] }
+      - { role: letsencrypt, vars: { 'domain': '{{ ansible_fqdn }}', 'use_lednsapi': true}, tags: ['letsencrypt'] }
+      - { role: letsencrypt, vars: { 'domain': 'cdn.c3voc.de', 'use_lednsapi': true}, tags: ['letsencrypt'] }
+      - { role: letsencrypt, vars: { 'domain': 'streaming.media.ccc.de', 'use_lednsapi': true}, tags: ['letsencrypt'] }
       - { role: loadbalancer, tags: ['loadbalancer'] }

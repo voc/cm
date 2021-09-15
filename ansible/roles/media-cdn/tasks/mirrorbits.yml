@@ -1,6 +1,5 @@
 ---
 - group: name="mirrorbits" state=present
-
 - user: state=present
         name="mirrorbits"
         groups="mirrorbits"
@@ -12,15 +11,6 @@
 - file: path=/srv/mirrorbits/logs state=directory
         mode=0755 owner=mirrorbits group=root
 
-- git:
-    repo: https://github.com/voc/mirrorbits
-    dest: /srv/mirrorbits/mirrorbits
-  name: git clone mirrorbits repo
-
-- make:
-    chdir: /srv/mirrorbits/mirrorbits
-    target: install
-
 - template: src=mirrorbits.conf
             dest=/etc/mirrorbits.conf
             mode=0640 owner=mirrorbits group=root
@@ -29,5 +19,12 @@
       content="d /run/mirrorbits 0755 mirrorbits mirrorbits -"
       mode=0640 owner=root group=root
 
-- systemd: state=started enabled=yes name=mirrorbits.service
-- systemd: state=started enabled=yes name=redis.service
+- name: start and enable mirrorbits services
+  systemd:
+    name: "{{item}}.service"
+    state: started
+    enabled: yes
+  loop:
+    - mirrorbits
+    - redis
+    - mirrorbits-serverlist-api

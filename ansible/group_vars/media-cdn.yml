@@ -5,7 +5,12 @@ acmetool_responses_email: media@koeln.ccc.de
 # TODO is this still needed for mirrorbits?
 google_maps_api_key: ''
 
+group_domains:
+  - cdn-api.media.ccc.de
+  - static.media.ccc.de
+
 users:
+  - { name: 'voc', state: 'present' }
   - { name: 'andi', state: 'present' }
   - { name: 'danimo', state: 'present' }
   - { name: 'derchris', state: 'present' }
@@ -14,10 +19,10 @@ users:
   - { name: 'mazdermind', state: 'absent' }
   - { name: 'meise', state: 'absent' }
   - { name: 'mm', state: 'present' }
-  - { name: 'voc', state: 'present' }
   - { name: 'thee', state: 'present' }
   - { name: 'y0sh', state: 'present' }
-  - { name: 'necro', state: 'present' }
+  - { name: 'qb', state: 'present' }
+  - { name: 'lukas2511', state: 'present' }
 uploaders: "{{ lookup('keepass', 'ansible/media/uploaders.notes') | from_yaml }}"
 rsync_password: "{{ lookup('keepass', 'ansible/media/media_mirror_rsync.password') }}"
 rsync_secrets: "{{ lookup('keepass', 'ansible/media/rsync.notes') }}"

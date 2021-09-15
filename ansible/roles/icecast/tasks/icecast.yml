@@ -1,0 +1,56 @@
+---
+# Install package
+- name: install icecast streaming server
+  apt:
+    name: icecast2
+    state: latest
+
+# Create directories
+- name: create dump file directory for icecast
+  file:
+    dest: /srv/icecastdumps
+    state: directory
+    owner: icecast2
+    group: icecast
+    mode: 0755
+  when: icecast_push_master|bool
+
+# Configure
+- name: configure the icecast streaming server
+  template:
+    src: icecast.xml
+    dest: /etc/icecast2/icecast.xml
+    owner: icecast2
+    group: icecast
+    mode: 0660
+  register: icecast_conf
+
+- name: create custom override systemd unit for icecast
+  template:
+    src: icecast2.service
+    dest: /etc/systemd/system/icecast2.service
+    mode: 0644
+  register: icecast_service
+
+# Start service
+- name: enable icecast2 on boot
+  service:
+    name: icecast2.service
+    enabled: yes
+    state: started
+  when: icecast|bool
+
+- name: reload icecast2 service
+  systemd:
+    name: icecast2.service
+    state: reloaded
+    daemon_reload: yes
+  when: icecast|bool and icecast_conf.changed
+
+# Stop service
+- name: disable icecast2 on boot
+  service:
+    name: icecast2.service
+    enabled: no
+    state: stopped
+  when: not icecast|bool

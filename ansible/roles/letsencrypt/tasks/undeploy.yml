@@ -1,0 +1,28 @@
+---
+# remove old letsencrypt certbot files
+- name: remove unused letsencrypt directories
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/letsencrypt/accounts/
+    - /etc/letsencrypt/archive/
+    - /etc/letsencrypt/csr/
+    - /etc/letsencrypt/keys
+    - /etc/letsencrypt/renewal
+    - /etc/letsencrypt/renewal-hooks
+
+# remove ocsp stuff
+- name: remove ocsp update script
+  file:
+    path: "/usr/local/bin/update_{{ domain }}_ocsp_stapling.sh"
+    state: absent
+
+- name: remove ocsp update cronjob
+  cron:
+    name: "update_{{ domain }}_stapling.sh"
+    user: ocsp-updater
+    state: absent
+
+- name: remove ocsp-updater user
+  user: name=ocsp-updater group=ssl-cert state=absent

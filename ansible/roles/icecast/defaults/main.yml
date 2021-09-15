@@ -1,0 +1,25 @@
+# whether to start/enable icecast by default
+icecast: yes
+
+# whether to add additional mounts for stream push
+icecast_push_master: no
+
+# mounts for push master (requires icecast_push_master)
+icecast_additional_mounts: []
+
+# IP to fetch streams from
+icecast_master_ip: ""
+
+# whether to provision a distribution-icecast
+icedist: no
+
+# streams to fetch automatically (requires icedist)
+icedist_pull_streams: []
+
+# ansible credentials
+icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
+icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"
+icecast_source_password: "{{ lookup('keepass', 'ansible/icecast/source.password') }}"
+icecast_relay_password:  "{{ lookup('keepass', 'ansible/icecast/relay.password') }}"
+icecast_master_password: "{{ lookup('keepass', 'ansible/icecast/master.password') }}"
+icecast_admin_email:     "{{ lookup('keepass', 'ansible/icecast/admin.url') }}"

@@ -1,14 +1,19 @@
 ---
   - include: ../../../register/bin_path.yml
 
+  - include: upload.yml
+    tags: [nginx, upload, stream_master]
+    when: stream_master|bool
+
   - include: nginx.yml
     tags: nginx
-  - include: icecast.yml
-    tags: icecast
+
   - include: iptables.yml
     tags: iptables
+
   - include: sysctl.yml
     tags: sysctl
+
   - include: collectd.yml
     tags: [collectd, monitoring]
 
@@ -16,17 +21,13 @@
     when: relive_master|bool
     tags: relive
 
-  - include: icedist.yml
-    when: stream_master|bool
-    tags: icedist
-
   - include: fanout.yml
     when: stream_master|bool
     tags: fanout
 
   - include: stream_master.yml
     when: stream_master|bool
-    tags: stream_api
+    tags: [stream_master, stream_api]
 
   - include: register_relay.yml
     tags: register_relay

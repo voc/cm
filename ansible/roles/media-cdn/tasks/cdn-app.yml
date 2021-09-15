@@ -1,10 +1,25 @@
-- group: name="cdn-app" state=present
 
+- group: name=ftp
+- user: state=present
+        name="ftp"
+        groups="ftp"
+        create_home="no"
+        shell="/bin/false"
+
+- group: name="cdn-app" state=present
 - user: state=present
         name="cdn-app"
         home="/home/uploaders/cdn-app"
         groups="cdn-app,uploaders"
         shell="/bin/sh"
+
+- name: create /srv/ftp directory
+  file:
+    path: /srv/ftp
+    state: directory
+    mode: 0755
+    owner: cdn-app
+    group: root
 
 - name: change cdn-app home folder owner
   file:
@@ -28,3 +43,5 @@
     opts: bind,nofail
     state: mounted
     fstype: none
+
+#TODO: authorized keys for cdn-app user

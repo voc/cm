@@ -30,8 +30,8 @@ HISTFILE=~/.zsh/zshhist
 HISTSIZE=9000
 SAVEHIST=900000000
 
-if [ ! -d .zsh ]; then
-  mkdir .zsh
+if [ ! -d ~/.zsh ]; then
+  mkdir ~/.zsh
 fi
 
 # General options

@@ -2,10 +2,6 @@
 fastcgi_cache_path /srv/nginx/cache/streaming_fcgi
                    levels=1:2 keys_zone=streaming_fcgi:32m inactive=60m;
 
-upstream php {
-  server unix:/run/php/php7.3-fpm.sock;
-}
-
 map $upstream_http_content_length $flag_cache_empty {
   default 0;
   0       1;
