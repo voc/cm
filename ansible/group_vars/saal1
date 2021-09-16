@@ -72,11 +72,7 @@ voctomix_sources:
     stream_names:
         - original
     audiostream:
-      # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
-      0: 0
-  
-      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
-      1: 1
+        0: "0+1"
 #  -
 #    # Duo Port 4
 #    name: cam2
