@@ -14,7 +14,7 @@ voctomix_stream_suppress_audio_tracks: [1]
 voctomix_inverted_axis: true
 voctomix_shifted_sbs:   true
 
-voctomix_vaapi: true
+voctomix_vaapi: false
 
 # für JVC:
 #    video_connection: SDI
