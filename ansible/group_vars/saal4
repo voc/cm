@@ -66,7 +66,8 @@ voctomix_sources:
     devicenumber: 1
     video_connection: SDI
     video_mode: "1080i50"
-    deinterlace: yes
+    deinterlace: "yes"
+    scan: interlaced
     volume: 1.0
     audiostream:
       # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
