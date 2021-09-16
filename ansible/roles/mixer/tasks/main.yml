@@ -9,6 +9,7 @@
   - include: voctomix2.yml
     tags: encodermode
   - include: irssi.yml
+    tags: irssi
   - include: lenovo-throttling-fix.yml
     tags: throttling
   - include: rc.local.yml
