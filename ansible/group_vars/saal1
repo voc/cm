@@ -16,6 +16,8 @@ voctomix_shifted_sbs:   true
 
 voctomix_vaapi: false
 
+mixer_highdpi: yes
+
 # für JVC:
 #    video_connection: SDI
 #    video_mode: "1080p25"

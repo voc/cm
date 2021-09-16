@@ -7,6 +7,8 @@ room_fahrplan_name: fnord
 # reboot encoder after changing
 encodermode: hd-voctomix2
 
+mixer_highdpi: yes
+
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
 voctomix_audiostreams: 2
 voctomix_stream_suppress_audio_tracks: [1]

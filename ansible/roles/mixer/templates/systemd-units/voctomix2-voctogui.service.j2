@@ -13,8 +13,10 @@ User=mixer
 Group=mixer
 
 Environment="DISPLAY=:0"
+{% if mixer_highdpi is defined %}
+Environment="GDK_SCALE=2"
+{% endif %}
 ;Environment="GTK_THEME=Adwaita:dark"
-;Environment="GDK_SCALE=2"
 
 [Install]
 WantedBy = multi-user.target
