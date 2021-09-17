@@ -90,21 +90,22 @@ voctomix_sources:
     volume: 1.0
     stream_names:
         - original
-#  -
-#    # Mini Recorder links
-#    name: cam3
-#    type: decklink-internal
-#    devicenumber: 4
-#    video_connection: SDI
-#    video_mode: "1080p25"
+  -
+    # Mini Recorder links
+    name: islides
+    type: decklink-internal
+    devicenumber: 4
+    video_connection: SDI
+    video_mode: "1080i60"
+    volume: 0.0
   -
     # Mini Recorder rechts
-    name: slides
-    type: decklink-internal
-    devicenumber: 5
-    video_connection: HDMI
-    video_mode: "1080p24"
-    volume: 0.0
+#    name: slides
+#    type: decklink-internal
+#    devicenumber: 5
+#    video_connection: HDMI
+#    video_mode: "1080p24"
+#    volume: 0.0
 
 blinder_audio:
     original: "0+1"
