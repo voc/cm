@@ -92,11 +92,13 @@ voctomix_sources:
         - original
   -
     # Mini Recorder links
-    name: islides
+    name: slides
     type: decklink-internal
     devicenumber: 4
     video_connection: SDI
     video_mode: "1080i60"
+    deinterlace: "yes"
+    scan: interlaced
     volume: 0.0
     # Mini Recorder rechts
 #    name: slides
