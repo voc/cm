@@ -7,7 +7,7 @@
 
   - include: lxc.yml
     tags: lxc
-    when: ansible_virtualization_type is defined and ansible_virtualization_type == 'lxc'
+    when: ansible_virtualization_type is defined and ansible_virtualization_type == 'lxc' and 'proxmox' not in group_names
 
   - include: resolv.yml
     tags: [resolv, dns]
@@ -16,9 +16,11 @@
 
   - include: apt_proxy.yml
     tags: apt
+    when: "'proxmox' not in group_names"
 
   - include: repos.yml
     tags: [apt, repos]
+    when: "'proxmox' not in group_names"
 
   - include: packages.yml
     tags: packages
@@ -44,6 +46,7 @@
   - include: ssh_known_hosts.yml
     when: "'proxmox' not in group_names"
   - include: ssl.yml
+    tags: ssl
 
   # deploy users
   - include: user.yml

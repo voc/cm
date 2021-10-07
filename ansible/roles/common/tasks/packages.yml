@@ -39,7 +39,6 @@
       - libdbi1
       - libdbd-sqlite3
       - ethtool
-      - ifenslave-2.6
       - apt-transport-https
       - irqbalance
       - mosquitto-clients
