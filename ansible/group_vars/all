@@ -4,8 +4,8 @@ ansible_python_interpreter: /usr/bin/python3
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XYZ
-  name: XYZ
+  acronym: jhrn2021
+  name: Jugend Hackt Rhein-Neckar
   slogan: ""
   formats:
     hd: 'yes'
