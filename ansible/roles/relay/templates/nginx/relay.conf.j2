@@ -53,11 +53,6 @@ upstream mediastatic {
 }
 {% endif %}
 
-upstream icecast {
-  server localhost:8000;
-  keepalive 1000;
-}
-
 # relay vhost
 server {
   server_name _;
@@ -271,15 +266,6 @@ server {
       add_header X-Cache     "$upstream_cache_status edge";
       add_header Access-Control-Expose-Headers "X-Host";
       add_header X-Host "{{ vars.ansible_fqdn }}";
-  }
-  # Icecast direkt proxy path for https streaming
-  #
-  location ~* ^/.*\.(webm|mp3|opus)$ {
-      proxy_redirect            off;
-      proxy_set_header          X-Host $http_host;
-      proxy_set_header          X-Forwarded-For $remote_addr;
-      proxy_buffering           off;
-      proxy_pass                http://icecast;
   }
 
   # proxy cache static media files
