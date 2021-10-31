@@ -1,0 +1,7 @@
+- name: deploy icecast firewall rules
+  template:
+    dest: /etc/nftables/icecast.nft
+    src: icecast.nft
+    mode: 0644
+    validate: "/usr/sbin/nft -cf %s"
+  notify: reload firewall

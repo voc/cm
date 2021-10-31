@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: firewall
+    tags: [firewall, nftables, iptables]

@@ -1,4 +1,7 @@
 ---
+  - include: firewall.yml
+    tags: [firewall, iptables, nftables]
+
   - include: php.yml
     tags: php
     when: php|bool
@@ -20,4 +23,3 @@
   - include: monitoring.yml
     tags: monitoring
     when: not no_monitoring|bool
-

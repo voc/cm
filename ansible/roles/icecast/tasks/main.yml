@@ -4,3 +4,6 @@
 - include: icedist.yml
   tags: icedist
   when: icedist|bool
+
+- include: firewall.yml
+  tags: [firewall, nftables, iptables]
