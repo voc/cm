@@ -274,11 +274,14 @@ firewall:
     - port: any
       proto: icmp
       host: any
+    - port: fragment
+      proto: any
+      host: any
 
-    # Allow tcp/443 from any host with BOTH laptop and home group
+    # Allow consul traffic
     - port: 8300-8302
       proto: tcp
       groups: [consul]
-    - port: 8300-8302
+    - port: 8301-8302
       proto: udp
       groups: [consul]

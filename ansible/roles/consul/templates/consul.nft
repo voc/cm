@@ -2,10 +2,10 @@
 # allow access only through nebula interface
 {% if consul_server|bool %}
 # server specific
-add rule inet filter input iif nebula udp dport {8301, 8302} accept comment "consul";
-add rule inet filter input iif nebula tcp dport {8300, 8301, 8302} accept comment "consul";
+add rule inet filter input iifname nebula udp dport {8301, 8302} accept comment "consul";
+add rule inet filter input iifname nebula tcp dport {8300, 8301, 8302} accept comment "consul";
 {% else %}
 # all agents
-add rule inet filter input iif nebula udp dport 8301 accept comment "consul";
-add rule inet filter input iif nebula tcp dport 8301 accept comment "consul";
+add rule inet filter input iifname nebula udp dport 8301 accept comment "consul";
+add rule inet filter input iifname nebula tcp dport 8301 accept comment "consul";
 {% endif %}
