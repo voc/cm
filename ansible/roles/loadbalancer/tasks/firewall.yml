@@ -1,30 +1,13 @@
 ---
-  - name: restore rc-local
-    copy:
-      content: |
-        #!/bin/sh -e
-        #
-        # rc.local
-        #
-        # This script is executed at the end of each multiuser runlevel.
-        # Make sure that the script will "exit 0" on success or any other
-        # value on error.
-        #
-        # In order to enable or disable this script just change the execution
-        # bits.
-        #
-        # By default this script does nothing.
-
-        [ -d /etc/boot.d ] && run-parts /etc/boot.d
-
-        exit 0
-      dest: /etc/rc.local
-      mode: 0755
-
-  - name: deploy loadbalancer firewall rules
-    template:
-      dest: /etc/nftables/loadbalancer.nft
-      src: loadbalancer.nft
-      mode: 0644
-      validate: "/usr/sbin/nft -cf %s"
-    notify: reload firewall
+  # - name: deploy loadbalancer firewall rules
+  #   template:
+  #     dest: /etc/nftables/loadbalancer.nft
+  #     src: loadbalancer.nft
+  #     mode: 0644
+  #     validate: "/usr/sbin/nft -cf %s"
+  #   notify: reload firewall
+- name: remove loadbalancer firewall
+  file:
+    path: /etc/nftables/loadbalancer.nft
+    statE: absent
+  notify: reload firewall
