@@ -1,0 +1,26 @@
+---
+- name: install nftables
+  apt:
+    name: nftables
+    state: present
+
+- name: create nftables directory
+  file:
+    path: /etc/nftables
+    state: directory
+    mode: 0750
+
+- name: deploy default firewall
+  template:
+    src: rules.nft
+    dest: /etc/nftables.conf
+    mode: 0640
+  notify:
+    - start firewall
+    - reload firewall
+
+# - name: enable nftables
+#   service:
+#     name: nftables
+#     enabled: yes
+#     state: started

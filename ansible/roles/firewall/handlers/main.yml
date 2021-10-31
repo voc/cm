@@ -1,0 +1,11 @@
+---
+- name: start firewall
+  service:
+    name: nftables
+    enabled: yes
+    state: started
+
+- name: reload firewall
+  service:
+    name: nftables
+    state: reloaded
