@@ -1,0 +1,49 @@
+---
+- name: add hashicorp apt key
+  ansible.builtin.apt_key:
+    id: E8A032E094D8EB4EA189D270DA418C88A3219F7B
+    url:  https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: add hashicorp apt repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+  register: consul_repo
+
+- name: install consul
+  apt:
+    name: consul
+    state: latest
+    update_cache: yes
+  when: consul_repo.changed
+  register: consul_pkg
+
+- name: deploy consul config
+  template:
+    src: consul.hcl
+    dest: /etc/consul.d/consul.hcl
+    mode: 0640
+    validate: "/usr/bin/consul validate -config-format=hcl %s"
+  register: consul_conf
+
+- name: deploy consul firewall config
+  template:
+    src: consul.nft
+    dest: /etc/nftables/consul.nft
+    mode: 0640
+    validate: "/usr/sbin/nft -cf %s"
+  tags: [iptables, nftables, firewall]
+  notify: reload firewall
+
+- name: start/enable consul
+  service:
+    name: consul
+    enabled: yes
+    state: started
+
+- name: reload consul
+  service:
+    name: consul
+    state: reloaded
+  when: consul_pkg.changed or consul_conf.changed
