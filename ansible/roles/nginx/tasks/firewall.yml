@@ -4,5 +4,5 @@
     dest: /etc/nftables/nginx.nft
     src: nginx.nft
     mode: 0644
-    validate: "/usr/sbin/nft -cf %s"
+    # validate: "/usr/sbin/nft -cf %s"
   notify: reload firewall
