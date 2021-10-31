@@ -1,5 +1,9 @@
 ---
 dependencies:
+  - role: firewall
+    tags: [firewall, iptables, nftables]
+  - role: consul
+    tags: [consul]
   - role: nginx
     tags: nginx
     vars:

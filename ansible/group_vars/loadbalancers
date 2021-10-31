@@ -25,6 +25,9 @@ nginx_ips_allow_stats: [
 # serve dtag clients via extra-relays
 haproxy_dtag_extrawurst: false
 
+nebula_lighthouse: true
+consul_server: true
+
 # DO NOT EDIT MANUALLY BELOW THAT LINE
 
 lb_3rdparty_relays: {
