@@ -1,0 +1,4 @@
+#!/usr/sbin/nft -f
+{% if nebula_lighthouse|bool %}
+add rule inet filter input udp dport 4242 accept comment "nebula";
+{% endif %}

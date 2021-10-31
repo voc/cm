@@ -1,0 +1,10 @@
+---
+nebula_version: 1.4.0
+# add sha256 prefix for get_url
+nebula_archive_checksum: "sha256:d1ef37ca4d676f00df0ec83911cc2d9f1e70edc70651589210f9e97c68891b9b"
+# no sha256 prefix for stat
+nebula_bin_checksum: "20273582eaa741142b485346efdc15226326daa83e8c39ca8b58cbe0b7f3f178"
+nebula_lighthouse: false
+nebula_ca_cert: "{{ lookup('keepass', 'ansible/nebula/CA.attr_cert') }}"
+nebula_lighthouses: []
+nebula_hosts_map: []

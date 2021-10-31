@@ -1,0 +1,64 @@
+---
+- name: check existing binary
+  stat:
+    path: /usr/local/bin/nebula
+    checksum_algorithm: sha256
+  register: nebula_stat
+
+- name: get nebula binary
+  get_url:
+    dest: /tmp/nebula.tar.gz
+    url: "https://github.com/slackhq/nebula/releases/download/v{{ nebula_version }}/nebula-linux-amd64.tar.gz"
+    checksum: "{{ nebula_archive_checksum }}"
+  when: not nebula_stat.stat.checksum is defined or nebula_stat.stat.checksum != nebula_bin_checksum
+
+- name: unarchive binary
+  unarchive:
+    remote_src: yes
+    src: /tmp/nebula.tar.gz
+    dest: /usr/local/bin/
+    include: [nebula]
+    list_files: true
+    mode: 0755
+  when: not nebula_stat.stat.checksum is defined or nebula_stat.stat.checksum != nebula_bin_checksum
+  register: nebula_bin
+
+- name: create nebula config dir
+  file:
+    path: /etc/nebula
+    state: directory
+    mode: 0750
+
+- name: deploy nebula config
+  template:
+    src: config.yml.j2
+    dest: /etc/nebula/config.yml
+    mode: 0640
+  register: nebula_conf
+
+- name: deploy nebula firewall config
+  template:
+    src: nebula.nft
+    dest: /etc/nftables/nebula.nft
+    mode: 0640
+  notify: reload firewall
+
+- name: create nebula unitfile
+  template:
+    src: nebula.service
+    dest: /etc/systemd/system/nebula.service
+    mode: 0644
+  register: nebula_unit
+
+- name: restart nebula service
+  systemd:
+    name: nebula
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+  when: (nebula_bin is defined and nebula_bin.changed) or nebula_conf.changed or nebula_unit.changed
+  register: nebula_service
+
+- name: rerun facts do detect nebula interface
+  setup:
+  when: nebula_service.changed
