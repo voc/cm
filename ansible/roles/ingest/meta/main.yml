@@ -13,3 +13,5 @@ dependencies:
     vars:
       icecast_push_master: yes
     tags: icecast
+  - role: consul
+    tags: [consul]

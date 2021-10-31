@@ -1,19 +1,11 @@
 #MANAGED BY ANSIBLE
-
-{% set apps = ["stream"] %}
-{% if rtmp_auth_relay|bool -%}
-    {{- apps.append("relay") }}
-{% endif %}
-
 [Unit]
 Description = RTMP-Auth Backend
-StartLimitIntervalSec = 0
 
 [Service]
-ExecStart = /opt/voc/rtmp-auth -store /opt/stream-api/store.db -app {{ apps|join(",") }} -subpath /backend
+ExecStart = /opt/voc/rtmp-auth -config /etc/rtmp-auth/config.toml
 User = stream-api
 Restart = always
-RestartSec = 3s
 
 [Install]
 WantedBy = multi-user.target

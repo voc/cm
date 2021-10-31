@@ -19,6 +19,18 @@
     group: www-data
     mode: 0640
 
+- name: create rtmp-auth config directory
+  file:
+    path: /etc/rtmp-auth/
+    state: directory
+    mode: 0755
+
+- name: deploy rtmp-auth config
+  template:
+    src: rtmp-auth.toml
+    dest: /etc/rtmp-auth/config.toml
+    mode: 0644
+
 - name: add rtmp-auth service file
   template:
     src: rtmp-auth.service.j2
