@@ -34,6 +34,7 @@
     src: config.yml.j2
     dest: /etc/nebula/config.yml
     mode: 0640
+    validate: "/usr/local/bin/nebula -config %s -test"
   register: nebula_conf
 
 - name: deploy nebula firewall config
@@ -41,6 +42,8 @@
     src: nebula.nft
     dest: /etc/nftables/nebula.nft
     mode: 0640
+    validate: "/usr/sbin/nft -cf %s"
+  tags: [iptables, nftables, firewall]
   notify: reload firewall
 
 - name: create nebula unitfile

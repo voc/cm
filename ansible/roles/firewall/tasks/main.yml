@@ -15,12 +15,7 @@
     src: rules.nft
     dest: /etc/nftables.conf
     mode: 0640
+    validate: "/usr/sbin/nft -cf %s"
   notify:
     - start firewall
     - reload firewall
-
-# - name: enable nftables
-#   service:
-#     name: nftables
-#     enabled: yes
-#     state: started
