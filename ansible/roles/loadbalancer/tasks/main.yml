@@ -15,8 +15,5 @@
   - include: sysctl.yml
     tags: sysctl
 
-  - include: firewall.yml
-    tags: [iptables, nftables, firewall]
-
   - include: monitoring.yml
     tags: monitoring
