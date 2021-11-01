@@ -6,7 +6,7 @@
     when: stream_master|bool
 
   - include: nginx.yml
-    tags: nginx
+    tags: [nginx, nginx-vhost]
 
   - include: iptables.yml
     tags: [firewall, iptables, nftables]
