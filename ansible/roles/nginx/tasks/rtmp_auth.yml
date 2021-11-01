@@ -30,6 +30,7 @@
     src: rtmp-auth.toml
     dest: /etc/rtmp-auth/config.toml
     mode: 0644
+  register: auth_config
 
 - name: add rtmp-auth service file
   template:
@@ -43,4 +44,4 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
-  when: rtmp_auth_service.changed
+  when: auth_config.changed or rtmp_auth_service.changed

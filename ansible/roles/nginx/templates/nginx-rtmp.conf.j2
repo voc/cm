@@ -62,6 +62,10 @@ rtmp {
       on_publish_done http://127.0.0.1:8080/unpublish;
       {% endif %}
 
+      # drop idle streams
+      drop_idle_publisher 10s;
+      idle_streams off;
+
       # forward streams to local icecast
       exec ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000
         -f live_flv -i rtmp://127.0.0.1/$app/$name
@@ -83,6 +87,10 @@ rtmp {
       on_publish http://127.0.0.1:8080/publish;
       on_publish_done http://127.0.0.1:8080/unpublish;
       {% endif %}
+
+      # drop idle streams
+      drop_idle_publisher 10s;
+      idle_streams off;
     }
   }
 }
