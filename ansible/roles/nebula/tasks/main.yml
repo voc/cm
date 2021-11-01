@@ -59,8 +59,14 @@
     daemon_reload: yes
     enabled: yes
     state: restarted
-  when: (nebula_bin is defined and nebula_bin.changed) or nebula_conf.changed or nebula_unit.changed
+  when: (nebula_bin is defined and nebula_bin.changed) or nebula_unit.changed
   register: nebula_service
+
+- name: reload nebula
+  service:
+    name: nebula
+    state: reloaded
+  when: nebula_conf.changed
 
 - name: rerun facts do detect nebula interface
   setup:
