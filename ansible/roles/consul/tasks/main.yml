@@ -24,6 +24,7 @@
     src: consul.hcl
     dest: /etc/consul.d/consul.hcl
     mode: 0640
+    owner: consul
     validate: "/usr/bin/consul validate -config-format=hcl %s"
   register: consul_conf
 
@@ -36,6 +37,24 @@
   tags: [iptables, nftables, firewall]
   notify: reload firewall
 
+- name: deploy consul telegraf config
+  template:
+    src: telegraf.conf
+    dest: /etc/telegraf/telegraf.d/consul.conf
+    mode: 0640
+    group: telegraf
+  tags: [monitoring, telegraf]
+  notify: reload telegraf
+  when: consul_server|bool
+
+- name: remove consul telegraf config
+  file:
+    path: /etc/telegraf/telegraf.d/consul.conf
+    state: absent
+  tags: [monitoring, telegraf]
+  notify: reload telegraf
+  when: not consul_server|bool
+
 - name: start/enable consul
   service:
     name: consul
@@ -47,3 +66,4 @@
     name: consul
     state: reloaded
   when: consul_pkg.changed or consul_conf.changed
+  tags: consul-config

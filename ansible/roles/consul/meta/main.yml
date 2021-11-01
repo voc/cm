@@ -2,3 +2,4 @@
 dependencies:
   - role: nebula
     tags: [nebula]
+  - role: monitoring-client

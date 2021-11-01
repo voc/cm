@@ -1,2 +1,6 @@
 ---
+# use consul in server mode
 consul_server: false
+
+# enable consul webui on http port
+consul_ui: false
