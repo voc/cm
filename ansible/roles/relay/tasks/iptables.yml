@@ -1,11 +1,22 @@
 ---
-  - name: create rc.local
-    template:
-      src: rc.local/rc.local.j2
+  - name: restore rc-local
+    copy:
+      content: |
+        #!/bin/sh -e
+        #
+        # rc.local
+        #
+        # This script is executed at the end of each multiuser runlevel.
+        # Make sure that the script will "exit 0" on success or any other
+        # value on error.
+        #
+        # In order to enable or disable this script just change the execution
+        # bits.
+        #
+        # By default this script does nothing.
+
+        [ -d /etc/boot.d ] && run-parts /etc/boot.d
+
+        exit 0
       dest: /etc/rc.local
       mode: 0755
-    register: rc_local
-
-  - name: reload rc.local
-    command: /etc/rc.local
-    when: rc_local.changed
