@@ -7,8 +7,8 @@
       mode: 0640
     register: telegraf_config
 
-  - name: restart telegraf
+  - name: reload telegraf
     service:
       name: telegraf
-      state: restarted
+      state: reloaded
     when: telegraf_config.changed
