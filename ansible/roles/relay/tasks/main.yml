@@ -9,7 +9,7 @@
     tags: nginx
 
   - include: iptables.yml
-    tags: iptables
+    tags: [firewall, iptables, nftables]
 
   - include: sysctl.yml
     tags: sysctl
