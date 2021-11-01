@@ -16,6 +16,9 @@ icedist: no
 # streams to fetch automatically (requires icedist)
 icedist_pull_streams: []
 
+# whether to expose icedist on the firewall
+icedist_public: no
+
 # ansible credentials
 icecast_admin_user:      "{{ lookup('keepass', 'ansible/icecast/admin.username') }}"
 icecast_admin_password:  "{{ lookup('keepass', 'ansible/icecast/admin.password') }}"

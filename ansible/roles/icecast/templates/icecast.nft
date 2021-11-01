@@ -1,2 +1,5 @@
 #!/usr/sbin/nft -f
+{% if icedist_public|bool %}
+add rule inet filter input tcp sport 1024-65535 tcp dport 7999 accept comment "icedist";
+{% endif %}
 add rule inet filter input tcp sport 1024-65535 tcp dport 8000 accept comment "icecast";
