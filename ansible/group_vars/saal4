@@ -77,19 +77,19 @@ voctomix_sources:
         - original
     audiostream:
         0: "0+1"
-  -
-    # Duo Port 4
-    name: cam2
-    type: decklink-internal
-    devicenumber: 0
-    video_connection: SDI
-    video_mode: "1080i50"
-    volume: 1.0
-    deinterlace: "yes"
-    scan: interlaced
-    volume: 1.0
-    stream_names:
-        - original
+#  -
+#    # Duo Port 4
+#    name: cam2
+#    type: decklink-internal
+#    devicenumber: 0
+#    video_connection: SDI
+#    video_mode: "1080i50"
+#    volume: 1.0
+#    deinterlace: "yes"
+#    scan: interlaced
+#    volume: 1.0
+#    stream_names:
+#        - original
   -
     # Mini Recorder links
     name: slides
