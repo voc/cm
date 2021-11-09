@@ -7,9 +7,9 @@ pki:
   ca: |
     {{ nebula_ca_cert | indent(4) }}
   cert: |
-    {{ lookup('keepass', 'ansible/nebula/' + ansible_fqdn + '.attr_cert') | indent(4) }}
+    {{ lookup('keepass', 'ansible/nebula/' + inventory_hostname + '.attr_cert') | indent(4) }}
   key: |
-    {{ lookup('keepass', 'ansible/nebula/' + ansible_fqdn + '.attr_key') | indent(4) }}
+    {{ lookup('keepass', 'ansible/nebula/' + inventory_hostname + '.attr_key') | indent(4) }}
   # blocklist is a list of certificate fingerprints that we will refuse to talk to
   #blocklist:
   #  - c99d4e650533b92061b09918e838a5a0a6aaee21eed1d12fd937682865936c72
