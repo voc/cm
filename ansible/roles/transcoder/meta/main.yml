@@ -1,0 +1,6 @@
+---
+dependencies:
+  - role: firewall
+    tags: [firewall, iptables, nftables]
+  - role: consul
+    tags: [consul]
