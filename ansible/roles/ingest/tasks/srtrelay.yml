@@ -1,0 +1,28 @@
+---
+- name: install srtrelay
+  apt:
+    name: srtrelay
+    state: latest
+  register: srtrelay_package
+
+- name: deploy srtrelay config
+  template:
+    src: srtrelay.toml.j2
+    dest: /etc/srtrelay/config.toml
+    mode: 0644
+  register: srtrelay_conf
+
+- name: deploy srtrelay service
+  template:
+    src: srtrelay.service.j2
+    dest: /etc/systemd/system/srtrelay.service
+    mode: 0644
+  register: srtrelay_service
+
+- name: restart srtrelay
+  systemd:
+    name: srtrelay
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+  when: srtrelay_package.changed or srtrelay_conf.changed or srtrelay_service.changed
