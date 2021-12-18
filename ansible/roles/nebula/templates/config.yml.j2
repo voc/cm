@@ -278,6 +278,11 @@ firewall:
       proto: any
       host: any
 
+    # Allow SSH traffic
+    - port: 22
+      proto: tcp
+      host: any
+
     # Allow consul traffic
     - port: 8300-8302
       proto: tcp
