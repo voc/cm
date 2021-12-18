@@ -2,7 +2,6 @@
  - name: install additional packages for transcoder role
    apt:
     name:
-      - icecast2
       - vainfo
       - i965-va-driver-shaders
       - python3-dbus

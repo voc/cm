@@ -1,0 +1,14 @@
+#MANAGED BY ANSIBLE
+
+[Unit]
+Description = Transcode Stream %I
+Requires = transcode@%i.target
+After = transcode@%i.target
+
+[Service]
+Type = simple
+EnvironmentFile = /opt/transcoder2/config/%i
+ExecStart = /opt/transcoder2/scripts/transcode.py --restart
+Restart = always
+RestartSec = 5s
+StartLimitInterval = 0

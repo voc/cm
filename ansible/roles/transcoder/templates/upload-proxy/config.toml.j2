@@ -1,0 +1,7 @@
+{% for address in transcoder_upload_proxy_sinks %}
+[[sinks]]
+address = "{{ address }}"
+username = "{{ lookup('keepass', 'ansible/stream-api/upload.username') }}"
+password = "{{ lookup('keepass', 'ansible/stream-api/upload.password') }}"
+
+{% endfor %}

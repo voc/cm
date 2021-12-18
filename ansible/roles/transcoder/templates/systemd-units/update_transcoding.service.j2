@@ -1,9 +1,0 @@
-#MANAGED BY ANSIBLE
-
-[Unit]
-Description = Update transcoding tasks
-
-[Service]
-Type = simple
-ExecStart = /opt/transcoder/scripts/update_transcoding.py -u {{ stream_api.user }} -p {{ stream_api.password }} {{ stream_api.url }} {{ inventory_hostname }}
-StartLimitInterval = 0

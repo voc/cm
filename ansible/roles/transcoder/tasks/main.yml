@@ -9,5 +9,8 @@
  #   loop_control:
  #     loop_var: transcoder_stream
 
- - include: transcoding.yml
-   tags: transcoding
+ - include: cleanup.yml
+   tags: cleanup
+
+ - include: stream-api.yml
+   tags: stream-api

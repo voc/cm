@@ -1,0 +1,28 @@
+---
+  - name: remove old transcoder scripts
+    file: path=/opt/transcoder/scripts state=absent
+
+  - name: disable transcoding update timer
+    systemd:
+      name: update_transcoding.timer
+      state: stopped
+      enabled: no
+      daemon_reload: no
+    changed_when: false
+    failed_when: false
+
+  - name: find old systemd files
+    find:
+      paths: /etc/systemd/system
+      recurse: no
+      patterns: "^((transcode_[^@]*.)|update_transcoding)(target|service|wants|timer)$"
+      use_regex: yes
+      file_type: any
+    register: old_systemd_transcoding_files
+
+  - name: delete old systemd files
+    file:
+      path: "{{ item.path }}"
+      state: absent
+    loop: "{{ old_systemd_transcoding_files.files }}"
+

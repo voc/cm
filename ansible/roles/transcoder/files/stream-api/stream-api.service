@@ -1,0 +1,9 @@
+[Unit]
+Description=Stream-API
+
+[Service]
+ExecStart=/opt/stream-api/stream-api -debug -config /etc/stream-api/config.yml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

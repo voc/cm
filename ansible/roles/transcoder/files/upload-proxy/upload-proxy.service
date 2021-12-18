@@ -1,0 +1,9 @@
+[Unit]
+Description=Upload-Proxy
+
+[Service]
+ExecStart=/opt/upload-proxy/upload-proxy -config /etc/upload-proxy/config.toml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
