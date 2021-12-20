@@ -2,6 +2,7 @@
  - hosts: transcoders
    roles:
      - { role: common, tags: ['common'] }
+     - { role: consul, tags: ['consul'] }
      - { role: monitoring-client, tags: ['monitoring'] }
      - { role: transcoder, tags: ['transcoder'] }
    vars:

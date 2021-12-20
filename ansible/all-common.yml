@@ -1,0 +1,6 @@
+---
+ - hosts: all
+   roles:
+     - { role: common }
+   vars:
+     ssh_allow_voc_password_login: 'yes'
