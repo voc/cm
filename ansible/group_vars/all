@@ -56,11 +56,6 @@ user_voc_password: "{{ lookup('keepass', 'ansible/logins/voc.password') }}"
 
 system:
   type: pc
-  kernel_package: linux-image-4.19.0-6-amd64
-#  kernel_urls:
-#    - http://pkg.c3voc.de/pool/main/l/linux/linux-image-4.13.12-041312-generic_4.13.12-041312.201711080535_amd64.deb
-#    - http://pkg.c3voc.de/pool/main/l/linux/linux-headers-4.13.12-041312_4.13.12-041312.201711080535_all.deb
-#    - http://pkg.c3voc.de/pool/main/l/linux/linux-headers-4.13.12-041312-generic_4.13.12-041312.201711080535_amd64.deb
 
 use_lan_dns: true
 

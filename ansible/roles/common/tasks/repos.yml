@@ -50,17 +50,21 @@
  # add repos
  #
 
- - name: setup the debian backports repo for buster
-   apt_repository: repo="deb http://ftp.de.debian.org/debian buster-backports main contrib non-free" update_cache=false
+ - name: setup the debian backports repo
+   apt_repository: repo="deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free" update_cache=false
    when: system.type == 'pc'
 
- - name: ensure that the non-free suite is enabled for buster
-   apt_repository: repo="deb http://ftp.de.debian.org/debian buster main contrib non-free" update_cache=false
+ - name: ensure that the non-free suite is enabled
+   apt_repository: repo="deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }} main contrib non-free" update_cache=false
    when: system.type == 'pc'
 
  - name: ensure that security updates enabled for buster
    apt_repository: repo="deb http://security.debian.org/ buster/updates main contrib non-free" update_cache=false
-   when: system.type == 'pc'
+   when: system.type == 'pc' and ansible_distribution_release == 'buster'
+
+ - name: ensure that security updates enabled for bullseye
+   apt_repository: repo="deb http://security.debian.org/ bullseye-security main contrib non-free" update_cache=false
+   when: system.type == 'pc' and ansible_distribution_release == 'bullseye'
 
  - name: ensure that the debian keyrings are present
    apt: name={{ packages|flatten(levels=1) }} state=present update_cache=yes
@@ -70,8 +74,8 @@
       - debian-archive-keyring
    when: system.type == 'pc'
 
- - name: setup the VOC debian repo for buster
-   apt_repository: repo="deb http://pkg.c3voc.de/ buster main" state=present
+ - name: setup the VOC debian repo
+   apt_repository: repo="deb http://pkg.c3voc.de/ {{ ansible_distribution_release }} main" state=present
    when: "system.type == 'pc' and 'proxmox' not in group_names"
 
 #
