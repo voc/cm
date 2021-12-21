@@ -72,6 +72,8 @@ encoder-irun-3.lan.c3voc.de transcoder_capacity=3 ansible_host=192.168.200.4 ans
 encoder-irun-4.lan.c3voc.de transcoder_capacity=3 ansible_host=192.168.200.5 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
 encoder-irun-5.lan.c3voc.de transcoder_capacity=3 ansible_host=192.168.200.6 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
 
+encoder-lks-1.lan.c3voc.de transcoder_capacity=3 ansible_host=193.56.133.29
+
 #minion1.lan.c3voc.de transcoder_capacity=1
 #minion4.lan.c3voc.de transcoder_capacity=1
 #minion6.lan.c3voc.de transcoder_capacity=1
