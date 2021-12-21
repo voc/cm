@@ -8,7 +8,7 @@
 
 - name: Install transcoder scripts
   git:
-    repo: https://github.com/iSchluff/transcoding
+    repo: https://github.com/voc/transcoding
     dest: /opt/transcoder2/scripts
     update: yes
 
