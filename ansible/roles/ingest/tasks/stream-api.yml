@@ -1,0 +1,15 @@
+---
+- name: deploy stream-api config
+  template:
+    src: stream-api.yml.j2
+    dest: /etc/stream-api/config.yml
+    mode: 0644
+  register: api_conf
+
+- name: restart stream-api
+  systemd:
+    name: stream-api
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+  when: api_conf.changed
