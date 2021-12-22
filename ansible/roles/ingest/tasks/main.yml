@@ -1,3 +1,9 @@
 ---
-  - include: nginx.yml
-    tags: nginx
+- include: nginx.yml
+  tags: nginx
+
+- include: srtrelay.yml
+  tags: srtrelay
+
+- include: stream-api.yml
+  tags: stream-api
