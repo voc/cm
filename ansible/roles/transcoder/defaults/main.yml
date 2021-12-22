@@ -1,2 +1,3 @@
+---
 transcoder_sink: localhost:8080
-
+transcoder_capacity: 4
