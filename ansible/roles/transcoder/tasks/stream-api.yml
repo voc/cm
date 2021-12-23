@@ -16,10 +16,10 @@
   template: src=transcoder/config.py.j2 dest=/opt/transcoder2/scripts/config.py
 
 - name: Install systemd template service
-  copy: src=transcode.service dest=/etc/systemd/system/transcode@.service mode=0755
+  copy: src=transcode.service dest=/etc/systemd/system/transcode@.service mode=0644
 
 - name: Install systemd template target
-  copy: src=transcode.target dest=/etc/systemd/system/transcode@.target mode=0755
+  copy: src=transcode.target dest=/etc/systemd/system/transcode@.target mode=0644
 
 - name: Force systemd reload
   systemd: daemon_reload=yes
@@ -38,7 +38,7 @@
   template: src=upload-proxy/config.toml.j2 dest=/etc/upload-proxy/config.toml
 
 - name: Install systemd unit for upload-proxy
-  copy: src=upload-proxy/upload-proxy.service dest=/etc/systemd/system/upload-proxy.service mode=0755
+  copy: src=upload-proxy/upload-proxy.service dest=/etc/systemd/system/upload-proxy.service mode=0644
 
 - name: Enable and start systemd unit for upload-proxy
   systemd: name=upload-proxy enabled=yes state=started daemon_reload=yes
@@ -57,8 +57,18 @@
   template: src=stream-api/config.yml.j2 dest=/etc/stream-api/config.yml
 
 - name: Install systemd unit for stream-api
-  copy: src=stream-api/stream-api.service dest=/etc/systemd/system/stream-api.service mode=0755
+  copy: src=stream-api/stream-api.service dest=/etc/systemd/system/stream-api.service mode=0644
 
 - name: Enable and start systemd unit for stream-api
   systemd: name=stream-api enabled=yes state=started daemon_reload=yes
+
+# fixer script
+- name: Install transcode service state fixer script
+  copy: src=fix-transcode-services.py dest=/opt/fix-transcode-services.py mode=0755
+
+- name: Install systemd unit for transcode service state fixer script
+  copy: src=fix-transcode-services.service dest=/etc/systemd/system/fix-transcode-services.service mode=0644
+
+- name: Enable and start systemd unit for transcode service state fixer script
+  systemd: name=fix-transcode-services enabled=yes state=started daemon_reload=yes
 

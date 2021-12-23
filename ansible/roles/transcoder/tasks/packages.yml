@@ -6,4 +6,6 @@
       - i965-va-driver-shaders
       - python3-dbus
       - python3-paho-mqtt
+      - python3-consul
+      - python3-pystemd
     state: latest
