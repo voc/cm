@@ -1,5 +1,6 @@
 ---
 
 use_lednsapi: false
+lednsapi_secret_name: "{{ ansible_fqdn }}"
 group_domains: []
 host_domains: []
