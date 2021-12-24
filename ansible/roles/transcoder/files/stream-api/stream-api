@@ -31,7 +31,7 @@ def transcodings_start(stream):
     transcoder_config = "stream_key=%s\n" % stream
     transcoder_config += "format=%s\n" % streaminfo["format"]
     transcoder_config += "output=direct\n"
-    transcoder_config += "type=all\n"
+    transcoder_config += "type=h264-only\n"
     transcoder_config += "transcoding_source=%s\n" % streaminfo["source"]
     transcoder_config += "transcoding_sink=%s\n" % config["sink"]
 
@@ -91,6 +91,10 @@ def fix_services_state():
         if stream not in all_streams:
             log("Stream %s is no longer available, stopping transcoding" % stream)
             transcodings_stop(stream)
+            try:
+                cons.kv.delete("stream/%s/transcoder" % stream)
+            except:
+                pass
 
 def mainloop():
     global config
@@ -107,7 +111,10 @@ def mainloop():
         for stream in my_streams[config["capacity"]:]:
             log("Transcoder is over capacity, stopping transcoding for stream %s" % stream)
             transcodings_stop(stream)
-            cons.kv.delete("stream/%s/transcoder" % stream)
+            try:
+                cons.kv.delete("stream/%s/transcoder" % stream)
+            except:
+                pass
             my_streams.remove(stream)
 
     # claim streams if not already at capacity
@@ -137,6 +144,11 @@ def mainloop():
 
             if len(my_streams) >= config["capacity"]:
                 break
+
+    transcoder_info = {}
+    transcoder_info["time"] = time.time()
+    transcoder_info["streams"] = len(my_streams)
+    cons.kv.put("transcoders/%s" % HOSTNAME, json.dumps(transcoder_info).encode())
 
     fix_services_state()
 

@@ -11,9 +11,11 @@
     repo: https://github.com/voc/transcoding
     dest: /opt/transcoder2/scripts
     update: yes
+  tags: transcoder-scripts
 
 - name: Configure transcoder scripts
   template: src=transcoder/config.py.j2 dest=/opt/transcoder2/scripts/config.py
+  tags: transcoder-scripts
 
 - name: Install systemd template service
   copy: src=transcode.service dest=/etc/systemd/system/transcode@.service mode=0644
