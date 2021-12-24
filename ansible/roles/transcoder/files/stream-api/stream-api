@@ -122,9 +122,10 @@ def mainloop():
         for stream, transcoder in get_all_streams().items():
             if transcoder: continue
 
-            # wait a random delay (100ms to 5.1s) and check for transcoder again
-            time.sleep((100+random.randrange(5000))/1000)
-            if cons.kv.get("stream/%s/transcoder" % stream)[1]: continue
+            # wait a random delay (500ms to 5.5s) and check for transcoder again
+            for i in range(5):
+                time.sleep((100+random.randrange(1000))/1000)
+                if cons.kv.get("stream/%s/transcoder" % stream)[1]: continue
 
             log("Found unclaimed stream %s, trying to claim..." % stream)
             cons.kv.put("stream/%s/transcoder" % stream, HOSTNAME.encode())
@@ -136,6 +137,7 @@ def mainloop():
                 print("Another transcoder seems to have claimed %s" % stream)
                 continue
 
+            log("I won %s!" % stream)
             my_streams.append(stream)
             transcodings_start(stream)
 
