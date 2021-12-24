@@ -14,4 +14,3 @@
    tags: cleanup
 
  - include: stream-api.yml
-   tags: stream-api

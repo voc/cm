@@ -49,26 +49,29 @@
 
 - name: Install stream-api binary
   copy: src="stream-api/stream-api" dest="/opt/stream-api/stream-api" mode=0755
+  tags: stream-api
 
 - name: Create config directory for stream-api
   file: path=/etc/stream-api state=directory mode=0755
 
 - name: Configure stream-api
   template: src=stream-api/config.yml.j2 dest=/etc/stream-api/config.yml
+  tags: stream-api
 
 - name: Install systemd unit for stream-api
   copy: src=stream-api/stream-api.service dest=/etc/systemd/system/stream-api.service mode=0644
 
 - name: Enable and start systemd unit for stream-api
-  systemd: name=stream-api enabled=yes state=started daemon_reload=yes
+  systemd: name=stream-api enabled=yes state=restarted daemon_reload=yes
+  tags: stream-api
 
 # fixer script
-- name: Install transcode service state fixer script
-  copy: src=fix-transcode-services.py dest=/opt/fix-transcode-services.py mode=0755
+- name: Remove old transcode service state fixer script
+  file: path=/opt/fix-transcode-services.py state=absent
 
-- name: Install systemd unit for transcode service state fixer script
-  copy: src=fix-transcode-services.service dest=/etc/systemd/system/fix-transcode-services.service mode=0644
+- name: Remove systemd unit for old transcode service state fixer script
+  file: path=/etc/systemd/system/fix-transcode-services.service state=absent
 
-- name: Enable and start systemd unit for transcode service state fixer script
-  systemd: name=fix-transcode-services enabled=yes state=started daemon_reload=yes
+- name: Disable and stop systemd unit for old transcode service state fixer script
+  shell: systemctl disable --now fix-transcode-services.service
 

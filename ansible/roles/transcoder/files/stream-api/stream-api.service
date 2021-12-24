@@ -2,7 +2,8 @@
 Description=Stream-API
 
 [Service]
-ExecStart=/opt/stream-api/stream-api -debug -config /etc/stream-api/config.yml
+ExecStart=/opt/stream-api/stream-api
+Environment=PYTHON_UNBUFFERED=1
 Restart=always
 
 [Install]
