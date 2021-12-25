@@ -24,6 +24,7 @@
     group: icecast
     mode: 0660
   register: icecast_conf
+  tags: icecast-config
 
 - name: create custom override systemd unit for icecast
   template:
