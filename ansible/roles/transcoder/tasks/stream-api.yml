@@ -19,13 +19,3 @@
 - name: Enable and start systemd unit for stream-api
   systemd: name=stream-api enabled=yes state=restarted daemon_reload=yes
   tags: stream-api
-
-# fixer script
-- name: Remove old transcode service state fixer script
-  file: path=/opt/fix-transcode-services.py state=absent
-
-- name: Remove systemd unit for old transcode service state fixer script
-  file: path=/etc/systemd/system/fix-transcode-services.service state=absent
-
-- name: Disable and stop systemd unit for old transcode service state fixer script
-  shell: systemctl disable --now fix-transcode-services.service

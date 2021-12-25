@@ -155,6 +155,7 @@ def mainloop():
     transcoder_info = {}
     transcoder_info["time"] = time.time()
     transcoder_info["streams"] = len(my_streams)
+    transcoder_info["capacity"] = config["capacity"]
     cons.kv.put("transcoders/%s" % HOSTNAME, json.dumps(transcoder_info).encode())
 
     fix_services_state()
