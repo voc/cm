@@ -13,4 +13,11 @@
  - include: cleanup.yml
    tags: cleanup
 
+ - include: transcoder-scripts.yml
+   tags: transcoder-scripts
+
+ - include: upload-proxy.yml
+   tags: upload-proxy
+
  - include: stream-api.yml
+   tags: stream-api

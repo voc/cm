@@ -1,0 +1,21 @@
+# upload-proxy
+- name: Create directory for upload-proxy binary
+  file: path=/opt/upload-proxy state=directory mode=0755
+
+- name: Install upload-proxy binary
+  copy: src="upload-proxy/upload-proxy" dest="/opt/upload-proxy/upload-proxy" mode=0755
+
+- name: Create config directory for upload-proxy
+  file: path=/etc/upload-proxy state=directory mode=0755
+
+- name: Configure upload-proxy
+  template: src=upload-proxy/config.toml.j2 dest=/etc/upload-proxy/config.toml
+  notify: restart upload-proxy
+
+- name: Install systemd unit for upload-proxy
+  copy: src=upload-proxy/upload-proxy.service dest=/etc/systemd/system/upload-proxy.service mode=0644
+
+- name: Enable and start systemd unit for upload-proxy
+  systemd: name=upload-proxy enabled=yes state=started daemon_reload=yes
+
+

@@ -14,7 +14,7 @@ fi
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function get_relay_json() {
-  pass=$(KEEPASS_PW=${KEEPASS_PW} python ${BASEDIR}/lookup_plugins/keepass.py ansible/stream-api/relay-register.password)
+  pass=$(KEEPASS_PW=${KEEPASS_PW} python3 ${BASEDIR}/lookup_plugins/keepass.py ansible/stream-api/relay-register.password)
   wget -O ${BASEDIR}/relays.json https://voc:${pass}@c3voc.de/relayregister/relays
 }
 

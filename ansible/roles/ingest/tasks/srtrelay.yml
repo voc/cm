@@ -5,6 +5,9 @@
     state: latest
   register: srtrelay_package
 
+- name: create config directory for srtrelay
+  file: state=directory path=/etc/srtrelay mode=0755
+
 - name: deploy srtrelay config
   template:
     src: srtrelay.toml.j2
@@ -26,3 +29,11 @@
     enabled: yes
     daemon_reload: yes
   when: srtrelay_package.changed or srtrelay_conf.changed or srtrelay_service.changed
+
+- name: deploy srtrelay firewall rules
+  template:
+    dest: /etc/nftables/srtrelay.nft
+    src: srtrelay.nft
+    mode: 0644
+    # validate: "/usr/sbin/nft -cf %s"
+  notify: reload firewall

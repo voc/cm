@@ -1,0 +1,2 @@
+---
+  - include: ../../../handlers/systemd.yml

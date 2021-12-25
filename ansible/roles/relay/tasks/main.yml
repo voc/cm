@@ -11,8 +11,8 @@
   - include: iptables.yml
     tags: [firewall, iptables, nftables]
 
-  - include: sysctl.yml
-    tags: sysctl
+#  - include: sysctl.yml
+#    tags: sysctl
 
   - include: collectd.yml
     tags: [collectd, monitoring]
@@ -25,9 +25,9 @@
     when: stream_master|bool
     tags: fanout
 
-  - include: stream_master.yml
+  - include: upload-server.yml
     when: stream_master|bool
-    tags: [stream_master, stream_api]
+    tags: upload-server
 
   - include: register_relay.yml
     tags: register_relay

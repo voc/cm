@@ -1,0 +1,16 @@
+[http]
+# List of RTMP apps
+applications = ["stream", "relay"]
+
+# Prefix
+prefix = "/backend"
+
+# Allow insecure
+#insecure = false
+
+[store]
+backend = "consul"
+
+[store.file]
+# Configure file storage path relative to working directory
+#path = "store.db"

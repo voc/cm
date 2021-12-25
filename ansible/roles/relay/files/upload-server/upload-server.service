@@ -1,0 +1,9 @@
+[Unit]
+Description=Upload-Server
+
+[Service]
+ExecStart=/opt/upload-server/upload-server -config /etc/upload-server/config.toml -path /srv/nginx
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

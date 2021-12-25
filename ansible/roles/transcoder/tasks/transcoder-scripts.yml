@@ -1,0 +1,28 @@
+# transcoder
+- name: Create parent directory for transcoder scripts
+  file: path=/opt/transcoder2 state=directory mode=0755
+
+- name: Create config directory for transcoder scripts
+  file: path=/opt/transcoder2/config state=directory mode=0755
+
+- name: Install transcoder scripts
+  git:
+    repo: https://github.com/voc/transcoding
+    dest: /opt/transcoder2/scripts
+    update: yes
+  tags: transcoder-scripts
+
+- name: Configure transcoder scripts
+  template: src=transcoder/config.py.j2 dest=/opt/transcoder2/scripts/config.py
+  tags: transcoder-scripts
+
+- name: Install systemd template service
+  copy: src=transcode.service dest=/etc/systemd/system/transcode@.service mode=0644
+
+- name: Install systemd template target
+  copy: src=transcode.target dest=/etc/systemd/system/transcode@.target mode=0644
+
+- name: Force systemd reload
+  systemd: daemon_reload=yes
+
+

@@ -1,0 +1,7 @@
+[global]
+allowedDirs = ["/hls", "/dash", "/thumbnail"]
+
+[[auth]]
+user = "{{ lookup('keepass', 'ansible/stream-api/upload.username') }}"
+pass = "{{ lookup('keepass', 'ansible/stream-api/upload.password') }}"
+match = "/*"

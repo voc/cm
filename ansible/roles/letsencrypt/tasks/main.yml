@@ -7,7 +7,7 @@
   - include: letsencrypt_fake.yml
     when: letsencrypt_fake is defined
 
-  - include: monitoring.yml
-    tags:
-      - monitoring
-      - check_system
+#  - include: monitoring.yml
+#    tags:
+#      - monitoring
+#      - check_system

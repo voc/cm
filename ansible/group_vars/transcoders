@@ -3,3 +3,4 @@ transcoder_lounge_push_endpoint: live.ber.c3voc.de:7999
 
 transcoder_upload_proxy_sinks:
 - "https://live.ber.c3voc.de/upload"
+- "https://live.nurluefter.de/upload"

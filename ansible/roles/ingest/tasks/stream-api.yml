@@ -1,15 +1,33 @@
 ---
-- name: deploy stream-api config
-  template:
-    src: stream-api.yml.j2
-    dest: /etc/stream-api/config.yml
-    mode: 0644
+# stream-api
+- name: Create directory for stream-api binary
+  file: path=/opt/stream-api state=directory mode=0755
+
+- name: Install stream-api binary
+  copy: src="stream-api/stream-api" dest="/opt/stream-api/stream-api" mode=0755
+  tags: stream-api
+
+- name: Create config directory for stream-api
+  file: path=/etc/stream-api state=directory mode=0755
+
+- name: Configure stream-api
+  template: src=stream-api/config.yml.j2 dest=/etc/stream-api/config.yml
+  tags: stream-api
   register: api_conf
 
-- name: restart stream-api
+- name: Install systemd unit for stream-api
+  copy: src=stream-api/stream-api.service dest=/etc/systemd/system/stream-api.service mode=0644
+
+- name: Enable and start systemd unit for stream-api
+  systemd: name=stream-api enabled=yes state=restarted daemon_reload=yes
+  tags: stream-api
+  when: not api_conf.changed
+
+- name: Restart stream-api
   systemd:
     name: stream-api
     state: restarted
     enabled: yes
     daemon_reload: yes
   when: api_conf.changed
+

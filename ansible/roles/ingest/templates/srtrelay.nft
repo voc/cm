@@ -1,0 +1,2 @@
+#!/usr/sbin/nft -f
+add rule inet filter input udp dport 1337 accept
