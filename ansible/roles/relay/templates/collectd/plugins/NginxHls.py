@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, os, re, urllib, datetime, itertools, subprocess, collections, logging, urllib2
+import sys, os, re, urllib.request, urllib.parse, urllib.error, datetime, itertools, subprocess, collections, logging, urllib.request, urllib.error, urllib.parse
 from os.path import basename, dirname, splitext
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 logging.basicConfig(level=logging.ERROR, format='%(levelname)8s %(name)s: %(message)s')
 
@@ -110,9 +110,9 @@ def count_hls_viewers():
 				# ensure unescaped path
 				path = dirname(urlparse(path).path)
 
-                                # avoid dual counting for multi-quality hls
-                                if len(path.split("/")) == 2:
-                                    continue
+				# avoid dual counting for multi-quality hls
+				if len(path.split("/")) == 2:
+					continue
 
 				# create set
 				if not path in counters:
@@ -132,7 +132,7 @@ try:
 	import collectd
 
 	def read(data=None):
-		for stream, viewer in count_hls_viewers().items():
+		for stream, viewer in list(count_hls_viewers().items()):
 			vl = collectd.Values(plugin='hls', type='users', type_instance=stream, values=[viewer])
 			vl.dispatch()
 
@@ -140,8 +140,8 @@ try:
 
 except ImportError:
 	print('collectd module not found, assuming test-run')
-	viewers = count_hls_viewers().items()
+	viewers = list(count_hls_viewers().items())
 
 	print('detected the following streams:')
 	for stream, viewer in viewers:
-		print('  %s: %u' % (stream, viewer))
+		print(('  %s: %u' % (stream, viewer)))
