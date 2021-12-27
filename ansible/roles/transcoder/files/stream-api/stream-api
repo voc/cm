@@ -106,6 +106,12 @@ def mainloop():
         if transcoder == HOSTNAME:
             my_streams.append(stream)
 
+    for stream in my_streams:
+        if cons.kv.get("stream/%s/restart" % stream)[1]:
+            transcodings_stop(stream)
+            transcodings_start(stream)
+            cons.kv.delete("stream/%s/restart" % stream)
+
     # fix over-capacity (this should not happen during normal operation)
     if len(my_streams) > config["capacity"]:
         for stream in my_streams[config["capacity"]:]:
