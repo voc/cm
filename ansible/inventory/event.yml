@@ -176,7 +176,9 @@ ns2.c3voc.de monitoring_role=dns
 lb.dus.c3voc.de
 lb.alb.c3voc.de
 lb.dort.c3voc.de
-rc3-edge-1.lan.c3voc.de ansible_host=voc-edge-1.fra-nitrado.infra.rc3.world lednsapi_secret_name=rc3-edge
+rc3-edge-1.lan.c3voc.de ansible_host=voc-edge-1.fra-nitrado.infra.rc3.world lednsapi_secret_name=rc3-edge nebula_lighthouse=false
+rc3-edge-2.lan.c3voc.de ansible_host=voc-edge-1.fra-jana.infra.rc3.world lednsapi_secret_name=rc3-edge nebula_lighthouse=false
+lb.wob.c3voc.de lednsapi_secret_name=rc3-edge
 
 [minions]
 minion1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion1.password') }}"
