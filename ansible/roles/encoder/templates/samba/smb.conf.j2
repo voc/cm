@@ -240,6 +240,9 @@ printcap name = /dev/null
 # public shares, not just authenticated ones
    usershare allow guests = yes
 
+# Allow unallowed characters in filenames (e.g. colons)
+   fruit:encoding = native
+
 #======================= Share Definitions =======================
 
 [homes]
@@ -338,6 +341,7 @@ printcap name = /dev/null
    path = /video
    guest ok = yes
    fake oplocks = yes
+   vfs objects = catia fruit
 
 [fuse]
    read only = no
@@ -346,6 +350,7 @@ printcap name = /dev/null
    guest ok = yes
    fake oplocks = yes
    force user = root
+   vfs objects = catia fruit
 
 [tmp]
    read only = no
@@ -354,6 +359,7 @@ printcap name = /dev/null
    guest ok = yes
    fake oplocks = yes
    force user = root
+   vfs objects = catia fruit
 
 [encoded]
    read only = no
@@ -362,3 +368,4 @@ printcap name = /dev/null
    guest ok = yes
    fake oplocks = yes
    force user = root
+   vfs objects = catia fruit
