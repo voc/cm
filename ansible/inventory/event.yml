@@ -59,20 +59,11 @@ tweety.lan.c3voc.de transcoder_capacity=2 ansible_host=tweety.alb.c3voc.de
 daffy.lan.c3voc.de transcoder_capacity=4 ansible_host=daffy.alb.c3voc.de
 sylvester.lan.c3voc.de transcoder_capacity=4 ansible_host=sylvester.alb.c3voc.de
 
-encoder-fsl-1.lan.c3voc.de transcoder_capacity=2 ansible_host=10.0.0.2 ansible_ssh_common_args="-o ProxyJump=root@hetzner-07.fslab.de"
-encoder-fsl-2.lan.c3voc.de transcoder_capacity=2 ansible_host=10.0.0.3 ansible_ssh_common_args="-o ProxyJump=root@hetzner-07.fslab.de"
-encoder-fsl-3.lan.c3voc.de transcoder_capacity=2 ansible_host=10.0.0.4 ansible_ssh_common_args="-o ProxyJump=root@hetzner-03.fslab.de"
-encoder-fsl-4.lan.c3voc.de transcoder_capacity=2 ansible_host=10.0.0.5 ansible_ssh_common_args="-o ProxyJump=root@hetzner-03.fslab.de"
-encoder-fsl-5.lan.c3voc.de transcoder_capacity=2 ansible_host=10.0.0.6 ansible_ssh_common_args="-o ProxyJump=root@hetzner-06.fslab.de"
-encoder-fsl-6.lan.c3voc.de transcoder_capacity=2 ansible_host=10.0.0.7 ansible_ssh_common_args="-o ProxyJump=root@hetzner-06.fslab.de"
-
 encoder-irun-1.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.2 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
 encoder-irun-2.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.3 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
 encoder-irun-3.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.4 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
 encoder-irun-4.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.5 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
 encoder-irun-5.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.6 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
-
-encoder-lks-1.lan.c3voc.de transcoder_capacity=2 ansible_host=193.56.133.29
 
 #minion1.lan.c3voc.de transcoder_capacity=1
 #minion4.lan.c3voc.de transcoder_capacity=1
@@ -176,9 +167,6 @@ ns2.c3voc.de monitoring_role=dns
 lb.dus.c3voc.de
 lb.alb.c3voc.de
 lb.dort.c3voc.de
-rc3-edge-1.lan.c3voc.de ansible_host=voc-edge-1.fra-nitrado.infra.rc3.world lednsapi_secret_name=rc3-edge nebula_lighthouse=false
-rc3-edge-2.lan.c3voc.de ansible_host=voc-edge-1.fra-jana.infra.rc3.world lednsapi_secret_name=rc3-edge nebula_lighthouse=false
-lb.wob.c3voc.de lednsapi_secret_name=rc3-edge
 
 [minions]
 minion1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/minion1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/minion1.password') }}"
@@ -198,13 +186,6 @@ blade1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade
 blade2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade2.password') }}"
 blade3.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade3.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade3.password') }}"
 blade4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade4.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade4.password') }}"
-
-transcoder1.vpn.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.password') }}"
-transcoder2.vpn.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.password') }}"
-transcoder3.vpn.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.password') }}"
-transcoder4.vpn.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.password') }}"
-transcoder5.vpn.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.password') }}"
-transcoder6.vpn.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/fraunhofer-transcoders.password') }}"
 
 [tracker]
 tracker.c3voc.de

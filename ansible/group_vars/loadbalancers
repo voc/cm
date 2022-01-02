@@ -35,8 +35,6 @@ lb_3rdparty_relays: {
 }
 
 lb_dash_relays: {
-  "ber1.wob.c3voc.de": 75,
-  "fra1.wob.c3voc.de": 75,
   "live.ams.c3voc.de": 50,
   "live.bn.c3voc.de": 50,
   "live.dort.c3voc.de": 75,
@@ -45,7 +43,6 @@ lb_dash_relays: {
   "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
   "usa.alb.c3voc.de": 75,
-  "wob1.wob.c3voc.de": 75,
 }
 
 lb_dtag_relays: {
@@ -56,13 +53,10 @@ lb_dtag_relays: {
 }
 
 lb_icecast_relays: {
-  "ber1.wob.c3voc.de": 75,
-  "fra1.wob.c3voc.de": 75,
   "live.ams.c3voc.de": 50,
   "live.dort.c3voc.de": 75,
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
-  "wob1.wob.c3voc.de": 75,
 }
 
 lb_local_relays: {
