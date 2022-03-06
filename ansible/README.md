@@ -38,6 +38,11 @@ Basic `ansible` call to deploy new config to a set of hosts on an event.
   ./ansible-playbook-keepass site.yml -l saal1
 ```
 
+Run ad-hoc commands
+```
+  ansible -i event/ transcoders -m shell -a "echo hello world"
+```
+
 ## Keepass Password
 
 The Keepass password will be automatically derived using your GPG-keyring or MacOS Keychain when available. It is recommended that you set up one of these options if you need to do a lot of playbook runs.
