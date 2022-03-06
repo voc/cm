@@ -8,4 +8,3 @@
     when: nginx is defined and nginx|bool
 
   - include: ../../../handlers/systemd.yml
-  - include: ../../../roles/letsencrypt/handlers/main.yml domain={{ ansible_fqdn }}
