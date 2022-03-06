@@ -59,12 +59,6 @@ tweety.lan.c3voc.de transcoder_capacity=2 ansible_host=tweety.alb.c3voc.de
 daffy.lan.c3voc.de transcoder_capacity=4 ansible_host=daffy.alb.c3voc.de
 sylvester.lan.c3voc.de transcoder_capacity=4 ansible_host=sylvester.alb.c3voc.de
 
-encoder-irun-1.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.2 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
-encoder-irun-2.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.3 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
-encoder-irun-3.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.4 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
-encoder-irun-4.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.5 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
-encoder-irun-5.lan.c3voc.de transcoder_capacity=2 transcoder_sink=192.168.200.1:8080 ansible_host=192.168.200.6 ansible_ssh_common_args="-o ProxyJump=root@45.92.49.49"
-
 #minion1.lan.c3voc.de transcoder_capacity=1
 #minion4.lan.c3voc.de transcoder_capacity=1
 #minion6.lan.c3voc.de transcoder_capacity=1
