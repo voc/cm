@@ -1,9 +1,12 @@
 # upload-proxy
-- name: Create directory for upload-proxy binary
-  file: path=/opt/upload-proxy state=directory mode=0755
+- name: install stream-api
+  apt:
+    name:
+      - stream-api
+    state: latest
 
-- name: Install upload-proxy binary
-  copy: src="upload-proxy/upload-proxy" dest="/opt/upload-proxy/upload-proxy" mode=0755
+- name: Remove old upload-proxy binary
+  file: path=/opt/upload-proxy state=absent
 
 - name: Create config directory for upload-proxy
   file: path=/etc/upload-proxy state=directory mode=0755
@@ -14,6 +17,7 @@
 
 - name: Install systemd unit for upload-proxy
   copy: src=upload-proxy/upload-proxy.service dest=/etc/systemd/system/upload-proxy.service mode=0644
+  notify: restart upload-proxy
 
 - name: Enable and start systemd unit for upload-proxy
   systemd: name=upload-proxy enabled=yes state=started daemon_reload=yes
