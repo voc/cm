@@ -18,11 +18,11 @@
     owner: www-data
     group: www-data
 
-- name: create /srv/www/media.ccc.de/media firectory
-  file:
-    dest: /srv/www/media.ccc.de/media
-    state: directory
-    recurse: yes
-    owner: cdn-app
-    group: cdn-app
-
+#- name: create /srv/www/media.ccc.de/media firectory
+#  file:
+#    dest: /srv/www/media.ccc.de/media
+#    state: directory
+#    recurse: yes
+#    owner: cdn-app
+#    group: cdn-app
+#
