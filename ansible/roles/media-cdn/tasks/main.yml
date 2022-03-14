@@ -17,11 +17,6 @@
   - import_tasks: mirrorbits.yml
     tags: mirrorbits
 
-  - import_tasks: uploaders.yml
-    tags:
-      - users
-      - uploaders
-
   - import_tasks: cdn-app.yml
     tags:
       - users

@@ -23,7 +23,7 @@ users:
   - { name: 'y0sh', state: 'present' }
   - { name: 'qb', state: 'present' }
   - { name: 'lukas2511', state: 'present' }
-uploaders: "{{ lookup('keepass', 'ansible/media/uploaders.notes') | from_yaml }}"
+uploaders: []
 rsync_password: "{{ lookup('keepass', 'ansible/media/media_mirror_rsync.password') }}"
 rsync_secrets: "{{ lookup('keepass', 'ansible/media/rsync.notes') }}"
 rsync_secrets_public: "{{ lookup('keepass', 'ansible/media/rsync_public.notes') }}"
