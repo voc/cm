@@ -34,13 +34,13 @@
     tags: ntp
     when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
 
-  - include: acpi_undeploy.yml
-    when: system.type == 'pc' and ansible_virtualization_role == 'guest'
-    tags: acpi
-
-  - include: acpi.yml
-    when: system.type == 'pc' and ansible_virtualization_role != 'guest'
-    tags: acpi
+#  - include: acpi_undeploy.yml
+#    when: system.type == 'pc' and ansible_virtualization_role == 'guest'
+#    tags: acpi
+#
+#  - include: acpi.yml
+#    when: system.type == 'pc' and ansible_virtualization_role != 'guest'
+#    tags: acpi
 
   - include: molly-guard.yml
   - include: ssh_known_hosts.yml
