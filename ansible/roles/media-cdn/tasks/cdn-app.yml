@@ -32,7 +32,7 @@
   mount:
     path: /home/uploaders/cdn-app/cdn.media.ccc.de
     src: /srv/ftp
-    opts: bind,nofail
+    opts: bind,nofail,x-system.after=zfs-mount.service
     state: mounted
     fstype: none
 
@@ -40,7 +40,7 @@
   mount:
     path: /home/uploaders/cdn-app/static.media.ccc.de
     src: /srv/www/media.ccc.de/media
-    opts: bind,nofail
+    opts: bind,nofail,x-system.after=zfs-mount.service
     state: mounted
     fstype: none
 

@@ -1,5 +1,5 @@
 ---
 
 host_domains:
-  - cdn.media.ccc.de ftp.media.ccc.de berlin-ak.cdn.media.ccc.de berlin-ak.ftp.media.ccc.de
+  - cdn.media.ccc.de ftp.media.ccc.de berlin-ak.cdn.media.ccc.de berlin-ak.ftp.media.ccc.de static.media.ccc.de
   #TODO: add ftp.ccc.de

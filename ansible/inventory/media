@@ -2,8 +2,8 @@
 koeln.media.ccc.de
 
 [media-cdn]
-berlin-ak.media.ccc.de domain=berlin-ak.cdn.media.ccc.de ansible_user=root
-koeln.media.ccc.de ansible_user=root
+berlin-ak.media.ccc.de domain=berlin-ak.media.ccc.de ansible_user=root
+koeln.media.ccc.de domain=koeln.media.ccc.de ansible_user=root
 
 [media-mirror]
 dortmund.media.ccc.de domain=dortmund.media.ccc.de ansible_user=voc ansible_become=true

@@ -1,13 +1,7 @@
 ---
-acmetool_setup: 0
-acmetool_responses_email: "mm@koeln.ccc.de"
-acmetool_responses_method: webroot
-acmetool_want:
-  - |
-    koeln.cdn.media.ccc.de
-    cdn.media.ccc.de ftp.ccc.de
-    cdn-api.media.ccc.de
-    static.media.ccc.de koeln.media.ccc.de
-    upload.media.ccc.de
+host_domains:
+  - cdn.media.ccc.de ftp.media.ccc.de koeln.cdn.media.ccc.de koeln.ftp.media.ccc.de static.media.ccc.de
+  #TODO: add ftp.ccc.de
+
 cdn_node: yes
 go_version: 1.13.8
