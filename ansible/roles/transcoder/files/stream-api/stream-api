@@ -35,6 +35,12 @@ def transcodings_start(stream):
     transcoder_config += "transcoding_source=%s\n" % streaminfo["source"]
     transcoder_config += "transcoding_sink=%s\n" % config["sink"]
 
+    try:
+        passthrough_mode = cons.kv.get("stream/%s/passthrough" % stream)[1]["Value"].decode()
+    except:
+        passthrough_mode = "no"
+    transcoder_config += "passthrough=%s\n" % passthrough_mode
+
     transcoder_config_path = config["configPath"] + "/" + stream
     open(transcoder_config_path, "w").write(transcoder_config)
 
