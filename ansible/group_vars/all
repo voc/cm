@@ -4,8 +4,8 @@ ansible_python_interpreter: /usr/bin/python3
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: XYZ
-  name: XYZ
+  acronym: glt22
+  name: "Grazer Linuxtage 2022"
   slogan: ""
   formats:
     hd: 'yes'

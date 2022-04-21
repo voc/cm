@@ -1,21 +1,18 @@
 ---
 room_number: 4
-room_fahrplan_name: fnord
+room_fahrplan_name: HS i1
 
 # hd-direct, hd-voctomix, hd-voctomix2
 # deploy with --tags encodermode
 # reboot encoder after changing
 encodermode: hd-voctomix2
 
-mixer_highdpi: yes
-
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
-voctomix_audiostreams: 2
+voctomix_audiostreams: 1
 voctomix_stream_suppress_audio_tracks: []
 
 voctomix_inverted_axis: True
-
-voctomix_inverted_axis: True
+mixer_highdpi: yes
 
 # für JVC:
 #    video_connection: SDI
@@ -70,13 +67,13 @@ voctomix_sources:
     video_connection: SDI
     video_mode: "1080i50"
     deinterlace: assume-progressive
+    scan: psf
     volume: 1.0
     audiostream:
-      # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
-      0: 0
-  
-      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
-      1: 1
+      0: 0+1
+    stream_names:
+      0: original
+
   -
     # Duo Port 4
     name: cam2
@@ -85,7 +82,8 @@ voctomix_sources:
     video_connection: SDI
     video_mode: "1080i50"
     deinterlace: assume-progressive
-    volume: 1.0
+    scan: psf
+    volume: 0.0
 #  -
 #    # Mini Recorder links
 #    name: cam3
