@@ -10,19 +10,17 @@ encodermode: hd-voctomix2
 voctomix_audiostreams: 1
 voctomix_stream_suppress_audio_tracks: []
 
-#voctomix_inverted_axis: True
-mixer_highdpi: yes
+voctomix:
+    parallel_slide_recording: false
 
 voctomix_sources:
   -
     # Duo Port 2
     name: cam1
     type: decklink-internal
-    devicenumber: 0
+    devicenumber: 4
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
-    scan: psf
+    video_mode: "1080p25"
     volume: 1.0
     audiostream:
       0: 0+1
@@ -32,17 +30,9 @@ voctomix_sources:
     # Mini Recorder rechts
     name: slides
     type: decklink-internal
-    devicenumber: 1
+    devicenumber: 0
     video_connection: SDI
-    video_mode: "1080p30"
-    volume: 0.0
-  -
-    # Mini Recorder rechts
-    name: cam2
-    type: decklink-internal
-    devicenumber: 2
-    video_connection: SDI
-    video_mode: "1080p30"
+    video_mode: "1080p60"
     volume: 0.0
 
 blinder_audio:
