@@ -11,7 +11,7 @@ encodermode: hd-voctomix2
 voctomix_audiostreams: 1
 voctomix_stream_suppress_audio_tracks: []
 
-voctomix_inverted_axis: True
+#voctomix_inverted_axis: True
 mixer_highdpi: yes
 
 # für JVC:
@@ -90,7 +90,10 @@ voctomix_sources:
     # Mini Recorder rechts
     name: slides
     type: decklink-internal
-    devicenumber: 2
+    devicenumber: 1
     video_connection: SDI
     video_mode: "1080p25"
     volume: 0.0
+
+blinder_audio:
+    original: 0+1
