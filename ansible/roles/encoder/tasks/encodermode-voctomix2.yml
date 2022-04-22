@@ -174,11 +174,11 @@
     tags:
       - check_recording
 
-  - file: src=/usr/local/sbin/check_system.sh
-        dest=/opt/voctomix2/scripts/check_recording.sh
-        state=link
-    tags:
-      - check_recording
+        #- file: src=/usr/local/sbin/check_system.sh
+        #dest=/opt/voctomix2/scripts/check_recording.sh
+        #state=link
+        #tags:
+        #- check_recording
 
 
   - cron: name="check recording and send mqtt message"

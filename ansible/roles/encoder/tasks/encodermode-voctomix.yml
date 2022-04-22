@@ -249,11 +249,11 @@
     tags:
       - check_recording
 
-  - file: src=/usr/local/sbin/check_system.sh
-        dest=/opt/voctomix/scripts/check_recording.sh
-        state=link
-    tags:
-      - check_recording
+        #- file: src=/usr/local/sbin/check_system.sh
+        #dest=/opt/voctomix/scripts/check_recording.sh
+        #state=link
+        #tags:
+        #- check_recording
 
   # legacy - check_system is per default deployed on all systems
   # via common role
