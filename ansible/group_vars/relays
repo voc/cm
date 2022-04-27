@@ -92,3 +92,7 @@ nginx_ips_allow_stats: [
   "10.73.0.0/16",
   "10.8.0.0/16"
 ]
+
+streamapi_sources:
+  - type: icecast
+    url: http://localhost:7999

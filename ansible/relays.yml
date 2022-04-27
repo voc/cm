@@ -4,3 +4,4 @@
       - { role: common, tags: ['common'] }
       - { role: monitoring-client, tags: ['monitoring'] }
       - { role: relay, tags: ['relay'] }
+      - { role: ingest, tags: ['ingest'] } # stream-api only
