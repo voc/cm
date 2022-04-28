@@ -179,7 +179,7 @@ def main():
             mainloop()
         except:
             traceback.print_exc()
-        time.sleep((10000 + random.randrange(2000))/1000)
+        time.sleep(1)
 
 if __name__ == '__main__':
     main()
