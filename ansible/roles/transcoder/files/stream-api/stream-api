@@ -137,6 +137,7 @@ def mainloop():
             # wait a random delay (500ms to 5.5s) and check for transcoder again
             nextloop = False
             for i in range(5):
+                time.sleep((100*len(my_streams))/1000) # extremely professional load balancing hack
                 time.sleep((100+random.randrange(1000))/1000)
                 if cons.kv.get("stream/%s/transcoder" % stream)[1]:
                     nextloop = True
