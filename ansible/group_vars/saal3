@@ -1,6 +1,6 @@
 ---
 room_number: 3
-room_fahrplan_name: Saal 3
+room_fahrplan_name: Blauer Salon
 
 # hd-direct, hd-voctomix
 # deploy with --tags encodermode
@@ -8,8 +8,8 @@ room_fahrplan_name: Saal 3
 encodermode: hd-voctomix
 
 # Anzahl der Stereo-Streams (1 = native, 2 = first translator, 3 = second translator, 4 = PA Backup)
-voctomix_audiostreams: 2
-voctomix_stream_suppress_audio_tracks: [1]
+voctomix_audiostreams: 1
+voctomix_stream_suppress_audio_tracks: []
 
 voctomix_inverted_axis: True
 
@@ -95,3 +95,6 @@ voctomix_sources:
     video_connection: HDMI
     video_mode: "1080p24"
     volume: 0.0
+
+blinder_audio:
+    original: 0+1
