@@ -10,7 +10,7 @@ from ansible.errors import AnsibleError
 from ansible.plugins.lookup import LookupBase
 
 try:
-	from pykeepass import PyKeePass, version as pykeepassVersion
+	from pykeepass import PyKeePass
 except ImportError:
 	raise AnsibleError(
 		"pykeepass is missing - install with pip"\
@@ -34,7 +34,7 @@ class LookupModule(LookupBase):
 		for term in terms:
 			path, attribute = term.rsplit('.', 1)
 			# pykeepass > 4.0 uses list for path
-			if int(pykeepassVersion.__version__[0]) >= 4:
+			if int(kp.version[0]) >= 4:
 				path = path.split("/")
 			found = kp.find_entries_by_path(path, first=True)
 
