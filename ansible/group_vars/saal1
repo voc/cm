@@ -31,20 +31,21 @@ voctomix_sources:
       0: original
   -
     # Mini Recorder rechts
-    name: slides
-    type: decklink-internal
-    devicenumber: 1
-    video_connection: SDI
-    video_mode: "1080p30"
-    volume: 0.0
-  -
-    # Mini Recorder rechts
     name: cam2
     type: decklink-internal
     devicenumber: 2
     video_connection: SDI
     video_mode: "1080p30"
     volume: 0.0
+  -
+    # Mini Recorder rechts
+    name: slides
+    type: decklink-internal
+    devicenumber: 4
+    video_connection: SDI
+    video_mode: "1080p30"
+    volume: 0.0
+
 
 blinder_audio:
     original: 0+1
