@@ -1,6 +1,6 @@
 ---
 room_number: 4
-room_fahrplan_name: HS i1
+room_fahrplan_name: Blauer Salon
 
 # hd-direct, hd-voctomix, hd-voctomix2
 # deploy with --tags encodermode
@@ -70,20 +70,21 @@ voctomix_sources:
     scan: psf
     volume: 1.0
     audiostream:
-      0: 0+1
-    stream_names:
-      0: original
+      # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
+      0: 0
 
-  -
-    # Duo Port 4
-    name: cam2
-    type: decklink-internal
-    devicenumber: 0
-    video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
-    scan: psf
-    volume: 0.0
+      # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
+      1: 1
+#  -
+#    # Duo Port 4
+#    name: cam2
+#    type: decklink-internal
+#    devicenumber: 0
+#    video_connection: SDI
+#    video_mode: "1080i50"
+#    deinterlace: assume-progressive
+#    scan: psf
+#    volume: 0.0
 #  -
 #    # Mini Recorder links
 #    name: cam3
@@ -99,3 +100,6 @@ voctomix_sources:
     video_connection: HDMI
     video_mode: "1080p24"
     volume: 0.0
+
+blinder_audio:
+    original: 0+1
