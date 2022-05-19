@@ -40,7 +40,7 @@ ffmpeg -y -nostdin -hide_banner -re \
     [0:a]pan=stereo|c0=c2|c1=c2[s_trans_1];\
     [0:a]pan=stereo|c0=c3|c1=c3[s_trans_2];\
     \
-    [s_pgm] asplit=2 [pgm_1] [pgm_2] ;\
+    [s_pgm] asplit=2 [pgm] [pgm_2] ;\
     [pgm_2] dynaudnorm=$para_pa_leveler [pgm_lev] ;\
     \
     [s_trans_1] compand=$para_trans_gate [trans_gate_1] ;\
@@ -56,7 +56,6 @@ ffmpeg -y -nostdin -hide_banner -re \
     [trans_lev_2] volume=$para_mix_vol_trans [mix_trans_2] ;\
     [mix_int_1][mix_trans_1] amix=inputs=2:duration=longest [mix_out_1] ;\
     [mix_int_2][mix_trans_2] amix=inputs=2:duration=longest [mix_out_2] ;\
-    [pgm_1] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [pgm]; \
     [mix_out_1] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [duck_out_1]; \
     [mix_out_2] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [duck_out_2] \
 {% endif %}
