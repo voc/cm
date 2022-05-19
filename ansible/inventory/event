@@ -33,6 +33,10 @@ encoder7.lan.c3voc.de
 mixer11.lan.c3voc.de
 encoder11.lan.c3voc.de
 
+[saal191]
+encoder191.lan.c3voc.de
+mixer191.lan.c3voc.de
+
 [saal-osc1]
 encoder-osc1.lan.c3voc.de
 mixer-osc1.lan.c3voc.de
@@ -79,6 +83,7 @@ encoder11.lan.c3voc.de crs_token="unused" crs_secret="unused" crs_token_meta="un
 encoder-osc1.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc1.password') }}"
 encoder-osc2.lan.c3voc.de  crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-osc2.password') }}"
 encoder-muc.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/encoder-muc.password') }}"
+encoder191.lan.c3voc.de crs_token="unused" crs_secret="unused" crs_token_meta="unused" crs_secret_meta="unused"
 encoder-cccfr.lan.c3voc.de
 loop-encoder
 
