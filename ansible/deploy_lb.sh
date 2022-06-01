@@ -32,15 +32,16 @@ function create_lb_cariables() {
 }
 
 function deploy_lbs() {
+  cd "${BASEDIR}"
   if [[ $PRETEND = true ]]; then
-    $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -b -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --check --diff
+    ./ansible-playbook-keepass site.yml -f 1 -u voc -b -i event -l 'loadbalancers' --tags haproxy_deploy --check --diff
   else
     echo
     echo "Deploy new config to loadbalancers? [yes|no]"
     read choice
 
     if [ "$choice" = "yes" ]; then
-      $BASEDIR/ansible-playbook-keepass $BASEDIR/site.yml -f 1 -u $USER -b -i $BASEDIR/event -l 'loadbalancers' --tags haproxy_deploy --diff
+      ./ansible-playbook-keepass site.yml -f 1 -u voc -b -i event -l 'loadbalancers' --tags haproxy_deploy --diff
     else
       echo "Nothing deployed."
     fi
