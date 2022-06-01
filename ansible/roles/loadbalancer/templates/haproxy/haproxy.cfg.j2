@@ -78,7 +78,7 @@ frontend icecast_and_nginx_hls_http
     acl is_3rdparty          path_reg   -i {{ haproxy_3rdparty_regex }}
 {% endif %}
     # ip address matching
-    acl is_local             src        151.217.0.0/16 94.45.224.0/19 2001:67c:20a1::/48 # TODO: update subnetworks
+    acl is_local             src        94.45.224.0/19 151.216.128.0/17 2a05:e201::/32 # EMF Camp
 
 {% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
     # dtag address matching
