@@ -23,11 +23,12 @@ sub has_tag {
 }
 
 sub generate {
-	my ($data, $host) = @_;
+	my ($data, $host, $tag) = @_;
 
 	my $relay = $data->{$host};
 
 	return unless $relay->{cm_deploy};
+	return unless (($tag cmp "local") == 0 || $relay->{dns_priority} > 10);
 
 	printf '  "%s": %d,', $host, $relay->{dns_priority};
 
@@ -59,7 +60,7 @@ foreach my $tag (sort keys %$tags) {
 	say "";
 	say "lb_${tag}_relays: {";
 	foreach my $host (sort @{$tags->{$tag}}) {
-		generate($data, $host);
+		generate($data, $host, $tag);
 	}
 	say "}";
 }
