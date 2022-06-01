@@ -43,7 +43,6 @@ lb_dash_relays: {
   "live.fem.c3voc.de": 75,
   "live.self.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
-  "usa.alb.c3voc.de": 75,
   "wob1.wob.c3voc.de": 75,
 }
 
@@ -51,7 +50,6 @@ lb_dtag_relays: {
   "live.dort.c3voc.de": 75,
   "live2.alb.c3voc.de": 50,
   "relive.c3voc.de": 75,
-  "usa.alb.c3voc.de": 75,
 }
 
 lb_icecast_relays: {
@@ -65,6 +63,7 @@ lb_icecast_relays: {
 }
 
 lb_local_relays: {
+  "live.emf.c3voc.de": 1,
 }
 
 lb_mediastatic_relays: {
