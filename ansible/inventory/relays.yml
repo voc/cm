@@ -16,3 +16,4 @@ live.self.c3voc.de             nginx=yes icecast=yes icecast_master_ip=185.106.8
 live2.alb.c3voc.de             nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
 relive.c3voc.de                nginx=yes icecast=no
 live.ams.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
+live.emf.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
