@@ -4,4 +4,4 @@
       - { role: common, tags: ['common'] }
       - { role: monitoring-client, tags: ['monitoring'] }
       - { role: relay, tags: ['relay'] }
-      - { role: ingest, tags: ['ingest'] } # stream-api only
+      - { role: ingest, tags: ['ingest'], when: ansible_fqdn == "live.ber.c3voc.de"} # stream-api only
