@@ -1,9 +1,9 @@
 ---
-nebula_version: 1.4.0
+nebula_version: 1.5.2
 # add sha256 prefix for get_url
-nebula_archive_checksum: "sha256:d1ef37ca4d676f00df0ec83911cc2d9f1e70edc70651589210f9e97c68891b9b"
+nebula_archive_checksum: "sha256:76816e3bab815ed07600a541f96e4093b911aca310bb74d2c72085a9a605af60"
 # no sha256 prefix for stat
-nebula_bin_checksum: "20273582eaa741142b485346efdc15226326daa83e8c39ca8b58cbe0b7f3f178"
+nebula_bin_checksum: "6e78efaae2a284f9aaef6920d5e59a775289785689b9726d0c7123f2472f9dbc"
 nebula_lighthouse: false
 nebula_ca_cert: "{{ lookup('keepass', 'ansible/nebula/CA.attr_cert') }}"
 nebula_lighthouses: []

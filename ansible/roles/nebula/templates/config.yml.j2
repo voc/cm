@@ -290,3 +290,10 @@ firewall:
     - port: 8301-8302
       proto: udp
       groups: [consul]
+
+{% if 'master_relays' in group_names %}
+  # allow http-upload
+    - port: 8080
+      proto: tcp
+      host: any
+{% endif %}
