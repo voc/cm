@@ -4,3 +4,5 @@ streamapi_sources:
   - type: srtrelay
     url: http://localhost:8084
 
+rtmp: yes
+rtmp_auth: yes

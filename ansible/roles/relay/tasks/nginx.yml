@@ -48,3 +48,10 @@
       name: nginx
       state: reloaded
     when: relay_vhost.changed or relay_vhost_link.changed
+
+  - name: "Register consul service"
+    template:
+      src: nginx/relay.hcl
+      dest: /etc/consul.d/nginx.hcl
+    notify: reload consul
+    tags: consul

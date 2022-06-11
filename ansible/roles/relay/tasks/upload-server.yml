@@ -4,8 +4,11 @@
   file: path=/opt/upload-server state=directory mode=0755
 
 - name: Install upload-server binary
-  copy: src="upload-server/upload-server" dest="/opt/upload-server/upload-server" mode=0755
-  tags: upload-server
+  apt:
+    name: stream-api
+    state: latest
+  # copy: src="upload-server/upload-server" dest="/opt/upload-server/upload-server" mode=0755
+  # tags: upload-server
 
 - name: Create config directory for upload-server
   file: path=/etc/upload-server state=directory mode=0755
@@ -31,3 +34,9 @@
     daemon_reload: yes
   when: api_conf.changed
 
+- name: Register upload-server consul service
+  template:
+    src: upload-server/upload.hcl
+    dest: /etc/consul.d/upload.hcl
+  notify: reload consul
+  tags: consul

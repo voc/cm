@@ -1,9 +1,6 @@
 ---
 dependencies:
   - role: nginx
-    vars:
-      rtmp: yes
-      rtmp_auth: yes
     tags: nginx
   - role: letsencrypt
     vars:
