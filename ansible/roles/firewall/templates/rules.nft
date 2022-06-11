@@ -5,12 +5,12 @@ flush ruleset
 table inet filter {
     chain input {
         type filter hook input priority 0; policy drop;
+        iif "lo" accept
+        ct state established,related accept
+        ct state invalid drop
         meta l4proto icmp ip saddr 185.106.84.33 icmp type destination-unreachable counter drop comment "juniper-fuckup-fix"
         meta l4proto icmp ip saddr 195.54.164.161 icmp type destination-unreachable counter drop comment "juniper-fuckup-fix"
         meta l4proto icmp ip saddr 195.54.164.169 icmp type destination-unreachable counter drop comment "juniper-fuckup-fix"
-        ct state established,related accept
-        ct state invalid drop
-        iif "lo" accept
         meta nfproto ipv4 ip protocol icmp accept
         meta nfproto ipv6 ip6 nexthdr icmpv6 accept
         tcp sport 1024-65535 tcp dport 22 accept
