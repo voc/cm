@@ -187,6 +187,7 @@ users:
   - { name: 'cardno', state: 'absent' } # cristoph fcmc
   - { name: 'derchris', state: 'present' }
   - { name: 'mntl', state: 'present' }
+  - { name: 'hexchen', state: 'present' }
   - { name: 'voc', state: 'present' }
 
 #used in encoders rc.local
