@@ -34,8 +34,8 @@ class LookupModule(LookupBase):
 		for term in terms:
 			path, attribute = term.rsplit('.', 1)
 			# pykeepass > 4.0 uses list for path
-			if int(kp.version[0]) >= 4:
-				path = path.split("/")
+			#if int(kp.version[0]) >= 4:
+			path = path.split("/")
 			found = kp.find_entries_by_path(path, first=True)
 
 			if not found:
