@@ -1,0 +1,3 @@
+.secrets.cfg*
+__pycache__
+*.swp

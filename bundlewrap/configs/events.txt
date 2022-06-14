@@ -1,0 +1,4 @@
+# syntax:  eventname:case numbers
+# example: fooevent:1,2,4
+gpn20:1,2,3,4
+glt22:4,5,6
