@@ -7,6 +7,11 @@ files = {
         'delete': True,
     },
     '/etc/systemd/resolved.conf': {
+        'content_type': 'mako',
+        'context': {
+            'nameservers': node.metadata.get('nameservers', ['5.1.66.255', '185.150.99.255', '194.150.168.168', '1.1.1.1']),
+            'domains': node.metadata.get('dns_search_domains', ['lan.c3voc.de']),
+        },
         'triggers': {
             'svc_systemd:systemd-resolved:restart',
         },
