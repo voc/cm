@@ -1,8 +1,9 @@
-from ipaddress import ip_address, ip_network, IPv4Address, IPv4Network
+from ipaddress import IPv4Address, IPv4Network, ip_address, ip_network
 
-from bundlewrap.exceptions import NoSuchGroup, NoSuchNode, BundleError
+from bundlewrap.exceptions import BundleError, NoSuchGroup, NoSuchNode
 from bundlewrap.utils.text import bold, red
 from bundlewrap.utils.ui import io
+
 
 def resolve_identifier(repo, identifier):
     """

@@ -1,4 +1,4 @@
-from os.path import join, exists
+from os.path import exists, join
 
 files['/etc/bash.bashrc'] = {
     'content_type': 'mako',

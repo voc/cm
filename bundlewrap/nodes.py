@@ -3,6 +3,7 @@ from os.path import join
 from pathlib import Path
 
 import bwkeepass as keepass
+
 from bundlewrap.metadata import atomic
 from bundlewrap.utils import error_context
 

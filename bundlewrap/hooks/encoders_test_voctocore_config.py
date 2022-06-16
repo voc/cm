@@ -1,5 +1,6 @@
-from bundlewrap.exceptions import BundleError
 from re import match
+
+from bundlewrap.exceptions import BundleError
 
 # last checked 2022-06-16
 # <https://gstreamer.freedesktop.org/documentation/decklink/decklinkvideosrc.html?gi-language=c#GstDecklinkModes>
