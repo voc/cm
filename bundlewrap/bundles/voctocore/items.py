@@ -3,6 +3,11 @@
 event = node.metadata.get('event/acronym', '')
 assert node.has_bundle('encoder-common')
 
+slides_port = 0
+for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
+    if sname == 'slides':
+        slides_port = 13000 + idx
+
 ### voc2mix
 directories['/opt/voctomix2/release'] = {}
 git_deploy['/opt/voctomix2/release'] = {
@@ -57,11 +62,6 @@ directories['/opt/voctomix2/scripts'] = {
 }
 
 ## recording-sink
-slides_port = 0
-for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
-    if sname == 'slides':
-        slides_port = 13000 + idx
-
 files['/opt/voctomix2/scripts/recording-sink.sh'] = {
     'context': {
         'mqtt': node.metadata.get('mqtt-monitoring'),
@@ -89,5 +89,4 @@ svc_systemd['voctomix2-recording-sink'] = {
         'causes-downtime',
     },
 }
-# TODO recording
 # TODO streaming
