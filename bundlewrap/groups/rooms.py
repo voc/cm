@@ -8,7 +8,7 @@ for i in (1, 2, 3, 4, 5, 6, 80):
         },
         'metadata': {
             'event': {
-                'fahrplan_room_name': f'Saal {i}',
+                'room_name': f'Saal {i}',
                 'room_number': i
             },
         },
@@ -23,7 +23,7 @@ for i in (81, 191):
         },
         'metadata': {
             'event': {
-                'fahrplan_room_name': f'Saal {i}',
+                'room_name': f'Saal {i}',
                 'room_number': i
             },
         },

@@ -1,5 +1,3 @@
-#'/usr/local/lib/systemd/system': {
-
 event = node.metadata.get('event/acronym', '')
 assert node.has_bundle('encoder-common')
 
@@ -21,7 +19,7 @@ files['/opt/voctomix2/voctocore-config.ini'] = {
         'backgrounds': node.metadata.get('voctocore/backgrounds', {}),
         'event': event,
         'mirror_view': node.metadata.get('voctocore/mirror_view'),
-        'room_fahrplan_name': node.metadata.get('event/room_fahrplan_name', ''),
+        'room_name': node.metadata.get('event/room_name', ''),
         'sources': node.metadata.get('voctocore/sources', {}),
         'static_background_image': node.metadata.get('voctocore/static_background_image'),
         'vaapi_enabled': node.metadata.get('voctocore/vaapi'),
@@ -63,9 +61,11 @@ directories['/opt/voctomix2/scripts'] = {
 
 ## recording-sink
 files['/opt/voctomix2/scripts/recording-sink.sh'] = {
+    'content_type': 'mako',
     'context': {
-        'mqtt': node.metadata.get('mqtt-monitoring'),
         'event': node.metadata.get('event'),
+        'mqtt': node.metadata.get('mqtt-monitoring'),
+        'parallel_slide_recording': node.metadata.get('voctocore/parallel_slide_recording'),
         'slides_port': slides_port,
     },
     'mode': '0755',
