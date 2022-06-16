@@ -8,11 +8,6 @@ defaults = {
             'openssh-sftp-server': {},
         },
     },
-    'pacman': {
-        'packages': {
-            'openssh': {},
-        },
-    },
 }
 
 @metadata_reactor.provides(

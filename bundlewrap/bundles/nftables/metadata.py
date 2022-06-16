@@ -6,33 +6,7 @@ defaults = {
             'nftables': {},
         },
     },
-    'pacman': {
-        'packages': {
-            'nftables': {},
-# https://github.com/bundlewrap/bundlewrap/issues/688
-#            'iptables': {
-#                'installed': False,
-#                'needed_by': {
-#                    'pkg_pacman:iptables-nft',
-#                },
-#            },
-            'iptables-nft': {
-                'needed_by': {
-                    'pkg_pacman:nftables',
-                },
-            },
-        },
-    },
 }
-
-if not node.has_bundle('vmhost'):
-    # see comment in bundles/vmhost/items.py
-    defaults['apt']['packages']['iptables'] = {
-        'installed': False,
-        'needed_by': {
-            'pkg_apt:nftables',
-        },
-    }
 
 @metadata_reactor.provides(
     'nftables/rules/99-port_rules',
