@@ -1,0 +1,15 @@
+[Unit]
+Description=CRS runner for ${script}
+After=network.target
+
+[Service]
+User=voc
+Group=voc
+ExecStart=/opt/crs-scripts/bin/crs_run ${script}
+WorkingDirectory=/opt/crs-scripts
+Restart=on-failure
+RestartSec=10
+SyslogIdentifier=crs-${worker}
+
+[Install]
+WantedBy=crs-worker.target

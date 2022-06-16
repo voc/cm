@@ -1,0 +1,6 @@
+export CRS_TRACKER="${url}"
+export CRS_TOKEN="${token}"
+export CRS_SECRET="${secret}"
+% if use_vaapi:
+export CRS_USE_VAAPI="yes"
+% endif
