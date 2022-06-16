@@ -1,0 +1,10 @@
+Defaults timestamp_timeout=5
+Defaults passwd_timeout=10
+Defaults env_keep+="SSH_AUTH_SOCK"
+Defaults secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Defaults !syslog
+Defaults !pam_session
+
+root ALL=(ALL) ALL
+
+#includedir /etc/sudoers.d

@@ -1,0 +1,5 @@
+% for user, config in sorted(node.metadata['users'].items()):
+%  for p in sorted(config.get('sudo_commands', [])):
+${user} ALL=(ALL) NOPASSWD:${p}
+%  endfor
+% endfor
