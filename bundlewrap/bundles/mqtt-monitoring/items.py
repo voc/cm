@@ -1,13 +1,7 @@
-import bwkeepass as keepass
-
 files['/usr/local/sbin/check_system.sh'] = {
     'content_type': 'jinja2',
     'context': {
-        'mqtt': {
-            'server': keepass.url(['ansible', 'mqtt']),
-            'username': keepass.username(['ansible', 'mqtt']),
-            'password': keepass.password(['ansible', 'mqtt']),
-        },
+        'mqtt': node.metadata.get('mqtt-monitoring'),
         'event': node.metadata.get('event'),
     },
     'mode': '0755',
