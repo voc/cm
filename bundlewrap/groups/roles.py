@@ -82,6 +82,7 @@ groups['mixers'] = {
         r'^mixer[0-9]+$',
     },
     'bundles': {
+        'mixer-common',
         'voctogui',
     },
 }
