@@ -13,13 +13,13 @@ groups['linux'] = {
         'systemd',
         'systemd-networkd',
         'systemd-timers',
+        'telegraf',
         'users',
 #        'basic',
 #        'cron',
 #        'openssh',
 #        'postfix',
 #        'sshmon',
-#        'telegraf',
     },
     'metadata': {
         'firewall': {
@@ -27,6 +27,11 @@ groups['linux'] = {
                 '*': {'voc-internal'},
                 '*/udp': {'voc-internal'},
             },
+        },
+        'telegraf': {
+            'influxdb_url': keepass.url(['ansible', 'monitoring', 'write_htpasswd']),
+            'influxdb_username': keepass.username(['ansible', 'monitoring', 'write_htpasswd']),
+            'influxdb_password': keepass.password(['ansible', 'monitoring', 'write_htpasswd']),
         },
     },
     'pip_command': 'pip3',
