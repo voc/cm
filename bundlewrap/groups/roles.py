@@ -3,7 +3,6 @@ groups['encoders'] = {
         r'^encoder[0-9]+$',
     },
     'bundles': {
-        'encoder-common',
         'rsync',
         'samba',
         'voctocore',
@@ -15,9 +14,6 @@ groups['minions'] = {
     'member_patterns': {
         r'^minion[0-9]+$',
     },
-    'bundles': {
-        'encoder-common',
-    },
 }
 
 groups['mixers'] = {
@@ -27,5 +23,21 @@ groups['mixers'] = {
     'bundles': {
         'mixer-common',
         'voctogui',
+    },
+}
+
+groups['crs-workers'] = {
+    'subgroups': {
+        'encoders',
+        'minions',
+    },
+    'bundles': {
+        'crs-worker',
+        'encoder-common',
+    },
+    'metadata': {
+        'crs-worker': {
+            'tracker_url': 'https://tracker.c3voc.de/rpc',
+        },
     },
 }
