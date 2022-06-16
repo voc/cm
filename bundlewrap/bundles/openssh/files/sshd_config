@@ -1,0 +1,42 @@
+Port 22
+
+PermitRootLogin No
+Protocol 2
+AuthorizedKeysFile .ssh/authorized_keys
+GSSAPIAuthentication no
+KerberosAuthentication no
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+PubkeyAuthentication yes
+UseDNS no
+
+LogLevel INFO
+X11Forwarding no
+IgnoreRhosts yes
+HostbasedAuthentication no
+PermitEmptyPasswords no
+PermitUserEnvironment no
+Ciphers chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,ecdh-sha2-nistp521,ecdh-sha2-nistp256,ecdh-sha2-nistp384,diffie-hellman-group-exchange-sha256
+LoginGraceTime 60
+AllowUsers ${' '.join(sorted(login_users))}
+UsePAM yes
+AllowTcpForwarding no
+PrintMotd no
+
+MaxSessions 512
+MaxStartups 512:30:768
+
+Subsystem sftp internal-sftp
+
+Match Group sftp
+    ChrootDirectory %h
+    ForceCommand internal-sftp
+    PasswordAuthentication no
+
+Match User ${','.join(sorted(admin_users))}
+    AllowTcpForwarding yes
+% if enable_x_forwarding_for_admins:
+    X11Forwarding yes
+% endif
