@@ -8,12 +8,6 @@ svc_systemd = {
 }
 svc_restart = ['svc_systemd:nmbd:restart', 'svc_systemd:smbd:restart']
 
-pkg_apt = {
-    'samba': {
-        'installed': True,
-    },
-}
-
 files = {
     '/etc/samba/smb.conf': {
         'content_type': 'mako',
