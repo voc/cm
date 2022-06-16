@@ -8,9 +8,7 @@ files['/usr/local/sbin/check_system.sh'] = {
             'username': keepass.username(['ansible', 'mqtt']),
             'password': keepass.password(['ansible', 'mqtt']),
         },
-        'event': {
-            'acronym': 'TODO', # TODO
-        },
+        'event': node.metadata.get('event'),
     },
     'mode': '0755',
 }

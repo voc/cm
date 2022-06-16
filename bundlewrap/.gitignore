@@ -1,3 +1,4 @@
 .secrets.cfg*
 __pycache__
 *.swp
+groups/*.toml
