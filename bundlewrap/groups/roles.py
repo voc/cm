@@ -10,7 +10,7 @@ groups['encoders'] = {
     'metadata': {
         'samba': {
             'restrict-to': {
-                'ignore': True,
+                'voc-internal',
             },
             'shares': {
                 'video': {
