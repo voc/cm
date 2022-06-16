@@ -1,0 +1,3 @@
+% for locale in sorted(node.metadata['locale']['installed']):
+${locale} ${locale.split('.')[-1]}
+% endfor

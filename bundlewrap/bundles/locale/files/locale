@@ -1,0 +1,1 @@
+LANG=${node.metadata['locale']['default']}
