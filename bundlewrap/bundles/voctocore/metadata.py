@@ -26,7 +26,7 @@ defaults = {
     'voctocore': {
         'mirror_view': False, # automatically mirrors SBS/LEC views
         'parallel_slide_recording': True,
-        'static_background_image': False,
+        'static_background_image': True,
         'vaapi': False,
         'backgrounds': {
             'lec': {
@@ -52,3 +52,19 @@ defaults = {
         },
     },
 }
+
+@metadata_reactor.provides(
+    'voctocore/sources',
+)
+def auto_audio_level(metadata):
+    sources = {}
+    for aname, aconfig in metadata.get('voctocore/audio', {}).items():
+        sources[aconfig['input']] = {
+            'volume': '1.0',
+        }
+
+    return {
+        'voctocore': {
+            'sources': sources,
+        },
+    }

@@ -25,7 +25,7 @@ svc_systemd = {
 
 symlinks = {
     '/etc/resolv.conf': {
-        'target': '/var/systemd/resolv.conf',
+        'target': '/lib/systemd/resolv.conf',
         'needs': {
             'svc_systemd:systemd-resolved',
         },
