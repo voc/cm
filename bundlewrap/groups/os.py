@@ -21,7 +21,14 @@ groups['linux'] = {
 #        'sshmon',
 #        'telegraf',
     },
-    'metadata': {},
+    'metadata': {
+        'firewall': {
+            'port_rules': {
+                '*': {'voc-internal'},
+                '*/udp': {'voc-internal'},
+            },
+        },
+    },
     'pip_command': 'pip3',
 }
 
