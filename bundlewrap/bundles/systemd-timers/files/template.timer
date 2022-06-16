@@ -1,0 +1,13 @@
+[Unit]
+Description=Timer for Service ${timer}
+
+[Timer]
+OnCalendar=${config['when']}
+% if config.get('persistent', True):
+Persistent=true
+% else:
+Persistent=false
+% endif
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,22 @@
+[Unit]
+Description=Service for Timer ${timer}
+After=network.target
+% if config.get('requires', ''):
+Requires=${config['requires']}
+% endif
+
+[Service]
+User=${config.get('user', 'root')}
+Group=${config.get('group', config.get('user', 'root'))}
+% for k, v in sorted(config.get('environment', {}).items()):
+Environment=${k}=${v}
+% endfor
+WorkingDirectory=${config.get('pwd', '/')}
+Type=oneshot
+% if isinstance(config['command'], list):
+%  for command in config['command']:
+ExecStart=${command}
+%  endfor
+% else:
+ExecStart=${config['command']}
+% endif
