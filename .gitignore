@@ -3,3 +3,4 @@ ansible/relays.json
 *.DS_Store
 venv/
 *.un~
+*.swp
