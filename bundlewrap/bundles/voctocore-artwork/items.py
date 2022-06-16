@@ -29,6 +29,21 @@ for target_file, possible_sources in {
         join(event_acronym, 'bg.png'),
         'default-bg.png',
     ],
+    '/opt/voc/share/bg_lec.png': [
+        join(event_acronym, f'saal{room_number}', 'bg_lec.png'),
+        join(event_acronym, 'bg_lec.png'),
+        'default-bg_lec.png',
+    ],
+    '/opt/voc/share/bg_lecm.png': [
+        join(event_acronym, f'saal{room_number}', 'bg_lecm.png'),
+        join(event_acronym, 'bg_lecm.png'),
+        'default-bg_lecm.png',
+    ],
+    '/opt/voc/share/bg_sbs.png': [
+        join(event_acronym, f'saal{room_number}', 'bg_sbs.png'),
+        join(event_acronym, 'bg_sbs.png'),
+        'default-bg_sbs.png',
+    ],
     '/opt/voc/share/pause.ts': [
         join(event_acronym, f'saal{room_number}', 'pause.ts'),
         join(event_acronym, 'pause.ts'),
@@ -54,10 +69,8 @@ for target_file, possible_sources in {
         if exists(join(repo.path, 'data', 'voctocore-artwork', 'files', source)):
             source_file = source
             break
-    else:
-        raise BundleError(f'{node.name}: could not find any suitable artwork files for {target_file}')
-
-    files[target_file] = {
-        'source': source,
-        'content_type': 'binary',
-    }
+    if source_file is not None:
+        files[target_file] = {
+            'source': source,
+            'content_type': 'binary',
+        }
