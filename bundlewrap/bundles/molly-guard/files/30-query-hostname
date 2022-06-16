@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# This script will ask for the bundlewrap node name. This replaces the
+# original script, which will ask for the hostname, which sometimes
+# is not enough to properly identify the system.
+
+NODE_NAME="${node.name}"
+
+# If this is not a terminal, do nothing
+test -t 0 || exit 0
+
+sigh()
+{
+    echo "Sorry, input does not match. Won't $MOLLYGUARD_CMD $NODE_NAME ..." >&2
+    exit 1
+}
+
+trap 'echo;sigh' 1 2 3 9 10 12 15
+
+echo -n "Please enter the bundlewrap node name of this System to $MOLLYGUARD_CMD: "
+read NODE_NAME_USER || :
+
+NODE_NAME_USER="$(echo "$NODE_NAME_USER" | tr '[:upper:]' '[:lower:]')"
+
+[ "$NODE_NAME_USER" = "$NODE_NAME" ] || sigh
+
+trap - 1 2 3 9 10 12 15
+
+exit 0

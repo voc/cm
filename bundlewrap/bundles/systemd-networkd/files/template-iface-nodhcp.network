@@ -1,0 +1,54 @@
+<%
+    from ipaddress import ip_network
+%>\
+[Match]
+Name=${interface}
+
+% for addr in sorted(config.get('ips', set())):
+[Address]
+<%
+    if '/' in addr:
+        ip, prefix = addr.split('/')
+    else:
+        ip = addr
+        prefix = '32'
+%>\
+Address=${ip}/${prefix}
+
+% endfor
+% for route, rconfig in sorted(config.get('routes', {}).items()):
+[Route]
+%   if 'via' in rconfig:
+Gateway=${rconfig['via']}
+%   endif
+Destination=${route}
+GatewayOnlink=yes
+
+% endfor
+% if 'gateway4' in config:
+[Route]
+Gateway=${config['gateway4']}
+GatewayOnlink=yes
+
+% endif
+% if 'gateway6' in config:
+[Route]
+Gateway=${config['gateway6']}
+GatewayOnlink=yes
+
+% endif
+[Network]
+DHCP=no
+% if config.get('ipv6_accept_ra', False):
+IPv6AcceptRA=yes
+% else:
+IPv6AcceptRA=no
+% endif
+
+% if config.get('forwarding', False):
+IPForward=yes
+%endif
+
+% for vlan in sorted(config.get('vlans', set())):
+VLAN=${interface}.${vlan}
+% endfor
