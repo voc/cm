@@ -31,7 +31,7 @@ ffmpeg \
         -map "[s_trans_2]" -c:a s302m -metadata:s:a:1 title="Translated-2" \
         -strict -2 \
     -flags +global_header \
-    -f segment -segment_time 180 -strftime 1 -segment_format mpegts "/video/capture/${event['acronym']/${event['room_fahrplan_name'].lower().replace(' ', '') }-%Y-%m-%d_%H-%M-%S-$$.ts"
+    -f segment -segment_time 180 -strftime 1 -segment_format mpegts "/video/capture/${event['acronym']}/${event['room_name'].lower().replace(' ', '') }-%Y-%m-%d_%H-%M-%S-$$.ts"
 
 ffmpeg_error_code=$?
 if [ "0" -ne "$ffmpeg_error_code" ]; then
