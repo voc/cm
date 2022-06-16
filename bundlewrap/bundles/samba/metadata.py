@@ -9,19 +9,16 @@ defaults = {
 }
 
 @metadata_reactor.provides(
-    'firewall/port_rules/22',
+    'firewall/port_rules',
 )
 def firewall(metadata):
-    if metadata.get('samba/restrict-to/ignore'):
-        return {}
-    else:
-        return {
-            'firewall': {
-                'port_rules': {
-                    '137/udp': atomic(metadata.get('samba/restrict-to', {'*'})),
-                    '138/udp': atomic(metadata.get('samba/restrict-to', {'*'})),
-                    '139': atomic(metadata.get('samba/restrict-to', {'*'})),
-                    '445': atomic(metadata.get('samba/restrict-to', {'*'})),
-                },
+    return {
+        'firewall': {
+            'port_rules': {
+                '137/udp': atomic(metadata.get('samba/restrict-to', {'*'})),
+                '138/udp': atomic(metadata.get('samba/restrict-to', {'*'})),
+                '139': atomic(metadata.get('samba/restrict-to', {'*'})),
+                '445': atomic(metadata.get('samba/restrict-to', {'*'})),
             },
-        }
+        },
+    }
