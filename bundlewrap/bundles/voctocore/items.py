@@ -21,10 +21,14 @@ files['/opt/voctomix2/voctocore-config.ini'] = {
         'static_background_image': node.metadata.get('voctocore/static_background_image'),
         'vaapi_enabled': node.metadata.get('voctocore/vaapi'),
     },
+    'triggers': {
+        'svc_systemd:voctomix2-voctocore:restart',
+    },
 }
 files['/usr/local/lib/systemd/system/voctomix2-voctocore.service'] = {
     'triggers': {
         'action:systemd-reload',
+        'svc_systemd:voctomix2-voctocore:restart',
     },
 }
 svc_systemd['voctomix2-voctocore'] = {
@@ -50,6 +54,40 @@ files['/usr/local/sbin/check_system.d/check_recording.pl'] = {
 ### Additional scripts
 directories['/opt/voctomix2/scripts'] = {
     'purge': True,
+}
+
+## recording-sink
+slides_port = 0
+for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
+    if sname == 'slides':
+        slides_port = 13000 + idx
+
+files['/opt/voctomix2/scripts/recording-sink.sh'] = {
+    'context': {
+        'mqtt': node.metadata.get('mqtt-monitoring'),
+        'event': node.metadata.get('event'),
+        'slides_port': slides_port,
+    },
+    'mode': '0755',
+    'triggers': {
+        'svc_systemd:voctomix2-recording-sink:restart',
+    },
+}
+files['/usr/local/lib/systemd/system/voctomix2-recording-sink.service'] = {
+    'triggers': {
+        'action:systemd-reload',
+        'svc_systemd:voctomix2-recording-sink:restart',
+    },
+}
+svc_systemd['voctomix2-recording-sink'] = {
+    'needs': {
+        'file:/opt/voctomix2/scripts/recording-sink.sh',
+        'file:/usr/local/lib/systemd/system/voctomix2-recording-sink.service',
+        'pkg_apt:ffmpeg'
+    },
+    'tags': {
+        'causes-downtime',
+    },
 }
 # TODO recording
 # TODO streaming
