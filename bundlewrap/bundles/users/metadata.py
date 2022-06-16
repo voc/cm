@@ -1,5 +1,6 @@
 from json import loads
 from os.path import join
+
 import bwkeepass as keepass
 
 defaults = {

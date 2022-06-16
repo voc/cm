@@ -1,4 +1,4 @@
-from json import loads, dumps
+from json import dumps, loads
 
 from bundlewrap.metadata import metadata_to_json
 from bundlewrap.utils import Fault

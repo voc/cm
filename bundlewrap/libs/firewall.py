@@ -1,5 +1,5 @@
+from ipaddress import IPv4Network, ip_network
 from os.path import abspath, dirname, join
-from ipaddress import ip_network, IPv4Network
 
 named_networks = {
     'voc-internal': {
