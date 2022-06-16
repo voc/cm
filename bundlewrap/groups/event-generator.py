@@ -16,17 +16,13 @@ except FileNotFoundError:
     pass
 
 for eventname, cases in events.items():
-    groups[eventname] = {
-        'subgroups': {
-            f'{eventname}-encoders',
-            f'{eventname}-mixers',
-            f'{eventname}-minions',
-        },
+    groups.setdefault(eventname, {})['subgroups'] = {
+        f'{eventname}-encoders',
+        f'{eventname}-mixers',
+        f'{eventname}-minions',
     }
 
     for hw_type in ('encoder', 'mixer', 'minion'):
-        groups[f'{eventname}-{hw_type}s'] = {
-            'members': {
-                f'{hw_type}{casenr}' for casenr in cases
-            },
+        groups.setdefault(f'{eventname}-{hw_type}s', {})['members'] = {
+            f'{hw_type}{casenr}' for casenr in cases
         }
