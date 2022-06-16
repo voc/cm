@@ -7,6 +7,7 @@ groups['encoders'] = {
         'rsync',
         'samba',
         'voctocore',
+        'voctocore-artwork',
     },
 }
 
