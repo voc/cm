@@ -17,11 +17,11 @@ video_mode={{ source.video_mode }}
 volume={{ source.volume | default('0.0') }}
 {% if source.scan is defined %}
 scan={{ source.scan }}
+{% endif %}
 {% if source.audiostream is defined  %}
 {% for audiostream, mapping in source.audiostream.items() %}
 audio.{{ source.stream_names[audiostream] }} = {{ mapping }}
 {% endfor %}
-{% endif %}
 {% endif %}
 
 {% endfor %}

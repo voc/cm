@@ -1,6 +1,6 @@
 ---
 room_number: 191
-room_fahrplan_name: Blauer Salon
+room_fahrplan_name: Auditorium
 
 # hd-direct, hd-voctomix, hd-voctomix2
 # deploy with --tags encodermode
@@ -65,9 +65,7 @@ voctomix_sources:
     type: decklink-internal
     devicenumber: 1
     video_connection: SDI
-    video_mode: "1080i50"
-    deinterlace: assume-progressive
-    scan: psf
+    video_mode: "1080p25"
     volume: 1.0
     audiostream:
       # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
@@ -96,7 +94,7 @@ voctomix_sources:
     name: slides
     type: decklink-internal
     devicenumber: 0
-    video_connection: SDI
+    video_connection: HDMI
     video_mode: "1080p25"
     volume: 0.0
 
