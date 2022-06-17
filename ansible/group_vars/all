@@ -4,8 +4,8 @@ ansible_python_interpreter: /usr/bin/python3
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: gpn20
-  name: "20. Gulaschprogrammiernacht"
+  acronym: jugend-hackt-frankfurt-am-main-2022
+  name: "Jugend hackt Frankfurt am Main"
   slogan: ""
   formats:
     hd: 'yes'
