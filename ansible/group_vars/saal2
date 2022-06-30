@@ -30,10 +30,10 @@ mixer_highdpi: yes
 #  volume: 1.0
 #  audiostream:
 #    # fill stereo-stream 0 (native) with sdi-channel 0 on both sides
-#    0: 0
+#    0: 0+0
 #
 #    # fill stereo-stream 1 (backup) with sdi-channel 0 on both sides
-#    1: 1
+#    1: 1+1
 
 # Audio-Mapping Native-Stereo
 #  volume: 1.0
