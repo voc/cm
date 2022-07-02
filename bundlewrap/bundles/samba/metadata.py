@@ -4,6 +4,7 @@ defaults = {
     'apt': {
         'packages': {
             'samba': {},
+            'samba-vfs-modules': {},
         }
     }
 }
