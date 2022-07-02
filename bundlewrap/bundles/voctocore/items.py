@@ -1,3 +1,5 @@
+import bwkeepass as keepass
+
 event = node.metadata.get('event/acronym', '')
 assert node.has_bundle('encoder-common')
 
@@ -89,4 +91,38 @@ svc_systemd['voctomix2-recording-sink'] = {
         'causes-downtime',
     },
 }
-# TODO streaming
+
+## streaming sink
+
+files['/opt/voctomix2/scripts/streaming-sink.sh'] = {
+    'content_type': 'mako',
+    'context': {
+        'event': node.metadata.get('event'),
+        'parallel_slide_streaming': node.metadata.get('voctocore/parallel_slide_streaming'),
+        'slides_port': slides_port + 2000,
+        'srt_publish': node.metadata.get('voctocore/srt_publish'),
+        'endpoint': node.metadata.get('voctocore/streaming_endpoint'),
+        'icecast_key': keepass.password(['ansible', 'icecast', 'source']),
+        'vaapi_enabled': node.metadata.get('voctocore/vaapi'),
+    },
+    'mode': '0755',
+    'triggers': {
+        'svc_systemd:voctomix2-streaming-sink:restart',
+    },
+}
+files['/usr/local/lib/systemd/system/voctomix2-streaming-sink.service'] = {
+    'triggers': {
+        'action:systemd-reload',
+        'svc_systemd:voctomix2-streaming-sink:restart',
+    },
+}
+svc_systemd['voctomix2-streaming-sink'] = {
+    'needs': {
+        'file:/opt/voctomix2/scripts/streaming-sink.sh',
+        'file:/usr/local/lib/systemd/system/voctomix2-streaming-sink.service',
+        'pkg_apt:ffmpeg'
+    },
+    'tags': {
+        'causes-downtime',
+    },
+}
