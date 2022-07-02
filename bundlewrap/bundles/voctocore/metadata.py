@@ -26,8 +26,10 @@ defaults = {
     'voctocore': {
         'mirror_view': False, # automatically mirrors SBS/LEC views
         'parallel_slide_recording': True,
+        'parallel_slide_streaming': True,
         'static_background_image': True,
         'vaapi': False,
+        'srt_stream': False,
         'backgrounds': {
             'lec': {
                 'kind': 'img',
