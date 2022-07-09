@@ -77,20 +77,21 @@ GSTREAMER_SUPPORTED_FORMATS = {
 
 def node_apply_start(repo, node, interactive=False, **kwargs):
     for sname, sconfig in node.metadata.get('voctocore/sources', {}).items():
-        if not sname == 'slides' and not re.match(r'^cam[0-9]+$', sname):
+        if not sname == 'slides' and not match(r'^cam[0-9]+$', sname):
             raise BundleError(f'{node.name}: voctocore source {sname} has invalid name, must be either "slides" or match "cam[0-9]+"')
 
-        if not sconfig['devicenumber'].isdigit():
+        if not str(sconfig['devicenumber']).isdigit():
             raise BundleError(f'{node.name}: voctocore source {sname} has invalid device number {sconfig["devicenumber"]}')
 
         if sconfig['mode'] not in GSTREAMER_SUPPORTED_FORMATS:
-            raise BundleError(f'{node.name}: voctocore source {sname} wants input format {sconfig["mode"]}, which isn\'t supported')
+            raise BundleError(f'{node.name}: voctocore source {sname} wants input format {sconfig["mode"]}, which isn\'t supported by gstreamer')
 
     used_audio = {}
     for aname, aconfig in node.metadata.get('voctocore/audio', {}).items():
         if aconfig['input'] not in node.metadata.get('voctocore/sources', {}):
             raise BundleError(f'{node.name}: voctocore audio {aname} wants input {aconfig["input"]}, which doesn\'t exist')
 
-        audio_name = f'{aconfig["input"]} {aconfig["sources"]}'
+        audio_name = f'{aconfig["input"]} {aconfig["streams"]}'
         if audio_name in used_audio:
             raise BundleError(f'{node.name}: voctocore audio {aname} wants input {audio_name}, which is already used by {used_audio[audio_name]}')
+        used_audio[audio_name] = aname
