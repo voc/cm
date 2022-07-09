@@ -11,6 +11,9 @@ for i in (1, 2, 3, 4, 5, 6, 80):
                 'room_name': f'Saal {i}',
                 'room_number': i
             },
+            'voctocore': {
+                'streaming_endpoint': f's{i}',
+            },
         },
     }
 
@@ -25,6 +28,9 @@ for i in (81, 191):
             'event': {
                 'room_name': f'Saal {i}',
                 'room_number': i
+            },
+            'voctocore': {
+                'streaming_endpoint': f's{i}',
             },
         },
     }
