@@ -7,6 +7,7 @@ groups['encoders'] = {
         'samba',
         'voctocore',
         'voctocore-artwork',
+        'voctomix2',
     },
 }
 
@@ -23,6 +24,7 @@ groups['mixers'] = {
     'bundles': {
         'mixer-common',
         'voctogui',
+        'voctomix2',
     },
 }
 

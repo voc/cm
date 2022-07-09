@@ -29,7 +29,7 @@ defaults = {
         'parallel_slide_streaming': True,
         'static_background_image': True,
         'vaapi': False,
-        'srt_stream': False,
+        'srt_publish': False,
         'backgrounds': {
             'lec': {
                 'kind': 'img',

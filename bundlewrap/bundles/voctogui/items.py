@@ -1,8 +1,5 @@
-directories['/opt/voctomix2/release'] = {}
-git_deploy['/opt/voctomix2/release'] = {
-    'repo': 'https://c3voc.de/git/voctomix',
-    'rev': 'voctomix2',
-}
+assert node.has_bundle('voctomix2')
+
 files['/opt/voctomix2/voctogui-config.ini'] = {
     'content_type': 'mako',
     'context': {
@@ -12,11 +9,13 @@ files['/opt/voctomix2/voctogui-config.ini'] = {
         'video_display': node.metadata.get('voctogui/video_display'),
     },
 }
+
 files['/usr/local/lib/systemd/system/voctomix2-voctogui.service'] = {
     'triggers': {
         'action:systemd-reload',
     },
 }
+
 svc_systemd['voctomix2-voctogui'] = {
     'needs': {
         'file:/opt/voctomix2/voctogui-config.ini',
