@@ -30,6 +30,8 @@ To set up a new event, do the following steps:
    That file should contain the basic information about your event:
 
 ```toml
+subgroups = ["saal1", "saal2"]
+
 [metadata.event]
 timezone = "Europe/Berlin"
 acronym = "XYZ"
