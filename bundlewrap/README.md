@@ -23,11 +23,9 @@ machines.
 
 ## Event setup
 
-To set up a new event, do the following steps:
-
-1. Add your event to `configs/events.txt`. Syntax is as described.
-2. Add `yourevent.toml` to the `groups` directory in this repository.
-   That file should contain the basic information about your event:
+To set up a new event, do the following steps, add `yourevent.toml` to
+the `groups` directory in this repository. That file should contain the
+basic information about your event:
 
 ```toml
 subgroups = ["saal1", "saal2"]
@@ -38,6 +36,9 @@ acronym = "XYZ"
 name = "ZYXcon"
 slogan = ""
 ```
+
+Please add the rooms used in your event to the `subgroups` list of the
+file.
 
 It is important that you never commit `yourevent.toml` to the main branch
 of this repository.
