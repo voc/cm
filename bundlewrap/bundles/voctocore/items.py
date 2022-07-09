@@ -2,6 +2,7 @@ import bwkeepass as keepass
 
 event = node.metadata.get('event/acronym', '')
 assert node.has_bundle('encoder-common')
+assert node.has_bundle('voctomix2')
 
 slides_port = 0
 for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
@@ -9,11 +10,6 @@ for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
         slides_port = 13000 + idx
 
 ### voc2mix
-directories['/opt/voctomix2/release'] = {}
-git_deploy['/opt/voctomix2/release'] = {
-    'repo': 'https://c3voc.de/git/voctomix',
-    'rev': 'voctomix2',
-}
 files['/opt/voctomix2/voctocore-config.ini'] = {
     'content_type': 'mako',
     'context': {
@@ -92,8 +88,7 @@ svc_systemd['voctomix2-recording-sink'] = {
     },
 }
 
-## streaming sink
-
+## streaming-sink
 files['/opt/voctomix2/scripts/streaming-sink.sh'] = {
     'content_type': 'mako',
     'context': {
