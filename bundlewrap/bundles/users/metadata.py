@@ -13,7 +13,7 @@ defaults = {
         'root': {
             'home': '/root',
             'shell': '/bin/bash',
-            'password': repo.vault.human_password_for('root on {}'.format(node.name)),
+            'password': keepass.password(['Allgemein', 'Benutzerpasswörter', 'SSH Passwort und Key root']),
         },
     },
 }
@@ -62,7 +62,7 @@ def user_voc(metadata):
     return {
         'users': {
             'voc': {
-                'password': repo.vault.decrypt('encrypt$gAAAAABiqsxspjkukpzwVoZSPfWfWGnKlAU6ULGhU-bbH2vmixjxzSm6X6rCgt9qFsWx4L4hfrbjFN3J427WU9i6bxuimaRarg=='),
+                'password': keepass.password(['ansible', 'logins', 'voc']),
                 'ssh_pubkey': repo.libs.faults.join_faults(pubkey, '\n'),
                 'sudo_commands': {'ALL'},
             },
