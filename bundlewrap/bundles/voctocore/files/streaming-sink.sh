@@ -32,7 +32,7 @@ ffmpeg -y -nostdin -hide_banner -re \
 % endif
     -thread_queue_size 512 -i tcp://localhost:15000?timeout=3000000 \
 % if parallel_slide_streaming:
-    -thread_queue_size 512 -i tcp://localhost:${slides_port}?timeout=3000000 \
+    -thread_queue_size 512 -i tcp://localhost:15001?timeout=3000000 \
 % endif
 % if vaapi_enabled:
     -filter_hw_device streaming \
