@@ -17,10 +17,6 @@ export BW_KEEPASS_FILE=$HOME/whereever/the/voc/keepass/lives.kdbx
 export BW_KEEPASS_PASSWORD=reallysecure
 ```
 
-You should also deploy the `.secrets.cfg` file to the same directory
-this README lives in. This will allow you to apply anything on the
-machines.
-
 ## Event setup
 
 To set up a new event, do the following steps, add `yourevent.toml` to

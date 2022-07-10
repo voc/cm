@@ -16,7 +16,7 @@ defaults = {
     },
     'users': {
         'mixer': {
-            'password': repo.vault.human_password_for(f'mixer@{node.name}'),
+            'password': keepass.password(['ansible', 'logins', 'mixer']),
         },
     },
 }
