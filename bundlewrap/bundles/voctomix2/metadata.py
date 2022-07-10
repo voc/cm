@@ -10,6 +10,7 @@ defaults = {
             'gstreamer1.0-plugins-ugly': {},
             'gstreamer1.0-tools': {},
             'gstreamer1.0-vaapi': {},
+            'gstreamer1.0-x': {},
             'i965-va-driver-shaders': {},
             'libgstreamer1.0-0': {},
             'python3-gi': {},
