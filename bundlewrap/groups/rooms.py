@@ -13,7 +13,7 @@ ROOMS_WITH_MINIONS = (
     80,
 )
 
-for i in ROOMS_WITH_MINONS + ROOMS_WITHOUT_MINIONS:
+for i in ROOMS_WITH_MINIONS + ROOMS_WITHOUT_MINIONS:
     groups[f'saal{i}'] = {
         'members': {
             f'encoder{i}',
@@ -30,5 +30,5 @@ for i in ROOMS_WITH_MINONS + ROOMS_WITHOUT_MINIONS:
         },
     }
 
-    if i in ROOMS_WITH_MINONS:
+    if i in ROOMS_WITH_MINIONS:
         groups[f'saal{i}']['members'].add(f'minion{i}')
