@@ -22,7 +22,7 @@
   };
 
   outputs = { self, nixpkgs, deploy-rs, flake-utils, sops-nix, home-manager, flake-compat }: let
-    hostsDir = ./hosts;
+    hostsDir = "${../nixos}/hosts";
     hostNames = with nixpkgs.lib; attrNames
       (filterAttrs (name: type: type == "directory") (builtins.readDir hostsDir));
     hostConfig = host: if builtins.pathExists "${hostsDir}/${host}/meta.nix"
@@ -50,13 +50,13 @@
     hosts = with nixpkgs.lib; listToAttrs (map (name: nameValuePair name (hostConfig name)) hostNames);
   in {
     nixosConfigurations = builtins.mapAttrs (host: config: config.nixosConfiguration) hosts;
-    deploy = builtins.mapAttrs (host: config: config.deploy) hosts;
+    deploy.nodes = builtins.mapAttrs (host: config: config.deploy) hosts;
 
     nixosModules = {
       nftables = import ./modules/nftables;
     };
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-  } // flake-utils.lib.eachDefaultSystem (system: let
+  } // flake-utils.lib.eachSystem ([ "x86_64-linux" "x86_64-darwin" "aarch64-darwin"]) (system: let
     pkgs = (import nixpkgs { inherit system; });
   in {
     devShells.default = pkgs.mkShell {
