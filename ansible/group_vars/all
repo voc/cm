@@ -4,8 +4,8 @@ ansible_python_interpreter: /usr/bin/python3
 # Event config
 event:
   timezone: Europe/Berlin
-  acronym: jugend-hackt-frankfurt-am-main-2022
-  name: "Jugend hackt Frankfurt am Main"
+  acronym: jugend-hackt-rhein-neckar-2022
+  name: "Jugend hackt Rhein-Neckar"
   slogan: ""
   formats:
     hd: 'yes'

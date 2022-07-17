@@ -60,10 +60,9 @@ mixer_highdpi: yes
 
 voctomix_sources:
   -
-    # Duo Port 2
     name: cam1
     type: decklink-internal
-    devicenumber: 1
+    devicenumber: 2
     video_connection: SDI
     video_mode: "1080p25"
     volume: 1.0
@@ -72,25 +71,20 @@ voctomix_sources:
       0: 0+1
     stream_names:
       0: original
+  -
+    name: cam2
+    type: decklink-internal
+    devicenumber: 4
+    video_connection: SDI
+    video_mode: "1080p25"
+    volume: 0.0
 #  -
-#    # Duo Port 4
-#    name: cam2
-#    type: decklink-internal
-#    devicenumber: 0
-#    video_connection: SDI
-#    video_mode: "1080i50"
-#    deinterlace: assume-progressive
-#    scan: psf
-#    volume: 0.0
-#  -
-#    # Mini Recorder links
 #    name: cam3
 #    type: decklink-internal
 #    devicenumber: 4
 #    video_connection: SDI
 #    video_mode: "1080p25"
   -
-    # Mini Recorder rechts
     name: slides
     type: decklink-internal
     devicenumber: 0

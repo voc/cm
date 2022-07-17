@@ -1,0 +1,7 @@
+subgroups = ["saal1"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+acronym = "GEEK"
+name = "Geekend 2022"
+slogan = ""
