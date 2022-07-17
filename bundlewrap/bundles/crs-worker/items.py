@@ -16,6 +16,9 @@ files['/opt/crs-scripts/tracker-profile.sh'] = {
         'token': node.metadata.get('crs-worker/token/encoding'),
         'secret': node.metadata.get('crs-worker/secret/encoding'),
     },
+    'needs': {
+        'git_deploy:/opt/crs-scripts',
+    },
 }
 files['/opt/crs-scripts/tracker-profile-meta.sh'] = {
     'content_type': 'mako',
@@ -25,6 +28,15 @@ files['/opt/crs-scripts/tracker-profile-meta.sh'] = {
         'vaapi': node.metadata.get('crs-worker/use_vaapi'),
         'token': node.metadata.get('crs-worker/token/meta', node.metadata.get('crs-worker/token/encoding')),
         'secret': node.metadata.get('crs-worker/secret/meta', node.metadata.get('crs-worker/secret/encoding')),
+    },
+    'needs': {
+        'git_deploy:/opt/crs-scripts',
+    },
+}
+
+files['/usr/local/lib/systemd/system/crs-worker.target'] = {
+    'triggers': {
+        'action:systemd-reload',
     },
 }
 
@@ -37,6 +49,13 @@ for worker, script in {
     'postprocessing': 'script-F-postprocessing-upload.pl',
 }.items():
     files[f'/etc/systemd/system/crs-{worker}.service'] = {
+        'delete': True,
+        'triggers': {
+            'action:systemd-reload',
+        },
+    }
+
+    files[f'/usr/local/lib/systemd/system/crs-{worker}.service'] = {
         'content_type': 'mako',
         'source': 'crs-runner.service',
         'context': {
@@ -45,5 +64,14 @@ for worker, script in {
         },
         'triggers': {
             'action:systemd-reload',
+        },
+    }
+
+    svc_systemd[f'crs-{worker}'] = {
+        'needs': {
+            'file:/opt/crs-scripts/tracker-profile-meta.sh',
+            'file:/opt/crs-scripts/tracker-profile.sh',
+            f'file:/usr/local/lib/systemd/system/crs-{worker}.service',
+            'git_deploy:/opt/crs-scripts',
         },
     }
