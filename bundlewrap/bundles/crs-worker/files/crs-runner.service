@@ -1,6 +1,5 @@
 [Unit]
 Description=CRS runner for ${script}
-After=network.target
 
 [Service]
 User=voc
