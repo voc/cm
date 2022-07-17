@@ -5,3 +5,4 @@ venv/
 *.un~
 *.swp
 .envrc.local
+nixos/.direnv
