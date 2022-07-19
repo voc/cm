@@ -16,10 +16,6 @@ groups['linux'] = {
         'systemd-timers',
         'telegraf',
         'users',
-#        'basic',
-#        'cron',
-#        'postfix',
-#        'sshmon',
     },
     'metadata': {
         'firewall': {
@@ -46,7 +42,6 @@ groups['debian'] = {
     'bundles': {
         'apt',
         'molly-guard',
-#        'backup-client',
     },
     'os': 'debian',
 }
