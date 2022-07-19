@@ -68,6 +68,7 @@ for worker, script in {
     }
 
     svc_systemd[f'crs-{worker}'] = {
+        'running': None, # do not start these workers automatically
         'needs': {
             'file:/opt/crs-scripts/tracker-profile-meta.sh',
             'file:/opt/crs-scripts/tracker-profile.sh',
