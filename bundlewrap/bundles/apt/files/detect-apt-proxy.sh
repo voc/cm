@@ -20,7 +20,7 @@ show_proxy_messages=1
 # be available on the top. If no proxy is available, a direct connection will
 # be used
 try_proxies=(
-10.73.0.254:3142
+#10.73.0.254:3142
 aptproxy.lan.c3voc.de:3142
 )
 
