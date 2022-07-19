@@ -13,7 +13,7 @@ User=mixer
 Group=mixer
 
 Environment="DISPLAY=:0"
-% if highdpi
+% if high_dpi:
 Environment="GDK_SCALE=2"
 % endif
 
