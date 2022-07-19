@@ -36,5 +36,12 @@ slogan = ""
 Please add the rooms used in your event to the `subgroups` list of the
 file.
 
+To set a room name, simply specify the following in `nodes/yourencoder.toml`:
+
+```toml
+[metadata.event]
+room_name = "myroom"
+```
+
 It is important that you never commit `yourevent.toml` to the main branch
 of this repository.
