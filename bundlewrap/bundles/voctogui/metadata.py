@@ -4,6 +4,7 @@ defaults = {
             'gir1.2-gtk-3.0': {},
             'gnome-themes-standard': {},
             'gstreamer1.0-alsa': {},
+            'gstreamer1.0-gl': {},
             'gstreamer1.0-pulseaudio': {},
             'gstreamer1.0-tools': {},
             'gstreamer1.0-vaapi': {},
@@ -18,7 +19,7 @@ defaults = {
         },
     },
     'voctogui' : {
-        'highdpi': True,
+        'high_dpi': True,
         'play_audio': False,
         'video_display': 'gl',
     },
