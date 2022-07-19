@@ -30,13 +30,13 @@ MaxStartups 512:30:768
 
 Subsystem sftp internal-sftp
 
+Match Address 10.73.0.0/16
+% if allow_password_auth_for_voc_range:
+    PasswordAuthentication yes
+% endif
+    AllowTcpForwarding yes
+
 Match Group sftp
     ChrootDirectory %h
     ForceCommand internal-sftp
     PasswordAuthentication no
-
-Match User ${','.join(sorted(admin_users))}
-    AllowTcpForwarding yes
-% if enable_x_forwarding_for_admins:
-    X11Forwarding yes
-% endif
