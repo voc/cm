@@ -1,4 +1,3 @@
-
 defaults = {
     'apt': {
         'packages': {
@@ -11,7 +10,6 @@ defaults = {
             'gstreamer1.0-tools': {},
             'gstreamer1.0-vaapi': {},
             'gstreamer1.0-x': {},
-            'i965-va-driver-shaders': {},
             'libgstreamer1.0-0': {},
             'python3-gi': {},
             'python3-pyinotify': {},
@@ -21,3 +19,18 @@ defaults = {
         },
     },
 }
+
+
+@metadata_reactor.provides(
+    'apt/packages/i965-va-driver-shaders',
+)
+def vaapi_drive_maybe(metadata):
+    if not metadata.get('voctocore/vaapi'):
+        return {}
+    return {
+        'apt': {
+            'packages': {
+                'i965-va-driver-shaders': {},
+            },
+        },
+    }
