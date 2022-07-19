@@ -13,7 +13,7 @@ files = {
         'context': {
             'login_users': login_users,
             'admin_users': users_from_metadata,
-            'enable_x_forwarding_for_admins': node.metadata.get('openssh/enable_x_forwarding_for_admins', False),
+            'allow_password_auth_for_voc_range': node.metadata.get('openssh/allow_password_auth_for_voc_range', True),
         },
         'triggers': {
             'action:sshd_check_config',
@@ -38,7 +38,7 @@ actions = {
 }
 
 svc_systemd = {
-    service: {
+    'ssh': {
         'needs': {
             'file:/etc/systemd/system/ssh.service.d/bundlewrap.conf',
             'file:/etc/ssh/sshd_config',
