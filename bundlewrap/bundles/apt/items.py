@@ -26,9 +26,16 @@ actions = {
 }
 
 files = {
-    '/etc/apt/apt.conf.d/30detectproxy': {},
+    '/etc/apt/apt.conf.d/30detectproxy': {
+        'needed_by': {
+            'pkg_apt:',
+        },
+    },
     '/etc/apt/detect-apt-proxy.sh': {
         'mode': '0755',
+        'needed_by': {
+            'pkg_apt:',
+        },
     },
     '/etc/apt/preferences.d/c3voc-repo-pinning.pref': {
         'triggers': {
