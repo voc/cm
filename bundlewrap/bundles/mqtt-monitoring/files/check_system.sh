@@ -7,7 +7,7 @@ LIMIT_DISK_USAGE=90
 LIMIT_DISK_MIN_FREE_SPACE_KB=9765625
 LIMIT_LOAD=$(echo "$(grep processor /proc/cpuinfo | wc -l) * 2" | bc)
 
-TRUNC_HOSTNAME=$(hostname -f | cut -d. -f1-2)
+TRUNC_HOSTNAME=$(hostnamectl --static | cut -d. -f1-2)
 
 HYPERVISOR=$(systemd-detect-virt)
 if [ $? -ne 0 ]; then
