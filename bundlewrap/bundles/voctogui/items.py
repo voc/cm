@@ -23,6 +23,19 @@ files['/usr/local/lib/systemd/system/voctomix2-voctogui.service'] = {
     },
 }
 
+files['/usr/local/bin/voctogui-check-connection.sh'] = {
+    'content_type': 'mako',
+    'context': {
+        'room_number': node.metadata.get('event/room_number'),
+    },
+    'source' : 'voctogui-check-connection.sh',
+    'mode': 755,
+    'triggers': {
+        'svc_systemd:voctomix2-voctogui:restart',
+    },
+}
+
+
 svc_systemd['voctomix2-voctogui'] = {
     'needs': {
         'file:/opt/voctomix2/voctogui-config.ini',
