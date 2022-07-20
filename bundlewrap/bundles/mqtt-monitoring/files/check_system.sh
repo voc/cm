@@ -352,7 +352,7 @@ check_load
 check_disk_space
 check_raid
 check_logs
-check_interfaces
+#check_interfaces
 check_systemd
 check_ac_power
 
