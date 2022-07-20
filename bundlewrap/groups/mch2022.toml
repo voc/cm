@@ -1,0 +1,5 @@
+subgroups = ["saal1", "saal2", "saal3"]
+
+[metadata.event]
+acronym='mch2022'
+slug='mch2022'
