@@ -270,24 +270,20 @@ check_updates () {
 
 # send system uptime in every run
 ping () {
-  hostname="$(hostname -f)"
   primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
-  hostname=${hostname:-$primary_ip}
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
   for i in 1 2 3 ; do
-    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${hostname}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}" && break
+    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${TRUNC_HOSTNAME}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}" && break
   done
   debug_output "ping" $hostname $uptime
 }
 
 # inform watchdog about graceful shutdown
 shutdown () {
-  hostname="$(hostname -f)"
   primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
-  hostname=${hostname:-$primary_ip}
 
   for i in 1 2 3 ; do
-    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/shutdown" -m "{ \"name\": \"${hostname}\"}" && break
+    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/shutdown" -m "{ \"name\": \"${TRUNC_HOSTNAME}\"}" && break
   done
 
   debug_output "shutdown" $hostname
