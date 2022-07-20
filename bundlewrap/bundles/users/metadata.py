@@ -1,4 +1,5 @@
 from json import loads
+from os import environ
 from os.path import join
 
 import bwkeepass as keepass
@@ -13,7 +14,7 @@ defaults = {
         'root': {
             'home': '/root',
             'shell': '/bin/bash',
-            'password': keepass.password(['Allgemein', 'Benutzerpasswörter', 'SSH Passwort und Key root']),
+            'password': keepass.password(['Allgemein', 'Benutzerpasswörter', 'SSH Passwort und Key root']) if environ.get('BW_KEEPASS_FILE') else None,
         },
     },
 }
@@ -62,7 +63,7 @@ def user_voc(metadata):
     return {
         'users': {
             'voc': {
-                'password': keepass.password(['ansible', 'logins', 'voc']),
+                'password': keepass.password(['ansible', 'logins', 'voc']) if environ.get('BW_KEEPASS_FILE') else None,
                 'ssh_pubkey': repo.libs.faults.join_faults(pubkey, '\n'),
                 'sudo_commands': {'ALL'},
             },
