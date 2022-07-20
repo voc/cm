@@ -17,5 +17,4 @@ bar {
   status_command i3status
 }
 
-exec --no-startup-id i3-msg "workspace 1; append_layout ~/.config/i3/layout.json"
 exec --no-startup-id i3-msg "workspace 1; exec kitty irssi"
