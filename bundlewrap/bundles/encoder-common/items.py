@@ -5,4 +5,8 @@ if not event:
     raise BundleError(f'{node.name} bundle:encoder-common requires event/acronym to be set, is "{event}".')
 
 for path in ('capture', 'encoded', 'tmp', 'intros', 'fuse'):
-    directories[f'/video/{path}/{event}'] = {}
+    directories[f'/video/{path}/{event}'] = {
+        'needed_by': {
+            'bundle:voctocore',
+        },
+    }
