@@ -5,6 +5,9 @@ groups = {
 directories = {
     '/etc/sudoers.d': {
         'purge': True,
+        'after': {
+            'pkg_apt:',
+        },
     },
 }
 
