@@ -181,6 +181,6 @@ statusbar = {
   };
 };
 settings = {
-  core = { real_name = "voc-${node.name}"; user_name = "${node.name}"; nick = "${node.name}"; };
+  core = { real_name = "c3voc: ${room_name}"; user_name = "${node.name}"; nick = "${node.name}"; };
   "fe-text" = { actlist_sort = "refnum"; };
 };
