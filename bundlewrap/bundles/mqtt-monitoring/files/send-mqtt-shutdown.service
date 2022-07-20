@@ -6,6 +6,7 @@ After=network.target local-fs.target
 Type=oneshot
 RemainAfterExit=yes
 ExecStop=/usr/local/sbin/check_system.sh shutdown
+Environment=TRUNC_HOSTNAME=${node.name}
 TimeoutStopSec=5
 
 [Install]

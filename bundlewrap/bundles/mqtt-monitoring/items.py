@@ -9,6 +9,7 @@ files['/usr/local/sbin/check_system.sh'] = {
 directories['/usr/local/sbin/check_system.d'] = {}
 
 files['/usr/local/lib/systemd/system/send-mqtt-shutdown.service'] = {
+    'content_type': 'mako',
     'triggers': {
         'action:systemd-reload',
     },
