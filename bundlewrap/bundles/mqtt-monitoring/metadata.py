@@ -1,6 +1,11 @@
 import bwkeepass as keepass
 
 defaults = {
+    'apt': {
+        'packages': {
+            'mosquitto-clients': {},
+        },
+    },
     'mqtt-monitoring': {
         'server': keepass.url(['ansible', 'mqtt']),
         'username': keepass.username(['ansible', 'mqtt']),
