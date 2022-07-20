@@ -74,6 +74,7 @@ def firewall(metadata):
         12000,
         14000,
         15000, # mix live
+        15100, # mix preview live
         16000, # background video
         17000, # video blinder
         18000, # audio blinder
