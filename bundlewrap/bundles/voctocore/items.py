@@ -78,6 +78,9 @@ files['/usr/local/lib/systemd/system/voctomix2-recording-sink.service'] = {
     },
 }
 svc_systemd['voctomix2-recording-sink'] = {
+    'after': {
+        'svc_systemd:voctomix2-voctocore',
+    },
     'needs': {
         'file:/opt/voctomix2/scripts/recording-sink.sh',
         'file:/usr/local/lib/systemd/system/voctomix2-recording-sink.service',
@@ -112,6 +115,9 @@ files['/usr/local/lib/systemd/system/voctomix2-streaming-sink.service'] = {
     },
 }
 svc_systemd['voctomix2-streaming-sink'] = {
+    'after': {
+        'svc_systemd:voctomix2-voctocore',
+    },
     'needs': {
         'file:/opt/voctomix2/scripts/streaming-sink.sh',
         'file:/usr/local/lib/systemd/system/voctomix2-streaming-sink.service',
