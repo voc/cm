@@ -6,6 +6,9 @@ token.meta = "!kee_user:ansible|worker-groups|encoder2-meta"
 secret.encoding = "!kee_pass:ansible|worker-groups|encoder2"
 secret.meta = "!kee_pass:ansible|worker-groups|encoder2-meta"
 
+[metadata.event]
+room_name = "Battery"
+
 [metadata.interfaces.eth0]
 ips = ["10.73.2.3/16"]
 gateway4 = "10.73.0.254"
