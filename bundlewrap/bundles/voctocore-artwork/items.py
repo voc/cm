@@ -1,6 +1,8 @@
 from bundlewrap.exceptions import BundleError
 from os.path import exists, join
 
+assert node.has_bundle('voctocore')
+
 room_number = node.metadata.get('event/room_number', 0)
 event_acronym = node.metadata.get('event/acronym')
 
@@ -73,4 +75,7 @@ for target_file, possible_sources in {
         files[target_file] = {
             'source': source,
             'content_type': 'binary',
+            'triggers': {
+                'svc_systemd:voctomix2-voctocore:restart',
+            },
         }
