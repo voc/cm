@@ -11,7 +11,7 @@ groups['encoders'] = {
     },
     'metadata': {
         'voctocore': {
-            'streaming_auth_key': keepass.password(['ansible', 'icecast', 'source']),
+            'streaming_auth_key': keepass.password(['ansible', 'icecast', 'icedist', 'source']),
         },
     },
 }
