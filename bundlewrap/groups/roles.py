@@ -13,6 +13,9 @@ groups['encoders'] = {
         'voctocore': {
             'streaming_auth_key': keepass.password(['ansible', 'icecast', 'icedist', 'source']),
         },
+        'systemd': {
+            'ignore_power_switch': True,
+        },
     },
 }
 
@@ -30,6 +33,11 @@ groups['mixers'] = {
         'mixer-common',
         'voctogui',
         'voctomix2',
+    },
+    'metadata': {
+        'systemd': {
+            'ignore_power_switch': True,
+        },
     },
 }
 

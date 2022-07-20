@@ -55,3 +55,14 @@ svc_systemd = {
         },
     },
 }
+
+if node.metadata.get('systemd/ignore_power_switch', False):
+    files['/etc/systemd/logind.conf'] = {
+        'source': 'logind-ignore.conf',
+        'comment': 'when changing this file, a reboot is needed to apply the changes',
+    }
+else:
+    files['/etc/systemd/logind.conf'] = {
+        'source': 'logind-poweroff.conf',
+        'comment': 'when changing this file, a reboot is needed to apply the changes',
+    }
