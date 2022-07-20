@@ -4,7 +4,7 @@
   "type": "con",
   "nodes": [
     {
-      "border": "normal",
+      "border": "none",
       "current_border_width": 2,
       "floating": "auto_off",
       "geometry": {
@@ -23,7 +23,7 @@
       "type": "con"
     },
     {
-      "border": "normal",
+      "border": "none",
       "current_border_width": 2,
       "floating": "auto_off",
       "geometry": {

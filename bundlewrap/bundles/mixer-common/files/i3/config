@@ -1,7 +1,21 @@
-font pango:monospace 16
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
 
-bindsym Mod4+Return exec kitty
-bindsym Mod4+Shift+c reload
+font pango:monospace 16
+default_border none
+
+bar {
+  workspace_buttons no
+  status_command i3status
+}
 
 exec --no-startup-id i3-msg "workspace 1; append_layout ~/.config/i3/layout.json"
 exec --no-startup-id i3-msg "workspace 1; exec kitty irssi"
