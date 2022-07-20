@@ -25,7 +25,7 @@ defaults = {
     'apt/packages/i965-va-driver-shaders',
 )
 def vaapi_drive_maybe(metadata):
-    if not metadata.get('voctocore/vaapi'):
+    if not metadata.get('voctocore/vaapi', False):
         return {}
     return {
         'apt': {
