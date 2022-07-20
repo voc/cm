@@ -19,8 +19,16 @@ files = {
 }
 
 svc_systemd = {
-    'systemd-networkd': {},
-    'systemd-resolved': {},
+    'systemd-networkd': {
+        'after': {
+            'pkg_apt:',
+        },
+    },
+    'systemd-resolved': {
+        'after': {
+            'pkg_apt:',
+        },
+    },
 }
 
 symlinks = {
