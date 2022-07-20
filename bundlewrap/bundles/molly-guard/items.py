@@ -1,9 +1,15 @@
 directories = {
     '/etc/molly-guard/messages.d': {
         'purge': True,
+        'after': {
+            'pkg_apt:molly-guard',
+        },
     },
     '/etc/molly-guard/run.d': {
         'purge': True,
+        'after': {
+            'pkg_apt:molly-guard',
+        },
     },
 }
 
