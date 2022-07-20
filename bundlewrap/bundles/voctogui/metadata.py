@@ -21,6 +21,6 @@ defaults = {
     'voctogui' : {
         'high_dpi': True,
         'play_audio': False,
-        'video_display': 'gl',
+        'video_display': 'xv',
     },
 }
