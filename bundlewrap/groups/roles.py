@@ -9,6 +9,11 @@ groups['encoders'] = {
         'voctocore-artwork',
         'voctomix2',
     },
+    'metadata': {
+        'voctocore': {
+            'streaming_auth_key': keepass.password(['ansible', 'icecast', 'source']),
+        },
+    },
 }
 
 groups['minions'] = {

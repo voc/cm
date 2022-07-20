@@ -94,10 +94,10 @@ files['/opt/voctomix2/scripts/streaming-sink.sh'] = {
     'context': {
         'event': node.metadata.get('event'),
         'parallel_slide_streaming': node.metadata.get('voctocore/parallel_slide_streaming'),
-        'slides_port': slides_port + 2000,
+        'slides_port': slides_port,
         'srt_publish': node.metadata.get('voctocore/srt_publish'),
         'endpoint': node.metadata.get('voctocore/streaming_endpoint'),
-        'icecast_key': keepass.password(['ansible', 'icecast', 'source']),
+        'auth_key': node.metadata.get('voctocore/streaming_auth_key'),
         'vaapi_enabled': node.metadata.get('voctocore/vaapi'),
     },
     'mode': '0755',
