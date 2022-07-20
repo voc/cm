@@ -5,6 +5,7 @@ defaults = {
         'packages': {
             'decklink-debugger': {},
             'desktopvideo': {},
+            'desktopvideo-gui': {},
             'fbset': {},
             'gstreamer1.0-libav': {},
         },
