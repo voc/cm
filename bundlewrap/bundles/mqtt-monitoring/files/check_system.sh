@@ -77,20 +77,6 @@ check_load () {
   debug_output "load" $load_1_minute $load_5_minutes $load_15_minutes $truncated_load
 }
 
-check_recording () {
-  systemctl is-active recording-sink.service >/dev/null
-  if [ "0" -eq "$?" ]; then
-    message=$(perl /usr/local/bin/check_recording.pl /video/capture/{{ event.acronym }}/)
-    error_code=$?
-
-    if [ "2" -eq "$error_code" ]; then
-      send_mqtt_message "error" "recording/${TRUNC_HOSTNAME}" "<red>${message}</red> /video/capture/{{ event.acronym }}/"
-    fi
-
-    debug_output "recording" $message $error_code
-  fi
-}
-
 # check_raid implements:
 #
 #  * mdadm status of existing md devices
@@ -353,9 +339,6 @@ check_systemd
 check_ac_power
 
 # special cases
-if [ "0" -eq "$(hostnamectl status --static | grep -q "encoder"; echo $?)" ]; then
-  check_recording
-fi
 # only check temperature on real hardware
 if [ -z "${HYPERVISOR}" ]; then
   check_temperature
