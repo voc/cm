@@ -31,7 +31,7 @@ ffmpeg -y -nostdin -hide_banner -re \
     -hwaccel_device streaming \
 % endif
     -thread_queue_size 512 -i tcp://localhost:15000?timeout=3000000 \
-% if parallel_slide_streaming:
+% if parallel_slide_streaming and slides_port:
     -thread_queue_size 512 -i tcp://localhost:15001?timeout=3000000 \
 % endif
 % if vaapi_enabled:
@@ -100,10 +100,10 @@ ffmpeg -y -nostdin -hide_banner -re \
     \
 % if srt_publish:
     -f mpegts \
-    srt://ingest.c3voc.de:1337?streamid=${endpoint}
+    srt://ingest.c3voc.de:1337?streamid=publish/${endpoint}/${auth_key}
 % else:
     -f matroska \
-    -password "${icecast_key}" \
+    -password "${auth_key}" \
     -content_type video/webm \
     icecast://live.ber.c3voc.de:7999/${endpoint}
 % endif
