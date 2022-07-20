@@ -15,7 +15,7 @@ devicenumber = 1
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 4
+devicenumber = 3
 mode = "1080p25"
 hdmi = true
 
