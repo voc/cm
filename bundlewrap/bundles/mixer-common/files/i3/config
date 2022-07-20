@@ -1,0 +1,7 @@
+font pango:monospace 16
+
+bindsym Mod4+Return exec kitty
+bindsym Mod4+Shift+c reload
+
+exec --no-startup-id i3-msg "workspace 1; append_layout ~/.config/i3/layout.json"
+exec --no-startup-id i3-msg "workspace 1; exec kitty irssi"

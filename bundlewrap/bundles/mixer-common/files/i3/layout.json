@@ -1,0 +1,45 @@
+{
+  "layout": "splitv",
+  "percent": 0.5,
+  "type": "con",
+  "nodes": [
+    {
+      "border": "normal",
+      "current_border_width": 2,
+      "floating": "auto_off",
+      "geometry": {
+        "height": 2109,
+        "width": 1276,
+        "x": 0,
+        "y": 0
+      },
+      "name": "Voctomix GUI",
+      "percent": 0.851004203643157,
+      "swallows": [
+        {
+          "title": "^Voctomix\\ GUI$"
+        }
+      ],
+      "type": "con"
+    },
+    {
+      "border": "normal",
+      "current_border_width": 2,
+      "floating": "auto_off",
+      "geometry": {
+        "height": 1440,
+        "width": 3078,
+        "x": 0,
+        "y": 0
+      },
+      "name": "irssi",
+      "percent": 0.148995796356843,
+      "swallows": [
+        {
+          "class": "^kitty$"
+        }
+      ],
+      "type": "con"
+    }
+  ]
+}
