@@ -1,0 +1,24 @@
+groups = ["debian-buster"]
+
+[metadata.crs-worker]
+token.encoding = "!kee_user:ansible|worker-groups|encoder5"
+token.meta = "!kee_user:ansible|worker-groups|encoder5-meta"
+secret.encoding = "!kee_pass:ansible|worker-groups|encoder5"
+secret.meta = "!kee_pass:ansible|worker-groups|encoder5-meta"
+
+[metadata.interfaces.eth0]
+ips = ["10.73.5.3/16"]
+gateway4 = "10.73.0.254"
+
+[metadata.voctocore.sources.cam1]
+devicenumber = 1
+mode = "1080i50"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 4
+mode = "1080p25"
+hdmi = true
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"
