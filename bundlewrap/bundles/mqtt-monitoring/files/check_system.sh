@@ -7,15 +7,13 @@ LIMIT_DISK_USAGE=90
 LIMIT_DISK_MIN_FREE_SPACE_KB=9765625
 LIMIT_LOAD=$(echo "$(grep processor /proc/cpuinfo | wc -l) * 2" | bc)
 
-TRUNC_HOSTNAME=$(hostnamectl --static | cut -d. -f1-2)
-
 HYPERVISOR=$(systemd-detect-virt)
 if [ $? -ne 0 ]; then
-	# When no virtualization is detected, systemd-detect-virt outputs
-	# "none", which is not as nice to check for. Set to empty string
-	# instead.
+    # When no virtualization is detected, systemd-detect-virt outputs
+    # "none", which is not as nice to check for. Set to empty string
+    # instead.
 
-	HYPERVISOR=""
+    HYPERVISOR=""
 fi
 
 send_mqtt_message () {
@@ -256,23 +254,20 @@ check_updates () {
 
 # send system uptime in every run
 ping () {
-  primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
   for i in 1 2 3 ; do
     mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${TRUNC_HOSTNAME}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}" && break
   done
-  debug_output "ping" $hostname $uptime
+  debug_output "ping" $TRUNC_HOSTNAME $uptime
 }
 
 # inform watchdog about graceful shutdown
 shutdown () {
-  primary_ip="$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)"
-
   for i in 1 2 3 ; do
     mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/shutdown" -m "{ \"name\": \"${TRUNC_HOSTNAME}\"}" && break
   done
 
-  debug_output "shutdown" $hostname
+  debug_output "shutdown" $TRUNC_HOSTNAME
 }
 
 # Check voc related websites
@@ -324,8 +319,8 @@ check_ac_power () {
 
 # no checks on shutdown
 if [ "$1" = "shutdown" ] ; then
-	shutdown
-	exit 0
+    shutdown
+    exit 0
 fi
 
 # general checks
@@ -348,7 +343,7 @@ if [ "232042" = "$(date +'%e%H%M')" ]; then
   check_updates
 fi
 
-if [ "mng.ber.c3voc.de" = "$(hostname -f)" ]; then
+if [ "mng.ber.c3voc.de" = "$TRUNC_HOSTNAME" ]; then
   check_http
 fi
 
