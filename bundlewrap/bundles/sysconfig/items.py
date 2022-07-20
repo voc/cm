@@ -13,6 +13,9 @@ files = {
     '/etc/motd': {
         'content': '',
     },
+    '/etc/modules': {
+        'content': '\n'.join(node.metadata.get('modules', set())) + '\n',
+    },
 }
 
 description = []
