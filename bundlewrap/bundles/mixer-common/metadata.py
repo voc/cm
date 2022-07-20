@@ -4,13 +4,16 @@ defaults = {
     'apt': {
         'packages': {
             'fonts-roboto': {},
-            'irssi': {},
-            'slim': {},
             'i3-wm': {},
-            'x11vnc': {},
-            'x11-xserver-utils': {},
-            'xserver-xorg': {},
+            'i3status': {},
+            'irssi': {},
             'kitty': {},
+            'slim': {},
+            'x11-utils': {},
+            'x11-xserver-utils': {},
+            'x11vnc': {},
+            'xdotool': {},
+            'xserver-xorg': {},
         },
     },
     'users': {
