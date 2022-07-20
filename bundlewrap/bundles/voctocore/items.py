@@ -46,9 +46,16 @@ svc_systemd['voctomix2-voctocore'] = {
 
 
 ### Monitoring
-files['/usr/local/sbin/check_system.d/check_recording.pl'] = {
+files['/usr/local/sbin/check_system.d/check_recording.sh'] = {
     # will get executed automatically by bundle:mqtt-monitoring
     'mode': '0755',
+    'content_type': 'mako',
+    'context': {
+        'event': node.metadata.get('event'),
+    },
+}
+files['/usr/local/sbin/check_system.d/check_recording.pl'] = {
+    'mode': '0644',
 }
 
 
