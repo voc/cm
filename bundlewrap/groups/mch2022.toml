@@ -1,4 +1,4 @@
-subgroups = ["saal1", "saal2", "saal3"]
+subgroups = ["saal1", "saal2", "saal3", "saal5"]
 
 [metadata.event]
 acronym='mch2022'
