@@ -3,6 +3,7 @@ Description=Timer for Service ${timer}
 
 [Timer]
 OnCalendar=${config['when']}
+AccuracySec=1s
 % if config.get('persistent', True):
 Persistent=true
 % else:
