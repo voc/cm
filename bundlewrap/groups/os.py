@@ -43,6 +43,13 @@ groups['debian'] = {
         'apt',
         'molly-guard',
     },
+    'metadata': {
+        'mqtt-monitoring': {
+            'plugins': {
+                'interface_speed',
+            },
+        },
+    },
     'os': 'debian',
 }
 

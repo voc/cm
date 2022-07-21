@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # I'm sorry…
 
@@ -166,43 +166,6 @@ check_logs () {
 }
 
 
-# check_interfaces implements:
-#
-#   * full-duplex check
-#   * line speed test for at least 1gbit
-#
-# limitations:
-#
-#   * check only work on real hardware.
-#   * ignored interfaces:
-#     + down status
-#     + with tags
-#     + bridges
-#     + loopback
-#  * no bond status check
-#
-check_interfaces () {
-  for interface in $(grep "iface" /etc/network/interfaces | grep -vE "iface lo |#|br|bond.*\..*|monitoring-ignore-me" | awk '{ print $2 }' | sed 's|:.*$||g' | sort | uniq); do
-    if [ "$(systemd-detect-virt)" = "none" ] && [ "$(grep -q up /sys/class/net/${interface}/operstate; echo $?)" -eq "0" ]; then
-      # we need at least 1gbit
-      if [ -e "/sys/class/net/${interface}/speed" ]; then
-        if [ "$(cat /sys/class/net/${interface}/speed)" -lt "1000" ]; then
-          send_mqtt_message "error" "system/interface/${interface}/${TRUNC_HOSTNAME}" "<red>${interface} has lass then 1Gbit/s</red>"
-        fi
-      fi
-      # we need full-dumplex
-      if [ -e "/sys/class/net/${interface}/duplex" ]; then
-        if [ "$(grep -q "full" /sys/class/net/${interface}/duplex; echo $?)" -eq "1" ]; then
-          send_mqtt_message "error" "system/interface/${interface}/${TRUNC_HOSTNAME}" "<red>${interface} runs not in full-dumplex mode!</red>"
-        fi
-      fi
-
-      debug_output "interface" $interface "$(cat /sys/class/net/${interface}/duplex)" "$(cat /sys/class/net/${interface}/speed)"
-    fi
-  done
-}
-
-
 # check_temperature implements:
 #   * intel cpu temperature with coretemp
 check_temperature () {
@@ -329,7 +292,6 @@ check_load
 check_disk_space
 check_raid
 check_logs
-#check_interfaces
 check_systemd
 check_ac_power
 
