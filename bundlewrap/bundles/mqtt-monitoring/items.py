@@ -6,7 +6,10 @@ files['/usr/local/sbin/check_system.sh'] = {
     },
     'mode': '0755',
 }
-directories['/usr/local/sbin/check_system.d'] = {}
+
+directories['/usr/local/sbin/check_system.d'] = {
+    'purge': True,
+}
 
 files['/usr/local/lib/systemd/system/send-mqtt-shutdown.service'] = {
     'content_type': 'mako',
@@ -14,8 +17,15 @@ files['/usr/local/lib/systemd/system/send-mqtt-shutdown.service'] = {
         'action:systemd-reload',
     },
 }
+
 svc_systemd['send-mqtt-shutdown'] = {
     'needs': {
         'file:/usr/local/lib/systemd/system/send-mqtt-shutdown.service',
     },
 }
+
+for plugin in node.metadata.get('mqtt-monitoring/plugins', set()):
+    files[f'/usr/local/sbin/check_system.d/{plugin}.sh'] = {
+        'source': f'plugins/{plugin}.sh',
+        'mode': '0755',
+    }
