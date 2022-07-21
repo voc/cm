@@ -1,17 +1,16 @@
-#MANAGED BY ANSIBLE
-
 [Unit]
-Description = voctomix2 core
+Description=voctomix2 core
 After=network.target
-Conflicts=voctocore.service
 
 [Service]
-Type = notify
-WorkingDirectory = /opt/voctomix2/release
-ExecStart = /opt/voctomix2/release/voctocore/voctocore.py --ini-file /opt/voctomix2/voctocore-config.ini -vv
-Restart = always
-RestartSec = 1s
-StartLimitInterval = 0
+User=voc
+Group=voc
+Type=notify
+WorkingDirectory=/opt/voctomix2/release
+ExecStart=/opt/voctomix2/release/voctocore/voctocore.py --ini-file /opt/voctomix2/voctocore-config.ini -vv
+Restart=always
+RestartSec=1s
+StartLimitInterval=0
 
 [Install]
-WantedBy = multi-user.target
+WantedBy=multi-user.target
