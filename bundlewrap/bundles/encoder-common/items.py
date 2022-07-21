@@ -9,4 +9,6 @@ for path in ('capture', 'encoded', 'tmp', 'intros', 'fuse'):
         'needed_by': {
             'bundle:voctocore',
         },
+        'owner': 'voc',
+        'group': 'voc',
     }
