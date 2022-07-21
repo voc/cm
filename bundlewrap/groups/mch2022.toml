@@ -1,5 +1,8 @@
-subgroups = ["saal1", "saal2", "saal3", "saal4", "saal5", "saal6"]
+subgroups = ["saal1", "saal2", "saal3", "saal4", "saal5", "saal6", "server"]
 
 [metadata.event]
 acronym='mch2022'
 slug='mch2022'
+
+[metadata.voctocore]
+mirror_view = true
