@@ -19,6 +19,9 @@ files['/etc/voctolight.ini'] = {
     'context': {
         'light': node.metadata.get('voctolight'),
     },
+    'triggers': {
+        'svc_systemd:voctolight:restart',
+    },
 }
 
 svc_systemd['voctolight'] = {
