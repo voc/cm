@@ -5,11 +5,6 @@ from os.path import join
 import bwkeepass as keepass
 
 defaults = {
-    'apt': {
-        'packages': {
-            'kitty-terminfo': {},
-        },
-    },
     'users': {
         'root': {
             'home': '/root',
@@ -18,6 +13,13 @@ defaults = {
         },
     },
 }
+
+if node.os_version[0] > 9:
+    defaults['apt'] = {
+        'packages': {
+            'kitty-terminfo': {},
+        },
+    }
 
 
 @metadata_reactor.provides(
