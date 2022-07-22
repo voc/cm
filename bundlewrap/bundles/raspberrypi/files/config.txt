@@ -1,0 +1,18 @@
+disable_overscan=1
+hdmi_force_hotplug=1
+dtparam=spi=on
+dtparam=audio=on
+dtoverlay=vc4-fkms-v3d
+max_framebuffers=2
+hdmi_drive=2
+force_turbo=1
+
+gpu_mem=${node.metadata.get('raspberrypi/gpu_mem', 128)}
+
+% if node.os == 'debian':
+arm_64bit=1
+% endif
+
+% for k, v in sorted(node.metadata.get('raspberrypi/config.txt', {}).items()):
+${k}=${v}
+% endfor
