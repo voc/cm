@@ -24,3 +24,9 @@ files = {
         **file_perms,
     },
 }
+
+svc_systemd['wifi-country'] = {
+    'enabled': False,
+    'masked': True,
+    'running': False,
+}
