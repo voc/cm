@@ -24,6 +24,7 @@ svc_systemd = {
             'pkg_apt:',
         },
     },
+}
 
 if node.os_version[0] > 9:
     svc_systemd['systemd-resolved'] = {
