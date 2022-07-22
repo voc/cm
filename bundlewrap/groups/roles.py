@@ -56,3 +56,9 @@ groups['crs-workers'] = {
         },
     },
 }
+
+groups['tallycom'] = {
+    'member_patterns': {
+        r'^tallycom[0-9-]+$',
+    },
+}
