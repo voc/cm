@@ -13,6 +13,10 @@ defaults = {
             'isc-dhcp-common': {
                 'installed': False,
             },
+            'smartmontools': {
+                # Why is this even installed in the first place?
+                'installed': False,
+            },
         },
     },
     'raspberrypi': {
