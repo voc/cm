@@ -10,9 +10,7 @@ files = {
     '/etc/htoprc.global': {
         'source': 'htoprc',
     },
-    '/etc/motd': {
-        'content': '',
-    },
+    '/etc/motd': {},
     '/etc/modules': {
         'content': '\n'.join(node.metadata.get('modules', set())) + '\n',
     },
