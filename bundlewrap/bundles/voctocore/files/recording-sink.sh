@@ -1,10 +1,6 @@
 #!/bin/sh
-mosquitto_pub \
-    --capath /etc/ssl/certs/ \
-    -h "${mqtt['server']}" \
-    -p 8883 \
-    -u "${mqtt['username']}" \
-    -P "${mqtt['password']}" \
+
+[ -x /usr/local/sbin/voc2mqtt ] && /usr/local/sbin/voc2mqtt \
     -t "/voc/alert" \
     -m "{\"level\":\"info\",\"component\":\"recording/${node.name}\",\"msg\":\"Recording started…\"}" &
 
@@ -35,21 +31,11 @@ ffmpeg \
 
 ffmpeg_error_code=$?
 if [ "0" -ne "$ffmpeg_error_code" ]; then
-    mosquitto_pub \
-        --capath /etc/ssl/certs/ \
-        -h "${mqtt['server']}" \
-        -p 8883 \
-        -u "${mqtt['username']}" \
-        -P "${mqtt['password']}" \
+    [ -x /usr/local/sbin/voc2mqtt ] && /usr/local/sbin/voc2mqtt \
         -t "/voc/alert" \
         -m "{\"level\":\"info\",\"component\":\"recording/${node.name}\",\"msg\":\"Recording failed!\"}" &
 else
-    mosquitto_pub \
-        --capath /etc/ssl/certs/ \
-        -h "${mqtt['server']}" \
-        -p 8883 \
-        -u "${mqtt['username']}" \
-        -P "${mqtt['password']}" \
+    [ -x /usr/local/sbin/voc2mqtt ] && /usr/local/sbin/voc2mqtt \
         -t "/voc/alert" \
         -m "{\"level\":\"info\",\"component\":\"recording/${node.name}\",\"msg\":\"Recording <red>stopped</red> (ffmpeg error code $ffmpeg_error_code)\"}" &
 fi

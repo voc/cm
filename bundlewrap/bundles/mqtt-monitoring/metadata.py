@@ -3,6 +3,7 @@ import bwkeepass as keepass
 defaults = {
     'apt': {
         'packages': {
+            'jq': {},
             'mosquitto-clients': {},
         },
     },
