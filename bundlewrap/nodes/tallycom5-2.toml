@@ -6,4 +6,4 @@ gateway4 = "10.73.0.254"
 
 [metadata.voctolight]
 host = "encoder2.lan.c3voc.de"
-input = "cam3"
+input = "cam1"
