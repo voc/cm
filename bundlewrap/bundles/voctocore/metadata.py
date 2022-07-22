@@ -15,6 +15,7 @@ defaults = {
         'parallel_slide_recording': True,
         'parallel_slide_streaming': True,
         'static_background_image': True,
+        'streaming_use_dynaudnorm': False,
         'vaapi': False,
         'srt_publish': False,
         'backgrounds': {

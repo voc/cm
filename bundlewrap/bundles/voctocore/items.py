@@ -65,6 +65,7 @@ files['/opt/voctomix2/scripts/recording-sink.sh'] = {
     'context': {
         'event': node.metadata.get('event'),
         'mqtt': node.metadata.get('mqtt-monitoring'),
+        'dynaudnorm': node.metadata.get('voctocore/streaming_use_dynaudnorm'),
         'parallel_slide_recording': node.metadata.get('voctocore/parallel_slide_recording'),
         'slides_port': slides_port,
     },

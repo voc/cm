@@ -58,7 +58,9 @@ ffmpeg -y -nostdin -hide_banner -re \
     [0:a]pan=stereo|c0=c3|c1=c3[s_trans_2];\
     \
     [s_pgm] asplit=2 [pgm_1] [pgm_2] ;\
-    [pgm_2] dynaudnorm=$para_pa_leveler [pgm_lev] ;\
+% if dynaudnorm:
+    [pgm_2] dynaudnorm=$para_pa_leveler [pgm_le] ;\
+% endif
     \
     [s_trans_1] compand=$para_trans_gate [trans_gate_1] ;\
     [trans_gate_1] compand=$para_trans_limiter [trans_lim_1] ;\
@@ -68,14 +70,21 @@ ffmpeg -y -nostdin -hide_banner -re \
     [trans_gate_2] compand=$para_trans_limiter [trans_lim_2] ;\
     [trans_lim_2] dynaudnorm=$para_trans_leveler [trans_lev_2] ;\
     \
+% if dynaudnorm:
     [pgm_lev] volume=$para_mix_vol_pa,asplit [mix_int_1][mix_int_2] ;\
+% else:
+    [pgm_2] volume=$para_mix_vol_pa,asplit [mix_int_1][mix_int_2] ;\
+% endif
     [trans_lev_1] volume=$para_mix_vol_trans [mix_trans_1] ;\
     [trans_lev_2] volume=$para_mix_vol_trans [mix_trans_2] ;\
     [mix_int_1][mix_trans_1] amix=inputs=2:duration=longest [mix_out_1] ;\
-    [mix_int_2][mix_trans_2] amix=inputs=2:duration=longest [mix_out_2] ;\
+    [mix_int_2][mix_trans_2] amix=inputs=2:duration=longest [mix_out_2] \
+% if dynaudnorm:
+    ;\
     [pgm_1] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [pgm]; \
     [mix_out_1] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [duck_out_1]; \
     [mix_out_2] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [duck_out_2] \
+% endif
     " \
 % if vaapi_enabled:
     -c:v h264_vaapi \
@@ -94,9 +103,15 @@ ffmpeg -y -nostdin -hide_banner -re \
 % endif
     -metadata:s:v:0 title="HD" \
     -metadata:s:v:0 title="Slides" \
+% if dynaudnorm:
     -map "[pgm]" -metadata:s:a:0 title="native" \
     -map "[duck_out_1]" -metadata:s:a:1 title="translated" \
     -map "[duck_out_2]" -metadata:s:a:2 title="translated-2" \
+% else:
+    -map "[pgm_1]" -metadata:s:a:0 title="native" \
+    -map "[mix_out_1]" -metadata:s:a:1 title="translated" \
+    -map "[mix_out_2]" -metadata:s:a:2 title="translated-2" \
+% endif
     \
 % if srt_publish:
     -f mpegts \
