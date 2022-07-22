@@ -7,7 +7,7 @@ secret.encoding = "!kee_pass:ansible|worker-groups|encoder3"
 secret.meta = "!kee_pass:ansible|worker-groups|encoder3-meta"
 
 [metadata.event]
-room_name = "Clairvoyance"
+room_name = "Clairvoyance 🔮"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.3.3/16"]
