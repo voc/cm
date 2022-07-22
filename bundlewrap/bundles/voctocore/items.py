@@ -59,11 +59,6 @@ files['/usr/local/sbin/check_system.d/check_recording.pl'] = {
 }
 
 
-### Additional scripts
-directories['/opt/voctomix2/scripts'] = {
-    'purge': True,
-}
-
 ## recording-sink
 files['/opt/voctomix2/scripts/recording-sink.sh'] = {
     'content_type': 'mako',
