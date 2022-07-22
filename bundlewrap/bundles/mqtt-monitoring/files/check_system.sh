@@ -20,13 +20,16 @@ send_mqtt_message () {
   error_level=$1
   component=$2
   message=$3
+  msg='{"level":"'$error_level'","component":"'$component'","msg":"'$message'"}"'
+  cmd=voc2mqtt -t "/voc/alert" -m "$msg"
 
   if [ -n "$DEBUG" ]; then
-    echo voc2mqtt -t \"/voc/alert\" -m \"{\\\"level\\\":\\\"${error_level}\\\",\\\"component\\\":\\\"${component}\\\",\\\"msg\\\":\\\"${message}\\\"}\"
+    echo $cmd
   else
     for i in 1 2 3 ; do
-      voc2mqtt -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}" && break
+       $($cmd) && break
     done
+    voc2mqtt -t "hosts/${TRUNC_HOSTNAME}/alert/${error_level}" -m "$msg"
   fi
 }
 
@@ -219,9 +222,11 @@ check_updates () {
 ping () {
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
   ips="$(ip -brief a | awk '{if ($2 == "UP") {for(i=3;i<=NF;++i)print $i}}' | jq --raw-input --slurp 'split("\n") | .[0:-1]' --compact-output)"
+  msg='{ "name": "'$TRUNC_HOSTNAME'", "interval": "60", "additional_data": { "uptime": '$uptime', "ips": '$ips' }}'
   for i in 1 2 3 ; do
-    voc2mqtt -t "/voc/checkin" -m "{ \"name\": \"${TRUNC_HOSTNAME}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime}, \"ips\": ${ips} }}" && break
+    voc2mqtt -t "/voc/checkin" -m "$msg" && break
   done
+  voc2mqtt -t "hosts/$TRUNC_HOSTNAME/checkin" -m "$msg"
   debug_output "ping" $TRUNC_HOSTNAME $uptime $ips
 }
 
