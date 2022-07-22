@@ -6,6 +6,9 @@ supported_os = {
         11: 'bullseye',
         99: 'unstable',
     },
+    'raspbian': {
+        9: 'stretch',
+    }
 }
 
 try:
