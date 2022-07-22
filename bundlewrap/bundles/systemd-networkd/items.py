@@ -24,21 +24,28 @@ svc_systemd = {
             'pkg_apt:',
         },
     },
-    'systemd-resolved': {
+
+if node.os_version[0] > 9:
+    svc_systemd['systemd-resolved'] = {
         'after': {
             'pkg_apt:',
         },
-    },
-}
+    }
 
-symlinks = {
-    '/etc/resolv.conf': {
-        'target': '/lib/systemd/resolv.conf',
-        'needs': {
-            'svc_systemd:systemd-resolved',
+    symlinks = {
+        '/etc/resolv.conf': {
+            'target': '/lib/systemd/resolv.conf',
+            'needs': {
+                'svc_systemd:systemd-resolved',
+            },
         },
-    },
-}
+    }
+else:
+    files['/etc/resolv.conf'] = {
+        'after': {
+            'pkg_apt:',
+        },
+    }
 
 directories = {
     '/etc/systemd/network': {
