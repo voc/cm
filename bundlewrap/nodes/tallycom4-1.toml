@@ -5,4 +5,6 @@ ips = ["10.73.4.15/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctolight]
+host = "encoder1.lan.c3voc.de"
+input = "cam3"
 gpio_red = 12
