@@ -19,6 +19,9 @@ for i in ROOMS_WITH_MINIONS + ROOMS_WITHOUT_MINIONS:
             f'encoder{i}',
             f'mixer{i}',
         },
+        'member_patterns': {
+            f'^tallycom{i}-[0-9+]$',
+        },
         'metadata': {
             'event': {
                 'room_name': f'Saal {i}',
