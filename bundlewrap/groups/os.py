@@ -67,6 +67,7 @@ groups['raspbian'] = {
         # TODO remove these bundles once raspbian is a subgroup of linux
         'mqtt-monitoring',
         'openssh',
+        'sudo',
         'sysconfig',
         'systemd',
         'systemd-timers',
