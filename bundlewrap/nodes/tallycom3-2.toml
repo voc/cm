@@ -1,0 +1,8 @@
+groups = ["raspbian-stretch"]
+
+[metadata.interfaces.eth0]
+ips = ["10.73.3.16/16"]
+gateway4 = "10.73.0.254"
+
+[metadata.voctolight]
+gpio_red = 12
