@@ -1,6 +1,8 @@
 groups['linux'] = {
     'subgroups': {
         'debian',
+        # TODO enable this once we have reinstalled all tally pis
+        #'raspbian',
     },
     'bundles': {
         'grub',
@@ -51,6 +53,37 @@ groups['debian'] = {
         },
     },
     'os': 'debian',
+}
+
+groups['raspbian'] = {
+    'subgroups': {
+        'raspbian-stretch',
+    },
+    'bundles': {
+        'apt',
+        'molly-guard',
+        'raspberrypi',
+
+        # TODO remove these bundles once raspbian is a subgroup of linux
+        'mqtt-monitoring',
+        'openssh',
+        'sysconfig',
+        'systemd',
+        'systemd-timers',
+        'users',
+    },
+    'metadata': {
+        'users': {
+            'pi': {
+                'delete': True,
+            },
+        },
+    },
+    'os': 'raspbian',
+}
+
+groups['raspbian-stretch'] = {
+    'os_version': (9,)
 }
 
 groups['debian-buster'] = {
