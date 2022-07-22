@@ -1,0 +1,3 @@
+#!/bin/sh
+
+mosquitto_pub --capath /etc/ssl/certs/ -h "${mqtt['server']}" -p 8883 -u "${mqtt['username']}" -P "${mqtt['password']}" "$@"

@@ -1,7 +1,13 @@
+files['/usr/local/sbin/voc2mqtt'] = {
+    'content_type': 'mako',
+    'context': {
+        'mqtt': node.metadata.get('mqtt-monitoring'),
+    },
+    'mode': '0755',
+}
 files['/usr/local/sbin/check_system.sh'] = {
     'content_type': 'jinja2',
     'context': {
-        'mqtt': node.metadata.get('mqtt-monitoring'),
         'event': node.metadata.get('event'),
     },
     'mode': '0755',

@@ -22,10 +22,10 @@ send_mqtt_message () {
   message=$3
 
   if [ -n "$DEBUG" ]; then
-    echo mosquitto_pub --capath /etc/ssl/certs/ -h \"{{ mqtt.server }}\" -u \"{{ mqtt.username }}\" -P \"{{ mqtt.password }}\" -t \"/voc/alert\" -m \"{\\\"level\\\":\\\"${error_level}\\\",\\\"component\\\":\\\"${component}\\\",\\\"msg\\\":\\\"${message}\\\"}\"
+    echo voc2mqtt -t \"/voc/alert\" -m \"{\\\"level\\\":\\\"${error_level}\\\",\\\"component\\\":\\\"${component}\\\",\\\"msg\\\":\\\"${message}\\\"}\"
   else
     for i in 1 2 3 ; do
-      mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}" && break
+      voc2mqtt -t "/voc/alert" -m "{\"level\":\"${error_level}\",\"component\":\"${component}\",\"msg\":\"${message}\"}" && break
     done
   fi
 }
@@ -218,16 +218,17 @@ check_updates () {
 # send system uptime in every run
 ping () {
   uptime="$(cat /proc/uptime | awk '{ print $1 }')"
+  ips="$(ip -brief a | awk '{if ($2 == "UP") {for(i=3;i<=NF;++i)print $i}}' | jq --raw-input --slurp 'split("\n") | .[0:-1]' --compact-output)"
   for i in 1 2 3 ; do
-    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/checkin" -m "{ \"name\": \"${TRUNC_HOSTNAME}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime} }}" && break
+    voc2mqtt -t "/voc/checkin" -m "{ \"name\": \"${TRUNC_HOSTNAME}\", \"interval\": \"60\", \"additional_data\": { \"uptime\": ${uptime}, \"ips\": ${ips} }}" && break
   done
-  debug_output "ping" $TRUNC_HOSTNAME $uptime
+  debug_output "ping" $TRUNC_HOSTNAME $uptime $ips
 }
 
 # inform watchdog about graceful shutdown
 shutdown () {
   for i in 1 2 3 ; do
-    mosquitto_pub --capath /etc/ssl/certs/ -h "{{ mqtt.server }}" -p 8883 -u "{{ mqtt.username }}" -P "{{ mqtt.password }}" -t "/voc/shutdown" -m "{ \"name\": \"${TRUNC_HOSTNAME}\"}" && break
+    voc2mqtt -t "/voc/shutdown" -m "{ \"name\": \"${TRUNC_HOSTNAME}\"}" && break
   done
 
   debug_output "shutdown" $TRUNC_HOSTNAME
