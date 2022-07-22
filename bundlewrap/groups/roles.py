@@ -61,4 +61,8 @@ groups['tallycom'] = {
     'member_patterns': {
         r'^tallycom[0-9-]+$',
     },
+    'bundles': {
+        'voctolight',
+        'voctomix2',
+    },
 }
