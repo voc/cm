@@ -26,7 +26,6 @@ defaults = {
     'sysctl': {
         'options': {
             'vm.swappiness': '5',
-            'net.ipv6.conf.all.disable_ipv6': '1',
         },
     },
 }
