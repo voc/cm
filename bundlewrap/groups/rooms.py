@@ -39,6 +39,14 @@ for i in ROOMS_WITH_MINIONS + ROOMS_WITHOUT_MINIONS:
 
 groups['server'] = {
     'members': {
+        'router',
         'storage',
+    },
+    'metadata': {
+        'grub': {
+            'cmdline_linux': {
+                'net.ifnames': '1',
+            },
+        },
     },
 }
