@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+
+from json import dump
+from os import environ
+from os.path import dirname, join
+from requests import post
+from sys import exit
+
+TOKEN = environ.get('NETBOX_AUTH_TOKEN')
+QUERY = '''{
+  ip_address_list {
+    description
+    address
+    custom_fields
+  }
+}'''
+
+if not TOKEN:
+    print('Please set the environment variable NETBOX_AUTH_TOKEN to run this script')
+    exit(1)
+
+r = post(
+    'https://netbox.c3voc.de/graphql/',
+    headers={
+        'Authorization': f'Token {TOKEN}',
+        'Accept': 'application/json'
+    },
+    json={
+        'query': QUERY,
+    },
+)
+r.raise_for_status()
+
+result = {}
+for address in r.json()['data']['ip_address_list']:
+    if address.get('custom_fields', {}).get('mac_address', ''):
+        result[address['address'].split('/')[0]] = {
+            'description': address['description'],
+            'mac': address['custom_fields']['mac_address'],
+        }
+
+with open(join(dirname(dirname(__file__)), 'configs', 'dhcp.json'), 'w+') as f:
+    dump(
+        result,
+        f,
+        indent=4,
+        sort_keys=True,
+    )
