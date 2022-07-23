@@ -6,6 +6,7 @@ groups['linux'] = {
     },
     'bundles': {
         'grub',
+        'lldp',
         'locale',
         'mqtt-monitoring',
         'nftables',
