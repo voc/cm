@@ -35,6 +35,11 @@ groups['mixers'] = {
         'voctomix2',
     },
     'metadata': {
+        'mqtt-monitoring': {
+            'plugins': {
+                'ac_power',
+            },
+        },
         'systemd': {
             'ignore_power_switch': True,
         },

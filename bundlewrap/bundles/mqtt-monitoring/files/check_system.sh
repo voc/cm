@@ -277,19 +277,6 @@ check_systemd () {
   fi
 }
 
-# check if system is running on battery and the capacity is <= 30%
-check_ac_power () {
-  if [ -f "/sys/class/power_supply/AC/online" ]; then
-    ac_online=$(cat /sys/class/power_supply/AC/online)
-    if [ -f "/sys/class/power_supply/BAT0/capacity" ]; then
-      bat0_capacity=$(cat /sys/class/power_supply/BAT0/capacity)
-    else
-      bat0_capacity="-1"
-    fi
-    [ "0" -eq "$ac_online" ] && [ "$bat0_capacity" -le 30 ] && send_mqtt_message "error" "system/power/${TRUNC_HOSTNAME}" "<red>AC power offline! Battery $bat0_capacity % left.</red>"
-  fi
-}
-
 # no checks on shutdown
 if [ "$1" = "shutdown" ] ; then
     shutdown
@@ -303,7 +290,6 @@ check_disk_space
 check_raid
 check_logs
 check_systemd
-check_ac_power
 
 # special cases
 # only check temperature on real hardware
