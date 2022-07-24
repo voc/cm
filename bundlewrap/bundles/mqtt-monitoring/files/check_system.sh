@@ -17,20 +17,24 @@ if [ $? -ne 0 ]; then
 fi
 
 send_mqtt_message () {
-  error_level=$1
-  component=$2
-  message=$3
-  msg='{"level":"'$error_level'","component":"'$component'","msg":"'$message'"}"'
-  cmd=voc2mqtt -t "/voc/alert" -m "$msg"
+    error_level=$1
+    component=$2
+    message=$3
 
-  if [ -n "$DEBUG" ]; then
-    echo $cmd
-  else
+    set -x
+
+    [ -n "$DEBUG" ] && set -x
     for i in 1 2 3 ; do
-       $($cmd) && break
+        voc2mqtt \
+            -t '/voc/alert' \
+            -m "{\"level\":\"$error_level\",\"component\":\"$component\",\"msg\":\"$message\"}"  && break
     done
-    voc2mqtt -t "hosts/${TRUNC_HOSTNAME}/alert/${error_level}" -m "$msg"
-  fi
+
+    voc2mqtt \
+        -t 'hosts/'$TRUNC_HOSTNAME'/alert/'$error_level \
+        -m "{\"level\":\"$error_level\",\"component\":\"$component\",\"msg\":\"$message\"}"
+
+    [ -n "$DEBUG" ] &&set +x
 }
 
 debug_output() {
