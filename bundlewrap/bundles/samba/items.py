@@ -19,4 +19,18 @@ files = {
             'svc_systemd:smbd:restart',
         },
     },
+    '/etc/systemd/system/nmbd.service.d/bundlewrap.conf': {
+        'source': 'override.conf',
+        'triggers': {
+            'action:systemd-reload',
+            'svc_systemd:nmbd:restart',
+        },
+    },
+    '/etc/systemd/system/smbd.service.d/bundlewrap.conf': {
+        'source': 'override.conf',
+        'triggers': {
+            'action:systemd-reload',
+            'svc_systemd:smbd:restart',
+        },
+    },
 }
