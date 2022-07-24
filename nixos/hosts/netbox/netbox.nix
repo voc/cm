@@ -9,6 +9,8 @@
     extraConfig = ''
       # REMOTE_AUTH_BACKEND = 'social_core.backends.open_id_connect.OpenIdConnectAuth'
       # SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = 'https://auth.c3voc.de'
+
+      EXEMPT_VIEW_PERMISSIONS = ['*']
     '';
   };
 
