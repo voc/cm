@@ -45,6 +45,15 @@ files['/home/mixer/.config/i3/config'] = {
     },
 }
 
+files['/home/mixer/.config/i3status/config'] = {
+    'source' : 'i3status/config',
+    'owner': 'mixer',
+    'group': 'mixer',
+    'triggers': {
+        'svc_systemd:display-manager:restart',
+    },
+}
+
 files['/home/mixer/.config/i3/layout.json'] = {
     'source' : 'i3/layout.json',
     'owner': 'mixer',

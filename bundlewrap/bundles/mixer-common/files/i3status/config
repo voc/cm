@@ -1,0 +1,38 @@
+general {
+    output_format = "i3bar"
+    colors = true
+    interval = 1
+}
+
+order += "ethernet eth0"
+order += "battery 0"
+order += "load"
+order += "time"
+
+ethernet eth0 {
+    format_up = "E: %ip (%speed)"
+    format_down = "E: down"
+    separator_block_width = 51
+}
+
+battery 0 {
+    format = "%status %percentage (%remaining)"
+    format_down = "No battery"
+    status_chr = "CHARGING:"
+    status_bat = "ON BATTERY:"
+    status_unk = "?"
+    status_full = "FULLY CHARGED:"
+    path = "/sys/class/power_supply/BAT%d/uevent"
+    low_threshold = 30
+    separator_block_width = 51
+}
+
+time {
+    format = "%a, %Y-%m-%d %H:%M:%S (W%V)"
+    separator_block_width = 51
+}
+
+load {
+    format = "L: %5min"
+    separator_block_width = 51
+}
