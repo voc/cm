@@ -9,7 +9,7 @@ defaults = {
         'root': {
             'home': '/root',
             'shell': '/bin/bash',
-            'password': keepass.password(['Allgemein', 'Benutzerpasswörter', 'SSH Passwort und Key root']) if environ.get('BW_KEEPASS_FILE') else None,
+            'password': keepass.password(['Allgemein', 'Benutzerpasswörter', 'SSH Passwort und Key root']) if environ.get('BW_KEEPASS_PASSWORD') else None,
         },
     },
 }
@@ -65,7 +65,7 @@ def user_voc(metadata):
     return {
         'users': {
             'voc': {
-                'password': keepass.password(['ansible', 'logins', 'voc']) if environ.get('BW_KEEPASS_FILE') else None,
+                'password': keepass.password(['ansible', 'logins', 'voc']) if environ.get('BW_KEEPASS_PASSWORD') else None,
                 'ssh_pubkey': repo.libs.faults.join_faults(pubkey, '\n'),
                 'sudo_commands': {'ALL'},
             },
