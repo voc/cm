@@ -1,5 +1,8 @@
 hostname = "10.73.200.201"
-bundles = ["isc-dhcp-server"]
+bundles = [
+    "isc-dhcp-server",
+    "netdata",
+]
 groups = ["debian-bullseye"]
 
 [metadata.interfaces.ens18]
