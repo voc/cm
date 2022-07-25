@@ -11,6 +11,9 @@ defaults = {
         'server': keepass.url(['ansible', 'mqtt']),
         'username': keepass.username(['ansible', 'mqtt']),
         'password': keepass.password(['ansible', 'mqtt']),
+        'plugins': {
+            'fan_speed',
+        },
     },
     'systemd-timers': {
         'timers': {

@@ -26,9 +26,3 @@ svc_systemd['thinkfan'] = {
         'pkg_apt:thinkfan',
     },
 }
-
-files[f'/usr/local/sbin/check_system.d/fan_speed.sh'] = {
-    'source': 'fan_speed.sh',
-    'content_type': 'mako',
-    'mode': '0755',
-}
