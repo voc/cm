@@ -43,6 +43,9 @@ telegraf_config = {
         'processes': [{}],
         'system': [{}],
         'swap': [{}],
+        'sensors' [{
+            'timeout': '2s',
+        }],
         **node.metadata.get('telegraf/input_plugins/builtin', {}),
     },
     'outputs': {

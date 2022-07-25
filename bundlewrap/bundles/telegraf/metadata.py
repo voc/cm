@@ -1,6 +1,7 @@
 defaults = {
     'apt': {
         'packages': {
+            'lm-sensors': {},
             'telegraf': {},
         },
         'repos': {
