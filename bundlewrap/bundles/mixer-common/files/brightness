@@ -1,0 +1,20 @@
+#!/bin/bash
+
+TARGET=""
+MAX="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
+
+if [ "$1" == "half" ]
+then
+    TARGET="$(echo "$MAX / 2" | bc)"
+elif [ "$1" == "full" ]
+then
+    TARGET="$MAX"
+fi
+
+if [ -z "$TARGET" ]
+then
+    cat /sys/class/backlight/intel_backlight/brightness
+    exit 0
+fi
+
+echo "$TARGET" > /sys/class/backlight/intel_backlight/brightness

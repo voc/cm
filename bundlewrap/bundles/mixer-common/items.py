@@ -46,7 +46,11 @@ files['/home/mixer/.config/i3/config'] = {
 }
 
 files['/home/mixer/.config/i3status/config'] = {
-    'source' : 'i3status/config',
+    'delete': True,
+}
+
+files['/home/mixer/.config/i3pystatus/config.py'] = {
+    'source' : 'i3pystatus_config.py',
     'owner': 'mixer',
     'group': 'mixer',
     'triggers': {
@@ -65,6 +69,10 @@ files['/home/mixer/.config/i3/layout.json'] = {
 
 files['/usr/local/bin/voctogui-i3-layout.sh'] = {
     'source' : 'i3/voctogui-i3-layout.sh',
+    'mode': 755,
+}
+
+files['/usr/local/sbin/brightness'] = {
     'mode': 755,
 }
 
@@ -95,3 +103,35 @@ for script in [ 'knast.pl', 'selectvocmixer.pl' ]:
             'svc_systemd:display-manager:restart',
         },
     }
+
+directories['/opt/i3pystatus/src'] = {}
+
+actions['i3pystatus_create_virtualenv'] = {
+    'command': '/usr/bin/python3 -m virtualenv -p python3 /opt/i3pystatus/venv/',
+    'unless': 'test -d /opt/i3pystatus/venv/',
+    'needs': {
+        'directory:/opt/i3pystatus/src',
+        'pkg_apt:python3-virtualenv',
+    },
+}
+
+actions['i3pystatus_install'] = {
+    'command': ' && '.join([
+        'cd /opt/i3pystatus/src',
+        '/opt/i3pystatus/venv/bin/pip install --upgrade pip colour netifaces',
+        '/opt/i3pystatus/venv/bin/pip install --upgrade -e .',
+    ]),
+    'needs': {
+        'action:i3pystatus_create_virtualenv',
+    },
+    'triggered': True,
+}
+
+git_deploy['/opt/i3pystatus/src'] = {
+    'repo': 'https://github.com/enkore/i3pystatus.git',
+    'rev': 'current',
+    'triggers': {
+        'action:i3pystatus_install',
+        'svc_systemd:display-manager:restart',
+    },
+}
