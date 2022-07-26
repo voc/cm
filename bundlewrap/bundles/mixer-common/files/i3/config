@@ -14,7 +14,7 @@ default_border none
 
 bar {
   workspace_buttons no
-  status_command i3status
+  status_command /opt/i3pystatus/venv/bin/python ~/.config/i3pystatus/config.py
 }
 
 exec --no-startup-id x11vnc -display :0 -loop0 -shared -nopw -scale 1/2
