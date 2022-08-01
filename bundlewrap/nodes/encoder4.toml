@@ -20,9 +20,5 @@ mode = "1080p25"
 hdmi = true
 
 [metadata.voctocore.audio.original]
-streams = "0"
-input = "cam1"
-
-[metadata.voctocore.audio.translated]
-streams = "1"
+streams = "0+1"
 input = "cam1"
