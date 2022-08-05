@@ -1,8 +1,6 @@
-files['/etc/thinkfan.conf'] = {
-    'content_type': 'mako',
-    'context': {
-        'hwmon': node.metadata.get('thinkfan/hwmon', []),
-    },
+files['/usr/local/bin/thinkfan-configwriter'] = {
+    'source': 'configwriter.py',
+    'mode': '0755',
     'triggers': {
         'svc_systemd:thinkfan:restart',
     },
@@ -22,7 +20,7 @@ files['/etc/systemd/system/thinkfan.service.d/bundlewrap.conf'] = {
 
 svc_systemd['thinkfan'] = {
     'needs': {
-        'file:/etc/thinkfan.conf',
+        'file:/usr/local/bin/thinkfan-configwriter',
         'pkg_apt:thinkfan',
     },
 }

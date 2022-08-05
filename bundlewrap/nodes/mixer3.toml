@@ -4,12 +4,3 @@ groups = ["debian-buster"]
 [metadata.interfaces.eth0]
 ips = ["10.73.3.1/16"]
 gateway4 = "10.73.0.254"
-
-[metadata.thinkfan]
-hwmon = [
-    "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input",
-    "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp2_input",
-    "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp3_input",
-    "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp4_input",
-    "/sys/devices/platform/coretemp.0/hwmon/hwmon3/temp5_input",
-]
