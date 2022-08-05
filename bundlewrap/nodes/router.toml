@@ -6,9 +6,9 @@ bundles = [
 groups = ["debian-bullseye"]
 
 [metadata.interfaces.ens18]
-#dhcp = true
-ips = ["94.45.241.105/24"]
-gateway4 = "94.45.241.1"
+dhcp = true
+#ips = ["94.45.241.105/24"]
+#gateway4 = "94.45.241.1"
 
 [metadata.interfaces.ens19]
 ips = [
