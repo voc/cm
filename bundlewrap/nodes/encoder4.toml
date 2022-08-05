@@ -11,13 +11,12 @@ ips = ["10.73.4.3/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 0
-mode = "1080p25"
+devicenumber = 1
+mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 5
 mode = "1080p25"
-hdmi = true
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
