@@ -4,3 +4,4 @@ ansible/relays.json
 venv/
 *.un~
 *.swp
+.envrc.local
