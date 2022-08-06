@@ -4,6 +4,11 @@ groups['servercase'] = {
         'storage',
     },
     'metadata': {
+        'apt': {
+            'packages': {
+                'qemu-guest-agent': {},
+            },
+        },
         'grub': {
             'cmdline_linux': {
                 'net.ifnames': '1',
