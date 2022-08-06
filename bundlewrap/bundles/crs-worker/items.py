@@ -40,6 +40,8 @@ files['/usr/local/lib/systemd/system/crs-worker.target'] = {
     },
 }
 
+autostart_scripts = node.metadata.get('crs-worker/autostart_scripts', set())
+
 for worker, script in {
     'recording-scheduler': 'script-A-recording-scheduler.pl',
     'mount4cut': 'script-B-mount4cut.pl',
@@ -59,16 +61,24 @@ for worker, script in {
         'content_type': 'mako',
         'source': 'crs-runner.service',
         'context': {
-            'worker': worker,
+            'autostart': (worker in autostart_scripts),
             'script': script,
+            'worker': worker,
         },
         'triggers': {
             'action:systemd-reload',
         },
     }
 
+    if worker in autostart_scripts:
+        files[f'/usr/local/lib/systemd/system/crs-{worker}.service']['triggers'].add(
+            f'svc_systemd:crs-{worker}:restart',
+        )
+
+
     svc_systemd[f'crs-{worker}'] = {
-        'running': None, # do not start these workers automatically
+        # do not start these workers automatically, unless requested
+        'running': (True if worker in autostart_scripts else None),
         'needs': {
             'file:/opt/crs-scripts/tracker-profile-meta.sh',
             'file:/opt/crs-scripts/tracker-profile.sh',

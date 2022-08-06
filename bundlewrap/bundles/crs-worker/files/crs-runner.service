@@ -11,4 +11,8 @@ RestartSec=10
 SyslogIdentifier=crs-${worker}
 
 [Install]
+% if autostart:
+WantedBy=multi-user.target
+% else:
 WantedBy=crs-worker.target
+% endif
