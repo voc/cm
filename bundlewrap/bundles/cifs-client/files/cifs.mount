@@ -1,18 +1,12 @@
 [Unit]
 Description=${mount}
-
 After=network.target
-% for depend in sorted(depends_on):
-BindsTo=${depend}
-After=${depend}
-% endfor
-
 
 [Mount]
 What=${serverpath}
 Where=${mountpoint}
-Type=${type}
-Options=${','.join('{}={}'.format(k,v) for k,v in sorted(mount_options.items()))}
+Type=cifs
+Options=${opts}
 
 [Install]
 WantedBy=multi-user.target

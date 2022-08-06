@@ -9,42 +9,46 @@ svc_systemd = {}
 
 
 for mount, data in node.metadata.get('cifs-client', {}).get('mounts', {}).items():
-    directories[data['mountpoint']] = {
-        'needs': data.get('needs', set()),
-    }
-    for parameter in ['mode', 'owner', 'group']:
-        if parameter in data:
-            directories[data['mountpoint']][parameter] = data[parameter]
-    if node.has_bundle('zfs'):
-        directories[data['mountpoint']]['needs'].add('zfs_pool:')
-        directories[data['mountpoint']]['needs'].add('zfs_dataset:')
-    files['/etc/systemd/system/{}.mount'.format(data['unitname'])] = {
-        'mode': "0644",
-        'source': "cifs.mount",
+    unitname = data['mountpoint'][1:].replace('-', '\\x2d').replace('/', '-')
+
+    mount_options = set()
+    for opt, value in data.get('mount_options', {}).items():
+        if value is not None:
+            mount_options.add(f'{opt}={value}')
+        else:
+            mount_options.add(opt)
+
+    files[f'/usr/local/lib/systemd/system/{unitname}.mount'] = {
+        'mode': '0644',
+        'source': 'cifs.mount',
         'content_type': 'mako',
-        'context': data,
+        'context': {
+            'mount': mount,
+            'opts': ','.join(sorted(mount_options)),
+            **data,
+        },
         'triggers': [
-            "action:systemd-daemon-reload",
+            'action:systemd-reload',
         ],
     }
-    svc_systemd['{}.mount'.format(data['unitname'])] = {
+
+    svc_systemd[f'{unitname}.mount'] = {
         'needs': [
-            'file:/etc/systemd/system/{}.mount'.format(data['unitname']),
-            'file:/etc/cifs-credentials/{}'.format(mount),
+            'file:/usr/local/lib/systemd/system/{}.mount'.format(unitname),
             'directory:{}'.format(data['mountpoint']),
         ],
     }
-    if data.get('credentials', None):
-        files['/etc/cifs-credentials/{}'.format(mount)] = {
-            'mode': "0400",
-            'source': "cifs.credentials",
+
+    if data.get('credentials'):
+        files[f'/etc/cifs-credentials/{mount}'] = {
+            'mode': '0400',
+            'source': 'cifs.credentials',
             'content_type': 'mako',
             'context': data,
-            'triggers': [
-                "action:systemd-daemon-reload",
-                'svc_systemd:{}.mount:restart'.format(data['unitname']),
-            ],
+            'triggers': {
+                'action:systemd-reload',
+                f'svc_systemd:{unitname}.mount:restart',
+            },
         }
-        svc_systemd['{}.mount'.format(data['unitname'])]['needs'].append(
-                'file:/etc/cifs-credentials/{}'.format(mount))
+        svc_systemd[f'{unitname}.mount']['needs'].add(f'file:/etc/cifs-credentials/{mount}')
 
