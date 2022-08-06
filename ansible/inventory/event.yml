@@ -13,21 +13,6 @@ audio-pi2.lan.c3voc.de stream=a2
 audio-pi3.lan.c3voc.de stream=a3
 audio-pi4.lan.c3voc.de stream=a4
 
-[tally-pis]
-tallycom1-1.lan.c3voc.de cam=cam1 encoder=encoder1.lan.c3voc.de
-tallycom1-2.lan.c3voc.de cam=cam2 encoder=encoder1.lan.c3voc.de
-tallycom2-1.lan.c3voc.de cam=cam1 encoder=encoder2.lan.c3voc.de
-tallycom2-2.lan.c3voc.de cam=cam2 encoder=encoder2.lan.c3voc.de
-tallycom3-1.lan.c3voc.de cam=cam1 encoder=encoder3.lan.c3voc.de
-tallycom3-2.lan.c3voc.de cam=cam2 encoder=encoder3.lan.c3voc.de
-tallycom4-1.lan.c3voc.de cam=cam1 encoder=encoder4.lan.c3voc.de
-tallycom4-2.lan.c3voc.de cam=cam2 encoder=encoder4.lan.c3voc.de
-tallycom5-1.lan.c3voc.de cam=cam1 encoder=encoder5.lan.c3voc.de
-tallycom5-2.lan.c3voc.de cam=cam2 encoder=encoder5.lan.c3voc.de
-tallycom6-1.lan.c3voc.de cam=cam1 encoder=encoder6.lan.c3voc.de
-tallycom6-2.lan.c3voc.de cam=cam2 encoder=encoder6.lan.c3voc.de
-tallycom23-1.lan.c3voc.de cam=cam23 encoder=encoder23.lan.c3voc.de
-
 # Proxmox Hosts
 [proxmox]
 blinky.alb.c3voc.de
