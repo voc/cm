@@ -36,6 +36,18 @@ slogan = ""
 Please add the rooms used in your event to the `subgroups` list of the
 file.
 
+Available room setups:
+* saal1
+* saal2
+* saal3
+* saal4
+* saal5
+* saal6
+* saal80
+* saal81
+* saal191
+* servercase
+
 To set a room name, simply specify the following in `nodes/yourencoder.toml`:
 
 ```toml
