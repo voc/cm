@@ -1,4 +1,4 @@
-# c3voc Bundlewrap Repository (DEMO ONLY, NO PRODUCTION USE!)
+# c3voc Bundlewrap Repository
 
 Setting up this repository is easy:
 
