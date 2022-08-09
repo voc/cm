@@ -21,9 +21,6 @@ send_mqtt_message () {
     component=$2
     message=$3
 
-    set -x
-
-    [ -n "$DEBUG" ] && set -x
     for i in 1 2 3 ; do
         voc2mqtt \
             -t '/voc/alert' \
@@ -33,8 +30,6 @@ send_mqtt_message () {
     voc2mqtt \
         -t 'hosts/'$TRUNC_HOSTNAME'/alert/'$error_level \
         -m "{\"level\":\"$error_level\",\"component\":\"$component\",\"msg\":\"$message\"}"
-
-    [ -n "$DEBUG" ] &&set +x
 }
 
 debug_output() {
