@@ -4,7 +4,7 @@ from os.path import exists, join
 assert node.has_bundle('voctocore')
 
 room_number = node.metadata.get('event/room_number', 0)
-event_acronym = node.metadata.get('event/acronym')
+event_slug = node.metadata.get('event/slug')
 
 directories['/opt/voc/share'] = {
     'purge': True,
@@ -12,56 +12,56 @@ directories['/opt/voc/share'] = {
 
 for target_file, possible_sources in {
     '/opt/voc/share/overlay_hd.png': [
-        join(event_acronym, f'saal{room_number}', 'overlay_hd.png'),
-        join(event_acronym, 'overlay_hd.png'),
+        join(event_slug, f'saal{room_number}', 'overlay_hd.png'),
+        join(event_slug, 'overlay_hd.png'),
         'default-overlay-hd.png',
     ],
     '/opt/voc/share/overlay_slides.png': [
-        join(event_acronym, f'saal{room_number}', 'overlay_slides.png'),
-        join(event_acronym, 'overlay_slides.png'),
+        join(event_slug, f'saal{room_number}', 'overlay_slides.png'),
+        join(event_slug, 'overlay_slides.png'),
         'default-overlay-slides.png',
     ],
     '/opt/voc/share/bgloop.ts': [
-        join(event_acronym, f'saal{room_number}', 'bgloop.ts'),
-        join(event_acronym, 'bgloop.ts'),
+        join(event_slug, f'saal{room_number}', 'bgloop.ts'),
+        join(event_slug, 'bgloop.ts'),
         'default-bgloop.ts',
     ],
     '/opt/voc/share/bg.png': [
-        join(event_acronym, f'saal{room_number}', 'bg.png'),
-        join(event_acronym, 'bg.png'),
+        join(event_slug, f'saal{room_number}', 'bg.png'),
+        join(event_slug, 'bg.png'),
         'default-bg.png',
     ],
     '/opt/voc/share/bg_lec.png': [
-        join(event_acronym, f'saal{room_number}', 'bg_lec.png'),
-        join(event_acronym, 'bg_lec.png'),
+        join(event_slug, f'saal{room_number}', 'bg_lec.png'),
+        join(event_slug, 'bg_lec.png'),
         'default-bg_lec.png',
     ],
     '/opt/voc/share/bg_lecm.png': [
-        join(event_acronym, f'saal{room_number}', 'bg_lecm.png'),
-        join(event_acronym, 'bg_lecm.png'),
+        join(event_slug, f'saal{room_number}', 'bg_lecm.png'),
+        join(event_slug, 'bg_lecm.png'),
         'default-bg_lecm.png',
     ],
     '/opt/voc/share/bg_sbs.png': [
-        join(event_acronym, f'saal{room_number}', 'bg_sbs.png'),
-        join(event_acronym, 'bg_sbs.png'),
+        join(event_slug, f'saal{room_number}', 'bg_sbs.png'),
+        join(event_slug, 'bg_sbs.png'),
         'default-bg_sbs.png',
     ],
     '/opt/voc/share/pause.ts': [
-        join(event_acronym, f'saal{room_number}', 'pause.ts'),
-        join(event_acronym, 'pause.ts'),
+        join(event_slug, f'saal{room_number}', 'pause.ts'),
+        join(event_slug, 'pause.ts'),
         'default-pause.ts',
     ],
     '/opt/voc/share/nostream.ts': [
-        join(event_acronym, f'saal{room_number}', 'nostream.ts'),
-        join(event_acronym, 'nostream.ts'),
+        join(event_slug, f'saal{room_number}', 'nostream.ts'),
+        join(event_slug, 'nostream.ts'),
         'default-nostream.ts',
-        join(event_acronym, f'saal{room_number}', 'nostream.png'),
-        join(event_acronym, 'nostream.png'),
+        join(event_slug, f'saal{room_number}', 'nostream.png'),
+        join(event_slug, 'nostream.png'),
         'default-nostream.png',
     ],
     '/opt/voc/share/pause-music.mp3': [
-        join(event_acronym, f'saal{room_number}', 'pause-music.mp3'),
-        join(event_acronym, 'pause-music.mp3'),
+        join(event_slug, f'saal{room_number}', 'pause-music.mp3'),
+        join(event_slug, 'pause-music.mp3'),
         'default-pause-music.mp3',
     ],
 }.items():

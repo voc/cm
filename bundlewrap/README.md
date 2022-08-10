@@ -40,9 +40,8 @@ subgroups = ["saal1", "saal2"]
 
 [metadata.event]
 timezone = "Europe/Berlin"
-acronym = "XYZ"
 name = "ZYXcon"
-slogan = ""
+slug = "XYZ"
 ```
 
 Please add the rooms used in your event to the `subgroups` list of the
