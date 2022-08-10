@@ -1,8 +1,4 @@
 # c3voc Bundlewrap Repository
-Host *
-    ControlPath ~/.ssh/cm-%r@%h:%p
-    ControlMaster auto
-    ControlPersist 10m
 
 Setting up this repository is easy:
 
