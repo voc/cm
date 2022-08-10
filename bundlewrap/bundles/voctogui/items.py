@@ -1,11 +1,13 @@
 assert node.has_bundle('voctomix2')
 
+encoder_ip = node.metadata.get('voctogui/encoder-ip', '10.73.{}.3'.format(node.metadata.get('event/room_number')))
+
 files['/opt/voctomix2/voctogui-config.ini'] = {
     'content_type': 'mako',
     'context': {
+        'encoder_ip': encoder_ip,
         'high_dpi': node.metadata.get('voctogui/high_dpi'),
         'play_audio': node.metadata.get('voctogui/play_audio'),
-        'room_number': node.metadata.get('event/room_number'),
         'video_display': node.metadata.get('voctogui/video_display'),
     },
     'triggers': {
@@ -26,7 +28,7 @@ files['/usr/local/lib/systemd/system/voctomix2-voctogui.service'] = {
 files['/usr/local/bin/voctogui-check-connection.sh'] = {
     'content_type': 'mako',
     'context': {
-        'room_number': node.metadata.get('event/room_number'),
+        'encoder_ip': encoder_ip,
     },
     'source' : 'voctogui-check-connection.sh',
     'mode': 755,
