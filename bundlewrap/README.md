@@ -10,6 +10,12 @@ Setting up this repository is easy:
 pip3 install -r requirements.txt
 ```
 
+or
+```
+poetry install
+```
+
+
 You do not need to set up Keepass or a bundlewrap .secrets.cfg for basic
 encoder setup.
 
