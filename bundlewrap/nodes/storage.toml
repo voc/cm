@@ -1,1 +1,16 @@
-bundles = ["encoder-common"]
+groups = ["debian-bullseye", "crs-workers"]
+bundles = ["encoder-common", "samba", "rsync"]
+hostname = "storage.voc.fslab.de"
+cmd_wrapper_outer = "sh -c {}"
+
+[metadata]
+hostname = "storage.voc.fslab.de"
+
+[metadata.interfaces.eth0]
+ips = ["10.73.128.101/16"]
+gateway4 = "10.73.128.201"
+
+[metadata.crs-worker]
+token.encoding = "!kee_user:ansible|worker-groups|fslab-storage"
+secret.encoding = "!kee_pass:ansible|worker-groups|fslab-storage"
+

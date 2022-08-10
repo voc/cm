@@ -1,7 +1,7 @@
 Port 22
 AddressFamily inet
 
-PermitRootLogin No
+PermitRootLogin prohibit-password
 Protocol 2
 AuthorizedKeysFile .ssh/authorized_keys
 GSSAPIAuthentication no

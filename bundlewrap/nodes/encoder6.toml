@@ -21,3 +21,6 @@ mode = "1080p25"
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "cam1"
+
+[metadata.event]
+room_name = "HS 8"
