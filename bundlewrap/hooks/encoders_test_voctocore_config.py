@@ -77,6 +77,9 @@ GSTREAMER_SUPPORTED_FORMATS = {
 
 def node_apply_start(repo, node, interactive=False, **kwargs):
     for sname, sconfig in node.metadata.get('voctocore/sources', {}).items():
+        if sconfig.get('kind', 'decklink') != 'decklink':
+            continue
+
         if not sname == 'slides' and not match(r'^cam[0-9]+$', sname):
             raise BundleError(f'{node.name}: voctocore source {sname} has invalid name, must be either "slides" or match "cam[0-9]+"')
 
