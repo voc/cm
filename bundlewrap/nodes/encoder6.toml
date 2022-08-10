@@ -23,4 +23,4 @@ streams = "0+1"
 input = "cam1"
 
 [metadata.event]
-room_name = "HS 8"
+room_name = "HS8"
