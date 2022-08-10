@@ -1,8 +1,6 @@
 from bundlewrap.exceptions import BundleError
 
-event = node.metadata.get('event/acronym', '')
-if not event and node.has_bundle('voctocore'):
-    raise BundleError(f'{node.name} bundle:encoder-common requires event/acronym to be set, is "{event}".')
+event = node.metadata.get('event/slug', '')
 
 directories[f'/video'] = {
     'owner': 'voc',

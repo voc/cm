@@ -2,7 +2,7 @@
 
 [ -x /usr/local/sbin/voc2mqtt ] && /usr/local/sbin/voc2mqtt \
     -t "/voc/alert" \
-    -m "{\"level\":\"info\",\"component\":\"recording/${node.name}\",\"msg\":\"Recording started…\"}" &
+    -m "{\"level\":\"info\",\"component\":\"recording/${node.name}\",\"msg\":\"Recording to /video/capture/${event['slug']}/ started…\"}" &
 
 ffmpeg \
     -v verbose \
@@ -27,7 +27,7 @@ ffmpeg \
         -map "[s_trans_2]" -c:a s302m -metadata:s:a:1 title="Translated-2" \
         -strict -2 \
     -flags +global_header \
-    -f segment -segment_time 180 -strftime 1 -segment_format mpegts "/video/capture/${event['acronym']}/${event['room_name'].lower().replace(' ', '') }-%Y-%m-%d_%H-%M-%S-$$.ts"
+    -f segment -segment_time 180 -strftime 1 -segment_format mpegts "/video/capture/${event['slug']}/${event['room_name'].lower().replace(' ', '') }-%Y-%m-%d_%H-%M-%S-$$.ts"
 
 ffmpeg_error_code=$?
 if [ "0" -ne "$ffmpeg_error_code" ]; then
