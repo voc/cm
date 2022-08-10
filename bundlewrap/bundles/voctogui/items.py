@@ -1,6 +1,6 @@
 assert node.has_bundle('voctomix2')
 
-encoder_ip = node.metadata.get('voctogui/encoder-ip', '10.73.{}.3'.format(node.metadata.get('event/room_number')))
+encoder_ip = node.metadata.get('voctogui/encoder-ip', '10.73.{}.3'.format(node.metadata.get('event/room_number', 0)))
 
 files['/opt/voctomix2/voctogui-config.ini'] = {
     'content_type': 'mako',
