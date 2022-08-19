@@ -50,6 +50,7 @@ defaults = {
             'strace': {},
             'systemd': {},
             'tcpdump': {},
+            'zsh': {},
             'tmux': {},
             'tree': {},
             'unzip': {},
