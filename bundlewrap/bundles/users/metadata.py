@@ -10,7 +10,7 @@ defaults = {
             'home': '/root',
             'shell': '/usr/bin/zsh',
             'password': keepass.password(['Allgemein', 'Benutzerpasswörter', 'SSH Passwort und Key root']) if environ.get('BW_KEEPASS_PASSWORD') else None,
-            'ssh_pubkey': 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICM+JQvdIp51w6haGKHnBhWQjKDasnHsR5WZRnNMydul lukas2511@vocfoo\nssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH7W3NIGeEGRHu63+dP7s6M5/s0uHODI4QV2Y1yOzDEq\n',
+            'ssh_pubkey': 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICM+JQvdIp51w6haGKHnBhWQjKDasnHsR5WZRnNMydul lukas2511@vocfoo\nssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH7W3NIGeEGRHu63+dP7s6M5/s0uHODI4QV2Y1yOzDEq\nssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILVVF1Oo6d/RjJUzuSALI2/w64U/W0Ss0E4hEq82hhXV root@storage.voc.fslab.de\n',
         },
     },
 }
