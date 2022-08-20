@@ -7,6 +7,11 @@ git_deploy['/opt/crs-scripts'] = {
     'rev': 'master',
 }
 
+files['/etc/fuse.conf'] = {
+    'content_type': 'text',
+    'content': '# /etc/fuse.conf - Configuration file for Filesystem in Userspace (FUSE)\nuser_allow_other\n',
+}
+
 files['/opt/crs-scripts/tracker-profile.sh'] = {
     'content_type': 'mako',
     'source': 'environment',
