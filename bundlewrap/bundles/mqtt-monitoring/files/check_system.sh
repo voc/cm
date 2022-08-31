@@ -125,9 +125,9 @@ check_raid () {
   fi
 
   if [ -e "$(command -v zpool)" ] && [ "$(lsmod | grep -q zfs; echo $?)" -eq "0" ];then
-    zpool list -H | while read line; do
+    zpool list -H -o name,health | while read line; do
       pool_name=$(echo $line| awk  '{ print $1 }')
-      pool_health=$(echo $line| awk  '{ print $9 }')
+      pool_health=$(echo $line| awk  '{ print $2 }')
 
       echo $pool_health | grep -iqE 'online'
       if [ "$?" -ne "0" ]; then
