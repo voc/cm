@@ -1,0 +1,24 @@
+groups = ["debian-bullseye"]
+
+[metadata.crs-worker]
+token.encoding = "!kee_user:ansible|worker-groups|encoderc4"
+token.meta = "!kee_user:ansible|worker-groups|encoderc4-meta"
+secret.encoding = "!kee_pass:ansible|worker-groups|encoderc4"
+secret.meta = "!kee_pass:ansible|worker-groups|encoderc4-meta"
+
+[metadata.interfaces.enp0s31f6]
+ips = ["172.23.23.5/23", "10.73.97.3/24"]
+gateway4 = "172.23.23.1"
+
+[metadata.voctocore.sources.cam1]
+devicenumber = 1
+mode = "1080i50"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 0
+mode = "1080p60"
+hdmi = 1
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"

@@ -1,9 +1,0 @@
-groups = ["debian-buster"]
-
-[metadata.crs-worker]
-token.encoding = "!kee_user:ansible|worker-groups|minion5"
-secret.encoding = "!kee_pass:ansible|worker-groups|minion5"
-
-[metadata.interfaces.eth0]
-ips = ["10.73.5.7/16"]
-gateway4 = "10.73.0.254"

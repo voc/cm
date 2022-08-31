@@ -1,0 +1,8 @@
+subgroups = ["c4"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+acronym = "oc"
+slug = "oc"
+name = "OpenChaos"
+slogan = ""
