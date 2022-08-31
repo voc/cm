@@ -1,3 +1,6 @@
 deb http://deb.debian.org/debian/ bullseye main non-free contrib
 deb http://security.debian.org/debian-security bullseye-security main contrib non-free
 deb http://deb.debian.org/debian/ bullseye-updates main contrib non-free
+
+deb [arch=amd64] http://download.proxmox.com/debian/pve bullseye pve-no-subscription
+
