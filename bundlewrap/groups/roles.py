@@ -1,6 +1,6 @@
 groups['encoders'] = {
     'member_patterns': {
-        r'^encoder[0-9]+$',
+        r'^encoder.+$',
     },
     'bundles': {
         'rsync',
@@ -21,13 +21,13 @@ groups['encoders'] = {
 
 groups['minions'] = {
     'member_patterns': {
-        r'^minion[0-9]+$',
+        r'^minion.+$',
     },
 }
 
 groups['mixers'] = {
     'member_patterns': {
-        r'^mixer[0-9]+$',
+        r'^mixer.+$',
     },
     'bundles': {
         'mixer-common',
@@ -64,7 +64,7 @@ groups['crs-workers'] = {
 
 groups['tallycom'] = {
     'member_patterns': {
-        r'^tallycom[0-9-]+$',
+        r'^tallycom.+$',
     },
     'bundles': {
         'voctolight',
