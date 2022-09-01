@@ -10,6 +10,9 @@ secret.meta = "!kee_pass:ansible|worker-groups|encoderc4-meta"
 ips = ["172.23.23.5/23", "10.73.97.3/24"]
 gateway4 = "172.23.23.1"
 
+[metadata.firewall.port_rules]
+"*" = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
 mode = "1080i50"
