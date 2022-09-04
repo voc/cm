@@ -1,0 +1,9 @@
+[Unit]
+Description=rsync recordings from encoder
+
+[Service]
+User=voc
+Group=voc
+ExecStart=/usr/local/sbin/rsync-from-encoder %i ${slug}
+Restart=on-failure
+RestartSec=10

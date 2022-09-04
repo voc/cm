@@ -38,6 +38,21 @@ files['/usr/local/sbin/crs-mount'] = {
     'mode': '0700',
 }
 
+files['/usr/local/sbin/rsync-from-encoder'] = {
+    'owner': 'voc',
+    'mode': '0700',
+}
+
+files['/usr/local/lib/systemd/system/rsync-from-encoder@.service'] = {
+    'content_type': 'mako',
+    'context': {
+        'slug': node.metadata.get('event/slug', '*'),
+    },
+    'triggers': {
+        'action:systemd-reload',
+    },
+}
+
 files['/usr/local/lib/systemd/system/crs-worker.target'] = {
     'triggers': {
         'action:systemd-reload',
