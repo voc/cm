@@ -34,6 +34,10 @@ files['/opt/crs-scripts/tracker-profile-meta.sh'] = {
     },
 }
 
+files['/usr/local/sbin/crs-mount'] = {
+    'mode': '0700',
+}
+
 files['/usr/local/lib/systemd/system/crs-worker.target'] = {
     'triggers': {
         'action:systemd-reload',

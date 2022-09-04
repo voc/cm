@@ -1,0 +1,31 @@
+#!/bin/bash
+
+[[ -n "$DEBUG" ]] && set -x
+
+set -euo pipefail
+
+TARGET="${1:-none}"
+USERID="$(id -u)"
+
+if [[ "$TARGET" == "none" ]]
+then
+    echo "Usage: $0 <storage>" >&2
+    exit 1
+fi
+
+if [[ $USERID -ne 0 ]]
+then
+    echo "$0 needs to run as root!" >&2
+    exit 1
+fi
+
+mount -t cifs -o uid=voc,password=,ro "//${TARGET}/video" /video
+mount -t cifs -o uid=voc,password=,ro "//${TARGET}/tmp" /video/tmp
+mount -t cifs -o uid=voc,password=,ro "//${TARGET}/encoded" /video/encoded
+
+echo "Mount successful, you can now start the worker scripts:"
+echo
+echo "  all scripts: sudo systemctl start crs-worker.target"
+echo "encoding only: sudo systemctl start crs-encoding.service"
+
+exit 0
