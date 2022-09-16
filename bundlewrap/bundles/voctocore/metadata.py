@@ -18,28 +18,7 @@ defaults = {
         'streaming_use_dynaudnorm': False,
         'vaapi': False,
         'srt_publish': False,
-        'backgrounds': {
-            'lec': {
-                'kind': 'img',
-                'path': '/opt/voc/share/bg_lec.png',
-                'composites': 'lec',
-            },
-            'lecm': {
-                'kind': 'img',
-                'path': '/opt/voc/share/bg_lecm.png',
-                'composites': '|lec',
-            },
-            'sbs': {
-                'kind': 'img',
-                'path': '/opt/voc/share/bg_sbs.png',
-                'composites': 'sbs',
-            },
-            'fs': {
-                'kind': 'test',
-                'pattern': 'black',
-                'composites': 'fs',
-            },
-        },
+        'backgrounds': {},
     },
 }
 

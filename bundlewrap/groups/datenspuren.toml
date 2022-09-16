@@ -5,3 +5,10 @@ timezone = "Europe/Berlin"
 name = "Datenspuren 2022"
 slug = "DS2022"
 acronym = "DS2022"
+
+[metadata.voctocore]
+static_background_image = false
+
+[metadata.voctocore.backgrounds.background]
+kind = "file"
+location = "/opt/voc/share/bgloop.ts"
