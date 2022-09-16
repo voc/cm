@@ -1,0 +1,7 @@
+subgroups = ["saal3"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Datenspuren 2022"
+slug = "DS2022"
+acronym = "DS2022"
