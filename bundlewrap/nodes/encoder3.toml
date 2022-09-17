@@ -1,5 +1,8 @@
 groups = ["debian-buster"]
 
+[metadata.event]
+room_name = "Großer Saal"
+
 [metadata.crs-worker]
 token.encoding = "!kee_user:ansible|worker-groups|encoder3"
 token.meta = "!kee_user:ansible|worker-groups|encoder3-meta"
