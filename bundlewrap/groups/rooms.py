@@ -1,4 +1,5 @@
 ROOMS_WITHOUT_MINIONS = (
+    23,
     81,
     191,
 )

@@ -50,9 +50,10 @@ Available room setups:
 * saal4
 * saal5
 * saal6
-* saal80
-* saal81
-* saal191
+* saal23 - CCCB
+* saal80 - muCCC
+* saal81 - hacc
+* saal191 - Seibert
 * servercase
 
 To set a room name, simply edit the room_name value in `nodes/yourencoder.toml`:
