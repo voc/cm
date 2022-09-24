@@ -64,3 +64,11 @@ room_name = "myroom"
 
 It is important that you never commit `yourevent.toml` to the main branch
 of this repository.
+
+## Custom artwork
+
+Using this repository, you can deploy room-specific or event-specific (or a mixture of both) artwork to the encoders.
+
+Place your artwork into `data/voctocore-artwork/files/<event_slug>/` for event-specific artwork, into `data/voctocore-artwork/files/<event_slug>/saal<number>/` for room-specific artwork.
+
+Room-specific artwork will take preference over event-specific artwork. In case neither is found, bundlewrap will use the generic VOC artwork.
