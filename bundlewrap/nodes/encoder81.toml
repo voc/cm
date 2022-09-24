@@ -1,13 +1,13 @@
 groups = ["debian-buster", "mixers"]
 
-[metadata.event]
-room_name = "Audimax 1"
-
 [metadata.crs-worker]
 token.encoding = "!kee_user:ansible|worker-groups|encoder-hacc"
 token.meta = "!kee_user:ansible|worker-groups|encoder-hacc-meta"
 secret.encoding = "!kee_pass:ansible|worker-groups|encoder-hacc"
 secret.meta = "!kee_pass:ansible|worker-groups|encoder-hacc-meta"
+
+[metadata.event]
+room_name = "Audimax 1"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.81.3/16"]

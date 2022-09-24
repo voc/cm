@@ -55,7 +55,7 @@ Available room setups:
 * saal191
 * servercase
 
-To set a room name, simply specify the following in `nodes/yourencoder.toml`:
+To set a room name, simply edit the room_name value in `nodes/yourencoder.toml`:
 
 ```toml
 [metadata.event]

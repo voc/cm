@@ -24,7 +24,6 @@ for i in ROOMS_WITH_MINIONS + ROOMS_WITHOUT_MINIONS:
         },
         'metadata': {
             'event': {
-                'room_name': f'Saal {i}',
                 'room_number': i
             },
             'voctocore': {
