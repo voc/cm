@@ -26,21 +26,38 @@ if node.os_version[0] > 9:
     'users',
 )
 def add_users_from_json(metadata):
+    ign_default =  metadata.get('do_not_import_default_users', False)
+
     with open(join(repo.path, 'configs', 'users.json'), 'r') as f:
         json = loads(f.read())
 
     users = {}
     metadata_users = metadata.get('users', {})
-    # First, add all admin users
     for uname, should_exist in json.items():
-        if should_exist:
-            users[uname] = {
-                'ssh_pubkey': keepass.notes(['ansible', 'authorized_keys', uname]),
-                'sudo_commands': {'ALL'},
-            }
+        if should_exist and not ign_default:
+            users[uname] = {}
         elif uname not in metadata_users:
             users[uname] = {
                 'delete': True,
+            }
+
+    return {
+        'users': users,
+    }
+
+
+@metadata_reactor.provides(
+    'users',
+)
+def user_keys_and_sudo(metadata):
+    users = {}
+    metadata_users = metadata.get('users', {})
+    # First, add all admin users
+    for uname, uconfig in metadata_users.items():
+        if not uconfig.get('delete', False):
+            users[uname] = {
+                'ssh_pubkey': keepass.notes(['ansible', 'authorized_keys', uname]),
+                'sudo_commands': {'ALL'},
             }
 
     return {
