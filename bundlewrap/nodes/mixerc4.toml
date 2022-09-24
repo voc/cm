@@ -1,0 +1,4 @@
+# This system does not exist. However, we created this node file to
+# simplify the configuration management a bit.
+#     "Gehen sie weiter, hier gibt es nichts zu sehen"
+dummy = true
