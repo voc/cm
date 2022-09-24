@@ -1,0 +1,48 @@
+groups = ["debian-bullseye"]
+
+[metadata]
+do_not_import_default_users = true
+hostname = "encoderc4.labor.koeln.ccc.de"
+
+[metadata.crs-worker.secrets]
+encoding.secret = "!kee_pass:ansible|worker-groups|encoderc4"
+encoding.token = "!kee_user:ansible|worker-groups|encoderc4"
+meta.secret = "!kee_pass:ansible|worker-groups|encoderc4-meta"
+meta.token = "!kee_user:ansible|worker-groups|encoderc4-meta"
+
+[metadata.event]
+name = "OpenChaos"
+room_name = "C4"
+room_number = 97
+slug = "oc"
+
+[metadata.interfaces.enp0s31f6]
+ips = ["172.23.23.118/23", "10.73.97.3/24"]
+gateway4 = "172.23.23.1"
+
+[metadata.firewall.port_rules]
+"*" = ["rfc1918"]
+"*/udp" = ["rfc1918"]
+
+[metadata.users.florob]
+[metadata.users.florolf]
+[metadata.users.ike]
+[metadata.users.lukas2511]
+[metadata.users.qb]
+
+[metadata.voctocore]
+streaming_auth_key = ""
+streaming_endpoint = "s97"
+
+[metadata.voctocore.sources.cam1]
+devicenumber = 1
+mode = "1080i50"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 0
+mode = "1080p60"
+hdmi = true
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"
