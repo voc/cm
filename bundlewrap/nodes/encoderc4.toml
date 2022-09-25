@@ -32,6 +32,8 @@ gateway4 = "172.23.23.1"
 
 [metadata.voctocore]
 streaming_auth_key = ""
+# because we're using voctomix2 main branch
+custom_voctocore_config = true
 streaming_endpoint = "s97"
 
 [metadata.voctocore.sources.cam1]
