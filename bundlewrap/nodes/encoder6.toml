@@ -7,7 +7,7 @@ secret.encoding = "!kee_pass:ansible|worker-groups|encoder6"
 secret.meta = "!kee_pass:ansible|worker-groups|encoder6-meta"
 
 [metadata.event]
-room_name = "Saal 6"
+room_name = "DOUGLASIE (Mathegebäude, V)"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.6.3/16"]

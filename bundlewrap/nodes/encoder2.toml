@@ -7,7 +7,7 @@ secret.encoding = "!kee_pass:ansible|worker-groups|encoder2"
 secret.meta = "!kee_pass:ansible|worker-groups|encoder2-meta"
 
 [metadata.event]
-room_name = "Saal 2"
+room_name = "BIRKE (Mathegebäude, V)"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.2.3/16"]
