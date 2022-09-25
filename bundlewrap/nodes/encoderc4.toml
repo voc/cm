@@ -48,3 +48,7 @@ hdmi = true
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "cam1"
+
+[metadata.voctomix2]
+# because voctomix2 branch is not yet compatible with bullseye as of 2022-09-25
+rev = "main"
