@@ -5,7 +5,7 @@ token.encoding = "!kee_user:ansible|worker-groups|encoder23"
 secret.encoding = "!kee_pass:ansible|worker-groups|encoder23"
 
 [metadata.event]
-room_name = "EMACS (Hauptgebäude, V)"
+room_name = "EMACS"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.23.3/16"]
