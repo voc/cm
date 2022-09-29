@@ -19,11 +19,11 @@
   services.yate.config = {
     regexroute = "[default]
 \${username}^$=-;error=noauth
-^+49941383388\\(.*\\)$=lateroute/\\1";
+\${sip_to}^\"\" <sip:+49941383388\\(.*\\)@sip.plusnet.de>$=lateroute/\\1";
     ysipchan = {
-      general = {
-        ignorevia = "yes";
-      };
+      #general = {
+      #  ignorevia = "yes";
+      #};
       #"listener general".enable = "no";
       #"listener dect" = {
       #  type = "udp";
@@ -87,7 +87,7 @@
   systemd.services.yate = {
     preStart = let
       accfile = pkgs.writeText "accfile.conf" (lib.generators.toINI { } {
-        sipgate = {
+        dialin = {
           enabled = "yes";
           protocol = "sip";
           username = "fo315618tr148633_04";

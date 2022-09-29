@@ -18,8 +18,8 @@ buildPythonApplication rec {
     owner = "dect-e";
     repo = pname;
     #rev = "v${version}";
-    rev = "83a0c73c5232f9bfa63c2898a958d67a2a17caeb";
-    sha256 = "sha256-7ItooKr2pUMqkpGLJ2NP5vlAs/xRH/Q1n5kTgbTDgWs=";
+    rev = "819390a47426af1d617e011fd0576b4d87235ae6";
+    sha256 = "sha256-WkJNNqiKTX/5zyvje5YeSoG0jz8nLpJOZaDdUoNrl7Y=";
   };
 
   sourceRoot = "source/src";
