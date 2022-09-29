@@ -8,6 +8,7 @@ defaults = {
             'i3status': {},
             'irssi': {},
             'kitty': {},
+            'netcat': {},
             'slim': {},
             'x11-utils': {},
             'x11-xserver-utils': {},
