@@ -37,7 +37,10 @@
                               self.nixosModules.nftables
                               sops-nix.nixosModules.sops
                               home-manager.nixosModules.home-manager
-                              { networking.hostName = host; }
+                              {
+                                networking.hostName = host;
+                                nixpkgs.overlays = [ self.overlays.default ];
+                              }
                             ];
                           };
                           deploy = {
@@ -51,6 +54,8 @@
     hosts = with nixpkgs.lib; listToAttrs (map (name: nameValuePair name (hostConfig name)) hostNames);
   in {
     nixosConfigurations = builtins.mapAttrs (host: config: config.nixosConfiguration) hosts;
+    overlays = with nixpkgs.lib; mapAttrs (name: _: import ./overlays/${name})
+      (filterAttrs (name: type: type == "directory") (builtins.readDir ./overlays));
     deploy.nodes = builtins.mapAttrs (host: config: config.deploy) hosts;
 
     nixosModules = {
