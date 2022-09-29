@@ -61,7 +61,7 @@
   networking.firewall.allowedUDPPorts = [ 161 ];
 
   environment.systemPackages = with pkgs; [
-    (writers.makePythonWriter python39 python39.pkgs "/bin/dect_claim" { libraries = [ python39.pkgs.python-yate ]; } (builtins.readFile ./dect_claim.py))
+    (writers.makePythonWriter python310 python310.pkgs "/bin/dect_claim" { libraries = [ python310.pkgs.python-yate ]; } (builtins.readFile ./dect_claim.py))
     (runCommand "yintro.slin" {} ''
       mkdir -p $out/share/sounds/yate
       ln -s ${./yintro.slin} $out/share/sounds/yate/yintro.slin

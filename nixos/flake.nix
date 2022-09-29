@@ -40,6 +40,7 @@
                               {
                                 networking.hostName = host;
                                 nixpkgs.overlays = [ self.overlays.default ];
+                                sops.defaultSopsFile = "${hostsDir}/${host}/secrets.yaml";
                               }
                             ];
                             specialArgs.inputs = inputs;

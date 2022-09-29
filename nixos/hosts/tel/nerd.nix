@@ -28,13 +28,13 @@
 
     environment = {
       NERD_CONFIG_FILE = "/etc/nerd/nerd.cfg";
-      PYTHONPATH = "${pkgs.python3.pkgs.nerd.pythonPath}:${pkgs.python3.pkgs.nerd}/${pkgs.python3.sitePackages}:${pkgs.python3Packages.psycopg2}/${pkgs.python3.sitePackages}";
+      PYTHONPATH = "${pkgs.python310.pkgs.nerd.pythonPath}:${pkgs.python310.pkgs.nerd}/${pkgs.python310.sitePackages}:${pkgs.python310Packages.psycopg2}/${pkgs.python310.sitePackages}";
     };
 
     preStart = ''
       export DJANGO_SECRET=$(cat ${config.sops.secrets.nerd_secret.path})
       ${pkgs.gnused}/bin/sed -e "s/!!DJANGO_SECRET!!/$DJANGO_SECRET/g" ${nerdCfg} > /etc/nerd/nerd.cfg
-      ${pkgs.python3.pkgs.nerd}/bin/nerd migrate
+      ${pkgs.python310.pkgs.nerd}/bin/nerd migrate
     '';
 
     serviceConfig = {
@@ -42,7 +42,7 @@
       Group = "nerd";
       ConfigurationDirectory = "nerd";
       ExecStart = ''
-        ${pkgs.python3Packages.gunicorn}/bin/gunicorn \
+        ${pkgs.python310Packages.gunicorn}/bin/gunicorn \
           --bind 0.0.0.0:10510 \
           --access-logfile - \
           nerd.wsgi
@@ -87,7 +87,7 @@
           }
           reverse_proxy * http://127.0.0.1:10510
         }
-        root * ${pkgs.python3.pkgs.nerd}/var/lib/nerd/
+        root * ${pkgs.python310.pkgs.nerd}/var/lib/nerd/
       '';
     };
   };
