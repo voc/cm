@@ -21,7 +21,7 @@
     flake = false;
   };
 
-  outputs = { self, nixpkgs, deploy-rs, flake-utils, sops-nix, home-manager, flake-compat }: let
+  outputs = { self, nixpkgs, deploy-rs, flake-utils, sops-nix, home-manager, flake-compat }@inputs: let
     hostsDir = "${../nixos}/hosts";
     hostNames = with nixpkgs.lib; attrNames
       (filterAttrs (name: type: type == "directory") (builtins.readDir hostsDir));
@@ -42,6 +42,7 @@
                                 nixpkgs.overlays = [ self.overlays.default ];
                               }
                             ];
+                            specialArgs.inputs = inputs;
                           };
                           deploy = {
                             hostname = "${host}.c3voc.de";
@@ -60,6 +61,8 @@
 
     nixosModules = {
       nftables = import ./modules/nftables;
+      yate = import ./modules/yate;
+      fieldpoc = import ./modules/fieldpoc;
     };
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
   } // flake-utils.lib.eachSystem ([ "x86_64-linux" "x86_64-darwin" "aarch64-darwin"]) (system: let

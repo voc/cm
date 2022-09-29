@@ -1,0 +1,14 @@
+diff --git a/ywsd/objects.py b/ywsd/objects.py
+index 4ce29fb..a535e76 100644
+--- a/ywsd/objects.py
++++ b/ywsd/objects.py
+@@ -178,7 +178,8 @@ class ActiveCall:
+     async def is_active_call(cls, username, x_eventphone_id, db_connection):
+         return (
+             await db_connection.scalar(
+-                cls.table.count()
++                sa.select(sa.func.count('*'))
++                .select_from(cls.table)
+                 .where(cls.table.c.username == username)
+                 .where(cls.table.c.x_eventphone_id == x_eventphone_id)
+             )

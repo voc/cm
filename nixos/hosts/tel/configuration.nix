@@ -5,6 +5,8 @@
     [ # Include the results of the hardware scan.
       ./hardware.nix
       ../../profiles/server
+      ./nerd.nix
+      ./yate.nix
     ];
 
   boot.loader.grub.enable = true;
