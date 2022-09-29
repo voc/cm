@@ -56,10 +56,9 @@ def user_keys_and_sudo(metadata):
     for uname, uconfig in metadata_users.items():
         if not uconfig.get('delete', False):
             users[uname] = {
-                'ssh_pubkey': keepass.notes(['ansible', 'authorized_keys', uname]),
                 'sudo_commands': {'ALL'},
             }
-            if uname not in ('root', 'voc', 'mixer'):
+            if uname not in ('root', 'voc'):
                 users[uname]['ssh_pubkey'] = keepass.notes(['ansible', 'authorized_keys', uname])
 
     return {
