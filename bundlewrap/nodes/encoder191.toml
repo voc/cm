@@ -1,3 +1,4 @@
+hostname = "10.73.191.119"
 groups = ["debian-buster"]
 
 [metadata.crs-worker]
