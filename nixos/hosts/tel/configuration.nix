@@ -11,8 +11,6 @@
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
-  networking.hostName = "bub-yate";
-
   networking.interfaces.ens18.ipv4.addresses = [{
     address = "185.106.84.27";
     prefixLength = 26;

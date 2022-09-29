@@ -6,3 +6,5 @@ venv/
 *.swp
 .envrc.local
 nixos/.direnv
+nixos/.deploy-gc
+nixos/result

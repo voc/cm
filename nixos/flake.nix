@@ -12,7 +12,7 @@
     inputs.nixpkgs.follows = "/nixpkgs";
   };
   inputs.home-manager = {
-    url = "github:nix-community/home-manager";
+    url = "github:nix-community/home-manager/release-22.05";
     inputs.nixpkgs.follows = "/nixpkgs";
   };
 
@@ -37,6 +37,7 @@
                               self.nixosModules.nftables
                               sops-nix.nixosModules.sops
                               home-manager.nixosModules.home-manager
+                              { networking.hostName = host; }
                             ];
                           };
                           deploy = {
