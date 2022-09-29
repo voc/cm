@@ -59,6 +59,8 @@ def user_keys_and_sudo(metadata):
                 'ssh_pubkey': keepass.notes(['ansible', 'authorized_keys', uname]),
                 'sudo_commands': {'ALL'},
             }
+            if uname not in ('root', 'voc', 'mixer'):
+                users[uname]['ssh_pubkey'] = keepass.notes(['ansible', 'authorized_keys', uname])
 
     return {
         'users': users,
