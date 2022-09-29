@@ -4,12 +4,12 @@ directories = {
         'purge': True,
     },
 }
-files = {}
-svc_systemd = {}
-
 
 for mount, data in node.metadata.get('cifs-client', {}).get('mounts', {}).items():
     unitname = data['mountpoint'][1:].replace('-', '\\x2d').replace('/', '-')
+
+    if data.get('create_dir', False):
+        directories[data['mountpoint']] = {}
 
     mount_options = set()
     for opt, value in data.get('mount_options', {}).items():
