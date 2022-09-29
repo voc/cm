@@ -28,9 +28,6 @@ files['/home/mixer/.irssi/config'] = {
     'source' : 'irssi/config',
     'owner': 'mixer',
     'group': 'mixer',
-    'context': {
-        'room_name': node.metadata.get('event/room_name'),
-    },
     'triggers': {
         'svc_systemd:display-manager:restart',
     },
