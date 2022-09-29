@@ -1,4 +1,10 @@
+bundles = ["cifs-client"]
 groups = ["debian-buster"]
+
+[metadata.cifs-client.mounts.video-ext]
+create_dir = true
+mountpoint = "/video-ext"
+serverpath = "//10.73.23.25/VOC"
 
 [metadata.crs-worker]
 token.encoding = "!kee_user:ansible|worker-groups|encoder23"
@@ -7,18 +13,29 @@ secret.encoding = "!kee_pass:ansible|worker-groups|encoder23"
 [metadata.event]
 room_name = "EMACS"
 
-[metadata.interfaces.eth0]
+[metadata.grub.cmdline_linux]
+"net.ifnames" = "1"
+
+[metadata.interfaces.enp4s1]
 ips = ["10.73.23.3/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 1
-mode = "1080i50"
+devicenumber = 0
+mode = "1080p25"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 5
+devicenumber = 1
 mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
+input = "cam1"
+
+[metadata.voctocore.audio.translated]
+streams = "2+3"
+input = "cam1"
+
+[metadata.voctocore.audio.translated2]
+streams = "5+6"
 input = "cam1"
