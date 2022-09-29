@@ -17,19 +17,9 @@
   };
 
   services.yate.config = {
-    accfile.dialout = {
-      enabled = "yes";
-      protocol = "sip";
-      username = "yate";
-      password = "yate";
-      registrar = "yate-dialup.bula22.de";
-    };
     regexroute = "[default]
 \${username}^$=-;error=noauth
-^yate$=goto dialin
-^.*$=line/\\0;line=dialout
-[dialin]
-\${sip_x-called}^.*$=lateroute/\\1";
+^+49941383388\\(.*\\)$=lateroute/\\1";
     ysipchan = {
       general = {
         ignorevia = "yes";
@@ -59,9 +49,11 @@
   };
 
   networking.firewall.allowedUDPPorts = [ 161 ];
+  networking.firewall.allowedTCPPorts = [ 5060 5061 ];
+  networking.nftables.extraInput = "meta l4proto udp accept";
 
   environment.systemPackages = with pkgs; [
-    (writers.makePythonWriter python310 python310.pkgs "/bin/dect_claim" { libraries = [ python310.pkgs.python-yate ]; } (builtins.readFile ./dect_claim.py))
+    (writers.makePythonWriter python39 python39.pkgs "/bin/dect_claim" { libraries = [ python39.pkgs.python-yate ]; } (builtins.readFile ./dect_claim.py))
     (runCommand "yintro.slin" {} ''
       mkdir -p $out/share/sounds/yate
       ln -s ${./yintro.slin} $out/share/sounds/yate/yintro.slin
@@ -81,8 +73,33 @@
         expect "disconnecting"
       '';
     in ''
-      ${pkgs.curl}/bin/curl https://nerd.bula22.de/export.json\?event=1 > /etc/fieldpoc/extensions.json
+      ${pkgs.curl}/bin/curl https://tel.c3voc.de/export.json\?event=1 > /etc/fieldpoc/extensions.json
       ${pkgs.expect}/bin/expect ${reloadScript}
     '';
+  };
+
+
+  sops.secrets.trunk_password = {
+    owner = "yate";
+    restartUnits = [ "yate.service" ];
+  };
+
+  systemd.services.yate = {
+    preStart = let
+      accfile = pkgs.writeText "accfile.conf" (lib.generators.toINI { } {
+        sipgate = {
+          enabled = "yes";
+          protocol = "sip";
+          username = "fo315618tr148633_04";
+          authname = "fo315618tr148633_04";
+          password = "!!trunk_password!!";
+          registrar = "sip.plusnet.de";
+          localaddress = "yes";
+        };
+      });
+    in ''
+      ${pkgs.gnused}/bin/sed -e "s/!!trunk_password!!/$(cat ${config.sops.secrets.trunk_password.path})/g" ${accfile} > /etc/yate/accfile.conf
+    '';
+    serviceConfig.PermissionsStartOnly = true;
   };
 }

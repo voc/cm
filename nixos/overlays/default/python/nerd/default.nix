@@ -2,7 +2,7 @@
 , buildPythonApplication
 , makePythonPath
 , fetchFromGitHub
-, python3
+, python310
 , hatchling
 , django_4
 , django-bootstrap5
@@ -26,7 +26,7 @@ buildPythonApplication rec {
 
   format = "pyproject";
 
-  buildInputs = [ python3 hatchling ];
+  buildInputs = [ python310 hatchling ];
   propagatedBuildInputs = [
     django_4
     django-bootstrap5
@@ -43,7 +43,7 @@ buildPythonApplication rec {
 
   passthru = {
     # PYTHONPATH of all dependencies used by the package
-    pythonPath = python3.pkgs.makePythonPath propagatedBuildInputs;
+    pythonPath = python310.pkgs.makePythonPath propagatedBuildInputs;
   };
 
   doCheck = false;

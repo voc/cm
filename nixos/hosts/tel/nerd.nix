@@ -17,9 +17,9 @@
       [database]
       engine = postgresql_psycopg2
       name = nerd
-      user =
-      password =
-      host = /run/postgresql
+      user = nerd
+      password = nerd
+      host = 127.0.0.1
       port =
     '';
   in {
@@ -77,7 +77,7 @@
     virtualHosts."tel.c3voc.de" = {
       extraConfig = ''
         @disallow_export {
-          not remote_ip 10.42.10.0/24 2a01:4f8:1c0c:8221::/64
+          not remote_ip 127.0.0.1 ::1 185.106.84.27 2001:67c:20a0:e::27
           path /export.json*
         }
         route {
