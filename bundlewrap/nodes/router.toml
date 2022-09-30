@@ -1,7 +1,8 @@
-hostname = "10.73.200.201"
+hostname = "10.8.170.1"
 bundles = [
     "isc-dhcp-server",
     "netdata",
+    "openvpn-client",
 ]
 groups = ["debian-bullseye"]
 
@@ -30,7 +31,7 @@ options.subnet-mask = "255.255.255.0"
 [metadata.nftables.rules]
 "50-router" = [
     "inet filter forward ct state { related, established } accept",
-    "inet filter forward iifname ens19 accept",
+    "inet filter forward iifname { ens19, tun0 } accept",
     "nat postrouting oifname ens18 masquerade",
 
     "nat prerouting daddr 141.23.55.14 tcp dport 22 dnat to 10.73.0.2",
