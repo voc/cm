@@ -1,0 +1,25 @@
+groups = ["debian-buster"]
+hostname = "10.73.98.3"
+
+[metadata.crs-worker]
+token.encoding = "!kee_user:ansible|worker-groups|encoder98"
+secret.encoding = "!kee_pass:ansible|worker-groups|encoder98"
+
+[metadata.event]
+room_name = "Pitch&Thrive"
+
+[metadata.interfaces.eth0]
+ips = ["10.73.98.3/16"]
+gateway4 = "10.73.0.254"
+
+[metadata.voctocore.sources.cam1]
+devicenumber = 0
+mode = "1080p25"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 1
+mode = "1080p25"
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"
