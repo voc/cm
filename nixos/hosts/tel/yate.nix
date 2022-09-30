@@ -21,9 +21,9 @@
 \${username}^$=-;error=noauth
 \${sip_to}^\"\" <sip:+49941383388\\(.*\\)@sip.plusnet.de>$=lateroute/\\1";
     ysipchan = {
-      #general = {
-      #  ignorevia = "yes";
-      #};
+      general = {
+        ignorevia = "yes";
+      };
       #"listener general".enable = "no";
       #"listener dect" = {
       #  type = "udp";
@@ -45,6 +45,10 @@
     ysnmpagent = {
       general.port = 161;
       snmp_v2.ro_community = "yate";
+    };
+    yrtpchan.general = {
+      autoaddr = "no";
+      anyssrc = "yes";
     };
   };
 
@@ -95,6 +99,7 @@
           password = "!!trunk_password!!";
           registrar = "sip.plusnet.de";
           localaddress = "yes";
+          keepalive = "25";
         };
       });
     in ''
