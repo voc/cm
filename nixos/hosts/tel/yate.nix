@@ -47,8 +47,6 @@
       snmp_v2.ro_community = "yate";
     };
     yrtpchan.general = {
-      autoaddr = "no";
-      anyssrc = "yes";
     };
   };
 
