@@ -32,9 +32,10 @@ options.subnet-mask = "255.255.255.0"
 "50-router" = [
     "inet filter forward ct state { related, established } accept",
     "inet filter forward iifname { ens19, tun0 } accept",
+    "inet filter forward tcp dport 22 accept",
     "nat postrouting oifname ens18 masquerade",
 
-    "nat prerouting daddr 141.23.55.14 tcp dport 22 dnat to 10.73.0.2",
+    "nat prerouting ip daddr 141.23.55.14 tcp dport 22 dnat to 10.73.0.2",
 
     # XXX migration from old vm to new router vm, remove this once
     # everything in the server case has been redeployed
