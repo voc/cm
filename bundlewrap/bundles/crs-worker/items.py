@@ -53,6 +53,21 @@ files['/usr/local/lib/systemd/system/rsync-from-encoder@.service'] = {
     },
 }
 
+files['/usr/local/sbin/rsync-to-storage'] = {
+    'owner': 'voc',
+    'mode': '0700',
+}
+
+files['/usr/local/lib/systemd/system/rsync-to-storage@.service'] = {
+    'content_type': 'mako',
+    'context': {
+        'slug': node.metadata.get('event/slug', '*'),
+    },
+    'triggers': {
+        'action:systemd-reload',
+    },
+}
+
 files['/usr/local/lib/systemd/system/crs-worker.target'] = {
     'triggers': {
         'action:systemd-reload',

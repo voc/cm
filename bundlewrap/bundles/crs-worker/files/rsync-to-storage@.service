@@ -1,0 +1,9 @@
+[Unit]
+Description=rsync recordings to storage
+
+[Service]
+User=voc
+Group=voc
+ExecStart=/usr/local/sbin/rsync-to-storage %i ${slug}
+Restart=on-failure
+RestartSec=10
