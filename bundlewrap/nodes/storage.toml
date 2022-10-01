@@ -1,5 +1,5 @@
 bundles = ["encoder-common"]
-groups = ["crs-worker"]
+groups = ["crs-workers"]
 
 [metadata.crs-worker]
 autostart_scripts = [ "recording-scheduler", "mount4cut", "cut-postprocessor", "postencoding", "postprocessing" ]
