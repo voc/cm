@@ -19,7 +19,8 @@
   services.yate.config = {
     regexroute = "[default]
 \${username}^$=-;error=noauth
-\${sip_to}^\"\" <sip:+49941383388\\(.*\\)@sip.plusnet.de>$=lateroute/\\1";
+\${sip_to}^\"\" <sip:+49941383388\\(.*\\)@sip.plusnet.de>$=lateroute/\\1
+^.*$=sip/sip:\\0;line=dialout;osip_P-Asserted-Identity=<sip:0941383388\${caller}@sipm.voip2gsm.eu>;osip_P-Preferred-Identity=<sip:0941383388\${caller}@sipm.voip2gsm.eu>;caller=53458.02";
     ysipchan = {
       general = {
         ignorevia = "yes";
@@ -86,6 +87,11 @@
     restartUnits = [ "yate.service" ];
   };
 
+  sops.secrets.dialout_password = {
+    owner = "yate";
+    restartUnits = [ "yate.service" ];
+  };
+
   systemd.services.yate = {
     preStart = let
       accfile = pkgs.writeText "accfile.conf" (lib.generators.toINI { } {
@@ -99,9 +105,19 @@
           localaddress = "yes";
           keepalive = "25";
         };
+        dialout = {
+          enabled = "yes";
+          protocol = "sip";
+          username = "53458.02";
+          authname = "53458.02";
+          password = "!!dialout_password!!";
+          registrar = "sipm.voip2gsm.eu";
+          localaddress = "yes";
+          keepalive = "25";
+        };
       });
     in ''
-      ${pkgs.gnused}/bin/sed -e "s/!!trunk_password!!/$(cat ${config.sops.secrets.trunk_password.path})/g" ${accfile} > /etc/yate/accfile.conf
+      ${pkgs.gnused}/bin/sed -e "s/!!trunk_password!!/$(cat ${config.sops.secrets.trunk_password.path})/g" -e "s/!!dialout_password!!/$(cat ${config.sops.secrets.dialout_password.path})/g" ${accfile} > /etc/yate/accfile.conf
     '';
     serviceConfig.PermissionsStartOnly = true;
   };
