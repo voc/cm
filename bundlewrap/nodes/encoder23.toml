@@ -1,10 +1,10 @@
 bundles = ["cifs-client"]
 groups = ["debian-buster"]
 
-[metadata.cifs-client.mounts.video-ext]
-create_dir = true
-mountpoint = "/video-ext"
-serverpath = "//10.73.23.25/VOC"
+#[metadata.cifs-client.mounts.video-ext]
+#create_dir = true
+#mountpoint = "/video-ext"
+#serverpath = "//10.73.23.25/VOC"
 
 [metadata.crs-worker]
 token.encoding = "!kee_user:ansible|worker-groups|encoder23"
