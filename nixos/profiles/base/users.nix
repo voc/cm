@@ -9,6 +9,7 @@ let
 in {
   imports = customConfigs;
 
+  users.mutableUsers = false;
   users.users = (lib.mapAttrs (name: user: {
     uid = user.uid;
     isNormalUser = true;
@@ -16,7 +17,7 @@ in {
     openssh.authorizedKeys.keys = user.ssh_pubkeys;
   }) enabled) // {
     voc = {
-      uid = 1000;
+      uid = 1100;
       isNormalUser = true;
       extraGroups = [ "wheel" "systemd-journal" ];
       password = "voc";
