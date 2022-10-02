@@ -15,6 +15,7 @@ in {
     isNormalUser = true;
     extraGroups = [ "wheel" "systemd-journal" ];
     openssh.authorizedKeys.keys = user.ssh_pubkeys;
+    hashedPassword = lib.mkIf ((user.password_hash or "") != "") users.password_hash;
   }) enabled) // {
     voc = {
       uid = 1100;
