@@ -25,6 +25,9 @@
       general = {
         ignorevia = "yes";
       };
+      message = {
+        enable = "yes";
+      };
       #"listener general".enable = "no";
       #"listener dect" = {
       #  type = "udp";
