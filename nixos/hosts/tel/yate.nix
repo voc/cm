@@ -28,23 +28,6 @@
       message = {
         enable = "yes";
       };
-      #"listener general".enable = "no";
-      #"listener dect" = {
-      #  type = "udp";
-      #  addr = "10.42.132.1";
-      #  port = "5060";
-      #};
-      #"listener sip" = {
-      #  type = "udp";
-      #  addr = "10.42.133.1";
-      #  port = "5060";
-      #};
-      #"listener voip" = {
-      #  type = "udp";
-      #  addr = "10.42.10.6";
-      #  port = "5060";
-      #  default = "yes";
-      #};
     };
     ysnmpagent = {
       general.port = 161;
@@ -99,7 +82,7 @@
     preStart = let
       accfile = pkgs.writeText "accfile.conf" (lib.generators.toINI { } {
         dialin = {
-          enabled = "yes";
+          enabled = "no";
           protocol = "sip";
           username = "fo315618tr148633_04";
           authname = "fo315618tr148633_04";
@@ -109,7 +92,7 @@
           keepalive = "25";
         };
         dialout = {
-          enabled = "yes";
+          enabled = "no";
           protocol = "sip";
           username = "53458.02";
           authname = "53458.02";
