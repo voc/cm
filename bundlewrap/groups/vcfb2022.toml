@@ -1,0 +1,6 @@
+subgroups = ["saal3", "saal4"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Vintage Computing Festival Berlin 2022"
+slug = "vcfb2022"
