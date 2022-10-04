@@ -20,8 +20,8 @@ then
 fi
 
 mount -t cifs -o uid=voc,password=,ro "//${TARGET}/video" /video
-mount -t cifs -o uid=voc,password=,ro "//${TARGET}/tmp" /video/tmp
-mount -t cifs -o uid=voc,password=,ro "//${TARGET}/encoded" /video/encoded
+mount -t cifs -o uid=voc,password=,rw "//${TARGET}/tmp" /video/tmp
+mount -t cifs -o uid=voc,password=,rw "//${TARGET}/encoded" /video/encoded
 
 echo "Mount successful, you can now start the worker scripts:"
 echo
