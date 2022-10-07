@@ -1,0 +1,6 @@
+subgroups = ["saal191"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Jugend hackt Berlin 2022"
+slug = "jh22-berlin"
