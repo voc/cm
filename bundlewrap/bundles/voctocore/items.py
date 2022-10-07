@@ -1,4 +1,5 @@
 import bwkeepass as keepass
+from bundlewrap.exceptions import BundleError
 
 event = node.metadata.get('event/slug', '')
 assert node.has_bundle('encoder-common')
