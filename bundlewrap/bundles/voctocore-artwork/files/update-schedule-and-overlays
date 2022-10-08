@@ -1,0 +1,83 @@
+#!/bin/bash
+
+[[ -n "$DEBUG" ]] && set -x
+
+send_mqtt_message () {
+    error_level=$1
+    component=$2
+    message=$3
+
+    for i in 1 2 3 ; do
+        voc2mqtt \
+            -t '/voc/alert' \
+            -m "{\"level\":\"$error_level\",\"component\":\"$component\",\"msg\":\"$message\"}"  && break
+    done
+
+    voc2mqtt \
+        -t 'hosts/'$TRUNC_HOSTNAME'/alert/'$error_level \
+        -m "{\"level\":\"$error_level\",\"component\":\"$component\",\"msg\":\"$message\"}"
+}
+
+tmpdir=$(mktemp -d)
+trap 'cd /;rm -Rf "$tmpdir"' EXIT
+
+schedule="$(cat /opt/voc/schedule_url)"
+if [[ -n "$schedule" ]]
+then
+    curl -qo "$tmpdir/schedule.xml" "$schedule"
+    curl_exit=$?
+
+    if [[ $curl_exit -ne 0 ]]
+    then
+        send_mqtt_message "error" "schedule/${node.name}" "Downloading schedule from $schedule failed: curl exited $curl_exit"
+    else
+        xmllint "$tmpdir/schedule.xml" >/dev/null
+        validate_exit=$?
+
+        if [[ $validate_exit -ne 0 ]]
+        then
+            send_mqtt_message "error" "schedule/${node.name}" "Downloading schedule from $schedule failed: xmllint exited $validate_exit"
+        else
+            sha_old="$(sha256sum /opt/voc/schedule.xml | cut -d' ' -f1)"
+            sha_new="$(sha256sum "$tmpdir/schedule,xml" | cut -d' ' -f1)"
+
+            if [[ "$sha_old" != "$sha_new" ]]
+            then
+                mv "$tmpdir/schedule.xml" "/opt/voc/schedule.xml"
+                send_mqtt_message "info" "schedule/${node.name}" "Downloading schedule from $schedule succeeded"
+            fi
+        fi
+    fi
+fi
+
+overlays="$(cat /opt/voc/overlays_url)"
+if [[ -n "$overlays" ]]
+then
+    curl -qo "$tmpdir/overlays.tar.gz" "$overlays"
+    curl_exit=$?
+
+    if [[ $curl_exit -ne 0 ]]
+    then
+        send_mqtt_message "error" "overlays/${node.name}" "Downloading overlays from $overlays failed: curl exited $curl_exit"
+    else
+        sha_old="$(cat /opt/voc/overlays_sha256 2>/dev/null)"
+        sha_new="$(sha256sum "$tmpdir/overlays.tar.gz" | cut -d' ' -f1)"
+
+        if [[ "$sha_old" != "$sha_new" ]]
+        then
+            mkdir "$tmpdir/overlays"
+            tar -xzf "$tmpdir/overlays.tar.gz" -C "$tmpdir/overlays"
+            tar_exit=$?
+
+            if [[ $tar_exit -ne 0 ]]
+            then
+                send_mqtt_message "error" "overlays/${node.name}" "Downloading overlays from $overlays failed: tar exited $tar_exit"
+            else
+                rm -Rf "/opt/voc/overlays"
+                mv "$tmpdir/overlays" "/opt/voc/overlays"
+                echo "$sha_new" > /opt/voc/overlays_sha256
+                send_mqtt_message "info" "overlays/${node.name}" "Downloading overlays from $overlays succeeded"
+            fi
+        fi
+    fi
+fi

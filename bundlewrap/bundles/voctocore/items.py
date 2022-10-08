@@ -12,6 +12,10 @@ for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
     if sname == 'slides':
         slides_port = 13000 + idx
 
+overlay_mapping = []
+for filename, title in sorted(node.metadata.get('event/overlay_mappings', {}).items()):
+    overlay_mapping.append(f'{filename}.png|{title}')
+
 ### voc2mix
 files['/opt/voctomix2/voctocore-config.ini'] = {
     'content_type': 'mako',
@@ -19,7 +23,9 @@ files['/opt/voctomix2/voctocore-config.ini'] = {
         'audio': node.metadata.get('voctocore/audio', {}),
         'backgrounds': node.metadata.get('voctocore/backgrounds', {}),
         'event': event,
+        'has_schedule': node.metadata.get('event/schedule_xml', ''),
         'mirror_view': node.metadata.get('voctocore/mirror_view'),
+        'overlay_mapping': overlay_mapping,
         'room_name': node.metadata.get('event/room_name', ''),
         'sources': node.metadata.get('voctocore/sources', {}),
         'static_background_image': node.metadata.get('voctocore/static_background_image'),

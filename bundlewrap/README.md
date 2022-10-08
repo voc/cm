@@ -55,7 +55,7 @@ Available room setups:
 * saal191
 * servercase
 
-To set a room name, simply edit the room_name value in `nodes/yourencoder.toml`:
+To set a room name, simply edit the `room_name` value in `nodes/yourencoder.toml`:
 
 ```toml
 [metadata.event]
@@ -65,7 +65,38 @@ room_name = "myroom"
 It is important that you never commit `yourevent.toml` to the main branch
 of this repository.
 
-## Custom artwork
+### Overlays
+
+If you want to use overlays ("Bauchbinden" in German), you have to add
+the key `overlays` to `yourevent.toml`. The value of this key should be
+a full-blown URL pointing to a `.tar.gz`-Archive containing the overlays
+themselves. You can create it using `tar -czf overlays.tar.gz *.png`.
+
+If the event uses a `schedule.xml` file, you can add it to the config
+using the `schedule_xml` key. This needs to be a URL, too.
+
+If the event does not use a schedule, you can specify
+filename-to-title-Mappings yourself. You can do so using the
+`event/overlay_mapping` metadata key.
+
+If you provide a schedule.xml and `event/overlay_mapping`, the schedule
+will take preference.
+
+#### Example config
+
+```toml
+[metadata.event]
+schedule_xml = "https://example.com/schedule.xml"
+overlays = "https://example.com/overlays.tar.gz"
+
+[metadata.event.overlay_mappings]
+# Omit ".png" from filename here
+graphic1 = "Alice"
+graphic2 = "Bob"
+graphic3 = "Alice and Bob"
+```
+
+### Custom artwork
 
 Using this repository, you can deploy room-specific or event-specific (or a mixture of both) artwork to the encoders.
 

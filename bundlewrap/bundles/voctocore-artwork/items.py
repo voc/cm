@@ -10,6 +10,38 @@ directories['/opt/voc/share'] = {
     'purge': True,
 }
 
+files['/opt/voc/schedule_url'] = {
+    'content': node.metadata.get('event/schedule_xml', '') + '\n',
+    'triggers': {
+        'action:voctocore-artwork_update_schedule_and_overlays',
+    },
+}
+
+files['/opt/voc/overlays_url'] = {
+    'content': node.metadata.get('event/overlays', '') + '\n',
+    'triggers': {
+        'action:voctocore-artwork_update_schedule_and_overlays',
+    },
+}
+
+files['/usr/local/bin/update-schedule-and-overlays'] = {
+    'mode': '0755',
+    'content_type': 'mako',
+}
+
+actions['voctocore-artwork_update_schedule_and_overlays'] = {
+    'command': 'systemctl start update_schedule_and_overlays.service',
+    'triggered': True,
+    'needs': {
+        'file:/opt/voc/overlays_url',
+        'file:/opt/voc/schedule_url',
+        'file:/usr/local/bin/update-schedule-and-overlays',
+        'pkg_apt:curl',
+        'pkg_apt:libxml2-utils',
+        'svc_systemd:update_schedule_and_overlays.timer',
+    },
+}
+
 for target_file, possible_sources in {
     '/opt/voc/share/overlay_hd.png': [
         join(event_slug, f'saal{room_number}', 'overlay_hd.png'),
