@@ -43,6 +43,7 @@ then
 
             if [[ "$sha_old" != "$sha_new" ]]
             then
+                chmod go+r "$tmpdir/schedule.xml"
                 mv "$tmpdir/schedule.xml" "/opt/voc/schedule.xml"
                 send_mqtt_message "info" "schedule/${node.name}" "Downloading schedule from $schedule succeeded"
             fi
@@ -73,6 +74,7 @@ then
             then
                 send_mqtt_message "error" "overlays/${node.name}" "Downloading overlays from $overlays failed: tar exited $tar_exit"
             else
+                chmod go+r "$tmpdir"/overlays/*.png
                 rm -Rf "/opt/voc/overlays"
                 mv "$tmpdir/overlays" "/opt/voc/overlays"
                 echo "$sha_new" > /opt/voc/overlays_sha256
