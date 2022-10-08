@@ -4,3 +4,15 @@ subgroups = ["saal191"]
 timezone = "Europe/Berlin"
 name = "Jugend hackt Berlin 2022"
 slug = "jh22-berlin"
+overlays = "https://paste.franzi.business/ykf949imdnk3/overlays.tar.gz"
+
+[metadata.event.overlay_mappings]
+auto = "Selbstfahrendes Auto"
+demonetzwerk = "Soziales Netzwerk für Demos"
+eatyourcate = "Eatyourcate"
+jumpandfun = "Jump and Fun"
+kunstausstellung = "VR-Kunstausstellung"
+learnit = "LearnIT"
+quickcompare = "Quick Compare"
+tamagochi = "Alpaka-Tamagochi"
+virensimulator = "Virensimulator"
