@@ -1,6 +1,21 @@
 import bwkeepass as keepass
 from bundlewrap.exceptions import BundleError
 
+KEYBOARD_SHORTCUTS = {
+    # maps inputs to buttons, first for Channel A, second Channel B
+    'cam1': ('F1', '1'),
+    'cam2': ('F2', '2'),
+    'cam3': ('F3', '3'),
+    'slides': ('F4', '4'),
+
+    # only one button for features and scenes
+    'scene_fs': ('F5',),
+    'scene_sbs': ('F6',),
+    'scene_lec': ('F7',),
+    'feature_mirror': ('F9',),
+    'feature_43': ('F10',),
+}
+
 event = node.metadata.get('event/slug', '')
 assert node.has_bundle('encoder-common')
 assert node.has_bundle('voctomix2')
@@ -25,6 +40,7 @@ files['/opt/voctomix2/voctocore-config.ini'] = {
         'backgrounds': node.metadata.get('voctocore/backgrounds', {}),
         'event': event,
         'has_schedule': node.metadata.get('event/schedule_xml', ''),
+        'keyboard_shortcuts': KEYBOARD_SHORTCUTS,
         'mirror_view': node.metadata.get('voctocore/mirror_view'),
         'overlay_mapping': overlay_mapping,
         'room_name': node.metadata.get('event/room_name', ''),
