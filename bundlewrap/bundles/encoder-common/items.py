@@ -1,6 +1,6 @@
 from bundlewrap.exceptions import BundleError
 
-event = node.metadata.get('event/slug', '')
+event = node.metadata.get('event/slug')
 
 directories[f'/video'] = {
     'owner': 'voc',
@@ -13,11 +13,10 @@ for path in ('capture', 'encoded', 'tmp', 'intros', 'fuse'):
         'group': 'voc',
     }
 
-    if event:
-        directories[f'/video/{path}/{event}'] = {
-            'needed_by': {
-                'bundle:voctocore',
-            },
-            'owner': 'voc',
-            'group': 'voc',
-        }
+    directories[f'/video/{path}/{event}'] = {
+        'needed_by': {
+            'bundle:voctocore',
+        },
+        'owner': 'voc',
+        'group': 'voc',
+    }

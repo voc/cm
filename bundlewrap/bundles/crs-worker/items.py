@@ -46,7 +46,7 @@ files['/usr/local/sbin/rsync-from-encoder'] = {
 files['/usr/local/lib/systemd/system/rsync-from-encoder@.service'] = {
     'content_type': 'mako',
     'context': {
-        'slug': node.metadata.get('event/slug', '*'),
+        'slug': node.metadata.get('event/slug'),
     },
     'triggers': {
         'action:systemd-reload',
@@ -61,7 +61,7 @@ files['/usr/local/sbin/rsync-to-storage'] = {
 files['/usr/local/lib/systemd/system/rsync-to-storage@.service'] = {
     'content_type': 'mako',
     'context': {
-        'slug': node.metadata.get('event/slug', '*'),
+        'slug': node.metadata.get('event/slug'),
     },
     'triggers': {
         'action:systemd-reload',

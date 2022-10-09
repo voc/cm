@@ -16,12 +16,9 @@ KEYBOARD_SHORTCUTS = {
     'feature_43': ('F10',),
 }
 
-event = node.metadata.get('event/slug', '')
+event = node.metadata.get('event/slug')
 assert node.has_bundle('encoder-common')
 assert node.has_bundle('voctomix2')
-
-if not event:
-    raise BundleError(f'{node.name} bundle:voctocore requires event/slug to be set!')
 
 slides_port = 0
 for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
