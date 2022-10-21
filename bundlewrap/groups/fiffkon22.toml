@@ -1,0 +1,6 @@
+subgroups = ["saal3", "saal4"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "FIfFKon 2022"
+slug = "fiffkon22"
