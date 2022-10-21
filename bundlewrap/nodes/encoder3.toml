@@ -13,12 +13,15 @@ room_name = "Einstein-Saal"
 ips = ["10.73.3.3/16"]
 gateway4 = "10.73.0.254"
 
+[metadata.voctocore]
+mirror_view = true
+
 [metadata.voctocore.sources.cam1]
-devicenumber = 1
+devicenumber = 0
 mode = "1080i50"
 
 [metadata.voctocore.sources.cam2]
-devicenumber = 3
+devicenumber = 1
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
