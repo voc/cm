@@ -6,6 +6,8 @@ token.meta = "!kee_user:ansible|worker-groups|encoder3-meta"
 secret.encoding = "!kee_pass:ansible|worker-groups|encoder3"
 secret.meta = "!kee_pass:ansible|worker-groups|encoder3-meta"
 
+autostart_scripts = [ "recording-scheduler", "mount4cut", "cut-postprocessor", "postencoding", "postprocessing" ]
+
 [metadata.event]
 room_name = "Einstein-Saal"
 
