@@ -17,3 +17,7 @@ live2.alb.c3voc.de             nginx=yes icecast=no nginx_stream_masters='["185.
 relive.c3voc.de                nginx=yes icecast=no
 live.ams.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
 live.emf.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
+
+ber1.wob.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
+fra1.wob.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
+wob1.wob.c3voc.de              nginx=yes icecast=no nginx_stream_masters='["185.106.84.40"]'
