@@ -4,6 +4,14 @@ from bundlewrap.exceptions import SkipNode
 
 
 def node_apply_start(repo, node, interactive=False, **kwargs):
+    if not node.has_any_bundle([
+        'crs-worker',
+        'encoder-common',
+        'voctocore',
+        'voctocore-artwork',
+    ]):
+        return
+
     event_slug = node.metadata.get('event/slug')
 
     if event_slug == 'XYZ':
@@ -26,4 +34,9 @@ def node_apply_start(repo, node, interactive=False, **kwargs):
             ):
                 raise SkipNode('Declined in hooks/encoders_test_event_slug because of missing event slug')
         else:
-            io.stderr('{x}  {node}  has {no} event slug set! Please make sure you\'re using the correct event configuration!')
+            io.stderr(
+                '{x}  {node}  has {no} event slug set! Please make sure you\'re using the correct event configuration!'.format(
+                    x=red('✘'),
+                    node=node.name,
+                    no=bold('no'),
+            )
