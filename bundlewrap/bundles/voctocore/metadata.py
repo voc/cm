@@ -10,9 +10,6 @@ defaults = {
             'gstreamer1.0-libav': {},
         },
     },
-    'event': {
-        'slug': 'XYZ',
-    },
     'voctocore': {
         'mirror_view': False, # automatically mirrors SBS/LEC views
         'parallel_slide_recording': True,

@@ -1,4 +1,7 @@
 defaults = {
+    'event': {
+        'slug': 'XYZ',
+    },
     'rsync': {
         'shares': {
             'video': {
