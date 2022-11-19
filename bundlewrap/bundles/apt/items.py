@@ -29,7 +29,9 @@ actions = {
 }
 
 files = {
+    # Reenable when server case has apt proxy again
     '/etc/apt/apt.conf.d/30detectproxy': {
+        'delete': True,
         'needed_by': {
             'pkg_apt:',
         },
