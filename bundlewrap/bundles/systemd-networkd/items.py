@@ -6,14 +6,9 @@ files = {
     '/etc/network/interfaces': {
         'delete': True,
     },
-    '/etc/systemd/resolved.conf': {
-        'content_type': 'mako',
-        'context': {
-            'nameservers': node.metadata.get('nameservers', ['5.1.66.255', '185.150.99.255', '194.150.168.168', '1.1.1.1']),
-            'domains': node.metadata.get('dns_search_domains', ['lan.c3voc.de']),
-        },
-        'triggers': {
-            'svc_systemd:systemd-resolved:restart',
+    '/etc/resolv.conf': {
+        'after': {
+            'pkg_apt:',
         },
     },
 }
@@ -24,29 +19,15 @@ svc_systemd = {
             'pkg_apt:',
         },
     },
+    'systemd-resolved': {
+        'running': False,
+        'enabled': False,
+        'after': {
+            'file:/etc/resolv.conf',
+            'pkg_apt:',
+        },
+    },
 }
-
-if node.os_version[0] > 9:
-    svc_systemd['systemd-resolved'] = {
-        'after': {
-            'pkg_apt:',
-        },
-    }
-
-    symlinks = {
-        '/etc/resolv.conf': {
-            'target': '/lib/systemd/resolv.conf',
-            'needs': {
-                'svc_systemd:systemd-resolved',
-            },
-        },
-    }
-else:
-    files['/etc/resolv.conf'] = {
-        'after': {
-            'pkg_apt:',
-        },
-    }
 
 directories = {
     '/etc/systemd/network': {
