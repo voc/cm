@@ -1,4 +1,11 @@
-bundles = ["encoder-common"]
+bundles = [
+    "encoder-common",
+    "mqtt-monitoring",
+    "sysconfig",
+    "systemd",
+    "systemd-timers",
+    "users",
+]
 groups = ["crs-workers"]
 
 [metadata.crs-worker]
