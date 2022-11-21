@@ -20,27 +20,26 @@ for username, attrs in node.metadata['users'].items():
         files[home] = {'delete': True}
 
     else:
-        user = users.setdefault(username, {})
-
-        user['home'] = home
-        user['shell'] = attrs.get('shell', '/bin/bash')
+        users[username] = {
+            'home': home,
+            'shell': attrs.get('shell', '/bin/bash'),
+            'uid': attrs.get('uid', None),
+            'groups': attrs.get('groups', set()),
+        }
 
         if 'password' in attrs:
-            user['password'] = attrs['password']
+            users[username]['password'] = attrs['password']
         else:
-            user['password_hash'] = 'x' if node.use_shadow_passwords else '*'
-
-        if 'groups' in attrs:
-            user['groups'] = attrs['groups']
+            users[username]['password_hash'] = 'x' if node.use_shadow_passwords else '*'
 
         directories[home] = {
             'owner': username,
             'mode': attrs.get('home-mode', '0700'),
         }
 
-        if 'ssh_pubkey' in attrs:
+        if 'ssh_pubkeys' in attrs:
             files[home + '/.ssh/authorized_keys'] = {
-                'content': attrs['ssh_pubkey'] + '\n',
+                'content': '\n'.join(sorted(attrs['ssh_pubkeys'])) + '\n',
                 'owner': username,
                 'mode': '0600',
             }

@@ -1,6 +1,6 @@
-from json import loads
+from tomlkit import loads
 from os import environ
-from os.path import join
+from os.path import dirname, join
 
 import bwkeepass as keepass
 
@@ -11,6 +11,7 @@ defaults = {
             'shell': '/bin/bash',
             'password': keepass.password(['Allgemein', 'Benutzerpasswörter', 'SSH Passwort und Key root']) if environ.get('BW_KEEPASS_PASSWORD') else None,
         },
+        'voc': {},
     },
 }
 
@@ -28,14 +29,19 @@ if node.os_version[0] > 9:
 def add_users_from_json(metadata):
     ign_default =  metadata.get('do_not_import_default_users', False)
 
-    with open(join(repo.path, 'configs', 'users.json'), 'r') as f:
-        json = loads(f.read())
+    with open(join(dirname(repo.path), 'users.toml'), 'r') as f:
+        users_toml = loads(f.read())
 
     users = {}
     metadata_users = metadata.get('users', {})
-    for uname, should_exist in json.items():
+    for uname, uconfig in users_toml.items():
+        should_exist = uconfig['enable']
+
         if should_exist and not ign_default:
-            users[uname] = {}
+            users[uname] = {
+                'uid': uconfig['uid'],
+                'ssh_pubkeys': set(uconfig.get('ssh_pubkeys', set())),
+            }
         elif uname not in metadata_users:
             users[uname] = {
                 'delete': True,
@@ -49,17 +55,15 @@ def add_users_from_json(metadata):
 @metadata_reactor.provides(
     'users',
 )
-def user_keys_and_sudo(metadata):
+def user_sudo(metadata):
     users = {}
     metadata_users = metadata.get('users', {})
-    # First, add all admin users
+    # every user in metadata should be able to use sudo
     for uname, uconfig in metadata_users.items():
-        if not uconfig.get('delete', False):
+        if not uconfig.get('delete', False) and 'sudo_commands' not in uconfig:
             users[uname] = {
                 'sudo_commands': {'ALL'},
             }
-            if uname not in ('root', 'voc', 'mixer'):
-                users[uname]['ssh_pubkey'] = keepass.notes(['ansible', 'authorized_keys', uname])
 
     return {
         'users': users,
@@ -70,21 +74,16 @@ def user_keys_and_sudo(metadata):
     'users/voc',
 )
 def user_voc(metadata):
-    pubkey = []
+    pubkey = set()
 
     for user, attrs in sorted(metadata.get('users', {}).items()):
-        if 'ssh_pubkey' in attrs:
-            pubkey.extend([
-                f'# {user}',
-                attrs['ssh_pubkey'],
-                '',
-            ])
+        pubkey |= set(attrs.get('ssh_pubkeys', set()))
 
     return {
         'users': {
             'voc': {
                 'password': keepass.password(['ansible', 'logins', 'voc']) if environ.get('BW_KEEPASS_PASSWORD') else None,
-                'ssh_pubkey': repo.libs.faults.join_faults(pubkey, '\n'),
+                'ssh_pubkeys': pubkey,
                 'sudo_commands': {'ALL'},
             },
         },
