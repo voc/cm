@@ -8,12 +8,11 @@
 
   - name: create /etc/letsencrypt hierarchy
     file:
-      dest: /etc/letsencrypt/live/{{ item }}
+      dest: /etc/letsencrypt/live
       owner: root
       group: ssl-cert
       state: directory
       mode: 0750
-    loop: "{{ [domain] + group_domains + host_domains }}"
 
   - name: generate dehydrated folders
     file:
