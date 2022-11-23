@@ -1,19 +1,46 @@
 ---
-  - name: install collectd config file
-    template:
-      src: collectd/collectd.server.conf.j2
-      dest: /etc/collectd/collectd.conf
-      mode: 0640
-    register: collectd_config
+# Collectd stuff
+- name: adding entries for curl_json php to types.db
+  lineinfile:
+    dest: /opt/voc/collectd/types.db
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
+  with_items:
+    - {
+        regex: '^listen_queue\ .*',
+        line: "listen_queue       value:GAUGE:0:65535",
+      }
+    - {
+        regex: '^active_processes\ .*',
+        line: "active_processes   value:GAUGE:0:65535",
+      }
+    - {
+        regex: '^total_processes\ .*',
+        line: "total_processes    value:GAUGE:0:65535",
+      }
+  register: collectd_types
 
-  - name: install collectd auth file
-    template:
-      src: collectd/passwd.j2
-      dest: /etc/collectd/passwd
-      mode: 0600
+- name: install collectd config file
+  template:
+    src: collectd/collectd.server.conf.j2
+    dest: /etc/collectd/collectd.conf
+    mode: 0640
+  register: collectd_config
 
-  - name: restart collectd
-    service:
-      name: collectd
-      state: restarted
-    when: collectd_config.changed
+- name: install collectd auth file
+  template:
+    src: collectd/passwd.j2
+    dest: /etc/collectd/passwd
+    mode: 0600
+
+- name: restart collectd
+  service:
+    name: collectd
+    state: restarted
+  when: collectd_types.changed or collectd_config.changed
+
+- name: create logrotate config
+  template:
+    src: collectd/logrotate
+    dest: /etc/logrotate.d/collectd
+    mode: 0644
