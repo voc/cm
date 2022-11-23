@@ -13,7 +13,7 @@ BADGER="$!"
 trap "kill $BADGER ; lockfile-remove -l $LOCK" INT TERM EXIT
 
   # begin
-  RSYNC_PASSWORD={{ rsync_web_password }} rsync -Pa --bwlimit=42230 -x -4 \
+  RSYNC_PASSWORD={{ rsync_web_password }} rsync -Pa --bwlimit=42230 -4 \
     --exclude "lost+found" \
     {{ rsync_web_url }} /srv/www/media.ccc.de
   # end
