@@ -12,3 +12,6 @@ groups = ["crs-workers"]
 autostart_scripts = [ "recording-scheduler", "mount4cut", "cut-postprocessor", "postencoding", "postprocessing" ]
 token.encoding = "!kee_user:ansible|worker-groups|storage"
 secret.encoding = "!kee_pass:ansible|worker-groups|storage"
+
+[metadata.event]
+slug = "t4at2022"
