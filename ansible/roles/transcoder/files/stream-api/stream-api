@@ -13,8 +13,6 @@ import traceback
 sys.path.append("/opt/transcoder2/scripts")
 import mqtt
 
-HOSTNAME = socket.gethostname().split(".")[0]
-
 cons = consul.Consul()
 
 def transcodings_get_running():
@@ -85,11 +83,11 @@ def fix_services_state():
 
     for stream, transcoder in all_streams.items():
         # start transcodings that should be running
-        if transcoder == HOSTNAME and stream not in running_transcodings:
+        if transcoder == config["hostname"] and stream not in running_transcodings:
             log("Transcoding %s should be running but is not, starting target" % stream)
             transcodings_start(stream)
         # stop transcodings that should be running on a different host
-        elif transcoder != HOSTNAME and stream in running_transcodings:
+        elif transcoder != config["hostname"] and stream in running_transcodings:
             log("Transcoding %s is running but should not be, stopping target" % stream)
             transcodings_stop(stream)
 
@@ -106,10 +104,13 @@ def mainloop():
     global config
     config = yaml.safe_load(open("/etc/stream-api/config.yml"))["transcode"]
 
+    if "hostname" not in config:
+        config["hostname"] = socket.gethostname().split(".")[0]
+
     # check what streams this system should handle
     my_streams = []
     for stream, transcoder in get_all_streams().items():
-        if transcoder == HOSTNAME:
+        if transcoder == config["hostname"]:
             my_streams.append(stream)
 
     for stream in my_streams:
@@ -146,12 +147,12 @@ def mainloop():
                 continue
 
             log("Found unclaimed stream %s, trying to claim..." % stream)
-            cons.kv.put("stream/%s/transcoder" % stream, HOSTNAME.encode())
+            cons.kv.put("stream/%s/transcoder" % stream, config["hostname"].encode())
 
             # wait a random delay (100ms to 2.1s) and check if no other transcoder claimed the stream
             time.sleep((100+random.randrange(2000))/1000)
             # check if another transcoder tried to claim this..
-            if cons.kv.get("stream/%s/transcoder" % stream)[1]["Value"].decode() != HOSTNAME:
+            if cons.kv.get("stream/%s/transcoder" % stream)[1]["Value"].decode() != config["hostname"]:
                 print("Another transcoder seems to have claimed %s" % stream)
                 continue
 
@@ -169,7 +170,7 @@ def mainloop():
     transcoder_info["time"] = time.time()
     transcoder_info["streams"] = len(my_streams)
     transcoder_info["capacity"] = config["capacity"]
-    cons.kv.put("transcoders/%s" % HOSTNAME, json.dumps(transcoder_info).encode())
+    cons.kv.put("transcoders/%s" % config["hostname"], json.dumps(transcoder_info).encode())
 
     fix_services_state()
 
