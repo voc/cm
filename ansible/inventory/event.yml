@@ -6,10 +6,10 @@ tweety.lan.c3voc.de transcoder_capacity=2 ansible_host=tweety.alb.c3voc.de
 daffy.lan.c3voc.de transcoder_capacity=4 ansible_host=daffy.alb.c3voc.de
 sylvester.lan.c3voc.de transcoder_capacity=4 ansible_host=sylvester.alb.c3voc.de
 
-transcoder1.myloc.c3voc.de transcoder_capacity=4 ansible_host=transcoder1.myloc.c3voc.de streamapi_hostname=myloc-transcoder1
-transcoder2.myloc.c3voc.de transcoder_capacity=4 ansible_host=transcoder2.myloc.c3voc.de streamapi_hostname=myloc-transcoder2
-transcoder3.myloc.c3voc.de transcoder_capacity=4 ansible_host=transcoder3.myloc.c3voc.de streamapi_hostname=myloc-transcoder3
-transcoder1.voc.fslab.de transcoder_capacity=2 ansible_host=transcoder1.voc.fslab.de streamapi_hostname=fslab-transcoder1
+transcoder1.myloc.c3voc.de transcoder_capacity=2 ansible_host=transcoder1.myloc.c3voc.de streamapi_hostname=myloc-transcoder1
+transcoder2.myloc.c3voc.de transcoder_capacity=2 ansible_host=transcoder2.myloc.c3voc.de streamapi_hostname=myloc-transcoder2
+transcoder3.myloc.c3voc.de transcoder_capacity=2 ansible_host=transcoder3.myloc.c3voc.de streamapi_hostname=myloc-transcoder3
+transcoder1.voc.fslab.de transcoder_capacity=2 ansible_host=168.119.65.177 ansible_port=10802 streamapi_hostname=fslab-transcoder1
 transcoder2.voc.fslab.de transcoder_capacity=4 ansible_host=transcoder2.voc.fslab.de streamapi_hostname=fslab-transcoder2
 
 [audio-pis]
