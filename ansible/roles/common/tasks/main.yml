@@ -52,10 +52,10 @@
   - include: user.yml
     tags: user
 
-#  - include: monitoring.yml
-#    tags:
-#      - monitoring
-#      - check_system
+  - include: monitoring.yml
+    tags:
+      - monitoring
+      - check_system
 
   - name: setting voc password
     user:
