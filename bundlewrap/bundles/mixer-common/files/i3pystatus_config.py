@@ -15,8 +15,8 @@ status.register("clock",
     format="%a, %Y-%m-%d %H:%M:%S (W%V)",)
 
 status.register("battery",
-    battery_ident="BAT0",
-    format="BAT0: {status}{percentage:.2f}% {remaining:%E%h:%M}",
+    battery_ident="ALL",
+    format="BATTERY: {status}{percentage:.2f}% {remaining:%E%h:%M}",
     status={
         "DIS": "↓",
         "CHR": "↑",
