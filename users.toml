@@ -2,6 +2,10 @@
 enable = false # special-cased, in here as a placeholder
 uid = 1100
 
+[mixer]
+enable = false # special-cased, in here as a placeholder
+uid = 1999
+
 [hexchen]
 enable = true
 uid = 1101
