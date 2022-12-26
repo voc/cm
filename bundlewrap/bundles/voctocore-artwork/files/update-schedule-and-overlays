@@ -39,7 +39,7 @@ then
             send_mqtt_message "error" "schedule/${node.name}" "Downloading schedule from $schedule failed: xmllint exited $validate_exit"
         else
             sha_old="$(sha256sum /opt/voc/schedule.xml | cut -d' ' -f1)"
-            sha_new="$(sha256sum "$tmpdir/schedule,xml" | cut -d' ' -f1)"
+            sha_new="$(sha256sum "$tmpdir/schedule.xml" | cut -d' ' -f1)"
 
             if [[ "$sha_old" != "$sha_new" ]]
             then
