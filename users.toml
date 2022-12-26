@@ -1,6 +1,6 @@
 [voc]
 enable = false # special-cased, in here as a placeholder
-uid = 1100
+uid = 1000
 
 [mixer]
 enable = false # special-cased, in here as a placeholder
