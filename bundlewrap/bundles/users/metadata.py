@@ -2,6 +2,8 @@ from tomlkit import loads
 from os import environ
 from os.path import dirname, join
 
+from bundlewrap.exceptions import BundleError
+
 import bwkeepass as keepass
 
 defaults = {
@@ -23,27 +25,54 @@ defaults = {
 if node.os_version[0] > 9:
     defaults['apt']['packages']['kitty-terminfo'] = {}
 
+with open(join(dirname(repo.path), 'users.toml'), 'r') as f:
+    USERS_TOML = loads(f.read())
+
 
 @metadata_reactor.provides(
     'users',
 )
-def add_users_from_json(metadata):
+def add_users_from_toml(metadata):
     ign_default =  metadata.get('do_not_import_default_users', False)
 
-    with open(join(dirname(repo.path), 'users.toml'), 'r') as f:
-        users_toml = loads(f.read())
+    users = {
+        uname: {} for uname in metadata.get('users', {})
+    }
 
-    users = {}
-    metadata_users = metadata.get('users', {})
-    for uname, uconfig in users_toml.items():
-        should_exist = uconfig['enable']
+    # first, establish a list of all users that should exist on the
+    # system
+    for uname, uconfig in USERS_TOML.items():
+        if uconfig['enable'] and not ign_default:
+            users[uname] = {}
 
-        if should_exist and not ign_default:
-            users[uname] = {
-                'uid': uconfig['uid'],
-                'ssh_pubkeys': set(uconfig.get('ssh_pubkeys', set())),
-            }
-        elif uname not in metadata_users:
+    # second, process all users so we have stuff like uids, ssh keys
+    # and sudo
+    for uname in users:
+        if uname in ('root',):
+            continue
+
+        if metadata.get(f'users/{uname}/sudo_commands', None) is None:
+            # we explicitely check for None here, so we can set
+            # sudo_commands to an empty list to restrict users.
+            users[uname]['sudo_commands'] = {'ALL'}
+
+        if uname in USERS_TOML:
+            users[uname]['uid'] = USERS_TOML[uname]['uid']
+
+            if USERS_TOML[uname].get('ssh_pubkeys', set()):
+                users[uname]['ssh_pubkeys'] = set(USERS_TOML[uname]['ssh_pubkeys'])
+        else:
+            uid = metadata.get(f'users/{uname}/uid', None)
+
+            if uid is None:
+                raise BundleError(f'{node.name}: user {uname} has no uid set, please set one manually')
+            elif int(uid) < 1000:
+                raise BundleError(f'{node.name}: user {uname} tries to use uid {uid}, but uids below 2000 are reserved for automatic provisioning')
+
+    # last, loop through every user in USERS_TOML again and delete
+    # every user that should not exist
+    for uname in USERS_TOML:
+        if uname not in users:
             users[uname] = {
                 'delete': True,
             }
@@ -54,25 +83,8 @@ def add_users_from_json(metadata):
 
 
 @metadata_reactor.provides(
-    'users',
-)
-def user_sudo(metadata):
-    users = {}
-    metadata_users = metadata.get('users', {})
-    # every user in metadata should be able to use sudo
-    for uname, uconfig in metadata_users.items():
-        if not uconfig.get('delete', False) and 'sudo_commands' not in uconfig:
-            users[uname] = {
-                'sudo_commands': {'ALL'},
-            }
-
-    return {
-        'users': users,
-    }
-
-
-@metadata_reactor.provides(
-    'users/voc',
+    'users/voc/password',
+    'users/voc/ssh_pubkeys',
 )
 def user_voc(metadata):
     pubkey = set()
@@ -85,7 +97,6 @@ def user_voc(metadata):
             'voc': {
                 'password': keepass.password(['ansible', 'logins', 'voc']) if environ.get('BW_KEEPASS_PASSWORD') else None,
                 'ssh_pubkeys': pubkey,
-                'sudo_commands': {'ALL'},
             },
         },
     }
