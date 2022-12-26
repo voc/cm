@@ -98,11 +98,16 @@ graphic3 = "Alice and Bob"
 
 ### Custom artwork
 
-Using this repository, you can deploy room-specific or event-specific (or a mixture of both) artwork to the encoders.
+Using this repository, you can deploy room-specific or event-specific
+(or a mixture of both) artwork to the encoders.
 
-Place your artwork into `data/voctocore-artwork/files/<event_slug>/` for event-specific artwork, into `data/voctocore-artwork/files/<event_slug>/saal<number>/` for room-specific artwork.
+Place your artwork into `data/voctocore-artwork/files/<event_slug>/`
+for event-specific artwork, into
+`data/voctocore-artwork/files/<event_slug>/saal<number>/` for
+room-specific artwork.
 
-Room-specific artwork will take preference over event-specific artwork. In case neither is found, bundlewrap will use the generic VOC artwork.
+Room-specific artwork will take preference over event-specific artwork.
+In case neither is found, bundlewrap will use the generic VOC artwork.
 
 
 ### voctocore playout
@@ -116,6 +121,8 @@ number.
 ```toml
 [metadata.voctocore.playout]
 program = 0
+stream = 1
+cam1 = 4
 ```
 
 For source name, you can use any defined voctocore source name, in
@@ -123,4 +130,6 @@ addition to `program` (without stream-blanker) and `stream` (including
 stream-blanker).
 
 Bundlewrap will print an error if you try to use an invalid source name
-or if you're trying to re-use decklink cards for multiple things.
+or if you're trying to re-use decklink cards for multiple things. Please
+note bundlewrap will *not* verify whether your decklink card does support
+playout.
