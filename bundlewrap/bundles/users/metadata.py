@@ -35,7 +35,9 @@ def add_users_from_toml(metadata):
     ign_default =  metadata.get('do_not_import_default_users', False)
 
     users = {
-        uname: {} for uname in metadata.get('users', {})
+        uname: {}
+        for uname, uconfig in metadata.get('users', {}).items()
+        if not uconfig.get('delete', False)
     }
 
     # first, establish a list of all users that should exist on the
