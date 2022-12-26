@@ -19,6 +19,7 @@ defaults = {
     },
     'users': {
         'mixer': {
+            'uid': 1999,
             'password': keepass.password(['ansible', 'logins', 'mixer']),
             'sudo_commands': {
                 '/usr/local/sbin/brightness',
