@@ -1,2 +1,2 @@
-bundlewrap~=4.13.6
+bundlewrap>=4.13.6
 bundlewrap-keepass
