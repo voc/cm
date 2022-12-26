@@ -1,5 +1,5 @@
 [Unit]
-Description=voctomix2 streaming-sink
+Description=voctomix2 ${pname} playout
 After=voctomix2-voctocore.service
 Requires=voctomix2-voctocore.service
 
@@ -7,7 +7,7 @@ Requires=voctomix2-voctocore.service
 User=voc
 Group=voc
 Type=simple
-ExecStart=/opt/voctomix2/scripts/streaming-sink.sh
+ExecStart=/opt/voctomix2/scripts/playout_${pname}.sh
 Restart=always
 RestartSec=1s
 StartLimitInterval=0

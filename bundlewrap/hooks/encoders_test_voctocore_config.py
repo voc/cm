@@ -76,6 +76,8 @@ GSTREAMER_SUPPORTED_FORMATS = {
 
 
 def node_apply_start(repo, node, interactive=False, **kwargs):
+    used_devices = {}
+
     for sname, sconfig in node.metadata.get('voctocore/sources', {}).items():
         if sconfig.get('kind', 'decklink') != 'decklink':
             continue
@@ -83,8 +85,12 @@ def node_apply_start(repo, node, interactive=False, **kwargs):
         if not sname == 'slides' and not match(r'^cam[0-9]+$', sname):
             raise BundleError(f'{node.name}: voctocore source {sname} has invalid name, must be either "slides" or match "cam[0-9]+"')
 
-        if not str(sconfig['devicenumber']).isdigit():
-            raise BundleError(f'{node.name}: voctocore source {sname} has invalid device number {sconfig["devicenumber"]}')
+        device = str(sconfig['devicenumber'])
+        if not device.isdigit():
+            raise BundleError(f'{node.name}: voctocore source {sname} has invalid device number {device}')
+        elif device in used_devices:
+            raise BundleError(f'{node.name}: voctocore source {sname} already used by {used_devices[device]}')
+        used_devices[device] = f'source {sname}'
 
         if sconfig['mode'] not in GSTREAMER_SUPPORTED_FORMATS:
             raise BundleError(f'{node.name}: voctocore source {sname} wants input format {sconfig["mode"]}, which isn\'t supported by gstreamer')
@@ -98,3 +104,11 @@ def node_apply_start(repo, node, interactive=False, **kwargs):
         if audio_name in used_audio:
             raise BundleError(f'{node.name}: voctocore audio {aname} wants input {audio_name}, which is already used by {used_audio[audio_name]}')
         used_audio[audio_name] = aname
+
+    for pname, pdevice in node.metadata.get('voctocore/playout', {}).items():
+        device = str(pdevice)
+        if not device.isdigit():
+            raise BundleError(f'{node.name}: voctocore playout {pname} has invalid device number {device}')
+        elif device in used_devices:
+            raise BundleError(f'{node.name}: voctocore playout {pname} already used by {used_devices[device]}')
+        used_devices[device] = f'playout {sname}'

@@ -16,12 +16,18 @@ KEYBOARD_SHORTCUTS = {
     'feature_43': ('F10',),
 }
 
+PLAYOUT_PORTS = {
+    'stream': 15000,
+    'program': 11000,
+}
+
 event = node.metadata.get('event/slug')
 assert node.has_bundle('encoder-common')
 assert node.has_bundle('voctomix2')
 
 slides_port = 0
 for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
+    PLAYOUT_PORTS[sname] = 13000 + idx
     if sname == 'slides':
         slides_port = 13000 + idx
 
@@ -153,3 +159,57 @@ svc_systemd['voctomix2-streaming-sink'] = {
         'causes-downtime',
     },
 }
+
+## streaming-sink
+for pname, pdevice in node.metadata.get('voctocore/playout', {}).items():
+    if pname not in PLAYOUT_PORTS:
+        raise BundleError(f'{node.name} wants to use voctocore playout for {pname}, which does not exist. Valid choices: {",".join(sorted(PLAYOUT_PORTS))}')
+
+    files[f'/opt/voctomix2/scripts/playout_{pname}.sh'] = {
+        'source': 'decklink-playout.sh',
+        'content_type': 'mako',
+        'context': {
+            'device': pdevice,
+            'port': PLAYOUT_PORTS[pname],
+        },
+        'mode': '0755',
+        'triggers': {
+            f'svc_systemd:voctomix2-playout-{pname}:restart',
+        },
+    }
+    files[f'/usr/local/lib/systemd/system/voctomix2-playout-{pname}.service'] = {
+        'source': 'voctomix2-playout.service',
+        'content_type': 'mako',
+        'context': {
+            'pname': pname,
+        },
+        'triggers': {
+            'action:systemd-reload',
+            f'svc_systemd:voctomix2-playout-{pname}:restart',
+        },
+    }
+    svc_systemd[f'voctomix2-playout-{pname}'] = {
+        'after': {
+            'svc_systemd:voctomix2-voctocore',
+        },
+        'needs': {
+            f'file:/opt/voctomix2/scripts/playout_{pname}.sh',
+            f'file:/usr/local/lib/systemd/system/voctomix2-playout-{pname}.service',
+            'pkg_apt:ffmpeg'
+        },
+        'tags': {
+            'causes-downtime',
+        },
+    }
+
+for pname in PLAYOUT_PORTS:
+    if pname in node.metadata.get('voctocore/playout', {}):
+        continue
+
+    actions[f'voctocore_stop-playout_{pname}'] = {
+        'command': f'systemctl disable --now voctomix2-playout-{pname}',
+        'unless': f'! systemctl is-active voctomix2-playout-{pname}',
+        'before': {
+            'directory:/usr/local/lib/systemd/system',
+        },
+    }

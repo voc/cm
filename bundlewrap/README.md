@@ -103,3 +103,24 @@ Using this repository, you can deploy room-specific or event-specific (or a mixt
 Place your artwork into `data/voctocore-artwork/files/<event_slug>/` for event-specific artwork, into `data/voctocore-artwork/files/<event_slug>/saal<number>/` for room-specific artwork.
 
 Room-specific artwork will take preference over event-specific artwork. In case neither is found, bundlewrap will use the generic VOC artwork.
+
+
+### voctocore playout
+
+If you want to send content out of one of the decklink cards, you can
+do so using the `voctocore/playout` metadata key.
+
+You have to use a source name as key, the value is the decklink device
+number.
+
+```toml
+[metadata.voctocore.playout]
+program = 0
+```
+
+For source name, you can use any defined voctocore source name, in
+addition to `program` (without stream-blanker) and `stream` (including
+stream-blanker).
+
+Bundlewrap will print an error if you try to use an invalid source name
+or if you're trying to re-use decklink cards for multiple things.
