@@ -65,7 +65,7 @@ def add_users_from_toml(metadata):
 
             if uid is None:
                 raise BundleError(f'{node.name}: user {uname} has no uid set, please set one manually')
-            elif int(uid) < 1000:
+            elif int(uid) < 2000:
                 raise BundleError(f'{node.name}: user {uname} tries to use uid {uid}, but uids below 2000 are reserved for automatic provisioning')
 
     # last, loop through every user in USERS_TOML again and delete
