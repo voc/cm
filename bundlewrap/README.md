@@ -143,16 +143,20 @@ playout.
 ```toml
 [metadata.voctocore.sources.cam2] # "cam2" is the source name
 devicenumber = 2 # decklink device number
-mode = 1080p25 # video mode
+mode = "1080p25" # video mode
 hdmi = true # default false. If true, uses HDMI instead of SDI
 ```
 
 If you use an interlaced video mode (`1080i50` for example), bundlewrap
 will automatically set `scan=psf` in voctocore config.
 
+Please note that bundlewrap will enforce naming of decklink sources.
+Valid source names are either `slides` or match `^cam[0-9]+$`.
+
 #### other inputs
 
 ```toml
+[metadata.voctocore.sources.balltest]
 kind = test
 pattern = ball
 ```
@@ -162,6 +166,7 @@ the source configuration and simply dump anything you add to the
 voctocore configuration.
 
 Please note audio configuration still applies (see below).
+Source name enforcement is disabled for non-decklink sources.
 
 ### audio
 
