@@ -25,6 +25,32 @@ Host *
     ControlPersist 10m
 ```
 
+## Usage
+
+These are just some examples, please refer to the bundlewrap documentation
+for more information.
+
+```
+# apply configuration to system(s), restarting services as needed
+$ bw apply <system or group>
+
+# apply configuration to system(s), skipping everything that would
+# interrupt a stream or recording
+$ bw apply -s tag:causes-downtime -- <system or group>
+
+# dry-run, show all changes an apply would do, without doing any actual
+# changes on the system
+$ bw verify <system or group>
+
+# verify configuration for a system locally
+# if you don't have keepass access, you have to append -i flag
+$ bw test <system or group>
+```
+
+`<system or group>` can be a single system name, like `encoder1` or
+a group of systems, like `saal1`. The saal groups contain all systems
+in that case (encoder, minion, mixer, all tally pis).
+
 ## Event setup
 
 To set up a new event, do the following steps, add `yourevent.toml` to
