@@ -183,7 +183,9 @@ hdmi = true # default false. If true, uses HDMI instead of SDI
 ```
 
 If you use an interlaced video mode (`1080i50` for example), bundlewrap
-will automatically set `scan=psf` in voctocore config.
+will automatically set `scan=psf` in voctocore config. If that is not
+what you need, you can set the `scan` attribute manually to the correct
+value.
 
 Please note that bundlewrap will enforce naming of decklink sources.
 Valid source names are either `slides` or match `^cam[0-9]+$`.
