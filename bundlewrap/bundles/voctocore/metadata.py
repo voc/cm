@@ -51,7 +51,7 @@ def auto_audio_level(metadata):
     sources = {}
     for aname, aconfig in metadata.get('voctocore/audio', {}).items():
         sources[aconfig['input']] = {
-            'volume': '1.0',
+            'volume': aconfig.get('volume', '1.0'),
         }
 
     return {

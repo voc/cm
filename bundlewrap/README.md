@@ -133,3 +133,47 @@ Bundlewrap will print an error if you try to use an invalid source name
 or if you're trying to re-use decklink cards for multiple things. Please
 note bundlewrap will *not* verify whether your decklink card does support
 playout.
+
+## voctocore Sources Defitinion
+
+### video
+
+#### decklink inputs
+
+```toml
+[metadata.voctocore.sources.cam2] # "cam2" is the source name
+devicenumber = 2 # decklink device number
+mode = 1080p25 # video mode
+hdmi = true # default false. If true, uses HDMI instead of SDI
+```
+
+If you use an interlaced video mode (`1080i50` for example), bundlewrap
+will automatically set `scan=psf` in voctocore config.
+
+#### other inputs
+
+```toml
+kind = test
+pattern = ball
+```
+
+If you set `kind`, bundlewrap will disable any automatic processing of
+the source configuration and simply dump anything you add to the
+voctocore configuration.
+
+Please note audio configuration still applies (see below).
+
+### audio
+
+```toml
+[metadata.voctocore.audio.translated-1] # "translated-1" is the source name
+input = "cam1" # which input provides this audio
+streams = "0+1" # use the first two audio streams received by the input
+volume = "1,0" # this is the default
+```
+
+Bundlewrap will take care of configuring the sources and blinders correctly.
+If you don't set it, the `volume` attribute of the corresponding input
+will automatically be set to `1.0`. If you want to change this, you have
+to manually set the `volume` attribute of the audio stream to the correct
+value.
