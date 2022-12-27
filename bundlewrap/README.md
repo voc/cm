@@ -34,9 +34,13 @@ for more information.
 # apply configuration to system(s), restarting services as needed
 $ bw apply <system or group>
 
-# apply configuration to system(s), skipping everything that would
+# apply configuration to system(s), skipping all restarts that would
 # interrupt a stream or recording
 $ bw apply -s tag:causes-downtime -- <system or group>
+
+# apply configuration to system(s), but ask before doing any change, so
+# you can decide if you really want to do the change
+$ bw apply -i <system or group>
 
 # dry-run, show all changes an apply would do, without doing any actual
 # changes on the system
