@@ -157,8 +157,8 @@ Valid source names are either `slides` or match `^cam[0-9]+$`.
 
 ```toml
 [metadata.voctocore.sources.balltest]
-kind = test
-pattern = ball
+kind = "test"
+pattern = "ball"
 ```
 
 If you set `kind`, bundlewrap will disable any automatic processing of
