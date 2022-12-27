@@ -75,7 +75,15 @@ GSTREAMER_SUPPORTED_FORMATS = {
 }
 
 
+def test_node(repo, node, **kwargs):
+    run_test(node)
+
+
 def node_apply_start(repo, node, interactive=False, **kwargs):
+    run_test(node)
+
+
+def run_test(node):
     used_devices = {}
 
     for sname, sconfig in node.metadata.get('voctocore/sources', {}).items():
@@ -89,7 +97,7 @@ def node_apply_start(repo, node, interactive=False, **kwargs):
         if not device.isdigit():
             raise BundleError(f'{node.name}: voctocore source {sname} has invalid device number {device}')
         elif device in used_devices:
-            raise BundleError(f'{node.name}: voctocore source {sname} already used by {used_devices[device]}')
+            raise BundleError(f'{node.name}: voctocore source {sname} device already used by {used_devices[device]}')
         used_devices[device] = f'source {sname}'
 
         if sconfig['mode'] not in GSTREAMER_SUPPORTED_FORMATS:
@@ -107,8 +115,8 @@ def node_apply_start(repo, node, interactive=False, **kwargs):
 
     for pname, pdevice in node.metadata.get('voctocore/playout', {}).items():
         device = str(pdevice)
-        if not device.isdigit():
+        if not (device.isdigit() or device == 'fb'):
             raise BundleError(f'{node.name}: voctocore playout {pname} has invalid device number {device}')
         elif device in used_devices:
-            raise BundleError(f'{node.name}: voctocore playout {pname} already used by {used_devices[device]}')
+            raise BundleError(f'{node.name}: voctocore playout {pname} device already used by {used_devices[device]}')
         used_devices[device] = f'playout {sname}'

@@ -116,7 +116,8 @@ If you want to send content out of one of the decklink cards, you can
 do so using the `voctocore/playout` metadata key.
 
 You have to use a source name as key, the value is the decklink device
-number.
+number. You may also use the special value `fb` to output to the internal
+HDMI output on the mainboard.
 
 ```toml
 [metadata.voctocore.playout]
@@ -133,6 +134,9 @@ Bundlewrap will print an error if you try to use an invalid source name
 or if you're trying to re-use decklink cards for multiple things. Please
 note bundlewrap will *not* verify whether your decklink card does support
 playout.
+
+When using `fb` output, you have to have a display connected to the
+encoder during boot, otherwise `/dev/fb0` won't get created correctly.
 
 ## voctocore Sources Defitinion
 
