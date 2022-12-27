@@ -27,7 +27,8 @@ Host *
 
 ## Usage
 
-These are just some examples, please refer to the bundlewrap documentation
+These are just some examples, please refer to the
+[bundlewrap documentation](https://docs.bundlewrap.org/guide/cli/)
 for more information.
 
 ```
