@@ -1,19 +1,40 @@
 #!/bin/bash
 
+<%text>
 [[ -n "$DEBUG" ]] && set -x
 
 print_logs=0
-[[ "$1" == "--logs" ]] && print_logs=1
+[[ "$1" == "--logs" ]] && print_logs=${2:-10}
 
-if [[ "$print_logs" -eq 1 ]] && [[ "$(id -u)" -ne 0 ]]
+if [[ "$1" == "--help" ]]
+then
+    echo "Usage: $0 [--logs [10]]"
+    echo
+    echo "  --logs  Print the last X (default 10) lines of the workers"
+    echo "          logs in addition to the worker status."
+    exit 0
+fi
+
+if [[ "$print_logs" -gt 0 ]] && [[ "$(id -u)" -ne 0 ]]
 then
     echo "$0: need root for displaying logs!"
     exit 1
 fi
 
+if [[ "$print_logs" -eq 0 ]]
+then
+    echo " Script                                   | systemd unit                  | status"
+    echo "------------------------------------------+-------------------------------+--------"
+fi
+</%text>
 % for unitname, scriptname in scripts.items():
+if [[ "$print_logs" -eq 0 ]]
+then
+    echo -n " ${scriptname.ljust(40)} | crs-${unitname.ljust(25)} | "
+else
+    echo -n "${scriptname} (crs-${unitname}) is "
+fi
 
-echo -n "${scriptname} (crs-${unitname}.service) is "
 status="$(systemctl is-active crs-${unitname})"
 if [[ "$?" -eq 0 ]]
 then
@@ -24,9 +45,9 @@ fi
 echo "$status"
 tput sgr0
 
-if [[ "$print_logs" -eq 1 ]]
+if [[ "$print_logs" -gt 0 ]]
 then
-    journalctl -n10 --no-pager -u crs-${unitname}
+    journalctl -n "$print_logs" --no-pager -u crs-${unitname}
     echo
     echo
 fi
