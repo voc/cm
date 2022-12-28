@@ -1,4 +1,9 @@
 defaults = {
+    'apt': {
+        'packages': {
+            'rename': {},
+        },
+    },
     'event': {
         'slug': 'XYZ',
     },
