@@ -1,5 +1,14 @@
 assert node.has_bundle('encoder-common')
 
+WORKER_SCRIPTS = {
+    'recording-scheduler': 'script-A-recording-scheduler.pl',
+    'mount4cut': 'script-B-mount4cut.pl',
+    'cut-postprocessor': 'script-C-cut-postprocessor.pl',
+    'encoding': 'script-D-encoding.pl',
+    'postencoding': 'script-E-postencoding-auphonic.pl',
+    'postprocessing': 'script-F-postprocessing-upload.pl',
+}
+
 directories['/opt/crs-scripts'] = {}
 
 git_deploy['/opt/crs-scripts'] = {
@@ -81,16 +90,16 @@ files['/usr/local/lib/systemd/system/crs-worker.target'] = {
     },
 }
 
-autostart_scripts = node.metadata.get('crs-worker/autostart_scripts', set())
+files['/usr/local/sbin/crs-status'] = {
+    'content_type': 'mako',
+    'context': {
+        'scripts': WORKER_SCRIPTS,
+    },
+    'mode': '0755',
+}
 
-for worker, script in {
-    'recording-scheduler': 'script-A-recording-scheduler.pl',
-    'mount4cut': 'script-B-mount4cut.pl',
-    'cut-postprocessor': 'script-C-cut-postprocessor.pl',
-    'encoding': 'script-D-encoding.pl',
-    'postencoding': 'script-E-postencoding-auphonic.pl',
-    'postprocessing': 'script-F-postprocessing-upload.pl',
-}.items():
+autostart_scripts = node.metadata.get('crs-worker/autostart_scripts', set())
+for worker, script in WORKER_SCRIPTS.items():
     files[f'/etc/systemd/system/crs-{worker}.service'] = {
         'delete': True,
         'triggers': {
@@ -115,7 +124,6 @@ for worker, script in {
         files[f'/usr/local/lib/systemd/system/crs-{worker}.service']['triggers'].add(
             f'svc_systemd:crs-{worker}:restart',
         )
-
 
     svc_systemd[f'crs-{worker}'] = {
         # do not start these workers automatically, unless requested

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+[[ -n "$DEBUG" ]] && set -x
+
+print_logs=0
+[[ "$1" == "--logs" ]] && print_logs=1
+
+if [[ "$print_logs" -eq 1 ]] && [[ "$(id -u)" -ne 0 ]]
+then
+    echo "$0: need root for displaying logs!"
+    exit 1
+fi
+
+% for unitname, scriptname in scripts.items():
+
+echo -n "${scriptname} (crs-${unitname}.service) is "
+status="$(systemctl is-active crs-${unitname})"
+if [[ "$?" -eq 0 ]]
+then
+    tput setaf 2
+else
+    tput setaf 1
+fi
+echo "$status"
+tput sgr0
+
+if [[ "$print_logs" -eq 1 ]]
+then
+    journalctl -n10 --no-pager -u crs-${unitname}
+    echo
+    echo
+fi
+% endfor
