@@ -34,3 +34,25 @@ files = {
         },
     },
 }
+
+last_action = set()
+for user, uconfig in node.metadata.get('users', {}).items():
+    if (
+        not uconfig.get('password')
+        or uconfig.get('delete')
+        or user in ('root',)
+    ):
+        continue
+
+    actions[f'smbpasswd_for_user_{user}'] = {
+        'command': f'smbpasswd -a -s {user}',
+        'unless': f'pdbedit -L | grep -E "^{user}:"',
+        'data_stdin': uconfig['password'] + '\n' + uconfig['password'],
+        'needs': {
+            f'user:{user}',
+        },
+        'after': last_action,
+    }
+    last_action = {
+        f'action:smbpasswd_for_user_{user}',
+    }
