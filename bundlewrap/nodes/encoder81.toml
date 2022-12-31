@@ -1,4 +1,5 @@
-groups = ["debian-buster", "mixers"]
+bundles = ["mixer-common", "voctogui"]
+groups = ["debian-buster"]
 
 [metadata.crs-worker]
 token.encoding = "!kee_user:ansible|worker-groups|encoder-hacc"

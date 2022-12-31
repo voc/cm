@@ -1,7 +1,8 @@
 ROOMS_WITHOUT_MINIONS = (
-    81,
-    98,
-    191,
+    23, # cccb
+    81, # hacc
+    98, # derpeter
+    191, # seibert
 )
 
 ROOMS_WITH_MINIONS = (
