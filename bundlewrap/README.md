@@ -94,7 +94,8 @@ room_name = "myroom"
 ```
 
 It is important that you never commit `yourevent.toml` to the main branch
-of this repository.
+of this repository. Instead, please create a branch named `events/XYZ`,
+replacing `XYZ` with your event slug.
 
 ### Overlays
 
