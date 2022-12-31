@@ -21,7 +21,7 @@ dhcp = true
 high_dpi = true
 
 [metadata.voctocore]
-#streaming_endpoint = "!kee_pass:ansible|stream-api|encoders|hacc"
+streaming_endpoint = "!kee_pass:ansible|stream-api|encoders|hacc"
 srt_publish = true
 
 [metadata.voctocore.sources.cam1]

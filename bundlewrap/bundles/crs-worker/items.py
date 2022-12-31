@@ -27,10 +27,11 @@ files['/opt/crs-scripts/tracker-profile.sh'] = {
     'content_type': 'mako',
     'source': 'environment',
     'context': {
+        'room_name': node.metadata.get('crs-worker/room_name'),
+        'secret': node.metadata.get('crs-worker/secret/encoding'),
+        'token': node.metadata.get('crs-worker/token/encoding'),
         'url': node.metadata.get('crs-worker/tracker_url'),
         'vaapi': node.metadata.get('crs-worker/use_vaapi'),
-        'token': node.metadata.get('crs-worker/token/encoding'),
-        'secret': node.metadata.get('crs-worker/secret/encoding'),
     },
     'needs': {
         'git_deploy:/opt/crs-scripts',
