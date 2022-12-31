@@ -4,3 +4,6 @@ export CRS_SECRET="${secret}"
 % if use_vaapi:
 export CRS_USE_VAAPI="yes"
 % endif
+% if room_name:
+export CRS_ROOM="${room_name}"
+% endif
