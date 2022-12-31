@@ -27,7 +27,7 @@ files['/opt/crs-scripts/tracker-profile.sh'] = {
     'content_type': 'mako',
     'source': 'environment',
     'context': {
-        'room_name': node.metadata.get('crs-worker/room_name'),
+        'room_name': node.metadata.get('crs-worker/room_name', None),
         'secret': node.metadata.get('crs-worker/secret/encoding'),
         'token': node.metadata.get('crs-worker/token/encoding'),
         'url': node.metadata.get('crs-worker/tracker_url'),
