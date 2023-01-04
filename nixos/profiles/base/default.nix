@@ -84,5 +84,14 @@
     experimental-features = nix-command flakes
   '';
 
+  system.autoUpgrade = {
+    enable = true;
+    allowReboot = lib.mkDefault false;
+    dates = "03:30";
+    flake = "github:voc/cm?dir=nixos";
+    rebootWindow.lower = "03:00";
+    rebootWindow.upper = "05:00";
+  };
+
   programs.fuse.userAllowOther = true;
 }
