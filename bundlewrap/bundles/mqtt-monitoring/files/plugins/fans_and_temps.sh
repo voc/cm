@@ -6,6 +6,7 @@ fi
 for i in $(find /sys/devices/platform/ -iname 'temp*_input')
 do
     label_filename="$(echo $i | sed 's/input/label/')"
+    crit_filename="$(echo $i | sed 's/input/crit/')"
     if [ -r "$label_filename" ]
     then
         label="temp_$(cat "$label_filename" | sed 's/\s\+/_/g')"
@@ -14,6 +15,17 @@ do
     fi
 
     voc2mqtt -t 'hosts/'$TRUNC_HOSTNAME'/stats/'$label -m "$(echo "$(cat "$i") / 1000" | bc)"
+
+    if [ -r "$crit_filename" ]
+    then
+        current="$(cat "$i")"
+        critical="$(cat "$crit_filename")"
+
+        if [[ "${critical}" -gt 1 ]] && [ $(echo "${current} > (${critical}*0.95)" | bc) -eq "1" ]
+        then
+            voc2alert "error" "temp/${label}" "temperature exceeds threshold (currently at $(echo "${current}/1000" | bc)°C, critical at $(echo "${critical}/1000" | bc)°C)</red>"
+        fi
+    fi
 done
 
 for i in $(find /sys/devices/platform/ -iname 'fan*_input')

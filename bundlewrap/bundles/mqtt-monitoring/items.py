@@ -1,3 +1,8 @@
+files['/usr/local/sbin/voc2alert'] = {
+    'content_type': 'mako',
+    'mode': '0755',
+}
+
 files['/usr/local/sbin/voc2mqtt'] = {
     'content_type': 'mako',
     'context': {
@@ -5,6 +10,7 @@ files['/usr/local/sbin/voc2mqtt'] = {
     },
     'mode': '0755',
 }
+
 files['/usr/local/sbin/check_system.sh'] = {
     'content_type': 'jinja2',
     'context': {

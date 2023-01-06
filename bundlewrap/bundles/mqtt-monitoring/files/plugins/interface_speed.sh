@@ -4,26 +4,27 @@ for interface in $(ls /sys/class/net/)
 do
     if ! [[ "$interface" =~ "^(lo|br|bond)" ]] && [ -z "$HYPERVISOR" ]
     then
-        if [ "$(cat "/sys/class/net/$interface/operstate")" == "up" ]
+        if [ "$(cat "/sys/class/net/$interface/operstate")" == "up" ] && [ -r "/sys/class/net/$interface/speed" ]
         then
-            if [ -r "/sys/class/net/$interface/speed" ]
+            speed="$(cat "/sys/class/net/$interface/speed")"
+
+            # if speed is 0 or below, this is probably not a "real"
+            # ethernet interface.
+            if [ "$speed" -gt "1" ]
             then
-                speed="$(cat "/sys/class/net/$interface/speed")"
                 if [ "$speed" -lt "1000" ]
                 then
-                    send_mqtt_message "error" "system/interface/$TRUNC_HOSTNAME/$interface" "$interface has less than 1Gbit/s (only $speed Mbit/s)"
+                    voc2alert "error" "interface/$interface" "$interface has less than 1Gbit/s (only $speed Mbit/s)"
                 fi
-                debug_output "$interface" "speed" "$speed"
-            fi
 
-            if [ -r "/sys/class/net/$interface/duplex" ]
-            then
-                duplex="$(cat "/sys/class/net/$interface/duplex")"
-                if [ "$duplex" != "full" ]
+                if [ -r "/sys/class/net/$interface/duplex" ]
                 then
-                    send_mqtt_message "error" "system/interface/$TRUNC_HOSTNAME/$interface" "$interface runs in $duplex mode!"
+                    duplex="$(cat "/sys/class/net/$interface/duplex")"
+                    if [ "$duplex" != "full" ]
+                    then
+                        voc2alert "error" "interface/$interface" "$interface runs in $duplex mode!"
+                    fi
                 fi
-                debug_output "$interface" "duplex" "$duplex"
             fi
         fi
     fi
