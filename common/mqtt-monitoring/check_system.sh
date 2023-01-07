@@ -20,7 +20,7 @@ for i in 1 2 3 ; do
         -m "$PING_MESSAGE" && break
 done
 
-KERNEL_LOG=$(journalctl _TRANSPORT=kernel --since "10 minutes ago" --no-pager --no-hostname)
+KERNEL_LOG=$(journalctl _TRANSPORT=kernel --since "10 minutes ago" --no-pager --no-hostname -o short-full -a)
 
 for file in /usr/local/sbin/check_system.d/*.sh
 do
