@@ -21,7 +21,7 @@ do
         current="$(cat "$i")"
         critical="$(cat "$crit_filename")"
 
-        if [[ "${critical}" -gt 1 ]] && [ $(echo "${current} > (${critical}*0.95)" | bc) -eq "1" ]
+        if [ "${critical}" -gt 1 ] && [ $(echo "${current} > (${critical}*0.95)" | bc) -eq "1" ]
         then
             voc2alert "error" "temp/${label}" "temperature exceeds threshold (currently at $(echo "${current}/1000" | bc)°C, critical at $(echo "${critical}/1000" | bc)°C)</red>"
         fi
