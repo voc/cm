@@ -2,7 +2,7 @@
 
 for interface in $(ls /sys/class/net/)
 do
-    if ! [[ "$interface" =~ "^(lo|br|bond)" ]] && [ -z "$HYPERVISOR" ]
+    if ! [[ "$interface" =~ "^(lo|br|bond)" ]]
     then
         if [ "$(cat "/sys/class/net/$interface/operstate")" == "up" ] && [ -r "/sys/class/net/$interface/speed" ]
         then
