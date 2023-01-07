@@ -3,9 +3,7 @@
     from re import sub
 %>\
 
-[ -x /usr/local/sbin/voc2mqtt ] && /usr/local/sbin/voc2mqtt \
-    -t "/voc/alert" \
-    -m "{\"level\":\"info\",\"component\":\"recording/${node.name}\",\"msg\":\"Recording to /video/capture/${event['slug']}/ started…\"}" &
+voc2alert "info" "recording" "Recording to /video/capture/${event['slug']}/ started…"
 
 ffmpeg \
     -v verbose \
@@ -38,13 +36,9 @@ ffmpeg \
 
 ffmpeg_error_code=$?
 if [ "0" -ne "$ffmpeg_error_code" ]; then
-    [ -x /usr/local/sbin/voc2mqtt ] && /usr/local/sbin/voc2mqtt \
-        -t "/voc/alert" \
-        -m "{\"level\":\"info\",\"component\":\"recording/${node.name}\",\"msg\":\"Recording failed!\"}" &
+    voc2alert "error" "recording" "Recording failed, ffmpeg exited $ffmpeg_error_code"
 else
-    [ -x /usr/local/sbin/voc2mqtt ] && /usr/local/sbin/voc2mqtt \
-        -t "/voc/alert" \
-        -m "{\"level\":\"info\",\"component\":\"recording/${node.name}\",\"msg\":\"Recording <red>stopped</red> (ffmpeg error code $ffmpeg_error_code)\"}" &
+    voc2alert "warn" "recording" "Recording stopped!"
 fi
 
 exit $ffmpeg_error_code
