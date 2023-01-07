@@ -81,6 +81,7 @@ files['/etc/telegraf/telegraf.conf'] = {
 
 svc_systemd['telegraf'] = {
     'needs': {
+        'pkg_apt:lm-sensors',
         'pkg_apt:telegraf',
         'file:/etc/telegraf/telegraf.conf',
     },
