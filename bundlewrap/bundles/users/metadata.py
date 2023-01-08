@@ -43,7 +43,7 @@ def add_users_from_toml(metadata):
     # first, establish a list of all users that should exist on the
     # system
     for uname, uconfig in USERS_TOML.items():
-        if uconfig['enable'] and not ign_default:
+        if uconfig['enable_event'] and not ign_default:
             users[uname] = {}
 
     # second, process all users so we have stuff like uids, ssh keys
