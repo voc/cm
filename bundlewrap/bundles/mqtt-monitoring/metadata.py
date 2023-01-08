@@ -31,20 +31,3 @@ defaults = {
 if 'minion' not in node.name:
     defaults['mqtt-monitoring']['plugins'].add('load')
     defaults['mqtt-monitoring']['plugins'].add('kernel_throttling')
-
-
-@metadata_reactor.provides(
-    'mqtt-monitoring/my_hostname',
-)
-def my_hostname(metadata):
-    hostname = metadata.get('hostname')
-
-    # strip .c3voc.de from end of hostname
-    if hostname.endswith('.c3voc.de'):
-        hostname = hostname[:-9]
-
-    return {
-        'mqtt-monitoring': {
-            'my_hostname': hostname,
-        },
-    }

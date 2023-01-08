@@ -1,5 +1,4 @@
 files['/usr/local/sbin/voc2alert'] = {
-    'content_type': 'mako',
     'mode': '0755',
 }
 

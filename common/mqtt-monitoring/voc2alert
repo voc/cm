@@ -1,0 +1,27 @@
+#!/bin/bash
+
+
+[[ -n "$DEBUG" ]] && set -x
+set -euo pipefail
+
+MY_HOSTNAME="$(hostnamectl --static | sed 's/\.c3voc\.de$//g')"
+
+MESSAGE="$(jq \
+    --null-input \
+    --arg level "$1" \
+    --arg component "$MY_HOSTNAME/$2" \
+    --arg msg "$3" \
+    --compact-output \
+    '{"level": $level, "component": $component, "msg": $msg}')"
+
+for i in 1 2 3 ; do
+    voc2mqtt \
+        -t '/voc/alert' \
+        -m "$MESSAGE" && break
+done
+
+for i in 1 2 3 ; do
+    voc2mqtt \
+        -t "hosts/$MY_HOSTNAME/alert" \
+        -m "$MESSAGE" && break
+done

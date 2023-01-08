@@ -12,6 +12,8 @@ helpers are documented below, possibly including an example.
 ## mqtt-monitoring
 
 Please configure your system to execute `check_system.sh` every minute.
+This script requires the `voc2alert` script to be available in `$PATH`
+and executable (chmod +x) to send alerts.
 
 Files in `plugins/` should be added to `/usr/local/sbin/check_system.d/`
 depending on what your system does.
@@ -33,35 +35,4 @@ mosquitto_pub \
     -u "${mqtt_username}" \
     -P "${mqtt_password}" \
     "$@"
-```
-
-### `voc2alert` (+x, in `$PATH`)
-
-**Publishes alerts to the `#voc-wok` IRC channel.**
-
-Please set `$MY_HOSTNAME` to the hostname of the system. If the system
-hostname ends in `.c3voc.de`, that suffix should be removed.
-
-```bash
-#!/bin/bash
-
-MESSAGE="$(jq \
-    --null-input \
-    --arg level "$1" \
-    --arg component "$MY_HOSTNAME/$2" \
-    --arg msg "$3" \
-    --compact-output \
-    '{"level": $level, "component": $component, "msg": $msg}')"
-
-for i in 1 2 3 ; do
-    voc2mqtt \
-        -t '/voc/alert' \
-        -m "$MESSAGE" && break
-done
-
-for i in 1 2 3 ; do
-    voc2mqtt \
-        -t "hosts/$MY_HOSTNAME/alert" \
-        -m "$MESSAGE" && break
-done
 ```
