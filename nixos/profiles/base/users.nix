@@ -2,9 +2,9 @@
 
 let
   users = builtins.fromTOML (builtins.readFile ../../../users.toml);
-  enabled = lib.filterAttrs (name: user: user.enable or false) users;
+  enabled = lib.filterAttrs (name: user: user.enable_rz or false) users;
 
-  enabled_noLib = builtins.filter (x: users.${x}.enable or false) (builtins.attrNames users);
+  enabled_noLib = builtins.filter (x: users.${x}.enable_rz or false) (builtins.attrNames users);
   customConfigs = builtins.filter (x: builtins.pathExists x) (map (name: "${../../users}/${name}/default.nix") enabled_noLib);
 in {
   imports = customConfigs;
