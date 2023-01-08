@@ -9,14 +9,14 @@ do
     crit_filename="$(echo $i | sed 's/input/crit/')"
     if [ -r "$label_filename" ]
     then
-        label="temp_$(cat "$label_filename" | sed 's/\s\+/_/g')"
+        label="$(cat "$label_filename" | sed 's/\s\+/_/g')"
+        voc2mqtt -t 'hosts/'$TRUNC_HOSTNAME'/stats/temp_'$label -m "$(echo "$(cat "$i") / 1000" | bc)"
     else
-        label="$(basename $i)"
+        label=""
+        voc2mqtt -t 'hosts/'$TRUNC_HOSTNAME'/stats/'$(basename $i) -m "$(echo "$(cat "$i") / 1000" | bc)"
     fi
 
-    voc2mqtt -t 'hosts/'$TRUNC_HOSTNAME'/stats/'$label -m "$(echo "$(cat "$i") / 1000" | bc)"
-
-    if [ -r "$crit_filename" ]
+    if [ -r "$crit_filename" ] && [ -n "$label" ]
     then
         current="$(cat "$i")"
         critical="$(cat "$crit_filename")"
