@@ -58,18 +58,19 @@ def add_users_from_toml(metadata):
             # sudo_commands to an empty list to restrict users.
             users[uname]['sudo_commands'] = {'ALL'}
 
+        uid = metadata.get(f'users/{uname}/uid', None)
         if uname in USERS_TOML:
+            if uid is not None:
+                raise BundleError(f'{node.name}: user {uname} tries to overwrite deterministic uid, which is not allowed.')
+
             users[uname]['uid'] = USERS_TOML[uname]['uid']
 
             if USERS_TOML[uname].get('ssh_pubkeys', set()):
                 users[uname]['ssh_pubkeys'] = set(USERS_TOML[uname]['ssh_pubkeys'])
-        else:
-            uid = metadata.get(f'users/{uname}/uid', None)
-
-            if uid is None:
-                raise BundleError(f'{node.name}: user {uname} has no uid set, please set one manually')
-            elif int(uid) < 2000:
-                raise BundleError(f'{node.name}: user {uname} tries to use uid {uid}, but uids below 2000 are reserved for automatic provisioning')
+        elif uid is None:
+            raise BundleError(f'{node.name}: user {uname} has no uid set, please set one manually')
+        elif int(uid) < 2000:
+            raise BundleError(f'{node.name}: user {uname} tries to use uid {uid}, but uids below 2000 are reserved for automatic provisioning')
 
     # last, loop through every user in USERS_TOML again and delete
     # every user that should not exist
