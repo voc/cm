@@ -2,7 +2,7 @@ users_from_metadata = set()
 additional_users = node.metadata.get('openssh/allowed_users', set())
 
 for user, config in node.metadata.get('users', {}).items():
-    if 'ssh_pubkey' in config and not config.get('delete', False):
+    if 'ssh_pubkeys' in config and not config.get('delete', False):
         users_from_metadata.add(user)
 
 login_users = users_from_metadata.union(additional_users)

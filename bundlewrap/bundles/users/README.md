@@ -13,9 +13,9 @@ configs, if user-specific configuration exists.
             'groups': {
                 # list of groups the user should be in
             },
-            'ssh_pubkey': [
+            'ssh_pubkeys': {
                 # list of ssh pubkeys that are allowed to log in
-            ],
+            },
         },
     }
 
