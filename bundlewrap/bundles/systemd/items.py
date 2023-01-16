@@ -12,10 +12,7 @@ actions = {
     'systemd-hostname': {
         'command': 'hostnamectl set-hostname {}'.format(node.metadata['hostname']),
         'unless': '[ "$(hostnamectl --static)" = "{}" ]'.format(node.metadata['hostname']),
-        # Provided by bundle:basic
-        'needs': {
-            'file:/etc/hosts',
-        },
+        'needs': {'file:/etc/hosts'} if node.has_bundle('basic') else set(),
     },
     'systemd-timezone': {
         'command': 'timedatectl set-timezone {}'.format(timezone),
