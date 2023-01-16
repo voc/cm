@@ -18,7 +18,7 @@ then
 
         if [ "0" -eq "$ac_online" ] && [ "$capacity" -le 30 ]
         then
-            send_mqtt_message "error" "system/power/${TRUNC_HOSTNAME}/$identifier" "<red>AC power offline! Battery $identifier $capacity % left.</red>"
+            voc2alert "error" "battery/$identifier" "AC power offline! Battery $identifier $capacity % left."
         fi
     done
 fi

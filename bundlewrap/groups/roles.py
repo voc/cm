@@ -10,6 +10,11 @@ groups['encoders'] = {
         'voctomix2',
     },
     'metadata': {
+        'mqtt-monitoring': {
+            'plugins': {
+                'raid_mdstat',
+            },
+        },
         'voctocore': {
             'streaming_auth_key': keepass.password(['ansible', 'icecast', 'icedist', 'source']),
         },

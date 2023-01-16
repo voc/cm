@@ -12,7 +12,10 @@ defaults = {
         'username': keepass.username(['ansible', 'mqtt']),
         'password': keepass.password(['ansible', 'mqtt']),
         'plugins': {
-            'fan_speed',
+            'disk_space',
+            'fans_and_temps',
+            'systemd_failed_units',
+            'kernel_log',
         },
     },
     'systemd-timers': {
@@ -20,10 +23,11 @@ defaults = {
             'check_system_and_send_mqtt_message': {
                 'command': '/usr/local/sbin/check_system.sh',
                 'when': 'minutely',
-                'environment': {
-                    'TRUNC_HOSTNAME': node.name,
-                },
             },
         },
     },
 }
+
+if 'minion' not in node.name:
+    defaults['mqtt-monitoring']['plugins'].add('load')
+    defaults['mqtt-monitoring']['plugins'].add('kernel_throttling')

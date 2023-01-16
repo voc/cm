@@ -1,4 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-set -x
-mosquitto_pub --capath /etc/ssl/certs/ -h "${mqtt['server']}" -p 8883 -u "${mqtt['username']}" -P "${mqtt['password']}" "$@"
+
+[[ -n "$DEBUG" ]] && set -x
+set -euo pipefail
+
+mosquitto_pub \
+    --capath /etc/ssl/certs/ \
+    -h "${mqtt['server']}" \
+    -p 8883 \
+    -u "${mqtt['username']}" \
+    -P "${mqtt['password']}" \
+    "$@"
