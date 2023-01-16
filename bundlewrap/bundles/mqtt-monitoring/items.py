@@ -10,6 +10,10 @@ files['/usr/local/sbin/voc2mqtt'] = {
     'mode': '0755',
 }
 
+files['/usr/local/sbin/alert_shutdown.sh'] = {
+    'mode': '0755',
+}
+
 files['/usr/local/sbin/check_system.sh'] = {
     'content_type': 'jinja2',
     'context': {
