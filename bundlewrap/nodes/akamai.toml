@@ -1,0 +1,6 @@
+# runs proxmox
+dummy = true
+
+# Needs user 'root' for apply.
+# Please install packages 'sudo', 'jq' and 'mosquitto-clients' manually.
+bundles = ["mqtt-monitoring", "systemd", "systemd-timers"]
