@@ -1,6 +1,8 @@
 [Unit]
 Description=Send MQTT shutdown
 After=network.target local-fs.target systemd-hostnamed.service
+Wants=network.target
+Requires=systemd-hostnamed.service
 
 [Service]
 Type=oneshot
