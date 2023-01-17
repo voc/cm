@@ -1,8 +1,11 @@
 [Unit]
 Description=Service for Timer ${timer}
-After=network.target
+After=network.target ${' '.join(sorted(config.get('requisite', set())))}
 % if config.get('requires', ''):
 Requires=${config['requires']}
+% endif
+% if config.get('requisite', set()):
+Requisite=${' '.join(sorted(config['requisite']))}
 % endif
 
 [Service]
