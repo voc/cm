@@ -1,6 +1,6 @@
 [Unit]
 Description=Send MQTT shutdown
-After=network.target
+After=network.target systemd-hostnamed.service
 Requires=network.target
 
 [Service]
