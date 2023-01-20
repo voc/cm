@@ -43,13 +43,8 @@ directories = {
 
 
 for interface, config in node.metadata.get('interfaces').items():
-    if config.get('dhcp', False):
-        template = 'template-iface-dhcp.network'
-    else:
-        template = 'template-iface-nodhcp.network'
-
     files[f'/etc/systemd/network/{interface}.network'] = {
-        'source': template,
+        'source': 'template-iface.network',
         'content_type': 'mako',
         'context': {
             'interface': interface,

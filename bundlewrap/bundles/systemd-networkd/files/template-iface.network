@@ -25,30 +25,38 @@ Destination=${route}
 GatewayOnlink=yes
 
 % endfor
-% if 'gateway4' in config:
+% if not config.get('dhcp', False):
+%  if 'gateway4' in config:
 [Route]
 Gateway=${config['gateway4']}
 GatewayOnlink=yes
 
-% endif
-% if 'gateway6' in config:
+%  endif
+%  if 'gateway6' in config:
 [Route]
 Gateway=${config['gateway6']}
 GatewayOnlink=yes
 
+%  endif
 % endif
 [Network]
-DHCP=no
-% if config.get('ipv6_accept_ra', False):
-IPv6AcceptRA=yes
-% else:
-IPv6AcceptRA=no
-% endif
-
-% if config.get('forwarding', False):
-IPForward=yes
-%endif
-
 % for vlan in sorted(config.get('vlans', set())):
 VLAN=${interface}.${vlan}
 % endfor
+
+% if config.get('dhcp', False):
+DHCP=yes
+IPv6AcceptRA=yes
+
+[DHCPv4]
+UseDomains=no
+UseHostname=no
+UseMTU=yes
+UseNTP=no
+UseTimezone=no
+SendHostname=yes
+Hostname=${node.metadata.get('hostname')}
+% else:
+DHCP=no
+IPv6AcceptRA=no
+% endif
