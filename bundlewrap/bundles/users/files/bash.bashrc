@@ -35,7 +35,8 @@ export LESS="-iRS -# 2"
 export EDITOR=vim
 export VISUAL=vim
 
-alias ipb='ip -brief'
+alias ipb='ip -brief --color=always'
+alias ipa='ip -brief --color=always addr show; echo; ip --color=always route show; ip -6 --color=always route show'
 alias l='ls -lAh'
 alias s='sudo -i'
 alias v='vim -p'
