@@ -23,8 +23,7 @@ defaults = {
             'check_system_and_send_mqtt_message': {
                 'command': '/usr/local/sbin/check_system.sh',
                 'when': 'minutely',
-                'requisite': {
-                    'systemd-hostnamed.service',
+                'requires': {
                     'network.target',
                 },
             },

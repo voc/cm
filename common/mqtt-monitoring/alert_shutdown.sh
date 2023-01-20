@@ -1,8 +1,11 @@
 #!/bin/bash
 
+MY_HOSTNAME="$(hostnamectl --static)"
+[[ -z "$MY_HOSTNAME" ]] && exit 1
+
 MESSAGE="$(jq \
     --null-input \
-    --arg name "$(hostnamectl --static)" \
+    --arg name "$MY_HOSTNAME" \
     --compact-output \
     '{"name": $name}')"
 

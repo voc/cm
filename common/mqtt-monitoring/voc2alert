@@ -5,6 +5,7 @@
 set -euo pipefail
 
 MY_HOSTNAME="$(hostnamectl --static | sed 's/\.c3voc\.de$//g')"
+[[ -z "$MY_HOSTNAME" ]] && exit 1
 
 MESSAGE="$(jq \
     --null-input \
