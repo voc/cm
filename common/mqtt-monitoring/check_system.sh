@@ -32,33 +32,3 @@ do
         . "${file}"
     fi
 done
-
-# I'm sorry, legacy shit follows below…
-
-# check_raid implements:
-#
-#  * mdadm status of existing md devices
-#  * megacli raid controller status via wrapper raidstatus
-#    (available e.g. on storage and ${TRUNC_HOSTNAME})
-#  * megacli battery status via wrapper raidstatus
-#
-check_raid () {
-  if [ -e "$(command -v zpool)" ] && [ "$(lsmod | grep -q zfs; echo $?)" -eq "0" ];then
-    zpool list -H -o name,health | while read line; do
-      pool_name=$(echo $line| awk  '{ print $1 }')
-      pool_health=$(echo $line| awk  '{ print $2 }')
-
-      echo $pool_health | grep -iqE 'online'
-      if [ "$?" -ne "0" ]; then
-        send_mqtt_message "error" "system/zfs/${TRUNC_HOSTNAME}" "<red>ZFS pool '${zfs_pool}' is '${pool_health}' please run 'zpool status' for more information</red>"
-      fi
-
-      debug_output "zfs" $pool_name $pool_health
-    done
-  fi
-}
-
-# general checks
-check_raid
-
-# execute subchecks
