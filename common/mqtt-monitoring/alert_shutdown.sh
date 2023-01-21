@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# do not alert about shutdowns for proxmox hosts
+[[ -n "$(command -v pvenode)" ]] && exit 0
+
 MY_HOSTNAME="$(hostnamectl --static)"
 [[ -z "$MY_HOSTNAME" ]] && exit 1
 

@@ -11,7 +11,8 @@ PING_MESSAGE="$(jq \
     --compact-output \
     '{"name": $hostname, "interval": 60, "additional_data": {"uptime": $uptime, "ips": $ips}}')"
 
-if [[ -n "$MY_HOSTNAME" ]]
+# only check in if hostname is set and this is not a proxmox node
+if [[ -n "$MY_HOSTNAME" ]] && [[ -z "$(command -v pvenode)" ]]
 then
     for i in 1 2 3 ; do
         voc2mqtt \
