@@ -7,6 +7,7 @@ files = {
         'delete': True,
     },
     '/etc/resolv.conf': {
+        'content_type': 'mako',
         'after': {
             'pkg_apt:',
         },
