@@ -1,0 +1,4 @@
+groups = ["debian-bullseye"]
+
+[metadata.interfaces.ens18]
+ips = ["10.73.200.110/16"]
