@@ -16,12 +16,13 @@ git_deploy['/opt/crs-scripts'] = {
     'rev': 'master',
 }
 
-files['/video/upload-key'] = {
-    'content_type': 'any', # do not touch file contents
-    'owner': 'voc',
-    'mode': '0600',
-    'unless': '! test -f /video/upload-key',
-}
+if not node.has_bundle('cifs-client'):
+    files['/video/upload-key'] = {
+        'content_type': 'any', # do not touch file contents
+        'owner': 'voc',
+        'mode': '0600',
+        'unless': '! test -f /video/upload-key',
+    }
 
 files['/opt/crs-scripts/tracker-profile.sh'] = {
     'content_type': 'mako',
