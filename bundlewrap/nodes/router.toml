@@ -2,6 +2,8 @@ hostname = "10.73.200.201"
 bundles = [
     "isc-dhcp-server",
     "netdata",
+    "openvpn-client",
+    "unbound-with-knot",
 ]
 groups = ["debian-bullseye"]
 
