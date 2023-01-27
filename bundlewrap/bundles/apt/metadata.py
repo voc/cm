@@ -7,6 +7,7 @@ defaults = {
             'buffer': {},
             'build-essential': {},
             'bwm-ng': {},
+            'curl': {},
             'debian-goodies': {},
             'dnsutils': {},
             'dstat': {},
