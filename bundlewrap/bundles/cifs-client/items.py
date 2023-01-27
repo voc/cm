@@ -33,10 +33,10 @@ for mount, data in node.metadata.get('cifs-client', {}).get('mounts', {}).items(
     }
 
     svc_systemd[f'{unitname}.mount'] = {
-        'needs': [
+        'needs': {
             'file:/usr/local/lib/systemd/system/{}.mount'.format(unitname),
             'directory:{}'.format(data['mountpoint']),
-        ],
+        },
     }
 
     if data.get('credentials'):
