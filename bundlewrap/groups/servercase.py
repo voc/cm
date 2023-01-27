@@ -30,6 +30,11 @@ groups['minions-servercase'] = {
         'cifs-client',
     },
     'metadata': {
+        'interfaces': {
+            'ens18': {
+                'gateway4': '10.73.0.254',
+            },
+        },
         'cifs-client': {
             'mounts': {
                 'video': {
