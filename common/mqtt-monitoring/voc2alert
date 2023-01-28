@@ -29,6 +29,6 @@ done
 
 for i in 1 2 3 ; do
     voc2mqtt \
-        -t "hosts/$MY_HOSTNAME/alert" \
+        -t "hosts/$HOSTNAME_SHORT/alert" \
         -m "$MESSAGE" && break
 done
