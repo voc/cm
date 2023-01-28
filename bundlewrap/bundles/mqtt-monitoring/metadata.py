@@ -34,3 +34,19 @@ defaults = {
 if 'minion' not in node.name:
     defaults['mqtt-monitoring']['plugins'].add('load')
     defaults['mqtt-monitoring']['plugins'].add('kernel_throttling')
+
+@metadata_reactor.provides(
+    'systemd-timers/timers/check_system_and_send_mqtt_message/environment/MY_HOSTNAME',
+)
+def hostname(metadata):
+    return {
+        'systemd-timers': {
+            'timers': {
+                'check_system_and_send_mqtt_message': {
+                    'environment': {
+                        'MY_HOSTNAME': metadata.get('hostname'),
+                    },
+                },
+            },
+        },
+    }

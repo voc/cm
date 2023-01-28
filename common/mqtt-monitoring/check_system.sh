@@ -1,8 +1,11 @@
 #!/bin/bash
 
-MY_HOSTNAME="$(hostnamectl --static)"
-KERNEL_LOG=$(journalctl _TRANSPORT=kernel --since "10 minutes ago" --no-pager --no-hostname -o short-full -a)
+if [[ -z "$MY_HOSTNAME" ]]
+then
+    MY_HOSTNAME="$(hostnamectl --static)"
+fi
 
+KERNEL_LOG=$(journalctl _TRANSPORT=kernel --since "10 minutes ago" --no-pager --no-hostname -o short-full -a)
 PING_MESSAGE="$(jq \
     --null-input \
     --arg ips "$(ip -brief a | awk '{if ($2 == "UP") {for(i=3;i<=NF;++i)print $i}}' | tr '\n' ' ')" \
@@ -22,7 +25,7 @@ then
 
     for i in 1 2 3 ; do
         voc2mqtt \
-            -t "hosts/$(hostnamectl --static | sed 's/\.c3voc\.de$//g')/checkin" \
+            -t "hosts/$(echo -n "$MY_HOSTNAME" | sed 's/\.c3voc\.de$//g')/checkin" \
             -m "$PING_MESSAGE" && break
     done
 fi

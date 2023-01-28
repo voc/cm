@@ -7,6 +7,7 @@ Requires=network.target
 Type=oneshot
 RemainAfterExit=yes
 ExecStop=/usr/local/sbin/alert_shutdown.sh
+Environment=MY_HOSTNAME=${node.metadata.get('hostname')}
 TimeoutStopSec=5
 
 [Install]

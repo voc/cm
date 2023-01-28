@@ -11,6 +11,7 @@ files['/usr/local/sbin/voc2mqtt'] = {
 }
 
 files['/usr/local/sbin/alert_shutdown.sh'] = {
+    'content_type': 'mako',
     'mode': '0755',
 }
 
