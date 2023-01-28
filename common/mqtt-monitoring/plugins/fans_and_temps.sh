@@ -1,6 +1,6 @@
 if [ -r "/proc/acpi/ibm/fan" ]
 then
-    voc2mqtt -t 'hosts/'$TRUNC_HOSTNAME'/stats/fan_level' -m "$(awk '/^level/ {print $2}' /proc/acpi/ibm/fan)"
+    voc2mqtt -t "$PER_HOST_TOPIC/stats/fan_level" -m "$(awk '/^level/ {print $2}' /proc/acpi/ibm/fan)"
 fi
 
 for i in $(find /sys/devices/platform/ -iname 'temp*_input')
@@ -10,10 +10,10 @@ do
     if [ -r "$label_filename" ]
     then
         label="$(cat "$label_filename" | sed 's/\s\+/_/g')"
-        voc2mqtt -t 'hosts/'$TRUNC_HOSTNAME'/stats/temp_'$label -m "$(echo "$(cat "$i") / 1000" | bc)"
+        voc2mqtt -t "$PER_HOST_TOPIC/stats/temp_${label}" -m "$(echo "$(cat "$i") / 1000" | bc)"
     else
         label=""
-        voc2mqtt -t 'hosts/'$TRUNC_HOSTNAME'/stats/'$(basename $i) -m "$(echo "$(cat "$i") / 1000" | bc)"
+        voc2mqtt -t "$PER_HOST_TOPIC/stats/$(basename $i)" -m "$(echo "$(cat "$i") / 1000" | bc)"
     fi
 
     if [ -r "$crit_filename" ] && [ -n "$label" ]
@@ -38,5 +38,5 @@ do
         label="$(basename $i)"
     fi
 
-    voc2mqtt -t 'hosts/'$TRUNC_HOSTNAME'/stats/'$label -m "$(cat "$i")"
+    voc2mqtt -t "$PER_HOST_TOPIC/stats/$label" -m "$(cat "$i")"
 done

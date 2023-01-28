@@ -5,6 +5,7 @@ then
     MY_HOSTNAME="$(hostnamectl --static)"
 fi
 
+PER_HOST_TOPIC="$(echo -n "hosts/$MY_HOSTNAME" | sed 's/\.c3voc\.de$//g')"
 KERNEL_LOG=$(journalctl _TRANSPORT=kernel --since "10 minutes ago" --no-pager --no-hostname -o short-full -a)
 PING_MESSAGE="$(jq \
     --null-input \
@@ -25,7 +26,7 @@ then
 
     for i in 1 2 3 ; do
         voc2mqtt \
-            -t "hosts/$(echo -n "$MY_HOSTNAME" | sed 's/\.c3voc\.de$//g')/checkin" \
+            -t "$PER_HOST_TOPIC/checkin" \
             -m "$PING_MESSAGE" && break
     done
 fi

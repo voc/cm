@@ -4,13 +4,18 @@
 [[ -n "$DEBUG" ]] && set -x
 set -euo pipefail
 
-MY_HOSTNAME="$(hostnamectl --static | sed 's/\.c3voc\.de$//g')"
-[[ -z "$MY_HOSTNAME" ]] && exit 1
+if [[ -z "$MY_HOSTNAME" ]]
+then
+    MY_HOSTNAME="$(hostnamectl --static)"
+fi
+
+HOSTNAME_SHORT="$(echo "$MY_HOSTNAME" | sed 's/\.c3voc\.de$//g')"
+[[ -z "$HOSTNAME_SHORT" ]] && exit 1
 
 MESSAGE="$(jq \
     --null-input \
     --arg level "$1" \
-    --arg component "$MY_HOSTNAME/$2" \
+    --arg component "$HOSTNAME_SHORT/$2" \
     --arg msg "$3" \
     --compact-output \
     '{"level": $level, "component": $component, "msg": $msg}')"
