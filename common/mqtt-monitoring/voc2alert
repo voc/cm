@@ -2,12 +2,13 @@
 
 
 [[ -n "$DEBUG" ]] && set -x
-set -euo pipefail
 
 if [[ -z "$MY_HOSTNAME" ]]
 then
     MY_HOSTNAME="$(hostnamectl --static)"
 fi
+
+set -euo pipefail
 
 HOSTNAME_SHORT="$(echo "$MY_HOSTNAME" | sed 's/\.c3voc\.de$//g')"
 [[ -z "$HOSTNAME_SHORT" ]] && exit 1

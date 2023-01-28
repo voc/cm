@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+[[ -n "$DEBUG" ]] && set -x
+
 if [[ -z "$MY_HOSTNAME" ]]
 then
     MY_HOSTNAME="$(hostnamectl --static)"
