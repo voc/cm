@@ -1,0 +1,9 @@
+[Match]
+Name=${' '.join(sorted(match))}
+
+[Network]
+Bond=${bond}
+
+% for vlan in sorted(vlans):
+VLAN=${bond}.${vlan}
+% endfor

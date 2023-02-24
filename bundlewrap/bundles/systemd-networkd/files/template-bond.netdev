@@ -1,0 +1,13 @@
+[NetDev]
+Name=${bond}
+Kind=bond
+
+[Bond]
+Mode=${mode}
+% if mode in {'balance-rr', '802.3ad', 'balance-tlp'}:
+TransmitHashPolicy=layer3+4
+% endif
+MIIMonitorSec=0.1
+% if mode == '802.3ad':
+LACPTransmitRate=fast
+% endif
