@@ -37,3 +37,37 @@ defaults = {
         },
     },
 }
+
+
+@metadata_reactor.provides(
+    'zfs/datasets',
+    'zfs/snapshots/retain_per_dataset',
+)
+def zfs(metadata):
+    if not node.has_bundle('zfs'):
+        raise DoNotRunAgain
+
+    slug = metadata.get('event/slug')
+
+    return {
+        'zfs': {
+            'datasets': {
+                f'video/{slug}/{path}': {
+                    'mountpoint': f'/video/{path}/{slug}',
+                    'needed_by': {
+                        f'directory:/video/{path}/{slug}',
+                    },
+                } for path in ('capture', 'encoded', 'tmp', 'intros')
+            },
+            'snapshots': {
+                'retain_per_dataset': {
+                    f'video/{slug}/{path}': {
+                        'hourly': 2,
+                        'daily': 0,
+                        'weekly': 0,
+                        'monthly': 0,
+                    } for path in ('capture', 'tmp')
+                },
+            },
+        },
+    }

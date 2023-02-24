@@ -16,6 +16,7 @@ for path in ('capture', 'encoded', 'tmp', 'intros', 'fuse'):
     directories[f'/video/{path}/{event}'] = {
         'needed_by': {
             'bundle:voctocore',
+            'bundle:crs-worker',
         },
         'owner': 'voc',
         'group': 'voc',
