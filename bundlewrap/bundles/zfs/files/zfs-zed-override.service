@@ -1,0 +1,6 @@
+[Service]
+# Default unit sets Restart=on-abort, which will not automatically
+# restart zed after system has suspended. I'm not sure why zed even
+# exits after suspending the system.
+Restart=always
+RestartSec=2

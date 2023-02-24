@@ -1,0 +1,6 @@
+[Unit]
+ConditionPathExists=
+
+[Service]
+ExecStart=
+ExecStart=/usr/sbin/zpool import -aN -o cachefile=none

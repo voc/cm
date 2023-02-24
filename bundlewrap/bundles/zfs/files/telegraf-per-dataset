@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+from subprocess import check_output
+
+pools = check_output(
+    ['/usr/sbin/zpool', 'list', '-Hpo', 'name,allocated,size'],
+    env={
+        'LC_ALL': 'C',
+    },
+).decode('UTF-8')
+
+datasets = check_output(
+    ['/usr/sbin/zfs', 'list', '-Hpo', 'name,usedbydataset,usedsnap,compressratio'],
+    env={
+        'LC_ALL': 'C',
+    },
+).decode('UTF-8')
+
+zpools = {}
+for line in pools.splitlines():
+    name, used, total = line.split()
+
+    zpools[name] = {
+        'used': used,
+        'total': total,
+    }
+
+    print('zfs_pool,pool={} size={}i,used={}i'.format(name, total, used))
+
+for line in datasets.splitlines():
+    name, used, usedsnap, compressratio = line.split()
+
+    pool = name.split('/')[0]
+
+    if '/' not in name:
+        # covered by pool metrics above
+        continue
+
+    if pool not in zpools:
+        raise Exception('BUG: {} in datasets, but {} not in pools'.format(name, pool))
+
+    if compressratio[-1] == 'x':
+        compressratio = compressratio[:-1]
+
+    print('zfs_dataset,pool={},dataset={} used={}i,usedsnap={}i,compressratio={}'.format(
+        pool,
+        name,
+        used,
+        usedsnap,
+        compressratio,
+    ))

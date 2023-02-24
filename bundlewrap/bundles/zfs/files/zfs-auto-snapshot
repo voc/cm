@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+
+
+import re
+from datetime import datetime
+from json import loads
+from subprocess import check_call, check_output
+from sys import argv
+
+
+def list_datasets():
+    datasets = set()
+    for line in check_output(['zfs', 'list', '-H', '-o', 'name']).splitlines():
+        line = line.decode('UTF-8')
+
+        for prefix in metadata.get('snapshot_never', set()):
+            if line.startswith(prefix):
+                break
+        else:
+            datasets.add(line)
+
+    return datasets
+
+
+def get_filtered_snapshots_for_dataset(ds):
+    all_snapshots = check_output(['zfs', 'list', '-H', '-o', 'name', '-t', 'snapshot']).decode('UTF-8').splitlines()
+
+    prefix = '{}@zfs-auto-snap_{}-'.format(ds, label)
+    snapshots = set()
+
+    for i in sorted(all_snapshots):
+        if i.startswith(prefix):
+            snapshots.add(i)
+
+    return snapshots
+
+
+def delete_snapshot(snap):
+    assert '@' in snap, 'BUG! Dataset "{}" has no @!'.format(snap)
+    print('deleting snapshot {}'.format(snap))
+    check_call(['zfs', 'destroy', snap])
+
+
+def create_snapshot(ds, label, now):
+    check_call(['zfs', 'snapshot', '{}@zfs-auto-snap_{}-{}'.format(ds, label, now)])
+    print('created snapshot {}@zfs-auto-snap_{}-{}'.format(ds, label, now))
+
+
+label = argv[1]
+
+with open('/etc/zfs-snapshot-config.json', 'r') as fp:
+    metadata = loads(fp.read())
+
+default_retain = metadata['retain_defaults'][label]
+now = datetime.now().strftime('%F-%H%M')
+snapshots_created = False
+
+for ds in list_datasets():
+    retain = int(metadata.get('retain_per_dataset', {}).get(ds, {}).get(label, default_retain))
+
+    if retain > 0:
+        create_snapshot(ds, label, now)
+        snapshots_created = True
+
+    existing_snapshots = get_filtered_snapshots_for_dataset(ds)
+
+    if retain > 0:
+        # Why +1 here? Because we're specifying the amount of hours we want
+        # to go back in time, not the amount of snapshots we want to keep.
+        # Stating '1 month' does mean 'i want to be able to go back atleast
+        # one monthly snapshot', not 'keep one monthly snapshot'. If we only
+        # kept one snapshot, that wouldn't be possible for most of the time,
+        # because the monthly snapshot is actually less than a month old.
+        snapshots_to_keep = retain+1
+
+        for snapshot in sorted(existing_snapshots)[:-snapshots_to_keep]:
+            delete_snapshot(snapshot)
+    else:
+        for snapshot in existing_snapshots:
+            delete_snapshot(snapshot)
+
+with open('/var/tmp/zfs-auto-snapshot.status', 'w') as fp:
+    fp.write('{}\n'.format(datetime.now().strftime('%s') if snapshots_created else 0))
