@@ -1,14 +1,39 @@
 bundles = [
     "encoder-common",
-    "mqtt-monitoring",
-    "sysconfig",
-    "systemd",
-    "systemd-timers",
-    "users",
 ]
-groups = ["crs-workers"]
+groups = [
+    "crs-workers",
+    "debian-bullseye",
+]
 
 [metadata.crs-worker]
 autostart_scripts = [ "recording-scheduler", "mount4cut", "cut-postprocessor", "postencoding", "postprocessing" ]
 token.encoding = "!kee_user:ansible|worker-groups|storage"
 secret.encoding = "!kee_pass:ansible|worker-groups|storage"
+
+[metadata.interfaces.'bond0.3504']
+ips = [
+    "10.73.200.24/16",
+]
+gateway4 = "10.73.0.254"
+
+[metadata.systemd-networkd.bonds.bond0]
+match = [
+    "enp3s0f0",
+    "enp3s0f1",
+]
+
+[metadata.zfs.pools.video.when_creating]
+ashift = 12
+
+[[metadata.zfs.pools.video.when_creating.config]]
+devices = [
+    "TODO", # TODO
+]
+type = "raidz2"
+
+[[metadata.zfs.pools.video.when_creating.config]]
+devices = [
+    "TODO", # TODO
+]
+type = "cache"
