@@ -49,16 +49,21 @@ def zfs(metadata):
 
     slug = metadata.get('event/slug')
 
+    datasets = {
+        f'video/{slug}': {},
+    }
+
+    for path in ('capture', 'encoded', 'tmp', 'intros'):
+        datasets[f'video/{slug}/{path}'] = {
+            'mountpoint': f'/video/{path}/{slug}',
+            'needed_by': {
+                f'directory:/video/{path}/{slug}',
+            },
+        }
+
     return {
         'zfs': {
-            'datasets': {
-                f'video/{slug}/{path}': {
-                    'mountpoint': f'/video/{path}/{slug}',
-                    'needed_by': {
-                        f'directory:/video/{path}/{slug}',
-                    },
-                } for path in ('capture', 'encoded', 'tmp', 'intros')
-            },
+            'datasets': datasets,
             'snapshots': {
                 'retain_per_dataset': {
                     f'video/{slug}/{path}': {
