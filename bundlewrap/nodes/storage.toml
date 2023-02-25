@@ -1,5 +1,6 @@
 bundles = [
     "encoder-common",
+    "zfs",
 ]
 groups = [
     "crs-workers",
@@ -23,17 +24,35 @@ match = [
     "enp3s0f1",
 ]
 
+[metadata.zfs.module_options]
+zfs_arc_max_gb = 100
+
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
 
 [[metadata.zfs.pools.video.when_creating.config]]
 devices = [
-    "TODO", # TODO
+    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130269302",
+    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130291135",
+    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130291202",
+    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130298009",
+    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130298111",
+    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WMC130231072",
+    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B1_WD-WCC131052364",
+    "/dev/disk/by-id/ata-WDC_WD3003FZEX-00Z4SA0_WD-WMC1F0E0YDS8",
 ]
 type = "raidz2"
 
 [[metadata.zfs.pools.video.when_creating.config]]
 devices = [
-    "TODO", # TODO
+    "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV3180015K240CGN-part3",
+    "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part3"
+]
+type = "log"
+
+[[metadata.zfs.pools.video.when_creating.config]]
+devices = [
+    "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV3180015K240CGN-part4",
+    "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part4"
 ]
 type = "cache"
