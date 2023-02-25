@@ -30,6 +30,7 @@ defaults = {
             'mosh': {},
             'mtr-tiny': {},
             'ncdu': {},
+            'psmisc': {},
             'pv': {},
             'python3': {},
             'python3-dev': {},
