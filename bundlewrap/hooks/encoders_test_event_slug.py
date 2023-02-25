@@ -1,3 +1,5 @@
+from os import environ
+
 from bundlewrap.utils.ui import io
 from bundlewrap.utils.text import red, blue, bold, wrap_question
 from bundlewrap.exceptions import SkipNode
@@ -5,6 +7,9 @@ from bundlewrap.exceptions import SkipNode
 
 def node_apply_start(repo, node, interactive=False, **kwargs):
     if not node.has_bundle('encoder-common'):
+        return
+
+    if environ.get('BW_SKIP_TEST_EVENT_SLUG', '0') == '1':
         return
 
     event_slug = node.metadata.get('event/slug')
