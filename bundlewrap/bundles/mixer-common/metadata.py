@@ -19,6 +19,9 @@ defaults = {
     },
     'users': {
         'mixer': {
+            'groups': {
+                'video',
+            },
             'sudo_commands': {
                 '/usr/local/sbin/brightness',
             },
