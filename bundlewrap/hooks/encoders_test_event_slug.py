@@ -21,8 +21,8 @@ def node_apply_start(repo, node, interactive=False, **kwargs):
                     red('hooks/encoders_test_event_slug'),
                     '\n'.join([
                         'event/slug is not set!',
-                        'Please make sure you\'re using the correct event configuration.'
-                        'If you choose "no" here, the node will get skipped in this apply.'
+                        'Please make sure you\'re using the correct event configuration.',
+                        'If you choose "no" here, the node will get skipped in this apply.',
                     ]),
                     'Apply anyways?',
                     prefix='{} {}'.format(
