@@ -62,6 +62,22 @@ for interface, config in node.metadata.get('interfaces').items():
         },
     }
 
+    if '.' in interface:
+        files[f'/etc/systemd/network/{interface}.netdev'] = {
+            'source': 'template-iface-vlan.netdev',
+            'content_type': 'mako',
+            'context': {
+                'interface': interface,
+                'vlan': interface.split('.', 1)[1],
+            },
+            'needed_by': {
+                'svc_systemd:systemd-networkd',
+            },
+            'triggers': {
+                'svc_systemd:systemd-networkd:restart',
+            },
+        }
+
 for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
     files[f'/etc/systemd/network/{bond}.netdev'] = {
         'source': 'template-bond.netdev',
