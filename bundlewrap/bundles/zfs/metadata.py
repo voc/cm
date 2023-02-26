@@ -35,6 +35,11 @@ defaults = {
             },
         },
     },
+    'mqtt-monitoring': {
+        'plugins': {
+            'zfs_status',
+        },
+    },
     'systemd-timers': {
         'timers': {
             'zfs-auto-snapshot-daily': {
