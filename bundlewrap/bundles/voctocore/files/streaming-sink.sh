@@ -23,6 +23,13 @@ para_mix_leveler="p=0.35:r=1:f=30"
 para_mix_loudnorm="i=-23.0:lra=12.0:tp=-3.0"
 
 
+if [[ -z "$VOC_STREAMING_AUTH" ]]
+then
+    voc2alert "error" "streaming" "failed to start stream, credentials missing!"
+    exit 1
+fi
+
+
 ffmpeg -y -nostdin -hide_banner -re \
 % if vaapi_enabled:
     -init_hw_device vaapi=streaming:/dev/dri/renderD128 \
@@ -102,7 +109,9 @@ ffmpeg -y -nostdin -hide_banner -re \
     -map "[slides]" \
 % endif
     -metadata:s:v:0 title="HD" \
-    -metadata:s:v:0 title="Slides" \
+% if parallel_slide_streaming:
+    -metadata:s:v:1 title="Slides" \
+% endif
 % if dynaudnorm:
     -map "[pgm]" -metadata:s:a:0 title="native" \
     -map "[duck_out_1]" -metadata:s:a:1 title="translated" \
@@ -115,10 +124,10 @@ ffmpeg -y -nostdin -hide_banner -re \
     \
 % if srt_publish:
     -f mpegts \
-    srt://ingest.c3voc.de:1337?streamid=publish/${endpoint}/${auth_key}
+    "srt://ingest.c3voc.de:1337?streamid=publish/${endpoint}/$VOC_STREAMING_AUTH"
 % else:
     -f matroska \
-    -password "${auth_key}" \
+    -password "$VOC_STREAMING_AUTH" \
     -content_type video/webm \
-    icecast://live.ber.c3voc.de:7999/${endpoint}
+    "icecast://live.ber.c3voc.de:7999/${endpoint}"
 % endif

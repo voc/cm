@@ -7,6 +7,7 @@ Requires=voctomix2-voctocore.service
 User=voc
 Group=voc
 Type=simple
+Environment=VOC_STREAMING_AUTH=${auth_key}
 ExecStart=/opt/voctomix2/scripts/streaming-sink.sh
 Restart=always
 RestartSec=1s

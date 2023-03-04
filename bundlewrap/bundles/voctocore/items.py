@@ -93,8 +93,6 @@ files['/opt/voctomix2/scripts/recording-sink.sh'] = {
     'content_type': 'mako',
     'context': {
         'event': node.metadata.get('event'),
-        'mqtt': node.metadata.get('mqtt-monitoring'),
-        'dynaudnorm': node.metadata.get('voctocore/streaming_use_dynaudnorm'),
         'parallel_slide_recording': node.metadata.get('voctocore/parallel_slide_recording'),
         'slides_port': slides_port,
     },
@@ -132,7 +130,6 @@ files['/opt/voctomix2/scripts/streaming-sink.sh'] = {
         'slides_port': slides_port,
         'srt_publish': node.metadata.get('voctocore/srt_publish'),
         'endpoint': node.metadata.get('voctocore/streaming_endpoint'),
-        'auth_key': node.metadata.get('voctocore/streaming_auth_key'),
         'vaapi_enabled': node.metadata.get('voctocore/vaapi'),
     },
     'mode': '0755',
@@ -141,6 +138,11 @@ files['/opt/voctomix2/scripts/streaming-sink.sh'] = {
     },
 }
 files['/usr/local/lib/systemd/system/voctomix2-streaming-sink.service'] = {
+    'content_type': 'mako',
+    'context': {
+        'auth_key': node.metadata.get('voctocore/streaming_auth_key'),
+    },
+    'cascade_skip': False,
     'triggers': {
         'action:systemd-reload',
         'svc_systemd:voctomix2-streaming-sink:restart',
