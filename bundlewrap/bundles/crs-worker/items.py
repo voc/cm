@@ -119,6 +119,20 @@ for worker, script in WORKER_SCRIPTS.items():
         },
         'triggers': {
             'action:systemd-reload',
+            # When changing the 'Install' section of a unit file, the unit
+            # needs to be disabled and then re-enabled to fix the symlinks.
+            # Since we cannot know what exactly changed, we simply disable
+            # the worker every time the unit file has been changed.
+            # Bundlewrap will re-enable it afterwards.
+            f'action:crs-worker_disable_worker_{worker}',
+        },
+    }
+
+    actions[f'crs-worker_disable_worker_{worker}'] = {
+        'command': f'systemctl disable crs-{worker}',
+        'triggered': True,
+        'before': {
+            f'svc_systemd:crs-{worker}',
         },
     }
 
