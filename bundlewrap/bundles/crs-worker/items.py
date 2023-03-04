@@ -24,7 +24,7 @@ if not node.has_bundle('cifs-client'):
         'unless': '! test -f /video/upload-key',
     }
 
-files['/opt/crs-scripts/tracker-profile.sh'] = {
+files['/opt/tracker-profile.sh'] = {
     'content_type': 'mako',
     'source': 'environment',
     'context': {
@@ -34,11 +34,9 @@ files['/opt/crs-scripts/tracker-profile.sh'] = {
         'url': node.metadata.get('crs-worker/tracker_url'),
         'vaapi': node.metadata.get('crs-worker/use_vaapi'),
     },
-    'needs': {
-        'git_deploy:/opt/crs-scripts',
-    },
+    'cascade_skip': False,
 }
-files['/opt/crs-scripts/tracker-profile-meta.sh'] = {
+files['/opt/tracker-profile-meta.sh'] = {
     'content_type': 'mako',
     'source': 'environment',
     'context': {
@@ -47,6 +45,18 @@ files['/opt/crs-scripts/tracker-profile-meta.sh'] = {
         'token': node.metadata.get('crs-worker/token/meta', node.metadata.get('crs-worker/token/encoding')),
         'secret': node.metadata.get('crs-worker/secret/meta', node.metadata.get('crs-worker/secret/encoding')),
     },
+    'cascade_skip': False,
+}
+
+symlinks['/opt/crs-scripts/tracker-profile.sh'] = {
+    'target': '/opt/tracker-profile.sh',
+    'needs': {
+        'git_deploy:/opt/crs-scripts',
+    },
+}
+
+symlinks['/opt/crs-scripts/tracker-profile-meta.sh'] = {
+    'target': '/opt/tracker-profile-meta.sh',
     'needs': {
         'git_deploy:/opt/crs-scripts',
     },
@@ -145,9 +155,11 @@ for worker, script in WORKER_SCRIPTS.items():
         # do not start these workers automatically, unless requested
         'running': (True if worker in autostart_scripts else None),
         'needs': {
-            'file:/opt/crs-scripts/tracker-profile-meta.sh',
-            'file:/opt/crs-scripts/tracker-profile.sh',
+            'file:/opt/tracker-profile-meta.sh',
+            'file:/opt/tracker-profile.sh',
             f'file:/usr/local/lib/systemd/system/crs-{worker}.service',
             'git_deploy:/opt/crs-scripts',
+            'symlink:/opt/crs-scripts/tracker-profile-meta.sh',
+            'symlink:/opt/crs-scripts/tracker-profile.sh',
         },
     }
