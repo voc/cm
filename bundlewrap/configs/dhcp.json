@@ -23,10 +23,6 @@
         "description": "minion1",
         "mac": "00:1f:c6:9c:47:7e"
     },
-    "10.73.100.103": {
-        "description": "kunsi-p14s",
-        "mac": "8e:af:0a:7e:5d:46"
-    },
     "10.73.100.105": {
         "description": "teemee",
         "mac": "E8:6A:64:47:07:82"
@@ -42,6 +38,18 @@
     "10.73.100.110": {
         "description": "jtbx lan",
         "mac": "68:f7:28:12:e8:1c"
+    },
+    "10.73.100.112": {
+        "description": "kunsi-p14s",
+        "mac": "8e:af:0a:7e:5d:46"
+    },
+    "10.73.100.125": {
+        "description": "hexchen wifi",
+        "mac": "64:bc:58:52:db:e5"
+    },
+    "10.73.100.126": {
+        "description": "hexchen",
+        "mac": "54:05:db:ff:be:ae"
     },
     "10.73.100.238": {
         "description": "atze",
