@@ -1,4 +1,4 @@
-locale_needs = set()
+locale_after = set()
 for locale in sorted(node.metadata['locale']['installed']):
     actions[f'ensure_locale_{locale}_is_enabled'] = {
         'command': f"sed -i '/{locale}/s/^# *//g' /etc/locale.gen",
@@ -6,9 +6,9 @@ for locale in sorted(node.metadata['locale']['installed']):
         'triggers': {
             'action:locale-gen',
         },
-        'needs': locale_needs,
+        'needs': locale_after,
     }
-    locale_needs = {f'action:ensure_locale_{locale}_is_enabled'}
+    locale_after = {f'action:ensure_locale_{locale}_is_enabled'}
 
 actions = {
     'locale-gen': {

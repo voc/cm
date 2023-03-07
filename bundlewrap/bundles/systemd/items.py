@@ -3,9 +3,8 @@ timezone = node.metadata.get('timezone', 'Europe/Berlin')
 actions = {
     'systemd-reload': {
         'command': 'systemctl daemon-reload',
-        'cascade_skip': False,
         'triggered': True,
-        'needed_by': {
+        'before': {
             'svc_systemd:',
         },
     },
