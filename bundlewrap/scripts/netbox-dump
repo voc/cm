@@ -6,7 +6,6 @@ from os.path import dirname, join
 from requests import post
 from sys import exit
 
-TOKEN = environ.get('NETBOX_AUTH_TOKEN')
 QUERY = '''{
   ip_address_list {
     description
@@ -15,14 +14,9 @@ QUERY = '''{
   }
 }'''
 
-if not TOKEN:
-    print('Please set the environment variable NETBOX_AUTH_TOKEN to run this script')
-    exit(1)
-
 r = post(
     'https://netbox.c3voc.de/graphql/',
     headers={
-        'Authorization': f'Token {TOKEN}',
         'Accept': 'application/json'
     },
     json={
