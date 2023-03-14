@@ -1,5 +1,6 @@
 bundles = [
     "encoder-common",
+    "samba",
     "zfs",
 ]
 groups = [
