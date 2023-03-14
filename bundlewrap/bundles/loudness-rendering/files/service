@@ -1,0 +1,10 @@
+[Unit]
+Description=Loudness monitoring for ${stream_name}
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/loudness-rendering/${stream_name}.sh
+Restart=always
+RestartSec=10
+StartLimitInterval=0
