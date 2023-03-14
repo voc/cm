@@ -29,6 +29,7 @@ for stream, source_url in node.metadata.get('loudness-rendering').items():
     svc_systemd[f'{stream}_loudness'] = {
         'needs': {
             f'file:/usr/local/lib/systemd/system/{stream}_loudness.service',
+            f'file:/opt/loudness-rendering/{stream}.sh',
         },
     }
 
