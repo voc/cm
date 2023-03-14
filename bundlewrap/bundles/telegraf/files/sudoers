@@ -1,0 +1,3 @@
+% for command in sorted(node.metadata.get('telegraf/sudo_commands', set())):
+telegraf ALL=(ALL) NOPASSWD:${command}
+% endfor
