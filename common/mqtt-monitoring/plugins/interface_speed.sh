@@ -4,6 +4,11 @@ for interface in $(ls /sys/class/net/)
 do
     if ! [[ "$interface" =~ "^(lo|br|bond)" ]]
     then
+        if [ ! -d "/sys/class/net/$interface" ]
+        then
+            continue
+        fi
+
         if [ "$(cat "/sys/class/net/$interface/operstate")" == "up" ] && [ -r "/sys/class/net/$interface/speed" ]
         then
             speed="$(cat "/sys/class/net/$interface/speed")"
