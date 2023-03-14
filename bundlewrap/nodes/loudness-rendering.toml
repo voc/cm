@@ -1,9 +1,9 @@
-hostname= "10.73.170.4"
+hostname= "10.73.200.98"
 #hostname= "loudness-rendering.lan.c3voc.de"
 groups = ["debian-bullseye"]
 bundles = ["loudness-rendering"]
 
-[metadata.interfaces.ens18]
+[metadata.interfaces.eth0]
 ips = ["10.73.200.98/16"]
 
 [metadata.loudness-rendering]

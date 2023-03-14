@@ -21,7 +21,7 @@ for stream, source_url in node.metadata.get('loudness-rendering').items():
             'stream_name': stream,
         },
         'triggers': {
-            'action:systemd-daemon-reload',
+            'action:systemd-reload',
             f'svc_systemd:{stream}_loudness:restart',
         },
     }
