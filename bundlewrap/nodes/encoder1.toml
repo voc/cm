@@ -17,9 +17,13 @@ gateway4 = "10.73.0.254"
 devicenumber = 1
 mode = "1080i50"
 
-[metadata.voctocore.sources.slides]
+[metadata.voctocore.sources.cam2]
 devicenumber = 5
 mode = "1080p25"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 0
+mode = "1080p50"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
