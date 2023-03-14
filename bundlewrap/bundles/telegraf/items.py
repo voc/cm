@@ -79,6 +79,11 @@ files['/etc/telegraf/telegraf.conf'] = {
     },
 }
 
+files['/etc/sudoers.d/telegraf'] = {
+    'source': 'sudoers',
+    'content_type': 'mako',
+}
+
 svc_systemd['telegraf'] = {
     'needs': {
         'pkg_apt:lm-sensors',
