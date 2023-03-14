@@ -53,7 +53,13 @@ def zfs(metadata):
         f'video/{slug}': {},
     }
 
-    for path in ('capture', 'encoded', 'tmp', 'intros'):
+    for path in (
+        'capture',
+        'encoded',
+        'intros',
+        'repair',
+        'tmp',
+    ):
         datasets[f'video/{slug}/{path}'] = {
             'mountpoint': f'/video/{path}/{slug}',
             'needed_by': {
