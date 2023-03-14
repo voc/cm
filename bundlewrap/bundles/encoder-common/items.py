@@ -7,7 +7,14 @@ directories[f'/video'] = {
     'group': 'voc',
 }
 
-for path in ('capture', 'encoded', 'tmp', 'intros', 'fuse'):
+for path in (
+    'capture',
+    'encoded',
+    'fuse',
+    'intros',
+    'repair',
+    'tmp',
+):
     directories[f'/video/{path}'] = {
         'owner': 'voc',
         'group': 'voc',
