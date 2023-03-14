@@ -27,6 +27,6 @@ ffmpeg \
     -map "[out]" -c:v libx264 -threads 2 -preset veryfast -x264-params keyint=30 -tune zerolatency -crf:0 26 -profile:0 high -level:0 4.1 -c:a aac -strict -2 -pix_fmt yuv420p \
     -map "[audio]" -c:a aac -b:a 128k \
     -f flv \
-    "rtmp://rtmp-relay.video.smedia.cloud/relay/${stream_name}_loudness"
+    "rtmp://ingest.c3voc.de/relay/${stream_name}_loudness"
 
 /usr/local/bin/voc2alert "info" "loudness" "Loudness monitoring for ${stream_name} stopped, ffmpeg exit code $?."

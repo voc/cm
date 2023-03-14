@@ -5,6 +5,7 @@ bundles = ["loudness-rendering"]
 
 [metadata.interfaces.eth0]
 ips = ["10.73.200.98/16"]
+gateway4 = "10.73.0.254"
 
 [metadata.loudness-rendering]
 s1 = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
