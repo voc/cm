@@ -413,9 +413,17 @@ ssh_pubkeys = [
 ]
 
 [yosh]
-nable_rz = false
+enable_rz = false
 enable_event = false
 uid = 1153
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMCQHzLZkuHEq8NN8fcbPnYofPkngxqBhXr354Bzm0RH",
+]
+
+[janik]
+enable_rz = false
+enable_event = true
+uid = 1154
+ssh_pubkeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIN/Lx0XC63fpKe+Nzdsjf4y5tLCCOUXSj//QHdqFFpI",
 ]
