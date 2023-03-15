@@ -48,10 +48,11 @@ for username, attrs in node.metadata['users'].items():
             files[home + '/.ssh/authorized_keys'] = {'delete': True}
 
         for ftype, fname in {
-            'vimrc': '.vimrc',
             'bashrc': '.bashrc',
             'screenrc': '.screenrc',
+            'ssh_config': '.ssh/config',
             'tmux-conf': '.tmux.conf',
+            'vimrc': '.vimrc',
         }.items():
             if exists(join(repo.path, 'data', 'users', 'files', ftype, username)):
                 files[f'{home}/{fname}'] = {
