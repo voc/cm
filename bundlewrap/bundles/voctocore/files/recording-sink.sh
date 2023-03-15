@@ -32,7 +32,7 @@ ffmpeg \
     -segment_time 180 \
     -strftime 1 \
     -segment_format mpegts \
-    "/video/capture/${event['slug']}/${sub('[^a-z0-9-_]+', '', event['room_name'].lower())}-%Y-%m-%d_%H-%M-%S-$$.ts"
+    "/video/capture/${event['slug']}/${sub('[^a-z0-9-_]+', '_', event['room_name'].lower())}-%Y-%m-%d_%H-%M-%S-$$.ts"
 
 ffmpeg_error_code=$?
 if [ "0" -ne "$ffmpeg_error_code" ]; then
