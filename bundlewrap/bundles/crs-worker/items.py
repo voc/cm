@@ -24,6 +24,8 @@ if not node.has_bundle('cifs-client'):
         'unless': '! test -f /video/upload-key',
     }
 
+files['/etc/fuse.conf'] = {}
+
 files['/opt/tracker-profile.sh'] = {
     'content_type': 'mako',
     'source': 'environment',
