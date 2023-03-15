@@ -1,0 +1,9 @@
+# vim: syntax=sshconfig
+
+Host *
+    HashKnownHosts no
+
+Host releasing.c3voc.de
+    IdentityFile /video/upload-key
+    StrictHostKeyChecking accept-new
+    User upload
