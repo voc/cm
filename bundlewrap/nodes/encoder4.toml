@@ -24,8 +24,8 @@ scan = "interlaced"
 hdmi = true
 
 [metadata.voctocore.sources.slides]
-devicenumber = 5
-mode = "1080p25"
+devicenumber = 0
+mode = "1080p50"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
