@@ -56,6 +56,7 @@ def zfs(metadata):
     for path in (
         'capture',
         'encoded',
+        'fuse',
         'intros',
         'repair',
         'tmp',
