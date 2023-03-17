@@ -8,7 +8,10 @@ groups = [
     "debian-bullseye",
 ]
 
-[metadata.apt.packages.melt] # for the occasional repair task
+# for the occasional repair task, so users can use a dedicated machine
+# to render the output files after preparing in kdenlive
+[metadata.apt.packages.frei0r-plugins]
+[metadata.apt.packages.melt]
 
 [metadata.crs-worker]
 autostart_scripts = [ "recording-scheduler", "mount4cut", "cut-postprocessor", "postencoding", "postprocessing" ]
