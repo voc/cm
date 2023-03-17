@@ -8,6 +8,8 @@ groups = [
     "debian-bullseye",
 ]
 
+[metadata.apt.packages.melt] # for the occasional repair task
+
 [metadata.crs-worker]
 autostart_scripts = [ "recording-scheduler", "mount4cut", "cut-postprocessor", "postencoding", "postprocessing" ]
 token.encoding = "!kee_user:ansible|worker-groups|storage"
