@@ -8,4 +8,4 @@ ips = [
 gateway4 = "192.168.28.254"
 
 [metadata.voctogui]
-encoder-ip = "10.73.7,3"
+encoder-ip = "10.73.7.3"
