@@ -1,0 +1,27 @@
+groups = ["debian-buster"]
+
+[metadata.crs-worker]
+token.encoding = "nope"
+secret.encoding = "nope"
+
+[metadata.event]
+room_name = "GLT23"
+
+[metadata.interfaces.eth0]
+ips = [
+    "192.168.28.24/24",
+    "10.73.7.3/16",
+]
+gateway4 = "192.168.28.254"
+
+[metadata.voctocore.sources.cam1]
+devicenumber = 0
+mode = "1080p50"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 2
+mode = "1080p50"
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"

@@ -1,0 +1,6 @@
+subgroups = ["saal3", "saal4", "saal-glt"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Grazer Linuxtage"
+slug = "glt23"

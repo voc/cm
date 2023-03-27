@@ -1,0 +1,12 @@
+bundles = ["thinkfan"]
+groups = ["debian-buster"]
+
+[metadata.interfaces.eth0]
+ips = [
+    "192.168.28.22/24",
+    "10.73.7.1/16",
+]
+gateway4 = "192.168.28.254"
+
+[metadata.voctogui]
+encoder-ip = "192.168.28.24"
