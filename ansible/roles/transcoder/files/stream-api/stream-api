@@ -39,6 +39,18 @@ def transcodings_start(stream):
         passthrough_mode = "no"
     transcoder_config += "passthrough=%s\n" % passthrough_mode
 
+    try:
+        restream_target = cons.kv.get("stream/%s/restream" % stream)[1]["Value"].decode()
+    except:
+        restream_target = "none"
+    transcoder_config += "restream=%s\n" % restream_target
+
+    try:
+        framerate = cons.kv.get("stream/%s/framerate" % stream)[1]["Value"].decode()
+    except:
+        framerate = 25
+    transcoder_config += "framerate=%s\n" % framerate
+
     transcoder_config_path = config["configPath"] + "/" + stream
     open(transcoder_config_path, "w").write(transcoder_config)
 
