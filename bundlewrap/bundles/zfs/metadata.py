@@ -39,6 +39,9 @@ defaults = {
         'plugins': {
             'zfs_status',
         },
+        'plugins_daily': {
+            'zfs_usage',
+        },
     },
     'systemd-timers': {
         'timers': {
