@@ -40,3 +40,13 @@ do
         . "${file}"
     fi
 done
+
+if [[ -n "$DAILY_TASK_TIME" ]] && [[ "$(date '+%H%M')" == "$DAILY_TASK_TIME" ]]
+then
+    for file in /usr/local/sbin/check_system_daily.d/*.sh
+    do
+        if [ -x "${file}" ]; then
+            . "${file}"
+        fi
+    done
+fi

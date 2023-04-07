@@ -25,7 +25,7 @@ ips = [
 gateway4 = "10.73.0.254"
 
 [metadata.mqtt-monitoring]
-plugins = ["zfs_usage"]
+plugins_daily = ["zfs_usage"]
 
 [metadata.systemd-networkd.bonds.bond0]
 match = [
