@@ -43,6 +43,12 @@ defaults = {
     },
 }
 
+if not node.has_bundle('zfs'):
+    defaults['mqtt-monitoring'] = {
+        'plugins_daily': {
+            'disk_space_usage',
+        },
+    }
 
 @metadata_reactor.provides(
     'voctocore/sources',
