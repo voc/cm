@@ -6,7 +6,7 @@ IFS=$'\n'
 # system.
 if [[ -z "$(findmnt /video/fuse)" ]]
 then
-    for line in $(du -hd1 /vido | sort -hr)
+    for line in $(du -hd1 /video | sort -hr)
     do
         if [[ "$(echo "$line" | awk '{print $1}')" != "0" ]]
         then
