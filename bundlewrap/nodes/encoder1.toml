@@ -13,6 +13,9 @@ room_name = "K2 Rahel Liebeschütz-Plaut"
 ips = ["10.73.1.3/16"]
 gateway4 = "10.73.0.254"
 
+[metadata.voctocore]
+mirror_view = true
+
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
 mode = "1080i50"
