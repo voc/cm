@@ -17,12 +17,16 @@ defaults = {
             'systemd_failed_units',
             'kernel_log',
         },
+        'plugins_daily': set(),
     },
     'systemd-timers': {
         'timers': {
             'check_system_and_send_mqtt_message': {
                 'command': '/usr/local/sbin/check_system.sh',
                 'when': 'minutely',
+                'environment': {
+                    'DAILY_TASK_TIME': str(node.magic_number%24).rjust(2, '0') + str(node.magic_number%60).rjust(2, '0'),
+                },
                 'requires': {
                     'network.target',
                 },
