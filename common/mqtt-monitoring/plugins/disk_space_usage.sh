@@ -6,7 +6,7 @@ IFS=$'\n'
 # system.
 if [[ -z "$(findmnt /video/fuse)" ]]
 then
-    for line in $(du -bd2 /video | sort -nr)
+    for line in $(du -bSd2 /video | sort -nr)
     do
         diskspace="$(echo "$line" | awk '{print $1}')"
         path="$(echo "$line" | awk '{print $2}')"
