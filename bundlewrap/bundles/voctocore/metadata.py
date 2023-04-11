@@ -17,7 +17,7 @@ defaults = {
         'static_background_image': True,
         'streaming_use_dynaudnorm': False,
         'vaapi': False,
-        'srt_publish': False,
+        'srt_publish': True,
         'backgrounds': {
             'lec': {
                 'kind': 'img',

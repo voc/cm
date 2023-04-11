@@ -15,9 +15,6 @@ groups['encoders'] = {
                 'raid_mdstat',
             },
         },
-        'voctocore': {
-            'streaming_auth_key': keepass.password(['ansible', 'icecast', 'icedist', 'source']),
-        },
         'systemd': {
             'ignore_power_switch': True,
         },

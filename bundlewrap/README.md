@@ -84,6 +84,7 @@ Available room setups:
 * saal4
 * saal5
 * saal6
+* saal23
 * saal80
 * saal81
 * saal191

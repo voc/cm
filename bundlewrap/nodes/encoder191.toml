@@ -11,6 +11,9 @@ room_name = "Saal 191"
 ips = ["10.73.191.3/16"]
 gateway4 = "10.73.0.254"
 
+[metadata.voctocore]
+streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYlWopNOi_avhwhjvt5SiLmuKIV3HxxkgW3-Qys9ld6a9g1ozQKj7Jvie3_5_oLewa18snIb4GnlvdXoGiCnNGrlFyQgR7_UvIgYD-XGF015kR4="
+
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
 mode = "1080p25"
