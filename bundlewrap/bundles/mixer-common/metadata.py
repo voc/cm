@@ -17,6 +17,9 @@ defaults = {
             'xserver-xorg': {},
         },
     },
+    'mixer-common': {
+        'enable-irssi': True,
+    },
     'users': {
         'mixer': {
             'groups': {
