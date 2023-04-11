@@ -1,4 +1,3 @@
-import bwkeepass as keepass
 from bundlewrap.exceptions import BundleError
 
 KEYBOARD_SHORTCUTS = {

@@ -4,8 +4,6 @@ from os.path import dirname, join
 
 from bundlewrap.exceptions import BundleError
 
-import bwkeepass as keepass
-
 defaults = {
     'apt': {
         'packages': {
@@ -20,7 +18,7 @@ defaults = {
             'cascade_skip': False,
         },
         'voc': {
-            'password': vault.decrypt('encrypt$gAAAAABkNXrxKojy17G1rsgYSYEd_jkJ_GcTcqLFgWFKgWb3hpNnQ1YHpps-iICtfzXrgjK7Kaf18YWW-N94SRZ9tiKLSSiPWA=='),
+            'password': repo.vault.decrypt('encrypt$gAAAAABkNXrxKojy17G1rsgYSYEd_jkJ_GcTcqLFgWFKgWb3hpNnQ1YHpps-iICtfzXrgjK7Kaf18YWW-N94SRZ9tiKLSSiPWA=='),
             'cascade_skip': False,
         },
     },
