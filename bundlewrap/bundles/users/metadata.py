@@ -16,9 +16,13 @@ defaults = {
         'root': {
             'home': '/root',
             'shell': '/bin/bash',
-            'password': keepass.password(['Allgemein', 'Benutzerpasswörter', 'SSH Passwort und Key root']) if environ.get('BW_KEEPASS_PASSWORD') else None,
+            'password': repo.vault.human_password_for(f'{node.name} root'),
+            'cascade_skip': False,
         },
-        'voc': {},
+        'voc': {
+            'password': vault.decrypt('encrypt$gAAAAABkNXrxKojy17G1rsgYSYEd_jkJ_GcTcqLFgWFKgWb3hpNnQ1YHpps-iICtfzXrgjK7Kaf18YWW-N94SRZ9tiKLSSiPWA=='),
+            'cascade_skip': False,
+        },
     },
 }
 
@@ -86,7 +90,6 @@ def add_users_from_toml(metadata):
 
 
 @metadata_reactor.provides(
-    'users/voc/password',
     'users/voc/ssh_pubkeys',
 )
 def user_voc(metadata):
@@ -98,7 +101,6 @@ def user_voc(metadata):
     return {
         'users': {
             'voc': {
-                'password': keepass.password(['ansible', 'logins', 'voc']) if environ.get('BW_KEEPASS_PASSWORD') else None,
                 'ssh_pubkeys': pubkey,
             },
         },
