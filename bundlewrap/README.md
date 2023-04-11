@@ -9,13 +9,16 @@ pip3 install -r requirements.txt
 You do not need to set up Keepass or a bundlewrap .secrets.cfg for basic
 encoder setup.
 
-If you have access to the c3voc keepass file, you may want to set up a
-bit more stuff:
+If you have access to the c3voc keepass file, you may want to set up
+keepass and the .secrets.cfg:
 
 ```
 export BW_KEEPASS_FILE=$HOME/whereever/the/voc/keepass/lives.kdbx
 export BW_KEEPASS_PASSWORD=reallysecure
 ```
+
+The contents of the .secrets.cfg file can be found in the keepass file,
+too.
 
 You want to set up ssh multiplexing for fast runs:
 ```
