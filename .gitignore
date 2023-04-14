@@ -5,6 +5,7 @@ venv/
 *.un~
 *.swp
 .envrc.local
+.secrets.cfg
 nixos/.direnv
 nixos/.deploy-gc
 nixos/result
