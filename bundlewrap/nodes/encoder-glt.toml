@@ -14,13 +14,16 @@ ips = [
 ]
 gateway4 = "192.168.28.254"
 
+[metadata.voctocore]
+streaming_auth_key = "!decrypt:encrypt$gAAAAABkOR_vdc1TC6Hkh0TtmqahIXdc324x7ZRLqhaLWAozWTcm7f7Z-jeWiv0Ugc2KJ9yPqVhxLib-hsGEWPyLSRUavPg2yjK658sTf0WW9TgXEJpoB4Q="
+
 [metadata.voctocore.sources.cam1]
 devicenumber = 0
-mode = "1080p50"
+mode = "1080p25"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 2
-mode = "1080p50"
+mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
