@@ -14,7 +14,7 @@ ips = ["10.73.4.3/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
-streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYkFi0f2QTc0556Y1qm9RbQYhTptZkzxbQuABlDHv5sXz5y-MjfsWjmZFUWDnjgCLttfQStUT69p-oJuM8b0R22miw=="
+streaming_auth_key = "!decrypt:encrypt$gAAAAABkOSJp-QhuKBK7z_nzRUB1PvApqUVass_DtnkWLZRnlv0hUr8p-B3UEIFQdGY0PShXDVFX8R4A9LHE5BdBef5RSw5JLtYoato3u-q-4pkdp0rollI="
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
