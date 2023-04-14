@@ -21,30 +21,8 @@ secret.encoding = "!decrypt:encrypt$gAAAAABkOS_by1-OF4v0BuFqOwofXy4ka7cp5v7UQjxj
 [metadata.interfaces.eno1]
 ips = [
     "10.73.7.100/16",
-    "10.73.0.254/16",
 ]
-
-[metadata.interfaces.eno2]
-ips = [
-    "10.87.73.100/16",
-]
-gateway4 = "10.87.0.1"
-
-[metadata.nftables.rules]
-"50-router" = [
-    "inet filter forward ct state { related, established } accept",
-    "inet filter forward iifname eno1 accept",
-    "nat postrouting oifname eno2 masquerade",
-
-    # "dns"
-    "nat prerouting tcp dport 53 dnat to 8.8.8.8",
-    "nat prerouting udp dport 53 dnat to 8.8.8.8",
-    "inet filter input iifname eno1 tcp dport 53 accept",
-    "inet filter input iifname eno1 udp dport 53 accept",
-]
-
-[metadata.sysctl.options]
-"net.ipv4.ip_forward" = "1"
+gateway4 = "10.73.0.254"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
