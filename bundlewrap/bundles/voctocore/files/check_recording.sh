@@ -11,7 +11,7 @@ then
 
         if [ $return_code -eq 2 ]
         then
-            voc2core "error" "recording" "$message /video/capture/${event['slug']}/"
+            voc2alert "error" "recording" "$message /video/capture/${event['slug']}/"
         fi
     fi
 fi
