@@ -6,7 +6,7 @@ token.encoding = "nope"
 secret.encoding = "nope"
 
 [metadata.event]
-room_name = "GLT23"
+room_name = "HS i2"
 
 [metadata.interfaces.eth0]
 ips = [
