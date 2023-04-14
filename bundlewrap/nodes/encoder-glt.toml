@@ -16,7 +16,8 @@ ips = [
 gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
-streaming_auth_key = "!decrypt:encrypt$gAAAAABkOR_vdc1TC6Hkh0TtmqahIXdc324x7ZRLqhaLWAozWTcm7f7Z-jeWiv0Ugc2KJ9yPqVhxLib-hsGEWPyLSRUavPg2yjK658sTf0WW9TgXEJpoB4Q="
+streaming_endpoint = "s7"
+streaming_auth_key = "!decrypt:encrypt$gAAAAABkOSLVPvOwcn_e-rKhrlW6PIT0-z09xbzbboQh37snWqJ6gGfEwnv5SNuFYL1m7LXEig4_l8-EtYAgrH2wc2p3egUd5LNCgHTmZfdf60z22P7BQvU="
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 0
