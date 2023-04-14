@@ -4,3 +4,7 @@ subgroups = ["saal3", "saal4", "saal-glt"]
 timezone = "Europe/Berlin"
 name = "Grazer Linuxtage"
 slug = "glt23"
+
+
+[metadata.hosts.entries]
+'185.106.84.57' = ['ingest.c3voc.de']
