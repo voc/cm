@@ -8,6 +8,7 @@ defaults = {
             'desktopvideo-gui': {},
             'fbset': {},
             'gstreamer1.0-libav': {},
+            'xauth': {}, # for x11 forwarding
         },
     },
     'voctocore': {
