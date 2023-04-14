@@ -316,11 +316,8 @@ uid = 1139
 
 [masterbase]
 enable_rz = false
-enable_event = true
+enable_event = false
 uid = 1140
-ssh_pubkeys = [
-  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgDP3VvGP4G741TIphjhp8mlYFrFuIPLssekm6htYOU2QyYb52Pas+1LZ/gz6P2ksZo5GFGnkY3gTgmajgJZz2+DDWzEZDBT2vzYb16anC1AxzALGSmClZ7/yg1JuxjdBNnBEJ6K/b8eB0aLGm9OlTLgdXKxx++bAKn0Ksg9yfuaOnVTxfXfnVR4Nc9K25nQBlWDjGHpIlbDaWkr84h1iXNC5gbTdTQayGLXnN4IbZORXsYA6ONyn2hJrvwSbEP9Nw3KnwBoXbG9X9X2ggU3+mb31iFrSc3Y+xObowPWwHcp6QUJq/9spC9+RsTp9ms6nZx/vu8zXQ1q7dHhZXS7x1B7fU+38ZUimSEZbIFZABe/0GaoN1RONCwl9Quri8ibzWIwx+clDBE4OOjged7sXbcCzXH7jXN3fNU1M/DJ3kx/n+ivqMZU/5eKlVVHyVw+slUiXYfH+wqehJUlAfjW0DRK/5pRIuNw2w0J1NVkYWrzDvlHWSLIlwe24DXXNfpLnTB9c7aaEQQR+nEIgkfFrFk1e+qjkf6sLXadHklXIGbg4rrKX0Oj54M5IyYoWpU/Fz3pIXIDzAXOsF8frnWyytmo6ZYte9tFOVdEP5m1udZ6pJmxOSzaro3G31yZ3UljKYtle2OWNBe6DdjjRE4o3Mkh+zQpGMLDFCzn/QVT7M/Q==",
-]
 
 [mntl]
 enable_rz = false
@@ -434,4 +431,14 @@ enable_event = false
 uid = 1155
 ssh_pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPFw9I25dUMCMM66lIvt6VeBMhAX7tl4qvb7HxXQd8z",
+]
+
+[evilscientress]
+enable_rz = false
+enable_event = true
+uid = 1156
+ssh_pubkeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2xIY4KjfISt+ptrGkBGMq3scIeAp5adX4/jHCpvfsM",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHbwcj968sakFEMf1c4Fx44jLpE2XqMa3pi/XuvOQgiB",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGPse+vv3+kHBYt6bdab/4AbP1hU34/3qH9SBuC8LCJ",
 ]
