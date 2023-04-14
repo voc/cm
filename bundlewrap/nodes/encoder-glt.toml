@@ -1,3 +1,4 @@
+hostname = "10.73.7.3"
 groups = ["debian-buster"]
 
 [metadata.crs-worker]
@@ -12,7 +13,7 @@ ips = [
     "192.168.28.24/24",
     "10.73.7.3/16",
 ]
-gateway4 = "192.168.28.254"
+gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkOR_vdc1TC6Hkh0TtmqahIXdc324x7ZRLqhaLWAozWTcm7f7Z-jeWiv0Ugc2KJ9yPqVhxLib-hsGEWPyLSRUavPg2yjK658sTf0WW9TgXEJpoB4Q="
