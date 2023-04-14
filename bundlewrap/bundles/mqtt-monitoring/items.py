@@ -27,6 +27,10 @@ directories['/usr/local/sbin/check_system.d'] = {
     'purge': True,
 }
 
+directories['/usr/local/sbin/check_system_daily.d'] = {
+    'purge': True,
+}
+
 files['/usr/local/lib/systemd/system/send-mqtt-shutdown.service'] = {
     'content_type': 'mako',
     'triggers': {
@@ -42,6 +46,12 @@ svc_systemd['send-mqtt-shutdown'] = {
 
 for plugin in node.metadata.get('mqtt-monitoring/plugins', set()):
     files[f'/usr/local/sbin/check_system.d/{plugin}.sh'] = {
+        'source': f'plugins/{plugin}.sh',
+        'mode': '0755',
+    }
+
+for plugin in node.metadata.get('mqtt-monitoring/plugins_daily', set()):
+    files[f'/usr/local/sbin/check_system_daily.d/{plugin}.sh'] = {
         'source': f'plugins/{plugin}.sh',
         'mode': '0755',
     }

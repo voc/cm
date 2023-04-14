@@ -27,6 +27,9 @@ for username, attrs in node.metadata['users'].items():
             'groups': attrs.get('groups', set()),
         }
 
+        if 'cascade_skip' in attrs:
+            users[username]['cascade_skip'] = attrs['cascade_skip']
+
         if 'password' in attrs:
             users[username]['password'] = attrs['password']
         else:

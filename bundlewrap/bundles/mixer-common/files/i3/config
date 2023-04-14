@@ -18,4 +18,7 @@ bar {
 }
 
 exec --no-startup-id x11vnc -display :0 -loop0 -shared -nopw -scale 1/2
+
+% if node.metadata.get('mixer-common/enable-irssi'):
 exec --no-startup-id i3-msg "workspace 1; exec kitty irssi"
+% endif

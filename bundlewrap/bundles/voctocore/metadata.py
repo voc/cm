@@ -17,7 +17,7 @@ defaults = {
         'static_background_image': True,
         'streaming_use_dynaudnorm': False,
         'vaapi': False,
-        'srt_publish': False,
+        'srt_publish': True,
         'backgrounds': {
             'lec': {
                 'kind': 'img',
@@ -43,6 +43,12 @@ defaults = {
     },
 }
 
+if not node.has_bundle('zfs'):
+    defaults['mqtt-monitoring'] = {
+        'plugins_daily': {
+            'disk_space_usage',
+        },
+    }
 
 @metadata_reactor.provides(
     'voctocore/sources',

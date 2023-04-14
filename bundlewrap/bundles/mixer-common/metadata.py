@@ -1,5 +1,3 @@
-import bwkeepass as keepass
-
 defaults = {
     'apt': {
         'packages': {
@@ -16,6 +14,9 @@ defaults = {
             'xdotool': {},
             'xserver-xorg': {},
         },
+    },
+    'mixer-common': {
+        'enable-irssi': True,
     },
     'users': {
         'mixer': {

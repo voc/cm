@@ -1,4 +1,3 @@
-import bwkeepass as keepass
 from bundlewrap.exceptions import BundleError
 
 KEYBOARD_SHORTCUTS = {
@@ -20,6 +19,8 @@ PLAYOUT_PORTS = {
     'stream': 15000,
     'program': 11000,
 }
+
+SHOULD_BE_RUNNING = node.metadata.get('voctocore/should_be_running', True)
 
 event = node.metadata.get('event/slug')
 assert node.has_bundle('encoder-common')
@@ -71,6 +72,8 @@ svc_systemd['voctomix2-voctocore'] = {
     'tags': {
         'causes-downtime',
     },
+    'running': SHOULD_BE_RUNNING,
+    'enabled': SHOULD_BE_RUNNING,
 }
 
 
@@ -119,6 +122,7 @@ svc_systemd['voctomix2-recording-sink'] = {
     'tags': {
         'causes-downtime',
     },
+    'running': None, # get's auto-started by svc_systemd:voctomix2-voctocore
 }
 
 ## streaming-sink
@@ -160,6 +164,7 @@ svc_systemd['voctomix2-streaming-sink'] = {
     'tags': {
         'causes-downtime',
     },
+    'running': None, # get's auto-started by svc_systemd:voctomix2-voctocore
 }
 
 ## streaming-sink

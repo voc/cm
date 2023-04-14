@@ -35,6 +35,7 @@ files['/home/mixer/.irssi/config'] = {
 
 files['/home/mixer/.config/i3/config'] = {
     'source' : 'i3/config',
+    'content_type': 'mako',
     'owner': 'mixer',
     'group': 'mixer',
     'triggers': {
