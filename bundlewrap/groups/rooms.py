@@ -3,7 +3,6 @@ ROOMS_WITHOUT_MINIONS = (
     81, # hacc
     98, # derpeter
     191, # seibert
-    '-glt'
 )
 
 ROOMS_WITH_MINIONS = (
@@ -14,6 +13,7 @@ ROOMS_WITH_MINIONS = (
     5,
     6,
     80,
+    '-glt',
 )
 
 for i in ROOMS_WITH_MINIONS + ROOMS_WITHOUT_MINIONS:
