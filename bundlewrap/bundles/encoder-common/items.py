@@ -21,7 +21,7 @@ for path in (
     }
 
     directories[f'/video/{path}/{event}'] = {
-        'needed_by': {
+        'before': {
             'bundle:voctocore',
             'bundle:crs-worker',
         },
