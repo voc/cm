@@ -4,14 +4,14 @@
 
 set -euo pipefail
 
+EVENT="$2"
+TARGET="$1"
+
 if ! [ -d "/video/capture/${EVENT}" ]
 then
     echo "Target path not found, refusing to create. Did you run \`bw apply\`?"
     exit 1
 fi
-
-EVENT="$2"
-TARGET="$1"
 
 while sleep 10
 do
