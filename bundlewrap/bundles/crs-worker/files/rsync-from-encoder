@@ -15,5 +15,5 @@ fi
 
 while sleep 10
 do
-    rsync -av --bwlimit=10000 --append --inplace -t "${TARGET}::video/capture/${EVENT}" "/video/capture/"
+    rsync -av --bwlimit=100000 --append --inplace -t "${TARGET}::video/capture/${EVENT}" "/video/capture/"
 done
