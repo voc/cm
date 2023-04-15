@@ -5,7 +5,7 @@ directories = {
     },
 }
 
-for mount, data in node.metadata.get('cifs-client', {}).get('mounts', {}).items():
+for mount, data in node.metadata.get('cifs-client/mounts', {}).items():
     unitname = data['mountpoint'][1:].replace('-', '\\x2d').replace('/', '-')
 
     if data.get('create_dir', False):
@@ -13,7 +13,7 @@ for mount, data in node.metadata.get('cifs-client', {}).get('mounts', {}).items(
 
     mount_options = set()
     for opt, value in data.get('mount_options', {}).items():
-        if value is not None:
+        if value not in (None, False):
             mount_options.add(f'{opt}={value}')
         else:
             mount_options.add(opt)
