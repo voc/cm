@@ -23,3 +23,19 @@ defaults = {
         'use_vaapi': False,
     },
 }
+
+
+@metadata_reactor.provides(
+    'crs-worker/secrets/meta',
+)
+def derive_secrets_from_encoding(metadata):
+    return {
+        'crs-worker': {
+            'secrets': {
+                'meta': {
+                    'token': metadata.get('crs-worker/secrets/encoding/token'),
+                    'secret': metadata.get('crs-worker/secrets/encoding/secret'),
+                },
+            },
+        },
+    }

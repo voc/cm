@@ -1,9 +1,9 @@
 groups = ["debian-buster"]
 hostname = "10.73.98.3"
 
-[metadata.crs-worker]
-token.encoding = "!kee_user:ansible|worker-groups|encoder98"
-secret.encoding = "!kee_pass:ansible|worker-groups|encoder98"
+[metadata.crs-worker.secrets.encoding]
+token = "!kee_user:ansible|worker-groups|encoder98"
+secret = "!kee_pass:ansible|worker-groups|encoder98"
 
 [metadata.event]
 room_name = "Saal 98"

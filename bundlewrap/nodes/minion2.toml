@@ -1,8 +1,8 @@
 groups = ["debian-buster"]
 
-[metadata.crs-worker]
-token.encoding = "!kee_user:ansible|worker-groups|minion2"
-secret.encoding = "!kee_pass:ansible|worker-groups|minion2"
+[metadata.crs-worker.secrets.encoding]
+token = "!kee_user:ansible|worker-groups|minion2"
+secret = "!kee_pass:ansible|worker-groups|minion2"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.2.7/16"]
