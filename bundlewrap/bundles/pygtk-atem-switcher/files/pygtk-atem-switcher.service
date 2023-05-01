@@ -6,7 +6,6 @@ After=network.target
 Type = simple
 WorkingDirectory = /opt/pygtk-atem-switcher/src
 ExecStart = /opt/pygtk-atem-switcher/venv/bin/python /opt/pygtk-atem-switcher/src/main.py
-ExecStartPost = /usr/local/bin/i3-layout.sh
 Restart = always
 RestartSec = 5s
 StartLimitInterval = 0
