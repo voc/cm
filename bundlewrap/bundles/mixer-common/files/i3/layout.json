@@ -9,14 +9,17 @@
       "percent": 0.85,
       "nodes": [
         {
-      "border": "none",
-      "name": "Voctomix GUI",
-      "percent": 0.9,
-      "swallows": [
-        {
-          "title": "^Voctomix\\ GUI$"
-        }
-      ]
+          "border": "none",
+          "name": "Voctomix GUI",
+          "percent": 0.9,
+          "swallows": [
+            {
+              "title": "^Voctomix\\ GUI$"
+            },
+            {
+              "instance": "^voctogui\\.py$"
+            }
+          ]
         },
         {
           "border": "none",
@@ -32,15 +35,15 @@
       ]
     },
     {
-          "border": "none",
-          "name": "irssi",
-          "percent": 0.15,
-          "swallows": [
-            {
-              "class": "^kitty$"
-            }
-          ],
-          "type": "con"
+      "border": "none",
+      "name": "irssi",
+      "percent": 0.15,
+      "swallows": [
+        {
+          "class": "^kitty$"
         }
+      ],
+      "type": "con"
+    }
   ]
 }
