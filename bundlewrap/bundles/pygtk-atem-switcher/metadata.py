@@ -2,6 +2,14 @@ defaults = {
     'pygtk-atem-switcher': {
         'atem': {
             'video_mode': '1080p25',
+            'settings': {
+                'inputs': {
+                    'input1': 'Laptop',
+                    'input2': 'x',
+                    'input3': 'x',
+                    'input4': 'info-beamer',
+                },
+            },
         },
         'logging': {
             'level': 'INFO',
