@@ -61,13 +61,24 @@ files['/home/mixer/.config/i3/layout.json'] = {
     'owner': 'mixer',
     'group': 'mixer',
     'triggers': {
-        'svc_systemd:display-manager:restart',
+        'action:mixer-common_apply_i3_layout',
     },
 }
 
-files['/usr/local/bin/voctogui-i3-layout.sh'] = {
-    'source' : 'i3/voctogui-i3-layout.sh',
+files['/usr/local/bin/i3-layout.sh'] = {
+    'source' : 'i3/i3-layout.sh',
     'mode': 755,
+    'triggers': {
+        'action:mixer-common_apply_i3_layout',
+    },
+}
+
+actions['mixer-common_apply_i3_layout'] = {
+    'command': 'sudo -Hu mixer DISPLAY=:0 /usr/local/bin/i3-layout.sh',
+    'triggered': True,
+    'after': {
+        'svc_systemd:display-manager',
+    },
 }
 
 files['/usr/local/sbin/brightness'] = {

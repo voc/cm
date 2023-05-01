@@ -7,9 +7,7 @@ Type = simple
 WorkingDirectory = /opt/voctomix2/release
 ExecStartPre = /usr/local/bin/voctogui-check-connection.sh
 ExecStart = /opt/voctomix2/release/voctogui/voctogui.py --ini-file /opt/voctomix2/voctogui-config.ini -vv
-% if node.metadata.get('mixer-common/enable-irssi'):
-ExecStartPost = /usr/local/bin/voctogui-i3-layout.sh
-% endif
+ExecStartPost = /usr/local/bin/i3-layout.sh
 Restart = always
 RestartSec = 5s
 StartLimitInterval = 0

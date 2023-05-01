@@ -1,36 +1,27 @@
 {
   "layout": "splitv",
-  "percent": 0.85,
+  "percent": 0.5,
   "type": "con",
   "nodes": [
     {
+      "layout": "splith",
+      "type": "con",
+      "percent": 0.85,
+      "nodes": [
+        {
       "border": "none",
       "name": "Voctomix GUI",
+      "percent": 0.9,
       "swallows": [
         {
           "title": "^Voctomix\\ GUI$"
         }
-      ],
-      "type": "con"
-    },
-    {
-      "layout": "splith",
-      "percent": 0.8,
-      "type": "con",
-      "nodes": [
-        {
-          "border": "none",
-          "name": "irssi",
-          "swallows": [
-            {
-              "class": "^kitty$"
-            }
-          ],
-          "type": "con"
+      ]
         },
         {
           "border": "none",
           "name": "ATEM Switcher",
+          "percent": 0.1,
           "swallows": [
             {
               "instance": "^pygtk-atem-switcher$"
@@ -39,6 +30,17 @@
           "type": "con"
         }
       ]
-    }
+    },
+    {
+          "border": "none",
+          "name": "irssi",
+          "percent": 0.15,
+          "swallows": [
+            {
+              "class": "^kitty$"
+            }
+          ],
+          "type": "con"
+        }
   ]
 }
