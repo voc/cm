@@ -5,12 +5,13 @@ git_deploy['/opt/pygtk-atem-switcher/src'] = {
     'rev': 'development', # TODO use releases
     'triggers': {
         'action:pygtk-atem-switcher_install_deps',
+        'svc_systemd:pygtk-atem-switcher:restart',
     }
 }
 
 actions['pygtk-atem-switcher_create_virtualenv'] = {
     'command': '/usr/bin/python3 -m virtualenv -p python3 /opt/pygtk-atem-switcher/venv',
-    'unless': 'test -d /opt/pygtk-atem-switcher',
+    'unless': 'test -d /opt/pygtk-atem-switcher/venv',
     'needs': {
         # actually /opt/pygtk-atem-switcher, but we don't manage that
         'directory:/opt/pygtk-atem-switcher/src',
@@ -20,7 +21,7 @@ actions['pygtk-atem-switcher_create_virtualenv'] = {
 actions['pygtk-atem-switcher_install_deps'] = {
     'triggered': True,
     'command': '/opt/pygtk-atem-switcher/venv/bin/pip install --upgrade pip -r /opt/pygtk-atem-switcher/src/requirements.txt',
-    'after': {
+    'needs': {
         'action:pygtk-atem-switcher_create_virtualenv',
     },
 }
@@ -30,9 +31,21 @@ files['/opt/pygtk-atem-switcher/config.toml'] = {
     'context': {
         'config': node.metadata.get('pygtk-atem-switcher'),
     },
+    'triggers': {
+        'svc_systemd:pygtk-atem-switcher:restart',
+    }
 }
 
-files['/usr/local/lib/systemd/system/pygtk-atem-switcher.service'] = {}
+files['/usr/local/lib/systemd/system/pygtk-atem-switcher.service'] = {
+    'content_type': 'mako',
+    'context': {
+        'high_dpi': node.metadata.get('voctogui/high_dpi'),
+    },
+    'triggers': {
+        'action:systemd-reload',
+        'svc_systemd:pygtk-atem-switcher:restart',
+    }
+}
 
 svc_systemd['pygtk-atem-switcher'] = {
     'needs': {

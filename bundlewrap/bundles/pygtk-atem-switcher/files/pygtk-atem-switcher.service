@@ -1,21 +1,18 @@
 [Unit]
-Description = voctomix2 gui
+Description = PyGTK ATEM Switcher
 After=network.target
 
 [Service]
 Type = simple
-WorkingDirectory = /opt/voctomix2/release
-ExecStartPre = /usr/local/bin/voctogui-check-connection.sh
-ExecStart = /opt/voctomix2/release/voctogui/voctogui.py --ini-file /opt/voctomix2/voctogui-config.ini -vv
-% if node.metadata.get('mixer-common/enable-irssi'):
-ExecStartPost = /usr/local/bin/voctogui-i3-layout.sh
-% endif
+WorkingDirectory = /opt/pygtk-atem-switcher/src
+ExecStart = /opt/pygtk-atem-switcher/venv/bin/python /opt/pygtk-atem-switcher/src/main.py
+ExecStartPost = /usr/local/bin/i3-layout.sh
 Restart = always
 RestartSec = 5s
 StartLimitInterval = 0
 User=mixer
 Group=mixer
-
+Environment=PYATEMSWITCHER_CONFIG=/opt/pygtk-atem-switcher/config.toml
 Environment="DISPLAY=:0"
 % if high_dpi:
 Environment="GDK_SCALE=2"
