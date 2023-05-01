@@ -27,12 +27,13 @@ then
     echo "------------------------------------------+-------------------------------+--------"
 fi
 </%text>
-% for unitname, scriptname in scripts.items():
+% for unitname, config in scripts.items():
+%  if config['secret'] in node.metadata.get('crs-worker/secrets'):
 if [[ "$print_logs" -eq 0 ]]
 then
-    echo -n " ${scriptname.ljust(40)} | crs-${unitname.ljust(25)} | "
+    echo -n " ${config['script'].ljust(40)} | crs-${unitname.ljust(25)} | "
 else
-    echo -n "${scriptname} (crs-${unitname}) is "
+    echo -n "${config['script']} (crs-${unitname}) is "
 fi
 
 status="$(systemctl is-active crs-${unitname})"
@@ -51,4 +52,5 @@ then
     echo
     echo
 fi
+%  endif
 % endfor

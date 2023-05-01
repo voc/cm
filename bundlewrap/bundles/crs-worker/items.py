@@ -1,16 +1,42 @@
+from bundlewrap.exceptions import BundleError
+
 assert node.has_bundle('encoder-common')
 
 WORKER_SCRIPTS = {
-    'recording-scheduler': 'script-A-recording-scheduler.pl',
-    'mount4cut': 'script-B-mount4cut.pl',
-    'cut-postprocessor': 'script-C-cut-postprocessor.pl',
-    'encoding': 'script-D-encoding.pl',
-    'postencoding': 'script-E-postencoding-auphonic.pl',
-    'postprocessing': 'script-F-postprocessing-upload.pl',
+    'recording-scheduler': {
+        'secret': 'meta',
+        'script': 'script-A-recording-scheduler.pl',
+    },
+    'mount4cut': {
+        'secret': 'meta',
+        'script': 'script-B-mount4cut.pl',
+    },
+    'cut-postprocessor': {
+        'secret': 'meta',
+        'script': 'script-C-cut-postprocessor.pl',
+    },
+    'encoding': {
+        'secret': 'encoding',
+        'script': 'script-D-encoding.pl',
+    },
+    'postencoding': {
+        'secret': 'meta',
+        'script': 'script-E-postencoding-auphonic.pl',
+    },
+    'postprocessing': {
+        'secret': 'meta',
+        'script': 'script-F-postprocessing-upload.pl',
+    },
+    'autochecker': {
+        'secret': 'autochecker',
+        'script': 'script-X-checking-dummy.pl',
+        'environment': {
+            'CRS_ISMASTER': 'no',
+        },
+    }
 }
 
 directories['/opt/crs-scripts'] = {}
-
 git_deploy['/opt/crs-scripts'] = {
     'repo': 'https://github.com/crs-tools/crs-scripts.git',
     'rev': 'master',
@@ -25,44 +51,6 @@ if not node.has_bundle('cifs-client'):
     }
 
 files['/etc/fuse.conf'] = {}
-
-files['/opt/tracker-profile.sh'] = {
-    'content_type': 'mako',
-    'source': 'environment',
-    'context': {
-        'room_name': node.metadata.get('crs-worker/room_name', None),
-        'secret': node.metadata.get('crs-worker/secret/encoding'),
-        'token': node.metadata.get('crs-worker/token/encoding'),
-        'url': node.metadata.get('crs-worker/tracker_url'),
-        'vaapi': node.metadata.get('crs-worker/use_vaapi'),
-    },
-    'cascade_skip': False,
-}
-files['/opt/tracker-profile-meta.sh'] = {
-    'content_type': 'mako',
-    'source': 'environment',
-    'context': {
-        'url': node.metadata.get('crs-worker/tracker_url'),
-        'vaapi': node.metadata.get('crs-worker/use_vaapi'),
-        'token': node.metadata.get('crs-worker/token/meta', node.metadata.get('crs-worker/token/encoding')),
-        'secret': node.metadata.get('crs-worker/secret/meta', node.metadata.get('crs-worker/secret/encoding')),
-    },
-    'cascade_skip': False,
-}
-
-symlinks['/opt/crs-scripts/tracker-profile.sh'] = {
-    'target': '/opt/tracker-profile.sh',
-    'needs': {
-        'git_deploy:/opt/crs-scripts',
-    },
-}
-
-symlinks['/opt/crs-scripts/tracker-profile-meta.sh'] = {
-    'target': '/opt/tracker-profile-meta.sh',
-    'needs': {
-        'git_deploy:/opt/crs-scripts',
-    },
-}
 
 files['/usr/local/sbin/crs-mount'] = {
     'mode': '0700',
@@ -113,7 +101,27 @@ files['/usr/local/sbin/crs-status'] = {
 }
 
 autostart_scripts = node.metadata.get('crs-worker/autostart_scripts', set())
-for worker, script in WORKER_SCRIPTS.items():
+for worker, config in WORKER_SCRIPTS.items():
+    if config['secret'] not in node.metadata.get('crs-worker/secrets', {}):
+        # no secrets for this worker type available, just ignore it then,
+        # except if it was requested to auto-start.
+        if worker in autostart_scripts:
+            raise BundleError(f'{node.name} requested crs worker {worker} to auto-start, but secrets are missing')
+        continue
+
+    environment = {
+        'CRS_TRACKER': node.metadata.get('crs-worker/tracker_url'),
+        'CRS_TOKEN': node.metadata.get(f'crs-worker/secrets/{config["secret"]}/token'),
+        'CRS_SECRET': node.metadata.get(f'crs-worker/secrets/{config["secret"]}/secret'),
+        **config.get('environment', {})
+    }
+
+    if node.metadata.get('crs-worker/use_vaapi'):
+        environment['CRS_USE_VAAPI'] = 'yes'
+
+    if node.metadata.get('crs-worker/room_name', None):
+        environment['CRS_ROOM'] = node.metadata.get('crs-worker/room_name')
+
     files[f'/etc/systemd/system/crs-{worker}.service'] = {
         'delete': True,
         'triggers': {
@@ -126,8 +134,9 @@ for worker, script in WORKER_SCRIPTS.items():
         'source': 'crs-runner.service',
         'context': {
             'autostart': (worker in autostart_scripts),
-            'script': script,
+            'script': config['script'],
             'worker': worker,
+            'environment': environment,
         },
         'triggers': {
             'action:systemd-reload',
@@ -157,11 +166,13 @@ for worker, script in WORKER_SCRIPTS.items():
         # do not start these workers automatically, unless requested
         'running': (True if worker in autostart_scripts else None),
         'needs': {
-            'file:/opt/tracker-profile-meta.sh',
-            'file:/opt/tracker-profile.sh',
             f'file:/usr/local/lib/systemd/system/crs-{worker}.service',
             'git_deploy:/opt/crs-scripts',
-            'symlink:/opt/crs-scripts/tracker-profile-meta.sh',
-            'symlink:/opt/crs-scripts/tracker-profile.sh',
         },
     }
+
+# delete legacy stuff
+files['/opt/tracker-profile.sh'] = {'delete': True}
+files['/opt/tracker-profile-meta.sh'] = {'delete': True}
+files['/opt/crs-scripts/tracker-profile.sh'] = {'delete': True}
+files['/opt/crs-scripts/tracker-profile-meta.sh'] = {'delete': True}

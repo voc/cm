@@ -1,10 +1,10 @@
 groups = ["debian-buster"]
 
-[metadata.crs-worker]
-token.encoding = "!kee_user:ansible|worker-groups|encoder3"
-token.meta = "!kee_user:ansible|worker-groups|encoder3-meta"
-secret.encoding = "!kee_pass:ansible|worker-groups|encoder3"
-secret.meta = "!kee_pass:ansible|worker-groups|encoder3-meta"
+[metadata.crs-worker.secrets]
+encoding.secret = "!kee_pass:ansible|worker-groups|encoder3"
+encoding.token = "!kee_user:ansible|worker-groups|encoder3"
+meta.secret = "!kee_pass:ansible|worker-groups|encoder3-meta"
+meta.token = "!kee_user:ansible|worker-groups|encoder3-meta"
 
 [metadata.event]
 room_name = "Saal 3"

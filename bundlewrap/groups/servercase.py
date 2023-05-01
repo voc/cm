@@ -58,11 +58,11 @@ groups['minions-servercase'] = {
             'autostart_scripts': {
                 'encoding',
             },
-            'secret': {
-                'encoding': keepass.password(['ansible', 'worker-groups', 'minions-servercase']),
-            },
-            'token': {
-                'encoding': keepass.username(['ansible', 'worker-groups', 'minions-servercase']),
+            'secrets': {
+                'encoding': {
+                    'secret': keepass.password(['ansible', 'worker-groups', 'minions-servercase']),
+                    'token': keepass.username(['ansible', 'worker-groups', 'minions-servercase']),
+                },
             },
         },
     },

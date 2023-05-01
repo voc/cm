@@ -14,9 +14,17 @@ groups = [
 [metadata.apt.packages.melt]
 
 [metadata.crs-worker]
-autostart_scripts = [ "recording-scheduler", "mount4cut", "cut-postprocessor", "postencoding", "postprocessing" ]
-token.encoding = "!kee_user:ansible|worker-groups|storage"
-secret.encoding = "!kee_pass:ansible|worker-groups|storage"
+autostart_scripts = [
+    "recording-scheduler",
+    "mount4cut",
+    "cut-postprocessor",
+    "postencoding",
+    "postprocessing",
+]
+
+[metadata.crs-worker.secrets.encoding]
+token = "!kee_user:ansible|worker-groups|storage"
+secret = "!kee_pass:ansible|worker-groups|storage"
 
 [metadata.interfaces.'bond0.3504']
 ips = [
