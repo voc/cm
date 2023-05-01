@@ -1,20 +1,11 @@
 {
   "layout": "splitv",
-  "percent": 0.5,
+  "percent": 0.85,
   "type": "con",
   "nodes": [
     {
       "border": "none",
-      "current_border_width": 2,
-      "floating": "auto_off",
-      "geometry": {
-        "height": 2109,
-        "width": 1276,
-        "x": 0,
-        "y": 0
-      },
       "name": "Voctomix GUI",
-      "percent": 0.851004203643157,
       "swallows": [
         {
           "title": "^Voctomix\\ GUI$"
@@ -23,23 +14,31 @@
       "type": "con"
     },
     {
-      "border": "none",
-      "current_border_width": 2,
-      "floating": "auto_off",
-      "geometry": {
-        "height": 1440,
-        "width": 3078,
-        "x": 0,
-        "y": 0
-      },
-      "name": "irssi",
-      "percent": 0.148995796356843,
-      "swallows": [
+      "layout": "splith",
+      "percent": 0.8,
+      "type": "con",
+      "nodes": [
         {
-          "class": "^kitty$"
+          "border": "none",
+          "name": "irssi",
+          "swallows": [
+            {
+              "class": "^kitty$"
+            }
+          ],
+          "type": "con"
+        },
+        {
+          "border": "none",
+          "name": "ATEM Switcher",
+          "swallows": [
+            {
+              "instance": "^pygtk-atem-switcher$"
+            }
+          ],
+          "type": "con"
         }
-      ],
-      "type": "con"
+      ]
     }
   ]
 }

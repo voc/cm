@@ -33,6 +33,7 @@ groups['mixers'] = {
     },
     'bundles': {
         'mixer-common',
+        'pygtk-atem-switcher',
         'voctogui',
         'voctomix2',
     },
