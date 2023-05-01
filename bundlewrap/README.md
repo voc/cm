@@ -174,6 +174,34 @@ playout.
 When using `fb` output, you have to have a display connected to the
 encoder during boot, otherwise `/dev/fb0` won't get created correctly.
 
+### ATEM Mini
+
+Bundlewrap will deploy
+[pygtk-atem-switcher](https://github.com/kunsi/pygtk-atem-switcher) to
+each mixer laptop.
+
+If your ATEM is not reachable at `10.73.<room>.40`, please set the
+metadata `pygtk-atem-switcher/atem/ip` to the correct ip address.
+
+pygtk-atem-switcher will enforce some settings on startup to ensure
+smooth operation in all cases. To change these settings, add the
+following metadata to the `nodes/yourmixer.toml` file.
+
+If you wish to hide an input from the software, set its name to `empty`
+or `x`.
+
+```toml
+# All those values represent the defaults set by bundlewrap
+[metadata.pygtk-atem-switcher.atem]
+video_mode = "1080p25"
+
+[metadata.pygtk-atem-switcher.settings.inputs]
+input1 = "Laptop"
+input2 = "x"
+input3 = "x"
+input4 = "info-beamer"
+```
+
 ## voctocore Sources Defitinion
 
 ### video

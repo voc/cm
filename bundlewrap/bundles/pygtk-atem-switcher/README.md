@@ -10,6 +10,14 @@ mini.
         'atem': {
             'ip': '10.73.1.40', # derived by room number
             'video_mode': '1080p25', # this is the default
+            'settings': {
+                'inputs': { # these are defaults
+                    'input1': 'Laptop',
+                    'input2': 'x',
+                    'input3': 'x',
+                    'input4': 'info-beamer',
+                },
+            },
         },
         'logging': {
             'level': 'INFO',
