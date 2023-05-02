@@ -20,6 +20,13 @@ files = {
     },
 }
 
+# debian insists on creating that file during almost every
+# unattended-upgrades run. Make it known to bundlewrap, so
+# it does not get removed during applies.
+symlinks['/etc/sysctl.d/99-sysctl.conf'] = {
+    'target': '../sysctl.conf',
+}
+
 directories = {
     '/etc/sysctl.d': {
         'purge': True,
