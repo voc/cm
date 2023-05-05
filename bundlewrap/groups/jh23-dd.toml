@@ -1,0 +1,15 @@
+subgroups = ["saal6"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Jugend hackt Dresden 2023"
+slug = "jh23-dd"
+
+[metadata.pygtk-atem-switcher.atem]
+video_mode = "1080p50"
+
+[metadata.pygtk-atem-switcher.atem.settings.inputs]
+input1 = "Jugend"
+input2 = "GoPro"
+input3 = "Moderator"
+input4 = "info-beamer"
