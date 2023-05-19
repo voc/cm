@@ -12,6 +12,8 @@ ROOMS_WITH_MINIONS = (
     4,
     5,
     6,
+    41,
+    42,
     80,
 )
 
