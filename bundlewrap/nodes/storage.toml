@@ -13,6 +13,9 @@ groups = [
 [metadata.apt.packages.frei0r-plugins]
 [metadata.apt.packages.melt]
 
+# for intro-outro-generator
+[metadata.apt.packages.libmagickwand-dev]
+
 [metadata.crs-worker]
 autostart_scripts = [
     "recording-scheduler",
