@@ -1,4 +1,4 @@
-subgroups = ["saal6"]
+subgroups = ["saal6", "servercase"]
 
 [metadata.event]
 timezone = "Europe/Berlin"
