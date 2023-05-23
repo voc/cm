@@ -57,7 +57,7 @@ files['/home/mixer/.config/i3pystatus/config.py'] = {
 }
 
 files['/home/mixer/.config/i3/layout.json'] = {
-    'source' : 'i3/layout.json',
+    'source' : 'i3_layout/{}.json'.format(node.metadata.get('mixer-common/i3_layout')),
     'owner': 'mixer',
     'group': 'mixer',
     'triggers': {

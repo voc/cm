@@ -1,4 +1,4 @@
-bundles = ["thinkfan"]
+bundles = ["pygtk-atem-switcher", "thinkfan"]
 groups = ["debian-buster"]
 
 [metadata.interfaces.eth0]

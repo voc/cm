@@ -1,3 +1,4 @@
+bundles = ["pygtk-atem-switcher"]
 groups = ["debian-buster"]
 
 [metadata.apt.firmware-amd-graphics]

@@ -1,0 +1,28 @@
+{
+  "layout": "splith",
+  "percent": 0.5,
+  "type": "con",
+  "nodes": [
+    {
+      "border": "none",
+      "name": "Voctomix GUI",
+      "percent": 0.9,
+      "swallows": [
+        {
+          "instance": "^vocto"
+        }
+      ]
+    },
+    {
+      "border": "none",
+      "name": "ATEM Switcher",
+      "percent": 0.1,
+      "swallows": [
+        {
+          "instance": "^pygtk-atem-switcher$"
+        }
+      ],
+      "type": "con"
+    }
+  ]
+}

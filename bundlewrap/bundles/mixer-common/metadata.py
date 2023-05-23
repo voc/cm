@@ -29,3 +29,23 @@ defaults = {
         },
     },
 }
+
+
+@metadata_reactor.provides(
+    'mixer-common/i3_layout',
+)
+def i3_layout(metadata):
+    options = ['voctogui']
+
+    if node.has_bundle('pygtk-atem-switcher'):
+        options.append('atem')
+
+    if metadata.get('mixer-common/enable-irssi'):
+        options.append('irssi')
+
+    return {
+        'mixer-common': {
+            'i3_layout': '_'.join(options),
+        },
+    }
+
