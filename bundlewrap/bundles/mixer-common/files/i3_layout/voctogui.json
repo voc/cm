@@ -1,0 +1,17 @@
+{
+  "layout": "splith",
+  "percent": 0.5,
+  "type": "con",
+  "nodes": [
+    {
+      "border": "none",
+      "name": "Voctomix GUI",
+      "percent": 1,
+      "swallows": [
+        {
+          "instance": "^vocto"
+        }
+      ]
+    }
+  ]
+}

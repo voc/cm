@@ -1,0 +1,29 @@
+{
+  "layout": "splitv",
+  "percent": 0.5,
+  "type": "con",
+  "nodes": [
+    {
+      "border": "none",
+      "name": "Voctomix GUI",
+      "percent": 0.85,
+      "swallows": [
+        {
+          "instance": "^vocto"
+        }
+      ],
+      "type": "con"
+    },
+    {
+      "border": "none",
+      "name": "irssi",
+      "percent": 0.15,
+      "swallows": [
+        {
+          "class": "^kitty$"
+        }
+      ],
+      "type": "con"
+    }
+  ]
+}
