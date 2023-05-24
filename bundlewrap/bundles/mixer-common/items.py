@@ -77,7 +77,8 @@ actions['mixer-common_apply_i3_layout'] = {
     'command': 'sudo -Hu mixer DISPLAY=:0 /usr/local/bin/i3-layout.sh',
     'triggered': True,
     'after': {
-        'svc_systemd:display-manager',
+        'action:',
+        'svc_systemd:',
     },
 }
 

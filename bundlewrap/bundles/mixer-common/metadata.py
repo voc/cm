@@ -15,6 +15,9 @@ defaults = {
             'xserver-xorg': {},
         },
     },
+    'bash_aliases': {
+        'fix_layout': 'sudo -Hu mixer DISPLAY=:0 /usr/local/bin/i3-layout.sh',
+    },
     'mixer-common': {
         'enable-irssi': True,
     },
