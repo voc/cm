@@ -1,5 +1,5 @@
 bundles = ["pygtk-atem-switcher"]
-groups = ["debian-buster"]
+groups = ["debian-bullseye"]
 
 [metadata.apt.firmware-amd-graphics]
 [metadata.apt.firmware-linux-nonfree]
