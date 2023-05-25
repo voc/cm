@@ -49,13 +49,8 @@ files['/usr/local/lib/systemd/system/pygtk-atem-switcher.service'] = {
 
 svc_systemd['pygtk-atem-switcher'] = {
     'needs': {
+        'action:pygtk-atem-switcher_install_deps',
         'file:/usr/local/lib/systemd/system/pygtk-atem-switcher.service',
         'git_deploy:/opt/pygtk-atem-switcher/src',
-    },
-    'after': {
-        # do not create a hard dependency on the installation of stuff.
-        # if this fails, we maybe have some old stuff lying around, that
-        # should be fine.
-        'action:pygtk-atem-switcher_install_deps',
     },
 }
