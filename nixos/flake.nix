@@ -66,8 +66,9 @@
       fieldpoc = import ./modules/fieldpoc;
     };
   } // flake-utils.lib.eachSystem ([ "x86_64-linux" "x86_64-darwin" "aarch64-darwin"]) (system: let
-    pkgs = (import nixpkgs { inherit system; });
+    pkgs = (import nixpkgs { inherit system; overlays = builtins.attrValues inputs.self.overlays; });
   in {
+    legacyPackages = pkgs;
     devShells.default = pkgs.mkShell {
       buildInputs = [
         deploy-rs.packages.${system}.deploy-rs

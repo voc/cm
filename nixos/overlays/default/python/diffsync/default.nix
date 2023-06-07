@@ -1,15 +1,16 @@
-{ lib, buildPythonPackage, fetchPypi, pydantic, structlog, colorama, redis }:
+{ lib, buildPythonPackage, fetchPypi, pydantic, structlog, colorama, redis, poetry }:
 
 buildPythonPackage rec {
   pname = "diffsync";
-  version = "1.5.1";
+  version = "1.8.0";
+  format = "pyproject";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "84a736d03d385bd07cf7c86f57385d4130c3c3273bf7bc90febe2fa530ee1aa6";
+    sha256 = "sha256-HVnhEAnEalVQGu6HwxuXjavaE3rjIEkQVodnHF52dbk=";
   };
 
-  propagatedBuildInputs = [ pydantic structlog colorama redis ];
+  propagatedBuildInputs = [ pydantic structlog colorama redis poetry ];
 
   pythonImportsCheck = [ "diffsync" ];
 }
