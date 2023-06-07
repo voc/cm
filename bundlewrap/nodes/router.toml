@@ -11,8 +11,8 @@ groups = ["debian-bullseye"]
 # If 'dhcp' gets set to 'true', the set gateway will get ignored and
 # the system will use the dhcp provided gateway instead.
 dhcp = true
-ips = ["94.45.241.105/24"]
-gateway4 = "94.45.241.1"
+ips = ["94.45.229.1/24"]
+gateway4 = "94.45.229.2"
 
 [metadata.interfaces.ens19]
 ips = [
