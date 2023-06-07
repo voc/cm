@@ -8,4 +8,8 @@ final: prev: {
     configureFlags =
       [ "--with-libpq=${final.postgresql.withPackages (ps: [ ])}" ];
   });
+
+  nerd = prev.callPackage ./nerd { }; 
+  fieldpoc = prev.callPackage ./fieldpoc { };
+  ywsd = prev.callPackage ./ywsd { };
 }

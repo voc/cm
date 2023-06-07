@@ -19,8 +19,8 @@
   services.yate.config = {
     regexroute = "[default]
 \${username}^$=-;error=noauth
-\${sip_to}^\"\" <sip:+49941383388\\(.*\\)@sip.plusnet.de>$=lateroute/\\1
-^.*$=sip/sip:\\0;line=dialout;osip_P-Asserted-Identity=<sip:0941383388\${caller}@sipm.voip2gsm.eu>;osip_P-Preferred-Identity=<sip:0941383388\${caller}@sipm.voip2gsm.eu>;caller=53458.02";
+\${sip_to}^\"\" <sip:\\(.*\\)@sip.plusnet.de>$=lateroute/\\1
+^.*$=sip/sip:\\0;line=dialin;osip_P-Asserted-Identity=\${caller};osip_P-Preferred-Identity=\${caller};caller=1600";
     ysipchan = {
       general = {
         ignorevia = "yes";
@@ -82,12 +82,12 @@
     preStart = let
       accfile = pkgs.writeText "accfile.conf" (lib.generators.toINI { } {
         dialin = {
-          enabled = "no";
+          enabled = "yes";
           protocol = "sip";
-          username = "fo315618tr148633_04";
-          authname = "fo315618tr148633_04";
+          username = "1600";
+          authname = "1600";
           password = "!!trunk_password!!";
-          registrar = "sip.plusnet.de";
+          registrar = "sip.micropoc.de";
           localaddress = "yes";
           keepalive = "25";
         };

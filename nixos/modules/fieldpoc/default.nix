@@ -28,7 +28,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      python310.pkgs.fieldpoc
+      fieldpoc
     ];
 
     systemd.services.fieldpoc = {
@@ -38,7 +38,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.python310.pkgs.fieldpoc}/bin/fieldpoc -c /etc/fieldpoc/config.json -e /etc/fieldpoc/extensions.json --debug";
+        ExecStart = "${pkgs.fieldpoc}/bin/fieldpoc -c /etc/fieldpoc/config.json -e /etc/fieldpoc/extensions.json --debug";
         ConfigurationDirectory = "fieldpoc";
       };
 

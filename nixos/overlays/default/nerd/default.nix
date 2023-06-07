@@ -1,16 +1,9 @@
 { lib
-, buildPythonApplication
-, makePythonPath
 , fetchFromGitHub
 , python310
-, hatchling
-, django_4
-, django-bootstrap5
-, django-admin-autocomplete-filter
-, django-verify-email
 }:
 
-buildPythonApplication rec {
+python310.pkgs.buildPythonApplication rec {
   pname = "nerd";
   version = "0.0.1";
 
@@ -26,8 +19,8 @@ buildPythonApplication rec {
 
   format = "pyproject";
 
-  buildInputs = [ python310 hatchling ];
-  propagatedBuildInputs = [
+  buildInputs = [ python310 python310.pkgs.hatchling ];
+  propagatedBuildInputs = with python310.pkgs; [
     django_4
     django-bootstrap5
     django-admin-autocomplete-filter

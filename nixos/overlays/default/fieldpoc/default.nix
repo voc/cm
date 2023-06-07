@@ -1,6 +1,9 @@
-{ lib, buildPythonApplication, hatchling, mitel-ommclient2, sqlalchemy, ywsd, diffsync }:
+{ lib
+, python310
+, ywsd
+}:
 
-buildPythonApplication rec {
+with python310.pkgs; buildPythonApplication rec {
   pname = "fieldpoc";
   version = "0.11.0";
 

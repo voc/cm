@@ -28,13 +28,13 @@
 
     environment = {
       NERD_CONFIG_FILE = "/etc/nerd/nerd.cfg";
-      PYTHONPATH = "${pkgs.python310.pkgs.nerd.pythonPath}:${pkgs.python310.pkgs.nerd}/${pkgs.python310.sitePackages}:${pkgs.python310Packages.psycopg2}/${pkgs.python310.sitePackages}";
+      PYTHONPATH = "${pkgs.nerd.pythonPath}:${pkgs.nerd}/${pkgs.python310.sitePackages}:${pkgs.python310Packages.psycopg2}/${pkgs.python310.sitePackages}";
     };
 
     preStart = ''
       export DJANGO_SECRET=$(cat ${config.sops.secrets.nerd_secret.path})
       ${pkgs.gnused}/bin/sed -e "s/!!DJANGO_SECRET!!/$DJANGO_SECRET/g" ${nerdCfg} > /etc/nerd/nerd.cfg
-      ${pkgs.python310.pkgs.nerd}/bin/nerd migrate
+      ${pkgs.nerd}/bin/nerd migrate
     '';
 
     serviceConfig = {
@@ -87,7 +87,7 @@
           }
           reverse_proxy * http://127.0.0.1:10510
         }
-        root * ${pkgs.python310.pkgs.nerd}/var/lib/nerd/
+        root * ${pkgs.nerd}/var/lib/nerd/
       '';
     };
   };

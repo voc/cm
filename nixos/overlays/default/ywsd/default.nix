@@ -1,7 +1,9 @@
-{ lib, buildPythonApplication, fetchFromGitHub, aiopg, aiohttp, python-yate
-, pyyaml, sqlalchemy }:
+{ lib
+, python310
+, fetchFromGitHub
+}:
 
-buildPythonApplication rec {
+with python310.pkgs; buildPythonApplication rec {
   pname = "ywsd";
   version = "0.11.0";
 

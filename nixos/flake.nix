@@ -65,7 +65,6 @@
       yate = import ./modules/yate;
       fieldpoc = import ./modules/fieldpoc;
     };
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
   } // flake-utils.lib.eachSystem ([ "x86_64-linux" "x86_64-darwin" "aarch64-darwin"]) (system: let
     pkgs = (import nixpkgs { inherit system; });
   in {
