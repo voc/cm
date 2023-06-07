@@ -1,0 +1,6 @@
+subgroups = ["saal1", "saal3", "saal5"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "GPN21"
+slug = "gpn21"
