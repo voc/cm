@@ -4,3 +4,15 @@ groups = ["debian-buster"]
 [metadata.interfaces.eth0]
 ips = ["10.73.1.1/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.pygtk-atem-switcher.atem]
+video_mode = "1080p50"
+
+[metadata.pygtk-atem-switcher.settings.inputs]
+input1 = "Laptop"
+input2 = "x"
+input3 = "StageCam"
+input4 = "info-beamer"
+
+[metadata.pygtk-atem-switcher.atem]
+ip = "10.73.191.40"
