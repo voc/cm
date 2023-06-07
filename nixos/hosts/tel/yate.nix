@@ -62,7 +62,7 @@
         expect "disconnecting"
       '';
     in ''
-      ${pkgs.curl}/bin/curl https://tel.c3voc.de/export.json\?event=1 > /etc/fieldpoc/extensions.json
+      ${pkgs.curl}/bin/curl https://tel.c3voc.de/export.json\?event=2 > /etc/fieldpoc/extensions.json
       ${pkgs.expect}/bin/expect ${reloadScript}
     '';
   };
