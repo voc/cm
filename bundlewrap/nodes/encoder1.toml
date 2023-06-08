@@ -20,11 +20,11 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkMHUzBwe5QRDWbQU9ryOt4IwUdTTG-a1hN
 program = 'fb'
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 0
+devicenumber = 1
 mode = "1080i50"
 
 [metadata.voctocore.sources.cam2]
-devicenumber = 1
+devicenumber = 0
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
