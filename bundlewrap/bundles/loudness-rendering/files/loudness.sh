@@ -24,7 +24,9 @@ ffmpeg \
         nullsrc=size=640x720 [base];
         [0:v] scale=640:360, fps=30 [scaled];
         [0:a:0] ebur128=video=1:meter=16:target=-16:size=640x480 [ebur][a1];
-        [ebur] scale=640:360, fps=30 [v1];
+        [0:a:0] avectorscope=size=640x480:zoom=2:r=30[vec];
+        [ebur][vec] blend=all_mode='addition':all_opacity=0.8 [scope];
+        [scope] scale=640:360, fps=30 [v1];
         [a1] aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo [audio];
         [base][v1] overlay=shortest=1 [tmp1];
         [tmp1][scaled] overlay=shortest=1:y=360 [ov];
