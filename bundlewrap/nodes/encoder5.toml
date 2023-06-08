@@ -17,6 +17,10 @@ gateway4 = "10.73.0.254"
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYkgCo1Orl_R7yyMpMUhESSGiBvMRZy6J3DXw7PWsS7XDvmYjJktYpwn-pdO_CnHzoxbB1OpBh-MfdPZnt7WTA7Vh7V55KPjGpnj73uCHn6fpu8="
 
 [metadata.voctocore.sources.cam1]
+devicenumber = 0
+mode = "1080i50"
+
+[metadata.voctocore.sources.cam2]
 devicenumber = 1
 mode = "1080i50"
 
@@ -26,4 +30,4 @@ mode = "1080i50"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam1"
+input = "cam2"
