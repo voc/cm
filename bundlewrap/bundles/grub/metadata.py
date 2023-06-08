@@ -9,7 +9,7 @@ defaults = {
             'console': 'tty0',
             'consoleblank': '0',
             'elevator': 'deadline',
-            'fbcon': 'font:ter-132n,scrollback:128k',
+            'fbcon': 'font:Lat2-Terminus32x16,scrollback:128k',
             'net.ifnames': '0',
         },
     },
