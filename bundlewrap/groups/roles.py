@@ -18,6 +18,11 @@ groups['encoders'] = {
         'systemd': {
             'ignore_power_switch': True,
         },
+        'users': {
+            'voc': {
+                'groups': ['video'],
+            },
+        },
     },
 }
 
