@@ -20,7 +20,7 @@ groups['encoders'] = {
         },
         'users': {
             'voc': {
-                'groups': ['video'],
+                'groups': ['video', 'audio'],
             },
         },
     },
