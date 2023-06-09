@@ -61,6 +61,7 @@ groups['crs-workers'] = {
     'bundles': {
         'crs-worker',
         'encoder-common',
+        'master_me',
     },
     'metadata': {
         'crs-worker': {
