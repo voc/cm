@@ -42,6 +42,16 @@ git_deploy['/opt/crs-scripts'] = {
     'rev': 'master',
 }
 
+# for HD-Master r22
+directories['/usr/local/lib/ladspa'] = {}
+files['/usr/local/lib/ladspa/master_me.so'] = {
+    'mode': '0755',
+    'after': {
+        'pkg_apt:ffmpeg',
+    },
+    'content_type': 'binary',
+}
+
 if not node.has_bundle('cifs-client'):
     files['/video/upload-key'] = {
         'content_type': 'any', # do not touch file contents
