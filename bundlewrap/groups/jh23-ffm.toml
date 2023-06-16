@@ -1,0 +1,15 @@
+subgroups = ["saal4"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Jugend hackt Frankfurt am Main 2023"
+slug = "jh23-ffm"
+
+[metadata.pygtk-atem-switcher.atem]
+video_mode = "1080p50"
+
+[metadata.pygtk-atem-switcher.atem.settings.inputs]
+input1 = "Jugend"
+input2 = "Moderator"
+input3 = "GoPro"
+input4 = "info-beamer"
