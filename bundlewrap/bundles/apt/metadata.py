@@ -52,7 +52,7 @@ defaults = {
             'strace': {},
             'systemd': {},
             'tcpdump': {},
-            'terminus': {},
+            'xfonts-terminus': {},
             'tmux': {},
             'tree': {},
             'unzip': {},
