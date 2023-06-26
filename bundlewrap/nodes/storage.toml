@@ -73,3 +73,8 @@ devices = [
     "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part4"
 ]
 type = "cache"
+
+[metadata.zfs.datasets.'video/giftschrank']
+# storage for stuff we cannot release right now lives here, so we can
+# remove all the other stuff from an event
+mountpoint = "/video/giftschrank"
