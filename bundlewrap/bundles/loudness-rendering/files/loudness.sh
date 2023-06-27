@@ -7,7 +7,7 @@ SOURCE="$2"
 
 set -euo pipefail
 
-if ! ffprobe "${SOURCE}"
+if ! ffprobe -hide_banner "${SOURCE}"
 then
     echo "Source ${SOURCE} not available"
     exit 0
