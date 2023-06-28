@@ -1,0 +1,60 @@
+#!/bin/bash
+
+[[ -n "$DEBUG" ]] && set -x
+
+if [[ -z "$EVENT" ]]
+then
+    echo "EVENT not set"
+    exit 1
+fi
+
+DEVICE="$(echo "$1" | cut -d: -f1)"
+TARGET_DIR="$(echo "$1" | cut -d: -f2)"
+
+if [[ -z "$1" ]] || [[ -z "$DEVICE" ]] || [[ -z "$TARGET_DIR" ]]
+then
+    echo "Usage: $0 device:target"
+    echo
+    echo "To import /dev/sdb to /video/repair/${EVENT}/testcard, use this:"
+    echo "    $0 sdb:testcard"
+    exit 1
+fi
+
+do_import() (
+    # import in a subshell, so we can use `set -e` here.
+    set -euo pipefail
+
+    DIRNAME="$(echo "$RANDOM" | md5sum)"
+
+    mkdir -p "/mnt/${DIRNAME}"
+    trap 'cd /;rm -Rf "/mnt/$DIRNAME"' EXIT
+
+    mount "/dev/${DEVICE}" "/mnt/${DIRNAME}"
+
+    mkdir -p "/video/repair/${EVENT}/${TARGET_DIR}"
+    rsync -ahP "/mnt/${DIRNAME}/" "/video/repair/${EVENT}/${TARGET_DIR}"
+
+    umount "/dev/${DEVICE}"
+
+    exit 0
+)
+
+if ! [[ -d "/video/repair/${EVENT}" ]]
+then
+    echo "Target path /video/repair/${EVENT} does not exist, exiting!"
+    exit 2
+fi
+
+voc2alert "info" "importer" "Starting import of /dev/${DEVICE} to /video/repair/${EVENT}/${TARGET_DIR}"
+
+do_import
+exitcode=$?
+
+if [[ "$exitcode" -gt 0 ]]
+then
+    level="warn"
+else
+    level="info"
+fi
+
+voc2alert "$level" "importer" "Import of /dev/${DEVICE} to /video/repair/${EVENT}/${TARGET_DIR} finished, exit code $exitcode"
