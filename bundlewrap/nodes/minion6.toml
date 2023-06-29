@@ -1,4 +1,5 @@
 groups = ["debian-buster"]
+bundles = ["cifs-client"]
 
 [metadata.crs-worker.secrets.encoding]
 token = "!kee_user:ansible|worker-groups|minion6"
@@ -7,3 +8,20 @@ secret = "!kee_pass:ansible|worker-groups|minion6"
 [metadata.interfaces.eth0]
 ips = ["10.73.6.7/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.crs-worker]
+autostart_scripts = [
+    "encoding",
+]
+
+[metadata.cifs-client.mounts.video]
+serverpath = "//encoder5.lan.c3voc.de/video"
+
+[metadata.cifs-client.mounts.video-encoded]
+serverpath = "//encoder5.lan.c3voc.de/encoded"
+
+[metadata.cifs-client.mounts.video-fuse]
+serverpath = "//encoder5.lan.c3voc.de/fuse"
+
+[metadata.cifs-client.mounts.video-tmp]
+serverpath = "//encoder5.lan.c3voc.de/tmp"
