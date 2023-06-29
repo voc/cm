@@ -18,7 +18,7 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYk0lzAoL1Hf5xuaCK0E6A9xq15GeqVfs
 mirror_view = true
 
 [metadata.voctocore.playout]
-#program = "fb"
+program = "fb"
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 2
