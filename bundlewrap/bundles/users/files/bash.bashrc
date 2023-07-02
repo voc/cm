@@ -19,7 +19,9 @@ then
 fi
 
 uptime
-last | grep 'still logged in'
+echo
+last | head -n5
+echo
 
 export HISTCONTROL=ignoredups
 export HISTSIZE=50000
