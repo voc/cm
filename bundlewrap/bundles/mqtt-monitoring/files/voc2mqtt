@@ -4,10 +4,11 @@
 [[ -n "$DEBUG" ]] && set -x
 set -euo pipefail
 
-mosquitto_pub \
-    --capath /etc/ssl/certs/ \
-    -h "${mqtt['server']}" \
-    -p 8883 \
-    -u "${mqtt['username']}" \
-    -P "${mqtt['password']}" \
-    "$@"
+timeout 5 \
+    mosquitto_pub \
+        --capath /etc/ssl/certs/ \
+        -h "${mqtt['server']}" \
+        -p 8883 \
+        -u "${mqtt['username']}" \
+        -P "${mqtt['password']}" \
+        "$@"
