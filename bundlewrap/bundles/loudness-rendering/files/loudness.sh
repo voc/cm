@@ -5,7 +5,7 @@
 NAME="$1"
 SOURCE="$2"
 
-set -euo pipefail
+set -uo pipefail
 
 if ! ffprobe -hide_banner "${SOURCE}"
 then
