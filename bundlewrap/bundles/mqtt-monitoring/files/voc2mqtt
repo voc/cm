@@ -4,7 +4,9 @@
 [[ -n "$DEBUG" ]] && set -x
 set -euo pipefail
 
-timeout 5 \
+# 9 seconds, because the timeout for a "late checkin" is 20 seconds, so
+# with 9 seconds the third try starts at 18s.
+timeout 9 \
     mosquitto_pub \
         --capath /etc/ssl/certs/ \
         -h "${mqtt['server']}" \
