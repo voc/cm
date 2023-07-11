@@ -9,9 +9,7 @@ WorkingDirectory=/opt/crs-scripts
 Restart=on-failure
 RestartSec=10
 SyslogIdentifier=crs-${worker}
-% for k,v in sorted(environment.items()):
-Environment=${k}=${v}
-% endfor
+EnvironmentFile=/etc/crs-scripts/${secret}
 
 [Install]
 % if autostart:

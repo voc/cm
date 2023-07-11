@@ -110,6 +110,10 @@ files['/usr/local/sbin/crs-status'] = {
     'mode': '0755',
 }
 
+directories['/etc/crs-scripts'] = {
+    'purge': True,
+}
+
 autostart_scripts = node.metadata.get('crs-worker/autostart_scripts', set())
 for worker, config in WORKER_SCRIPTS.items():
     if config['secret'] not in node.metadata.get('crs-worker/secrets', {}):
@@ -139,14 +143,23 @@ for worker, config in WORKER_SCRIPTS.items():
         },
     }
 
+    files[f'/etc/crs-scripts/{config["secret"]}'] = {
+        'content_type': 'mako',
+        'source': 'crs-runner.env',
+        'context': {
+            'env': environment,
+        },
+        'triggers': set(), # see below
+    }
+
     files[f'/usr/local/lib/systemd/system/crs-{worker}.service'] = {
         'content_type': 'mako',
         'source': 'crs-runner.service',
         'context': {
             'autostart': (worker in autostart_scripts),
             'script': config['script'],
+            'secret': config['secret'],
             'worker': worker,
-            'environment': environment,
         },
         'triggers': {
             'action:systemd-reload',
@@ -171,11 +184,15 @@ for worker, config in WORKER_SCRIPTS.items():
         files[f'/usr/local/lib/systemd/system/crs-{worker}.service']['triggers'].add(
             f'svc_systemd:crs-{worker}:restart',
         )
+        files[f'/etc/crs-worker/{config["secret"]}']['triggers'].add(
+            f'svc_systemd:crs-{worker}:restart',
+        )
 
     svc_systemd[f'crs-{worker}'] = {
         # do not start these workers automatically, unless requested
         'running': (True if worker in autostart_scripts else None),
         'needs': {
+            f'file:/etc/crs-scripts/{config["secret"]}',
             f'file:/usr/local/lib/systemd/system/crs-{worker}.service',
             'git_deploy:/opt/crs-scripts',
         },
