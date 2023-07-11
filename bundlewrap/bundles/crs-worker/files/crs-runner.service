@@ -10,7 +10,7 @@ WorkingDirectory=/opt/crs-scripts
 SyslogIdentifier=crs-${worker}
 EnvironmentFile=/etc/crs-scripts/${secret}
 
-Restart=on-failure
+Restart=always
 RestartSec=10
 RestartPreventExitStatus=250
 
