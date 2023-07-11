@@ -4,12 +4,15 @@ Description=CRS runner for ${script}
 [Service]
 User=voc
 Group=voc
+
 ExecStart=/opt/crs-scripts/bin/crs_run ${script}
 WorkingDirectory=/opt/crs-scripts
-Restart=on-failure
-RestartSec=10
 SyslogIdentifier=crs-${worker}
 EnvironmentFile=/etc/crs-scripts/${secret}
+
+Restart=on-failure
+RestartSec=10
+RestartPreventExitStatus=250
 
 [Install]
 % if autostart:
