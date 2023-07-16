@@ -458,3 +458,11 @@ uid = 1158
 ssh_pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAL9Sw6U8IhvmTt4ANtd9SqSGiiLCPeaK/ioFDEJzGSn martin entropia",
 ]
+
+[moira]
+enable_rz = false
+enable_event = true
+uid = 1158
+ssh_pubkeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrcJRF71+XM5YZj+SaSiGcdVZ0IDxGBXIWssDtHiTtr",
+]
