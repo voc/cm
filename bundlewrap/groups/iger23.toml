@@ -1,0 +1,5 @@
+subgroups = ["saal1"]
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "IGER2023"
+slug = "iger-2023"
