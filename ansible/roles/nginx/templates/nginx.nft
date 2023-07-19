@@ -1,9 +1,11 @@
 #!/usr/sbin/nft -f
-add chain inet filter http_ratelimit;
-add rule inet filter http_ratelimit meta nfproto ipv4 ct state new meter lb_limit_v4 { ip saddr and 255.255.255.224 limit rate 50/second burst 20 packets} counter accept;
-add rule inet filter http_ratelimit meta nfproto ipv6 ct state new meter lb_limit_v6 { ip6 saddr and ffff:ffff:ffff:ff00:0000:0000:0000:0000 limit rate 50/second burst 20 packets} counter accept;
-add rule inet filter http_ratelimit counter reject;
-add rule inet filter input tcp sport 1024-65535 tcp dport {80, 443} jump http_ratelimit;
+add rule inet filter input tcp dport {80, 443} accept;
+
+#add chain inet filter http_ratelimit;
+#add rule inet filter http_ratelimit meta nfproto ipv4 ct state new meter lb_limit_v4 { ip saddr and 255.255.255.224 limit rate 50/second burst 20 packets} counter accept;
+#add rule inet filter http_ratelimit meta nfproto ipv6 ct state new meter lb_limit_v6 { ip6 saddr and ffff:ffff:ffff:ff00:0000:0000:0000:0000 limit rate 50/second burst 20 packets} counter accept;
+#add rule inet filter http_ratelimit counter reject;
+#add rule inet filter input tcp sport 1024-65535 tcp dport {80, 443} jump http_ratelimit;
 
 {% if rtmp %}
 # nginx rtmp
