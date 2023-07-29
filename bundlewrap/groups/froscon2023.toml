@@ -1,0 +1,8 @@
+subgroups = ["saal1", "saal2", "saal3", "saal4", "saal5", "saal6"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+acronym = "froscon2023"
+slug = "froscon2023"
+name = "FrOSCon 2023"
+slogan = "Free and Open Source Software Conference"

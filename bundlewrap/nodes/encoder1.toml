@@ -7,7 +7,7 @@ meta.secret = "!kee_pass:ansible|worker-groups|encoder1-meta"
 meta.token = "!kee_user:ansible|worker-groups|encoder1-meta"
 
 [metadata.event]
-room_name = "Saal 1"
+room_name = "HS1"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.1.3/16"]
@@ -18,6 +18,10 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkMHUzBwe5QRDWbQU9ryOt4IwUdTTG-a1hN
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
+mode = "1080i50"
+
+[metadata.voctocore.sources.cam2]
+devicenumber = 0
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
