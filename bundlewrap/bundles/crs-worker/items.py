@@ -36,6 +36,12 @@ WORKER_SCRIPTS = {
     }
 }
 
+i = 2
+if node.metadata.get("hostname").split(".")[0] in ["minion128-1", "minion128-2"]:
+    for _ in range(5):
+        WORKER_SCRIPTS[f"encoding{i}"] = WORKER_SCRIPTS["encoding"].copy()
+        i = i+1
+
 directories['/opt/crs-scripts'] = {}
 git_deploy['/opt/crs-scripts'] = {
     'repo': 'https://github.com/crs-tools/crs-scripts.git',
