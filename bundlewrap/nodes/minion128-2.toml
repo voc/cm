@@ -1,0 +1,6 @@
+groups = ["debian-bullseye"]
+hostname = "minion128-2.voc.fslab.de"
+
+[metadata.interfaces.eth0]
+ips = ["10.73.128.151/16"]
+gateway4 = "10.73.128.201"

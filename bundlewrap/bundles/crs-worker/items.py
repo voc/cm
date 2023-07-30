@@ -184,7 +184,7 @@ for worker, config in WORKER_SCRIPTS.items():
         files[f'/usr/local/lib/systemd/system/crs-{worker}.service']['triggers'].add(
             f'svc_systemd:crs-{worker}:restart',
         )
-        files[f'/etc/crs-worker/{config["secret"]}']['triggers'].add(
+        files[f'/etc/crs-scripts/{config["secret"]}']['triggers'].add(
             f'svc_systemd:crs-{worker}:restart',
         )
 
