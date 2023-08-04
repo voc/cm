@@ -38,7 +38,7 @@ files = {
 last_action = set()
 for user, uconfig in node.metadata.get('users', {}).items():
     if (
-        not uconfig.get('password')
+        'password' not in uconfig
         or uconfig.get('delete')
         or user in ('root',)
     ):
