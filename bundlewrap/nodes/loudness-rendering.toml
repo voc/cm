@@ -9,10 +9,32 @@ hostname = "loudness.voc.fslab.de"
 ips = ["10.73.128.160/16"]
 gateway4 = "10.73.128.201"
 
-[metadata.loudness-rendering]
-s1 = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
-s2 = "https://cdn.c3voc.de/hls/s2/native_hd.m3u8"
-s3 = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
-s4 = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
-s5 = "https://cdn.c3voc.de/hls/s5/native_hd.m3u8"
-s6 = "https://cdn.c3voc.de/hls/s6/native_hd.m3u8"
+[metadata.loudness-rendering.s1]
+name = "HS1 (s1)"
+source = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
+target = "rtmp://ingest2.c3voc.de/relay/s1_loudness"
+
+[metadata.loudness-rendering.s2]
+name = "HS7 (s2)"
+source = "https://cdn.c3voc.de/hls/s2/native_hd.m3u8"
+target = "rtmp://ingest2.c3voc.de/relay/s2_loudness"
+
+[metadata.loudness-rendering.s3]
+name = "HS3 (s3)"
+source = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
+target = "rtmp://ingest2.c3voc.de/relay/s3_loudness"
+
+[metadata.loudness-rendering.s4]
+name = "HS4 (s4)"
+source = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
+target = "rtmp://ingest2.c3voc.de/relay/s4_loudness"
+
+[metadata.loudness-rendering.s5]
+name = "HS8 (s5)"
+source = "https://cdn.c3voc.de/hls/s5/native_hd.m3u8"
+target = "rtmp://ingest2.c3voc.de/relay/s5_loudness"
+
+[metadata.loudness-rendering.s6]
+name = "HS6 (s6)"
+source = "https://cdn.c3voc.de/hls/s6/native_hd.m3u8"
+target = "rtmp://ingest2.c3voc.de/relay/s6_loudness"

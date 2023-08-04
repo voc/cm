@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/loudness_rendering ${stream_name} ${source_url}
+ExecStart=/usr/local/bin/loudness_rendering "${stream_name}" "${source_url}" "${loudness_target}"
 Restart=always
 RestartSec=10
 StartLimitInterval=0

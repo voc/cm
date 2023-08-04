@@ -4,7 +4,7 @@
 
 NAME="$1"
 SOURCE="$2"
-
+TARGET="${3:-rtmp://ingest2.c3voc.de/relay/${1}_loudness}"
 set -uo pipefail
 
 if ! ffprobe -hide_banner "${SOURCE}"
@@ -34,6 +34,6 @@ ffmpeg \
     -map "[out]" -c:v libx264 -threads 2 -preset veryfast -x264-params keyint=30 -tune zerolatency -crf:0 26 -profile:0 high -level:0 4.1 -c:a aac -strict -2 -pix_fmt yuv420p \
     -map "[audio]" -c:a aac -b:a 128k \
     -f flv \
-    "rtmp://ingest2.c3voc.de/relay/${NAME}_loudness"
+    "${TARGET}"
 
 /usr/local/sbin/voc2alert "info" "loudness" "Loudness monitoring for ${NAME} stopped, ffmpeg exit code $?."
