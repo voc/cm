@@ -1,11 +1,13 @@
-hostname= "10.73.200.98"
-#hostname= "loudness-rendering.lan.c3voc.de"
+hostname= "loudness.voc.fslab.de"
 groups = ["debian-bullseye"]
 bundles = ["loudness-rendering", "mqtt-monitoring"]
 
-[metadata.interfaces.eth0]
-ips = ["10.73.200.98/16"]
-gateway4 = "10.73.0.254"
+[metadata]
+hostname = "loudness.voc.fslab.de"
+
+[metadata.interfaces.ens18]
+ips = ["10.73.128.160/16"]
+gateway4 = "10.73.128.201"
 
 [metadata.loudness-rendering]
 s1 = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
