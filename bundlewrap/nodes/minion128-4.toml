@@ -1,12 +1,10 @@
 groups = ["debian-bullseye"]
-hostname = "minion128-4.voc.fslab.de"
 
 [metadata]
 hostname = "minion128-4.voc.fslab.de"
 
 [metadata.crs-worker]
-number_of_encoding_workers = 6
+autostart_workers = ["encoding"]
 
 [metadata.interfaces.ens18]
 ips = ["10.73.128.153/16"]
-gateway4 = "10.73.128.201"

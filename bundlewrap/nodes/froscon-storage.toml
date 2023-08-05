@@ -7,8 +7,6 @@ groups = [
     "debian-bullseye",
 ]
 
-hostname = "storage.voc.fslab.de"
-
 [metadata]
 hostname = "storage.voc.fslab.de"
 
