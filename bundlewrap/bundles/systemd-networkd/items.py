@@ -3,9 +3,6 @@ from bundlewrap.exceptions import BundleError
 assert node.has_bundle('systemd')
 
 files = {
-    '/etc/network/interfaces': {
-        'delete': True,
-    },
     '/etc/resolv.conf': {
         'content_type': 'mako',
         'after': {

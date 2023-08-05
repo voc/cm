@@ -1,7 +1,7 @@
 groups['servercase'] = {
     'members': {
         'router',
-        'storage',
+        'froscon-storage',
     },
     'metadata': {
         'apt': {
