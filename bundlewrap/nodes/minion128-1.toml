@@ -4,6 +4,9 @@ hostname = "minion128-1.voc.fslab.de"
 [metadata]
 hostname = "minion128-1.voc.fslab.de"
 
+[metadata.crs-worker]
+number_of_encoding_workers = 6
+
 [metadata.interfaces.ens18]
 ips = ["10.73.128.150/16"]
 gateway4 = "10.73.128.201"
