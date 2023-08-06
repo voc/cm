@@ -15,10 +15,6 @@ WORKER_SCRIPTS = {
         'secret': 'meta',
         'script': 'script-C-cut-postprocessor.pl',
     },
-    'encoding': {
-        'secret': 'encoding',
-        'script': 'script-D-encoding.pl',
-    },
     'postencoding': {
         'secret': 'meta',
         'script': 'script-E-postencoding-auphonic.pl',
@@ -35,6 +31,19 @@ WORKER_SCRIPTS = {
         },
     }
 }
+
+number_of_workers = node.metadata.get('crs-worker/number_of_encoding_workers')
+if number_of_workers > 1:
+    for i in range(number_of_workers):
+        WORKER_SCRIPTS[f'encoding{i}'] = {
+            'secret': 'encoding',
+            'script': 'script-D-encoding.pl',
+        }
+else:
+    WORKER_SCRIPTS['encoding'] = {
+        'secret': 'encoding',
+        'script': 'script-D-encoding.pl',
+    }
 
 directories['/opt/crs-scripts'] = {}
 git_deploy['/opt/crs-scripts'] = {
