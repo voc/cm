@@ -20,6 +20,7 @@ defaults = {
         },
     },
     'crs-worker': {
+        'number_of_encoding_workers': 1,
         'use_vaapi': False,
     },
 }
