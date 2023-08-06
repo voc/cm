@@ -32,7 +32,7 @@ WORKER_SCRIPTS = {
     }
 }
 
-number_of_workers = node.metadata.get('crs-worker/number_of_encoding_workers')
+number_of_workers = node.metadata.get('crs-worker/number_of_encoding_workers', 1)
 if number_of_workers > 1:
     for i in range(number_of_workers):
         WORKER_SCRIPTS[f'encoding{i}'] = {
