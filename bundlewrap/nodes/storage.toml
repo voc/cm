@@ -35,6 +35,9 @@ ips = [
 ]
 gateway4 = "10.73.0.254"
 
+[metadata.samba.shares.c3voctv]
+path = "/video/c3voctv"
+
 [metadata.systemd-networkd.bonds.bond0]
 match = [
     "enp3s0f0",
@@ -78,3 +81,6 @@ type = "cache"
 # storage for stuff we cannot release right now lives here, so we can
 # remove all the other stuff from an event
 mountpoint = "/video/giftschrank"
+
+[metadata.zfs.datasets.'video/c3voctv']
+mountpoint = "/video/c3voctv"
