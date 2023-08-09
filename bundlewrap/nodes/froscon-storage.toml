@@ -1,0 +1,32 @@
+bundles = [
+    "encoder-common",
+    "samba",
+]
+groups = [
+    "crs-workers",
+    "debian-bullseye",
+]
+
+[metadata]
+hostname = "storage.voc.fslab.de"
+
+# for the occasional repair task, so users can use a dedicated machine
+# to render the output files after preparing in kdenlive
+[metadata.apt.packages.frei0r-plugins]
+[metadata.apt.packages.melt]
+
+# for intro-outro-generator
+[metadata.apt.packages.libmagickwand-dev]
+
+[metadata.crs-worker]
+autostart_scripts = [
+    "recording-scheduler",
+    "mount4cut",
+    "cut-postprocessor",
+    "postencoding",
+    "postprocessing",
+]
+
+[metadata.crs-worker.secrets.encoding]
+token = "!kee_user:ansible|worker-groups|storage"
+secret = "!kee_pass:ansible|worker-groups|storage"
