@@ -1,0 +1,14 @@
+[Unit]
+Description=Viri Alerts to sACN DMX gateway
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/voc2dmx/src
+ExecStart=/opt/voc2dmx/venv/bin/python /opt/voc2dmx/src/main.py --config /opt/voc2dmx/config.toml
+Restart=on-failure
+RestartSec=5s
+StartLimitInterval=0
+
+[Install]
+WantedBy=multi-user.target

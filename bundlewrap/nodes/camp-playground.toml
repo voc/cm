@@ -1,0 +1,25 @@
+groups = ["debian-bullseye"]
+bundles = ["voc2dmx"]
+
+[metadata.interfaces.ens18]
+ips = ["10.73.200.60/16"]
+gateway = "10.73.0.254"
+
+[metadata.voc2dmx.mqtt]
+host = "mqtt.c3voc.de"
+user = "!decrypt:encrypt$gAAAAABk00GuwEtLjPbT3XB5fYj0yh6B0-jFCxZ4b2q9sbJAKwTe3OHO1Q-m4rdmN0ThlHiz0C6a6yooVMOY7ClxVKEAtjWqHA=="
+password = "!decrypt:encrypt$gAAAAABk00G3peZkBAogrzEVIXudZhtJTOcBByrVZHkZ4LILgIBGdgf6c7JmmAymRh4OO8VaVT7ehOlxVvLzkgkCKE9fA1HB1ebSFHN0UdZJ_GhLT9vV9js="
+topic = "/voc/alert-viri"
+
+[metadata.voc2dmx.sacn]
+target = "10.73.100.115"
+
+[metadata.voc2dmx.lights]
+ignition_wal_l710 = [
+    1,
+    7,
+    13,
+    19,
+    25,
+    31,
+]

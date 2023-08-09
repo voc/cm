@@ -1,0 +1,4 @@
+<%
+    from tomlkit import dumps as toml_dumps
+    from bundlewrap.utils.text import toml_clean
+%>${toml_clean(toml_dumps(repo.libs.faults.resolve_faults(config), sort_keys=True))}
