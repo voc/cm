@@ -1,0 +1,9 @@
+#!/bin/bash
+
+target="/var/tmp/postgresdumps"
+
+pg_dumpall --globals-only | gzip --quiet --rsyncable >"$target/globals.sql.gz"
+
+% for db in sorted(databases):
+pg_dump -C "${db}" | gzip --quiet --rsyncable >"$target/db_${db}.sql.gz"
+% endfor
