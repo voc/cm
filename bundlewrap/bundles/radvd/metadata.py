@@ -16,12 +16,15 @@ def enable_radvd_if_ipv6_available(metadata):
     radvd_enabled = False
 
     for iface, iconfig in metadata.get('interfaces').items():
-        if iface in radvd_interface:
-            # ignore interfaces for which we'll do announcements for
-            continue
-
-        if iconfig.get('dhcp', False):
-            # ignore interfaces for which we do dhcp client
+        # Ignore interfaces if one of the following conditions are met:
+        # - Interface gets router advertisements by us
+        # - Interface uses DHCP
+        # - Interface has no IPv6 gateway set
+        if (
+            iface in radvd_interfaces
+            or iconfig.get('dhcp', False)
+            or not iconfig.get('gateway6')
+        ):
             continue
 
         for ip in iconfig.get('ips', set()):
