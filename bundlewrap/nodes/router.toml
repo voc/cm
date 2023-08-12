@@ -3,21 +3,23 @@ bundles = [
     "isc-dhcp-server",
     "netdata",
     "openvpn-client",
+    "radvd",
     "unbound-with-knot",
 ]
 groups = ["debian-bullseye"]
 
 [metadata.interfaces.ens18]
-# If 'dhcp' gets set to 'true', the set gateway will get ignored and
-# the system will use the dhcp provided gateway instead.
-dhcp = true
-ips = ["94.45.241.105/24"]
+ips = [
+    "94.45.241.105/24",
+    "2001:67c:20a1:2241::105/64",
+]
 gateway4 = "94.45.241.1"
 
 [metadata.interfaces.ens19]
 ips = [
     "10.73.0.254/16",
     "10.73.200.201/16",
+    "2001:67c:20a1:3504:10:73:200:201/64",
 ]
 
 [metadata.isc-dhcp-server.subnets.ens19]
@@ -37,8 +39,13 @@ options.subnet-mask = "255.255.0.0"
     "nat postrouting oifname ens18 masquerade",
 ]
 
+[metadata.radvd.interfaces.ens19]
+prefix = "2001:67c:20a1:3504::/64"
+rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
+
 [metadata.sysctl.options]
 "net.ipv4.ip_forward" = "1"
+"net.ipv6.conf.all.forwarding" = "1"
 
 [metadata.unbound-with-knot]
 threads = 4
