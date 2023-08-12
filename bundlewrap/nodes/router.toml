@@ -14,7 +14,7 @@ ips = [
     "2001:67c:20a1:2241::105/64",
 ]
 gateway4 = "94.45.241.1"
-gateway6 = "2001:67c:20a1:2241::1",
+gateway6 = "2001:67c:20a1:2241::1"
 
 [metadata.interfaces.ens19]
 ips = [
@@ -47,6 +47,7 @@ rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
 [metadata.sysctl.options]
 "net.ipv4.ip_forward" = "1"
 "net.ipv6.conf.all.forwarding" = "1"
+"net.ipv6.conf.all.disable_ipv6" = "0"
 
 [metadata.unbound-with-knot]
 threads = 4
