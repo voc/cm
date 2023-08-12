@@ -3,7 +3,7 @@ bundles = ["voc2dmx"]
 
 [metadata.interfaces.ens18]
 ips = ["10.73.200.60/16"]
-gateway = "10.73.0.254"
+gateway4 = "10.73.0.254"
 
 [metadata.voc2dmx.mqtt]
 host = "mqtt.c3voc.de"
