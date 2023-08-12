@@ -15,11 +15,4 @@ topic = "/voc/alert-viri"
 target = "10.73.100.115"
 
 [metadata.voc2dmx.lights]
-ignition_wal_l710 = [
-    1,
-    7,
-    13,
-    19,
-    25,
-    31,
-]
+ignition_wal_l710 = [7,25,1,19,13]
