@@ -183,6 +183,10 @@
         "description": "tallycom4-2",
         "mac": "b8:27:eb:e5:64:3c"
     },
+    "10.73.4.3": {
+        "description": "encoder4",
+        "mac": "a8:a1:59:63:de:28"
+    },
     "10.73.4.4": {
         "description": "infobeamer4",
         "mac": "b8:27:eb:c5:f0:e2"
