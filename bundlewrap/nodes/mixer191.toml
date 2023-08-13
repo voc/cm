@@ -7,6 +7,7 @@ groups = ["debian-bullseye"]
 
 [metadata.voctogui]
 high_dpi = false
+enable-irssi = false
 
 [metadata.interfaces.eth0]
 ips = ["10.73.191.1/16"]
