@@ -243,6 +243,10 @@
         "description": "minion6",
         "mac": "00:1f:c6:9d:0b:1a"
     },
+    "10.73.95.3": {
+        "description": "encoder-hexchen",
+        "mac": "e8:6a:64:d8:01:35"
+    },
     "10.73.97.3": {
         "description": "encoder-c4",
         "mac": "70:85:c2:0c:29:3f"
