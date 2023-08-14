@@ -1,7 +1,7 @@
 ---
 - name: add hashicorp apt key
   ansible.builtin.apt_key:
-    id: E8A032E094D8EB4EA189D270DA418C88A3219F7B
+    id: 798AEC654E5C15428C8E42EEAA16FCBCA621E701
     url:  https://apt.releases.hashicorp.com/gpg
     state: present
 
