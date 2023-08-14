@@ -1,7 +1,7 @@
 defaults = {
     'pygtk-atem-switcher': {
         'atem': {
-            'video_mode': '1080p25',
+            'video_mode': '1080p50',
             'settings': {
                 'inputs': {
                     'input1': 'Laptop',
