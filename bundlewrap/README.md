@@ -195,7 +195,7 @@ or `x`.
 [metadata.pygtk-atem-switcher.atem]
 video_mode = "1080p25"
 
-[metadata.pygtk-atem-switcher.settings.inputs]
+[metadata.pygtk-atem-switcher.atem.settings.inputs]
 input1 = "Laptop"
 input2 = "x"
 input3 = "x"
