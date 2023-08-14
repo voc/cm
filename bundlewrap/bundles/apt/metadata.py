@@ -52,7 +52,6 @@ defaults = {
             'strace': {},
             'systemd': {},
             'tcpdump': {},
-            'terminus': {},
             'tmux': {},
             'tree': {},
             'unzip': {},
@@ -80,3 +79,6 @@ defaults = {
         },
     },
 }
+
+if node.os_version >= (11,):
+    defaults['apt']['packages']['terminus'] = {}
