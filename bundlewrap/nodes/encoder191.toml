@@ -5,7 +5,7 @@ token = "!kee_user:ansible|worker-groups|encoder191"
 secret = "!kee_pass:ansible|worker-groups|encoder191"
 
 [metadata.event]
-room_name = "Saal 191"
+room_name = "Bühne (Mary Ann Horton)"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.191.3/16"]
