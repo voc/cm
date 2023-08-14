@@ -7,7 +7,7 @@ meta.secret = "!kee_pass:ansible|worker-groups|encoder2-meta"
 meta.token = "!kee_user:ansible|worker-groups|encoder2-meta"
 
 [metadata.event]
-room_name = "Saal 2"
+room_name = "Bits & Bäume"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.2.3/16"]
@@ -15,6 +15,7 @@ gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNAla1u8QC8xEqxSbtHs3PFLVTluTMgb7KdkPmiohsYStvBz9M7yhqKRz2rhjMHnnT_7zt3ZAVlxnseIdTCUmLb0Ov5_wiDC9rbPtci751ZUPi-I="
+mirror_view = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
