@@ -8,9 +8,10 @@ ips = ["10.73.200.98/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.loudness-rendering]
-s1 = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
-s2 = "https://cdn.c3voc.de/hls/s2/native_hd.m3u8"
-s3 = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
-s4 = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
-s5 = "https://cdn.c3voc.de/hls/s5/native_hd.m3u8"
-s6 = "https://cdn.c3voc.de/hls/s6/native_hd.m3u8"
+#s1 = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
+bub = "https://cdn.c3voc.de/hls/s2/native_hd.m3u8"
+digitalcourage = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
+milliways = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
+nortx = "https://cdn.c3voc.de/hls/s5/native_hd.m3u8"
+c3voctv = "https://cdn.c3voc.de/hls/s6/native_hd.m3u8"
+jugendhackt = "https://cdn.c3voc.de/hls/s191/native_hd.m3u8"
