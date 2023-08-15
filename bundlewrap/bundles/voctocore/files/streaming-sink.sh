@@ -66,7 +66,7 @@ ffmpeg -y -nostdin -hide_banner -re \
     \
     [s_pgm] asplit=2 [pgm_1] [pgm_2] ;\
 % if dynaudnorm:
-    [pgm_2] dynaudnorm=$para_pa_leveler [pgm_le] ;\
+    [pgm_2] dynaudnorm=$para_pa_leveler [pgm_lev] ;\
 % endif
     \
     [s_trans_1] compand=$para_trans_gate [trans_gate_1] ;\
