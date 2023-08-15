@@ -4,3 +4,7 @@ groups = ["debian-buster"]
 [metadata.interfaces.eth0]
 ips = ["10.73.5.1/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.pygtk-atem-switcher.atem]
+video_mode = "1080p25"
+inputs.input2 = "HandsOn"
