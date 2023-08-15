@@ -8,7 +8,7 @@ ips = ["10.73.200.98/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.loudness-rendering]
-#s1 = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
+marktplatz = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
 bub = "https://cdn.c3voc.de/hls/s2/native_hd.m3u8"
 digitalcourage = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
 milliways = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
