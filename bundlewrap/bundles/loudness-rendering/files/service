@@ -8,3 +8,6 @@ ExecStart=/usr/local/bin/loudness_rendering ${stream_name} ${source_url}
 Restart=always
 RestartSec=10
 StartLimitInterval=0
+
+[Install]
+WantedBy=multi-user.target
