@@ -49,6 +49,24 @@ rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
 "net.ipv6.conf.all.forwarding" = "1"
 "net.ipv6.conf.all.disable_ipv6" = "0"
 
+[[metadata.telegraf.input_plugins.builtin.proxmox]]
+api_token = "!decrypt:encrypt$gAAAAABk3jHP-bc7jvJ_Lc-20Dyxa3ZpXTfW60gpwGpfEa23sgL-6Tg_TdV1FYIr6LPzihLd4DTCcsokVtbfZpOINpZ28bBLQWY_qk5QAIQymQx9jbHJQR8HJ0-yzO0LliQTzY2_Qndub-j_0Kv8hC1cyIxvlI3FfkehY0POBnYXN9y3oJcJQQY="
+base_url = "https://10.73.200.21:8006/api2/json"
+insecure_skip_verify = true
+node_name = "fastly"
+
+[[metadata.telegraf.input_plugins.builtin.proxmox]]
+api_token = "!decrypt:encrypt$gAAAAABk3jHP-bc7jvJ_Lc-20Dyxa3ZpXTfW60gpwGpfEa23sgL-6Tg_TdV1FYIr6LPzihLd4DTCcsokVtbfZpOINpZ28bBLQWY_qk5QAIQymQx9jbHJQR8HJ0-yzO0LliQTzY2_Qndub-j_0Kv8hC1cyIxvlI3FfkehY0POBnYXN9y3oJcJQQY="
+base_url = "https://10.73.200.22:8006/api2/json"
+insecure_skip_verify = true
+node_name = "cloudflare"
+
+[[metadata.telegraf.input_plugins.builtin.proxmox]]
+api_token = "!decrypt:encrypt$gAAAAABk3jHP-bc7jvJ_Lc-20Dyxa3ZpXTfW60gpwGpfEa23sgL-6Tg_TdV1FYIr6LPzihLd4DTCcsokVtbfZpOINpZ28bBLQWY_qk5QAIQymQx9jbHJQR8HJ0-yzO0LliQTzY2_Qndub-j_0Kv8hC1cyIxvlI3FfkehY0POBnYXN9y3oJcJQQY="
+base_url = "https://10.73.200.23:8006/api2/json"
+insecure_skip_verify = true
+node_name = "akamai"
+
 [metadata.unbound-with-knot]
 threads = 4
 cache_slabs = 4
