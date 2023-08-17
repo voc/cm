@@ -27,15 +27,16 @@ for mount, data in node.metadata.get('cifs-client/mounts', {}).items():
             'opts': ','.join(sorted(mount_options)),
             **data,
         },
-        'triggers': [
+        'triggers': {
             'action:systemd-reload',
-        ],
+        },
     }
 
     svc_systemd[f'{unitname}.mount'] = {
         'needs': {
-            'file:/usr/local/lib/systemd/system/{}.mount'.format(unitname),
             'directory:{}'.format(data['mountpoint']),
+            'file:/usr/local/lib/systemd/system/{}.mount'.format(unitname),
+            'pkg_apt:cifs-utils',
         },
     }
 
