@@ -58,7 +58,6 @@ def zfs(metadata):
         'encoded',
         'fuse',
         'intros',
-        'repair',
         'tmp',
     ):
         datasets[f'video/{slug}/{path}'] = {
