@@ -12,7 +12,6 @@ for path in (
     'encoded',
     'fuse',
     'intros',
-    'repair',
     'tmp',
 ):
     directories[f'/video/{path}'] = {
@@ -28,3 +27,12 @@ for path in (
         'owner': 'voc',
         'group': 'voc',
     }
+
+directories[f'/video/tmp/{event}/repair'] = {
+    'before': {
+        'bundle:voctocore',
+        'bundle:crs-worker',
+    },
+    'owner': 'voc',
+    'group': 'voc',
+}
