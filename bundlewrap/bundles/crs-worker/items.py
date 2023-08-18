@@ -61,6 +61,12 @@ files['/usr/local/lib/ladspa/master_me.so'] = {
     'content_type': 'binary',
 }
 
+files['/usr/local/lib/systemd/system/restore-fuse-mounts.service'] = {
+    'triggers': {
+        'action:systemd-reload',
+    },
+}
+
 if not node.has_bundle('cifs-client'):
     files['/video/upload-key'] = {
         'content_type': 'any', # do not touch file contents
