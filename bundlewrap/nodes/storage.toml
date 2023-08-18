@@ -25,9 +25,13 @@ autostart_scripts = [
     "postprocessing",
 ]
 
+[metadata.crs-worker.secrets.meta]
+token = "!decrypt:encrypt$gAAAAABk35Itmzhf3Z4xPLMT3IVhRKnm0GPS0S7grfHxvRlbFU2pJ-906p3iBz-ebqABDHtqZITWyO68Y442FaDeqN2_wKhgRvO10I4BB4uP8ki_Enmtg_TihUsnx2x1e4kzedxpmVF2"
+secret = "!decrypt:encrypt$gAAAAABk35IynVb6gzhx7o51UQhlLX6BOVS1U5ZENrMlnYggMSjbLC0uSWLT6nvtibE7eTmD4ZFOmYjDJ_7uGrseH_bBva_HruGiBztnrtd5d9qaYRagpf_B9KQfSyXqjP_FbHLcM4Bo"
+
 [metadata.crs-worker.secrets.encoding]
-token = "!kee_user:ansible|worker-groups|storage"
-secret = "!kee_pass:ansible|worker-groups|storage"
+token = "!decrypt:encrypt$gAAAAABk35IGE_pw8FevjzPXEzYIBjoD1u7Uoqz_6hB6plLt_Fsu0imi220dm_3szThLCib_fCt4YN_xcizsY3ZrXPvr7ike0joG6tADsl_7WL0fU2nbK71r_Uz2NwNc9t8zCM6WRrin"
+secret = "!decrypt:encrypt$gAAAAABk35IM38TpDZfXUb2a4MCCdgP3FKpXciy_hjFIFRBU3fXu5DuF2jT95mqxLwqpkqdQ42EMlUOVdfyanxRc2zGEAP4l52yXI0yjhHnVj-LX_5l038oQnfMe1hpTWaR5Ih7Tk9QE"
 
 [metadata.interfaces.'bond0.3504']
 ips = [
