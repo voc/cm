@@ -43,6 +43,14 @@
         "description": "kunsi-p14s",
         "mac": "8e:af:0a:7e:5d:46"
     },
+    "10.73.100.113": {
+        "description": "kunsi infobeamer 1",
+        "mac": "b8:27:eb:c9:16:8e"
+    },
+    "10.73.100.114": {
+        "description": "kunsi infobeamer 2",
+        "mac": "b8:27:eb:37:27:98"
+    },
     "10.73.100.125": {
         "description": "hexchen wifi",
         "mac": "64:bc:58:52:db:e5"
@@ -106,6 +114,10 @@
     "10.73.120.3": {
         "description": "Streaming-Pi 3",
         "mac": "b8:27:eb:1d:9d:9a"
+    },
+    "10.73.191.4": {
+        "description": "infobeamer191",
+        "mac": "dc:a6:32:41:52:88"
     },
     "10.73.2.1": {
         "description": "mixer2",
@@ -183,6 +195,10 @@
         "description": "tallycom4-2",
         "mac": "b8:27:eb:e5:64:3c"
     },
+    "10.73.4.3": {
+        "description": "encoder4",
+        "mac": "a8:a1:59:63:de:28"
+    },
     "10.73.4.4": {
         "description": "infobeamer4",
         "mac": "b8:27:eb:c5:f0:e2"
@@ -238,6 +254,10 @@
     "10.73.6.7": {
         "description": "minion6",
         "mac": "00:1f:c6:9d:0b:1a"
+    },
+    "10.73.95.3": {
+        "description": "encoder-hexchen",
+        "mac": "e8:6a:64:d8:01:35"
     },
     "10.73.97.3": {
         "description": "encoder-c4",
