@@ -23,19 +23,19 @@ KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-grou
 LoginGraceTime 60
 AllowUsers ${' '.join(sorted(login_users))}
 UsePAM yes
-AllowTcpForwarding no
+AllowTcpForwarding yes
+AllowAgentForwarding yes
 PrintMotd no
 
 MaxSessions 512
 MaxStartups 512:30:768
 
 Subsystem sftp internal-sftp
+% if allow_password_auth_for_voc_range:
 
 Match Address 10.73.0.0/16
-% if allow_password_auth_for_voc_range:
     PasswordAuthentication yes
 % endif
-    AllowTcpForwarding yes
 
 Match Group sftp
     ChrootDirectory %h
