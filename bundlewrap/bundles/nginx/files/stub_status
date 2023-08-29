@@ -1,0 +1,6 @@
+server {
+    listen       127.0.0.1:22999 default_server;
+    server_name  _;
+
+    stub_status;
+}

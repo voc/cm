@@ -1,0 +1,25 @@
+server {
+    server_name ${domain};
+    root ${webroot};
+    index index.html index.htm;
+
+    listen 80;
+    listen [::]:80;
+
+% if create_logs:
+    access_log /var/log/nginx/access-${vhost}.log gdpr;
+    error_log /var/log/nginx/error-${vhost}.log;
+% else:
+    # logs are disabled
+% endif
+
+    add_header Referrer-Policy same-origin;
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header Permissions-Policy interest-cohort=();
+
+%   for opt in sorted(additional_config):
+    ${opt};
+%   endfor
+}

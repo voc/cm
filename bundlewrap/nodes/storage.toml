@@ -1,5 +1,6 @@
 bundles = [
     "encoder-common",
+    "nginx",
     "samba",
     "zfs",
 ]
@@ -38,6 +39,18 @@ ips = [
     "10.73.200.24/16",
 ]
 gateway4 = "10.73.0.254"
+
+[metadata.nginx]
+# this should not be needed, since this machine is usually only reachable
+# on the internal network anyway. But this machine had a public ip address
+# temporarily in the past, so here we go ...
+restrict-to = [
+    "voc-internal",
+]
+
+[metadata.nginx.vhosts.video-encoded]
+domain = "storage.lan.c3voc.de"
+webroot = "/video/encoded"
 
 [metadata.samba.shares.c3voctv]
 path = "/video/c3voctv"
