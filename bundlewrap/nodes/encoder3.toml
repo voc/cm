@@ -6,6 +6,13 @@ encoding.token = "!kee_user:ansible|worker-groups|encoder3"
 meta.secret = "!kee_pass:ansible|worker-groups|encoder3-meta"
 meta.token = "!kee_user:ansible|worker-groups|encoder3-meta"
 
+[metadata.crs-worker]
+autostart_scripts = [
+    "recording-scheduler",
+    "mount4cut",
+    "cut-postprocessor",
+]
+
 [metadata.event]
 room_name = "Lecture hall (Room 122)"
 
