@@ -26,8 +26,8 @@ mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 3
-mode = "1080p25"
+mode = "1080p50"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam1"
+input = "cam2"
