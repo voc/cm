@@ -1,0 +1,9 @@
+subgroups = [
+    "saal2",
+    "saal6",
+]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "All Systems Go! 2024"
+slug = "asg2024"
