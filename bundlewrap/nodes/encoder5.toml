@@ -7,7 +7,7 @@ meta.secret = "!kee_pass:ansible|worker-groups|encoder5-meta"
 meta.token = "!kee_user:ansible|worker-groups|encoder5-meta"
 
 [metadata.event]
-room_name = "Saal 5"
+room_name = "Kleiner Saal"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.5.3/16"]

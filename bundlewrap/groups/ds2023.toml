@@ -1,0 +1,6 @@
+subgroups = ["saal5", "saal6"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Datenspuren 2023"
+slug = "ds2023"
