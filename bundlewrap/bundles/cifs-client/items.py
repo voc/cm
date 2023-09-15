@@ -6,8 +6,7 @@ directories = {
 }
 
 for mount, data in node.metadata.get('cifs-client/mounts', {}).items():
-    unitname = data['mountpoint'][1:].replace('-', '\\x2d').replace('/', '-')
-
+    unitname = data['unitname']
     if data.get('create_dir', False):
         directories[data['mountpoint']] = {}
 

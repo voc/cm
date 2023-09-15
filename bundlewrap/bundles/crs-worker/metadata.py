@@ -25,6 +25,11 @@ defaults = {
     },
 }
 
+if node.has_bundle('zfs'):
+    defaults['crs-worker']['systemd_after'] = {
+        'zfs-mount.service',
+    }
+
 
 @metadata_reactor.provides(
     'crs-worker/secrets/meta',
@@ -37,6 +42,20 @@ def derive_secrets_from_encoding(metadata):
                     'token': metadata.get('crs-worker/secrets/encoding/token'),
                     'secret': metadata.get('crs-worker/secrets/encoding/secret'),
                 },
+            },
+        },
+    }
+
+
+@metadata_reactor.provides(
+    'crs-worker/systemd_after',
+)
+def mount_deps_from_cifs_client(metadata):
+    return {
+        'crs-worker': {
+            'systemd_after': {
+                f"{config['unitname']}.mount"
+                for config in metadata.get('cifs-client/mounts', {}).values()
             },
         },
     }

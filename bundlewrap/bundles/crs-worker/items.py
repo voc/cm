@@ -174,6 +174,7 @@ for worker, config in WORKER_SCRIPTS.items():
             'autostart': (worker in autostart_scripts),
             'script': config['script'],
             'secret': config['secret'],
+            'systemd_after': node.metadata.get('crs-worker/systemd_after', set()),
             'worker': worker,
         },
         'triggers': {

@@ -1,5 +1,7 @@
 [Unit]
 Description=CRS runner for ${script}
+Requires=${' '.join(sorted(systemd_after))}
+After=${' '.join(sorted(systemd_after))}
 
 [Service]
 User=voc

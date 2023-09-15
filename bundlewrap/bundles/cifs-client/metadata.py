@@ -13,6 +13,7 @@ defaults = {
 def fill_mount_options(metadata):
     ret = {}
     for mount, data in node.metadata.get('cifs-client/mounts', {}).items():
+        mountpoint = data.get('mountpoint', '/{}'.format(mount.replace('-', '/')))
         ret[mount] = {
             'mount_options': {
                 'dir_mode': data.get('mount_options', {}).get('dir_mode', '0755'),
@@ -21,7 +22,8 @@ def fill_mount_options(metadata):
                 'password': data.get('password', ''),
                 'uid': data.get('owner', 'voc'),
             },
-            'mountpoint': data.get('mountpoint', '/{}'.format(mount.replace('-', '/'))),
+            'mountpoint': mountpoint,
+            'unitname': mountpoint[1:].replace('-', '\\x2d').replace('/', '-')
         }
 
         if data.get('credentials', None):
