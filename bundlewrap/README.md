@@ -74,6 +74,9 @@ name = "ZYXcon"
 slug = "XYZ"
 ```
 
+The event slug *must* match the `Project.Slug` property in our ticket
+tracker.
+
 Please add the rooms used in your event to the `subgroups` list of the
 file.
 
