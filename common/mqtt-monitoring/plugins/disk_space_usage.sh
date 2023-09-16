@@ -6,6 +6,9 @@ IFS=$'\n'
 # system.
 if [[ -z "$(findmnt /video/fuse)" ]]
 then
+    free="$(df -h --output=avail /video | tail -n1 | sed 's/ //g')"
+    voc2alert "info" "disk" "Free space in /video: ${free}"
+
     for line in $(du -bSd2 /video | sort -nr)
     do
         diskspace="$(echo "$line" | awk '{print $1}')"
