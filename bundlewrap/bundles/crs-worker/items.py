@@ -19,10 +19,6 @@ WORKER_SCRIPTS = {
         'secret': 'meta',
         'script': 'script-E-postencoding-auphonic.pl',
     },
-    'postprocessing': {
-        'secret': 'meta',
-        'script': 'script-F-postprocessing-upload.pl',
-    },
     'autochecker': {
         'secret': 'autochecker',
         'script': 'script-X-checking-dummy.pl',
@@ -31,6 +27,17 @@ WORKER_SCRIPTS = {
         },
     }
 }
+
+if node.metadata.get('crs-worker/postprocessing_dummy_instead_of_upload', False):
+    WORKER_SCRIPTS['postprocessing'] = {
+        'secret': 'meta',
+        'script': 'script-F-postprocessing-dummy.pl',
+    }
+else:
+    WORKER_SCRIPTS['postprocessing'] = {
+        'secret': 'meta',
+        'script': 'script-F-postprocessing-upload.pl',
+    }
 
 number_of_workers = node.metadata.get('crs-worker/number_of_encoding_workers')
 if number_of_workers > 1:
