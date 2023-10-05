@@ -19,6 +19,9 @@ svc_systemd = {
         'after': {
             'pkg_apt:',
         },
+        'tags': {
+            'causes-downtime',
+        },
     },
     'systemd-resolved': {
         'running': False,
