@@ -201,6 +201,9 @@ for worker, config in WORKER_SCRIPTS.items():
         'before': {
             f'svc_systemd:crs-{worker}',
         },
+        'tags': {
+            'causes-downtime',
+        },
     }
 
     if worker in autostart_scripts:
@@ -218,6 +221,9 @@ for worker, config in WORKER_SCRIPTS.items():
             f'file:/etc/crs-scripts/{config["secret"]}',
             f'file:/usr/local/lib/systemd/system/crs-{worker}.service',
             'git_deploy:/opt/crs-scripts',
+        },
+        'tags': {
+            'causes-downtime',
         },
     }
 
