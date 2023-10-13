@@ -1,0 +1,9 @@
+subgroups = ["saal1"]
+
+[metadata]
+nameservers = ["141.20.1.3"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Vintage Computing Festival Berlin 2023"
+slug = "vcfb23"
