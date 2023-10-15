@@ -1,0 +1,11 @@
+# VM on kunsis laptop
+hostname = "10.73.96.7"
+groups = ["debian-bookworm"]
+
+[metadata.crs-worker.secrets.encoding]
+token = "!decrypt:encrypt$gAAAAABlK_NU3Ht2QfEyn5OSLfY_nUO4NeOI1VF6Xlv-0LvFBHz8X4gEWZVJXknW4-lujFXAqJdANwDP1EfpIBO1xl2jzWPFgm1WlywqtaPLmted1O7LD75vH0x9H34tMi1iTam4UEiW"
+secret = "!decrypt:encrypt$gAAAAABlK_Nk7Jbaf_4IKFeT4ij_H3S7qcAd6VsWq1KHa5nZKNwmhjSi6eJcMYxbgmuABqvVnSpBrnz4DSwVRABbh2EfxW17R7WH2OAHNiqCfVC8UmtgTtWwOCUJIpz8qC9Z5efSCIEU"
+
+[metadata.interfaces.eth0]
+ips = ["10.73.96.7/16"]
+gateway4 = "10.73.0.254"
