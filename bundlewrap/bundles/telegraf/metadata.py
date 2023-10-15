@@ -7,7 +7,7 @@ defaults = {
         'repos': {
             'influxdb': {
                 'items': {
-                    'deb https://repos.influxdata.com/{os} {os_release} stable',
+                    'deb https://repos.influxdata.com/{os} stable main',
                 },
             },
         },

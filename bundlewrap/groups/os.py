@@ -40,6 +40,7 @@ groups['debian'] = {
     'subgroups': {
         'debian-buster',
         'debian-bullseye',
+        'debian-bookworm',
         'debian-sid',
     },
     'bundles': {
@@ -94,6 +95,10 @@ groups['debian-buster'] = {
 
 groups['debian-bullseye'] = {
     'os_version': (11,)
+}
+
+groups['debian-bookworm'] = {
+    'os_version': (12,)
 }
 
 groups['debian-sid'] = {

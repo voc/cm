@@ -4,6 +4,7 @@ supported_os = {
     'debian': {
         10: 'buster',
         11: 'bullseye',
+        12: 'bookworm',
         99: 'unstable',
     },
     'raspbian': {
