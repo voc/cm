@@ -1,7 +1,7 @@
 final: prev: {
-  python39 = let packageOverrides = final: prev: import ./python final prev;
+  python39 = let packageOverrides = pfinal: pprev: import ./python final pfinal pprev;
   in prev.python39.override { inherit packageOverrides; };
-  python310 = let packageOverrides = final: prev: import ./python final prev;
+  python310 = let packageOverrides = pfinal: pprev: import ./python final pfinal pprev;
   in prev.python310.override { inherit packageOverrides; };
 
   yate = prev.yate.overrideAttrs (old: {

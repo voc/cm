@@ -1,5 +1,5 @@
 { lib
-, buildPythonApplication
+, buildPythonPackage
 , makePythonPath
 , fetchFromGitHub
 , python310
@@ -10,7 +10,7 @@
 , django-verify-email
 }:
 
-buildPythonApplication rec {
+buildPythonPackage rec {
   pname = "nerd";
   version = "0.0.1";
 

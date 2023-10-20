@@ -5,6 +5,7 @@
     enable = true;
     listenAddress = "[::1]";
     secretKeyFile = "/var/lib/netbox/secret";
+    package = pkgs.netbox.override { python3 = pkgs.python310; };
 
     extraConfig = ''
       # REMOTE_AUTH_BACKEND = 'social_core.backends.open_id_connect.OpenIdConnectAuth'

@@ -30,10 +30,12 @@
 
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    kbdInteractiveAuthentication = false;
-    permitRootLogin = lib.mkDefault "no";
-    gatewayPorts = lib.mkDefault "yes";
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = lib.mkDefault "no";
+      GatewayPorts = lib.mkDefault "yes";
+    };
     extraConfig = "StreamLocalBindUnlink yes";
   };
   programs.mosh.enable = true;
