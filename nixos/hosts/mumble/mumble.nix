@@ -20,4 +20,5 @@
 
   # set ACLs so that the murmur user can read the certificates
   security.acme.certs."mumble.c3voc.de".postRun = "${pkgs.acl}/bin/setfacl -Rm u:murmur:rX /var/lib/acme/mumble.c3voc.de";
+  security.acme.certs."mumble.c3voc.de".reloadServices = [ "murmur.service" ];
 }
