@@ -31,6 +31,12 @@ in {
     # Only allow implict TLS
     enableImap = false;
     enablePop3 = false;
+
+    # whitelist SPF checks from mng (for now)
+    policydSPFExtraConfig = ''
+      HELO_Whitelist = mng.c3voc.de
+      skip_addresses = 127.0.0.0/8,::ffff:127.0.0.0/104,::1,185.106.84.49,2001:67c:20a0:e::179
+    '';
   };
 
   services.postfix = {
@@ -47,21 +53,18 @@ in {
     siteOwner = OWNER_EMAIL;
     webUser = config.services.uwsgi.user;
     hyperkitty.enable = true;
-    webHosts = [ MAILMAN_HOST "beta.${MAILMAN_HOST}" ];
+    webHosts = [ MAILMAN_HOST ];
+    webSettings.POSTORIUS_TEMPLATE_BASE_URL = "https://${MAILMAN_HOST}/";
   };
 
   services.nginx = {
     virtualHosts.${MAILMAN_HOST} = {
-      enableACME = false;
-      forceSSL = false;
+      enableACME = true;
+      forceSSL = true;
       locations."~ ^/(?:pipermail|private)/([a-z-]+)/".return = "303 https://${MAILMAN_HOST}/hyperkitty/list/$1.${MAILMAN_HOST}/";
       locations."~ ^/(?:listadmin)/([a-z-]+)".return = "303 https://${MAILMAN_HOST}/postorius/lists/$1.${MAILMAN_HOST}/settings/";
       locations."~ ^/(?:listinfo|options)/([a-z-]+)".return = "303 https://${MAILMAN_HOST}/postorius/lists/$1.${MAILMAN_HOST}/";
       locations."/create".return = "301 https://${MAILMAN_HOST}/postorius/lists/new";
-    };
-    virtualHosts."beta.lists.c3voc.de" = {
-      enableACME = true;
-      forceSSL = true;
     };
   };
 
