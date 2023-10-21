@@ -64,4 +64,8 @@
       proxyPass = "http://localhost:${toString config.services.jira.listenPort}";
     };
   };
+
+  services.postfix.enable = true;
+  services.postfix.hostname = config.networking.fqdn;
+  services.postfix.origin = config.networking.fqdn;
 }
