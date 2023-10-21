@@ -15,13 +15,18 @@
     url = "github:nix-community/home-manager/release-23.05";
     inputs.nixpkgs.follows = "/nixpkgs";
   };
+  inputs.nixos-mailserver = {
+    url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+    inputs.nixpkgs.follows = "/nixpkgs";
+    inputs.utils.follows = "/flake-utils";
+  };
 
   inputs.flake-compat = {
     url = "github:edolstra/flake-compat";
     flake = false;
   };
 
-  outputs = { self, nixpkgs, deploy-rs, flake-utils, sops-nix, home-manager, flake-compat }@inputs: let
+  outputs = { self, nixpkgs, deploy-rs, flake-utils, sops-nix, home-manager, flake-compat, ... }@inputs: let
     hostsDir = "${../nixos}/hosts";
     hostNames = with nixpkgs.lib; attrNames
       (filterAttrs (name: type: type == "directory") (builtins.readDir hostsDir));

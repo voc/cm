@@ -5,6 +5,7 @@
     [ # Include the results of the hardware scan.
       ./hardware.nix
       ../../profiles/server
+      ./mail.nix
     ];
 
   networking.hostName = "mail";
