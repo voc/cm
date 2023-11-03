@@ -1,5 +1,8 @@
 subgroups = ["saal2", "saal3", "saal4"]
 
+[metadata]
+nameservers = ["10.73.0.254"]
+
 [metadata.event]
 timezone = "Europe/Berlin"
 name = "GodotCon 2023"
