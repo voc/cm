@@ -13,7 +13,6 @@ defaults = {
         'password': keepass.password(['ansible', 'mqtt']),
         'plugins': {
             'disk_space',
-            'fans_and_temps',
             'systemd_failed_units',
             'kernel_log',
         },
@@ -36,8 +35,9 @@ defaults = {
 }
 
 if 'minion' not in node.name:
-    defaults['mqtt-monitoring']['plugins'].add('load')
+    defaults['mqtt-monitoring']['plugins'].add('fans_and_temps',
     defaults['mqtt-monitoring']['plugins'].add('kernel_throttling')
+    defaults['mqtt-monitoring']['plugins'].add('load')
 
 @metadata_reactor.provides(
     'systemd-timers/timers/check_system_and_send_mqtt_message/environment/MY_HOSTNAME',
