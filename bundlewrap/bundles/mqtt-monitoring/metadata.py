@@ -35,7 +35,7 @@ defaults = {
 }
 
 if 'minion' not in node.name:
-    defaults['mqtt-monitoring']['plugins'].add('fans_and_temps'),
+    defaults['mqtt-monitoring']['plugins'].add('fans_and_temps')
     defaults['mqtt-monitoring']['plugins'].add('kernel_throttling')
     defaults['mqtt-monitoring']['plugins'].add('load')
 
