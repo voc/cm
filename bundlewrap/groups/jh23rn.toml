@@ -3,4 +3,4 @@ subgroups = ["saal1"]
 [metadata.event]
 timezone = "Europe/Berlin"
 name = "Jugend Hack Rhein-Neckar 2023"
-slug = "jh23-rn"
+slug = "jh23rn"
