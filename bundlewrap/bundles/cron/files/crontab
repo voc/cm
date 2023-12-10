@@ -1,0 +1,11 @@
+# CAUTION! This file is managed with bundlewrap.
+# Any manual edits will be lost!
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+#MAILTO=${repo.libs.defaults.admin_email}
+
+${min} *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+${min} 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+${min} 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+${min} 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )

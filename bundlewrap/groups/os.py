@@ -5,6 +5,7 @@ groups['linux'] = {
         #'raspbian',
     },
     'bundles': {
+        'cron',
         'grub',
         'lldp',
         'locale',

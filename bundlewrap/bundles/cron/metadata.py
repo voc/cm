@@ -1,0 +1,7 @@
+defaults = {
+    'apt': {
+        'packages': {
+            'cron': {},
+        },
+    },
+}
