@@ -3,6 +3,7 @@ groups['encoders'] = {
         r'^encoder.+$',
     },
     'bundles': {
+        'mdadm',
         'rsync',
         'samba',
         'voctocore',
@@ -10,11 +11,6 @@ groups['encoders'] = {
         'voctomix2',
     },
     'metadata': {
-        'mqtt-monitoring': {
-            'plugins': {
-                'raid_mdstat',
-            },
-        },
         'systemd': {
             'ignore_power_switch': True,
         },

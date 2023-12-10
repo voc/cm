@@ -1,5 +1,6 @@
 bundles = [
     "encoder-common",
+    "mdadm",
     "nginx",
     "samba",
     "zfs",
