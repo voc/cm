@@ -1,4 +1,4 @@
-groups = ["debian-bullseye"]
+groups = ["debian-bullseye", "servercase"]
 bundles = ["postgresql"]
 
 [metadata.interfaces.ens18]
