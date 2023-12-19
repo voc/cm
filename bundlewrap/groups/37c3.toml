@@ -1,0 +1,6 @@
+subgroups = ["saal1", "saal2", "saal3", "saal4", "saal5", "servercase"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "37C3: Unlocked"
+slug = "37c3"

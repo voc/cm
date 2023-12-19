@@ -1,3 +1,4 @@
+hostname = "10.73.200.98"
 groups = ["debian-bullseye", "servercase"]
 bundles = ["loudness-rendering", "mqtt-monitoring"]
 
@@ -11,4 +12,3 @@ s2 = "https://cdn.c3voc.de/hls/s2/native_hd.m3u8"
 s3 = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
 s4 = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
 s5 = "https://cdn.c3voc.de/hls/s5/native_hd.m3u8"
-s6 = "https://cdn.c3voc.de/hls/s6/native_hd.m3u8"
