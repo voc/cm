@@ -21,11 +21,11 @@ devicenumber = 1
 mode = "1080i50"
 
 [metadata.voctocore.sources.cam2]
-devicenumber = 2
+devicenumber = 0
 mode = "1080i50"
 
 [metadata.voctocore.sources.totale]
-devicenumber = 3
+devicenumber = 4
 mode = "1080p25"
 
 [metadata.voctocore.sources.slides]
@@ -36,6 +36,10 @@ mode = "1080p25"
 streams = "0+1"
 input = "cam1"
 
-[metadata.voctocore.audio.translated]
-streams = "2+3"
+[metadata.voctocore.audio.translated-1]
+streams = "2"
+input = "cam1"
+
+[metadata.voctocore.audio.translated-2]
+streams = "3"
 input = "cam1"
