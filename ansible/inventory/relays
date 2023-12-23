@@ -1,0 +1,23 @@
+# managed by register2ansible.pl
+[relays:children]
+master_relays
+edge_relays
+
+[master_relays]
+live.ber.c3voc.de              nginx=yes icecast=yes
+live.nurluefter.de             nginx=yes icecast=yes
+
+[edge_relays]
+live.bn.c3voc.de               nginx=yes icecast=no
+live.dort.c3voc.de             nginx=yes icecast=yes icecast_master_ip=185.106.84.40
+live.dus.c3voc.de              nginx=yes icecast=no
+live.fem.c3voc.de              nginx=yes icecast=yes icecast_master_ip=185.106.84.40
+live.self.c3voc.de             nginx=yes icecast=yes icecast_master_ip=185.106.84.40
+live2.alb.c3voc.de             nginx=yes icecast=no
+relive.c3voc.de                nginx=yes icecast=no
+live.ams.c3voc.de              nginx=yes icecast=no
+live.emf.c3voc.de              nginx=yes icecast=no
+
+ber1.wob.c3voc.de              nginx=yes icecast=no
+fra1.wob.c3voc.de              nginx=yes icecast=no
+wob1.wob.c3voc.de              nginx=yes icecast=no
