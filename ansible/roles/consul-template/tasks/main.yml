@@ -1,0 +1,21 @@
+- name: "Check if consul-template is installed and version is {{ consul_template.version }}"
+  shell: "/usr/local/bin/consul-template -v | head -n1"
+  ignore_errors: true
+  register: consul_template_installed
+  changed_when: 'consul_template.version not in consul_template_installed.stdout'
+
+- name: download consul-template
+  get_url:
+    dest: /tmp/consul-template.zip
+    url: "https://releases.hashicorp.com/consul-template/{{ consul_template.version }}/consul-template_{{ consul_template.version }}_linux_amd64.zip"
+    checksum: "{{ consul_template.checksum }}"
+  when: consul_template_installed.failed or consul_template_installed.changed
+
+- name: install consul-template
+  unarchive:
+    remote_src: yes
+    src: /tmp/consul-template.zip
+    dest: /usr/local/bin/
+    mode: 0755
+  register: consul_template
+  when: not ansible_check_mode and (consul_template_installed.failed or consul_template_installed.changed)
