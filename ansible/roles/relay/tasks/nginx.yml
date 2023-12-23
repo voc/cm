@@ -28,30 +28,9 @@
       - "cache/hls_relive"
       - "cache/live"
 
-  # Manage vhost
-  - name: create relay vhost
-    template: dest="/etc/nginx/sites-available/{{ item }}"
-              src="nginx/{{ item }}.j2"
-              mode=0640 owner=root group=root
-    with_items:
-      - relay.conf
-    register: relay_vhost
-
-  - name: enable relay vhost
-    file: src=/etc/nginx/sites-available/relay.conf
-          dest=/etc/nginx/sites-enabled/relay.conf
-          state=link
-    register: relay_vhost_link
-
-  - name: reload nginx
-    service:
-      name: nginx
-      state: reloaded
-    when: relay_vhost.changed or relay_vhost_link.changed
-
   - name: "Register consul service"
     template:
       src: nginx/relay.hcl
       dest: /etc/consul.d/nginx.hcl
     notify: reload consul
-    tags: consul
+    tags: [consul, consul-template]

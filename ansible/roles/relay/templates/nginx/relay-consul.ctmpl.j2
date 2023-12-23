@@ -1,3 +1,5 @@
+## Templated at runtime by consul-template
+
 # HLS slave caching directories
 proxy_temp_path /srv/nginx/cache/tmp;
 
@@ -22,27 +24,22 @@ proxy_cache_path /srv/nginx/cache/mediastatic
 
 # Upstreams
 upstream stream {
-{% for server in nginx_stream_masters %}
-  server {{ server }};
-{% endfor %}
-{% if nginx_stream_masters_backup is defined %}
-{% for server in nginx_stream_masters_backup %}
-  server {{ server }} backup;
-{% endfor %}
-{% endif %}
+  # Templated by consul-template
+[[- range service "stream_master.http-relay" ]]
+  server [[ .Address ]]:[[ .Port ]];[[ end ]]
+
+  # backup server to prevent reload fail
+  server localhost:123 down;
   keepalive 32;
 }
 
 upstream relive {
-{% for server in nginx_hls_relive_masters %}
-  server {{ server }};
-{% endfor %}
-{% if nginx_hls_relive_masters_backup is defined %}
-{% for server in nginx_hls_relive_masters_backup %}
-  server {{ server }} backup;
-{% endfor %}
-{% endif %}
+  # Templated by consul-template
+[[- range service "relive_master.http-relay" ]]
+  server [[ .Address ]]:[[ .Port ]];[[ end ]]
 
+  # backup server to prevent reload fail
+  server localhost:123 down;
   keepalive 32;
 }
 
@@ -96,6 +93,13 @@ server {
   # ACME http challenge
   location ^~ /.well-known/acme-challenge {
     alias /var/www/dehydrated;
+  }
+
+  # health endpoint
+  location = /health {
+    access_log off;
+    add_header 'Content-Type' 'application/json';
+    return 200 '{"status": "up"}';
   }
 
   # rewrite old m3u8 playlist urls

@@ -1,33 +1,32 @@
 ---
-  - include: ../../../register/bin_path.yml
+  - import_tasks: ../../../register/bin_path.yml
 
-  - include: upload.yml
+  - import_tasks: upload.yml
     tags: [nginx, upload, stream_master]
     when: stream_master|bool
 
-  - include: nginx.yml
+  - import_tasks: nginx.yml
     tags: [nginx, nginx-vhost]
 
-  - include: iptables.yml
+  - import_tasks: consul_template.yml
+    tags: [consul-template]
+
+  - import_tasks: iptables.yml
     tags: [firewall, iptables, nftables]
 
-#  - include: sysctl.yml
+#  - import_tasks: sysctl.yml
 #    tags: sysctl
 
-  - include: collectd.yml
+  - import_tasks: collectd.yml
     tags: [collectd, monitoring]
 
-  - include: relive.yml
+  - import_tasks: relive.yml
     when: relive_master|bool
     tags: relive
 
-  - include: fanout.yml
-    when: stream_master|bool
-    tags: fanout
-
-  - include: upload-server.yml
+  - import_tasks: upload-server.yml
     when: stream_master|bool
     tags: upload-server
 
-  - include: register_relay.yml
+  - import_tasks: register_relay.yml
     tags: register_relay

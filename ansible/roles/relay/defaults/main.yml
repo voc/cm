@@ -15,8 +15,6 @@ nginx_media_static_cache_max_size: '20g'
 
 # backends
 nginx_media_static_masters: []
-nginx_hls_relive_masters: []
-nginx_stream_masters: []
 
 # fanout to youtube
 youtube: no

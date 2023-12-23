@@ -1,4 +1,3 @@
 # override register2ansible config (for when it's not congress, u know)
 icecast_master_ip: 185.106.84.40
-nginx_stream_masters: ['185.106.84.40']
 monitoring_role: edge-relay
