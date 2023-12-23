@@ -1,19 +1,22 @@
 ---
-  - include: ../../../register/bin_path.yml
-  - include: undeploy.yml
+  - import_tasks: ../../../register/bin_path.yml
+  - import_tasks: undeploy.yml
     tags: undeploy
 
-  - include: nginx.yml
+  - import_tasks: nginx.yml
     tags: nginx
 
-  - include: streaming_website.yml
+  - import_tasks: streaming_website.yml
     tags: streaming_website
 
-  - include: haproxy.yml
+  - import_tasks: haproxy.yml
     tags: haproxy
+  
+  - import_tasks: consul_template.yml
+    tags: consul-template
 
-  - include: sysctl.yml
+  - import_tasks: sysctl.yml
     tags: sysctl
 
-  - include: monitoring.yml
+  - import_tasks: monitoring.yml
     tags: monitoring

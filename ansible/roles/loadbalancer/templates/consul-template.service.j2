@@ -1,0 +1,19 @@
+[Unit]
+Description=Template config for haproxy
+After=network.target consul.service
+Before=haproxy.service
+
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/consul-template \
+  -default-left-delimiter '[[' -default-right-delimiter ']]' \
+  -template "/etc/consul-template.d/haproxy.ctmpl:/etc/haproxy/haproxy.cfg:/bin/bash -c '/bin/systemctl reload haproxy.service || true'"
+Restart=on-failure
+ExecReload=/usr/bin/env kill -HUP $MAINPID
+KillSignal=SIGINT
+
+[Install]
+WantedBy=haproxy.service
+
+

@@ -8,3 +8,5 @@ dependencies:
     tags: nginx
     vars:
       php: yes
+  - role: consul-template
+    tags: consul-template

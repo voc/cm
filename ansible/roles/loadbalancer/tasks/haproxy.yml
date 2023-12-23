@@ -47,18 +47,9 @@
     register: haproxy_scripts
     tags: haproxy_deploy
 
-  - name: create haproxy config
-    template: src=haproxy/haproxy.cfg.j2
-              dest=/etc/haproxy/haproxy.cfg
-              owner=root group=root mode=0640
-              validate='haproxy -f %s -c'
-    register: haproxy_config
-    tags: haproxy_deploy
-
   - name: reload and enable haproxy
     service:
       name: haproxy
-      state: reloaded
       enabled: yes
-    when: haproxy_config.changed or haproxy_scripts.changed
+    when: haproxy_scripts.changed
     tags: haproxy_deploy

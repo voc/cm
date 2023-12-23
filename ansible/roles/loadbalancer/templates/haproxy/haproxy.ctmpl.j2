@@ -160,6 +160,16 @@ listen stats_process_{{ nr }}
 # BACKENDs #
 # ######## #
 
+# Streaming Website
+backend streaming_website_https
+    balance source
+    option forwardfor
+    http-request set-header X-Custom-Header %[url]
+    http-request set-header X-Real-IP %[src]
+    server localhost 127.0.0.1:8080 maxconn 500000
+
+
+## Templated by consul-template ##
 {% for protocol in ["http", "https"] %}
 
 # {{ protocol }}
@@ -167,61 +177,56 @@ listen stats_process_{{ nr }}
 backend nginx_{{ protocol }}
     balance source
     option forwardfor
-{% for server, weight in lb_dash_relays.items() %}
-{% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }} check port 80
-{% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }} check port 443
-{% endif %}
-{% endfor %}
+
+[[- range service "edge.{{ protocol }}-relay" ]]
+    [[- $name := .Node | replaceAll "-" "." ]]
+    [[- $key := printf "services/haproxy/backends/%s/weight" $name ]]
+    [[- $weight := keyOrDefault $key "100" ]]
+    server [[ $name ]] [[ $name ]]:[[ .Port ]] redir {{ protocol }}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
 
 backend relive_{{ protocol }}
     balance source
     option forwardfor
-{% for server, weight in lb_relive_relays.items() %}
-{% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }} check port 80
-{% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }} check port 443
-{% endif %}
-{% endfor %}
 
 backend icecast_{{ protocol }}
     balance source
     option forwardfor
-{% for server, weight in lb_icecast_relays.items() %}
-{% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }} check port 80
-{% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }} check port 443
-{% endif %}
-{% endfor %}
+[[- range service "edge.{{ protocol }}-relay" ]]
+    [[- if in .Tags "icecast" | not ]]
+        [[- continue ]]
+    [[- end ]]
+    [[- $name := .Node | replaceAll "-" "." ]]
+    [[- $key := printf "services/haproxy/backends/%s/weight" $name ]]
+    [[- $weight := keyOrDefault $key "100" ]]
+    server [[ $name ]] [[ $name ]]:[[ .Port ]] redir {{ protocol }}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
 
 
 # 3rd party
 backend 3rdparty_{{ protocol }}
     balance source
     option forwardfor
-{% for server, weight in lb_3rdparty_relays.items() %}
-{% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }} check port 80
-{% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }} check port 443
-{% endif %}
-{% endfor %}
+[[- range service "edge.{{ protocol }}-relay" ]]
+    [[- if in .Tags "3rdparty" | not ]]
+        [[- continue ]]
+    [[- end ]]
+    [[- $name := .Node | replaceAll "-" "." ]]
+    [[- $key := printf "services/haproxy/backends/%s/weight" $name ]]
+    [[- $weight := keyOrDefault $key "100" ]]
+    server [[ $name ]] [[ $name ]]:[[ .Port ]] redir {{ protocol }}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
 
 
 # LOCAL
 backend local_{{ protocol }}
     balance source
     option forwardfor
-{% for server, weight in lb_local_relays.items() %}
-{% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }} check port 80
-{% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }} check port 443
-{% endif %}
-{% endfor %}
+[[- range service "edge.{{ protocol }}-relay" ]]
+    [[- if in .Tags "local" | not ]]
+        [[- continue ]]
+    [[- end ]]
+    [[- $name := .Node | replaceAll "-" "." ]]
+    [[- $key := printf "services/haproxy/backends/%s/weight" $name ]]
+    [[- $weight := keyOrDefault $key "100" ]]
+    server [[ $name ]] [[ $name ]]:[[ .Port ]] redir {{ protocol }}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
 
 
 {% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
@@ -229,21 +234,14 @@ backend local_{{ protocol }}
 backend dtag_{{ protocol }}
     balance source
     option forwardfor
-{% for server, weight in lb_dtag_relays.items() %}
-{% if protocol == "http" %}
-    server {{ server }} {{ server }}:80 redir http://{{ server }}:80  weight {{ weight }} check port 80
-{% else %}
-    server {{ server }} {{ server }}:443 redir https://{{ server }}:443  weight {{ weight }} check port 443
+[[- range service "edge.{{ protocol }}-relay" ]]
+    [[- if in .Tags "dtag" | not ]]
+        [[- continue ]]
+    [[- end ]]
+    [[- $name := .Node | replaceAll "-" "." ]]
+    [[- $key := printf "services/haproxy/backends/%s/weight" $name ]]
+    [[- $weight := keyOrDefault $key "100" ]]
+    server [[ $name ]] [[ $name ]]:[[ .Port ]] redir {{ protocol }}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
 {% endif %}
-{% endfor %}
-{% endif %}
-
 
 {% endfor %}
-
-backend streaming_website_https
-    balance source
-    option forwardfor
-    http-request set-header X-Custom-Header %[url]
-    http-request set-header X-Real-IP %[src]
-    server localhost 127.0.0.1:8080 maxconn 500000

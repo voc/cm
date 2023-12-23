@@ -5,7 +5,9 @@ services {
   tags = [
     {%if stream_master|bool %}"stream_master",{%endif%}
     {%if relive_master|bool %}"relive_master",{%endif%}
+    {%if stream_edge|bool %}"edge",{%endif%}
     {%if icecast|bool %}"icecast",{%endif%}
+    
   ]
   check = {
     id = "nginx-http"
@@ -23,6 +25,7 @@ services {
   tags = [
     {%if stream_master|bool %}"stream_master",{%endif%}
     {%if relive_master|bool %}"relive_master",{%endif%}
+    {%if stream_edge|bool %}"edge",{%endif%}
     {%if icecast|bool %}"icecast",{%endif%}
   ]
   check = {
@@ -42,6 +45,7 @@ services {
   address = "{{ ansible_default_ipv4.address }}"
   tags = [
     {%if stream_master|bool %}"master",{%endif%}
+    {%if stream_edge|bool %}"edge",{%endif%}
   ]
   check = {
     id = "icecast"
