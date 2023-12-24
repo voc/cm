@@ -1,10 +1,15 @@
 from bundlewrap.exceptions import BundleError
 
+if node.has_bundle('cifs-client'):
+    user_group = None
+else:
+    user_group = 'voc'
+
 event = node.metadata.get('event/slug')
 
 directories[f'/video'] = {
-    'owner': 'voc',
-    'group': 'voc',
+    'owner': user_group,
+    'group': user_group,
 }
 
 for path in (
@@ -15,8 +20,8 @@ for path in (
     'tmp',
 ):
     directories[f'/video/{path}'] = {
-        'owner': 'voc',
-        'group': 'voc',
+        'owner': user_group,
+        'group': user_group,
     }
 
     directories[f'/video/{path}/{event}'] = {
@@ -24,8 +29,8 @@ for path in (
             'bundle:voctocore',
             'bundle:crs-worker',
         },
-        'owner': 'voc',
-        'group': 'voc',
+        'owner': user_group,
+        'group': user_group,
     }
 
 directories[f'/video/tmp/{event}/repair'] = {
@@ -33,6 +38,6 @@ directories[f'/video/tmp/{event}/repair'] = {
         'bundle:voctocore',
         'bundle:crs-worker',
     },
-    'owner': 'voc',
-    'group': 'voc',
+    'owner': user_group,
+    'group': user_group,
 }
