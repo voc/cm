@@ -1,7 +1,7 @@
 groups = ["debian-bullseye", "servercase"]
 bundles = ["loudness-rendering", "mqtt-monitoring"]
 
-[metadata.interfaces.eth0]
+[metadata.interfaces.ens18]
 ips = ["10.73.200.98/16"]
 gateway4 = "10.73.0.254"
 
