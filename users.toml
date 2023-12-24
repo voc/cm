@@ -474,3 +474,11 @@ uid = 1160
 ssh_pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrcJRF71+XM5YZj+SaSiGcdVZ0IDxGBXIWssDtHiTtr moira_2022_06",
 ]
+
+[krobin]
+enable_rz = false
+enable_event = true
+uid = 1161
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILCty3i/MG4ehTN5JzY3UTtr/9q5L2eQinAGh1FClWIS trhetzner@oat"
+]
