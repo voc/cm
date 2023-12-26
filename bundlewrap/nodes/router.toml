@@ -16,7 +16,7 @@ ips = [
 ]
 #gateway4 = "178.250.162.41" # seibert wiesbaden
 gateway4 = "94.45.241.1" # c3noc event
-gateway6 = "2001:67c:20a1:2241::1" # c3noc event
+#gateway6 = "2001:67c:20a1:2241::1" # c3noc event
 
 [metadata.interfaces.ens19]
 ips = [
