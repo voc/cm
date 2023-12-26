@@ -25,8 +25,9 @@ proxy_cache_path /srv/nginx/cache/mediastatic
 # Upstreams
 upstream stream {
   # Templated by consul-template
-[[- range service "stream_master.http-relay" ]]
-  server [[ .Address ]]:[[ .Port ]];[[ end ]]
+[[- range $index,$service := service "stream_master.http-relay" ]]
+  server [[ $service.Address ]]:[[ $service.Port ]]
+  [[- if gt $index 0 ]] backup[[ end ]]; # [[ $service.Node ]][[ end ]]
 
   # backup server to prevent reload fail
   server localhost:123 down;
@@ -36,7 +37,7 @@ upstream stream {
 upstream relive {
   # Templated by consul-template
 [[- range service "relive_master.http-relay" ]]
-  server [[ .Address ]]:[[ .Port ]];[[ end ]]
+  server [[ .Address ]]:[[ .Port ]]; # [[ .Node ]][[ end ]]
 
   # backup server to prevent reload fail
   server localhost:123 down;
