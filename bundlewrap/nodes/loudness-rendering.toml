@@ -7,8 +7,8 @@ ips = ["10.73.200.98/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.loudness-rendering]
-s1 = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
-s2 = "https://cdn.c3voc.de/hls/s2/native_hd.m3u8"
-s3 = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
-s4 = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
-s5 = "https://cdn.c3voc.de/hls/s5/native_hd.m3u8"
+saal_1 = "https://cdn.c3voc.de/hls/s1/native_hd.m3u8"
+saal_g = "https://cdn.c3voc.de/hls/s2/native_hd.m3u8"
+saal_z = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
+saal_e = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
+saal_f = "https://cdn.c3voc.de/hls/s5/native_hd.m3u8"
