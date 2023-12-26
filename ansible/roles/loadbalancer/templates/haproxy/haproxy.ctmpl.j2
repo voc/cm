@@ -77,8 +77,9 @@ frontend icecast_and_nginx_hls_http
 {% if haproxy_3rdparty_regex is defined %}
     acl is_3rdparty          path_reg   -i {{ haproxy_3rdparty_regex }}
 {% endif %}
+
     # ip address matching
-    acl is_local             src        0.0.0.0/32 # disabled :D
+    acl is_local             src        94.45.224.0/19 151.217.0.0/17 2001:67c:20a1::/48 # 37c3
 
 {% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
     # dtag address matching
@@ -108,9 +109,15 @@ frontend icecast_and_nginx_hls_http
     use_backend 3rdparty_{{ proto }}    if is_3rdparty icecast {{ ssl }}
 {% endif %}
 
+[[- $numLocalHttp := service "local.http-relay" | len ]]
+[[- if gt $numLocalHttp 0 ]]
+[[- $numLocalHttps := service "local.https-relay" | len ]]
+[[- if gt $numLocalHttps 0 ]]
     # local relay
     use_backend local_{{ proto }}       if is_local stream_path stream_file {{ ssl }}
     use_backend local_{{ proto }}       if is_local icecast {{ ssl }}
+[[- end ]]
+[[- end ]]
 
 {% if haproxy_dtag_extrawurst is defined and haproxy_dtag_extrawurst|bool %}
     # dtag relay
@@ -178,7 +185,8 @@ backend nginx_{{ protocol }}
     balance source
     option forwardfor
 
-[[- range service "edge.{{ protocol }}-relay" ]]
+[[- $services{{ protocol }} := service "edge.{{ protocol }}-relay" ]]
+[[- range $services{{ protocol }} ]]
     [[- $name := .Node | replaceAll "-" "." ]]
     [[- $key := printf "services/haproxy/backends/%s/weight" $name ]]
     [[- $weight := keyOrDefault $key "100" ]]
@@ -187,12 +195,8 @@ backend nginx_{{ protocol }}
 backend relive_{{ protocol }}
     balance source
     option forwardfor
-
-backend icecast_{{ protocol }}
-    balance source
-    option forwardfor
-[[- range service "edge.{{ protocol }}-relay" ]]
-    [[- if in .Tags "icecast" | not ]]
+[[- range $services{{ protocol }} ]]
+    [[- if in .Tags "relive" | not ]]
         [[- continue ]]
     [[- end ]]
     [[- $name := .Node | replaceAll "-" "." ]]
@@ -201,12 +205,24 @@ backend icecast_{{ protocol }}
     server [[ $name ]] [[ $name ]]:[[ .Port ]] redir {{ protocol }}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
 
 
+backend icecast_{{ protocol }}
+    balance source
+    option forwardfor
+[[- range $services{{ protocol }} ]]
+    [[- if in .Tags "icecast" | not ]]
+        [[- continue ]]
+    [[- end ]]
+    [[- $name := .Node | replaceAll "-" "." ]]
+    [[- $key := printf "services/haproxy/backends/%s/weight" $name ]]
+    [[- $weight := keyOrDefault $key "100" ]]
+    server [[ $name ]] [[ $name ]]:[[ .Port ]] redir {{ protocol }}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
+
 # 3rd party
 backend 3rdparty_{{ protocol }}
     balance source
     option forwardfor
-[[- range service "edge.{{ protocol }}-relay" ]]
-    [[- if in .Tags "3rdparty" | not ]]
+[[- range $services{{ protocol }} ]]
+    [[- if in .Tags "thirdparty" | not ]]
         [[- continue ]]
     [[- end ]]
     [[- $name := .Node | replaceAll "-" "." ]]
@@ -219,7 +235,7 @@ backend 3rdparty_{{ protocol }}
 backend local_{{ protocol }}
     balance source
     option forwardfor
-[[- range service "edge.{{ protocol }}-relay" ]]
+[[- range $services{{ protocol }} ]]
     [[- if in .Tags "local" | not ]]
         [[- continue ]]
     [[- end ]]
@@ -234,7 +250,7 @@ backend local_{{ protocol }}
 backend dtag_{{ protocol }}
     balance source
     option forwardfor
-[[- range service "edge.{{ protocol }}-relay" ]]
+[[- range $services{{ protocol }} ]]
     [[- if in .Tags "dtag" | not ]]
         [[- continue ]]
     [[- end ]]

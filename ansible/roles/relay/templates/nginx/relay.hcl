@@ -7,7 +7,11 @@ services {
     {%if relive_master|bool %}"relive_master",{%endif%}
     {%if stream_edge|bool %}"edge",{%endif%}
     {%if icecast|bool %}"icecast",{%endif%}
-    
+    {%if local_relay|bool %}"local",{%endif%}
+    {%if relive_relay|bool %}"relive",{%endif%}
+    {%if dtag_relay|bool %}"dtag",{%endif%}
+    {%if thirdparty_relay|bool %}"thirdparty",{%endif%}
+    {%if mediastatic_relay|bool %}"mediastatic",{%endif%}
   ]
   check = {
     id = "nginx-http"
@@ -27,6 +31,11 @@ services {
     {%if relive_master|bool %}"relive_master",{%endif%}
     {%if stream_edge|bool %}"edge",{%endif%}
     {%if icecast|bool %}"icecast",{%endif%}
+    {%if local_relay|bool %}"local",{%endif%}
+    {%if relive_relay|bool %}"relive",{%endif%}
+    {%if dtag_relay|bool %}"dtag",{%endif%}
+    {%if thirdparty_relay|bool %}"thirdparty",{%endif%}
+    {%if mediastatic_relay|bool %}"mediastatic",{%endif%}
   ]
   check = {
     id = "nginx-https"

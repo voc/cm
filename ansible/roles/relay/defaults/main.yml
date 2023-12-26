@@ -11,6 +11,13 @@ stream_edge: no
 # Generate relive snippets locally
 relive_master: no
 
+# special edge relay tags for service announcement
+local_relay: no
+relive_relay: no
+dtag_relay: no
+thirdparty_relay: no
+mediastatic_relay: no
+
 # default cache sizes
 nginx_hls_relive_cache_max_size: '30g'
 nginx_live_cache_max_size: '30g'
