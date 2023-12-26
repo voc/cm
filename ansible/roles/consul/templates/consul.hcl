@@ -7,7 +7,6 @@ server = true
 bootstrap_expect = 3
 telemetry {
   dogstatsd_addr = "localhost:8125"
-  disable_compat_1.9 = true
   disable_hostname = true
   prometheus_retention_time = "60s"
 }

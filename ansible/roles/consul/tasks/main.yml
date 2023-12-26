@@ -1,23 +1,80 @@
 ---
-- name: add hashicorp apt key
+- name: remove hashicorp apt key
   ansible.builtin.apt_key:
     id: 798AEC654E5C15428C8E42EEAA16FCBCA621E701
     url:  https://apt.releases.hashicorp.com/gpg
-    state: present
+    state: absent
 
-- name: add hashicorp apt repo
+- name: remove hashicorp apt repo
   apt_repository:
     repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
-    state: present
+    state: absent
   register: consul_repo
 
-- name: install consul
+- name: remove consul apt
   apt:
     name: consul
-    state: latest
-    update_cache: yes
-  when: consul_repo.changed
-  register: consul_pkg
+    state: absent
+
+- name: make sure unzip is installed
+  ansible.builtin.package:
+    name: unzip
+    state: present
+
+- name: create consul user
+  user:
+    name: consul
+    system: yes
+    create_home: no
+    shell: /bin/false
+
+- name: "Check if consul is installed and version is {{ consul_version }}"
+  shell: "consul version | head -n1"
+  ignore_errors: true
+  register: consul_installed
+  changed_when: 'consul_version not in consul_installed.stdout'
+
+- name: download consul binary
+  ansible.builtin.get_url:
+    url: "{{ consul_url }}"
+    checksum: "{{ consul_checksum }}"
+    dest: /tmp/consul_{{ consul_version }}.zip
+    mode: 0644
+  when: consul_installed.failed or consul_installed.changed
+
+- name: deploy consul binary
+  unarchive:
+    remote_src: yes
+    src: /tmp/consul_{{ consul_version }}.zip
+    dest: /usr/bin/
+  when: not ansible_check_mode and (consul_installed.failed or consul_installed.changed)
+  notify: restart consul
+  tags: internet
+
+- name: create consul config directory
+  ansible.builtin.file:
+    path: /etc/consul.d
+    state: directory
+    owner: consul
+    group: consul
+    mode: 0755
+
+- name: create consul data directory
+  ansible.builtin.file:
+    path: /opt/consul
+    state: directory
+    owner: consul
+    group: consul
+    mode: 0755
+
+- name: deploy consul service
+  ansible.builtin.template:
+    src: consul.service
+    dest: /etc/systemd/system/consul.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart consul
 
 - name: deploy consul config
   template:
@@ -27,6 +84,7 @@
     owner: consul
     validate: "/usr/bin/consul validate -config-format=hcl %s"
   register: consul_conf
+  tags: consul-config
 
 - name: deploy consul firewall config
   template:
@@ -65,5 +123,5 @@
   service:
     name: consul
     state: reloaded
-  when: consul_pkg.changed or consul_conf.changed
+  when: consul_installed.changed or consul_conf.changed
   tags: consul-config

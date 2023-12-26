@@ -4,3 +4,8 @@ consul_server: false
 
 # enable consul webui on http port
 consul_ui: false
+
+consul_arch: amd64
+consul_version: 1.17.1
+consul_checksum: "sha256:388889321d6aaf389ee87acc247ea9885e684a1581c8ebfbeab7348abd7c0214"
+consul_url: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_{{ consul_arch }}.zip"
