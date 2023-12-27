@@ -5,25 +5,11 @@
   ###########
   # Install packages
 
-  - name: add influxdata apt key
-    apt_key:
-      id: 05CE15085FC09D18E99EFB22684A14CF2582E0C5
-      url: https://repos.influxdata.com/influxdb.key
-      state: present
-    tags: apt
-
-  - name: add influxdata repository
-    apt_repository:
-      repo: "deb https://repos.influxdata.com/debian {{ ansible_distribution_release }} stable"
-      state: present
-    tags: apt
-
   - name: install packages needed to monitor host
     apt:
       name:
         - nagios-plugins-basic
         - collectd
-        - telegraf
       state: latest
     tags: apt
 

@@ -1,18 +1,39 @@
 ---
-  - name: template telegraf config
-    template:
-      src: telegraf/telegraf.conf
-      dest: /etc/telegraf/
-      group: telegraf
-      mode: 0640
-    register: telegraf_config
+- name: add influxdata apt key
+  apt_key:
+    id: 9D539D90D3328DC7D6C8D3B9D8FF8E1F7DF8B07E
+    url: https://repos.influxdata.com/influxdata-archive_compat.key
+    keyring: /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg
+    state: present
+  tags: [apt, repos]
 
-  - name: copy dns script
-    copy: src=dns-stats.py dest=/opt/dns-stats.py mode=0755
-    when: monitoring_role is defined and monitoring_role == "dns"
+- name: add influxdata repository
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main"
+    state: present
+  tags: [apt, repos]
 
-  - name: reload telegraf
-    service:
-      name: telegraf
-      state: reloaded
-    when: telegraf_config.changed
+- name: install packages needed to monitor host
+  apt:
+    name:
+      - telegraf
+    state: latest
+  tags: apt
+
+- name: template telegraf config
+  template:
+    src: telegraf/telegraf.conf
+    dest: /etc/telegraf/
+    group: telegraf
+    mode: 0640
+  register: telegraf_config
+
+- name: copy dns script
+  copy: src=dns-stats.py dest=/opt/dns-stats.py mode=0755
+  when: monitoring_role is defined and monitoring_role == "dns"
+
+- name: reload telegraf
+  service:
+    name: telegraf
+    state: reloaded
+  when: telegraf_config.changed
