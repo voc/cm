@@ -129,11 +129,12 @@ svc_systemd['voctomix2-recording-sink'] = {
 files['/opt/voctomix2/scripts/streaming-sink.sh'] = {
     'content_type': 'mako',
     'context': {
+        'dynaudnorm': node.metadata.get('voctocore/streaming_use_dynaudnorm'),
+        'endpoint': node.metadata.get('voctocore/streaming_endpoint'),
         'event': node.metadata.get('event'),
         'parallel_slide_streaming': node.metadata.get('voctocore/parallel_slide_streaming'),
         'slides_port': slides_port,
         'srt_publish': node.metadata.get('voctocore/srt_publish'),
-        'endpoint': node.metadata.get('voctocore/streaming_endpoint'),
         'vaapi_enabled': node.metadata.get('voctocore/vaapi'),
     },
     'mode': '0755',
