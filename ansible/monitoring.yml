@@ -1,5 +1,7 @@
 ---
-  - hosts: monitoring
-    roles:
-      - { role: common, tags: ['common'] }
-      - { role: monitoring-server, tags: ['monitoring'] }
+- name: Monitoring play
+  hosts: monitoring
+  roles:
+    - { role: common, tags: ["common"] }
+    - { role: monitoring-server, tags: ["monitoring"] }
+    - { role: victoriametrics.cluster.single, tags: ["victoriametrics"] }

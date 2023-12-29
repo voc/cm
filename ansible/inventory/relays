@@ -11,13 +11,13 @@ live.nurluefter.de             nginx=yes icecast=yes
 live.bn.c3voc.de               nginx=yes icecast=no
 live.dort.c3voc.de             nginx=yes icecast=yes dtag_relay=yes mediastatic_relay=yes
 live.dus.c3voc.de              nginx=yes icecast=no
-live.fem.c3voc.de              nginx=yes icecast=yes
-live.self.c3voc.de             nginx=yes icecast=yes mediastatic_relay=yes
+live.fem.c3voc.de              nginx=yes icecast=yes stats_relay=yes
+live.self.c3voc.de             nginx=yes icecast=yes stats_relay=yes mediastatic_relay=yes
 live2.alb.c3voc.de             nginx=yes icecast=no dtag_relay=yes
 relive.c3voc.de                nginx=yes icecast=no relive_relay=yes
 live.ams.c3voc.de              nginx=yes icecast=no
 live.event.c3voc.de            nginx=yes icecast=yes local_relay=yes
 
-ber1.wob.c3voc.de              nginx=yes icecast=yes
+ber1.wob.c3voc.de              nginx=yes icecast=yes stats_relay=yes
 fra1.wob.c3voc.de              nginx=yes icecast=yes
 wob1.wob.c3voc.de              nginx=yes icecast=yes
