@@ -1,0 +1,44 @@
+hostname = "192.168.0.175"
+groups = ["debian-bookworm"]
+
+[metadata.crs-worker.secrets]
+encoding.secret = "foo"
+encoding.token = "bar"
+
+[metadata.event]
+room_name = "kunsi test"
+
+[metadata.interfaces.eth0]
+ips = ["10.73.96.3/16"]
+dhcp = true
+
+[metadata.voctomix2]
+rev = "27e2c58eaeda59cc021a6596d36fdb1ed28a4ace"
+
+[metadata.voctocore]
+streaming_auth_key = "no"
+
+[metadata.voctocore.sources.cam1]
+kind = "test"
+
+[metadata.voctocore.sources.cam2]
+kind = "test"
+
+[metadata.voctocore.sources.cam3]
+kind = "test"
+
+[metadata.voctocore.sources.cam4]
+kind = "test"
+
+[metadata.voctocore.sources.cam5]
+kind = "test"
+
+[metadata.voctocore.sources.cam6]
+kind = "test"
+
+[metadata.voctocore.sources.slides]
+kind = "test"
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"
