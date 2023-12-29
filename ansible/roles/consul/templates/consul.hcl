@@ -16,7 +16,7 @@ server = false
 retry_join = ["{{ consul_servers | join('", "') }}"]
 bind_addr = "{{ ansible_nebula.ipv4.address }}"
 performance {
-  raft_multiplier = 3
+  raft_multiplier = 5
 }
 # make lan-mode behave more like wan-mode
 gossip_lan {

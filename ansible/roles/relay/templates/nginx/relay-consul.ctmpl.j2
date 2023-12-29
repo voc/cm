@@ -321,7 +321,8 @@ server {
       add_header Access-Control-Expose-Headers "X-Host";
       add_header X-Host "{{ vars.ansible_fqdn }}";
   }
-  # Icecast direkt proxy path for https streaming
+
+  # Icecast direct proxy path for https streaming
   #
   location ~* ^/.*\.(webm|mp3|opus)$ {
       proxy_redirect            off;
@@ -363,7 +364,6 @@ server {
 
 
 {% if relive_master is defined and relive_master|bool %}
-
   # relive
   location ~ ^/crossdomain.xml {
     alias /srv/nginx/relive/crossdomain.xml;
@@ -409,6 +409,7 @@ server {
       # log for viewer counting
       access_log /var/log/nginx/access.log ip buffer=128k flush=30s;
   }
+
   # proxy cache ts files (relive)
   #
   # relive: /relive/31c3/29/1016.ts
@@ -432,6 +433,7 @@ server {
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
   }
+
   # proxy cache mp4 files (relive)
   #
   # relive: /relive/32c3/29/muxed.mp4
@@ -457,6 +459,7 @@ server {
       add_header Cache-Control no-cache;
       add_header X-Cache     "$upstream_cache_status edge";
   }
+
   # proxy cache for:
   #  * thumbs             (relive)
   #  * sprites            (relive)
@@ -488,4 +491,13 @@ server {
   }
 {% endif %}
 
+  location = /stats/ {
+    add_header Access-Control-Allow-Origin  "*";
+    add_header Access-Control-Allow-Headers "Content-Type";
+    add_header Access-Control-Allow-Methods "POST";
+    proxy_pass http://localhost:2342/;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+  }
 }

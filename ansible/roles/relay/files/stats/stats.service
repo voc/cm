@@ -1,0 +1,9 @@
+[Unit]
+Description=Player stats server
+
+[Service]
+ExecStart=/usr/local/bin/voc-telemetry
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

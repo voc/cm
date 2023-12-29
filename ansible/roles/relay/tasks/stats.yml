@@ -1,0 +1,36 @@
+---
+- name: Install stats binary
+  copy:
+    src: "stats/voc-telemetry"
+    dest: "/usr/local/bin/voc-telemetry"
+    mode: 0755
+  register: stats_bin
+
+- name: Install systemd unit for stats
+  copy:
+    src: stats/stats.service
+    dest: /etc/systemd/system/stats.service
+    mode: 0644
+
+- name: Enable and start systemd unit for stats
+  systemd:
+    name: stats
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+  when: stats_bin.changed
+
+- name: Deploy stats telegraf config
+  copy:
+    src: stats/stats.telegraf.conf
+    dest: /etc/telegraf/telegraf.d/stats.conf
+  tags: telegraf
+  register: stats_telegraf_conf
+
+- name: reload telegraf
+  service:
+    name: telegraf
+    state: reloaded
+  when: stats_telegraf_conf.changed
+  tags: telegraf
+

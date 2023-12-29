@@ -28,5 +28,9 @@
     when: stream_master|bool
     tags: upload-server
 
-  - import_tasks: register_relay.yml
-    tags: register_relay
+  # - import_tasks: register_relay.yml
+  #   tags: register_relay
+
+  - import_tasks: stats.yml
+    when: stats_relay|bool
+    tags: stats

@@ -17,6 +17,7 @@ relive_relay: no
 dtag_relay: no
 thirdparty_relay: no
 mediastatic_relay: no
+stats_relay: no
 
 # default cache sizes
 nginx_hls_relive_cache_max_size: '30g'

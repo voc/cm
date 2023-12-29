@@ -12,6 +12,7 @@ services {
     {%if dtag_relay|bool %}"dtag",{%endif%}
     {%if thirdparty_relay|bool %}"thirdparty",{%endif%}
     {%if mediastatic_relay|bool %}"mediastatic",{%endif%}
+    {%if stats_relay|bool %}"stats",{%endif%}
   ]
   check = {
     id = "nginx-http"
@@ -36,6 +37,7 @@ services {
     {%if dtag_relay|bool %}"dtag",{%endif%}
     {%if thirdparty_relay|bool %}"thirdparty",{%endif%}
     {%if mediastatic_relay|bool %}"mediastatic",{%endif%}
+    {%if stats_relay|bool %}"stats",{%endif%}
   ]
   check = {
     id = "nginx-https"
