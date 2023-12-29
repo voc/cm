@@ -49,6 +49,7 @@ for user, uconfig in node.metadata.get('users', {}).items():
         'unless': f'pdbedit -L | grep -E "^{user}:"',
         'data_stdin': uconfig['password'] + '\n' + uconfig['password'],
         'needs': {
+            'pkg_apt:samba',
             f'user:{user}',
         },
         'after': last_action,
