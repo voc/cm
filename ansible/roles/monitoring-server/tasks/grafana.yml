@@ -1,14 +1,34 @@
 ---
-  - name: install grafana config file
-    template:
-      src: grafana.ini.j2
-      dest: /etc/grafana/grafana.ini
-      group: grafana
-      mode: 0640
-    register: grafana_config
+- name: Add Grafana apt key
+  apt_key:
+    id: B53AE77BADB630A683046005963FA27710458545
+    url: https://packages.grafana.com/gpg.key
+    keyring: /etc/apt/trusted.gpg.d/grafana.gpg
+    state: present
+  tags: [apt, repos]
 
-  - name: restart grafana
-    service:
-      name: grafana-server
-      state: restarted
-    when: grafana_config.changed
+- name: Add Grafana apt repository
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/grafana.gpg] https://apt.grafana.com stable main"
+    state: present
+    filename: grafana
+  tags: [apt, repos]
+
+- name: Install grafana
+  apt:
+    name:
+      - grafana
+
+- name: install grafana config file
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+    group: grafana
+    mode: 0640
+  register: grafana_config
+
+- name: restart grafana
+  service:
+    name: grafana-server
+    state: restarted
+  when: grafana_config.changed

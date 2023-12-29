@@ -48,10 +48,30 @@ server {
     proxy_pass http://graphite-api;
   }
 
-  location /grafana {
-    rewrite /grafana/(.*) /$1 break;
+  location /public_grafana_Ohphud0Gae {
+    auth_basic          off;
+    rewrite /public_grafana_Ohphud0Gae/grafana/(.*) /grafana/$1 break;
+    rewrite /public_grafana_Ohphud0Gae/(.*) /grafana/$1 break;
+    proxy_set_header Accept-Encoding "";
+    sub_filter_types application/json;
+    sub_filter '<base href="/grafana/"/>' '<base href="/public_grafana_Ohphud0Gae/"/>';
+    sub_filter '"https://monitoring.c3voc.de/grafana' '"https://monitoring.c3voc.de/public_grafana_Ohphud0Gae';
+    sub_filter '"/grafana' '"/public_grafana_Ohphud0Gae';
+    sub_filter_once off;
+    proxy_set_header X-WEBAUTH-USER guest;
+    proxy_pass http://grafana;
+
+    # increase max body size for snapshots
+    client_max_body_size 100M;
+  }
+
+  location /grafana/ {
+    #rewrite /grafana/(.*) /$1 break;
     proxy_set_header X-WEBAUTH-USER admin;
     proxy_pass http://grafana;
+
+    # increase max body size for snapshots
+    client_max_body_size 100M;
   }
 
   location /prometheus/ {

@@ -1,0 +1,1 @@
+grafana_url: 'https://%(domain)s/grafana/'
