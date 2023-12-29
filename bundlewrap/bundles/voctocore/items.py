@@ -1,4 +1,5 @@
 from bundlewrap.exceptions import BundleError
+from os.path import join, isfile
 
 KEYBOARD_SHORTCUTS = {
     # maps inputs to buttons, first for Channel A, second Channel B
@@ -36,9 +37,12 @@ overlay_mapping = []
 for filename, title in sorted(node.metadata.get('event/overlay_mappings', {}).items()):
     overlay_mapping.append(f'{filename}.png|{title}')
 
+node_voctomix_path = join(repo.path, 'data', 'voctocore', 'files', f'{node.name}.ini')
+
 ### voc2mix
 files['/opt/voctomix2/voctocore-config.ini'] = {
     'content_type': 'mako',
+    'source': f'{node.name}.ini' if isfile(node_voctomix_path) else 'voctocore-config.ini',
     'context': {
         'audio': node.metadata.get('voctocore/audio', {}),
         'backgrounds': node.metadata.get('voctocore/backgrounds', {}),
