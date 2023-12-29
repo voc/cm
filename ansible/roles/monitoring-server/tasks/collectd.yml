@@ -44,3 +44,11 @@
     src: collectd/logrotate
     dest: /etc/logrotate.d/collectd
     mode: 0644
+
+- name: deploy collectd firewall config
+  template:
+    src: collectd/collectd.nft
+    dest: /etc/nftables/collectd.nft
+    mode: 0640
+  tags: [iptables, nftables, firewall]
+  notify: reload firewall
