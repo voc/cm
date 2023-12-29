@@ -3,7 +3,7 @@ defaults = {
         'packages': {
             'cifs-utils': {},
             'ffmpeg': {},
-            'fuse': {},
+            'fuse3': {},
             'fuse-ts': {},
             'libboolean-perl': {},
             'libconfig-inifiles-perl': {},
