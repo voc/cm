@@ -1,6 +1,7 @@
 ROOMS_WITHOUT_MINIONS = (
     23, # cccb
     81, # hacc
+    96, # kunsi
     98, # derpeter
     191, # seibert
 )
