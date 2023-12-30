@@ -17,5 +17,28 @@
     src: /tmp/consul-template.zip
     dest: /usr/local/bin/
     mode: 0755
-  register: consul_template
+  register: consul_template_bin
   when: not ansible_check_mode and (consul_template_installed.failed or consul_template_installed.changed)
+
+- name: create /etc/consul-template.d/ directory
+  file:
+    path: /etc/consul-template.d/
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Deploy consul-template service
+  template:
+    src: consul-template.service
+    dest: /etc/systemd/system/consul-template.service
+  register: consul_template_service
+  when: consul_template_templates|length > 0
+
+- name: Enable consul-template service
+  systemd:
+    name: consul-template
+    enabled: yes
+    daemon_reload: yes
+    state: "restarted"
+  when: consul_template_templates|length > 0 and consul_template_service.changed or consul_template_bin.changed

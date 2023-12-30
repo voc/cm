@@ -8,3 +8,7 @@ dependencies:
     tags: nginx
     vars:
       default_access_log: no
+  - role: consul
+    tags: consul
+  # - role: consul-template
+  #   tags: [consul, consul-template]

@@ -102,35 +102,33 @@ scrape_configs:
 
   - job_name: blackbox-hls
     file_sd_configs:
-    - files:  [/var/lib/prometheus/streams.yml]
-      # refresh_interval: 1m
+    - files:  [/var/lib/victoria-metrics/streams.yml]
     metrics_path: /probe
     params:
       module: [http]
     relabel_configs:
     - source_labels: [__address__]
-      replacement: http://live.ber.c3voc.de/hls/$1/chunks_0.m3u8
+      replacement: http://live.ber.c3voc.de/hls/$1/native_hd.m3u8
       target_label: __param_target
     - source_labels: [__address__]
       target_label: stream
     - target_label: __address__
       replacement: 127.0.0.1:9115 # The blackbox exporter.
 
-  - job_name: blackbox-dash
-    file_sd_configs:
-    - files: [/var/lib/prometheus/streams.yml]
-      # refresh_interval: 1m
-    metrics_path: /probe
-    params:
-      module: [http]
-    relabel_configs:
-    - source_labels: [__address__]
-      replacement: http://live.ber.c3voc.de/dash/$1/manifest.mpd
-      target_label: __param_target
-    - source_labels: [__address__]
-      target_label: stream
-    - target_label: __address__
-      replacement: 127.0.0.1:9115 # The blackbox exporter.
+  # - job_name: blackbox-dash
+  #   file_sd_configs:
+  #   - files: [/var/lib/victoria-metrics/streams.yml]
+  #   metrics_path: /probe
+  #   params:
+  #     module: [http]
+  #   relabel_configs:
+  #   - source_labels: [__address__]
+  #     replacement: http://live.ber.c3voc.de/dash/$1/manifest.mpd
+  #     target_label: __param_target
+  #   - source_labels: [__address__]
+  #     target_label: stream
+  #   - target_label: __address__
+  #     replacement: 127.0.0.1:9115 # The blackbox exporter.
 
       #- job_name: blackbox-icecast
       #  metrics_path: /probe

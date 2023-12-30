@@ -1,0 +1,4 @@
+# templated at runtime by consul-template
+- targets: [ [[- range ls "stream/" -]]
+  [[- .Key ]],
+[[- end ]] ]

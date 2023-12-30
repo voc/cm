@@ -1,0 +1,19 @@
+[Unit]
+Description=Template config for haproxy
+After=network.target consul.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/consul-template \
+{% for template in consul_template_templates %}
+  -template "{{ template }}" \
+{% endfor %}
+  -default-left-delimiter '[[' -default-right-delimiter ']]'
+Restart=on-failure
+ExecReload=/usr/bin/env kill -HUP $MAINPID
+KillSignal=SIGINT
+
+[Install]
+WantedBy=haproxy.service
+
+

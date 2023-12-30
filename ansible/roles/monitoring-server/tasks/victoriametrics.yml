@@ -9,4 +9,10 @@
   template:
     src: victoriametrics/scrape.yml
     dest: /etc/victoriametrics/scrape.yml
-  register: victoriametrics_scrape
+  register: victoriametrics_scrape_conf
+
+- name: reload victoriametrics
+  service:
+    name: victoriametrics
+    state: reloaded
+  when: victoriametrics_scrape_conf.changed

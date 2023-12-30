@@ -1,0 +1,15 @@
+- name: deploy consul-template
+  import_role:
+    name: consul-template
+
+- name: Deploy consul-template streams config
+  template:
+    src: victoriametrics/stream-discovery.ctmpl.j2
+    dest: /etc/consul-template.d/stream-discovery.ctmpl
+  register: stream_discovery_template
+
+- name: reload consul-template
+  service:
+    name: consul-template
+    state: reloaded
+  when: stream_discovery_template.changed

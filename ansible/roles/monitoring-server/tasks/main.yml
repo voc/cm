@@ -19,3 +19,6 @@
 
 - import_tasks: nginx.yml
   tags: [nginx]
+
+- import_tasks: consul_template.yml
+  tags: [consul, consul_template]
