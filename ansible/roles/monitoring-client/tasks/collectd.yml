@@ -13,6 +13,7 @@
               src=collectd/collectd.client.conf.j2
               owner=root group=root mode=0640
     notify: restart collectd
+    when: collectd_client|bool
     tags:
       - install
       - config

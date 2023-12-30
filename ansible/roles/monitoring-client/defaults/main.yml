@@ -1,2 +1,3 @@
 ---
+collectd_client: yes
 telegraf_interfaces: ["*"]  # e.g. ["ens*", "enp3s192p19u38f1e1", "eno2", "eth0"]

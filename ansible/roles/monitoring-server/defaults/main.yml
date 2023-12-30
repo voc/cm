@@ -1,1 +1,2 @@
 grafana_url: 'https://%(domain)s/grafana/'
+collectd_client: no
