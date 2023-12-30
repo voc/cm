@@ -5,6 +5,6 @@ nginx: yes
 victoriametrics_service_envflag_enabled: "true"
 victoriametrics_service_envflag_data: 
   - usePromCompatibleNaming=true
-  - promscrape_config=/etc/prometheus/scrape.yml
+  - promscrape_config=/etc/victoriametrics/scrape.yml
   - promscrape_config_strictParse=false
   - promscrape.fileSDCheckInterval="1m"

@@ -1,0 +1,28 @@
+- name: template vmalert rules
+  template:
+    src: victoriametrics/{{ item }}
+    dest: /etc/victoriametrics/{{ item }}
+  with_items:
+    - rules/recording.yml
+    - rules/alerting.yml
+  register: vmalert_rules
+
+- name: template vmalert service
+  template:
+    src: victoriametrics/vmalert.service
+    dest: /etc/systemd/system/vmalert.service
+  register: vmalert_service
+
+- name: enable/restart vmalert service
+  service:
+    name: vmalert
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+  when: vmalert_service.changed
+
+- name: reload vmalert
+  service:
+    name: vmalert
+    state: reloaded
+  when: vmalert_rules.changed

@@ -1,0 +1,12 @@
+---
+- name: create victoriametrics config dir
+  file:
+    path: /etc/victoriametrics/rules
+    state: directory
+    mode: 0755
+
+- name: template victoriametrics scrape config
+  template:
+    src: victoriametrics/scrape.yml
+    dest: /etc/victoriametrics/scrape.yml
+  register: victoriametrics_scrape

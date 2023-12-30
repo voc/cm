@@ -7,7 +7,7 @@ upstream grafana {
 }
 
 upstream prometheus {
-  server 127.0.0.1:9090;
+  server 127.0.0.1:8428;
 }
 
 upstream telegraf {
@@ -40,7 +40,7 @@ server {
   
   location /metrics {
     auth_basic          off;
-    proxy_pass http://prometheus/prometheus/federate?match%5B%5D=%7B__name__%3D~%22(stream%3Acollectd_users%3Alive%7Ccdn%3A.*)%22%7D;
+    proxy_pass http://prometheus/federate?match%5B%5D=%7B__name__%3D~%22(stream%3Acollectd_users%3Alive%7Ccdn%3A.*)%22%7D;
   }
 
   location /graphite {

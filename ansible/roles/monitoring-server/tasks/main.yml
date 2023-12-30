@@ -11,8 +11,11 @@
 - import_tasks: telegraf.yml
   tags: [telegraf]
 
-- import_tasks: prometheus.yml
-  tags: [prometheus]
+- import_tasks: victoriametrics.yml
+  tags: [victoriametrics]
+
+- import_tasks: vmalert.yml
+  tags: [victoriametrics, vmalert]
 
 - import_tasks: nginx.yml
   tags: [nginx]

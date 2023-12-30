@@ -52,3 +52,17 @@
     mode: 0640
   tags: [iptables, nftables, firewall]
   notify: reload firewall
+
+- name: template collectd-exporter.service
+  template:
+    src: systemd/collectd-exporter.service.j2
+    dest: /etc/systemd/system/collectd-exporter.service
+  register: collectd_exporter_service
+
+- name: enable/start collectd-exporter
+  systemd:
+    name: collectd-exporter
+    enabled: yes
+    state: restarted
+    daemon-reload: yes
+  when: collectd_exporter_service.changed

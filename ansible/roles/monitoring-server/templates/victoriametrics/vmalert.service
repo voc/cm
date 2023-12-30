@@ -1,0 +1,25 @@
+#
+# Ansible managed
+#
+
+[Unit]
+Description=vmalert service
+After=network.target victoriametrics.service
+
+[Service]
+Type=simple
+LimitNOFILE=2097152
+User=victoriametrics
+Group=victoriametrics
+ExecStart=/usr/local/bin/vmalert-prod -datasource.url=http://localhost:8428 -remoteWrite.url=http://localhost:8428 -notifier.url=http://localhost:9090 -rule /etc/victoriametrics/rules/*.yml
+ExecReload=/bin/kill -HUP $MAINPID
+SyslogIdentifier=vmalert
+Restart=always
+
+PrivateTmp=yes
+ProtectHome=yes
+NoNewPrivileges=yes
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

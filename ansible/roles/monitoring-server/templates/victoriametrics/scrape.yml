@@ -1,58 +1,8 @@
-# Sample config for Prometheus.
-
 global:
-  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-  # scrape_timeout is set to the global default (10s).
+  scrape_interval: "15s"
+  scrape_timeout: "15s"
 
-  # Attach these labels to any time series or alerts when communicating with
-  # external systems (federation, remote storage, Alertmanager).
-  external_labels:
-    source: 'C3VOC'
-
-# Alertmanager configuration
-alerting:
- alertmanagers:
- - static_configs:
-   - targets: ['localhost:9093']
-
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
-  - "rules/recording.yml"
-  - "rules/alerting.yml"
-
-# A scrape configuration containing exactly one endpoint to scrape:
 scrape_configs:
-  - job_name: 'prometheus'
-    scrape_interval: 5s
-    scrape_timeout: 5s
-    metrics_path: /prometheus/metrics
-    static_configs:
-      - targets: ['localhost:9090']
-
-  # telegraf
-  - job_name: telegraf
-    scrape_interval: 15s
-    static_configs:
-      - targets: ['localhost:9273']
-    metric_relabel_configs:
-      # Prefix telegraf metrics with telegraf_
-      - source_labels: ["__name__"]
-        regex: "(.*)"
-        target_label: "__name__"
-        replacement: "telegraf_$1"
-
-      # Relabel our local telegraf metrics
-      - source_labels: ["host"]
-        regex: "{{ ansible_host | replace(".","\\\\.") }}"
-        target_label: "exported_instance"
-        replacement: "{{ ansible_host }}"
-
-      - source_labels: ["host"]
-        regex: "{{ ansible_host | replace(".","\\\\.") }}"
-        target_label: "role"
-        replacement: "monitoring-server"
-
   # collectd exporter
   - job_name: collectd
     scrape_interval: 30s
@@ -153,7 +103,7 @@ scrape_configs:
   - job_name: blackbox-hls
     file_sd_configs:
     - files:  [/var/lib/prometheus/streams.yml]
-      refresh_interval: 1m
+      # refresh_interval: 1m
     metrics_path: /probe
     params:
       module: [http]
@@ -169,7 +119,7 @@ scrape_configs:
   - job_name: blackbox-dash
     file_sd_configs:
     - files: [/var/lib/prometheus/streams.yml]
-      refresh_interval: 1m
+      # refresh_interval: 1m
     metrics_path: /probe
     params:
       module: [http]
