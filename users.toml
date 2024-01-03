@@ -283,7 +283,7 @@ ssh_pubkeys = [
 ]
 
 [jayjay]
-enable_rz = false
+enable_rz = true
 enable_event = true
 uid = 1136
 ssh_pubkeys = [
