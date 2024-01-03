@@ -1,4 +1,9 @@
 defaults = {
+    'apt': {
+        'packages': {
+            'mdadm': {},
+        },
+    },
     'mqtt-monitoring': {
         'plugins': {
             'raid_mdstat',
