@@ -20,18 +20,3 @@ if node.has_any_bundle(['voctocore', 'voctogui']):
             },
         },
     }
-
-
-@metadata_reactor.provides(
-    'apt/packages/i965-va-driver-shaders',
-)
-def vaapi_drive_maybe(metadata):
-    if not metadata.get('voctocore/vaapi', False):
-        return {}
-    return {
-        'apt': {
-            'packages': {
-                'i965-va-driver-shaders': {},
-            },
-        },
-    }
