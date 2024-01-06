@@ -6,8 +6,8 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages.i965-va-driver]
 
 [metadata.crs-worker.secrets]
-encoding.secret = "foo"
-encoding.token = "bar"
+encoding.secret = "!decrypt:encrypt$gAAAAABlK_Nk7Jbaf_4IKFeT4ij_H3S7qcAd6VsWq1KHa5nZKNwmhjSi6eJcMYxbgmuABqvVnSpBrnz4DSwVRABbh2EfxW17R7WH2OAHNiqCfVC8UmtgTtWwOCUJIpz8qC9Z5efSCIEU"
+encoding.token = "!decrypt:encrypt$gAAAAABlK_NU3Ht2QfEyn5OSLfY_nUO4NeOI1VF6Xlv-0LvFBHz8X4gEWZVJXknW4-lujFXAqJdANwDP1EfpIBO1xl2jzWPFgm1WlywqtaPLmted1O7LD75vH0x9H34tMi1iTam4UEiW"
 
 [metadata.event]
 room_name = "kunsi test"
