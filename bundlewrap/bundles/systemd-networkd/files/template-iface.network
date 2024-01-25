@@ -43,6 +43,7 @@ GatewayOnlink=yes
 % for vlan in sorted(config.get('vlans', set())):
 VLAN=${interface}.${vlan}
 % endfor
+ConfigureWithoutCarrier=yes
 
 % if config.get('dhcp', False):
 DHCP=yes
