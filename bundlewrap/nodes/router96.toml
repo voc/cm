@@ -4,6 +4,7 @@ bundles = [
     "netdata",
     #"openvpn-client",
     "unbound-with-knot",
+    "voc2dmx",
 ]
 groups = ["debian-bullseye"]
 
@@ -50,3 +51,16 @@ threads = 4
 cache_slabs = 4
 primary = "!kee_user:ansible|router|knot secret"
 primary_secret = "!kee_pass:ansible|router|knot secret"
+
+[metadata.voc2dmx.sacn]
+target = "10.73.100.115"
+
+[metadata.voc2dmx.lights]
+stairville_par_56 = [
+    1,
+    6,
+    11,
+    16,
+#    21,
+#    26,
+]

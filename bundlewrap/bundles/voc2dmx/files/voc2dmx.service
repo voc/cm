@@ -1,0 +1,13 @@
+[Unit]
+Description=kunsis MQTT-to-DMX adapter
+
+[Service]
+User=voc2dmx
+Group=voc2dmx
+WorkingDirectory=/opt/voc2dmx/src
+ExecStart=/opt/voc2dmx/venv/bin/python3 main.py --config /opt/voc2dmx/config.toml
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
