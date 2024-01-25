@@ -1,4 +1,4 @@
-hostname = "172.19.138.9"
+hostname = "172.19.138.19"
 bundles = [
     "isc-dhcp-server",
     "netdata",
@@ -13,7 +13,7 @@ groups = ["debian-bullseye"]
 
 [metadata.interfaces.enp2s0]
 ips = [
-    "172.19.138.9/24"
+    "172.19.138.19/24"
 ]
 dhcp = true
 
@@ -32,6 +32,11 @@ options.domain-name-servers = "10.73.0.254"
 options.domain-search = "lan.c3voc.de"
 options.routers = "10.73.0.254"
 options.subnet-mask = "255.255.0.0"
+
+[metadata.netdata]
+restrict-to = [
+    "172.19.138.0/24", # kunsi home
+]
 
 [metadata.nftables.rules]
 "50-router" = [
