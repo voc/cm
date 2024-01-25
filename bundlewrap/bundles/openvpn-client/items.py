@@ -1,46 +1,47 @@
 import bwkeepass as keepass
+from os.path import join
+
+SECRETS_ROOT = join('openvpn-client', 'files')
 
 svc_systemd = {
     'openvpn@voc': {
-        'enabled': True,
         'needs': {
             'pkg_apt:openvpn',
             'file:/etc/openvpn/voc.conf',
             'file:/etc/openvpn/ca.crt',
             'file:/etc/openvpn/ta.key',
-            f"file:/etc/openvpn/{node.name}.crt",
-            f"file:/etc/openvpn/{node.name}.key",
+            "file:/etc/openvpn/node.crt",
+            "file:/etc/openvpn/node.key",
         },
     },
 }
 
 files = {
     '/etc/openvpn/voc.conf': {
-        'content_type': 'mako',
         'triggers': {
             'svc_systemd:openvpn@voc:restart',
         },
     },
     '/etc/openvpn/ca.crt': {
-        'content': keepass.notes(['ansible', 'vpn', 'ca.crt']),
+        'content': repo.vault.decrypt_file(join(SECRETS_ROOT, 'ca.crt.vault')),
         'triggers': {
             'svc_systemd:openvpn@voc:restart',
         },
     },
     '/etc/openvpn/ta.key': {
-        'content': keepass.notes(['ansible', 'vpn', 'ta.key']),
+        'content': repo.vault.decrypt_file(join(SECRETS_ROOT, 'ta.key.vault')),
         'triggers': {
             'svc_systemd:openvpn@voc:restart',
         },
     },
-    f"/etc/openvpn/{node.name}.crt": {
-        'content': keepass.notes(['ansible', 'vpn', f"{node.name}.crt"]),
+    "/etc/openvpn/node.crt": {
+        'content': repo.vault.decrypt_file(join(SECRETS_ROOT, 'clients', f'{node.name}.crt.vault')),
         'triggers': {
             'svc_systemd:openvpn@voc:restart',
         },
     },
-    f"/etc/openvpn/{node.name}.key": {
-        'content': keepass.notes(['ansible', 'vpn', f"{node.name}.key"]),
+    "/etc/openvpn/node.key": {
+        'content': repo.vault.decrypt_file(join(SECRETS_ROOT, 'clients', f'{node.name}.key.vault')),
         'triggers': {
             'svc_systemd:openvpn@voc:restart',
         },

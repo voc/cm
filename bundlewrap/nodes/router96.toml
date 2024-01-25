@@ -2,7 +2,7 @@ hostname = "172.19.138.9"
 bundles = [
     "isc-dhcp-server",
     "netdata",
-    #"openvpn-client",
+    "openvpn-client",
     "unbound-with-knot",
     "voc2dmx",
 ]
