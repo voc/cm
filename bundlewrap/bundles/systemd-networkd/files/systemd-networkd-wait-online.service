@@ -1,0 +1,9 @@
+[Unit]
+Description=dummy unit to disable systemd-networkd-wait-online
+
+[Service]
+ExecStart=/bin/true
+RemainAfterExit=true
+
+[Install]
+WantedBy=network-online.target

@@ -12,6 +12,12 @@ files = {
             'pkg_apt:',
         },
     },
+    '/usr/local/lib/systemd/system/systemd-networkd-wait-online.service': {
+        'triggers': {
+            'action:systemd-reload',
+            'svc_systemd:systemd-networkd-wait-online:restart',
+        },
+    },
 }
 
 svc_systemd = {
@@ -21,6 +27,12 @@ svc_systemd = {
         },
         'tags': {
             'causes-downtime',
+        },
+    },
+    'systemd-networkd-wait-online': {
+        'needs': {
+            'file:/usr/local/lib/systemd/system/systemd-networkd-wait-online.service',
+            'svc_systemd:systemd-networkd',
         },
     },
     'systemd-resolved': {
