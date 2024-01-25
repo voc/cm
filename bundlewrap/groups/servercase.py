@@ -1,6 +1,6 @@
 groups['servercase'] = {
     'members': {
-        'router',
+        'router200',
         'storage',
     },
     'metadata': {
