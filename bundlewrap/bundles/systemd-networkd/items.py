@@ -125,3 +125,54 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
             'svc_systemd:systemd-networkd:restart',
         },
     }
+
+for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
+    filename = '{}-match-{}'.format(
+        brname,
+        '-'.join(sorted(config['match'])),
+    ).replace('*', '_')
+
+    files[f'/etc/systemd/network/{brname}.netdev'] = {
+        'source': 'template-bridge.netdev',
+        'content_type': 'mako',
+        'context': {
+            'bridge': brname,
+        },
+        'needed_by': {
+            'svc_systemd:systemd-networkd',
+        },
+        'triggers': {
+            'svc_systemd:systemd-networkd:restart',
+        },
+    }
+
+    files[f'/etc/systemd/network/{filename}.network'] = {
+        'source': 'template-bridge.network',
+        'content_type': 'mako',
+        'context': {
+            'bridge': brname,
+            'match': config['match'],
+        },
+        'needed_by': {
+            'svc_systemd:systemd-networkd',
+        },
+        'triggers': {
+            'svc_systemd:systemd-networkd:restart',
+        },
+    }
+
+    if config.get('vlans', set()):
+        files[f'/etc/systemd/network/{brname}.network'] = {
+            'source': 'template-bridge-vlan.network',
+            'content_type': 'mako',
+            'context': {
+                'bridge': brname,
+                'vlans': config.get('vlans', set()),
+            },
+            'needed_by': {
+                'svc_systemd:systemd-networkd',
+            },
+            'triggers': {
+                'svc_systemd:systemd-networkd:restart',
+            },
+        }
