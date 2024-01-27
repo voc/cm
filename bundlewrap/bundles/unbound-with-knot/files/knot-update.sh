@@ -9,6 +9,13 @@ PASSWORD="${node.metadata.get('unbound-with-knot/primary_secret')}"
 needs_reload=0
 
 <%text>
+
+if ! ping -c2 "${PRIMARY}"
+then
+    voc2alert "warn" "knot" "Could not reach ${PRIMARY}, not updating!"
+    exit 0
+fi
+
 curl -s "http://${PRIMARY}/config/${HOSTNAME}.conf.asc" | gpg --armor --batch --passphrase "${PASSWORD}" -d > /etc/knot/knot.conf.new
 
 sha1_new="$(sha1sum /etc/knot/knot.conf.new | awk '{print $1}')"
@@ -29,11 +36,9 @@ if [[ "$needs_reload" -eq 1 ]]
 then
     if ! knotc -c "/etc/knot/knot.conf.new" conf-check
     then
-        echo "Config verify failed!"
+        voc2alert "error" "knot" "Downloaded new config from ${PRIMARY} with SHA1 hash '${sha1_new}', but 'knot -c' did not verify it!"
         exit 1
     fi
-
-    voc2alert "info" "knot" "Downloaded new configuration from ${PRIMARY} with SHA1 hash '${sha1_new}'"
 
     mv /etc/knot/knot.conf.new /etc/knot/knot.conf
 
@@ -44,6 +49,8 @@ then
         systemctl reset-failed knot
         systemctl start knot
     fi
+
+    voc2alert "info" "knot" "Downloaded new configuration from ${PRIMARY} with SHA1 hash '${sha1_new}'"
 fi
 
 knotc zone-refresh
