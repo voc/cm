@@ -32,6 +32,15 @@ in {
     enableImap = false;
     enablePop3 = false;
 
+    forwards = {
+      "cm@c3voc.de" = "cm@lists.c3voc.de";
+      "congress@c3voc.de" = "congress@lists.c3voc.de";
+      "media@c3voc.de" = "media@lists.c3voc.de";
+      "muenchen@c3voc.de" = "muenchen@lists.c3voc.de";
+      "studios@c3voc.de" = "studios@lists.c3voc.de";
+      "voc@c3voc.de" = "voc@lists.c3voc.de";
+    };
+
     # whitelist SPF checks from mng (for now)
     policydSPFExtraConfig = ''
       HELO_Whitelist = mng.c3voc.de
@@ -39,11 +48,15 @@ in {
     '';
   };
 
+  sops.secrets.aliases = {};
+
   services.postfix = {
+    mapFiles.virtual_cm = config.sops.secrets.aliases.path;
     relayDomains = ["hash:/var/lib/mailman/data/postfix_domains"];
     config = {
       transport_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       local_recipient_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
+      virtual_alias_maps = ["hash:/etc/postfix/virtual_cm"];
     };
   };
 
