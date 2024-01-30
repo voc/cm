@@ -20,6 +20,11 @@
     inputs.nixpkgs.follows = "/nixpkgs";
     inputs.utils.follows = "/flake-utils";
   };
+  inputs.authentik-nix = {
+    url = "github:nix-community/authentik-nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
 
   inputs.flake-compat = {
     url = "github:edolstra/flake-compat";
