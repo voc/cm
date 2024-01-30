@@ -54,6 +54,7 @@ in {
     mapFiles.virtual_cm = config.sops.secrets.aliases.path;
     relayDomains = ["hash:/var/lib/mailman/data/postfix_domains"];
     config = {
+      mydestination = lib.mkForce ["c3voc.de"];
       transport_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       local_recipient_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       virtual_alias_maps = ["hash:/etc/postfix/virtual_cm"];
