@@ -16,10 +16,10 @@
     enable = true;
     jrePackage = pkgs.jdk11;
     package = pkgs.atlassian-jira.overrideAttrs (prev: rec {
-      version = "9.4.11";
+      version = "9.4.15";
       src = pkgs.fetchurl {
         url = "https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-${version}.tar.gz";
-        sha256 = "sha256-/4siWmEtBHuajlZNabrkODzKLxg7WlQUCzwk//gj0iE=";
+        sha256 = "sha256-FpxmFjq6weSh9jlKaXddvwcS6OsNwPqW9p/4EEbcn2g=";
       };
     });
     catalinaOptions = [
