@@ -84,9 +84,9 @@ in {
 
   services.rspamd.extraConfig = ''
     actions {
-      reject = null; # Disable rejects, default is 15
+      greylist = 2; # Apply greylisting when reaching this score
       add_header = 4; # Add header when reaching this score
-      greylist = 10; # Apply greylisting when reaching this score
+      reject = 6; # yeeeeeeeet from 6 on
     }
   '';
 
