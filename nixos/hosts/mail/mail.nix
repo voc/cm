@@ -33,12 +33,12 @@ in {
     enablePop3 = false;
 
     forwards = {
-      "cm@c3voc.de" = "cm@lists.c3voc.de";
-      "congress@c3voc.de" = "congress@lists.c3voc.de";
-      "media@c3voc.de" = "media@lists.c3voc.de";
-      "muenchen@c3voc.de" = "muenchen@lists.c3voc.de";
-      "studios@c3voc.de" = "studios@lists.c3voc.de";
-      "voc@c3voc.de" = "voc@lists.c3voc.de";
+      "cm" = "cm@lists.c3voc.de";
+      "congress" = "congress@lists.c3voc.de";
+      "media" = "media@lists.c3voc.de";
+      "muenchen" = "muenchen@lists.c3voc.de";
+      "studios" = "studios@lists.c3voc.de";
+      "voc" = "voc@lists.c3voc.de";
     };
 
     # whitelist SPF checks from mng (for now)
