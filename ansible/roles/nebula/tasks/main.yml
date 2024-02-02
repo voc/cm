@@ -1,16 +1,22 @@
 ---
 - name: check existing binary
   stat:
-    path: /usr/local/bin/nebula
+    path: /usr/local/bin/nebula -version
     checksum_algorithm: sha256
   register: nebula_stat
+
+- name: "Check if nebula is installed and version is {{ nebula_version }}"
+  shell: "nebula version | head -n1"
+  ignore_errors: true
+  register: nebula_installed
+  changed_when: 'nebula_version not in nebula_installed.stdout'
 
 - name: get nebula binary
   get_url:
     dest: /tmp/nebula.tar.gz
     url: "https://github.com/slackhq/nebula/releases/download/v{{ nebula_version }}/nebula-linux-amd64.tar.gz"
     checksum: "{{ nebula_archive_checksum }}"
-  when: not nebula_stat.stat.checksum is defined or nebula_stat.stat.checksum != nebula_bin_checksum
+  when: nebula_installed.changed
 
 - name: unarchive binary
   unarchive:
@@ -20,19 +26,24 @@
     include: [nebula]
     list_files: true
     mode: 0755
-  when: not nebula_stat.stat.checksum is defined or nebula_stat.stat.checksum != nebula_bin_checksum
+  when: nebula_installed.changed
   register: nebula_bin
+
+- name: remove old nebula config
+  file:
+    path: /etc/nebula/config.yml
+    state: absent
 
 - name: create nebula config dir
   file:
-    path: /etc/nebula
+    path: /etc/nebula/config.d
     state: directory
     mode: 0750
 
 - name: deploy nebula config
   template:
-    src: config.yml.j2
-    dest: /etc/nebula/config.yml
+    src: config.yml
+    dest: /etc/nebula/config.d/01-main.yml
     mode: 0640
     validate: "/usr/local/bin/nebula -config %s -test"
   register: nebula_conf
@@ -71,3 +82,12 @@
 - name: rerun facts do detect nebula interface
   setup:
   when: nebula_service.changed
+
+- name: deploy nebula telegraf config
+  template:
+    src: telegraf_nebula.toml
+    dest: /etc/telegraf/telegraf.d/nebula.conf
+    mode: 0640
+    group: telegraf
+  tags: [monitoring, telegraf]
+  notify: reload telegraf

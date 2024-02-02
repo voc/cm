@@ -207,28 +207,15 @@ logging:
   # As an example, to log as RFC3339 with millisecond precision, set to:
   #timestamp_format: "2006-01-02T15:04:05.000Z07:00"
 
-#stats:
-  #type: graphite
-  #prefix: nebula
-  #protocol: tcp
-  #host: 127.0.0.1:9999
-  #interval: 10s
-
-  #type: prometheus
-  #listen: 127.0.0.1:8080
-  #path: /metrics
-  #namespace: prometheusns
-  #subsystem: nebula
-  #interval: 10s
-
-  # enables counter metrics for meta packets
-  #   e.g.: `messages.tx.handshake`
-  # NOTE: `message.{tx,rx}.recv_error` is always emitted
-  #message_metrics: false
-
-  # enables detailed counter metrics for lighthouse packets
-  #   e.g.: `lighthouse.rx.HostQuery`
-  #lighthouse_metrics: false
+stats:
+  type: prometheus
+  listen: 127.0.0.1:2343
+  path: /metrics
+  namespace: nebula
+  subsystem: 
+  interval: 10s
+  message_metrics: true
+  lighthouse_metrics: false
 
 # Handshake Manager Settings
 #handshakes:
@@ -248,7 +235,6 @@ firewall:
     tcp_timeout: 3h
     udp_timeout: 3m
     default_timeout: 10m
-    max_connections: 100000
 
   # The firewall is default deny. There is no way to write a deny rule.
   # Rules are comprised of a protocol, port, and one or more of host, group, or CIDR

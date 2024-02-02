@@ -1,0 +1,4 @@
+[[inputs.prometheus]]
+  urls = ["http://localhost:2343/metrics"]
+  metric_version = 1
+  tags = {job = "nebula"}
