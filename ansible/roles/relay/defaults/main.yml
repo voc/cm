@@ -29,3 +29,6 @@ nginx_media_static_masters: []
 
 # fanout to youtube
 youtube: no
+
+consul_template_templates:
+  - "/etc/consul-template.d/relay.ctmpl:/etc/nginx/sites-enabled/relay.conf:/bin/bash -c '/bin/systemctl reload nginx.service || true'"

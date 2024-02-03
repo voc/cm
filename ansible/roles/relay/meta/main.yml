@@ -26,5 +26,3 @@ dependencies:
     tags: consul
     vars:
       consul_ui: "{{ stream_master|bool }}"
-  - role: consul-template
-    tags: consul-template

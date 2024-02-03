@@ -11,8 +11,6 @@
   - import_tasks: consul_template.yml
     tags: [consul-template]
 
-  - import_tasks: iptables.yml
-    tags: [firewall, iptables, nftables]
 
 #  - import_tasks: sysctl.yml
 #    tags: sysctl
@@ -26,10 +24,7 @@
 
   - import_tasks: upload-server.yml
     when: stream_master|bool
-    tags: upload-server
-
-  # - import_tasks: register_relay.yml
-  #   tags: register_relay
+    tags: upload-serverd
 
   - import_tasks: stats.yml
     when: stats_relay|bool
