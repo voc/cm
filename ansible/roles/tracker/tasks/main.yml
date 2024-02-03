@@ -1,7 +1,7 @@
 ---
-  - include: nginx.yml
+  - import_tasks: nginx.yml
     tags: nginx
-  - include: php.yml
+  - import_tasks: php.yml
     tags: php
 
   - name: install tracker specific packages

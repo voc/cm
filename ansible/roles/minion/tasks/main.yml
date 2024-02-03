@@ -1,2 +1,2 @@
 ---
-  - include: pbx-rueckbau.yml
+  - import_tasks: pbx-rueckbau.yml

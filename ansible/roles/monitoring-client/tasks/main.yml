@@ -1,5 +1,5 @@
 ---
-  - include: ../../../register/bin_path.yml
+  - import_tasks: ../../../register/bin_path.yml
   ###########
   # General #
   ###########
@@ -13,11 +13,11 @@
       state: latest
     tags: apt
 
-  - include: encoder.yml
+  - import_tasks: encoder.yml
     when: ansible_hostname is match("encoder\d+")
 
-  - include: collectd.yml
+  - import_tasks: collectd.yml
     tags: collectd
 
-  - include: telegraf.yml
+  - import_tasks: telegraf.yml
     tags: telegraf

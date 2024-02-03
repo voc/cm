@@ -1,2 +1,2 @@
 ---
-  - include: ../../../handlers/systemd.yml
+  - import_tasks: ../../../handlers/systemd.yml

@@ -7,4 +7,4 @@
     service: name=nginx state=reloaded
     when: nginx is defined and nginx|bool
 
-  - include: ../../../handlers/systemd.yml
+  - import_tasks: ../../../handlers/systemd.yml

@@ -20,7 +20,7 @@
 
   - name: remove old unit-files
     file: state=absent path="/etc/systemd/system/{{ item }}"
-    with_items: old_units.stdout_lines
+    with_items: "{{ old_units.stdout_lines }}"
 
   - name: remove old voctocore.service.wants-dir
     file: state=absent path="{{ item }}"
@@ -143,7 +143,9 @@
 
   # nostream source
   - name: disable obsolete scripts for now internal services
-    include: service-cleanup.yml service={{item}}
+    include_tasks: service-cleanup.yml
+    vars:
+      service: "{{item}}"
     with_items:
       - voctomix2-nostream-source.service
       - voctomix2-music-source.service

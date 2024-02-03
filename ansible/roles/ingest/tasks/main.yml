@@ -1,15 +1,15 @@
 ---
-- include: nginx.yml
+- import_tasks: nginx.yml
   tags: nginx
   when: "'relays' not in group_names"
 
-- include: srtrelay.yml
+- import_tasks: srtrelay.yml
   tags: srtrelay
   when: "'relays' not in group_names"
 
-- include: rtmp-auth.yml
+- import_tasks: rtmp-auth.yml
   tags: rtmp-auth
   when: "'relays' not in group_names"
 
-- include: stream-api.yml
+- import_tasks: stream-api.yml
   tags: stream-api

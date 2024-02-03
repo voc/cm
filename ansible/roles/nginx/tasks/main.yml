@@ -1,25 +1,25 @@
 ---
-  - include: firewall.yml
+  - import_tasks: firewall.yml
     tags: [firewall, iptables, nftables]
 
-  - include: php.yml
+  - import_tasks: php.yml
     tags: php
     when: php|bool
 
-  - include: nginx.yml
+  - import_tasks: nginx.yml
 
-  - include: nginx_rtmp.yml
+  - import_tasks: nginx_rtmp.yml
     tags: rtmp
     when: rtmp|bool
 
-  - include: remove_nginx_rtmp.yml
+  - import_tasks: remove_nginx_rtmp.yml
     tags: rtmp
     when: not rtmp|bool
 
-  - include: rtmp_auth.yml
+  - import_tasks: rtmp_auth.yml
     when: rtmp|bool and rtmp_auth is defined and rtmp_auth|bool
     tags: [rtmp, rtmp-auth]
 
-  - include: monitoring.yml
+  - import_tasks: monitoring.yml
     tags: monitoring
     when: not no_monitoring|bool

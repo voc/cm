@@ -51,6 +51,3 @@
     notify: restart collectd
     when: haproxy is defined and haproxy
     tags: install
-
-  - include: snmp.yml
-    when: ansible_hostname is match('mixer\d+')

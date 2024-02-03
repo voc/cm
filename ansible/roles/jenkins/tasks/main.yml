@@ -1,4 +1,4 @@
 ---
-  - include: packages.yml
-  - include: dehydrated.yml vhost=build.ber.c3voc.de
-  - include: dehydrated.yml vhost=pkg.c3voc.de
+  - import_tasks: packages.yml
+  - import_tasks: dehydrated.yml vhost=build.ber.c3voc.de
+  - import_tasks: dehydrated.yml vhost=pkg.c3voc.de

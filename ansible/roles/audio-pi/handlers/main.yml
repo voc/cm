@@ -1,5 +1,5 @@
 ---
-  - include: ../../../handlers/main.yml
+  - import_tasks: ../../../handlers/main.yml
 
   - name: restart openvpn
     service: name=openvpn@voc.service state=restarted

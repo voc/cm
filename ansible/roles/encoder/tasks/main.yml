@@ -1,29 +1,29 @@
 ---
- - include: kernel.yml
+ - import_tasks: kernel.yml
    when: "system.type == 'pc' and 'proxmox' not in group_names"
    tags: kernel
- - include: general.yml
- - include: packages.yml
- - include: artwork.yml
+ - import_tasks: general.yml
+ - import_tasks: packages.yml
+ - import_tasks: artwork.yml
    tags: artwork
- - include: encodermode-voctomix.yml
+ - import_tasks: encodermode-voctomix.yml
    tags:
     - encodermode
     - voctomix
- - include: encodermode-voctomix2.yml
+ - import_tasks: encodermode-voctomix2.yml
    tags:
     - encodermode
     - voctomix2
- - include: icedist.yml
+ - import_tasks: icedist.yml
    tags: icedist
- - include: nginx.yml
+ - import_tasks: nginx.yml
    tags: nginx
- - include: samba.yml
+ - import_tasks: samba.yml
    tags: samba
- - include: rc.local.yml
+ - import_tasks: rc.local.yml
    tags:
      - rclocal
      - iptables
      - encodermode
- - include: rsync.yml
+ - import_tasks: rsync.yml
    tags: rsync

@@ -1,19 +1,19 @@
 ---
-  - include: packages.yml
-  - include: rpi-update.yml
+  - import_tasks: packages.yml
+  - import_tasks: rpi-update.yml
     tags: rpiupdate
-  - include: users.yml
+  - import_tasks: users.yml
     tags: users
-  - include: vpn.yml
+  - import_tasks: vpn.yml
     tags: vpn
-  - include: rc.local.yml
+  - import_tasks: rc.local.yml
     tags: rc
-  - include: audioinjector-setup.yml
+  - import_tasks: audioinjector-setup.yml
     tags: audioinjector
-  - include: journald.yml
+  - import_tasks: journald.yml
     tags: journald
-  - include: mqtt-alert.yml
+  - import_tasks: mqtt-alert.yml
     tags: mqttalert
-  - include: ingest.yml
+  - import_tasks: ingest.yml
     tags: ingest
 

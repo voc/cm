@@ -8,3 +8,4 @@ venv/
 nixos/.direnv
 nixos/.deploy-gc
 nixos/result
+.vscode
