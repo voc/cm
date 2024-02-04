@@ -1,30 +1,31 @@
 ---
 # upload-server
-- name: Create directory for upload-server binary
-  file: path=/opt/upload-server state=directory mode=0755
+# - name: Create directory for upload-server binary
+#   file: path=/opt/upload-server state=directory mode=0755
 
-- name: Install upload-server binary
-  apt:
-    name: stream-api
-    state: latest
+# - name: Install upload-server binary
+#   apt:
+#     name: stream-api
+#     state: latest
   # copy: src="upload-server/upload-server" dest="/opt/upload-server/upload-server" mode=0755
   # tags: upload-server
 
 - name: Create config directory for upload-server
-  file: path=/etc/upload-server state=directory mode=0755
+  file:
+    path: /etc/upload-server
+    state: directory
+    mode: 0755
 
 - name: Configure upload-server
   template: src=upload-server/config.toml.j2 dest=/etc/upload-server/config.toml
-  tags: upload-server
   register: api_conf
 
 - name: Install systemd unit for upload-server
-  copy: src=upload-server/upload-server.service dest=/etc/systemd/system/upload-server.service mode=0644
-
-- name: Enable and start systemd unit for upload-server
-  systemd: name=upload-server enabled=yes state=restarted daemon_reload=yes
-  tags: upload-server
-  when: not api_conf.changed
+  copy:
+    src: upload-server/upload-server.service
+    dest: /etc/systemd/system/upload-server.service
+    mode: 0644
+  register: api_service
 
 - name: Restart upload-server
   systemd:
@@ -32,7 +33,7 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
-  when: api_conf.changed
+  when: api_conf.changed or api_service.changed
 
 - name: Register upload-server consul service
   template:
