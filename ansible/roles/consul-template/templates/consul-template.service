@@ -1,6 +1,9 @@
 [Unit]
-Description=Template config for haproxy
+Description=Template config files from Consul
 After=network.target consul.service
+{% for unit in consul_template_before_units %}
+Before={{ unit }}
+{% endfor %}
 
 [Service]
 Type=simple
@@ -14,6 +17,6 @@ ExecReload=/usr/bin/env kill -HUP $MAINPID
 KillSignal=SIGINT
 
 [Install]
-WantedBy=haproxy.service
-
-
+{% for unit in consul_template_before_units %}
+WantedBy={{ unit }}
+{% endfor %}

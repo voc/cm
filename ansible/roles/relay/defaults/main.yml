@@ -32,3 +32,5 @@ youtube: no
 
 consul_template_templates:
   - "/etc/consul-template.d/relay.ctmpl:/etc/nginx/sites-enabled/relay.conf:/bin/bash -c '/bin/systemctl reload nginx.service || true'"
+consul_template_before_units:
+  - nginx.service
