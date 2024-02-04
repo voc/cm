@@ -1,8 +1,8 @@
 ---
 # Setup telegraf plugin
-- name: template nginx telegraf check
+- name: template nginx telegraf config
   template:
-    src: telegraf_nginx.conf
+    src: telegraf_nginx.toml
     dest: /etc/telegraf/telegraf.d/nginx.conf
     mode: 0644
   register: telegraf_nginx
@@ -14,33 +14,3 @@
     state: reloaded
   when: telegraf_nginx.changed
   tags: telegraf
-
-# Collectd stuff
-- name: adding entries for curl_json php to types.db
-  lineinfile:
-    dest: /opt/voc/collectd/types.db
-    regexp: "{{ item.regex }}"
-    line: "{{ item.line }}"
-  with_items:
-    - { regex: '^listen_queue\ .*', line: 'listen_queue       value:GAUGE:0:65535' }
-    - { regex: '^active_processes\ .*', line: 'active_processes   value:GAUGE:0:65535' }
-    - { regex: '^total_processes\ .*', line: 'total_processes    value:GAUGE:0:65535' }
-  notify: restart collectd
-  when: php is defined and php|bool
-  register: collectd_php_types
-  tags: collectd
-
-- name: template collectd nginx config
-  template:
-    src: collectd.nginx.conf
-    dest: /etc/collectd/collectd.conf.d/nginx.conf
-    mode: 0640
-  register: collectd_nginx_config
-  tags: collectd
-
-- name: restart collectd
-  service:
-    name: collectd
-    state: restarted
-  when: collectd_php_types.changed or collectd_nginx_config.changed
-  tags: collectd

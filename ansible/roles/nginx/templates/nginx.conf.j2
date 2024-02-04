@@ -94,13 +94,13 @@ http {
   # dynamic config
   include /etc/nginx/conf.d/*;
 
-{% if php|bool %}
+{% if nginx_php|bool %}
   upstream php {
     server unix:/run/php/php{{ php_version }}-fpm.sock;
   }
 {% endif %}
 
-{% if default_server %}
+{% if nginx_default_server|bool %}
   server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -151,7 +151,7 @@ http {
     }
 {% endif %}
 
-{% if php|bool %}
+{% if nginx_php|bool %}
     location ~* ^/stats/php {
       access_log off;
 

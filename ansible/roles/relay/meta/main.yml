@@ -3,7 +3,7 @@ dependencies:
   - role: nginx
     vars:
       # the relay config listens on http and https
-      default_server: no
+      nginx_default_server: no
       # currently required for viewer counting
       anonymize_logs: no
       # we only log playlists to access log

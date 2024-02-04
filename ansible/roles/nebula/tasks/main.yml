@@ -6,7 +6,7 @@
   register: nebula_stat
 
 - name: "Check if nebula is installed and version is {{ nebula_version }}"
-  shell: "nebula version | head -n1"
+  shell: "nebula -version | head -n1"
   ignore_errors: true
   register: nebula_installed
   changed_when: 'nebula_version not in nebula_installed.stdout'

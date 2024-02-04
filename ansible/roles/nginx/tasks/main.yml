@@ -4,7 +4,7 @@
 
   - import_tasks: php.yml
     tags: php
-    when: php|bool
+    when: nginx_php|bool
 
   - import_tasks: nginx.yml
 

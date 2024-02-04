@@ -1,6 +1,8 @@
 ---
   - name: install haproxy package
-    apt: name=haproxy state=present
+    apt: 
+      name: haproxy
+      state: present
 
   - name: setup dehydrated hook to combine certs for haproxy
     template:

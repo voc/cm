@@ -1,8 +1,5 @@
 ---
   - import_tasks: ../../../register/bin_path.yml
-  - import_tasks: undeploy.yml
-    tags: undeploy
-
   - import_tasks: nginx.yml
     tags: nginx
 
@@ -18,5 +15,5 @@
   - import_tasks: sysctl.yml
     tags: sysctl
 
-  - import_tasks: monitoring.yml
-    tags: monitoring
+  - import_tasks: telegraf.yml
+    tags: [telegraf, monitoring]
