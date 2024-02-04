@@ -86,69 +86,6 @@ mqtt:
   username: "{{ lookup('keepass', 'ansible/mqtt.username') }}"
   password: "{{ lookup('keepass', 'ansible/mqtt.password') }}"
 
-trusted_ipv4_ips: {
-  'voc internal #3500': '10.73.0.0/16',
-  'voc vpn': '10.8.0.0/16',
-  'voc public #2241':   '94.45.241.0/24',
-  'voc berlin':   '195.54.164.160/29',
-  'ccc berlin':   '195.160.172.0/24',
-  'voc dus':      '31.172.30.136/29',
-  '3st.be':       '188.40.235.220',
-  'luusa.org':    '212.201.69.24',
-  'n621.de':      '176.9.182.227',
-  'ilmenau':      '141.24.40.0/26',
-  'derpeter.net': '5.45.111.82',
-  'alb':          '185.106.84.0/22',
-  'alb rr1':      '185.1.74.1/32',
-  'alb rr2':      '185.1.74.2/32',
-  # relays
-  'live.bn.c3voc.de': '212.201.68.141',
-  'live.fem.c3voc.de': '141.24.220.23',
-  'live.alb.c3voc.de': '185.106.84.36',
-  'live2.alb.c3voc.de': '185.106.84.53',
-  'live.dus.c3voc.de': '31.172.30.138',
-  'lb.dus.c3voc.de': '31.172.30.141',
-  'lb.alb.c3voc.de': '185.106.84.35',
-  'live.self.c3voc.de': '141.70.120.34',
-  'live.ccl.c3voc.de': '31.172.30.138',
-  'usa.ccl.c3voc.de': '31.172.30.138',
-  'deskjet.ccl.c3voc.de': '31.172.30.138',
-}
-
-trusted_ipv6_ips: {
-  "31c3 public #2241":  '2001:67c:20a1:2241::/64',
-  "voc berlin":   '2001:67c:20a0:e::/64',
-  "voc dus":      '2a01:a700:4633::/64',
-  "3st.be":       '2a01:4f8:100:3022:1::35',
-  "luusa.org":    '2a00:5ba0:8000:4:5054:ff:fe18:542f',
-  "derpeter.net": '2001:4dd0:ff00:2a9::2',
-  "n621.de":      '2a01:4f8:151:8ffd:2::1',
-  "alb":          '2a02:8000::/32',
-  "alb rr1":       '2001:7f8:a5::5:7555:1/128',
-  "alb rr2":       '2001:7f8:a5::5:7555:2/128',
-  # relays
-  'live.bn.c3voc.de': '2a00:5ba0:8000:64:3aea:a7ff:fe90:6944',
-  'live.fem.c3voc.de': '2001:638:904:ffbf::23',
-  'live.alb.c3voc.de': '2001:67c:20a0:e::170',
-  'live2.alb.c3voc.de': '2001:67c:20a0:e::182',
-  'live.dus.c3voc.de': '2a01:a700:4633::138',
-  'lb.dus.c3voc.de': '2a01:a700:4633::141',
-  'lb.alb.c3voc.de': '2001:67c:20a0:e::169',
-  'live.self.c3voc.de': '2001:7c7:2111::1',
-  'live.ccl.c3voc.de': '2a01:a700:4633::138',
-  'usa.ccl.c3voc.de': '2a01:a700:4633::138',
-  'deskjet.ccl.c3voc.de': '2a01:a700:4633::138'
-}
-
-
-# allow stats ip
-nginx_ips_allow_stats: [
-  "::1",
-  "127.0.0.1",
-  "195.54.164.160/29",
-  "10.73.0.0/16",
-  "10.8.0.0/16"
-]
 
 users:
   - { name: 'andi', state: 'present' }
@@ -196,8 +133,6 @@ trusted_subnets:
   "voc vpn": "10.8.0.0/16"
 
 additional_users: []
-
-distribution_mode: icedist
 
 webroot_path: "/var/www"
 
