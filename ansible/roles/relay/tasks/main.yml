@@ -11,12 +11,11 @@
   - import_tasks: consul_template.yml
     tags: [consul-template]
 
-
 #  - import_tasks: sysctl.yml
 #    tags: sysctl
 
-  - import_tasks: collectd.yml
-    tags: [collectd, monitoring]
+  - import_tasks: telegraf.yml
+    tags: [telegraf, monitoring]
 
   - import_tasks: relive.yml
     when: relive_master|bool
@@ -24,7 +23,7 @@
 
   - import_tasks: upload-server.yml
     when: stream_master|bool
-    tags: upload-serverd
+    tags: upload-server
 
   - import_tasks: stats.yml
     when: stats_relay|bool

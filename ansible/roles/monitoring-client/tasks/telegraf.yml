@@ -13,7 +13,7 @@
     state: present
   tags: [apt, repos]
 
-- name: install packages needed to monitor host
+- name: install telegraf
   apt:
     name:
       - telegraf

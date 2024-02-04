@@ -1,9 +1,4 @@
 ---
-- name: restart collectd
-  service:
-    name: collectd
-    state: restarted
-
 - name: reload telegraf
   service:
     name: telegraf

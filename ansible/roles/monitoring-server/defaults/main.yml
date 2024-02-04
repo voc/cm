@@ -1,4 +1,3 @@
 grafana_url: 'https://%(domain)s/grafana/'
-collectd_client: no
 consul_template_templates:
   - "/etc/consul-template.d/stream-discovery.ctmpl:/var/lib/victoria-metrics/streams.yml"

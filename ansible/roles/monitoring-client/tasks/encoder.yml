@@ -1,7 +1,0 @@
-# Additional check_mk configurations for encoders
----
-  # Adding check_recording script
-  - name: add check_recording script
-    copy: dest=/usr/local/bin/check_recording
-          src=check_mk/plugins/check_recording
-          owner=root group=root mode=0755

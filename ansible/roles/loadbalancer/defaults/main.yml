@@ -6,3 +6,5 @@ haproxy_dtag_extrawurst: false
 
 consul_template_templates:
   - "/etc/consul-template.d/haproxy.ctmpl:/etc/haproxy/haproxy.cfg:/bin/bash -c '/bin/systemctl reload haproxy.service || true'"
+consul_template_before_units:
+  - haproxy.service

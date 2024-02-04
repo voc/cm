@@ -1,0 +1,41 @@
+---
+- name: create telegraf script dir
+  file:
+    path: /opt/voc/telegraf
+    state: directory
+    mode: 0755
+
+- name: deploy viewcounter script
+  copy:
+    src: "telegraf/{{ item }}"
+    dest: "/opt/voc/telegraf/{{ item }}"
+    mode: 0755
+  loop:
+    - NginxHls.py
+    - NginxDash.py
+
+- name: add telegraf to adm group
+  user:
+    name: telegraf
+    groups: adm
+    append: yes
+  register: telegraf_user
+
+- name: deploy relay telegraf config
+  template:
+    src: telegraf_relay.toml
+    dest: /etc/telegraf/telegraf.d/relay.conf
+    mode: 0644
+  register: telegraf_relay_config
+
+- name: restart telegraf
+  systemd:
+    name: telegraf
+    state: restarted
+  when: telegraf_user.changed
+
+- name: reload telegraf
+  service:
+    name: telegraf
+    state: reloaded
+  when: telegraf_relay_config.changed
