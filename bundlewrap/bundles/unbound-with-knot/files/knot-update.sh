@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 [[ -n "$DEBUG" ]] && set -x
-set -euo pipefail
+set -uo pipefail
 
 PRIMARY="${node.metadata.get('unbound-with-knot/primary')}"
 HOSTNAME="${node.metadata.get('hostname')}"
@@ -15,6 +15,8 @@ then
     voc2alert "warn" "knot" "Could not reach ${PRIMARY}, not updating!"
     exit 0
 fi
+
+set -e
 
 curl -s "http://${PRIMARY}/config/${HOSTNAME}.conf.asc" | gpg --armor --batch --passphrase "${PASSWORD}" -d > /etc/knot/knot.conf.new
 
