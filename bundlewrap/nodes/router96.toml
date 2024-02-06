@@ -57,15 +57,21 @@ cache_slabs = 4
 primary = "!kee_user:ansible|router|knot secret"
 primary_secret = "!kee_pass:ansible|router|knot secret"
 
+[metadata.voc2dmx]
+alert.brightness = 255
+rainbow.brightness = 150
+
 [metadata.voc2dmx.sacn]
 target = "10.73.100.115"
 
 [metadata.voc2dmx.lights]
-stairville_par_56 = [
-    1,
-    6,
-    11,
-    16,
+tsss_led_par_rgbw = [1, 9, 17, 25, 33, 41, 49, 57]
+
+# stairville_par_56 = [
+#    1,
+#    6,
+#    11,
+#    16,
 #    21,
 #    26,
-]
+# ]
