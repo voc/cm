@@ -1,0 +1,7 @@
+subgroups = ["saal1", "saal2", "saal6"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Hacker Hotel 2024"
+slug = "hackerhotel2024"
+schedule_xml = "https://example.com/schedule.xml"
