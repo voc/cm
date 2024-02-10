@@ -32,3 +32,6 @@ hdmi = true
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "cam1"
+
+[metadata.crs-worker]
+room_name = "Leonardo Da Vinci"
