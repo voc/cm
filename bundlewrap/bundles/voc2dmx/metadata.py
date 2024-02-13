@@ -11,7 +11,7 @@ defaults = {
         'sacn': {
             'universe': 1,
         },
-        'alert': {
+        'alerts': {
             'brightness': 100,
         },
         'rainbow': {
