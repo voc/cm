@@ -1,2 +1,2 @@
 ---
-  - include: systemd.yml
+  - import_tasks: systemd.yml

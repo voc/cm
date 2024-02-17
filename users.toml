@@ -480,5 +480,13 @@ enable_rz = false
 enable_event = true
 uid = 1161
 ssh_pubkeys = [
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILCty3i/MG4ehTN5JzY3UTtr/9q5L2eQinAGh1FClWIS trhetzner@oat"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILCty3i/MG4ehTN5JzY3UTtr/9q5L2eQinAGh1FClWIS trhetzner@oat"
+]
+
+[simpel]
+enable_rz = false
+enable_event = true
+uid = 1162
+ssh_pubkeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICMfqnvSSDoX0nLrHHnCaVzunwIT4LZY5kltcreRUxp1",
 ]

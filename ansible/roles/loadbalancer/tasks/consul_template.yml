@@ -1,27 +1,16 @@
-- name: create /etc/consul-template.d/ directory
-  file:
-    path: /etc/consul-template.d/
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
+- name: deploy consul-template
+  import_role:
+    name: consul-template
 
 - name: Deploy consul-template haproxy config
   template:
     src: haproxy/haproxy.ctmpl.j2
     dest: /etc/consul-template.d/haproxy.ctmpl
-  notify: reload consul-template
+  register: haproxy_template
+  tags: [haproxy]
 
-- name: Deploy consul-template service
-  template:
-    src: consul-template.service.j2
-    dest: /etc/systemd/system/consul-template.service
-  register: consul_template_service
-
-- name: Enable consul-template service
-  systemd:
+- name: reload consul-template
+  service:
     name: consul-template
-    enabled: yes
-    daemon_reload: yes
-    state: "restarted"
-  when: consul_template_service.changed
+    state: reloaded
+  when: haproxy_template.changed

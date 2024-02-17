@@ -5,6 +5,15 @@
           owner=root group=root mode=0750
     when: ansible_hostname is match('dellinger|storage|aws|berlin-ak|mebibyte')
 
+  - name: install required plugins for check_system
+    apt:
+      name:
+        - nagios-plugins-basic
+      state: present
+    tags: 
+      - check_system
+      - apt
+
   - name: create check_system script
     template:
       src: monitoring/check_system.sh.j2

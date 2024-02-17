@@ -1,0 +1,5 @@
+[Match]
+Name=${' '.join(sorted(match))}
+
+[Network]
+Bridge=${bridge}

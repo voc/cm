@@ -1,7 +1,7 @@
 ---
-  - include: packages.yml
-  - include: network_interfaces.yml
-  - include: shorewall.yml
+  - import_tasks: packages.yml
+  - import_tasks: network_interfaces.yml
+  - import_tasks: shorewall.yml
     tags: iptables
-  - include: dhcp.yml
-  - include: bind.yml
+  - import_tasks: dhcp.yml
+  - import_tasks: bind.yml

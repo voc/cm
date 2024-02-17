@@ -3,3 +3,6 @@ consul_template:
   checksum: sha256:1b1c9127e8da25b2d7322e6f2aa8e6d946336083999e0fdb321f96ffd447eebd
 
 # consul_template_templates: []
+
+# systemd that should be started after consul-template
+consul_template_before_units: []

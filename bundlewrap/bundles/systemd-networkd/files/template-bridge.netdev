@@ -1,0 +1,6 @@
+[NetDev]
+Name=${bridge}
+Kind=bridge
+
+[Bridge]
+STP=off

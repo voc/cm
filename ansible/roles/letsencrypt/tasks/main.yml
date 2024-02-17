@@ -1,13 +1,13 @@
 ---
-  - include: undeploy.yml
+  - import_tasks: undeploy.yml
 
-  - include: letsencrypt.yml
+  - import_tasks: letsencrypt.yml
     when: letsencrypt_fake is not defined
 
-  - include: letsencrypt_fake.yml
+  - import_tasks: letsencrypt_fake.yml
     when: letsencrypt_fake is defined
 
-#  - include: monitoring.yml
+#  - import_tasks: monitoring.yml
 #    tags:
 #      - monitoring
 #      - check_system

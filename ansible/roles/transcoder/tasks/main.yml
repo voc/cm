@@ -1,23 +1,23 @@
 ---
- - include: packages.yml
+ - import_tasks: packages.yml
    tags: packages
- - include: undeploy.yml
+ - import_tasks: undeploy.yml
 
- # - include: artwork.yml
+ # - import_tasks: artwork.yml
  #   tags: artwork
  #   with_items: "{{ transcoder_streams }}"
  #   when: transcoder_streams is defined
  #   loop_control:
  #     loop_var: transcoder_stream
 
- - include: cleanup.yml
+ - import_tasks: cleanup.yml
    tags: cleanup
 
- - include: transcoder-scripts.yml
+ - import_tasks: transcoder-scripts.yml
    tags: transcoder-scripts
 
- - include: upload-proxy.yml
+ - import_tasks: upload-proxy.yml
    tags: upload-proxy
 
- - include: stream-api.yml
+ - import_tasks: stream-api.yml
    tags: stream-api

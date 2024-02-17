@@ -1,7 +1,15 @@
-[global]
+[server]
+addr = "localhost:8080"
+outputPath = "/srv/nginx"
+
+# output playlist size
+playlistSize = 30
+streamTimeout = "15m"
+
+[auth]
 allowedDirs = ["/hls", "/dash", "/thumbnail"]
 
-[[auth]]
+[[auth.users]]
 user = "{{ lookup('keepass', 'ansible/stream-api/upload.username') }}"
 pass = "{{ lookup('keepass', 'ansible/stream-api/upload.password') }}"
-match = "/*"
+match = "*"

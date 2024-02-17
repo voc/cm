@@ -13,7 +13,7 @@
   - name: remove default vhost
     file: dest=/etc/nginx/sites-enabled/default state=absent
 
-  - include: create_vhost.yml certs_bootstrapped=no
+  - import_tasks: create_vhost.yml certs_bootstrapped=no
 
   - name: add host to domains.txt
     lineinfile:
@@ -57,7 +57,7 @@
   - name: run dehydrated cron job manually
     command: /usr/bin/dehydrated -c
 
-  - include: create_vhost.yml certs_bootstrapped=yes
+  - import_tasks: create_vhost.yml certs_bootstrapped=yes
       
 
  

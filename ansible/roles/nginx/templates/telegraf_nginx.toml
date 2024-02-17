@@ -1,0 +1,18 @@
+
+# Read Nginx's basic status information (ngx_http_stub_status_module)
+[[inputs.nginx]]
+  # An array of Nginx stub_status URI to gather stats.
+  urls = ["http://localhost:8999/stats/nginx"]
+
+{% if nginx_php|bool %}
+# PHP stats
+[[inputs.http]]
+  name_override = "php_fpm"
+  urls = ["http://localhost:8999/stats/php?json"]
+  data_format = "json"
+  tag_keys = [
+    "pool",
+  ]
+  tagexclude = ["url"]
+  fieldinclude = ["accepted conn", "listen queue len", "active processes", "total processes"]
+{% endif %}

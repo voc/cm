@@ -1,9 +1,9 @@
 ---
-- include: icecast.yml
+- import_tasks: icecast.yml
 
-- include: icedist.yml
+- import_tasks: icedist.yml
   tags: icedist
   when: icedist|bool
 
-- include: firewall.yml
+- import_tasks: firewall.yml
   tags: [firewall, nftables, iptables]

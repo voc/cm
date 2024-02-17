@@ -4,9 +4,10 @@ dependencies:
     tags: [firewall, iptables, nftables]
   - role: consul
     tags: [consul]
+    vars:
+      consul_server: true
   - role: nginx
     tags: nginx
     vars:
-      php: yes
-  - role: consul-template
-    tags: consul-template
+      nginx_php: yes
+      nginx_default_server: no

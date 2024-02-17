@@ -1,0 +1,7 @@
+[Match]
+Name=${bridge}
+
+[Network]
+% for vlan in sorted(vlans):
+VLAN=${bridge}.${vlan}
+% endfor

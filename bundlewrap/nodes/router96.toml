@@ -1,0 +1,77 @@
+hostname = "172.19.138.19"
+bundles = [
+    "isc-dhcp-server",
+    "netdata",
+    "openvpn-client",
+    "unbound-with-knot",
+    "voc2dmx",
+]
+groups = ["debian-bullseye"]
+
+[metadata.grub.cmdline_linux]
+'net.ifnames' = 1
+
+[metadata.interfaces.enp2s0]
+ips = [
+    "172.19.138.19/24"
+]
+dhcp = true
+
+[metadata.interfaces.br-lan]
+ips = [
+    "10.73.0.254/16",
+    "10.73.96.201/16",
+]
+
+[metadata.isc-dhcp-server.subnets.br-lan]
+range_lower = "10.73.96.100"
+range_higher = "10.73.96.199"
+subnet = "10.73.0.0/16"
+options.broadcast-address = "10.73.255.255"
+options.domain-name-servers = "10.73.0.254"
+options.domain-search = "lan.c3voc.de"
+options.routers = "10.73.0.254"
+options.subnet-mask = "255.255.0.0"
+
+[metadata.netdata]
+restrict-to = [
+    "172.19.138.0/24", # kunsi home
+]
+
+[metadata.nftables.rules]
+"50-router" = [
+    "inet filter forward ct state { related, established } accept",
+    "inet filter forward iifname { br-lan, tun-voc } accept",
+    "nat postrouting oifname enp2s0 masquerade",
+]
+
+[metadata.sysctl.options]
+"net.ipv4.ip_forward" = "1"
+
+[metadata.systemd-networkd.bridges.br-lan]
+match = ["enp1s0f*"]
+
+[metadata.unbound-with-knot]
+threads = 4
+cache_slabs = 4
+primary = "!kee_user:ansible|router|knot secret"
+primary_secret = "!kee_pass:ansible|router|knot secret"
+
+[metadata.voc2dmx]
+alert.brightness = 255
+rainbow.brightness = 150
+
+[metadata.voc2dmx.sacn]
+target = "10.73.100.115"
+
+[metadata.voc2dmx.lights]
+tsss_led_par_rgbw = [1, 9, 17, 25, 33, 41, 49, 57]
+
+# stairville_par_56 = [
+#    1,
+#    6,
+#    11,
+#    16,
+#    21,
+#    26,
+# ]

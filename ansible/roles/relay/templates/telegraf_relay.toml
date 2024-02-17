@@ -1,0 +1,7 @@
+# Collect stream viewers
+[[inputs.exec]]
+commands = [
+    "/opt/voc/telegraf/NginxHls.py",
+    "/opt/voc/telegraf/NginxDash.py",
+]
+data_format = "influx"

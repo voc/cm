@@ -1,9 +1,0 @@
-#MANAGED BY ANSIBLE
-
-[Unit]
-Description = Update stream info
-StartLimitIntervalSec = 0
-
-[Service]
-Type = simple
-ExecStart = /opt/stream_master/update_streams.py /srv/nginx/stream_info.json /opt/stream_master/config.toml

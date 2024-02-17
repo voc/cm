@@ -1,18 +1,18 @@
 ---
-  - include: general.yml
-  - include: packages.yml
-  - include: slim.yml
-  - include: x11vnc.yml
-  - include: edid-tools.yml
-  - include: voctomix.yml
+  - import_tasks: general.yml
+  - import_tasks: packages.yml
+  - import_tasks: slim.yml
+  - import_tasks: x11vnc.yml
+  - import_tasks: edid-tools.yml
+  - import_tasks: voctomix.yml
     tags: encodermode
-  - include: voctomix2.yml
+  - import_tasks: voctomix2.yml
     tags: encodermode
-  - include: irssi.yml
+  - import_tasks: irssi.yml
     tags: irssi
-  - include: lenovo-throttling-fix.yml
+  - import_tasks: lenovo-throttling-fix.yml
     tags: throttling
-  - include: rc.local.yml
+  - import_tasks: rc.local.yml
     tags:
       - iptables
       - rclocal

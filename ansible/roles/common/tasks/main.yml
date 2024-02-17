@@ -1,58 +1,58 @@
 ---
-  - include: ../../../register/bin_path.yml
+  - import_tasks: ../../../register/bin_path.yml
     tags: bin_path
 
-  - include: locale.yml
+  - import_tasks: locale.yml
     tags: locales
 
-  - include: lxc.yml
+  - import_tasks: lxc.yml
     tags: lxc
     when: ansible_virtualization_type is defined and ansible_virtualization_type == 'lxc' and 'proxmox' not in group_names
 
-  - include: resolv.yml
+  - import_tasks: resolv.yml
     tags: [resolv, dns]
     # work around systemd bug #10032
     when:  ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc' and 'nameservers' not in group_names
 
-  - include: apt_proxy.yml
+  - import_tasks: apt_proxy.yml
     tags: apt
     when: "'proxmox' not in group_names"
 
-  - include: repos.yml
+  - import_tasks: repos.yml
     tags: [apt, repos]
     when: "'proxmox' not in group_names"
 
-  - include: packages.yml
+  - import_tasks: packages.yml
     tags: packages
 
-  - include: vim.yml
-  - include: sudo.yml
-  - include: grub.yml
+  - import_tasks: vim.yml
+  - import_tasks: sudo.yml
+  - import_tasks: grub.yml
     when: "system.type == 'pc' and 'proxmox' not in group_names and ansible_virtualization_type != 'lxc'"
 
-  - include: ntp.yml
+  - import_tasks: ntp.yml
     tags: ntp
     when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
 
-#  - include: acpi_undeploy.yml
+#  - import_tasks: acpi_undeploy.yml
 #    when: system.type == 'pc' and ansible_virtualization_role == 'guest'
 #    tags: acpi
 #
-#  - include: acpi.yml
+#  - import_tasks: acpi.yml
 #    when: system.type == 'pc' and ansible_virtualization_role != 'guest'
 #    tags: acpi
 
-  - include: molly-guard.yml
-  - include: ssh_known_hosts.yml
+  - import_tasks: molly-guard.yml
+  - import_tasks: ssh_known_hosts.yml
     when: "'proxmox' not in group_names"
-  - include: ssl.yml
+  - import_tasks: ssl.yml
     tags: ssl
 
   # deploy users
-  - include: user.yml
+  - import_tasks: user.yml
     tags: user
 
-  - include: monitoring.yml
+  - import_tasks: monitoring.yml
     tags:
       - monitoring
       - check_system

@@ -9,6 +9,12 @@ do
             continue
         fi
 
+        if [ -d "/sys/class/net/$interface/bridge" ]
+        then
+            # this is a bridge, ignore it
+            continue
+        fi
+
         if [ "$(cat "/sys/class/net/$interface/operstate")" == "up" ] && [ -r "/sys/class/net/$interface/speed" ]
         then
             speed="$(cat "/sys/class/net/$interface/speed")"

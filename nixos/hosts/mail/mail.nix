@@ -32,6 +32,15 @@ in {
     enableImap = false;
     enablePop3 = false;
 
+    forwards = {
+      "cm" = "cm@lists.c3voc.de";
+      "congress" = "congress@lists.c3voc.de";
+      "media" = "media@lists.c3voc.de";
+      "muenchen" = "muenchen@lists.c3voc.de";
+      "studios" = "studios@lists.c3voc.de";
+      "voc" = "voc@lists.c3voc.de";
+    };
+
     # whitelist SPF checks from mng (for now)
     policydSPFExtraConfig = ''
       HELO_Whitelist = mng.c3voc.de
@@ -39,11 +48,16 @@ in {
     '';
   };
 
+  sops.secrets.aliases = {};
+
   services.postfix = {
+    mapFiles.virtual_cm = config.sops.secrets.aliases.path;
     relayDomains = ["hash:/var/lib/mailman/data/postfix_domains"];
     config = {
+      mydestination = lib.mkForce ["c3voc.de"];
       transport_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       local_recipient_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
+      virtual_alias_maps = ["hash:/etc/postfix/virtual_cm"];
     };
   };
 
@@ -70,9 +84,9 @@ in {
 
   services.rspamd.extraConfig = ''
     actions {
-      reject = null; # Disable rejects, default is 15
+      greylist = 2; # Apply greylisting when reaching this score
       add_header = 4; # Add header when reaching this score
-      greylist = 10; # Apply greylisting when reaching this score
+      reject = 6; # yeeeeeeeet from 6 on
     }
   '';
 

@@ -1,5 +1,5 @@
 ---
-  - include: ../../../register/bin_path.yml
+  - import_tasks: ../../../register/bin_path.yml
 
   # remove user when remove variable is defined
   - name: "remove users"

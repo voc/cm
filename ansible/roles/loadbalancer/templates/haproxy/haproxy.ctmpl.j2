@@ -154,18 +154,12 @@ frontend icecast_and_nginx_hls_https
 
     {{ frontend_acls("https", "{ ssl_fc }") }}
 
-
-# enable statistics and basic admin support for localhost
-{% for nr in range(1, haproxy_nbproc+1) %}
-listen stats_process_{{ nr }}
-    bind 127.0.0.1:910{{ nr }}
-    mode http
+frontend stats
+    bind *:8404
+    http-request use-service prometheus-exporter if { path /metrics }
     stats enable
-    stats uri     /admin?stats
+    stats uri /stats
     stats refresh 10s
-    stats admin   if LOCALHOST
-
-{% endfor %}
 
 # ######## #
 # BACKENDs #
