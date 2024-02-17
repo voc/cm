@@ -10,6 +10,10 @@ event = node.metadata.get('event/slug')
 directories[f'/video'] = {
     'owner': user_group,
     'group': user_group,
+    'after': {
+        'zfs_dataset:',
+        'zfs_pool:',
+    },
 }
 
 for path in (
