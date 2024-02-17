@@ -40,6 +40,8 @@ input = "cam1"
 ashift = 12
 
 [[metadata.zfs.pools.video.when_creating.config]]
+type = "mirror"
 devices = [
+    "/dev/disk/by-id/ata-INTEL_SSDSC2KB960G8_PHYF244001QU960CGN",
     "/dev/disk/by-id/ata-INTEL_SSDSC2KB960G8_PHYF244002AS960CGN",
 ]
