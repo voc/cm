@@ -8,7 +8,10 @@ directories = {
 for mount, data in node.metadata.get('cifs-client/mounts', {}).items():
     unitname = data['unitname']
     if data.get('create_dir', False):
-        directories[data['mountpoint']] = {}
+        directories[data['mountpoint']] = {
+            'owner': None,
+            'group': None,
+        }
 
     mount_options = set()
     for opt, value in data.get('mount_options', {}).items():
