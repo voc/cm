@@ -1,6 +1,11 @@
 [Unit]
 Description=Run dehydrated to renew Let's Encrypt certificates
+StartLimitIntervalSec=1h
+StartLimitBurst=3
 
 [Service]
 Type=oneshot
 ExecStart=/opt/dehydrated/dehydrated --cron
+RestartSec=5min
+Restart=on-failure
+RestartMode=direct
