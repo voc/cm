@@ -1,0 +1,6 @@
+subgroups = ["saal1", "saal2", "saal4", "saal4", "servercase"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "FOSSGIS 2024"
+slug = "fossgis2024"
