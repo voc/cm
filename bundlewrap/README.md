@@ -194,11 +194,13 @@ If you wish to hide an input from the software, set its name to `empty`
 or `x`.
 
 ```toml
-# All those values represent the defaults set by bundlewrap
+# All those values represent the defaults set by bundlewrap, you only
+# need to copy what you want to change.
 [metadata.pygtk-atem-switcher.atem]
 video_mode = "1080p25"
 
 [metadata.pygtk-atem-switcher.atem.settings.inputs]
+# use "x" to hide the button in the UI
 input1 = "Laptop"
 input2 = "x"
 input3 = "x"
