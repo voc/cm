@@ -21,11 +21,11 @@ neighbor_ip = "10.9.200.1"
 
 [metadata.interfaces.ens18]
 ips = [
-    "178.250.162.46/29", # seibert wiesbaden
-    "94.45.241.105/24", # c3noc event
-    "2001:67c:20a1:2241::105/64", # c3noc event
+    #"178.250.162.46/29", # seibert wiesbaden
+    #"94.45.241.105/24", # c3noc event
+    #"2001:67c:20a1:2241::105/64", # c3noc event
 ]
-gateway4 = "178.250.162.41" # seibert wiesbaden
+#gateway4 = "178.250.162.41" # seibert wiesbaden
 #gateway4 = "94.45.241.1" # c3noc event
 #gateway6 = "2001:67c:20a1:2241::1" # c3noc event
 
@@ -36,15 +36,15 @@ ips = [
     "2001:67c:20a1:3504:10:73:200:201/64",
 ]
 
-[metadata.isc-dhcp-server.subnets.ens19]
-range_lower = "10.73.170.1"
-range_higher = "10.73.170.254"
-subnet = "10.73.0.0/16"
-options.broadcast-address = "10.73.255.255"
-options.domain-name-servers = "10.73.0.254"
-options.domain-search = "lan.c3voc.de"
-options.routers = "10.73.0.254"
-options.subnet-mask = "255.255.0.0"
+# [metadata.isc-dhcp-server.subnets.ens19]
+# range_lower = "10.73.170.1"
+# range_higher = "10.73.170.254"
+# subnet = "10.73.0.0/16"
+# options.broadcast-address = "10.73.255.255"
+# options.domain-name-servers = "10.73.0.254"
+# options.domain-search = "lan.c3voc.de"
+# options.routers = "10.73.0.254"
+# options.subnet-mask = "255.255.0.0"
 
 [metadata.nftables]
 forward."50-router" = [
