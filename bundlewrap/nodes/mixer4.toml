@@ -7,6 +7,7 @@ gateway4 = "10.73.0.254"
 
 [metadata.pygtk-atem-switcher.atem]
 video_mode = "1080p50"
+ip = "10.73.5.40" # Atem Mini borrowed from case 5
 
 [metadata.pygtk-atem-switcher.atem.settings.inputs]
 input1 = "Laptop"
