@@ -46,6 +46,9 @@ groups['mixers'] = {
         'systemd': {
             'ignore_power_switch': True,
         },
+        'voctomix2': {
+            'rev': 'voctomix2-voctogui-reshuffle', # gui reshuffle
+        },
     },
 }
 
