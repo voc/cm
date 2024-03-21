@@ -4,3 +4,12 @@ groups = ["debian-buster"]
 [metadata.interfaces.eth0]
 ips = ["10.73.5.1/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.pygtk-atem-switcher.atem]
+ip = "10.73.96.40"
+
+[metadata.pygtk-atem-switcher.atem.settings.inputs]
+input1 = "Laptop"
+input2 = "PC"
+input3 = "x"
+input4 = "info-beamer"
