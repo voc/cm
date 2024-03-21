@@ -14,3 +14,6 @@ input1 = "Laptop"
 input2 = "x"
 input3 = "x"
 input4 = "info-beamer"
+
+[metadata.voctomix2]
+rev = 'voctomix2'
