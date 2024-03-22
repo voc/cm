@@ -6,7 +6,7 @@ bundles = [
     "unbound-with-knot",
     "voc2dmx",
 ]
-groups = ["debian-bullseye"]
+groups = ["debian-bookworm"]
 
 [metadata.bird]
 static_routes = [
