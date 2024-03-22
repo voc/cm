@@ -78,7 +78,7 @@ primary = "!kee_user:ansible|router|knot secret"
 primary_secret = "!kee_pass:ansible|router|knot secret"
 
 [metadata.voc2dmx]
-alert.brightness = 255
+alerts.brightness = 255
 rainbow.brightness = 150
 
 [metadata.voc2dmx.sacn]
