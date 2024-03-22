@@ -3,7 +3,6 @@ bundles = [
     "bird",
     "isc-dhcp-server",
     "netdata",
-    "openvpn-client",
     "radvd",
     "unbound-with-knot",
 ]
@@ -50,7 +49,7 @@ options.subnet-mask = "255.255.0.0"
 [metadata.nftables]
 forward."50-router" = [
     "ct state { related, established } accept",
-    "iifname { ens19, tun-voc } accept",
+    "iifname ens19 accept",
 ]
 nat_postrouting."50-router" = [
     "oifname ens18 masquerade",

@@ -1,7 +1,0 @@
-defaults = {
-    'apt': {
-        'packages': {
-            'openvpn': {},
-        },
-    },
-}
