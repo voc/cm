@@ -37,3 +37,11 @@ def join_faults(faults, by=' '):
         lambda o: by.join([i.value for i in o]),
         o=result,
     )
+
+
+def dict_as_json(json):
+    return Fault(
+        'dict_as_json',
+        lambda o: metadata_to_json(o) + '\n',
+        o=json
+    )
