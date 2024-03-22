@@ -1,4 +1,4 @@
-hostname = "10.73.200.201"
+hostname = "10.9.200.2"
 bundles = [
     "isc-dhcp-server",
     "netdata",
@@ -47,9 +47,17 @@ prefix = "2001:67c:20a1:3504::/64"
 rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
 
 [metadata.sysctl.options]
-"net.ipv4.ip_forward" = "1"
+"net.ipv4.conf.all.forwarding" = "1"
 "net.ipv6.conf.all.forwarding" = "1"
 "net.ipv6.conf.all.disable_ipv6" = "0"
+
+[metadata.systemd-networkd.wireguard.c3voc]
+# pubkey encrypt$gAAAAABl_YPpFCkOL-J4VetjmrCMaq5N1XYJEk4kcQZx22-45F_pW6Ppy8vsYPB88eupqfvHFgngdibJ-KOPnhF9728tgo0JB8GFiWonS_fGZR1vWBT4Zwgw1qpBUKZP4WRkzELcGdb2
+peer = "wg.c3voc.de:20200"
+peer_pubkey = "!decrypt:encrypt$gAAAAABl_YOCurKJacZUVR-ZrYa_YmmMJVA2N1TRochwDiVv6_-Z9J63Aemdq4PI3VbgGO3Qkbx4aY-vVikvBQYedjEt9sbzCv9z87yQ0tKFhelXfQMlwrI6sLZdAnTN7U9sXPVt2k-a"
+my_ip = "10.9.200.2"
+my_port = 20200
+privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4vfD9ScgHyA7-CzXRkHAwM7FIS6S8ArMwovWu_eqyP0owuRfHjvICLUSGxkBHeyTlA91jZuxwpbZ02sjFoLntYeBgD-pq"
 
 [[metadata.telegraf.input_plugins.builtin.proxmox]]
 api_token = "!decrypt:encrypt$gAAAAABk3jHP-bc7jvJ_Lc-20Dyxa3ZpXTfW60gpwGpfEa23sgL-6Tg_TdV1FYIr6LPzihLd4DTCcsokVtbfZpOINpZ28bBLQWY_qk5QAIQymQx9jbHJQR8HJ0-yzO0LliQTzY2_Qndub-j_0Kv8hC1cyIxvlI3FfkehY0POBnYXN9y3oJcJQQY="
