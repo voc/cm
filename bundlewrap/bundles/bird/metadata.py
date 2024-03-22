@@ -24,7 +24,7 @@ defaults = {
 def my_ip(metadata):
     wg_tunnels = sorted(metadata.get('systemd-networkd/wireguard', {}).keys())
     if wg_tunnels:
-        my_ip = sorted(metadata.get(f'systemd-networkd/wireguard/{wg_tunnels[0]}/my_ip'))[0].split('/')[0]
+        my_ip = metadata.get(f'systemd-networkd/wireguard/{wg_tunnels[0]}/my_ip').split('/')[0]
     else:
         my_ip = str(sorted(repo.libs.tools.resolve_identifier(repo, node.name))[0])
 
