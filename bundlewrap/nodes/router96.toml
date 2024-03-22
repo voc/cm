@@ -45,7 +45,7 @@ options.subnet-mask = "255.255.0.0"
 
 [metadata.netdata]
 restrict-to = [
-    "172.19.138.0/24", # kunsi home
+    "rfc1918",
 ]
 
 [metadata.nftables]
