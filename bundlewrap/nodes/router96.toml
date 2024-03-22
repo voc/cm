@@ -51,7 +51,7 @@ restrict-to = [
 [metadata.nftables]
 forward."50-router" = [
     "ct state { related, established } accept",
-    "iifname { br-lan, tun-voc } accept",
+    "iifname br-lan accept",
 ]
 nat_postrouting."50-router" = [
     "oifname enp2s0 masquerade",
