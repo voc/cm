@@ -24,7 +24,11 @@ groups['linux'] = {
     'metadata': {
         'firewall': {
             'port_rules': {
-                '*': {'voc-internal'},
+                '*': {
+                    # TODO evaluate if that can be restricted
+                    'voc-internal',
+                    'voc-vpn',
+                },
             },
         },
         'telegraf': {
