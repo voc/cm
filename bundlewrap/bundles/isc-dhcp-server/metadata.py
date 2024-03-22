@@ -32,7 +32,7 @@ def nftables(metadata):
         'nftables': {
             'input': {
                 # can't use port_rules here, because we're generating interface based rules.
-                '10-dhcpd': rules,
+                '10-dhcpd': sorted(rules),
             },
         }
     }

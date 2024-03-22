@@ -40,7 +40,7 @@ def wireguard_forwarding(metadata):
     return {
         'nftables': {
             'forward': {
-                '10-wireguard-tunnels': rules,
+                '10-wireguard-tunnels': sorted(rules),
             },
         },
     }
