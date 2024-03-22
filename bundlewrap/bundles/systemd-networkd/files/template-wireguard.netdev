@@ -1,0 +1,13 @@
+[NetDev]
+Name=wg_${tunnel}
+Kind=wireguard
+
+[WireGuard]
+PrivateKey=${privatekey}
+ListenPort=${my_port}
+
+[WireGuardPeer]
+PublicKey=${peer_pubkey}
+AllowedIPs=0.0.0.0/0
+Endpoint=${peer}
+PersistentKeepalive=30

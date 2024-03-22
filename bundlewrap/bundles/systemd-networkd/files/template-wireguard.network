@@ -1,0 +1,12 @@
+[Match]
+Name=wg_${tunnel}
+
+[Address]
+Address=${my_ip}
+
+[Network]
+IPv6AcceptRA=no
+DHCP=no
+
+[Link]
+ActivationPolicy=up

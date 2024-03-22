@@ -176,3 +176,33 @@ for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
                 'svc_systemd:systemd-networkd:restart',
             },
         }
+
+for tunnel, config in node.metadata.get('systemd-networkd/wireguard', {}).items():
+    files[f'/etc/systemd/network/wg_{tunnel}.netdev'] = {
+        'source': 'template-wireguard.netdev',
+        'content_type': 'mako',
+        'context': {
+            'tunnel': tunnel,
+            **config,
+        },
+        'needed_by': {
+            'svc_systemd:systemd-networkd',
+        },
+        'triggers': {
+            'svc_systemd:systemd-networkd:restart',
+        },
+    }
+    files[f'/etc/systemd/network/wg_{tunnel}.network'] = {
+        'source': 'template-wireguard.network',
+        'content_type': 'mako',
+        'context': {
+            'tunnel': tunnel,
+            **config,
+        },
+        'needed_by': {
+            'svc_systemd:systemd-networkd',
+        },
+        'triggers': {
+            'svc_systemd:systemd-networkd:restart',
+        },
+    }
