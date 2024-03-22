@@ -70,10 +70,7 @@ for config in sorted(node.metadata.get('telegraf/input_plugins/exec', {}).values
     telegraf_config['inputs']['exec'].append(config)
 
 files['/etc/telegraf/telegraf.conf'] = {
-    'content_type': 'mako',
-    'context': {
-        'config': telegraf_config,
-    },
+    'content': repo.libs.faults.dict_as_toml(telegraf_config),
     'triggers': {
         'svc_systemd:telegraf:restart',
     },

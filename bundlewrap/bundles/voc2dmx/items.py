@@ -27,10 +27,7 @@ actions['voc2dmx_install'] = {
 }
 
 files['/opt/voc2dmx/config.toml'] = {
-    'content_type': 'mako',
-    'context': {
-        'config': node.metadata.get('voc2dmx'),
-    },
+    'content': repo.libs.faults.dict_as_toml(node.metadata.get('voc2dmx')),
     'triggers': {
         'svc_systemd:voc2dmx:restart',
     },

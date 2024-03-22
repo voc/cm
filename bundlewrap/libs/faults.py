@@ -3,6 +3,9 @@ from json import dumps, loads
 from bundlewrap.metadata import metadata_to_json
 from bundlewrap.utils import Fault
 
+from tomlkit import dumps as toml_dumps
+from bundlewrap.utils.text import toml_clean
+
 
 def resolve_faults(dictionary: dict) -> dict:
     return loads(metadata_to_json(dictionary))
@@ -43,5 +46,13 @@ def dict_as_json(json):
     return Fault(
         'dict_as_json',
         lambda o: metadata_to_json(o) + '\n',
+        o=json
+    )
+
+
+def dict_as_toml(json):
+    return Fault(
+        'dict_as_toml',
+        lambda o: toml_clean(toml_dumps(resolve_faults(o), sort_keys=True)) + '\n',
         o=json
     )
