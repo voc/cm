@@ -51,7 +51,7 @@ forward."50-router" = [
     "ct state { related, established } accept",
     "iifname ens19 accept",
 ]
-nat_postrouting."50-router" = [
+postrouting."50-router" = [
     "oifname ens18 masquerade",
 ]
 
