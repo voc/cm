@@ -1,6 +1,3 @@
-from ipaddress import ip_network
-
-from bundlewrap.exceptions import NoSuchNode
 from bundlewrap.metadata import atomic
 
 defaults = {
