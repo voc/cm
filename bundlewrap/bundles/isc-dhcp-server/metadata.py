@@ -21,18 +21,18 @@ defaults = {
 
 
 @metadata_reactor.provides(
-    'nftables/rules/10-dhcpd',
+    'nftables/input/10-dhcpd',
 )
 def nftables(metadata):
     rules = set()
     for iface in node.metadata.get('isc-dhcp-server/subnets', {}):
-        rules.add(f'inet filter input udp dport {{ 67, 68 }} iifname {iface} accept')
+        rules.add(f'udp dport {{ 67, 68 }} iifname {iface} accept')
 
     return {
         'nftables': {
-            'rules': {
+            'input': {
                 # can't use port_rules here, because we're generating interface based rules.
-                '10-dhcpd': sorted(rules),
+                '10-dhcpd': rules,
             },
         }
     }

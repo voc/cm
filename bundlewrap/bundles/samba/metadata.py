@@ -19,8 +19,8 @@ def firewall(metadata):
             'port_rules': {
                 '137/udp': atomic(metadata.get('samba/restrict-to', set())),
                 '138/udp': atomic(metadata.get('samba/restrict-to', set())),
-                '139': atomic(metadata.get('samba/restrict-to', set())),
-                '445': atomic(metadata.get('samba/restrict-to', set())),
+                '139/tcp': atomic(metadata.get('samba/restrict-to', set())),
+                '445/tcp': atomic(metadata.get('samba/restrict-to', set())),
             },
         },
     }

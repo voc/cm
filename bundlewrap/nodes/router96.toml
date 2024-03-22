@@ -38,11 +38,13 @@ restrict-to = [
     "172.19.138.0/24", # kunsi home
 ]
 
-[metadata.nftables.rules]
-"50-router" = [
-    "inet filter forward ct state { related, established } accept",
-    "inet filter forward iifname { br-lan, tun-voc } accept",
-    "nat postrouting oifname enp2s0 masquerade",
+[metadata.nftables]
+forward."50-router" = [
+    "ct state { related, established } accept",
+    "iifname { br-lan, tun-voc } accept",
+]
+nat_postrouting."50-router" = [
+    "oifname enp2s0 masquerade",
 ]
 
 [metadata.sysctl.options]

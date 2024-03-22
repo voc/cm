@@ -87,7 +87,7 @@ def firewall(metadata):
         17000, # video blinder
         18000, # audio blinder
     ):
-        port_rules[str(port)] = atomic(metadata.get('voctocore/restrict-to', set()))
+        port_rules[f'{port}/tcp'] = atomic(metadata.get('voctocore/restrict-to', set()))
 
 
     for idx, source in enumerate(metadata.get('voctocore/sources', {})):
@@ -97,7 +97,7 @@ def firewall(metadata):
             13100, # source preview
             15001, # source live
         ):
-            port_rules[str(port+idx)] = atomic(metadata.get('voctocore/restrict-to', set()))
+            port_rules[f'{port+idx}/tcp'] = atomic(metadata.get('voctocore/restrict-to', set()))
 
 
     return {

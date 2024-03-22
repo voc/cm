@@ -17,7 +17,7 @@ def firewall(metadata):
     return {
         'firewall': {
             'port_rules': {
-                '22': atomic(metadata.get('openssh/restrict-to', {'*'})),
+                '22/tcp': atomic(metadata.get('openssh/restrict-to', {'*'})),
             },
         },
     }

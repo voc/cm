@@ -15,7 +15,7 @@ def firewall(metadata):
     return {
         'firewall': {
             'port_rules': {
-                '19999': atomic(metadata.get('netdata/restrict-to', set())),
+                '19999/tcp': atomic(metadata.get('netdata/restrict-to', set())),
             },
         },
     }

@@ -43,7 +43,7 @@ def firewall(metadata):
     return {
         'firewall': {
             'port_rules': {
-                '179': atomic(sources),
+                '179/tcp': atomic(sources),
             },
         },
     }

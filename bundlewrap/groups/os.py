@@ -25,7 +25,6 @@ groups['linux'] = {
         'firewall': {
             'port_rules': {
                 '*': {'voc-internal'},
-                '*/udp': {'voc-internal'},
             },
         },
         'telegraf': {

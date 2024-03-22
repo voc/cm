@@ -15,8 +15,12 @@ directories = {
 
 files = {
     '/etc/nftables.conf': {
-        'needs': {
-            'directory:/etc/nftables-rules.d',
+        'content_type': 'mako',
+        'context': {
+            'forward': node.metadata.get('nftables/forward', {}),
+            'input': node.metadata.get('nftables/input', {}),
+            'postrouting': node.metadata.get('nftables/postrouting', {}),
+            'prerouting': node.metadata.get('nftables/prerouting', {}),
         },
         'triggers': {
             'svc_systemd:nftables:reload',
@@ -31,21 +35,6 @@ files = {
         },
     },
 }
-
-for ruleset, rules in node.metadata.get('nftables/rules', {}).items():
-    files[f'/etc/nftables-rules.d/{ruleset}'] = {
-        'source': 'rules-template',
-        'content_type': 'mako',
-        'context': {
-            'rules': rules,
-        },
-        'needed_by': {
-            'svc_systemd:nftables',
-        },
-        'triggers': {
-            'svc_systemd:nftables:reload',
-        },
-    }
 
 svc_systemd = {
     'nftables': {

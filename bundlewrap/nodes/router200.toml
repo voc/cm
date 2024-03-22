@@ -47,11 +47,13 @@ options.domain-search = "lan.c3voc.de"
 options.routers = "10.73.0.254"
 options.subnet-mask = "255.255.0.0"
 
-[metadata.nftables.rules]
-"50-router" = [
-    "inet filter forward ct state { related, established } accept",
-    "inet filter forward iifname { ens19, tun-voc } accept",
-    "nat postrouting oifname ens18 masquerade",
+[metadata.nftables]
+forward."50-router" = [
+    "ct state { related, established } accept",
+    "iifname { ens19, tun-voc } accept",
+]
+nat_postrouting."50-router" = [
+    "oifname ens18 masquerade",
 ]
 
 [metadata.radvd.interfaces.ens19]

@@ -39,7 +39,7 @@ def firewall(metadata):
         'firewall': {
             'port_rules': {
                 # nope. nothing for knot
-                '53': atomic(metadata.get('unbound/restrict-to', set())),
+                '53/tcp': atomic(metadata.get('unbound/restrict-to', set())),
                 '53/udp': atomic(metadata.get('unbound/restrict-to', set())),
             },
         },

@@ -16,7 +16,7 @@ def firewall(metadata):
     return {
         'firewall': {
             'port_rules': {
-                '873': atomic(metadata.get('rsync/restrict-to', set())),
+                '873/tcp': atomic(metadata.get('rsync/restrict-to', set())),
             },
         },
     }

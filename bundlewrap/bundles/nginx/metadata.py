@@ -44,8 +44,8 @@ def firewall(metadata):
     return {
         'firewall': {
             'port_rules': {
-                '80': atomic(metadata.get('nginx/restrict-to', {'*'})),
-                '443': atomic(metadata.get('nginx/restrict-to', {'*'})),
+                '80/tcp': atomic(metadata.get('nginx/restrict-to', {'*'})),
+                '443/tcp': atomic(metadata.get('nginx/restrict-to', {'*'})),
             },
         },
     }
