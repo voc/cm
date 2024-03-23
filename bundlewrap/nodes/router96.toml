@@ -1,4 +1,4 @@
-hostname = "172.19.138.19"
+hostname = "10.73.96.201"
 bundles = [
     "bird",
     "isc-dhcp-server",
