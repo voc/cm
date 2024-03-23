@@ -13,7 +13,8 @@ named_networks = {
     'voc-vpn': {
         'ipv4': {
             '10.8.0.0/24', # openvpn
-            '10.9.0.0/16', # wireguard
+            '10.9.0.0/16', # wireguard s2s
+            '10.44.0.0/24', # wireguard clients
         },
         'ipv6': set(),
     },
