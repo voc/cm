@@ -1,5 +1,5 @@
 routeros['/ip/dns'] = {
-    'servers': ','.join(repo.libs.defaults.nameservers),
+    'servers': repo.libs.defaults.nameservers,
 }
 
 for service in (
