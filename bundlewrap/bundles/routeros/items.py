@@ -46,7 +46,7 @@ routeros['/snmp'] = {
     'enabled': True,
 }
 routeros['/snmp/community?name=public'] = {
-    'addresses': '::/0',
+    'addresses': '10.73.0.0/16',
     'disabled': False,
     'read-access': True,
     'write-access': False,
