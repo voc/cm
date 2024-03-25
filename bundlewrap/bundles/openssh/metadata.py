@@ -11,7 +11,7 @@ defaults = {
 }
 
 @metadata_reactor.provides(
-    'firewall/port_rules/22',
+    'firewall/port_rules',
 )
 def firewall(metadata):
     return {

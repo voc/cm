@@ -37,8 +37,7 @@ if node.has_bundle('telegraf'):
 
 
 @metadata_reactor.provides(
-    'firewall/port_rules/80',
-    'firewall/port_rules/443',
+    'firewall/port_rules',
 )
 def firewall(metadata):
     return {

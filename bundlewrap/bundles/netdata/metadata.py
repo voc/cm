@@ -9,7 +9,7 @@ defaults = {
 }
 
 @metadata_reactor.provides(
-    'firewall/port_rules/19999',
+    'firewall/port_rules',
 )
 def firewall(metadata):
     return {
