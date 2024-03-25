@@ -28,6 +28,8 @@ gateway4 = "10.73.0.254"
 #i2 = "https://cdn.c3voc.de/hls/s7/native_hd.m3u8"
 #i7 = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
 
+[metadata.users.equinox]
+
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
 

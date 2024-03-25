@@ -37,3 +37,9 @@ for i in ROOMS_WITH_MINIONS + ROOMS_WITHOUT_MINIONS:
 
     if i in ROOMS_WITH_MINIONS:
         groups[f'saal{i}']['members'].add(f'minion{i}')
+
+
+# room-specific metadata
+groups['saal28']['metadata']['users'] = {
+    'equinox': {},
+}
