@@ -3,6 +3,7 @@ bundles = [
     "bird",
     "isc-dhcp-server",
     "netdata",
+    "routeros-temperature-monitoring",
     "unbound-with-knot",
     "voc2dmx",
 ]
@@ -55,6 +56,11 @@ forward."50-router" = [
 ]
 postrouting."50-router" = [
     "oifname enp2s0 masquerade",
+]
+
+[metadata.routeros-temperature-monitoring]
+targets = [
+    "switch96.lan.c3voc.de",
 ]
 
 [metadata.sysctl.options]
