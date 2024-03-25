@@ -13,7 +13,7 @@ defaults = {
         'timers': {
             'knot_update': {
                 'command': '/etc/knot/update.sh',
-                'when': 'hourly',
+                'when': f'*-*-* *:{node.magic_number%60}:00',
                 'requires': {
                     'network-online.target',
                 },
