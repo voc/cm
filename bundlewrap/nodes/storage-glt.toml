@@ -1,0 +1,37 @@
+bundles = [
+    "encoder-common",
+#    "loudness-rendering",
+    "samba",
+    "zfs",
+]
+groups = [
+    "crs-workers",
+    "debian-bullseye",
+]
+
+[metadata.crs-worker]
+autostart_scripts = [ "recording-scheduler", "mount4cut", "cut-postprocessor", "postencoding", "postprocessing" ]
+encoding.secret = "!decrypt:encrypt$gAAAAABkOS_by1-OF4v0BuFqOwofXy4ka7cp5v7UQjxjrvQasQbmx4p4W4ZYPu0GyZwWvIzJdR0gUymexb-2QrzJAMD1fZd3p3BZQmHOlFulwegjXZIyKYo3SsgTnt9NsnSzYqNBNclY"
+encoding.token = "!decrypt:encrypt$gAAAAABkOS_Us1SxDDO0JZGgPQ7g-VMCw792NVYP2-k8wY5okEnlD_OWTePmEIbF6RK0h2tHZ9bRV_ReRPRLH3GPIsDA_49YaRQYoxzTQUkFOkEin9LQDiGsyAFfMtS5bP42Sfc3k8DT"
+
+[metadata.grub.cmdline_linux]
+'net.ifnames' = '1'
+
+[metadata.interfaces.eno1]
+ips = [
+    "10.73.28.100/16",
+]
+gateway4 = "10.73.0.254"
+
+#[metadata.loudness-rendering]
+#i1 = "https://cdn.c3voc.de/hls/s4/native_hd.m3u8"
+#i2 = "https://cdn.c3voc.de/hls/s7/native_hd.m3u8"
+#i7 = "https://cdn.c3voc.de/hls/s3/native_hd.m3u8"
+
+[metadata.zfs.pools.video.when_creating]
+ashift = 12
+
+[[metadata.zfs.pools.video.when_creating.config]]
+devices = [
+    "/dev/disk/by-id/ata-WDC_WD40EFAX-68JH4N1_WD-WX92DA1LZA99",
+]

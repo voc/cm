@@ -1,0 +1,11 @@
+groups = ["debian-buster"]
+
+[metadata.interfaces.eth0]
+ips = [
+    "10.73.28.1/16",
+    "192.168.28.22/24",
+]
+gateway4 = "10.73.0.254"
+
+[metadata.voctogui]
+high_dpi = false

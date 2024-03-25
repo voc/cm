@@ -12,7 +12,8 @@ ROOMS_WITH_MINIONS = (
     4,
     5,
     6,
-    80,
+    28, # GLT / realraum Graz
+    80, # muccc
 )
 
 for i in ROOMS_WITH_MINIONS + ROOMS_WITHOUT_MINIONS:

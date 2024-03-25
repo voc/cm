@@ -1,0 +1,27 @@
+bundles = ["cifs-client"]
+groups = ["debian-bullseye"]
+
+[metadata.cifs-client.mounts.video]
+serverpath = '//10.73.28.100/video'
+mount_options.ro = false
+
+[metadata.cifs-client.mounts.video-encoded]
+serverpath = '//10.73.28.100/encoded'
+
+[metadata.cifs-client.mounts.video-fuse]
+serverpath = '//10.73.28.100/fuse'
+
+[metadata.cifs-client.mounts.video-tmp]
+serverpath = '//10.73.28.100/tmp'
+
+[metadata.crs-worker]
+autostart_scripts = ["encoding"]
+encoding.secret = "!decrypt:encrypt$gAAAAABkOS_by1-OF4v0BuFqOwofXy4ka7cp5v7UQjxjrvQasQbmx4p4W4ZYPu0GyZwWvIzJdR0gUymexb-2QrzJAMD1fZd3p3BZQmHOlFulwegjXZIyKYo3SsgTnt9NsnSzYqNBNclY"
+encoding.token = "!decrypt:encrypt$gAAAAABkOS_Us1SxDDO0JZGgPQ7g-VMCw792NVYP2-k8wY5okEnlD_OWTePmEIbF6RK0h2tHZ9bRV_ReRPRLH3GPIsDA_49YaRQYoxzTQUkFOkEin9LQDiGsyAFfMtS5bP42Sfc3k8DT"
+
+[metadata.grub.cmdline_linux]
+'net.ifnames' = '1'
+
+[metadata.interfaces.enp35s0]
+ips = ["10.73.28.7/16"]
+gateway4 = "10.73.0.254"
