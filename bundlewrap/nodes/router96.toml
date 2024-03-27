@@ -60,8 +60,8 @@ match = ["enp1s0f*"]
 [metadata.unbound-with-knot]
 threads = 4
 cache_slabs = 4
-primary = "!kee_user:ansible|router|knot secret"
-primary_secret = "!kee_pass:ansible|router|knot secret"
+primary = "!decrypt:encrypt$gAAAAABmBGxVDiZLLQAXtkHpNgy3Eaqs5NM9ArfFMHhjL3OKOdQHnyPpcMkKz_G6vGykgizdjX_SiKUfDRt9to_pkPc09zEi1g=="
+primary_secret = "!decrypt:encrypt$gAAAAABmBJPrMSoaiY2MZXrWWw53erTfAvAscleB7orK73bxedAD1FZ7ApXXZH9-_05t8IYNQFxOKkCzOzsaWTzD5378VmX0BFdLJk-cTgSMqf1KP3rBsjhc47FhYXN3bFlv3P17tbAiXwTiauWrnU8SjM5ewTShyw=="
 
 [metadata.voc2dmx]
 alerts.brightness = 255
