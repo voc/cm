@@ -1,0 +1,46 @@
+hostname = "195.160.172.39"
+bundles = [
+    "bird",
+    "generator-routing",
+    "generator-s2s",
+    "isc-dhcp-server",
+    "snmp-temperature-monitoring",
+    "unbound-with-knot",
+]
+groups = ["debian-bookworm"]
+
+[metadata]
+room_number = 23
+
+[metadata.generator-s2s]
+# pubkey encrypt$gAAAAABmBGuy7yXUYspEOIgxUe3jb7Hx_k-FCZqI3i97dRD9B9OgfVYvBSdohi47-aLM8iGYePSEJOS8dA2Kqzr9wnyvGKwBeoDa7qSwRnNcuReJRsxrsagc-J6v7KshrRLWoUf49Rnv
+peer_pubkey = "!decrypt:encrypt$gAAAAABmBHBebMFGxM-McyWWBZVFl7IdR5mqrnJqlskrlDnyPw7TrUcn3p4tEy2qO8a8dAvl4XwBpWTtTq_QW40c0mPcjWaGy7ll9_Vg6npoYJ_30dyXgUngBIv7J8IpZQFle6tE_pUC"
+privatekey = "!decrypt:encrypt$gAAAAABmBGvEIbAfpmXi3Ya0Y_F_gN76UWZH7hIWMYxQ4L90OLwFi8iz8n4Wohg_IQ_11FRbytorU20d5tsaS3s8gVfSxw81uSW6i5PEt7CsbFmylz-gd3chUE9CuXbvqfGZ4k7abMl8"
+
+[metadata.interfaces.wan]
+ips = [
+    "195.160.172.39/24",
+]
+gateway4 = "195.160.172.5"
+
+[metadata.interfaces.lan]
+ips = [
+    "10.73.0.254/16",
+    "10.73.23.201/16",
+]
+
+[metadata.isc-dhcp-server.subnets.lan]
+range_lower = "10.73.23.100"
+range_higher = "10.73.23.199"
+subnet = "10.73.0.0/16"
+options.broadcast-address = "10.73.255.255"
+options.domain-name-servers = "10.73.0.254"
+options.domain-search = "lan.c3voc.de"
+options.routers = "10.73.0.254"
+options.subnet-mask = "255.255.0.0"
+
+[metadata.unbound-with-knot]
+threads = 4
+cache_slabs = 4
+primary = "!decrypt:encrypt$gAAAAABmBGxVDiZLLQAXtkHpNgy3Eaqs5NM9ArfFMHhjL3OKOdQHnyPpcMkKz_G6vGykgizdjX_SiKUfDRt9to_pkPc09zEi1g=="
+primary_secret = "!decrypt:encrypt$gAAAAABmBGxAnQsCKlsTF010N4XkJJoBkv9cJY4vxRo-EN4ukMn1FJsqXdhVqpDn1Ud7eptjmAZf_g3d-YRa1KOa9T16PlM0X6j-X0FGjcX4VCFf2qR1ggvVH4iID8lP7epPCKd4867k"
