@@ -1,5 +1,8 @@
 TUNNEL_NAME = 'c3voc'
 
+OSPF_AREA = '10.73.0.0'
+OSPF_PASSWORD = 'changeme'
+
 @metadata_reactor.provides(
     f'bird/bgp_neighbors/wg_{TUNNEL_NAME}',
     'bird/static_routes',
@@ -60,6 +63,24 @@ def firewall(metadata):
             },
             'input': {
                 '10-generator-s2s': sorted(input),
+            },
+        },
+    }
+
+
+@metadata_reactor.provides(
+    'bird/ospf',
+)
+def ospf(metadata):
+    raise DoNotRunAgain # TODO
+    return {
+        'bird': {
+            'ospf': {
+                'area': OSPF_AREA,
+                'interfaces': {
+                    metadata.get('external_interface'),
+                },
+                'password': OSPF_PASSWORD,
             },
         },
     }
