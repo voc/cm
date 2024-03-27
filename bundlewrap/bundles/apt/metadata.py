@@ -12,7 +12,6 @@ defaults = {
             'dnsutils': {},
             'dstat': {},
             'ethtool': {},
-            'ffmpeg': {},
             'git': {},
             'grep': {},
             'htop': {},
