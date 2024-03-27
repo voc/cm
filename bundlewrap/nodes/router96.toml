@@ -1,6 +1,7 @@
 hostname = "10.73.96.201"
 bundles = [
     "bird",
+    "generator-routing",
     "isc-dhcp-server",
     "netdata",
     "snmp-temperature-monitoring",
@@ -49,22 +50,10 @@ restrict-to = [
     "rfc1918",
 ]
 
-[metadata.nftables]
-forward."50-router" = [
-    "ct state { related, established } accept",
-    "iifname br-lan accept",
-]
-postrouting."50-router" = [
-    "oifname enp2s0 masquerade",
-]
-
 [metadata.snmp-temperature-monitoring]
 routeros = [
     "switch96.lan.c3voc.de",
 ]
-
-[metadata.sysctl.options]
-"net.ipv4.conf.all.forwarding" = "1"
 
 [metadata.systemd-networkd.bridges.br-lan]
 match = ["enp1s0f*"]
