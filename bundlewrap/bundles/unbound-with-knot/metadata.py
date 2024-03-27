@@ -3,6 +3,7 @@ from bundlewrap.metadata import atomic
 defaults = {
     'apt': {
         'packages': {
+            'dns-root-data': {},
             'gpg': {},
             'knot': {},
             'unbound': {},

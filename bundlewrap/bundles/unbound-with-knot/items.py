@@ -35,6 +35,7 @@ files['/etc/unbound/unbound.conf'] = {
 svc_systemd['unbound'] = {
     'needs': {
         'file:/etc/unbound/unbound.conf',
+        'pkg_apt:dns-root-data',
         'pkg_apt:unbound',
         'pkg_apt:unbound-anchor',
     },
