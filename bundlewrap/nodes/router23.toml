@@ -4,7 +4,6 @@ bundles = [
     "generator-routing",
     "generator-s2s",
     "isc-dhcp-server",
-    "snmp-temperature-monitoring",
     "unbound-with-knot",
 ]
 groups = ["debian-bookworm"]
