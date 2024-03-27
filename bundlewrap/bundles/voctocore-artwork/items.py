@@ -3,7 +3,7 @@ from os.path import exists, join
 
 assert node.has_bundle('voctocore')
 
-room_number = node.metadata.get('event/room_number', 0)
+room_number = node.metadata.get('room_number', 0)
 event_slug = node.metadata.get('event/slug')
 
 directories['/opt/voc/share'] = {

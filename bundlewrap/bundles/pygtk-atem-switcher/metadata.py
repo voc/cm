@@ -29,7 +29,7 @@ def atem_ip(metadata):
     return {
         'pygtk-atem-switcher': {
             'atem': {
-                'ip': '10.73.{}.40'.format(metadata.get('event/room_number', 0)),
+                'ip': '10.73.{}.40'.format(metadata.get('room_number', 0)),
             },
         },
     }

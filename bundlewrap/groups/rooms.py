@@ -26,9 +26,7 @@ for i in ROOMS_WITH_MINIONS + ROOMS_WITHOUT_MINIONS:
             f'^tallycom{i}-[0-9+]$',
         },
         'metadata': {
-            'event': {
-                'room_number': i
-            },
+            'room_number': i,
             'voctocore': {
                 'streaming_endpoint': f's{i}',
             },
