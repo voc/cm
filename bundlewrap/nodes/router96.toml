@@ -2,6 +2,7 @@ hostname = "10.73.96.201"
 bundles = [
     "bird",
     "generator-routing",
+    "generator-s2s",
     "isc-dhcp-server",
     "netdata",
     "snmp-temperature-monitoring",
@@ -10,15 +11,13 @@ bundles = [
 ]
 groups = ["debian-bookworm"]
 
-[metadata.bird]
-static_routes = [
-    "10.73.96.0/24",
-]
-[metadata.bird.bgp_neighbors.wg_c3voc_de]
-local_as = 65096
-local_ip = "10.9.96.2"
-neighbor_as = 65000
-neighbor_ip = "10.9.96.1"
+[metadata]
+room_number = 96
+
+[metadata.generator-s2s]
+# pubkey encrypt$gAAAAABl_ZDMUb43-_6jS6prfS2UJ8ssbjgGe6bJ8g67kJSWolVD8vmgPiDBWXAPllDVF8q-q8PwhNm4hcbGLxo689HNQtWtnfFj1XdHXcaDs8jPvYLW_ZUxkmwoMmLIPm_wERRURpke
+peer_pubkey = "!decrypt:encrypt$gAAAAABl_ZI9l68Y30J2l5ath5NmYwz6cCfKDXn9kG8BzfA_DggGrPI0_e2pnZMVfx1u2sysu28PcODRWsy1_HgTCnjW_uikuhX331cTaZ5eNFZG4xzoDCIy2e6F4dI3B6_2BxYwSl4E"
+privatekey = "!decrypt:encrypt$gAAAAABl_ZC1nT1IRu2Rr5Js8uVX2oPDOjsXhE1hMs4wtWoWXKCRIQeHpFmtXh3lsN6x1dJSu2pnCsNGxtQ-jYPOMBcVZ7tSE_rSnS7FCgPackGRx_3-yxu1AkiQXOmfXJ85POrEXdqO"
 
 [metadata.grub.cmdline_linux]
 'net.ifnames' = 1
@@ -57,14 +56,6 @@ routeros = [
 
 [metadata.systemd-networkd.bridges.br-lan]
 match = ["enp1s0f*"]
-
-[metadata.systemd-networkd.wireguard.c3voc]
-# pubkey encrypt$gAAAAABl_ZDMUb43-_6jS6prfS2UJ8ssbjgGe6bJ8g67kJSWolVD8vmgPiDBWXAPllDVF8q-q8PwhNm4hcbGLxo689HNQtWtnfFj1XdHXcaDs8jPvYLW_ZUxkmwoMmLIPm_wERRURpke
-peer = "wg.c3voc.de:20096"
-peer_pubkey = "!decrypt:encrypt$gAAAAABl_ZI9l68Y30J2l5ath5NmYwz6cCfKDXn9kG8BzfA_DggGrPI0_e2pnZMVfx1u2sysu28PcODRWsy1_HgTCnjW_uikuhX331cTaZ5eNFZG4xzoDCIy2e6F4dI3B6_2BxYwSl4E"
-my_ip = "10.9.96.2/30"
-my_port = 20096
-privatekey = "!decrypt:encrypt$gAAAAABl_ZC1nT1IRu2Rr5Js8uVX2oPDOjsXhE1hMs4wtWoWXKCRIQeHpFmtXh3lsN6x1dJSu2pnCsNGxtQ-jYPOMBcVZ7tSE_rSnS7FCgPackGRx_3-yxu1AkiQXOmfXJ85POrEXdqO"
 
 [metadata.unbound-with-knot]
 threads = 4
