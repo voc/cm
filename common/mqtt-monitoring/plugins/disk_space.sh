@@ -13,7 +13,7 @@ do
         errtype="warn"
     fi
 
-    if [ "$disk_usage_percent" -ge 90 ]
+    if [ "$disk_usage_percent" -ge 85 ]
     then
         voc2alert "${errtype}" "disk" "${device}: disk usage ${disk_usage_percent}%, only ${disk_space_avilable} left of ${disk_space} (mounted on ${mount_point})"
     fi
