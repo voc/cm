@@ -7,7 +7,7 @@ meta.secret = "!kee_pass:ansible|worker-groups|encoder2-meta"
 meta.token = "!kee_user:ansible|worker-groups|encoder2-meta"
 
 [metadata.event]
-room_name = "Hörsaal 2 (Ditze H016)"
+room_name = "Walhacka - D002"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.2.3/16"]
