@@ -10,6 +10,6 @@ video_mode = "1080p50"
 
 [metadata.pygtk-atem-switcher.atem.settings.inputs]
 input1 = "Laptop"
-input2 = "PC"
+input2 = "visualizer"
 input3 = "x"
 input4 = "info-beamer"
