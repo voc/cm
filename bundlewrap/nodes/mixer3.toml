@@ -1,15 +1,15 @@
-bundles = ["thinkfan"]
+bundles = ["pygtk-atem-switcher", "thinkfan"]
 groups = ["debian-buster"]
 
 [metadata.interfaces.eth0]
 ips = ["10.73.3.1/16"]
 gateway4 = "10.73.0.254"
 
-# [metadata.pygtk-atem-switcher.atem]
-# video_mode = "1080p50"
+[metadata.pygtk-atem-switcher.atem]
+video_mode = "1080p50"
 
-# [metadata.pygtk-atem-switcher.atem.settings.inputs]
-# input1 = "Laptop"
-# input2 = "PC"
-# input3 = "x"
-# input4 = "info-beamer"
+[metadata.pygtk-atem-switcher.atem.settings.inputs]
+input1 = "Laptop"
+input2 = "visualizer"
+input3 = "x"
+input4 = "info-beamer"
