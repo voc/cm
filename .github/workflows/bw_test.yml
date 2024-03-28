@@ -19,9 +19,6 @@ jobs:
   bw_test_dummy_mode:
     name: 'bw test (with dummy mode)'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./bw
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -30,9 +27,10 @@ jobs:
           python-version: 3.12
       - name: Install Dependencies
         run: pip3 install -r requirements.txt
+        working-directory: bundlewrap
       - name: Run bw test
-        working-directory: ./bw
         run: bw test
+        working-directory: bundlewrap
     env:
       BW_VAULT_DUMMY_MODE: '1'
       BW_KEEPASS_DUMMY_MODE: '1'
@@ -40,9 +38,6 @@ jobs:
   bw_test_ignore:
     name: 'bw test -i'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./bw
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -51,8 +46,10 @@ jobs:
           python-version: 3.12
       - name: Install Dependencies
         run: pip3 install -r requirements.txt
+        working-directory: bundlewrap
       - name: Run bw test
         run: bw test -i
+        working-directory: bundlewrap
     env:
       BW_VAULT_DUMMY_MODE: '1'
       BW_KEEPASS_DUMMY_MODE: '1'
