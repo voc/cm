@@ -1,0 +1,56 @@
+name: bw test
+on:
+  push:
+    branches-ignore:
+      - 'events/*'
+    paths:
+      - 'bw/*'
+      - 'common/*'
+  pull_request:
+    branches-ignore:
+      - 'events/*'
+    paths:
+      - 'bw/*'
+      - 'common/*'
+
+jobs:
+  bw_test_dummy_mode:
+    name: 'bw test (with dummy mode)'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./bw
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: Install Dependencies
+        run: pip3 install -r requirements.txt
+      - name: Run bw test
+        working-directory: ./bw
+        run: bw test
+    env:
+      BW_VAULT_DUMMY_MODE: '1'
+      BW_KEEPASS_DUMMY_MODE: '1'
+
+  bw_test_ignore:
+    name: 'bw test -i'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./bw
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: Install Dependencies
+        run: pip3 install -r requirements.txt
+      - name: Run bw test
+        run: bw test -i
+    env:
+      BW_VAULT_DUMMY_MODE: '1'
+      BW_KEEPASS_DUMMY_MODE: '1'
