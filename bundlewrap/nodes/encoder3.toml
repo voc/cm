@@ -15,10 +15,16 @@ gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYjN4gPPKKkywsLJdC9zZItzoy55F_RlJ1TfVBnUQ5uWJemWBTDfgGBbPn4FY6394SyWc805aw_IWietgxQEhhHdLkwWyWi8tWUWk5JViE2K1Cg="
+static_background_image = false
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
 mode = "1080i50"
+
+[metadata.voctocore.sources.cam2]
+devicenumber = 4
+mode = "1080i50"
+hdmi = true
 
 [metadata.voctocore.sources.slides]
 devicenumber = 5

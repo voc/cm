@@ -23,16 +23,19 @@ defaults = {
             'lec': {
                 'kind': 'img',
                 'path': '/opt/voc/share/bg_lec.png',
+                'file': '/opt/voc/share/bg_lec.png',
                 'composites': 'lec',
             },
             'lecm': {
                 'kind': 'img',
                 'path': '/opt/voc/share/bg_lecm.png',
+                'file': '/opt/voc/share/bg_lecm.png',
                 'composites': '|lec',
             },
             'sbs': {
                 'kind': 'img',
                 'path': '/opt/voc/share/bg_sbs.png',
+                'file': '/opt/voc/share/bg_sbs.png',
                 'composites': 'sbs',
             },
             'fs': {
