@@ -15,7 +15,7 @@ def generator_routing(metadata):
     if not external_interface:
         for iface, iconfig in interfaces.items():
             this_is_external = iconfig.get('dhcp', False) == True
-            for ip in iconfig['ips']:
+            for ip in iconfig.get('ips', set()):
                 i = ip_address(ip.split('/')[0])
                 if i.is_global:
                     this_is_external = True
