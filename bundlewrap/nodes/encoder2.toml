@@ -18,6 +18,10 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkNAla1u8QC8xEqxSbtHs3PFLVTluTMgb7K
 mirror_view = true
 
 [metadata.voctocore.sources.cam1]
+devicenumber = 0
+mode = "1080i50"
+
+[metadata.voctocore.sources.cam2]
 devicenumber = 1
 mode = "1080i50"
 
