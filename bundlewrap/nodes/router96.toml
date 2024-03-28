@@ -23,9 +23,6 @@ privatekey = "!decrypt:encrypt$gAAAAABl_ZC1nT1IRu2Rr5Js8uVX2oPDOjsXhE1hMs4wtWoWX
 'net.ifnames' = 1
 
 [metadata.interfaces.enp2s0]
-ips = [
-    "172.19.138.19/24"
-]
 dhcp = true
 
 [metadata.interfaces.br-lan]
