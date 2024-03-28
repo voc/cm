@@ -3,4 +3,4 @@ subgroups = ["saal2", "saal3", "servercase"]
 [metadata.event]
 timezone = "Europe/Berlin"
 name = "easterhegg 2024"
-slug = "eh"
+slug = "eh21"
