@@ -51,6 +51,17 @@ if not node.has_bundle('zfs'):
         },
     }
 
+
+@metadata_reactor.provides(
+    'voctocore/streaming_endpoint',
+)
+def streaming_endpoint(metadata):
+    return {
+        'voctocore': {
+            'streaming_endpoint': 's{}'.format(metadata.get('room_number')),
+        },
+    }
+
 @metadata_reactor.provides(
     'voctocore/sources',
 )
