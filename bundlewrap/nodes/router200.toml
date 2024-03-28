@@ -11,6 +11,7 @@ bundles = [
 groups = ["debian-bullseye"]
 
 [metadata]
+external_interface = "ens18"
 room_number = 200
 
 [metadata.bird]
