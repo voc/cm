@@ -27,7 +27,7 @@ actions['pygtk-atem-switcher_install_deps'] = {
 }
 
 files['/opt/pygtk-atem-switcher/config.toml'] = {
-    'content': repo.libs.faults.dict_as_toml(node.metadata.get('pygtk-atem-switcher')-,
+    'content': repo.libs.faults.dict_as_toml(node.metadata.get('pygtk-atem-switcher')),
     'triggers': {
         'svc_systemd:pygtk-atem-switcher:restart',
     }

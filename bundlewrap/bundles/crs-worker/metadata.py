@@ -35,6 +35,8 @@ if node.has_bundle('zfs'):
     'crs-worker/secrets/meta',
 )
 def derive_secrets_from_encoding(metadata):
+    if node.dummy:
+        raise DoNotRunAgain
     return {
         'crs-worker': {
             'secrets': {

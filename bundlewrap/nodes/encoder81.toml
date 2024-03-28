@@ -21,7 +21,8 @@ dhcp = true
 high_dpi = true
 
 [metadata.voctocore]
-streaming_endpoint = "!kee_pass:ansible|stream-api|encoders|hacc"
+streaming_endpoint = "hacc"
+streaming_auth_key = "!decrypt:encrypt$gAAAAABmBTUmTYXkCzR1bpxUd5VmNevZYF8EA9GFoZOY3CJ-q3AT2Cb1i4HOj51a8Wpln5IGtgMvqcitdspJJPTJDvq9v0w3PgajUsGvSeZ3LxdjlYqg234="
 
 [metadata.voctocore.sources.cam1]
 devicenumber = "4"
