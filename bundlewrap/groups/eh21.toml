@@ -4,5 +4,5 @@ subgroups = ["saal2", "saal3", "servercase"]
 timezone = "Europe/Berlin"
 name = "easterhegg 2024"
 slug = "eh21"
-#overlays = "http://webdump.sophies-kitchen.eu/eh21/overlays.tar.gz"
-#schedule_xml = "https://fahrplan.eh21.easterhegg.eu/eh/schedule/export/schedule.xml"
+overlays = "https://webdump.sophies-kitchen.eu/eh21/overlays.tar.gz"
+schedule_xml = "https://fahrplan.eh21.easterhegg.eu/eh/schedule/export/schedule.xml"
