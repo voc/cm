@@ -1,19 +1,5 @@
 name: bw test
-on:
-  push:
-    branches-ignore:
-      - 'events/*'
-    paths:
-      - 'bw/*'
-      - 'common/*'
-      - '.github/workflows/*'
-  pull_request:
-    branches-ignore:
-      - 'events/*'
-    paths:
-      - 'bw/*'
-      - 'common/*'
-      - '.github/workflows/*'
+on: [ push, pull_request ]
 
 jobs:
   bw_test_dummy_mode:
