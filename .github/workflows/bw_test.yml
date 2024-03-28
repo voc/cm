@@ -6,12 +6,14 @@ on:
     paths:
       - 'bw/*'
       - 'common/*'
+      - '.github/workflows/*'
   pull_request:
     branches-ignore:
       - 'events/*'
     paths:
       - 'bw/*'
       - 'common/*'
+      - '.github/workflows/*'
 
 jobs:
   bw_test_dummy_mode:
