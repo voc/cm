@@ -1,12 +1,7 @@
 hostname = "10.73.200.201"
 bundles = [
-    "bird",
-    "generator-routing",
-    "generator-s2s",
-    "isc-dhcp-server",
     "netdata",
     "radvd",
-    "unbound-with-knot",
 ]
 groups = ["debian-bullseye"]
 

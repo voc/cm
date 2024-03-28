@@ -1,12 +1,7 @@
 hostname = "10.73.96.201"
 bundles = [
-    "bird",
-    "generator-routing",
-    "generator-s2s",
-    "isc-dhcp-server",
     "netdata",
     "snmp-temperature-monitoring",
-    "unbound-with-knot",
     "voc2dmx",
 ]
 groups = ["debian-bookworm"]

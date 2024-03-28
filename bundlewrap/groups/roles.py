@@ -74,3 +74,16 @@ groups['tallycom'] = {
         'voctomix2',
     },
 }
+
+groups['routers'] = {
+    'member_patterns': {
+        r'^router.+$',
+    },
+    'bundles': {
+        'bird',
+        'generator-routing',
+        'generator-s2s',
+        'isc-dhcp-server',
+        'unbound-with-knot',
+    },
+}

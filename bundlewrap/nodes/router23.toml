@@ -1,11 +1,4 @@
 hostname = "195.160.172.39"
-bundles = [
-    "bird",
-    "generator-routing",
-    "generator-s2s",
-    "isc-dhcp-server",
-    "unbound-with-knot",
-]
 groups = ["debian-bookworm"]
 
 [metadata]
