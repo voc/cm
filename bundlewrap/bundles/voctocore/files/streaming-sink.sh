@@ -124,7 +124,7 @@ ffmpeg -y -nostdin -hide_banner -re \
     \
 % if srt_publish:
     -f mpegts \
-    "srt://ingest2.c3voc.de:1337?streamid=publish/${endpoint}/$VOC_STREAMING_AUTH"
+    "srt://ingest.c3voc.de:1337?streamid=publish/${endpoint}/$VOC_STREAMING_AUTH"
 % else:
     -f matroska \
     -password "$VOC_STREAMING_AUTH" \
