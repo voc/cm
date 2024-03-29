@@ -104,15 +104,19 @@ files['/usr/local/lib/systemd/system/rsync-from-encoder@.service'] = {
 }
 
 files['/usr/local/sbin/rsync-to-storage'] = {
-    'owner': 'voc',
-    'mode': '0700',
+    # only use this for REALLY weird network situations
+    'delete': True,
+    #'owner': 'voc',
+    #'mode': '0700',
 }
 
 files['/usr/local/lib/systemd/system/rsync-to-storage@.service'] = {
-    'content_type': 'mako',
-    'context': {
-        'slug': node.metadata.get('event/slug'),
-    },
+    # only use this for REALLY weird network situations
+    'delete': True,
+    #'content_type': 'mako',
+    #'context': {
+    #    'slug': node.metadata.get('event/slug'),
+    #},
     'triggers': {
         'action:systemd-reload',
     },
