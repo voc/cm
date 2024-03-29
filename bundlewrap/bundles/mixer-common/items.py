@@ -56,14 +56,16 @@ files['/home/mixer/.config/i3pystatus/config.py'] = {
     },
 }
 
-files['/home/mixer/.config/i3/layout.json'] = {
-    'source' : 'i3_layout/{}.json'.format(node.metadata.get('mixer-common/i3_layout')),
-    'owner': 'mixer',
-    'group': 'mixer',
-    'triggers': {
-        'action:mixer-common_apply_i3_layout',
-    },
-}
+i3_layout = node.metadata.get('mixer-common/i3_layout', None)
+if i3_layout is not None:
+    files['/home/mixer/.config/i3/layout.json'] = {
+        'source' : f'i3_layout/{i3_layout}.json',
+        'owner': 'mixer',
+        'group': 'mixer',
+        'triggers': {
+            'action:mixer-common_apply_i3_layout',
+        },
+    }
 
 files['/usr/local/bin/i3-layout.sh'] = {
     'source' : 'i3/i3-layout.sh',
