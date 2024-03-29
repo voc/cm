@@ -22,9 +22,9 @@ def gather_from_other_node(metadata):
     rnode = repo.get_node(n)
     streams = {}
     x = 0
-    for idx, (name, stream) in enumerate(sorted(rnode.metadata.get('loudness-rendering').items())):
+    for idx, name in enumerate(sorted(rnode.metadata.get('loudness-rendering'))):
         streams[f'stream_{name}'] = {
-            'command': f'/usr/local/bin/mpv.sh stream_{name} {stream}',
+            'command': f'/usr/local/bin/mpv.sh stream_{name} rtmp://ingest2.c3voc.de/relay/{name}_loudness',
             'height': 540,
             'width': 480,
             'x': x,
