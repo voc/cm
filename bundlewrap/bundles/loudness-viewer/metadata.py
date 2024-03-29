@@ -42,6 +42,6 @@ def gather_from_other_node(metadata):
                 'width': metadata.get('loudness-viewer/screen/width')-stream_width,
                 'x': stream_width,
                 'y': 0,
-            },
+            } if stream_width < metadata.get('loudness-viewer/screen/width') else {},
         },
     }
