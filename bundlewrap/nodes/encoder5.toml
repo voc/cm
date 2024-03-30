@@ -7,7 +7,7 @@ meta.secret = "!kee_pass:ansible|worker-groups|encoder5-meta"
 meta.token = "!kee_user:ansible|worker-groups|encoder5-meta"
 
 [metadata.event]
-room_name = "Saal 5"
+room_name = "Bitmarckplatz - D003"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.5.3/16"]
@@ -19,6 +19,11 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYkgCo1Orl_R7yyMpMUhESSGiBvMRZy6J
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
 mode = "1080i50"
+
+[metadata.voctocore.sources.cam2]
+devicenumber = 4
+mode = "1080i50"
+hdmi = true
 
 [metadata.voctocore.sources.slides]
 devicenumber = 5
