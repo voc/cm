@@ -1,0 +1,9 @@
+groups = ["debian-bullseye", "servercase"]
+bundles = ["loudness-viewer"]
+
+[metadata.interfaces.ens18]
+ips = ["10.73.0.0/16"]
+gateway4 = "10.73.0.254"
+
+[metadata.loudness-viewer]
+streams_from_node = "loudness-rendering"
