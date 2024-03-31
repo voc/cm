@@ -2,6 +2,7 @@ hostname = "10.73.200.201"
 bundles = [
     "netdata",
     "radvd",
+    "snmp-temperature-monitoring"
 ]
 groups = ["debian-bullseye"]
 
@@ -47,23 +48,14 @@ options.domain-search = "lan.c3voc.de"
 options.routers = "10.73.0.254"
 options.subnet-mask = "255.255.0.0"
 
-[metadata.nftables]
-forward."50-router" = [
-    "ct state { related, established } accept",
-    "iifname ens19 accept",
-]
-postrouting."50-router" = [
-    "oifname ens18 masquerade",
-]
-
 [metadata.radvd.interfaces.ens19]
 prefix = "2001:67c:20a1:3504::/64"
 rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
 
-[metadata.sysctl.options]
-"net.ipv4.conf.all.forwarding" = "1"
-"net.ipv6.conf.all.forwarding" = "1"
-"net.ipv6.conf.all.disable_ipv6" = "0"
+[metadata.snmp-temperature-monitoring]
+comware5 = [
+    "swt-colo.lan.c3voc.de",
+]
 
 [[metadata.telegraf.input_plugins.builtin.proxmox]]
 api_token = "!decrypt:encrypt$gAAAAABk3jHP-bc7jvJ_Lc-20Dyxa3ZpXTfW60gpwGpfEa23sgL-6Tg_TdV1FYIr6LPzihLd4DTCcsokVtbfZpOINpZ28bBLQWY_qk5QAIQymQx9jbHJQR8HJ0-yzO0LliQTzY2_Qndub-j_0Kv8hC1cyIxvlI3FfkehY0POBnYXN9y3oJcJQQY="
