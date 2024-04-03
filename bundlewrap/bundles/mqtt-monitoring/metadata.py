@@ -24,7 +24,7 @@ defaults = {
                 'command': '/usr/local/sbin/check_system.sh',
                 'when': 'minutely',
                 'environment': {
-                    'DAILY_TASK_TIME': str(node.magic_number%24).rjust(2, '0') + str(node.magic_number%60).rjust(2, '0'),
+                    'DAILY_TASK_TIME': str(6+(node.magic_number%3)).rjust(2, '0') + str(node.magic_number%60).rjust(2, '0'),
                 },
                 'requires': {
                     'network.target',
