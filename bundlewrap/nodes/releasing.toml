@@ -1,0 +1,8 @@
+bundles = [
+    "mqtt-monitoring",
+    "releasing_specials",
+    "systemd-timers",
+]
+
+[metadata]
+hostname = "releasing.c3voc.de"
