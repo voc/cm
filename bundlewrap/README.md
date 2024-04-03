@@ -67,6 +67,7 @@ basic information about your event:
 
 ```toml
 subgroups = ["saal1", "saal2"]
+members = ["releasing"]
 
 [metadata.event]
 timezone = "Europe/Berlin"
