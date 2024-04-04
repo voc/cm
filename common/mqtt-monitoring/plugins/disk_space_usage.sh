@@ -17,7 +17,7 @@ then
         # only alert if there is more than 1GB used
         if [[ "$diskspace" -gt 1073741824 ]]
         then
-            voc2alert "info" "disk" "$(printf '%7s %s' "$(echo "$diskspace / 1073741824" | bc)G" "$path")"
+            voc2alert "info" "disk" "$(printf '%7s %s' "$(echo "$diskspace / 1073741824" | bc)G" "$path")" && sleep 1
         fi
     done
 fi
