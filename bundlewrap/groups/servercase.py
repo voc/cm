@@ -38,19 +38,19 @@ groups['minions-servercase'] = {
         'cifs-client': {
             'mounts': {
                 'video': {
-                    'serverpath': '//storage.lan.c3voc.de/video',
+                    'serverpath': '//10.73.200.24/video',
                     'mount_options': {
                         'ro': None,
                     },
                 },
                 'video-encoded': {
-                    'serverpath': '//storage.lan.c3voc.de/encoded',
+                    'serverpath': '//10.73.200.24/encoded',
                 },
                 'video-fuse': {
-                    'serverpath': '//storage.lan.c3voc.de/fuse',
+                    'serverpath': '//10.73.200.24/fuse',
                 },
                 'video-tmp': {
-                    'serverpath': '//storage.lan.c3voc.de/tmp',
+                    'serverpath': '//10.73.200.24/tmp',
                 },
             },
         },
