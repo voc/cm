@@ -1,5 +1,5 @@
 routeros['/ip/dns'] = {
-    'servers': repo.libs.defaults.nameservers,
+    'servers': node.metadata.get('nameservers', repo.libs.defaults.nameservers),
 }
 
 for service in (
