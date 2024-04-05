@@ -5,3 +5,6 @@ members = ["releasing"]
 timezone = "Europe/Vienna"
 name = "Grazer Linuxtage 2024"
 slug = "glt24"
+
+[metadata.voctocore]
+mirror_view = true
