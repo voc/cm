@@ -32,8 +32,8 @@ ffmpeg \
         [a1] aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo [audio];
         [base][v1] overlay=shortest=1 [tmp1];
         [tmp1][scaled] overlay=shortest=1:y=360 [ov];
-        [ov] drawtext='fontcolor=white:x=50:y=50:fontsize=60:fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf:text=${ROOM}' [ov1];
-        [ov1] drawtext='fontcolor=white:x=50:y=110:fontsize=30:fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf:text=${NAME}' [out]" \
+        [ov] drawtext='fontcolor=white:x=45:y=36:fontsize=60:fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf:text=${ROOM}' [ov1];
+        [ov1] drawtext='fontcolor=white:x=45:y=101:fontsize=30:fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf:text=${NAME}' [out]" \
     -map "[out]" -c:v libx264 -threads 2 -preset veryfast -x264-params keyint=30 -tune zerolatency -crf:0 26 -profile:0 high -level:0 4.1 -c:a aac -strict -2 -pix_fmt yuv420p \
     -map "[audio]" -c:a aac -b:a 128k \
     -f flv \
