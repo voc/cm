@@ -70,7 +70,6 @@ subgroups = ["saal1", "saal2"]
 members = ["releasing"]
 
 [metadata.event]
-timezone = "Europe/Berlin"
 name = "ZYXcon"
 slug = "XYZ"
 ```
