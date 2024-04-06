@@ -2,10 +2,6 @@
   description = "c3voc nixOS config management";
 
   inputs.nixpkgs.url = "nixpkgs/nixos-23.11";
-  inputs.deploy-rs = {
-    url = "github:serokell/deploy-rs";
-    inputs.nixpkgs.follows = "/nixpkgs";
-  };
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.sops-nix = {
     url = "github:Mic92/sops-nix";
@@ -16,7 +12,7 @@
     inputs.nixpkgs.follows = "/nixpkgs";
   };
   inputs.nixos-mailserver = {
-    url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+    url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
     inputs.nixpkgs.follows = "/nixpkgs";
     inputs.utils.follows = "/flake-utils";
   };
@@ -24,67 +20,79 @@
     url = "github:nix-community/authentik-nix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-
-
+  inputs.nixos-generators = {
+    url = "github:nix-community/nixos-generators";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.flake-compat = {
     url = "github:edolstra/flake-compat";
     flake = false;
   };
 
-  outputs = { self, nixpkgs, deploy-rs, flake-utils, sops-nix, home-manager, flake-compat, ... }@inputs: let
-    hostsDir = "${../nixos}/hosts";
-    hostNames = with nixpkgs.lib; attrNames
-      (filterAttrs (name: type: type == "directory") (builtins.readDir hostsDir));
-    hostConfig = host: if builtins.pathExists "${hostsDir}/${host}/meta.nix"
-                        then (import "${hostsDir}/${host}/meta.nix")
-                        else {
-                          nixosConfiguration = nixpkgs.lib.nixosSystem {
-                            system = "x86_64-linux";
-                            modules = [
-                              "${hostsDir}/${host}/configuration.nix"
-                              ./profiles/base
+  outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, ... }@inputs: (
+    let
+      pkgs' = system: import nixpkgs {
+        inherit system;
+        overlays = with nixpkgs.lib; mapAttrsToList (name: _: import ./overlays/${name}) (
+          filterAttrs (name: type: type == "directory") (builtins.readDir ./overlays)
+        );
+      };
+    in (
+    {
+      colmena = {
+        meta = {
+          nixpkgs = pkgs' "x86_64-linux";
+          specialArgs = { inherit inputs; };
+        };
 
-                              self.nixosModules.nftables
-                              sops-nix.nixosModules.sops
-                              home-manager.nixosModules.home-manager
-                              {
-                                networking.hostName = host;
-                                nixpkgs.overlays = [ self.overlays.default ];
-                                sops.defaultSopsFile = "${hostsDir}/${host}/secrets.yaml";
-                              }
-                            ];
-                            specialArgs.inputs = inputs;
-                          };
-                          deploy = {
-                            hostname = "${host}.c3voc.de";
-                            profiles.system = {
-                              user = "root";
-                              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.${host};
-                            };
-                          };
-                        };
-    hosts = with nixpkgs.lib; listToAttrs (map (name: nameValuePair name (hostConfig name)) hostNames);
-  in {
-    nixosConfigurations = builtins.mapAttrs (host: config: config.nixosConfiguration) hosts;
-    overlays = with nixpkgs.lib; mapAttrs (name: _: import ./overlays/${name})
-      (filterAttrs (name: type: type == "directory") (builtins.readDir ./overlays));
-    deploy.nodes = builtins.mapAttrs (host: config: config.deploy) hosts;
+        defaults = { lib, name, ... }: {
+          imports = [
+            (./hosts + "/${name}")
 
-    nixosModules = {
-      nftables = import ./modules/nftables;
-      yate = import ./modules/yate;
-      fieldpoc = import ./modules/fieldpoc;
-    };
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-  } // flake-utils.lib.eachSystem ([ "x86_64-linux" "x86_64-darwin" "aarch64-darwin"]) (system: let
-    pkgs = (import nixpkgs { inherit system; });
-  in {
-    devShells.default = pkgs.mkShell {
-      buildInputs = [
-        deploy-rs.packages.${system}.deploy-rs
-        sops-nix.packages.${system}.sops-init-gpg-key
-        pkgs.age pkgs.sops
-      ];
-    };
-  });
+            ./modules/fieldpoc
+            ./modules/nftables
+            ./modules/yate
+
+            ./profiles/base
+
+            sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
+          ];
+
+          deployment = {
+            targetHost = "${name}.c3voc.de";
+            targetUser = lib.mkDefault null;
+          };
+          networking.hostName = name;
+          sops.defaultSopsFile = ./hosts + "/${name}/secrets.yaml";
+        };
+      } // import ./hosts.nix;
+      proxmoxImages = {
+        base = inputs.nixos-generators.nixosGenerate {
+          pkgs = pkgs' "x86_64-linux";
+          format = "proxmox";
+          modules = [
+            ./profiles/proxmox-image.nix
+            ./profiles/base
+            home-manager.nixosModules.home-manager
+          ];
+          specialArgs = {
+            name = "base";
+          };
+        };
+      };
+    } //  flake-utils.lib.eachSystem ([ "x86_64-linux" "x86_64-darwin" "aarch64-darwin"]) (system: let
+      pkgs = pkgs' system;
+    in {
+      devShells.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          age
+          colmena
+          sops
+
+          sops-nix.packages.${system}.sops-init-gpg-key
+        ];
+      };
+    }))
+  );
 }

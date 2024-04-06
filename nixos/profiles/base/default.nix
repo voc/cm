@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./make-nixpkgs.nix
     ./users.nix
   ];
 

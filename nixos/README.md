@@ -8,16 +8,40 @@ First you have to understand that Nix is and means multiple thing. There is:
 - NixOS the distribution
 - Nix the german word "nichts"
 
-There are some offical guides to NixOS that you can find on [nixos.org](https://nixos.org/learn.html), an other source of information is the unoffical user [wiki](https://nixos.wiki/) and for a general introduction you can look at [zero-to-nix](https://zero-to-nix.com/).  
+There are some offical guides to NixOS that you can find on [nixos.org](https://nixos.org/learn.html), an other source of information is the unoffical user [wiki](https://nixos.wiki/) and for a general introduction you can look at [zero-to-nix](https://zero-to-nix.com/).
 
-### Nix language
-Nix is a Functional programming language designed to be used to define packages and modules for the package-manger and the distro.
-Because it's usally used as a special purpose language it also has some quite specific built-ins, like ```fetchFromGit``` which takes a few parameters like the url to clone from or the rev, which is the revison to checkout also known as commit hash. It is proably note worthy that it is turing complete and some people use it for other things then package defenitions or modules. For more details there is an entry in the [wiki](https://nixos.wiki/wiki/Overview_of_the_Nix_Language)
+## About this (part of the) repo
 
-### Nix package-manger
-The nix package-manager can be universaly used under any Linux-Distro and even MacOS. It install packages from package-definitions which represent a usally to most part reproducible declartion of what a package actaually is. This is achived by having a hash of the source in the package definition. But fear not you don't have to build everything from source there are chache servers. The most used chache server is probably [cachix](https://www.cachix.org/) 
+To use this repo and deploy hosts you need to have the nix packet manager installed on your local system.
 
-### NixOS 
-This is the distribution encorperating Nix in it's core. The configuration of a standard install can be found in ```/etc/nixos/configuration.nix``` and it defines basically any aspect of the system except for the formating of the disks (there are ways to do that if you really want that). A example option would be ```networking.hostname = foo;```. Those options are defined in so called modules, and a easy way to search through these options is the [web-based-search](https://search.nixos.org/options?). 
+Rough sturcture:
+  * 'hosts/': host specific configuration, this are also the "starting point" for each host configuration
+  * 'profiles/': profiles are commonly a set of configurations shared by multiple hosts
+    * 'base/': base profile which is deployed to every host (as defined in `flake.nix`)
+  * 'modules/': configuration modules, that provide options to configure single packages
+  * 'flake.nix': starting point of the whole nix configuration
+  * 'hosts.nix': hosts that can be deployed with this repo, maybe special deployment settings for the hosts
 
-You probably want to just play around and look at stuff for you self. An easy way to do that would be to install a VM. You can also click one at hetzner or any other hosting provider, there are a few informations about that in the [wiki](https://nixos.wiki/wiki/NixOS_friendly_hosters). If you have a proxmox server or cluster running you can spin up an lxc container to play with nix, this is also documented in the [wiki](https://nixos.wiki/wiki/Proxmox_Virtual_Environment).
+For each host deployed with this repo there is a set of default options configured for each host (`flake.nix` `outputs.colmena.default`) and all host specific options which should be placed under `hosts/<hostname>/`.
+
+We use `colemena` to deploy configs to our `nix`-based hosts.
+
+## Frequent tasks
+
+### Deploy a host
+
+To deploy a specific host simple run
+
+    colmena apply switch --on "<name from host.nix>"
+
+When you are on a non `x86_64-linux` platform you want to use a nix remote builder.
+In case you don't have a remote-builder available you can do `--build-on-target` to use the target machine as builder.
+
+
+### Add new host to this repo
+
+Install `nixos` on a host, copy `configuration.nix` and `hardware-configuration.nix` to the host folder in this repo.
+Rename `configuration.nix` to `default.nix`. ... profit!
+
+Maybe there will be a better way for this is the future, mainly for the `nixos` install part, which is kind of annoying.
+

@@ -28,7 +28,10 @@
 
     environment = {
       NERD_CONFIG_FILE = "/etc/nerd/nerd.cfg";
-      PYTHONPATH = "${pkgs.python310.pkgs.nerd.pythonPath}:${pkgs.python310.pkgs.nerd}/${pkgs.python310.sitePackages}:${pkgs.python310Packages.psycopg2}/${pkgs.python310.sitePackages}";
+      PYTHONPATH = with pkgs.python310.pkgs; makePythonPath [
+        nerd
+        psycopg2
+      ];
     };
 
     preStart = ''

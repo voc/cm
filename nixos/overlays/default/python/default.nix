@@ -1,5 +1,4 @@
 nixpkgs: self: super: {
-  diffsync = self.callPackage ./diffsync { };
   python-yate = self.callPackage ./python-yate { };
   ywsd = self.callPackage ./ywsd { };
   mitel-ommclient2 = self.callPackage ./mitel-ommclient2 { };

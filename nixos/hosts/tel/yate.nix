@@ -1,10 +1,6 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  imports = [
-    inputs.self.nixosModules.yate
-    inputs.self.nixosModules.fieldpoc
-  ];
   sops.secrets.ommpassword = {};
   sops.secrets.sipsecret = {};
 
@@ -42,7 +38,9 @@
   networking.nftables.extraInput = "meta l4proto udp accept";
 
   environment.systemPackages = with pkgs; [
-    (writers.makePythonWriter python39 python39.pkgs "/bin/dect_claim" { libraries = [ python39.pkgs.python-yate ]; } (builtins.readFile ./dect_claim.py))
+    (writers.makePythonWriter python39 python39.pkgs python39.pkgs "/bin/dect_claim" {
+      libraries = [ python39.pkgs.python-yate ]; 
+    } (builtins.readFile ./dect_claim.py))
     (runCommand "yintro.slin" {} ''
       mkdir -p $out/share/sounds/yate
       ln -s ${./yintro.slin} $out/share/sounds/yate/yintro.slin
