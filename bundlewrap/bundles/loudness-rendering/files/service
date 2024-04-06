@@ -1,10 +1,10 @@
 [Unit]
-Description=Loudness monitoring for ${stream_name}
+Description=Loudness monitoring for ${identifier}
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/loudness_rendering ${stream_name} ${source_url}
+ExecStart=/usr/local/bin/loudness_rendering "${identifier}" "${source_url}" "${output}" "${room_name}"
 Restart=always
 RestartSec=10
 StartLimitInterval=0
