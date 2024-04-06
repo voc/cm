@@ -4,13 +4,15 @@ files['/usr/local/bin/loudness_rendering'] = {
     'triggers': set(),
 }
 
-for stream, source_url in node.metadata.get('loudness-rendering').items():
+for stream, config in node.metadata.get('loudness-rendering/streams').items():
     files[f'/usr/local/lib/systemd/system/{stream}_loudness.service'] = {
         'source': 'service',
         'content_type': 'mako',
         'context': {
-            'source_url': source_url,
-            'stream_name': stream,
+            'room_name': config['room'],
+            'source_url': config['source'],
+            'identifier': stream,
+            'output': config['output'],
         },
         'triggers': {
             'action:systemd-reload',
