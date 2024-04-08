@@ -11,15 +11,14 @@ files['/usr/local/sbin/voc2mqtt'] = {
 }
 
 files['/usr/local/sbin/alert_shutdown.sh'] = {
-    'content_type': 'mako',
     'mode': '0755',
 }
 
 files['/usr/local/sbin/check_system.sh'] = {
-    'content_type': 'jinja2',
-    'context': {
-        'event': node.metadata.get('event'),
-    },
+    'mode': '0755',
+}
+
+files['/usr/local/sbin/check_system_daily.sh'] = {
     'mode': '0755',
 }
 

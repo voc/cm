@@ -23,9 +23,16 @@ defaults = {
             'check_system_and_send_mqtt_message': {
                 'command': '/usr/local/sbin/check_system.sh',
                 'when': 'minutely',
-                'environment': {
-                    'DAILY_TASK_TIME': str(6+(node.magic_number%3)).rjust(2, '0') + str(node.magic_number%60).rjust(2, '0'),
+                'requires': {
+                    'network.target',
                 },
+            },
+            'check_system_daily_tasks': {
+                'command': '/usr/local/sbin/check_system_daily.sh',
+                'when': '{}:{}:00'.format(
+                    str(6+(node.magic_number%3)).rjust(2, '0'),
+                    str(node.magic_number%60).rjust(2, '0'),
+                ),
                 'requires': {
                     'network.target',
                 },
