@@ -29,8 +29,9 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABllVCErJFQ-7e0rDPlHlvooyH9HE93c7uSP
 kind = "test"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 0
-mode = "1080p25"
+kind = "test"
+#devicenumber = 0
+#mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
