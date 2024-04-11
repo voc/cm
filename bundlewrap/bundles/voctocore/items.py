@@ -47,7 +47,7 @@ files['/opt/voctomix2/voctocore-config.ini'] = {
         'audio': node.metadata.get('voctocore/audio', {}),
         'backgrounds': node.metadata.get('voctocore/backgrounds', {}),
         'event': event,
-        'has_schedule': node.metadata.get('event/schedule_xml', ''),
+        'has_schedule': node.metadata.get('event/schedule_json', ''),
         'keyboard_shortcuts': KEYBOARD_SHORTCUTS,
         'mirror_view': node.metadata.get('voctocore/mirror_view'),
         'overlay_mapping': overlay_mapping,

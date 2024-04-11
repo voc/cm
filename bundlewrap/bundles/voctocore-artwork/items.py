@@ -11,7 +11,7 @@ directories['/opt/voc/share'] = {
 }
 
 files['/opt/voc/schedule_url'] = {
-    'content': node.metadata.get('event/schedule_xml', '') + '\n',
+    'content': node.metadata.get('event/schedule_json', '') + '\n',
     'triggers': {
         'action:voctocore-artwork_update_schedule_and_overlays',
     },
