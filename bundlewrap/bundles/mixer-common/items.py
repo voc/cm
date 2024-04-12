@@ -134,6 +134,9 @@ actions['i3pystatus_install'] = {
     'needs': {
         'action:i3pystatus_create_virtualenv',
     },
+    'after': {
+        'pkg_apt:',
+    },
     'triggered': True,
 }
 

@@ -6,7 +6,7 @@ defaults = {
             'i3status': {},
             'irssi': {},
             'kitty': {},
-            'netcat': {},
+            'netcat-openbsd': {},
             'slim': {},
             'x11-utils': {},
             'x11-xserver-utils': {},
