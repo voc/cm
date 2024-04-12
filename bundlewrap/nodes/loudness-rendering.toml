@@ -1,5 +1,5 @@
 groups = ["debian-bullseye", "servercase"]
-bundles = ["loudness-rendering", "mqtt-monitoring"]
+bundles = ["loudness-rendering", "voctocore-artwork"]
 
 [metadata.interfaces.ens18]
 ips = ["10.73.200.98/16"]

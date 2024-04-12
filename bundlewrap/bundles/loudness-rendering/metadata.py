@@ -6,6 +6,14 @@ defaults = {
             'ffmpeg': {},
         },
     },
+    'systemd-timers': {
+        'timers': {
+            'loudness_info_updater': {
+                'command': '/usr/local/bin/loudness_info_updater',
+                'when': 'minutely',
+            },
+        },
+    },
 }
 
 
