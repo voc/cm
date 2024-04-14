@@ -257,3 +257,23 @@ If you don't set it, the `volume` attribute of the corresponding input
 will automatically be set to `1.0`. If you want to change this, you have
 to manually set the `volume` attribute of the audio stream to the correct
 value.
+
+## Provisioning of a new system
+
+Provisioning of a new system is relatively straightforward, but mentioned
+here for completeness.
+
+1. Boot the debian installer of the desired debian version
+2. During installation, ensure you create the user `voc` instead of your
+   own user.
+3. Log in to the system and set up the following:
+    * Log in for user `voc` without a password
+    * `sudo` for user `voc` without a password
+    * Add all mounts to `/etc/fstab` and mount the filesystems.
+4. Ensure you can run `ssh yoursystem.lan.c3voc.de 'sudo date'` without
+   issues. Use the hostname set in the node file to verify (the default
+   is `{nodename}.lan.c3voc.de`).
+5. Ensure you have both keepass access and access to the bundlewrap
+   `.secrets.cfg`
+6. Run `bw apply -P4 {nodename}` - using `-P4` will ensure you don't run
+   into "too many startups" issues with the debian default sshd config.
