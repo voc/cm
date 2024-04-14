@@ -24,6 +24,7 @@ PLAYOUT_PORTS = {
 SHOULD_BE_RUNNING = node.metadata.get('voctocore/should_be_running', True)
 
 event = node.metadata.get('event/slug')
+voctomix_version = node.metadata.get('voctomix2/rev')
 assert node.has_bundle('encoder-common')
 assert node.has_bundle('voctomix2')
 
@@ -37,12 +38,10 @@ overlay_mapping = []
 for filename, title in sorted(node.metadata.get('event/overlay_mappings', {}).items()):
     overlay_mapping.append(f'{filename}.png|{title}')
 
-node_voctomix_path = join(repo.path, 'data', 'voctocore', 'files', f'{node.name}.ini')
-
 ### voc2mix
 files['/opt/voctomix2/voctocore-config.ini'] = {
     'content_type': 'mako',
-    'source': f'{node.name}.ini' if isfile(node_voctomix_path) else 'voctocore-config.ini',
+    'source': f'voctocore-config-by-version/{voctomix_version}.ini',
     'context': {
         'audio': node.metadata.get('voctocore/audio', {}),
         'backgrounds': node.metadata.get('voctocore/backgrounds', {}),

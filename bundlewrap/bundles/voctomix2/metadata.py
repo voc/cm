@@ -19,4 +19,7 @@ if node.has_any_bundle(['voctocore', 'voctogui']):
                 'rlwrap': {},
             },
         },
+        'voctomix2': {
+            'rev': 'voctomix2',
+        },
     }
