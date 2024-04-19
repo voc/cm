@@ -19,7 +19,7 @@ ips = [
 gateway4 = "10.73.0.254"
 
 [metadata.voctomix2]
-rev = "main"
+rev = "2.0-rc2"
 
 [metadata.voctocore]
 #vaapi = true
