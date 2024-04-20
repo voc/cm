@@ -98,6 +98,7 @@ users:
   - { name: 'florob', state: 'present' }
   - { name: 'florolf', state: 'present' }
   - { name: 'fxkr', state: 'present' }
+  - { name: 'garionion', state: 'present' }
   - { name: 'ike', state: 'present' }
   - { name: 'jwacalex', state: 'present' }
   - { name: 'kunsi', state: 'present' }
