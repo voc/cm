@@ -26,12 +26,12 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABllVCErJFQ-7e0rDPlHlvooyH9HE93c7uSP
 vaapi = true
 
 [metadata.voctocore.sources.cam1]
-#kind = "test"
 devicenumber = 0
 mode = "1080p25"
 
 [metadata.voctocore.sources.slides]
-kind = "test"
+devicenumber = 1
+mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
