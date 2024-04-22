@@ -2,7 +2,7 @@ defaults = {
     'apt': {
         'packages': {
             'gir1.2-gtk-3.0': {},
-            'gnome-themes-standard': {},
+            'gnome-themes-extra': {},
             'gstreamer1.0-alsa': {},
             'gstreamer1.0-gl': {},
             'gstreamer1.0-pulseaudio': {},

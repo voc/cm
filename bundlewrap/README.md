@@ -111,8 +111,8 @@ the key `overlays` to `yourevent.toml`. The value of this key should be
 a full-blown URL pointing to a `.tar.gz`-Archive containing the overlays
 themselves. You can create it using `tar -czf overlays.tar.gz *.png`.
 
-If the event uses a `schedule.xml` file, you can add it to the config
-using the `schedule_xml` key. This needs to be a URL, too.
+If the event uses a `schedule.json` file, you can add it to the config
+using the `schedule_json` key. This needs to be a URL, too.
 
 If the event does not use a schedule, you can specify
 filename-to-title-Mappings yourself. You can do so using the
@@ -125,7 +125,7 @@ will take preference.
 
 ```toml
 [metadata.event]
-schedule_xml = "https://example.com/schedule.xml"
+schedule_json = "https://example.com/schedule.json"
 overlays = "https://example.com/overlays.tar.gz"
 
 [metadata.event.overlay_mappings]

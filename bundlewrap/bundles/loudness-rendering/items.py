@@ -4,6 +4,20 @@ files['/usr/local/bin/loudness_rendering'] = {
     'triggers': set(),
 }
 
+directories['/opt/loudness-rendering/data'] = {
+    'owner': 'voc',
+}
+
+files['/opt/loudness-rendering/config.json'] = {
+    'content': repo.libs.faults.dict_as_json(node.metadata.get('loudness-rendering')),
+}
+
+files['/usr/local/bin/loudness_info_updater'] = {
+    'source': 'updater.py',
+    'mode': '0755',
+}
+
+
 for stream, config in node.metadata.get('loudness-rendering/streams').items():
     files[f'/usr/local/lib/systemd/system/{stream}_loudness.service'] = {
         'source': 'service',

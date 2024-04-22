@@ -9,6 +9,7 @@ ROOMS = (
     28, # GLT / realraum Graz
     80, # muccc
     81, # hacc
+    96, # kunsi
     98, # derpeter
     191, # seibert
 )

@@ -4,6 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
+User=voc
+Group=voc
 ExecStart=/usr/local/bin/loudness_rendering "${identifier}" "${source_url}" "${output}" "${room_name}"
 Restart=always
 RestartSec=10
