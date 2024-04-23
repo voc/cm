@@ -12,6 +12,7 @@ defaults = {
             'libdbus-glib-1-dev': {},
             'libgirepository1.0-dev': {},
             'libgstreamer1.0-0': {},
+            'librsvg2-common': {},
             'python3-dbus': {},
             'python3-dev': {},
             'python3-gi-cairo': {},
