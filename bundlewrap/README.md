@@ -87,10 +87,13 @@ Available room setups:
 * saal4
 * saal5
 * saal6
-* saal23
-* saal80
-* saal81
-* saal191
+* saal23 (CCCB)
+* saal28 (realraum Graz / Grazer Linuxtage)
+* saal80 (muccc)
+* saal81 (hacc)
+* saal96 (kunsi)
+* saal98 (derpeter)
+* saal191 (seibert)
 * servercase
 
 To set a room name, simply edit the `room_name` value in `nodes/yourencoder.toml`:
@@ -249,7 +252,7 @@ Source name enforcement is disabled for non-decklink sources.
 [metadata.voctocore.audio.translated-1] # "translated-1" is the source name
 input = "cam1" # which input provides this audio
 streams = "0+1" # use the first two audio streams received by the input
-volume = "1,0" # this is the default
+volume = "1.0" # this is the default
 ```
 
 Bundlewrap will take care of configuring the sources and blinders correctly.
