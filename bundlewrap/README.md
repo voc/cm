@@ -17,8 +17,12 @@ export BW_KEEPASS_FILE=$HOME/whereever/the/voc/keepass/lives.kdbx
 export BW_KEEPASS_PASSWORD=reallysecure
 ```
 
-The contents of the .secrets.cfg file can be found in the keepass file,
-too.
+The contents of the `.secrets.cfg` file can be found in the keepass file,
+too. If you need access to the `.secrets.cfg` file, but don't have keepass
+access, please let us know.
+
+The `.secrets.cfg` file should be deployed in the same directory as this
+README file.
 
 You want to set up ssh multiplexing for fast runs:
 ```
