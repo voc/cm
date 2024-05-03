@@ -1,5 +1,9 @@
+bundles = ["bird", "generator-routing", "generator-s2s"]
 groups = ["debian-bookworm"]
 hostname = "10.79.128.38"
+
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
 
 [metadata.crs-worker.secrets.encoding]
 token = "!kee_user:ansible|worker-groups|encoder98"
@@ -8,16 +12,17 @@ secret = "!kee_pass:ansible|worker-groups|encoder98"
 [metadata.event]
 room_name = "osmodevcon"
 
+[metadata.generator-s2s]
+peer_pubkey = "!decrypt:encrypt$gAAAAABmLsonKqR_aLQxDmlGXJNLDxqeVS51UKCHOhaIMzbE4K41saEx84z38zSJT1OMCzrZPcL4bqujDYh04KazlgIRs8PTWDiVGVxa6Oks17TPpuHQjDfx1fmeBC6fUl7GxdpDHsOx"
+privatekey = "!decrypt:encrypt$gAAAAABmLsoZZpLvBv-4yogrdnxZ0ZaK5z5eOCjA95O-cwvlN_ZQ1M_NlFxc3NiqCnMUBaDMxGgQmi5DnRFEShfiR8km6Ag5wZtLyBKDEVC0NyB3BvbePVWfgd7tVidYEVqiFJ4h6lCX"
+
 [metadata.interfaces.eth0]
 dhcp = true
 
 [metadata.interfaces.eth1]
-dhcp = false
 ips = [
     "10.73.98.3/16",
 ]
-#gateway4 = "10.73.0.254"
-
 
 [metadata.voctomix2]
 rev = "2.0-rc2"
@@ -39,10 +44,3 @@ hdmi = true
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "cam1"
-
-[metadata.generator-s2s]
-peer_pubkey = "!decrypt:encrypt$gAAAAABmLsonKqR_aLQxDmlGXJNLDxqeVS51UKCHOhaIMzbE4K41saEx84z38zSJT1OMCzrZPcL4bqujDYh04KazlgIRs8PTWDiVGVxa6Oks17TPpuHQjDfx1fmeBC6fUl7GxdpDHsOx"
-privatekey = "!decrypt:encrypt$gAAAAABmLsoZZpLvBv-4yogrdnxZ0ZaK5z5eOCjA95O-cwvlN_ZQ1M_NlFxc3NiqCnMUBaDMxGgQmi5DnRFEShfiR8km6Ag5wZtLyBKDEVC0NyB3BvbePVWfgd7tVidYEVqiFJ4h6lCX"
-
-[metadata.apt.packages.intel-media-va-driver-non-free]
-[metadata.apt.packages.i965-va-driver]
