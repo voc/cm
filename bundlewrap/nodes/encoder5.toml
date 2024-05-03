@@ -1,3 +1,4 @@
+bundles = ["mdadm"]
 groups = ["debian-buster"]
 
 [metadata.crs-worker.secrets]

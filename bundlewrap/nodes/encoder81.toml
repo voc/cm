@@ -1,4 +1,4 @@
-bundles = ["mixer-common", "voctogui"]
+bundles = ["mdadm", "mixer-common", "voctogui"]
 groups = ["debian-buster"]
 
 [metadata.crs-worker.secrets]

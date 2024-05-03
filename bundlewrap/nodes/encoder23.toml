@@ -1,4 +1,4 @@
-bundles = ["cifs-client"]
+bundles = ["cifs-client", "mdadm"]
 groups = ["debian-buster"]
 
 [metadata.cifs-client.mounts.video-ext]

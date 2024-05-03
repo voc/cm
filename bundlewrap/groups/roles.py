@@ -3,7 +3,6 @@ groups['encoders'] = {
         r'^encoder.+$',
     },
     'bundles': {
-        'mdadm',
         'rsync',
         'samba',
         'voctocore',

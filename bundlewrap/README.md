@@ -17,8 +17,12 @@ export BW_KEEPASS_FILE=$HOME/whereever/the/voc/keepass/lives.kdbx
 export BW_KEEPASS_PASSWORD=reallysecure
 ```
 
-The contents of the .secrets.cfg file can be found in the keepass file,
-too.
+The contents of the `.secrets.cfg` file can be found in the keepass file,
+too. If you need access to the `.secrets.cfg` file, but don't have keepass
+access, please let us know.
+
+The `.secrets.cfg` file should be deployed in the same directory as this
+README file.
 
 You want to set up ssh multiplexing for fast runs:
 ```
@@ -87,10 +91,13 @@ Available room setups:
 * saal4
 * saal5
 * saal6
-* saal23
-* saal80
-* saal81
-* saal191
+* saal23 (CCCB)
+* saal28 (realraum Graz / Grazer Linuxtage)
+* saal80 (muccc)
+* saal81 (hacc)
+* saal96 (kunsi)
+* saal98 (derpeter)
+* saal191 (seibert)
 * servercase
 
 To set a room name, simply edit the `room_name` value in `nodes/yourencoder.toml`:
@@ -249,7 +256,7 @@ Source name enforcement is disabled for non-decklink sources.
 [metadata.voctocore.audio.translated-1] # "translated-1" is the source name
 input = "cam1" # which input provides this audio
 streams = "0+1" # use the first two audio streams received by the input
-volume = "1,0" # this is the default
+volume = "1.0" # this is the default
 ```
 
 Bundlewrap will take care of configuring the sources and blinders correctly.
@@ -275,5 +282,6 @@ here for completeness.
    is `{nodename}.lan.c3voc.de`).
 5. Ensure you have both keepass access and access to the bundlewrap
    `.secrets.cfg`
-6. Run `bw apply -P4 {nodename}` - using `-P4` will ensure you don't run
-   into "too many startups" issues with the debian default sshd config.
+6. Run `BW_SSH_ARGS="-l voc" bw apply -P4 {nodename}` - using `-P4`
+   will ensure you don't run into "too many startups" issues with the
+   debian default sshd config.
