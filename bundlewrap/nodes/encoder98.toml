@@ -1,4 +1,4 @@
-bundles = ["bird", "generator-routing", "generator-s2s"]
+bundles = ["bird", "generator-routing", "generator-s2s", "mdadm"]
 groups = ["debian-bookworm"]
 hostname = "10.79.128.38"
 
