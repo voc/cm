@@ -21,13 +21,6 @@ defaults = {
         },
     },
     'voctocore': {
-        'mirror_view': False, # automatically mirrors SBS/LEC views
-        'parallel_slide_recording': True,
-        'parallel_slide_streaming': True,
-        'static_background_image': True,
-        'streaming_use_dynaudnorm': False,
-        'vaapi': False,
-        'srt_publish': True,
         'backgrounds': {
             'lec': {
                 'kind': 'img',
@@ -50,6 +43,16 @@ defaults = {
                 'composites': 'fs',
             },
         },
+        'mirror_view': False, # automatically mirrors SBS/LEC views
+        'parallel_slide_recording': True,
+        'parallel_slide_streaming': True,
+        'programout_audiosink': 'autoaudiosink',
+        'programout_enabled': False,
+        'programout_videosink': 'autovideosink',
+        'srt_publish': True,
+        'static_background_image': True,
+        'streaming_use_dynaudnorm': False,
+        'vaapi': False,
     },
 }
 
