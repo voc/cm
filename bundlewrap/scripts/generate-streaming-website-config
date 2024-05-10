@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+
+from datetime import datetime
+from os.path import abspath, dirname
+from re import sub
+from sys import argv
+from zoneinfo import ZoneInfo
+
+from bundlewrap.metadata import metadata_to_json
+from bundlewrap.repo import Repository
+
+repo = Repository(dirname(dirname(abspath(__file__))))
+
+try:
+    nodes = sorted(repo.nodes_in_group(argv[1]))
+except Exception:
+    print(f'Usage: {argv[0]} <group>')
+    print('Generates a minimal streaming website config.json')
+    exit(1)
+
+NOW = datetime.now(ZoneInfo('Europe/Berlin')).isoformat(timespec='seconds')
+
+config = {
+    '$schema': '../../../docs/config-schema.json',
+    'conference': {
+        'description': '',
+        'end': NOW,
+        'organizer': '',
+        'start': NOW,
+        'title': nodes[0].metadata.get('event/name'),
+        'streamingConfig': {
+            'html': {
+                'footer': 'by <a href="https://c3voc.de">C3VOC</a>',
+            },
+        },
+        'rooms': [],
+    },
+}
+
+for node in nodes:
+    if not node.has_bundle('voctocore'):
+        continue
+
+    config['conference']['rooms'].append(
+        {
+            'name': node.metadata.get('event/room_name'),
+            'slug': sub(
+                r'[^a-z0-9-_]+', '_', node.metadata.get('event/room_name').lower()
+            ),
+            'streamId': node.metadata.get('voctocore/streaming_endpoint'),
+        }
+    )
+
+print(metadata_to_json(config))
