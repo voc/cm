@@ -1,5 +1,5 @@
-bundles = ["mdadm"]
-groups = ["debian-buster"]
+bundles = ["zfs"]
+groups = ["debian-bookworm"]
 
 [metadata.crs-worker.secrets]
 encoding.secret = "!kee_pass:ansible|worker-groups|encoder6"
@@ -28,3 +28,13 @@ mode = "1080p25"
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "cam1"
+
+[metadata.zfs.pools.video.when_creating]
+ashift = 12
+
+[[metadata.zfs.pools.video.when_creating.config]]
+type = "mirror"
+devices = [
+    "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_4TB_S751NS0WA03384Z",
+    "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_4TB_S751NX0X201833W",
+]
