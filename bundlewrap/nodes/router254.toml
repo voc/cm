@@ -1,0 +1,39 @@
+hostname = "10.73.254.201"
+groups = ["debian-bookworm"]
+
+[metadata]
+room_number = 254
+
+[metadata.generator-s2s]
+#pubkey encrypt$gAAAAABmQRQopMZCab3aifGDOOvE60fFz8d4Sckk_coTGMdmrxPTaSbSABvBnCGKexvEXH0AKpEmLjY1BF71Iqa49QKCUxXd9L-t7m5AuHUgNx_JEIpEPS0-oxEHpOPiAWxXc5BENlzL
+peer_pubkey = "!decrypt:encrypt$gAAAAABmQRPu0QfPmbc8xvOyEBDFlSVZigmmVSUXUGmO3WoXo3zvCMKqIlJMCe6YKpYW17j81PNUWYvKrxhyfdi4CBnLtZBycN4I1V4PIrA_a8gND8ehbXOSfYvs8zU0g0zZYtmetJjH"
+privatekey = "!decrypt:encrypt$gAAAAABmQRQb2TRjfHqwQ7DHu3bXB4CVftnGBUyC7_zkU2gAgABa5OML02S9JumKdTrwQzRq6wfOapKk7Tmt5Fn6zVywCCVN6Zt5ccrxV-A5ZhyIja5g0WbfADS3L_pH1_qzjXxLkUc4"
+
+[metadata.interfaces.wan]
+ips = [
+    "185.106.84.2/26",
+    "2001:67c:20a0:e::2/64",
+]
+gateway4 = "185.106.84.1"
+gateway6 = "2001:67c:20a0:e::1"
+
+[metadata.interfaces.lan]
+ips = [
+    "10.73.254.201/24",
+]
+
+[metadata.isc-dhcp-server.subnets.lan]
+range_lower = "10.73.254.100"
+range_higher = "10.73.254.199"
+subnet = "10.73.254.0/24"
+options.broadcast-address = "10.73.254.255"
+options.domain-name-servers = "10.73.254.201"
+options.domain-search = "lan.c3voc.de"
+options.routers = "10.73.254.201"
+options.subnet-mask = "255.255.255.0"
+
+[metadata.unbound-with-knot]
+threads = 4
+cache_slabs = 4
+primary = "!decrypt:encrypt$gAAAAABmBGxVDiZLLQAXtkHpNgy3Eaqs5NM9ArfFMHhjL3OKOdQHnyPpcMkKz_G6vGykgizdjX_SiKUfDRt9to_pkPc09zEi1g=="
+primary_secret = "!decrypt:encrypt$gAAAAABmBJMUO7A6U_6iu-SVlerpc7Do3BZR-0TSIeDlxmOTta2tywzUWKcQ42NzawP4W1hH6xhn3ckaYNYtChP9XMaCJE0aAwW3F2-5QP2vCw5xDbA9oNcWuo-Ahnt6KTGV_0sCGh04ef5v0vyrcQgG8sIiQhseFQ=="
