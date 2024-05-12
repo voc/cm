@@ -76,10 +76,9 @@ files['/usr/local/lib/systemd/system/restore-fuse-mounts.service'] = {
 
 if not node.has_bundle('cifs-client'):
     files['/video/upload-key'] = {
-        'content_type': 'any', # do not touch file contents
+        'content': repo.libs.ssh.generate_ed25519_private_key('upload', node),
         'owner': 'voc',
         'mode': '0600',
-        'unless': '! test -f /video/upload-key',
     }
 
 files['/etc/fuse.conf'] = {}
