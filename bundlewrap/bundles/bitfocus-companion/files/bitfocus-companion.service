@@ -1,0 +1,17 @@
+[Unit]
+Description=Bitfocus Companion
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=companion
+WorkingDirectory=/var/opt/bitfocus-companion
+ExecStartPre=/var/opt/bitfocus-companion/merge-passwords.py
+ExecStart=${startcmd}
+Restart=on-failure
+KillSignal=SIGINT
+TimeoutStopSec=60
+
+[Install]
+WantedBy=multi-user.target
