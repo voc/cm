@@ -59,6 +59,10 @@
         "description": "hexchen",
         "mac": "54:05:db:ff:be:ae"
     },
+    "10.73.100.17": {
+        "description": "scientress / Jenny (ThinkPad)",
+        "mac": "54:e1:ad:ef:2d:1e"
+    },
     "10.73.100.238": {
         "description": "atze",
         "mac": "80:fa:5b:41:f8:7b"
@@ -258,6 +262,14 @@
     "10.73.95.3": {
         "description": "encoder-hexchen",
         "mac": "e8:6a:64:d8:01:35"
+    },
+    "10.73.96.1": {
+        "description": "mixer96",
+        "mac": "54:e1:ad:a6:0d:1f"
+    },
+    "10.73.96.202": {
+        "description": "switch-kunsi",
+        "mac": "d0:21:f9:bd:d1:c8"
     },
     "10.73.97.3": {
         "description": "encoder-c4",
