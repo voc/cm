@@ -10,7 +10,7 @@ encoding.secret = "!decrypt:encrypt$gAAAAABlK_Nk7Jbaf_4IKFeT4ij_H3S7qcAd6VsWq1KH
 encoding.token = "!decrypt:encrypt$gAAAAABlK_NU3Ht2QfEyn5OSLfY_nUO4NeOI1VF6Xlv-0LvFBHz8X4gEWZVJXknW4-lujFXAqJdANwDP1EfpIBO1xl2jzWPFgm1WlywqtaPLmted1O7LD75vH0x9H34tMi1iTam4UEiW"
 
 [metadata.event]
-room_name = "Auditorium"
+room_name = "Ada"
 
 [metadata.interfaces.eth0]
 ips = [
