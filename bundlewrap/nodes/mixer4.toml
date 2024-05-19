@@ -1,9 +1,15 @@
 bundles = ["pygtk-atem-switcher", "thinkfan"]
 groups = ["debian-bookworm"]
 
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
+
 [metadata.interfaces.eth0]
 ips = ["10.73.4.1/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctomix2]
-rev = "preset_toolbar"
+rev = "main"
+
+[metadata.voctogui]
+encoder-ip = "10.73.96.3"
