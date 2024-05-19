@@ -3,6 +3,7 @@ bundles = [
   'nodejs',
   'git-repo',
   'bitfocus-companion',
+  'sampleplayer',
 ]
 
 [metadata.interfaces.eth0]
