@@ -5,11 +5,10 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages.i965-va-driver]
 
 [metadata.interfaces.eth0]
-#ips = ["10.73.96.1/16"]
 dhcp = true
 
 [metadata.voctomix2]
-rev = "preset_toolbar"
+rev = "main"
 
 [metadata.mixer-common]
 enable-irssi = false
