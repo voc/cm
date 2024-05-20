@@ -16,6 +16,11 @@ room_name = "kunsi test"
 ips = ["10.73.96.3/16"]
 dhcp = true
 
+[metadata.samba]
+restrict-to = [
+    "172.19.138.0/24", # kunsi home network
+]
+
 [metadata.voctomix2]
 rev = "main"
 
