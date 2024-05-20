@@ -74,12 +74,11 @@ files['/usr/local/lib/systemd/system/restore-fuse-mounts.service'] = {
     },
 }
 
-if not node.has_bundle('cifs-client'):
-    files['/video/upload-key'] = {
-        'content': repo.libs.ssh.generate_ed25519_private_key('upload', node),
-        'owner': 'voc',
-        'mode': '0600',
-    }
+files['/home/voc/.ssh/upload-key'] = {
+    'content': repo.libs.ssh.generate_ed25519_private_key('upload', node),
+    'owner': 'voc',
+    'mode': '0600',
+}
 
 files['/etc/fuse.conf'] = {}
 
@@ -234,3 +233,5 @@ files['/opt/tracker-profile.sh'] = {'delete': True}
 files['/opt/tracker-profile-meta.sh'] = {'delete': True}
 files['/opt/crs-scripts/tracker-profile.sh'] = {'delete': True}
 files['/opt/crs-scripts/tracker-profile-meta.sh'] = {'delete': True}
+files['/video/upload-key'] = {'delete': True}
+files['/video/upload-key.pub'] = {'delete': True}

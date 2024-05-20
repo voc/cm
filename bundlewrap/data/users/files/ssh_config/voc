@@ -4,6 +4,6 @@ Host *
     HashKnownHosts no
 
 Host releasing.c3voc.de
-    IdentityFile /video/upload-key
+    IdentityFile /home/voc/.ssh/upload-key
     StrictHostKeyChecking accept-new
     User upload
