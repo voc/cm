@@ -6,8 +6,8 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages.i965-va-driver]
 
 [metadata.crs-worker.secrets]
-encoding.secret = "!decrypt:encrypt$gAAAAABlK_Nk7Jbaf_4IKFeT4ij_H3S7qcAd6VsWq1KHa5nZKNwmhjSi6eJcMYxbgmuABqvVnSpBrnz4DSwVRABbh2EfxW17R7WH2OAHNiqCfVC8UmtgTtWwOCUJIpz8qC9Z5efSCIEU"
-encoding.token = "!decrypt:encrypt$gAAAAABlK_NU3Ht2QfEyn5OSLfY_nUO4NeOI1VF6Xlv-0LvFBHz8X4gEWZVJXknW4-lujFXAqJdANwDP1EfpIBO1xl2jzWPFgm1WlywqtaPLmted1O7LD75vH0x9H34tMi1iTam4UEiW"
+encoding.secret = "!decrypt:encrypt$gAAAAABmS4R0VdTZSS58MrVJR6YdjDDRv9M6vCQ6BNPvBcuJTVNK-mlyo7qPhEz1vumeA1bQxBWE3_dBNColadARCtjFmuQ7IbDFxxFTsE50Pf2A7eGzXB5Y3ju_TzqKLpycC_Y1QlJx"
+encoding.token = "!decrypt:encrypt$gAAAAABmS4Rp6JTMutWQIbbaIlQl6Kkr6ceqmmuElxm4L2E0REjODEjNZKdk3N4Ch6_ncw3YRJ1Fxk4-G0mEdZtcHhDzFoPMBtBgiW5MZ9mdmEWK4695_ylXVPN5RPt1-Ove0RtHEvYA"
 
 [metadata.event]
 room_name = "kunsi test"
