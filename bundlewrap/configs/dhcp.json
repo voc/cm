@@ -271,6 +271,10 @@
         "description": "switch-kunsi",
         "mac": "d0:21:f9:bd:d1:c8"
     },
+    "10.73.96.3": {
+        "description": "encoder96",
+        "mac": "6c:4b:90:5c:e3:6d"
+    },
     "10.73.97.3": {
         "description": "encoder-c4",
         "mac": "70:85:c2:0c:29:3f"
