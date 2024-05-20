@@ -13,10 +13,8 @@ encoding.token = "!decrypt:encrypt$gAAAAABlK_NU3Ht2QfEyn5OSLfY_nUO4NeOI1VF6Xlv-0
 room_name = "kunsi test"
 
 [metadata.interfaces.eth0]
-ips = [
-    "10.73.96.3/16",
-]
-gateway4 = "10.73.0.254"
+ips = ["10.73.96.3/16"]
+dhcp = true
 
 [metadata.voctomix2]
 rev = "main"
