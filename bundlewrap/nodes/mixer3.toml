@@ -1,5 +1,11 @@
 bundles = ["pygtk-atem-switcher", "thinkfan"]
-groups = ["debian-buster"]
+groups = ["debian-bookworm"]
+
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
+
+[metadata.voctomix2]
+rev = "main"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.3.1/16"]

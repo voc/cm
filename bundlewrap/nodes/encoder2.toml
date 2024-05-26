@@ -1,5 +1,8 @@
-bundles = ["mdadm"]
-groups = ["debian-buster"]
+bundles = ["zfs"]
+groups = ["debian-bookworm"]
+
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
 
 [metadata.crs-worker.secrets]
 encoding.secret = "!kee_pass:ansible|worker-groups|encoder2"
@@ -28,3 +31,13 @@ mode = "1080p25"
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "cam1"
+
+[metadata.zfs.pools.video.when_creating]
+ashift = 12
+
+[[metadata.zfs.pools.video.when_creating.config]]
+type = "mirror"
+devices = [
+    "/dev/disk/by-id/placeholder",
+    "/dev/disk/by-id/placeholder",
+]

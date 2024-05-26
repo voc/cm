@@ -19,7 +19,21 @@ if node.has_any_bundle(['voctocore', 'voctogui']):
                 'rlwrap': {},
             },
         },
-        'voctomix2': {
-            'rev': 'voctomix2',
-        },
     }
+
+@metadata_reactor.provides(
+    'voctomix2/rev',
+)
+def voctomix_version(metadata):
+    if node.in_group('deian-bookworm'):
+        return {
+            'voctomix2': {
+                'rev': 'v2.0',
+            },
+        }
+    else: 
+        return {
+            'voctomix2': {
+                'rev': 'voctomix2',
+            },
+        }

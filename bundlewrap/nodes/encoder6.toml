@@ -14,9 +14,6 @@ room_name = "Saal 6"
 ips = ["10.73.6.3/16"]
 gateway4 = "10.73.0.254"
 
-[metadata.voctomix2]
-rev = "2.0-rc2"
-
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYk0lzAoL1Hf5xuaCK0E6A9xq15GeqVfsTCHDomSz0RcFz-kzlyQaS6wXWTsEPF21QhvncKBIstse1UP1Ue5fOKP1J9ruv5ScZrnfctymdDCpuc="
 

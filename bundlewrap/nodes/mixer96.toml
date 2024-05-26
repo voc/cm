@@ -4,11 +4,11 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages.intel-media-va-driver-non-free]
 [metadata.apt.packages.i965-va-driver]
 
-[metadata.interfaces.eth0]
-dhcp = true
-
 [metadata.voctomix2]
 rev = "main"
+
+[metadata.interfaces.eth0]
+dhcp = true
 
 [metadata.mixer-common]
 enable-irssi = false
