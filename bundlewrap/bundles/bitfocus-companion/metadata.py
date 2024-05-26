@@ -117,7 +117,7 @@ def obs_config(metadata):
 
 
 @metadata_reactor.provides(
-    'firewall/port_rules/8000',
+    'firewall/port_rules',
 )
 def sperrfix(metadata):
     if metadata.get('bitfocus-companion/firewall/ignore', False):

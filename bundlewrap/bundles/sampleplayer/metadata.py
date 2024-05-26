@@ -16,7 +16,7 @@ defaults = {
 }
 
 @metadata_reactor.provides(
-    'firewall/port_rules/8080',
+    'firewall/port_rules',
 )
 def sperrfix(metadata):
     if metadata.get('sampleplayer/firewall/ignore', False):
