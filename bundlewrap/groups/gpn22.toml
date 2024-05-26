@@ -1,0 +1,6 @@
+subgroups = ["saal1", "saal3", "saal4", "saal6", "servercase"]
+members = ["releasing"]
+
+[metadata.event]
+name = "22. Gulaschprogrammiernacht"
+slug = "gpn22"
