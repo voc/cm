@@ -1,0 +1,6 @@
+subgroups = ["saal96"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Electromagnetic Field 2024"
+slug = "emf2024"
