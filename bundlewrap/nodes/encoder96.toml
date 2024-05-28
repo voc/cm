@@ -25,6 +25,7 @@ dhcp = true
 [metadata.samba]
 restrict-to = [
     "172.19.138.0/24", # kunsi home network
+    "172.31.152.0/24", # emf
 ]
 
 [metadata.voctomix2]
