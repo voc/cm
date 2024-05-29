@@ -25,10 +25,10 @@ if node.has_any_bundle(['voctocore', 'voctogui']):
     'voctomix2/rev',
 )
 def voctomix_version(metadata):
-    if node.in_group('deian-bookworm'):
+    if node.in_group('debian-bookworm'):
         return {
             'voctomix2': {
-                'rev': 'v2.0',
+                'rev': '2.0',
             },
         }
     else: 
