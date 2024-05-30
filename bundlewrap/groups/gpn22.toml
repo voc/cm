@@ -4,3 +4,4 @@ members = ["releasing"]
 [metadata.event]
 name = "22. Gulaschprogrammiernacht"
 slug = "gpn22"
+schedule_json = "https://cfp.gulas.ch/gpn22/schedule/export/schedule.json"
