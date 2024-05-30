@@ -30,7 +30,7 @@ mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 0
-mode = "1080i50"
+mode = "1080PsF25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
