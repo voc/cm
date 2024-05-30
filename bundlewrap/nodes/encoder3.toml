@@ -29,7 +29,7 @@ devicenumber = 1
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 5
+devicenumber = 4
 mode = "1080p25"
 
 [metadata.voctocore.audio.original]
