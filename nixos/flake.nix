@@ -39,6 +39,20 @@
       };
     in (
     {
+      nixosConfigurations = nixpkgs.lib.mapAttrs (name: mod:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            mod
+            (./hosts + "/${name}")
+            ./profiles/base
+            home-manager.nixosModules.home-manager
+          ];
+          specialArgs = {
+            name = name;
+          };
+        }
+      ) (import ./hosts.nix);
       colmena = {
         meta = {
           nixpkgs = pkgs' "x86_64-linux";
