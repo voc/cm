@@ -14,3 +14,16 @@ from_encoders = [
     "encoder5",
     "encoder6",
 ]
+
+[metadata.loudness-rendering.streams.emf_stagea]
+output = "rtmp://ingest2.c3voc.de/relay/emf_stagea_loudness"
+room = "Stage A"
+source = "https://cdn.c3voc.de/hls/emf_stagea/native_hd.m3u8"
+[metadata.loudness-rendering.streams.emf_stageb]
+output = "rtmp://ingest2.c3voc.de/relay/emf_stageb_loudness"
+room = "Stage B"
+source = "https://cdn.c3voc.de/hls/emf_stageb/native_hd.m3u8"
+[metadata.loudness-rendering.streams.emf_stagec]
+output = "rtmp://ingest2.c3voc.de/relay/emf_stagec_loudness"
+room = "Stage C"
+source = "https://cdn.c3voc.de/hls/emf_stagec/native_hd.m3u8"
