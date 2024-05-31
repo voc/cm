@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, name, pkgs, ... }:
 
 {
   imports = [
@@ -13,6 +13,7 @@
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages;
   boot.kernelParams = [ "quiet" ];
 
+  networking.hostName = lib.mkDefault name;
   networking.nftables.enable = lib.mkDefault true;
   networking.domain = lib.mkDefault "c3voc.de";
 

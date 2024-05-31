@@ -45,7 +45,7 @@
           specialArgs = { inherit inputs; };
         };
 
-        defaults = { lib, name, ... }: {
+        defaults = { config, lib, name, ... }: {
           imports = [
             (./hosts + "/${name}")
 
@@ -60,7 +60,7 @@
           ];
 
           deployment = {
-            targetHost = "${name}.c3voc.de";
+            targetHost = lib.mkDefault "${config.networking.hostName}.${config.networking.domain}";
             targetUser = lib.mkDefault null;
           };
           networking.hostName = name;
