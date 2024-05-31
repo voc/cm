@@ -45,3 +45,13 @@ Rename `configuration.nix` to `default.nix`. ... profit!
 
 Maybe there will be a better way for this is the future, mainly for the `nixos` install part, which is kind of annoying.
 
+## Specials
+
+### Loudness Player (WIP)
+
+In the current working state define streams and i3layout in `hosts/loudness-player/default.nix` and then build the iso
+
+    nix build .#nixosConfigurations.loudness-player.config.system.build.isoImage
+
+The image is symlinked in the result folder in this directory, flah it to an USB Drive, boot it (the grub entry is called installer, don't worry, nothing will be installed) adn enjoy the loudness monitoring
+
