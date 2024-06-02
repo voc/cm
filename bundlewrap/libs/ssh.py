@@ -3,10 +3,12 @@ from functools import lru_cache
 from hashlib import sha3_224
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
-from cryptography.hazmat.primitives.serialization import (Encoding,
-                                                        NoEncryption,
-                                                        PrivateFormat,
-                                                        PublicFormat)
+from cryptography.hazmat.primitives.serialization import (
+    Encoding,
+    NoEncryption,
+    PrivateFormat,
+    PublicFormat,
+)
 
 from bundlewrap.utils import Fault
 
@@ -14,7 +16,7 @@ from bundlewrap.utils import Fault
 @lru_cache(maxsize=None)
 def generate_ed25519_private_key(username, node):
     return Fault(
-        f'private key {username}@{node.name}',
+        f"private key {username}@{node.name}",
         lambda username, node: _generate_ed25519_private_key(username, node),
         username=username,
         node=node,
@@ -24,7 +26,7 @@ def generate_ed25519_private_key(username, node):
 @lru_cache(maxsize=None)
 def generate_ed25519_public_key(username, node):
     return Fault(
-        f'public key {username}@{node.name}',
+        f"public key {username}@{node.name}",
         lambda username, node: _generate_ed25519_public_key(username, node),
         username=username,
         node=node,
@@ -42,7 +44,7 @@ def _generate_ed25519_private_key(username, node):
 
     # get relevant lines from string
     nondeterministic_bytes = b64decode(
-        ''.join(nondeterministic_privatekey.split('\n')[1:-2])
+        "".join(nondeterministic_privatekey.split("\n")[1:-2])
     )
 
     # sanity check
@@ -59,13 +61,16 @@ def _generate_ed25519_private_key(username, node):
     )
 
     # reassemble file
-    deterministic_privatekey = '\n'.join(
-        [
-            '-----BEGIN OPENSSH PRIVATE KEY-----',
-            b64encode(deterministic_bytes).decode(),
-            '-----END OPENSSH PRIVATE KEY-----',
-        ]
-    ) + '\n'
+    deterministic_privatekey = (
+        "\n".join(
+            [
+                "-----BEGIN OPENSSH PRIVATE KEY-----",
+                b64encode(deterministic_bytes).decode(),
+                "-----END OPENSSH PRIVATE KEY-----",
+            ]
+        )
+        + "\n"
+    )
 
     return deterministic_privatekey
 
@@ -79,7 +84,7 @@ def _generate_ed25519_public_key(username, node):
             format=PublicFormat.OpenSSH,
         )
         .decode()
-        + f' {username}@{node.name}'
+        + f" {username}@{node.name}"
     )
 
 
