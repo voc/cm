@@ -434,7 +434,7 @@ ssh_pubkeys = [
 ]
 
 [evilscientress]
-enable_rz = false
+enable_rz = true
 enable_event = true
 uid = 1156
 ssh_pubkeys = [
