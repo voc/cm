@@ -6,3 +6,12 @@ bundles = [
 
 [metadata]
 hostname = "releasing.c3voc.de"
+
+[metadata.users.upload]
+ssh_pubkeys = [
+    # emf2024, sam_w
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDQdGzwYiallvWXIHgSAf2GOwMJKA8bxPmwyuO+vsd1HwB65hMRPCpKS+FNLIpkrADNnuhGS3xGCGSSuQ+zAu/g=",
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNLrJyUXmiFWb9vhlTWZLYr64IsKut+c9TGqq3/uwPDeF4X0Qb2jzxqXfQcDSztjR09JHbC8BOqfpYYT9LHahIo=",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOOicoYtzJ3vXSkY7MkriQrfyZ/gP8ONM2OHhO0zi2cl",
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGUoi76VYnqsPZ4IjyfNb8NfaaAfcU9iAbARFEfYTuNwxmYUjv+RpCBC1Gqi0YpdONyrWi9XljjAtY92P4jZffQ=",
+]

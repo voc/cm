@@ -18,3 +18,11 @@ actions = {
         },
     },
 }
+
+files['/home/upload/.ssh/authorized_keys'] = {
+    'content': repo.libs.faults.join_faults(
+        sorted(node.metadata.get('users/upload/ssh_pubkeys')),
+        '\n',
+    ) + '\n',
+    'owner': 'upload',
+}

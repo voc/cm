@@ -3,8 +3,8 @@ hostname = "10.73.96.7"
 groups = ["debian-bookworm"]
 
 [metadata.crs-worker.secrets.encoding]
-encoding.secret = "!decrypt:encrypt$gAAAAABmS4R0VdTZSS58MrVJR6YdjDDRv9M6vCQ6BNPvBcuJTVNK-mlyo7qPhEz1vumeA1bQxBWE3_dBNColadARCtjFmuQ7IbDFxxFTsE50Pf2A7eGzXB5Y3ju_TzqKLpycC_Y1QlJx"
-encoding.token = "!decrypt:encrypt$gAAAAABmS4Rp6JTMutWQIbbaIlQl6Kkr6ceqmmuElxm4L2E0REjODEjNZKdk3N4Ch6_ncw3YRJ1Fxk4-G0mEdZtcHhDzFoPMBtBgiW5MZ9mdmEWK4695_ylXVPN5RPt1-Ove0RtHEvYA"
+secret = "!decrypt:encrypt$gAAAAABmS4R0VdTZSS58MrVJR6YdjDDRv9M6vCQ6BNPvBcuJTVNK-mlyo7qPhEz1vumeA1bQxBWE3_dBNColadARCtjFmuQ7IbDFxxFTsE50Pf2A7eGzXB5Y3ju_TzqKLpycC_Y1QlJx"
+token = "!decrypt:encrypt$gAAAAABmS4Rp6JTMutWQIbbaIlQl6Kkr6ceqmmuElxm4L2E0REjODEjNZKdk3N4Ch6_ncw3YRJ1Fxk4-G0mEdZtcHhDzFoPMBtBgiW5MZ9mdmEWK4695_ylXVPN5RPt1-Ove0RtHEvYA"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.96.7/16"]
