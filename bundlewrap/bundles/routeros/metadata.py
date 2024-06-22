@@ -21,7 +21,7 @@ for port, conf in netbox['interfaces'].items():
     for ip in conf['ips']:
         ips[ip] = {'interface': port}
 
-    if conf['type'] == 'VIRTUAL':
+    if conf['type'].lower() == 'virtual':
         # these are VLAN interfaces (for management IPs)
         if conf['ips']:
             # this makes management services available in the VLAN
@@ -53,6 +53,8 @@ for port, conf in netbox['interfaces'].items():
         if conf.get('ips', []):
             ports[port]['ips'] = set(conf['ips'])
         if conf['type'] in (
+            '1000base-t',
+            '10gbase-x-sfpp',
             'A_1000BASE_T',
             'A_10GBASE_X_SFPP',
         ):
@@ -66,7 +68,7 @@ for port, conf in netbox['interfaces'].items():
 
     # tagged
 
-    if conf['mode'] == 'TAGGED_ALL':
+    if conf['mode'] in ('TAGGED_ALL', 'tagged-all'):
         tagged = set(vlans.keys()) - {conf['untagged_vlan']}
     else:
         tagged = conf['tagged_vlans']
@@ -83,5 +85,5 @@ defaults = {
         'ips': ips,
         'ports': ports,
         'vlans': vlans,
-    }
+    },
 }
