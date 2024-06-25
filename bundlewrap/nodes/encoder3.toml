@@ -20,26 +20,38 @@ gateway4 = "10.73.0.254"
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYjN4gPPKKkywsLJdC9zZItzoy55F_RlJ1TfVBnUQ5uWJemWBTDfgGBbPn4FY6394SyWc805aw_IWietgxQEhhHdLkwWyWi8tWUWk5JViE2K1Cg="
 
+
 [metadata.voctocore.sources.cam1]
-devicenumber = 2
+devicenumber = 0
 mode = "1080i50"
 
 [metadata.voctocore.sources.cam2]
-devicenumber = 3
+devicenumber = 1
+mode = "1080i50"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 4
+mode = "1080p25"
+
+[metadata.voctocore.sources.cam3]
+devicenumber = 5
 mode = "1080i50"
 
 
-[metadata.voctocore.sources.slides]
-devicenumber = 5
-mode = "1080p25"
-
 [metadata.voctocore.audio.original]
-streams = "0+1"
+streams = "0"
 input = "cam1"
 
 [metadata.voctocore.audio.translated-1]
-input = "cam2"
-streams = "0"
+input = "cam1"
+streams = "1"
+
+
+[metadata.pygtk-atem-switcher.atem.settings.inputs]
+input1 = "Speaker"
+input2 = "2"
+input3 = "3"
+input4 = "info-beamer"
 
 
 [metadata.zfs.pools.video.when_creating]
