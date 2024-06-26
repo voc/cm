@@ -93,7 +93,7 @@ def run_test(node):
         if not sname == 'slides' and not match(r'^cam[0-9]+$', sname):
             raise BundleError(f'{node.name}: voctocore source {sname} has invalid name, must be either "slides" or match "cam[0-9]+"')
 
-        device = str(sconfig['devicenumber'])
+        device = str(sconfig.get('devicenumber'))
         if not device.isdigit():
             raise BundleError(f'{node.name}: voctocore source {sname} has invalid device number {device}')
         elif device in used_devices:
@@ -108,10 +108,18 @@ def run_test(node):
         if aconfig['input'] not in node.metadata.get('voctocore/sources', {}):
             raise BundleError(f'{node.name}: voctocore audio {aname} wants input {aconfig["input"]}, which doesn\'t exist')
 
-        audio_name = f'{aconfig["input"]} {aconfig["streams"]}'
-        if audio_name in used_audio:
-            raise BundleError(f'{node.name}: voctocore audio {aname} wants input {audio_name}, which is already used by {used_audio[audio_name]}')
-        used_audio[audio_name] = aname
+        if not match(r'^\d+\+\d+$', aconfig['streams']):
+            if aconfig['streams'].isdigit():
+                raise BundleError(f'{node.name}: voctocore audio {aname} is not in required format "{aconfig["streams"]}+{aconfig["streams"]}".')
+            raise BundleError(f'{node.name}: voctocore audio {aname} is not in required format "X+X" (X being a SDI stream number).')
+
+        for stream in aconfig['streams'].split('+'):
+            audio_name = f'{aconfig["input"]} {stream}'
+            if audio_name in used_audio:
+                raise BundleError(f'{node.name}: voctocore audio {aname} wants input {audio_name}, which is already used by {used_audio[audio_name]}')
+
+        for stream in aconfig['streams'].split('+'):
+            used_audio[f'{aconfig["input"]} {stream}'] = aname
 
     for pname, pdevice in node.metadata.get('voctocore/playout', {}).items():
         device = str(pdevice)
