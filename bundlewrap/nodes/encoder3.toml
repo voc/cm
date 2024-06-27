@@ -40,12 +40,12 @@ hdmi = true
 
 
 [metadata.voctocore.audio.original]
-streams = "0"
+streams = "0+1"
 input = "cam1"
 
 [metadata.voctocore.audio.translated-1]
-input = "cam1"
-streams = "1"
+input = "cam2"
+streams = "0"
 
 
 
