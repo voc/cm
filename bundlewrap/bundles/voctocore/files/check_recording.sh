@@ -4,7 +4,7 @@ if systemctl is-active --quiet voctomix2-voctocore
 then
     if ! systemctl is-active --quiet voctomix2-recording-sink
     then
-        voc2alert "error" "recording" "voc2mix running, but recording-sink not!"
+        voc2alert "error" "recording" "voctomix running, but recording-sink not!"
     else
         message=$(perl /usr/local/sbin/check_system.d/check_recording.pl "/video/capture/${event['slug']}/")
         return_code="$?"

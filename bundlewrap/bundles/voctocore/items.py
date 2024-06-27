@@ -38,7 +38,7 @@ overlay_mapping = []
 for filename, title in sorted(node.metadata.get('event/overlay_mappings', {}).items()):
     overlay_mapping.append(f'{filename}.png|{title}')
 
-### voc2mix
+### voctomix
 files['/opt/voctomix2/voctocore-config.ini'] = {
     'content_type': 'mako',
     'source': f'voctocore-config-by-version/{voctomix_version}.ini',
