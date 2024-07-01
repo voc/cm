@@ -63,6 +63,9 @@ files = {
     '/etc/netplan': {
         'delete': True,
     },
+    '/usr/local/sbin/do-unattended-upgrades': {
+        'mode': '0700',
+    },
     '/var/lib/cloud': {
         'delete': True,
     },

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -xeuo pipefail
+
+apt-get update
+
+DEBIAN_FRONTEND=noninteractive apt-get -y -q -o Dpkg::Options::=--force-confold dist-upgrade
+
+DEBIAN_FRONTEND=noninteractive apt-get -y -q autoremove
+
+DEBIAN_FRONTEND=noninteractive apt-get -y -q clean
+
+existing=$(dpkg --get-selections | grep -E '^linux-(image|headers)-[0-9]' || true)
+
+if [[ -z "$existing" ]]
+then
+    echo "ERROR: No installed kernels found! Aborting!" >&2
+    exit 1
+fi
+
+current=$(uname -r | sed -r 's/-[a-zA-Z]+$//')
+latest=$(echo "$existing" | sort --version-sort -t- -k 3,4 | tail -n 1 | sed -r 's/[^0-9]+([0-9]\.[^-]+-[0-9]+).*/\1/')
+todelete=$(echo "$existing" | grep -v -E "($current|$latest)" | awk '{ print $1 }' || true)
+
+if [[ -n "$todelete" ]]
+then
+    DEBIAN_FRONTEND=noninteractive apt-get -qy purge $todelete
+fi
