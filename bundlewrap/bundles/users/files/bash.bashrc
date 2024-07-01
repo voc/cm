@@ -11,18 +11,22 @@ else
 fi
 unset PROMPT_COMMAND
 
-if [[ -f "/etc/node.description" ]]
-then
-    echo
-    cat "/etc/node.description"
-    echo
-fi
-
 uptime
 echo
 last | head -n5
 echo
 
+if [[ -x "/usr/local/bin/unit-status-on-login" ]]
+then
+    /usr/local/bin/unit-status-on-login
+fi
+</%text>
+
+% for cmd in sorted(node.metadata.get('extra-commands-on-login', set())):
+${cmd}
+% endfor
+
+<%text>
 export HISTCONTROL=ignoredups
 export HISTSIZE=50000
 export HISTTIMEFORMAT="%d/%m/%y %T "

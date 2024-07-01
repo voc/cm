@@ -11,6 +11,14 @@ defaults = {
             'xauth': {}, # for x11 forwarding
         },
     },
+    'extra-commands-on-login': {
+        '''echo "Free space in /video: $(df -h --output=avail /video | tail -n1 | sed 's/ //g')"'''
+    },
+    'unit-status-on-login': {
+        'voctomix2-voctocore',
+        'voctomix2-streaming-sink',
+        'voctomix2-recording-sink',
+    },
     'users': {
         'voc': {
             'groups': {
@@ -73,6 +81,7 @@ def streaming_endpoint(metadata):
             'streaming_endpoint': 's{}'.format(metadata.get('room_number')),
         },
     }
+
 
 @metadata_reactor.provides(
     'voctocore/sources',

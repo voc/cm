@@ -17,6 +17,9 @@ defaults = {
     'isc-dhcp-server': {
         'fixed_allocations': allocs,
     },
+    'unit-status-on-login': {
+        'isc-dhcp-server',
+    },
 }
 
 

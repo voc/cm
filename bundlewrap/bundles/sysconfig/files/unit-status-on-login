@@ -1,0 +1,25 @@
+#!/bin/bash
+
+[[ -n "$DEBUG" ]] && set -x
+
+echo "systemd unit status:"
+
+% for idx, unitname in enumerate(sorted(units)):
+status="$(systemctl is-active "${unitname}")"
+if [[ "$?" -eq 0 ]]
+then
+    tput setaf 2
+else
+    tput setaf 1
+fi
+echo -n " ${unitname.ljust(30)}"
+tput sgr0
+% if idx % 2:
+echo ""
+% endif
+% endfor
+
+% if not idx % 2:
+echo ""
+% endif
+echo ""

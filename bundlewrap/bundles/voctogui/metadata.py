@@ -19,6 +19,9 @@ defaults = {
             'python3-wheel': {},
         },
     },
+    'unit-status-on-login': {
+        'voctomix2-voctogui',
+    },
     'voctogui' : {
         'high_dpi': True,
         'play_audio': False,

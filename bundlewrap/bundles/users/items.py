@@ -6,6 +6,7 @@ files['/etc/bash.bashrc'] = {
 files['/etc/vim/vimrc.local'] = {}
 files['/usr/local/etc/screenrc'] = {}
 
+
 if node.os_version[0] < 10:
     files['/usr/share/terminfo/x/xterm-kitty'] = {}
 

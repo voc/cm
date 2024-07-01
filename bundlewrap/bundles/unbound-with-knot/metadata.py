@@ -29,6 +29,10 @@ defaults = {
         'max_ttl': 3600,
         'cache_size': '512M',
     },
+    'unit-status-on-login': {
+        'unbound',
+        'knot',
+    },
 }
 
 

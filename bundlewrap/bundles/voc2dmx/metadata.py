@@ -1,6 +1,9 @@
 import bwkeepass as keepass
 
 defaults = {
+    'unit-status-on-login': {
+        'voc2dmx',
+    },
     'voc2dmx': {
         'mqtt': {
             'host': keepass.url(['ansible', 'mqtt']),
