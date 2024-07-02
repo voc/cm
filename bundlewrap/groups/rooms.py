@@ -10,6 +10,7 @@ ROOMS = (
     80, # muccc
     81, # hacc
     96, # kunsi
+    ('c4', 97),
     98, # derpeter
     191, # seibert
 )
@@ -34,3 +35,22 @@ for i in ROOMS:
 groups['saal28']['metadata']['users'] = {
     'equinox': {},
 }
+
+groups['saalc4']['metadata'] = merge_dict(
+    groups['saalc4']['metadata'],
+    {
+        'firewall': {
+            'port_rules': {
+                '*': {
+                    'rfc1918',
+                },
+            },
+        },
+        'users': {
+            'florob': {},
+            'florolf': {},
+            'ike': {},
+            'qb': {},
+        },
+    }
+)
