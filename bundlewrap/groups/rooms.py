@@ -15,13 +15,17 @@ ROOMS = (
 )
 
 for i in ROOMS:
-    groups[f'saal{i}'] = {
+    if isinstance(i, tuple):
+        pattern, room_number = i
+    else:
+        pattern = room_number = i
+    groups[f'saal{pattern}'] = {
         'member_patterns': {
-            rf'^tallycom{i}-[0-9+]$',
-            rf'^(encoder|mixer|minion){i}$',
+            rf'^tallycom{pattern}-[0-9+]$',
+            rf'^(encoder|mixer|minion){pattern}$',
         },
         'metadata': {
-            'room_number': i,
+            'room_number': room_number,
         },
     }
 
