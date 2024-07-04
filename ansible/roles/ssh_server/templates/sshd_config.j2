@@ -69,7 +69,7 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
 
-DebianBanner no
+DebianBanner yes
 UseDNS no
 
 {% if ssh_allow_voc_password_login is defined and ssh_allow_voc_password_login == 'yes' %}
