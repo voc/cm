@@ -1,4 +1,4 @@
-{ lib, modulesPath, pkgs, ... }:
+{ config, lib, modulesPath, pkgs, ... }:
 
 
 let
@@ -69,6 +69,12 @@ in
 
     # Much faster than xz
     isoImage.squashfsCompression = lib.mkDefault "zstd";
+
+    isoImage.appendToMenuLabel = " Loudness Monitor";
+
+    isoImage.efiSplashImage = ./splash-efi.png;
+    isoImage.splashImage = ./splash-legacy.png;
+    isoImage.storeContents = lib.mkForce [ config.system.build.toplevel ] ;
 
     system.stateVersion = "23.11"; # do not touch
 
