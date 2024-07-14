@@ -56,8 +56,8 @@ groups['froscon-minions'] = {
         'crs-worker': {
             'secrets': {
                 'encoding': {
-                    'secret': keepass.password(['ansible', 'worker-groups', 'minions-servercase']),
-                    'token': keepass.username(['ansible', 'worker-groups', 'minions-servercase']),
+                    'secret': vault.decrypt('encrypt$gAAAAABmk8ICnBbZtrSNdXn1ugJkNBr4Hm8es580zK-QGA_MnTlNZBL21MWCSJlwcveCKjpKGcJeNxJ72HFtTgH10MvNCbKuQdpwFqK_womPBzLIZk-4iS6YscXC2jbi9D41R3REEy2z'),
+                    'token': vault.decrypt('encrypt$gAAAAABmk8HyS5oNmGoGlKmNtF7_aVxF1M8f0gzMQvjCIlgl-43nEI6E2-DL_kefbWN_6Y6ncOSXeO5IugOH6ogFxhCf9yxl9kxOhXFTXeXwOUk4gbN3ABZDHeDQB4VIlHJhG7vZy13H'),
                 },
             },
         },
