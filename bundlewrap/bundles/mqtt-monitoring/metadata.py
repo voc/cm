@@ -8,9 +8,8 @@ defaults = {
         },
     },
     'mqtt-monitoring': {
-        'server': keepass.url(['ansible', 'mqtt']),
-        'username': keepass.username(['ansible', 'mqtt']),
-        'password': keepass.password(['ansible', 'mqtt']),
+        'server': 'mqtt.c3voc.de',
+        'username': 'bundlewrap',
         'plugins': {
             'disk_space',
             'systemd_failed_units',

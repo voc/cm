@@ -6,9 +6,9 @@ defaults = {
     },
     'voc2dmx': {
         'mqtt': {
-            'host': keepass.url(['ansible', 'mqtt']),
-            'user': keepass.username(['ansible', 'mqtt']),
-            'password': keepass.password(['ansible', 'mqtt']),
+            'host': 'mqtt.c3voc.de',
+            'user': 'bundlewrap',,
+            'password': repo.vault.decrypt('encrypt$gAAAAABmk8KmZd6RTiomPYjrNyhGtd7zFFUcWVqeQNozzyhBO8cfIzihu5DczdRHy8HCneXgXA2eYNIEXvp_2561HEJzv7qWB5Tdxxt-ySAA8VUuZB4liqm3CO4gwRgBXUZxMnQYpLsx'),
             'topic': '/voc/alert-viri',
         },
         'sacn': {
