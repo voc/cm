@@ -1,0 +1,6 @@
+subgroups = ["saal96"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Jugend hackt Rhein-Neckar 2024"
+slug = "jh24-rn"
