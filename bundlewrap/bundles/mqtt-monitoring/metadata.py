@@ -29,7 +29,7 @@ defaults = {
             'check_system_daily_tasks': {
                 'command': '/usr/local/sbin/check_system_daily.sh',
                 'when': '{}:{}:00'.format(
-                    str(6+(node.magic_number%3)).rjust(2, '0'),
+                    str(5+(node.magic_number%4)).rjust(2, '0'),
                     str(node.magic_number%60).rjust(2, '0'),
                 ),
                 'requires': {
