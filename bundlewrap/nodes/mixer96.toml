@@ -1,4 +1,4 @@
-bundles = ["thinkfan"]
+bundles = ["pygtk-atem-switcher", "thinkfan"]
 groups = ["debian-bookworm"]
 
 [metadata.apt.packages.intel-media-va-driver-non-free]
@@ -8,11 +8,17 @@ groups = ["debian-bookworm"]
 ips = ["10.73.96.1/16"]
 dhcp = true
 
-[metadata.voctomix2]
-rev = "main"
-
 [metadata.mixer-common]
 enable-irssi = false
+
+[metadata.pygtk-atem-switcher.atem]
+ip = "10.73.191.40"
+settings.inputs.input1 = "In1"
+settings.inputs.input2 = "In2"
+settings.inputs.input3 = "In3"
+
+[metadata.voctomix2]
+rev = "main"
 
 [metadata.voctogui]
 high_dpi = false
