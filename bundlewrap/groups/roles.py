@@ -37,9 +37,6 @@ groups['mixers'] = {
                 'ac_power',
             },
         },
-        'voctomix2': {
-            'rev': 'main',
-        },
         'systemd': {
             'ignore_power_switch': True,
         },

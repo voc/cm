@@ -1,6 +1,6 @@
 DEBIAN_TO_VOCTOMIX_VERSION = {
     10: 'voctomix2',
-    12: '2.0',
+    12: '2.1.0',
 }
 
 if node.has_any_bundle(['voctocore', 'voctogui']):
