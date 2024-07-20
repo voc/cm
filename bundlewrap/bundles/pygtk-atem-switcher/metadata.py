@@ -20,6 +20,9 @@ defaults = {
             'gtk-application-prefer-dark-theme': True,
         },
     },
+    'unit-status-on-login': {
+        'pygtk-atem-switcher',
+    },
 }
 
 @metadata_reactor.provides(
