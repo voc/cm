@@ -1,4 +1,4 @@
-groups = ["debian-bullseye", "servercase"]
+groups = ["debian-bookworm", "servercase"]
 bundles = ["loudness-rendering", "voctocore-artwork"]
 
 [metadata.interfaces.ens18]
