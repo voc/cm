@@ -43,6 +43,7 @@ files['/usr/local/lib/systemd/system/voc2dmx.service'] = {
 
 users['voc2dmx'] = {
     'home': '/opt/voc2dmx',
+    'uid': 1998,
 }
 
 svc_systemd['voc2dmx'] = {
