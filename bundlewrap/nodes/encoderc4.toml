@@ -2,7 +2,6 @@ groups = ["debian-bookworm"]
 
 [metadata]
 hostname = "encoderc4.labor.koeln.ccc.de"
-do_not_import_default_users = true
 
 [metadata.crs-worker.secrets]
 encoding.secret = "!decrypt:encrypt$gAAAAABmhFbnelqRLAIVSSoulff5VhTMF4VwNWcQY1lFykx6ZBBKt7fgUJ1wK8N0koDCWdvpYv1njZCbX0czS9yG2k6lG1xKk7vcE8gbU8Lb7dAc-14Vv86rix8qIzk4cx482sRbzi7a"

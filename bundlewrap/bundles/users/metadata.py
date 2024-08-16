@@ -35,8 +35,6 @@ with open(join(dirname(repo.path), 'users.toml'), 'r') as f:
     'users',
 )
 def add_users_from_toml(metadata):
-    ign_default =  metadata.get('do_not_import_default_users', False)
-
     users = {
         uname: {}
         for uname, uconfig in metadata.get('users', {}).items()
@@ -46,7 +44,7 @@ def add_users_from_toml(metadata):
     # first, establish a list of all users that should exist on the
     # system
     for uname, uconfig in USERS_TOML.items():
-        if uconfig['enable_event'] and not ign_default:
+        if uconfig['enable_event']:
             users[uname] = {}
 
     # second, process all users so we have stuff like uids, ssh keys
