@@ -8,7 +8,7 @@ defaults = {
     },
 }
 
-m = match('^tallycom(\d+)-(\d+)$', node.name)
+m = match(r'^tallycom(\d+)-(\d+)$', node.name)
 if m:
     room, cam = m.groups()
     defaults['voctolight'] = {
