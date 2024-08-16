@@ -2,6 +2,8 @@ groups = ["debian-bookworm"]
 
 [metadata]
 hostname = "encoderc4.labor.koeln.ccc.de"
+do_not_import_default_users = true
+nameservers = [ '172.23.23.1' ]
 
 [metadata.crs-worker.secrets]
 encoding.secret = "!decrypt:encrypt$gAAAAABmhFbnelqRLAIVSSoulff5VhTMF4VwNWcQY1lFykx6ZBBKt7fgUJ1wK8N0koDCWdvpYv1njZCbX0czS9yG2k6lG1xKk7vcE8gbU8Lb7dAc-14Vv86rix8qIzk4cx482sRbzi7a"
@@ -18,6 +20,7 @@ gateway4 = "172.23.23.1"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABmhFXnPeqkBp1Q_dlLSCwub0LBbEro4zbFCihoenJiKlDAI8cDDN5uNOA8M4rgTMkSgEMLGGt7-sSbqzDTbUUIqOMSn51fZZRIfvU-reVtWMy5cnI="
+mirror_view = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
