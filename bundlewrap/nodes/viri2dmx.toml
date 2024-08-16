@@ -16,5 +16,4 @@ rainbow.brightness = 150
 target = "10.73.94.59"
 
 [metadata.voc2dmx.lights]
-tsss_led_par_rgbw = [1, 9, 17, 25, 33, 41, 49, 57]
-#sheds_30w_cob_rgb = [1, 8, 15, 22, 29, 36, 43, 50, 57, 64]
+tsss_led_par_rgbw = [1, 9, 17, 25]
