@@ -19,7 +19,7 @@ mkdir -p "/opt/loudness-rendering/data/${NAME}"
 touch "/opt/loudness-rendering/data/${NAME}/line1.txt"
 touch "/opt/loudness-rendering/data/${NAME}/line2.txt"
 
-/usr/local/sbin/voc2alert "info" "loudness" "Loudness monitoring for ${NAME} started ..."
+/usr/local/sbin/voc2alert "info" "loudness/${NAME}" "Loudness monitoring started ..."
 
 ffmpeg \
     -hide_banner \
@@ -44,4 +44,4 @@ ffmpeg \
     -f flv \
     "$OUTPUT"
 
-/usr/local/sbin/voc2alert "info" "loudness" "Loudness monitoring for ${NAME} stopped, ffmpeg exit code $?."
+/usr/local/sbin/voc2alert "info" "loudness/${NAME}" "Loudness monitoring stopped, ffmpeg exit code $?."
