@@ -12,7 +12,6 @@ ROOMS = (
     96, # kunsi
     ('c4', 97),
     98, # derpeter
-    191, # seibert
 )
 
 for i in ROOMS:
