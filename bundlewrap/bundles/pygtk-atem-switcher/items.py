@@ -13,6 +13,7 @@ actions['pygtk-atem-switcher_create_virtualenv'] = {
     'command': '/usr/bin/python3 -m virtualenv -p python3 /opt/pygtk-atem-switcher/venv',
     'unless': 'test -d /opt/pygtk-atem-switcher/venv',
     'needs': {
+        'pkg_apt:python3-virtualenv',
         # actually /opt/pygtk-atem-switcher, but we don't manage that
         'directory:/opt/pygtk-atem-switcher/src',
     },

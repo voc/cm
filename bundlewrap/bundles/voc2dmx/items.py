@@ -5,6 +5,7 @@ actions['voc2dmx_create_virtualenv'] = {
     'unless': 'test -d /opt/voc2dmx/venv',
     'needs': {
         'directory:/opt/voc2dmx/src',
+        'pkg_apt:python3-virtualenv',
     },
 }
 
