@@ -10,7 +10,7 @@ encoding.secret = "!decrypt:encrypt$gAAAAABmS4R0VdTZSS58MrVJR6YdjDDRv9M6vCQ6BNPv
 encoding.token = "!decrypt:encrypt$gAAAAABmS4Rp6JTMutWQIbbaIlQl6Kkr6ceqmmuElxm4L2E0REjODEjNZKdk3N4Ch6_ncw3YRJ1Fxk4-G0mEdZtcHhDzFoPMBtBgiW5MZ9mdmEWK4695_ylXVPN5RPt1-Ove0RtHEvYA"
 
 [metadata.event]
-room_name = "kunsi test"
+room_name = "HS8"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.96.3/16"]
