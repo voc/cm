@@ -7,3 +7,10 @@ groups = ["debian-bookworm"]
 [metadata.interfaces.eth0]
 ips = ["10.73.4.1/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.pygtk-atem-switcher.atem]
+ip = "10.73.97.40"
+settings.inputs.input1 = "Slides"
+settings.inputs.input2 = "Dokumentenkamera"
+settings.inputs.input3 = "X"
+settings.inputs.input4 = "Infobeamer"
