@@ -4,7 +4,4 @@ members = ["releasing"]
 [metadata.event]
 name = "FrOSCon 2024"
 slug = "froscon2024"
-timezone = "Europe/Berlin"
-acronym = "froscon2024"
-slogan = "Free and Open Source Software Conference"
-
+schedule_json = "https://programm.froscon.org/2024/schedule.json"
