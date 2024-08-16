@@ -46,30 +46,18 @@ groups['saalc4']['metadata'] = merge_dict(
                 },
             },
         },
+        'nameservers': {
+            '172.23.23.1',
+        },
         'users': {
             'florob': {},
             'florolf': {},
             'ike': {},
-            'qb': {},
+            'kadse': {},
             'lukas2511': {},
-            'twix': {
-                    'uid': 2000,
-                    'ssh_pubkeys': [
-                            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBmWzl45PCNsqsKxV3Ks4hjbUmkuICsKjE6maZKjW7oU twix@mars"
-                        ]
-                },
-            'kadse': {
-                    'uid': 2001,
-                    'ssh_pubkeys': [
-                            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKmmtGeeNFRf4HKaAVThV3IjGWSJDcji33k4E98vOt5G kadse",
-                        ]
-                },
-            'snoopy': {
-                    'uid': 2002,
-                    'ssh_pubkeys': [
-                            "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPCe7TJFPCWxRgSklbCPrYU4p/ANPV3t+98oh9+GIKS1AAAABHNzaDo= snoopy@woodstock",
-                        ]
-                },
+            'qb': {},
+            'snoopy': {},
+            'twix': {},
         },
     }
 )

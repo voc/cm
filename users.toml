@@ -456,7 +456,7 @@ enable_rz = false
 enable_event = true
 uid = 1158
 ssh_pubkeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAL9Sw6U8IhvmTt4ANtd9SqSGiiLCPeaK/ioFDEJzGSn martin entropia",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAL9Sw6U8IhvmTt4ANtd9SqSGiiLCPeaK/ioFDEJzGSn",
 ]
 
 [thies]
@@ -464,7 +464,7 @@ enable_rz = true
 enable_event = true
 uid = 1159
 ssh_pubkeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBh9aUbLzxXjgRNSolu/P/WNXQoYtcAcTFeFTFUqH7zr thies",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBh9aUbLzxXjgRNSolu/P/WNXQoYtcAcTFeFTFUqH7zr",
 ]
 
 [moira]
@@ -472,7 +472,7 @@ enable_rz = false
 enable_event = true
 uid = 1160
 ssh_pubkeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrcJRF71+XM5YZj+SaSiGcdVZ0IDxGBXIWssDtHiTtr moira_2022_06",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJrcJRF71+XM5YZj+SaSiGcdVZ0IDxGBXIWssDtHiTtr",
 ]
 
 [krobin]
@@ -480,7 +480,7 @@ enable_rz = false
 enable_event = true
 uid = 1161
 ssh_pubkeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILCty3i/MG4ehTN5JzY3UTtr/9q5L2eQinAGh1FClWIS trhetzner@oat"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILCty3i/MG4ehTN5JzY3UTtr/9q5L2eQinAGh1FClWIS",
 ]
 
 [simpel]
@@ -489,4 +489,28 @@ enable_event = true
 uid = 1162
 ssh_pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICMfqnvSSDoX0nLrHHnCaVzunwIT4LZY5kltcreRUxp1",
+]
+
+[twix]
+enable_rz = false
+enable_event = true
+uid = 1163
+ssh_pubkeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBmWzl45PCNsqsKxV3Ks4hjbUmkuICsKjE6maZKjW7oU",
+]
+
+[kadse]
+enable_rz = false
+enable_event = true
+uid = 1164
+ssh_pubkeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKmmtGeeNFRf4HKaAVThV3IjGWSJDcji33k4E98vOt5G",
+]
+
+[snoopy]
+enable_rz = false
+enable_event = true
+uid = 1165
+ssh_pubkeys = [
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPCe7TJFPCWxRgSklbCPrYU4p/ANPV3t+98oh9+GIKS1AAAABHNzaDo=",
 ]
