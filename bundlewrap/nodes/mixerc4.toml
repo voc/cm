@@ -14,3 +14,10 @@ enable-irssi = false
 [metadata.voctogui]
 encoder-ip = "10.73.96.3"
 high_dpi = false
+
+[metadata.pygtk-atem-switcher.atem]
+ip = "10.73.96.40"
+settings.inputs.input1 = "Slides"
+settings.inputs.input2 = "X"
+settings.inputs.input3 = "X"
+settings.inputs.input4 = "Infobeamer"

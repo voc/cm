@@ -30,7 +30,7 @@ vaapi = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 0
-mode = "1080p25"
+mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 1
