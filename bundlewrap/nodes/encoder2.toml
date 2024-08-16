@@ -38,6 +38,6 @@ ashift = 12
 [[metadata.zfs.pools.video.when_creating.config]]
 type = "mirror"
 devices = [
-    "/dev/disk/by-id/placeholder",
-    "/dev/disk/by-id/placeholder",
+    "/dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T3192687",
+    "/dev/disk/by-id/ata-ST3000DM001-1ER166_Z501LTC8",
 ]
