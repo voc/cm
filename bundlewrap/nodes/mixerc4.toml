@@ -9,7 +9,6 @@ ips = ["10.73.97.1/16"]
 dhcp = true
 
 [metadata.voctogui]
-encoder-ip = "10.73.96.3"
 high_dpi = false
 
 [metadata.pygtk-atem-switcher.atem]
