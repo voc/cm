@@ -12,8 +12,8 @@ name = "OpenChaos"
 room_name = "C4"
 slug = "oc"
 
-[metadata.interfaces.enp0s31f6]
-ips = ["172.23.23.118/23", "10.73.97.3/24"]
+[metadata.interfaces.eth0]
+ips = ["172.23.23.118/23", "10.73.97.3/16"]
 gateway4 = "172.23.23.1"
 
 [metadata.voctocore]
