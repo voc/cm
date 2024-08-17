@@ -45,9 +45,6 @@ groups['saalc4']['metadata'] = merge_dict(
                 },
             },
         },
-        'nameservers': {
-            '172.23.23.1',
-        },
         'users': {
             'florob': {},
             'florolf': {},

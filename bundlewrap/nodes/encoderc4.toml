@@ -1,3 +1,4 @@
+hostname = "10.73.97.3"
 groups = ["debian-bookworm"]
 
 [metadata]
@@ -8,17 +9,14 @@ encoding.secret = "!decrypt:encrypt$gAAAAABmhFbnelqRLAIVSSoulff5VhTMF4VwNWcQY1lF
 encoding.token = "!decrypt:encrypt$gAAAAABmhFbQ3RlhXKPjsmdxSQoHhjvIVrnFkFto_Kzq3utVXGTEDwTj8HcX1RqZGwETlkMz6iQOzAXsk3facY7u0BcQh3agDrqFeh7Sdg2wrodWgWqMJD99dOEnSM56HDccdFfdEuNI"
 
 [metadata.event]
-name = "OpenChaos"
-room_name = "C4"
-slug = "oc"
+room_name = "HS8"
 
-[metadata.interfaces.enp0s31f6]
+[metadata.interfaces.eth0]
 ips = ["172.23.23.118/23", "10.73.97.3/24"]
-gateway4 = "172.23.23.1"
+gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABmhFXnPeqkBp1Q_dlLSCwub0LBbEro4zbFCihoenJiKlDAI8cDDN5uNOA8M4rgTMkSgEMLGGt7-sSbqzDTbUUIqOMSn51fZZRIfvU-reVtWMy5cnI="
-mirror_view = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
@@ -26,8 +24,7 @@ mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 0
-mode = "1080p60"
-hdmi = true
+mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
