@@ -14,3 +14,8 @@ from_encoders = [
     "encoder5",
     "encoderc4",
 ]
+
+[metadata.loudness-rendering.streams.evoke]
+output = "rtmp://ingest2.c3voc.de/relay/evoke_loudness"
+room = "evoke"
+source = "https://cdn.c3voc.de/hls/evoke/native_hd.m3u8"
