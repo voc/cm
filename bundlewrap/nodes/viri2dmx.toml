@@ -8,13 +8,10 @@ groups = ["debian-bookworm"]
 ips = ["10.73.200.97/16"]
 gateway4 = "10.73.0.254"
 
-[metadata.voc2dmx]
-alerts.brightness = 255
-rainbow.brightness = 150
-
-[metadata.voc2dmx.sacn]
+[metadata.voc2dmx.universes.sophie]
 target = "10.73.94.59"
+lights.TSSS_LED_PAR_RGBW = [1, 9, 17, 25, 33, 41, 49, 57]
 
-[metadata.voc2dmx.lights]
-tsss_led_par_rgbw = [1, 9, 17, 25, 33, 41, 49, 57]
-#sheds_30w_cob_rgb = [1, 8, 15, 22, 29, 36, 43, 50, 57, 64]
+[metadata.voc2dmx.universes.kunsi]
+target = "10.73.100.115"
+lights.Sheds30WCOBRGB = [1, 8, 15, 22, 29, 36, 43, 50, 57, 64]

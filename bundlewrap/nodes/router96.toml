@@ -55,12 +55,6 @@ cache_slabs = 4
 primary = "!decrypt:encrypt$gAAAAABmBGxVDiZLLQAXtkHpNgy3Eaqs5NM9ArfFMHhjL3OKOdQHnyPpcMkKz_G6vGykgizdjX_SiKUfDRt9to_pkPc09zEi1g=="
 primary_secret = "!decrypt:encrypt$gAAAAABmBJPrMSoaiY2MZXrWWw53erTfAvAscleB7orK73bxedAD1FZ7ApXXZH9-_05t8IYNQFxOKkCzOzsaWTzD5378VmX0BFdLJk-cTgSMqf1KP3rBsjhc47FhYXN3bFlv3P17tbAiXwTiauWrnU8SjM5ewTShyw=="
 
-[metadata.voc2dmx]
-alerts.brightness = 255
-rainbow.brightness = 150
-
-[metadata.voc2dmx.sacn]
+[metadata.voc2dmx.universes.kunsi]
 target = "10.73.100.115"
-
-[metadata.voc2dmx.lights]
-sheds_30w_cob_rgb = [1, 8, 15, 22, 29, 36, 43, 50, 57, 64]
+lights.Sheds30WCOBRGB = [1, 8, 15, 22, 29, 36, 43, 50, 57, 64]
