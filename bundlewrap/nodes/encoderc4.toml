@@ -12,7 +12,7 @@ encoding.token = "!decrypt:encrypt$gAAAAABmhFbQ3RlhXKPjsmdxSQoHhjvIVrnFkFto_Kzq3
 room_name = "HS8"
 
 [metadata.interfaces.eth0]
-ips = ["172.23.23.118/23", "10.73.97.3/24"]
+ips = ["172.23.23.118/23", "10.73.97.3/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
