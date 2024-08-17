@@ -1,6 +1,12 @@
 defaults = {
     'apt': {
         'packages': {
+            'dhcpcd': {
+                'installed': False,
+            },
+            'isc-dhcp-client': {
+                'installed': False,
+            },
             'resolvconf': {
                 'installed': False,
             },
