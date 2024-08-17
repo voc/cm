@@ -1,5 +1,4 @@
 Port 22
-AddressFamily inet
 
 PermitRootLogin No
 Protocol 2
