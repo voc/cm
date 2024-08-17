@@ -156,34 +156,6 @@ Room-specific artwork will take preference over event-specific artwork.
 In case neither is found, bundlewrap will use the generic VOC artwork.
 
 
-### voctocore playout
-
-If you want to send content out of one of the decklink cards, you can
-do so using the `voctocore/playout` metadata key.
-
-You have to use a source name as key, the value is the decklink device
-number. You may also use the special value `fb` to output to the internal
-HDMI output on the mainboard.
-
-```toml
-[metadata.voctocore.playout]
-program = 0
-stream = 1
-cam1 = 4
-```
-
-For source name, you can use any defined voctocore source name, in
-addition to `program` (without stream-blanker) and `stream` (including
-stream-blanker).
-
-Bundlewrap will print an error if you try to use an invalid source name
-or if you're trying to re-use decklink cards for multiple things. Please
-note bundlewrap will *not* verify whether your decklink card does support
-playout.
-
-When using `fb` output, you have to have a display connected to the
-encoder during boot, otherwise `/dev/fb0` won't get created correctly.
-
 ### ATEM Mini
 
 Bundlewrap will deploy
@@ -213,57 +185,6 @@ input2 = "x"
 input3 = "x"
 input4 = "info-beamer"
 ```
-
-## voctocore Sources Defitinion
-
-### video
-
-#### decklink inputs
-
-```toml
-[metadata.voctocore.sources.cam2] # "cam2" is the source name
-devicenumber = 2 # decklink device number
-mode = "1080p25" # video mode
-hdmi = true # default false. If true, uses HDMI instead of SDI
-```
-
-If you use an interlaced video mode (`1080i50` for example), bundlewrap
-will automatically set `scan=psf` in voctocore config. If that is not
-what you need, you can set the `scan` attribute manually to the correct
-value.
-
-Please note that bundlewrap will enforce naming of decklink sources.
-Valid source names are either `slides` or match `^cam[0-9]+$`.
-
-#### other inputs
-
-```toml
-[metadata.voctocore.sources.balltest]
-kind = "test"
-pattern = "ball"
-```
-
-If you set `kind`, bundlewrap will disable any automatic processing of
-the source configuration and simply dump anything you add to the
-voctocore configuration.
-
-Please note audio configuration still applies (see below).
-Source name enforcement is disabled for non-decklink sources.
-
-### audio
-
-```toml
-[metadata.voctocore.audio.translated-1] # "translated-1" is the source name
-input = "cam1" # which input provides this audio
-streams = "0+1" # use the first two audio streams received by the input
-volume = "1.0" # this is the default
-```
-
-Bundlewrap will take care of configuring the sources and blinders correctly.
-If you don't set it, the `volume` attribute of the corresponding input
-will automatically be set to `1.0`. If you want to change this, you have
-to manually set the `volume` attribute of the audio stream to the correct
-value.
 
 ## Provisioning of a new system
 
