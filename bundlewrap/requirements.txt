@@ -1,2 +1,2 @@
-bundlewrap~=4.18.0
+bundlewrap~=4.20.0
 bundlewrap-keepass
