@@ -1,4 +1,4 @@
-subgroups = ["saal4"]
+subgroups = ["saal1"]
 members = ["releasing"]
 
 [metadata.event]
