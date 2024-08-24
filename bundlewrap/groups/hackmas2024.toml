@@ -1,0 +1,6 @@
+subgroups = ["saal4"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Hack ma's Castle 2024"
+slug = "hackmas2024"
