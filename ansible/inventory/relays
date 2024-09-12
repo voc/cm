@@ -17,6 +17,7 @@ live2.alb.c3voc.de             nginx=yes icecast=no dtag_relay=yes
 relive.c3voc.de                nginx=yes icecast=no relive_relay=yes
 live.ams.c3voc.de              nginx=yes icecast=no
 live.event.c3voc.de            nginx=yes icecast=yes local_relay=yes
+live.nitk.c3voc.de             nginx=yes icecast=no
 
 ber1.wob.c3voc.de              nginx=yes icecast=yes stats_relay=yes
 fra1.wob.c3voc.de              nginx=yes icecast=yes
