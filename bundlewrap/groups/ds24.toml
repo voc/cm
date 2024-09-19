@@ -1,0 +1,7 @@
+subgroups = ["saal3", "saal4", "saal5", "servercase"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Datenspuren 2024"
+slug = "ds24"
+schedule_json = "https://talks.datenspuren.de/ds24/schedule/export/schedule.json"
