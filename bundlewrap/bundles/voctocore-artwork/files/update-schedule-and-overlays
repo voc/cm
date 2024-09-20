@@ -28,8 +28,9 @@ then
             if [[ "$sha_old" != "$sha_new" ]]
             then
                 chmod go+r "$tmpdir/schedule.json"
+                version="$(jq '.schedule.version' < "$tmpdir/schedule.json")"
                 mv "$tmpdir/schedule.json" "/opt/voc/schedule.json"
-                voc2alert "info" "schedule" "Downloading schedule from $schedule succeeded"
+                voc2alert "info" "schedule" "Downloading schedule from $schedule succeeded, fahrplan version $version"
             fi
         fi
     fi
