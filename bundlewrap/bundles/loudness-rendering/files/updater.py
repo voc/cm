@@ -79,7 +79,10 @@ for stream, talk in room_info.items():
     with open(os.path.join(DATA_DIR, stream, 'line2.txt.tmp'), 'w+') as f:
         f.write(' - '.join(line2))
 
-    for i in ('line1', 'line2'):
+    with open(os.path.join(DATA_DIR, stream, 'line3.txt.tmp'), 'w+') as f:
+        f.write(config['streams'][stream]['room'])
+
+    for i in ('line1', 'line2', 'line3'):
         os.replace(
             os.path.join(DATA_DIR, stream, f'{i}.txt.tmp'),
             os.path.join(DATA_DIR, stream, f'{i}.txt'),
