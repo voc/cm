@@ -23,7 +23,6 @@ for stream, config in node.metadata.get('loudness-rendering/streams').items():
         'source': 'service',
         'content_type': 'mako',
         'context': {
-            'room_name': config['room'],
             'source_url': config['source'],
             'identifier': stream,
             'output': config['output'],
