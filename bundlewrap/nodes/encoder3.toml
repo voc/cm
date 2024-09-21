@@ -24,6 +24,10 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYjN4gPPKKkywsLJdC9zZItzoy55F_RlJ
 devicenumber = 1
 mode = "1080i50"
 
+[metadata.voctocore.sources.cam2]
+devicenumber = 3
+mode = "1080i50"
+
 [metadata.voctocore.sources.slides]
 devicenumber = 5
 mode = "1080p25"
