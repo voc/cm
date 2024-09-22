@@ -17,6 +17,12 @@ files['/usr/local/bin/loudness_info_updater'] = {
     'mode': '0755',
 }
 
+files['/usr/share/fonts/freesans.ttf'] = {
+    # FreeSans, enriched with emojis from Noto Emoji. Encrypted to avoid
+    # having to deal with licenses in this repository.
+    'content': repo.vault.decrypt_file_as_base64('fonts/freesans.ttf.vault'),
+    'content_type': 'base64',
+}
 
 for stream, config in node.metadata.get('loudness-rendering/streams').items():
     files[f'/usr/local/lib/systemd/system/{stream}_loudness.service'] = {
