@@ -6,27 +6,23 @@ Will install and configure everything needed to run voctocore with
 streaming and recording.
 
 ## metadata
-```python
-    'voctocore': {
-        'audio': {}, # see below
-        'backgrounds': {}, # TODO
-        'mirror_view': False, # enable mirroring by default
-        'playout': {}, # see below
-        'should_be_running': True,
-        'sources': {}, # see below
-        'srt_publish': True, # use srt publish instead of icecast
-        'static_background_image': True, # TODO
-        'streaming_auth_key': 'password', # password for streaming_endpoint
-        'streaming_endpoint': 'test', # streaming endpoint on ingest.c3voc.de
-        'streaming_use_dynaudnorm': False, # enable dynaudnorm filter in streaming
-        'vaapi': False, # use vaapi for all rendering tasks
+```toml
+[metadata.voctocore]
+mirror_view = false # enable mirroring by default
+should_be_running = true # can be used to disable voctocore, if system is to be used for storage only
+srt_publish = true # use srt publish instead of icecast
+streaming_auth_key = "password" # password for streaming_endpoint
+streaming_endpoint = "test" # streaming endpoint on ingest.c3voc.de
+streaming_use_dynaudnorm = false # enable dynaudnorm filter in streaming
+vaapi = false # use vaapi for all rendering tasks
 
-        # Enable slide recording/streaming. Gets disabled automatically
-        # if no slides source has been configured.
-        'parallel_slide_recording': True,
-        'parallel_slide_streaming': True,
-    },
+# Enable slide recording/streaming. Gets disabled automatically
+# if no slides source has been configured.
+parallel_slide_recording': True,
+parallel_slide_streaming': True,
 ```
+
+**TODO:** `[metadata.voctocore.backgrounds]` and `static_background_image`
 
 ### sources
 #### decklink sources
@@ -38,22 +34,17 @@ value.
 Please note that bundlewrap will enforce naming of decklink sources.
 Valid source names are either `slides` or match `^cam[0-9]+$`.
 
-```python
-    'voctocore': {
-        'sources': {
-            'cam1': {
-                'devicenumber': 0, # decklink device number
-                'hdmi': False, # default, use HDMI instead of SDI
-                'video_mode': '1080p25',
-                'volume': '1.0', # gets auto-configured, see below
+```toml
+[metadata.voctocore.sources.cam1]
+devicenumber = 0 # decklink device number
+hdmi = false # default, use HDMI instead of SDI
+video_mode = "1080p25"
+volume = "1.0" # gets auto-configured, see below
 
-                # deinterlacing options. Defaults to 'psf' if an interlaced
-                # video mode has been configured. Alternatively use
-                # 'interlace'.
-                'scan': 'psf',
-            },
-        },
-    },
+# deinterlacing options. Defaults to 'psf' if an interlaced
+# video mode has been configured. Alternatively use
+# 'interlace'.
+scan = "psf"
 ```
 
 #### other sources
@@ -65,16 +56,11 @@ configuration.
 Please note audio configuration still applies (see below).
 Source name enforcement is disabled for non-decklink sources.
 
-```python
-    'voctocore': {
-        'sources': {
-            'test': {
-                'kind': 'test',
-                'volume': '1.0', # gets auto-configured, see below
-                # Any other options are put into the config as stated.
-            },
-        },
-    },
+```toml
+[metadata.voctocore.sources.test]
+kind = "test"
+volume = "1.0" # gets auto-configured, see below
+# Any other options are put into the config as stated.
 ```
 
 ### audio
@@ -84,16 +70,11 @@ will automatically be set to `1.0`. If you want to change this, you have
 to manually set the `volume` attribute of the audio stream to the correct
 value.
 
-```python
-    'voctocore': {
-        'audio': {
-            'original': {
-                'input': 'cam1', # voctocore source name
-                'streams': '0+1', # audio stream number
-                'volume': '1.0', # default
-            },
-        },
-    },
+```toml
+[metadata.voctocore.audio.original]
+input = "cam1" # voctocore source name
+streams = "0+1" # audio stream number
+volume = "1.0" # default
 ```
 
 ### playout
@@ -116,12 +97,12 @@ playout.
 When using `fb` output, you have to have a display connected to the
 encoder during boot, otherwise `/dev/fb0` won't get created correctly.
 
-```python
-    'voctocore': {
-        'playout': {
-            'cam1': '0', # playout cam1 to decklink output 0
-            'stream': '1', # playout stream to decklink output 1
-            'program': 'fb', # playout program to framebuffer
-        },
-    },
+```toml
+[metadata.voctocore.playout]
+cam1 = 0 # playout cam1 to decklink output 0
+stream = 1 # playout stream to decklink output 1
+program = "fb" # playout program to framebuffer
 ```
+
+**Caution:** Playout to decklink outputs requires having a ffmpeg build
+with decklink support compiled in. C3VOC currently does not provide that.

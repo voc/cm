@@ -9,17 +9,14 @@ or set `is_enabled` metadata to `False`.
 
 ## metadata
 
-```python
-    'radvd': {
-        'is_enabled': True, # see above
-        'interfaces': {
-            'eth1': {
-                'prefix': '2001:db8:10:73::/64',
-                'rdnss': {
-                    '2001:db8:10:71::1',
-                    '2001:db8:10:71::2',
-                },
-            },
-        },
-    },
+```toml
+[metadata.radvd]
+is_enabled = true # see above
+
+[metadata.radvd.interfaces.eth1]
+prefix = "2001:db8:10:73::/64"
+rdnss = [
+    "2001:db8:10:71::1",
+    "2001:db8:10:71::2",
+]
 ```
