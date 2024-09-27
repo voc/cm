@@ -18,8 +18,8 @@ vaapi = false # use vaapi for all rendering tasks
 
 # Enable slide recording/streaming. Gets disabled automatically
 # if no slides source has been configured.
-parallel_slide_recording': True,
-parallel_slide_streaming': True,
+parallel_slide_recording = true
+parallel_slide_streaming = true
 ```
 
 **TODO:** `[metadata.voctocore.backgrounds]` and `static_background_image`
