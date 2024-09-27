@@ -1,5 +1,3 @@
-import bwkeepass as keepass
-
 defaults = {
     'apt': {
         'packages': {
