@@ -21,21 +21,21 @@ peer_pubkey = "!decrypt:encrypt$gAAAAABl_YOCurKJacZUVR-ZrYa_YmmMJVA2N1TRochwDiVv
 privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4vfD9ScgHyA7-CzXRkHAwM7FIS6S8ArMwovWu_eqyP0owuRfHjvICLUSGxkBHeyTlA91jZuxwpbZ02sjFoLntYeBgD-pq"
 
 [metadata.interfaces.ens18]
-ips = [
-    "178.250.162.46/29", # seibert wiesbaden
-    "94.45.241.105/24", # c3noc event
-    "2001:67c:20a1:2241::105/64", # c3noc event
-]
-gateway4 = "178.250.162.41" # seibert wiesbaden
+#ips = [
+#    "178.250.162.46/29", # seibert wiesbaden
+#    "94.45.241.105/24", # c3noc event
+#    "2001:67c:20a1:2241::105/64", # c3noc event
+#]
+#gateway4 = "178.250.162.41" # seibert wiesbaden
 #gateway4 = "94.45.241.1" # c3noc event
 #gateway6 = "2001:67c:20a1:2241::1" # c3noc event
-dhcp = false
+dhcp = true
 
 [metadata.interfaces.ens19]
 ips = [
     "10.73.0.254/16",
     "10.73.200.201/16",
-    "2001:67c:20a1:3504:10:73:200:201/64",
+    #"2001:67c:20a1:3504:10:73:200:201/64",
 ]
 
 [metadata.isc-dhcp-server.subnets.ens19]
