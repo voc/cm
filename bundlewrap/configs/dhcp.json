@@ -73,11 +73,11 @@
     },
     "10.73.100.31": {
         "description": "sophie-kabel",
-        "mac": "50:7b:9d:c7:18:bd"
+        "mac": "f8:e4:3b:41:f9:7c"
     },
     "10.73.100.32": {
         "description": "sophie-wifi",
-        "mac": "44:85:00:11:e4:b4"
+        "mac": "8c:3b:4a:56:a1:06"
     },
     "10.73.100.75": {
         "description": "meise wlan",
@@ -125,7 +125,7 @@
     },
     "10.73.2.1": {
         "description": "mixer2",
-        "mac": "28:d2:44:08:8a:53"
+        "mac": "48:2a:e3:22:8c:04"
     },
     "10.73.2.15": {
         "description": "tallycom2-1",
@@ -221,7 +221,7 @@
     },
     "10.73.5.1": {
         "description": "mixer5",
-        "mac": "3c:97:0e:ef:30:b3"
+        "mac": "48:2a:e3:22:8c:aa"
     },
     "10.73.5.15": {
         "description": "tallycom5-1",
@@ -258,6 +258,10 @@
     "10.73.6.7": {
         "description": "minion6",
         "mac": "00:1f:c6:9d:0b:1a"
+    },
+    "10.73.94.41": {
+        "description": "companion94",
+        "mac": "98:fa:9b:f4:47:6d"
     },
     "10.73.95.3": {
         "description": "encoder-hexchen",
