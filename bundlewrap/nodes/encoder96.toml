@@ -27,7 +27,6 @@ rev = "main"
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABllVCErJFQ-7e0rDPlHlvooyH9HE93c7uSPca2dCnkRtjY4wt4xA0tbxitWP8OTAULBxvewyPdXbr6LuGABkjcOfIEjZKJRTIG9eNOZ8FyH4EVmHs="
 vaapi = true
-mirror_view = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
