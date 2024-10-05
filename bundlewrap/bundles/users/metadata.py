@@ -2,7 +2,7 @@ from tomlkit import loads
 from os import environ
 from os.path import dirname, join
 
-from bundlewrap.exceptions import BundleError
+from bundlewrap.exceptions import BundleError, NoSuchGroup
 
 defaults = {
     'apt': {
@@ -18,7 +18,7 @@ defaults = {
             'cascade_skip': False,
         },
         'voc': {
-            'password': repo.vault.decrypt('encrypt$gAAAAABkNXrxKojy17G1rsgYSYEd_jkJ_GcTcqLFgWFKgWb3hpNnQ1YHpps-iICtfzXrgjK7Kaf18YWW-N94SRZ9tiKLSSiPWA=='),
+            'password': repo.vault.human_password_for(f'{node.name} user voc'),
             'cascade_skip': False,
         },
     },
@@ -98,6 +98,35 @@ def user_voc(metadata):
         'users': {
             'voc': {
                 'ssh_pubkeys': pubkey,
+            },
+        },
+    }
+
+
+@metadata_reactor.provides(
+    'users/voc/ssh_pubkeys',
+)
+def mixer_to_encoder_ssh_login(metadata):
+    room_number = metadata.get('room_number', None)
+    if room_number is None:
+        return {}
+
+    try:
+        saal_nodes = repo.nodes_in_group(f'saal{room_number}')
+    except NoSuchGroup:
+        return {}
+
+    pubkeys = set()
+    for rnode in saal_nodes:
+        if not rnode.has_bundle('mixer-to-encoder-ssh-login'):
+            continue
+
+        pubkeys.add(repo.libs.ssh.generate_ed25519_public_key('voc', rnode))
+
+    return {
+        'users': {
+            'voc': {
+                'ssh_pubkeys': pubkeys,
             },
         },
     }
