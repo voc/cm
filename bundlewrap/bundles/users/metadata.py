@@ -18,7 +18,7 @@ defaults = {
             'cascade_skip': False,
         },
         'voc': {
-            'password': repo.vault.decrypt('encrypt$gAAAAABkNXrxKojy17G1rsgYSYEd_jkJ_GcTcqLFgWFKgWb3hpNnQ1YHpps-iICtfzXrgjK7Kaf18YWW-N94SRZ9tiKLSSiPWA=='),
+            'password': repo.vault.human_password_for(f'{node.name} user voc'),
             'cascade_skip': False,
         },
     },
