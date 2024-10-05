@@ -101,3 +101,32 @@ def user_voc(metadata):
             },
         },
     }
+
+
+@metadata_reactor.provides(
+    'users/voc/ssh_pubkeys',
+)
+def mixer_to_encoder_ssh_login(metadata):
+    room_number = metadata.get('room_number', None)
+    if room_number is None:
+        return {}
+
+    try:
+        saal_nodes = repo.nodes_in_group(f'saal{room_number}')
+    except NosuchGroup:
+        return {}
+
+    pubkeys = set()
+    for rnode in saal_nodes:
+        if not rnode.has_bundle('mixer-to-encoder-ssh-login'):
+            continue
+
+        pubkeys.add(repo.libs.ssh.generate_ed25519_public_key('voc', rnode))
+
+    return {
+        'users': {
+            'voc': {
+                'ssh_pubkeys': pubkeys,
+            },
+        },
+    }

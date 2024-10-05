@@ -61,6 +61,10 @@ for username, attrs in node.metadata['users'].items():
             if exists(join(repo.path, 'data', 'users', 'files', ftype, username)):
                 files[f'{home}/{fname}'] = {
                     'source': f'{ftype}/{username}',
+                    'content_type': 'mako',
+                    'context': {
+                        'verbatim_config': node.metadata.get(f'users/{username}/{ftype}_verbatim', {}),
+                    },
                 }
             else:
                 files[f'{home}/{fname}'] = {
