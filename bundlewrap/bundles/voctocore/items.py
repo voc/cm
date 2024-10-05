@@ -174,7 +174,7 @@ svc_systemd['voctomix2-streaming-sink'] = {
     'running': None, # get's auto-started by svc_systemd:voctomix2-voctocore
 }
 
-## streaming-sink
+## playout
 for pname, pdevice in node.metadata.get('voctocore/playout', {}).items():
     if pname not in PLAYOUT_PORTS:
         raise BundleError(f'{node.name} wants to use voctocore playout for {pname}, which does not exist. Valid choices: {",".join(sorted(PLAYOUT_PORTS))}')
@@ -227,3 +227,9 @@ for pname in PLAYOUT_PORTS:
             'directory:/usr/local/lib/systemd/system',
         },
     }
+
+# loudness-rendering
+files['/opt/voctomix2/scripts/loudness-rendering.sh'] = {
+    'content_type': 'mako',
+    'mode': '0755',
+}
