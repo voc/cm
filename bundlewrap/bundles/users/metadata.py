@@ -2,7 +2,7 @@ from tomlkit import loads
 from os import environ
 from os.path import dirname, join
 
-from bundlewrap.exceptions import BundleError
+from bundlewrap.exceptions import BundleError, NoSuchGroup
 
 defaults = {
     'apt': {
