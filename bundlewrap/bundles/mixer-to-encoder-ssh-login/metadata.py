@@ -10,7 +10,7 @@ def ssh_config_generator(metadata):
 
     try:
         saal_nodes = repo.nodes_in_group(f'saal{room_number}')
-    except NosuchGroup:
+    except NoSuchGroup:
         return {}
 
     ssh_hostnames = set()

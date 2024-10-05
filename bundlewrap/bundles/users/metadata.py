@@ -113,7 +113,7 @@ def mixer_to_encoder_ssh_login(metadata):
 
     try:
         saal_nodes = repo.nodes_in_group(f'saal{room_number}')
-    except NosuchGroup:
+    except NoSuchGroup:
         return {}
 
     pubkeys = set()
