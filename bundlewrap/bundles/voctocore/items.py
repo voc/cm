@@ -25,11 +25,12 @@ SHOULD_BE_RUNNING = node.metadata.get('voctocore/should_be_running', True)
 
 event = node.metadata.get('event/slug')
 voctomix_version = node.metadata.get('voctomix2/rev')
+sources = node.metadata.get('voctocore/sources', {})
 assert node.has_bundle('encoder-common')
 assert node.has_bundle('voctomix2')
 
 slides_port = 0
-for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
+for idx, sname in enumerate(sources):
     PLAYOUT_PORTS[sname] = 13000 + idx
     if sname == 'slides':
         slides_port = 13000 + idx
@@ -37,6 +38,58 @@ for idx, sname in enumerate(node.metadata.get('voctocore/sources', {})):
 overlay_mapping = []
 for filename, title in sorted(node.metadata.get('event/overlay_mappings', {}).items()):
     overlay_mapping.append(f'{filename}.png|{title}')
+
+presets = {}
+preset_buttons = ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p']
+preset_camera_sources = sorted([source for source in sources.keys() if source.startswith('cam')])
+# fullscreen sources
+for source in sources.keys():
+    icon = None
+    if source == 'slides':
+        icon = 'slides.svg'
+    elif source.startswith('cam'):
+        icon = 'speaker.svg'
+    presets[f'fs_{source}'] = {
+        'name': source.upper(),
+        'icon': icon,
+    }
+    try:
+        presets[f'fs_{source}']['key'] = preset_buttons.pop(0)
+    except IndexError:
+        pass
+
+if len(preset_camera_sources) > 2:
+    # We have a (atleast) three-camera setup. We assume last camera is
+    # the wide shot, give operators side-by-side shots of every other
+    # camera combination.
+    my_cameras = preset_camera_sources.copy()
+    my_cameras.pop() # remove last camera from list
+    for cam1 in my_cameras:
+        for cam2 in my_cameras:
+            if f'sbs_{cam2}_{cam1}' in presets or cam1 == cam2:
+                continue
+
+            presets[f'sbs_{cam1}_{cam2}'] = {
+                'name': f'{cam1.upper()}|{cam2.upper()}',
+                'icon': 'side-by-side.svg',
+            }
+            try:
+                presets[f'fs_{source}']['key'] = preset_buttons.pop(0)
+            except IndexError:
+                pass
+
+if 'slides' in sources:
+    # Regular event setup, we have slides and one or more cameras. Give
+    # operators presets for lecture mode with every camera.
+    for source in preset_camera_sources:
+        presets[f'lec_{source}_slides'] = {
+            'name': f'{source.upper()}|SLIDES',
+            'icon': 'side-by-side-preview.svg',
+        }
+        try:
+            presets[f'fs_{source}']['key'] = preset_buttons.pop(0)
+        except IndexError:
+            pass
 
 ### voctomix
 files['/opt/voctomix2/voctocore-config.ini'] = {
@@ -50,11 +103,12 @@ files['/opt/voctomix2/voctocore-config.ini'] = {
         'keyboard_shortcuts': KEYBOARD_SHORTCUTS,
         'mirror_view': node.metadata.get('voctocore/mirror_view'),
         'overlay_mapping': overlay_mapping,
+        'presets': presets,
         'programout_audiosink': node.metadata.get('voctocore/programout_audiosink'),
         'programout_enabled': node.metadata.get('voctocore/programout_enabled'),
         'programout_videosink': node.metadata.get('voctocore/programout_videosink'),
         'room_name': node.metadata.get('event/room_name', ''),
-        'sources': node.metadata.get('voctocore/sources', {}),
+        'sources': sources,
         'static_background_image': node.metadata.get('voctocore/static_background_image'),
         'vaapi_enabled': node.metadata.get('voctocore/vaapi'),
     },
