@@ -7,7 +7,6 @@ set -uo pipefail
 mkdir -p "/opt/loudness-rendering/data/"
 touch "/opt/loudness-rendering/data/line1.txt"
 touch "/opt/loudness-rendering/data/line2.txt"
-touch "/opt/loudness-rendering/data/line3.txt"
 
 <%
     width_per_scope = int(1024/len(node.metadata.get('voctocore/audio')))
@@ -38,7 +37,7 @@ ffmpeg \
 % endfor
         [tmp${idx+1}] drawtext='fontcolor=white:x=${label_padding_left}:y=46:fontsize=50:fontfile=/usr/share/fonts/freesans.ttf:textfile=/opt/loudness-rendering/data/line1.txt:reload=30' [ov1];
         [ov1] drawtext='fontcolor=white:x=${label_padding_left}:y=106:fontsize=20:fontfile=/usr/share/fonts/freesans.ttf:textfile=/opt/loudness-rendering/data/line2.txt:reload=30' [ov2];
-        [ov2] drawtext='fontcolor=white:x=${label_padding_left}:y=417:fontsize=50:fontfile=/usr/share/fonts/freesans.ttf:textfile=/opt/loudness-rendering/data/line3.txt:reload=30' [ov3];
+        [ov2] drawtext='fontcolor=white:x=${label_padding_left}:y=417:fontsize=50:text=${node.metadata.get('event/room_name')}' [ov3];
         [ov3] drawtext='fontcolor=white:x=${label_padding_left}:y=387:fontsize=20:text=${node.name}' [out]" \
     -map "[out]" -c:v libx264 -threads 2 -preset veryfast -x264-params keyint=30 -tune zerolatency -crf:0 26 -profile:0 high -level:0 4.1 -strict -2 -pix_fmt yuv420p \
     -map "[audio]" -c:a aac -b:a 128k \
