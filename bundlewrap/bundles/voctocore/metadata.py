@@ -18,6 +18,15 @@ defaults = {
         'voctomix2-voctocore',
         'voctomix2-streaming-sink',
         'voctomix2-recording-sink',
+        'voctomix2-loudness-rendering',
+    },
+    'systemd-timers': {
+        'timers': {
+            'loudness_info_updater': {
+                'command': '/usr/local/bin/loudness_info_updater',
+                'when': 'minutely',
+            },
+        },
     },
     'users': {
         'voc': {
@@ -61,6 +70,9 @@ defaults = {
         'static_background_image': True,
         'streaming_use_dynaudnorm': False,
         'vaapi': False,
+
+        # TODO evaluate if default should be true
+        'loudness_rendering': False,
     },
 }
 

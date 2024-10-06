@@ -1,4 +1,5 @@
 from bundlewrap.exceptions import BundleError
+from json import dumps
 from os.path import join, isfile
 
 KEYBOARD_SHORTCUTS = {
@@ -228,7 +229,7 @@ svc_systemd['voctomix2-streaming-sink'] = {
     'running': None, # get's auto-started by svc_systemd:voctomix2-voctocore
 }
 
-## streaming-sink
+## playout
 for pname, pdevice in node.metadata.get('voctocore/playout', {}).items():
     if pname not in PLAYOUT_PORTS:
         raise BundleError(f'{node.name} wants to use voctocore playout for {pname}, which does not exist. Valid choices: {",".join(sorted(PLAYOUT_PORTS))}')
@@ -281,3 +282,45 @@ for pname in PLAYOUT_PORTS:
             'directory:/usr/local/lib/systemd/system',
         },
     }
+
+# loudness-rendering
+files['/opt/voctomix2/scripts/loudness-rendering.sh'] = {
+    'content_type': 'mako',
+    'mode': '0755',
+    'triggers': {
+        'svc_systemd:voctomix2-loudness-rendering:restart',
+    },
+}
+files['/usr/local/lib/systemd/system/voctomix2-loudness-rendering.service'] = {
+    'triggers': {
+        'action:systemd-reload',
+        'svc_systemd:voctomix2-loudness-rendering:restart',
+    },
+}
+svc_systemd['voctomix2-loudness-rendering'] = {
+    'after': {
+        'svc_systemd:voctomix2-voctocore',
+    },
+    'needs': {
+        'file:/opt/voctomix2/scripts/loudness-rendering.sh',
+        'file:/usr/local/lib/systemd/system/voctomix2-loudness-rendering.service',
+        'pkg_apt:ffmpeg'
+    },
+    'running': None, # get's auto-started by svc_systemd:voctomix2-voctocore
+    'enabled': node.metadata.get('voctocore/loudness_rendering'),
+}
+files['/usr/share/fonts/freesans.ttf'] = {
+    # FreeSans, enriched with emojis from Noto Emoji. Encrypted to avoid
+    # having to deal with licenses in this repository.
+    'content': repo.vault.decrypt_file_as_base64('fonts/freesans.ttf.vault'),
+    'content_type': 'base64',
+}
+files['/usr/local/bin/loudness_info_updater'] = {
+    'source': 'updater.py',
+    'mode': '0755',
+}
+files['/opt/loudness-rendering/config.json'] = {
+    'content': dumps({
+        'room_name': node.metadata.get('event/room_name'),
+    }),
+}
