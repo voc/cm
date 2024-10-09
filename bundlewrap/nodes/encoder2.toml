@@ -28,6 +28,9 @@ mode = "1080i50"
 devicenumber = 5
 mode = "1080p25"
 
+[metadata.voctocore.playout]
+stream = "fb"
+
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "cam1"
@@ -41,3 +44,4 @@ devices = [
     "/dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T3192687",
     "/dev/disk/by-id/ata-ST3000DM001-1ER166_Z501LTC8",
 ]
+

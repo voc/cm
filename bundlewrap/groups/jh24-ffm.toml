@@ -1,6 +1,0 @@
-subgroups = ["saal96"]
-members = ["releasing"]
-
-[metadata.event]
-name = "Frankfurt am Main 2024"
-slug = "jh24-ffm"

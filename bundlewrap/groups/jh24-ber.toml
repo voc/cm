@@ -1,0 +1,6 @@
+subgroups = ["saal6"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Berlin 2024"
+slug = "jh24-ber"
