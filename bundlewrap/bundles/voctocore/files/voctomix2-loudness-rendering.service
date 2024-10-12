@@ -1,0 +1,16 @@
+[Unit]
+Description=voctomix2 loudness-rendering
+After=voctomix2-voctocore.service
+Requires=voctomix2-voctocore.service
+
+[Service]
+User=voc
+Group=voc
+Type=simple
+ExecStart=/opt/voctomix2/scripts/loudness-rendering.sh
+Restart=always
+RestartSec=10s
+StartLimitInterval=0
+
+[Install]
+WantedBy=voctomix2-voctocore.service
