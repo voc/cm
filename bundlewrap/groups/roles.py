@@ -28,6 +28,7 @@ groups['mixers'] = {
     },
     'bundles': {
         'mixer-common',
+        'mixer-to-encoder-ssh-login',
         'voctogui',
         'voctomix2',
     },

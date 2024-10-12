@@ -7,3 +7,9 @@ Host releasing.c3voc.de
     IdentityFile /home/voc/.ssh/upload-key
     StrictHostKeyChecking accept-new
     User upload
+% if 'mixer-to-encoder-ssh-login' in verbatim_config:
+
+Host ${' '.join(sorted(verbatim_config['mixer-to-encoder-ssh-login']))}
+    IdentityFile /home/voc/.ssh/mixer-to-encoder-ssh-login
+    StrictHostKeyChecking accept-new
+% endif

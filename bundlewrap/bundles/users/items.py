@@ -43,7 +43,7 @@ for username, attrs in node.metadata['users'].items():
 
         if 'ssh_pubkeys' in attrs:
             files[home + '/.ssh/authorized_keys'] = {
-                'content': '\n'.join(sorted(attrs['ssh_pubkeys'])) + '\n',
+                'content': repo.libs.faults.join_faults(sorted(attrs['ssh_pubkeys']), '\n') + '\n',
                 'owner': username,
                 'mode': '0600',
             }
@@ -61,6 +61,10 @@ for username, attrs in node.metadata['users'].items():
             if exists(join(repo.path, 'data', 'users', 'files', ftype, username)):
                 files[f'{home}/{fname}'] = {
                     'source': f'{ftype}/{username}',
+                    'content_type': 'mako',
+                    'context': {
+                        'verbatim_config': node.metadata.get(f'users/{username}/{ftype}_verbatim', {}),
+                    },
                 }
             else:
                 files[f'{home}/{fname}'] = {
