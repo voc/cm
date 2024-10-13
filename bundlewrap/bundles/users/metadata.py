@@ -18,7 +18,7 @@ defaults = {
             'cascade_skip': False,
         },
         'voc': {
-            'password': repo.vault.human_password_for(f'{node.name} user voc'),
+            'password': repo.vault.human_password_for(f'{node.name} user voc', words=1),
             'cascade_skip': False,
         },
     },
