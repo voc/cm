@@ -1,0 +1,6 @@
+subgroups = ["saal6", "saal2"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Subscribe 11"
+slug = "subscribe11"
