@@ -8,7 +8,7 @@ meta.secret = "!decrypt:encrypt$gAAAAABlx3cwXRgJExYHPSONTvM4Qr2__WCSqqftfBcBk7pv
 meta.token = "!decrypt:encrypt$gAAAAABlx3cq0mWwMvUECvt8ctW_Wu1IvdbzhzMWbt7yzRUarPgFP6TY4UurHMzpIFoSjeT67zaQoYvZLLG3Vh2lAJZJo4kr_qfN6zEOe6U1RRSNXCzTb4866WgTfdIsaOX_8HBog4b0"
 
 [metadata.event]
-room_name = "Saal 6"
+room_name = "Großer Saal"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.6.3/16"]
@@ -19,6 +19,10 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYk0lzAoL1Hf5xuaCK0E6A9xq15GeqVfs
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 1
+mode = "1080i50"
+
+[metadata.voctocore.sources.cam2]
+devicenumber = 2
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
