@@ -514,3 +514,11 @@ uid = 1165
 ssh_pubkeys = [
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPCe7TJFPCWxRgSklbCPrYU4p/ANPV3t+98oh9+GIKS1AAAABHNzaDo=",
 ]
+
+[stuebinm]
+enable_rz = false
+enable_event = true
+uid = 1166
+ssh_pubkeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH8e9WrHsknoFwBm/YaigOSz9VI8dXRRR5G9BX4kKt9"
+]
