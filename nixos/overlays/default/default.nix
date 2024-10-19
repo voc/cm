@@ -8,4 +8,7 @@ final: prev: {
     configureFlags =
       [ "--with-libpq=${final.postgresql.withPackages (ps: [ ])}" ];
   });
+  rt = prev.rt.overrideAttrs (old: {
+    patches = old.patches ++ [ ./rt/rt-server-fcgi-wrapper.patch ];
+  });
 }
