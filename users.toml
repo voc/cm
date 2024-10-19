@@ -520,5 +520,5 @@ enable_rz = false
 enable_event = true
 uid = 1166
 ssh_pubkeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH8e9WrHsknoFwBm/YaigOSz9VI8dXRRR5G9BX4kKt9/ stuebinm@ilex"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH8e9WrHsknoFwBm/YaigOSz9VI8dXRRR5G9BX4kKt9"
 ]
