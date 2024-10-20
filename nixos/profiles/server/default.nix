@@ -12,7 +12,7 @@
     recommendedTlsSettings = true;
   };
 
-  services.zfs = lib.mkIf (lib.elem "zfs" config.boot.supportedFilesystems) {
+  services.zfs = lib.mkIf (lib.hasAttrByPath ["zfs"] config.boot.supportedFilesystems) {
     autoScrub.enable = true;
     autoSnapshot = {
       enable = true;

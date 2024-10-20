@@ -28,7 +28,7 @@
 
     environment = {
       NERD_CONFIG_FILE = "/etc/nerd/nerd.cfg";
-      PYTHONPATH = with pkgs.python310.pkgs; makePythonPath [
+      PYTHONPATH = with pkgs.python311.pkgs; makePythonPath [
         nerd
         psycopg2
       ];
@@ -37,7 +37,7 @@
     preStart = ''
       export DJANGO_SECRET=$(cat ${config.sops.secrets.nerd_secret.path})
       ${pkgs.gnused}/bin/sed -e "s/!!DJANGO_SECRET!!/$DJANGO_SECRET/g" ${nerdCfg} > /etc/nerd/nerd.cfg
-      ${pkgs.python310.pkgs.nerd}/bin/nerd migrate
+      ${pkgs.python311.pkgs.nerd}/bin/nerd migrate
     '';
 
     serviceConfig = {
@@ -45,7 +45,7 @@
       Group = "nerd";
       ConfigurationDirectory = "nerd";
       ExecStart = ''
-        ${pkgs.python310Packages.gunicorn}/bin/gunicorn \
+        ${pkgs.python311Packages.gunicorn}/bin/gunicorn \
           --bind 0.0.0.0:10510 \
           --access-logfile - \
           nerd.wsgi
@@ -59,9 +59,7 @@
     ensureUsers = [
       {
         name = "nerd";
-        ensurePermissions = {
-          "DATABASE nerd" = "ALL PRIVILEGES";
-        };
+        ensureDBOwnership = true;
       }
     ];
   };
@@ -90,7 +88,7 @@
           }
           reverse_proxy * http://127.0.0.1:10510
         }
-        root * ${pkgs.python310.pkgs.nerd}/var/lib/nerd/
+        root * ${pkgs.python311.pkgs.nerd}/var/lib/nerd/
       '';
     };
   };

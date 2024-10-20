@@ -12,6 +12,8 @@ buildPythonPackage rec {
 
   format = "pyproject";
 
+  patches = [ ./diffsync.patch ];
+
   buildInputs = [ hatchling ];
   propagatedBuildInputs = [ mitel-ommclient2 sqlalchemy ywsd diffsync ];
 }

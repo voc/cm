@@ -1,0 +1,22 @@
+diff --git a/fieldpoc/routing.py b/fieldpoc/routing.py
+index 185eb8b..1e38541 100644
+--- a/fieldpoc/routing.py
++++ b/fieldpoc/routing.py
+@@ -304,7 +304,7 @@ class YwsdForkRankMemberModel(ForkRankMemberModel):
+         return super().delete()
+ 
+ 
+-class BackendNerd(diffsync.DiffSync):
++class BackendNerd(diffsync.Adapter):
+     yate = YateModel
+     extension = ExtensionModel
+     user = UserModel
+@@ -378,7 +378,7 @@ class BackendNerd(diffsync.DiffSync):
+                 self.add(user)
+ 
+ 
+-class BackendYwsd(diffsync.DiffSync):
++class BackendYwsd(diffsync.Adapter):
+     yate = YwsdYateModel
+     extension = YwsdExtensionModel
+     user = YwsdUserModel

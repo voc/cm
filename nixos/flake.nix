@@ -1,23 +1,23 @@
 {
   description = "c3voc nixOS config management";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-23.11";
+  inputs.nixpkgs.url = "nixpkgs/nixos-24.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.sops-nix = {
     url = "github:Mic92/sops-nix";
     inputs.nixpkgs.follows = "/nixpkgs";
   };
   inputs.home-manager = {
-    url = "github:nix-community/home-manager/release-23.11";
+    url = "github:nix-community/home-manager/release-24.05";
     inputs.nixpkgs.follows = "/nixpkgs";
   };
   inputs.nixos-mailserver = {
-    url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
+    url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
     inputs.nixpkgs.follows = "/nixpkgs";
     inputs.utils.follows = "/flake-utils";
   };
   inputs.authentik-nix = {
-    url = "github:nix-community/authentik-nix";
+    url = "github:nix-community/authentik-nix/version/2024.8.3";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nixos-generators = {

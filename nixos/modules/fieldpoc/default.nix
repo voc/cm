@@ -38,7 +38,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.python310.pkgs.fieldpoc}/bin/fieldpoc -c /etc/fieldpoc/config.json -e /etc/fieldpoc/extensions.json --debug";
+        ExecStart = "${pkgs.python311.pkgs.fieldpoc}/bin/fieldpoc -c /etc/fieldpoc/config.json -e /etc/fieldpoc/extensions.json --debug";
         ConfigurationDirectory = "fieldpoc";
       };
 
