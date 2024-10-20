@@ -49,7 +49,7 @@ let
 
     # rtname appears in ticket email subjects. It needs to be globally unique,
     # so use your organization's domain name.
-    Set($rtname, 'c3voc.de');
+    Set($rtname, 'c3voc');
     # Organization is used in the database for ticket links, etc. It also needs to
     # be globally unique, so use your organization's domain name.
     Set($Organization, 'c3voc.de');
@@ -108,6 +108,11 @@ let
     # instructions on how to set them up.
     Set(%GnuPG, 'Enable' => '0');
     Set(%SMIME, 'Enable' => '0');
+
+    Set($CorrespondAddress, "rt@c3voc.de");
+    Set($CommentAddress, "rt-comment@c3voc.de");
+    Set($SendmailPath, '${pkgs.msmtp}/bin/sendmail');
+    Set($OwnerEmail, "voc-rt-admin@julianjacobi.net");
 
     Set( %FullTextSearch,
         Enable     => 1,
@@ -223,6 +228,22 @@ in
       };
     };
 
+    systemd.timers."rt-fulltext-indexer" = {
+      timerConfig.OnCalendar = "*-*-* *:00/3:00";
+    };
+    systemd.timers."rt-email-dashboard" = {
+      timerConfig.OnCalendar = "*-*-* *:00:00";
+    };
+    systemd.timers."rt-clean-sessions" = {
+      timerConfig.OnCallendar = "*-*-* 05:30:00";
+    };
+    systemd.timers."rt-digest-weekly" = {
+      timerConfig.OnCalendar = "Mon, *-*-* 04:30:00";
+    };
+    systemd.timers."rt-digest-daily" = {
+      timerConfig.OnCalendar = "*-*-* 04:30:00";
+    };
+
     systemd.sockets = foldl (last: num: last // {
       "rt-fcgi-${toString num}" = {
         wants = [ "network.target" ];
@@ -281,20 +302,27 @@ in
       };
     };
 
-    systemd.timers."rt-fulltext-indexer" = {
-      timerConfig.OnCalendar = "*-*-* *:00/3:00";
+    programs.msmtp.enable = true;
+    programs.msmtp.accounts.default = {
+      auth = false;
+      host = "mail.c3voc.de";
+      from = "rt@c3voc.de";
+      domain = "rt.c3voc.de";
     };
-    systemd.timers."rt-email-dashboard" = {
-      timerConfig.OnCalendar = "*-*-* *:00:00";
-    };
-    systemd.timers."rt-clean-sessions" = {
-      timerConfig.OnCallendar = "*-*-* 05:30:00";
-    };
-    systemd.timers."rt-digest-weekly" = {
-      timerConfig.OnCalendar = "Mon, *-*-* 04:30:00";
-    };
-    systemd.timers."rt-digest-daily" = {
-      timerConfig.OnCalendar = "*-*-* 04:30:00";
-    };
+
+    networking.nftables.extraInput = mkAfter ''
+      ip saddr 185.106.84.29/32 tcp dport 25 accept
+      ip6 saddr 2001:67c:20a0:e::29/128 tcp dport 25 accept
+    '';
+
+    services.postfix.enable = true;
+    services.postfix.setSendmail = false;
+    services.postfix.domain = "rt.c3voc.de";
+    services.postfix.destination = [ "rt.c3voc.de" ];
+    services.postfix.extraAliases = ''
+      rt:         "|${pkgs.rt}/bin/rt-mailgate                 --action correspond --url https://rt.c3voc.de/"
+      rt-comment: "|${pkgs.rt}/bin/rt-mailgate                 --action comment    --url https://rt.c3voc.de/"
+      rt-test:    "|${pkgs.rt}/bin/rt-mailgate --queue rt-test --action correspond --url https://rt.c3voc.de/"
+    '';
   };
 }
