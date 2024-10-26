@@ -10,7 +10,7 @@ creation_rules:
   - path_regex: hosts/tel/.*
     key_groups:
     - pgp:
-#     - *admin_n0emis
+      - *admin_n0emis
       age:
       - *admin_keepass
       - *admin_hexchen
@@ -19,7 +19,7 @@ creation_rules:
   - path_regex: hosts/mail/.*
     key_groups:
     - pgp:
-#     - *admin_n0emis
+      - *admin_n0emis
       age:
       - *admin_keepass
       - *admin_hexchen
