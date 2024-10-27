@@ -63,11 +63,17 @@ in {
       local_recipient_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       virtual_alias_maps = ["hash:/etc/postfix/virtual_cm"];
     };
-    networks = [ 
+    networks = [
       "127.0.0.1/32"
       "[::1]/128"
-      "185.106.84.19/32"         # rt.c3voc.de uses mail.c3cov.de as mail relay
-      "[2001:67c:20a0:e::19]/128"  # also rt.c3voc.de
+
+      # rt.c3voc.de
+      "185.106.84.19/32"
+      "[2001:67c:20a0:e::19]/128"
+
+      # pretalx.c3voc.de
+      "31.172.33.105/32"
+      "[2a01:a700:48d1::105]/128"
     ];
   };
 
