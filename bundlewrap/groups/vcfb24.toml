@@ -1,0 +1,7 @@
+subgroups = ["saal1"]
+members = ["releasing", "minion96"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Vintage Computing Festival Berlin 2024"
+slug = "vcfb24"
