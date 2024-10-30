@@ -5,6 +5,7 @@ keys:
   - &admin_keepass age13yl99pyktjyssdm487pa5ucm4rxcrdrt4lq8qk2vkvdwyfhcvahqs4e6cw
   - &host_tel age1glkmsh6pex9g5v95vwx78a8xksmnkvsu7ccnhxzu09yvnfnjudls3lfkru
   - &host_mail age1zcj3dt7uc3gc3kyt6l7m86qjzm9vlgq7kcsm9wh9gank6rqff4gqwrtzpa
+  - &host_tickets age1d3xrfzn6uht3ls7sg68emz33wxxwytmjjd7y4rv3zt9e366dealqkex4j8
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -25,3 +26,12 @@ creation_rules:
       - *admin_hexchen
       - *admin_jayjay
       - *host_mail
+  - path_regex: hosts/tickets/.*
+    key_groups:
+    - pgp:
+#     - *admin_n0emis
+      age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *host_tickets

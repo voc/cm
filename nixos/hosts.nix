@@ -4,7 +4,7 @@
   netbox = { ... }: {};
   sso = { ... }: {};
   tel = { ... }: {};
-  rt = { ... }: {};
+  tickets = { ... }: {};
   loudness-player = { ... }: {
   };
 }

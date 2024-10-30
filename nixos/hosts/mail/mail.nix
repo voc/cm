@@ -24,6 +24,8 @@ in {
       "c3voc.de"
     ];
 
+    debug = true;
+
     # Use Let's Encrypt certificates. Note that this needs to set up a stripped
     # down nginx and opens port 80.
     certificateScheme = "acme-nginx";
@@ -39,17 +41,17 @@ in {
       "muenchen" = "muenchen@lists.c3voc.de";
       "studios" = "studios@lists.c3voc.de";
       "voc" = "voc@lists.c3voc.de";
-    } // lib.genAttrs [ # rt related addresses
-      "rt"
-      "rt-comment"
-      "rt-test"
-    ] (addr: "${addr}@rt.c3voc.de");
+    };
 
     # whitelist SPF checks from mng (for now)
     policydSPFExtraConfig = ''
       HELO_Whitelist = mng.c3voc.de
       skip_addresses = 127.0.0.0/8,::ffff:127.0.0.0/104,::1,185.106.84.49,2001:67c:20a0:e::179
     '';
+
+    loginAccounts."znuny@c3voc.de" = {
+      hashedPassword = "$2b$05$KSWvSJXyURjzQjXfSIzPTeDTZ0lXjj2.z.t6QT8lL32q4UBwZQAQ6";
+    };
   };
 
   sops.secrets.aliases = {};
@@ -66,8 +68,6 @@ in {
     networks = [ 
       "127.0.0.1/32"
       "[::1]/128"
-      "185.106.84.19/32"         # rt.c3voc.de uses mail.c3cov.de as mail relay
-      "[2001:67c:20a0:e::19]/128"  # also rt.c3voc.de
     ];
   };
 
