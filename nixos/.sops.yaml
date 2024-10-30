@@ -1,4 +1,5 @@
 keys:
+  - &admin_derchris age1w5lu3zmrs5wqh74447d8zt28dluhgtz6a4cyr6njzpjqyfgjz5usg7d6ms
   - &admin_hexchen age1wvtkhug4q7fcs7wz03kpn77ruqkkwp2xqq30npv4287wtf3w8ukq370vre
   - &admin_jayjay age1yyxdtt7lpcm9hr0y76g559yq4uqz8e8hjc2fzqtwnhctsj99fp6sf3ksl6
   - &admin_n0emis 6E10217E3187069E057DF5ABE0262A773B824745
@@ -15,6 +16,7 @@ creation_rules:
       - *admin_keepass
       - *admin_hexchen
       - *admin_jayjay
+      - *admin_derchris
       - *host_tel
   - path_regex: hosts/mail/.*
     key_groups:
@@ -24,4 +26,5 @@ creation_rules:
       - *admin_keepass
       - *admin_hexchen
       - *admin_jayjay
+      - *admin_derchris
       - *host_mail
