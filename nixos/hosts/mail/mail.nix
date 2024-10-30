@@ -37,7 +37,7 @@ in {
     };
 
     loginAccounts."znuny@c3voc.de" = {
-      hashedPassword = "$2b$05$pdO2nm2sAKPIc4pT/hNBeu07xctX9BIE7ycVjpgmB8a6Bqu89e0Sq";
+      hashedPassword = "$2b$05$KSWvSJXyURjzQjXfSIzPTeDTZ0lXjj2.z.t6QT8lL32q4UBwZQAQ6";
     };
   };
 
@@ -56,7 +56,7 @@ in {
       "127.0.0.1/32"
       "[::1]/128"
 
-      # rt.c3voc.de
+      # tickets.c3voc.de
       "185.106.84.19/32"
       "[2001:67c:20a0:e::19]/128"
 
