@@ -51,6 +51,7 @@ defaults = {
                 'composites': 'fs',
             },
         },
+        'enable_sbs_preset_for_multi_camera': True,
         'mirror_view': False, # automatically mirrors SBS/LEC views
         'parallel_slide_recording': True,
         'parallel_slide_streaming': True,

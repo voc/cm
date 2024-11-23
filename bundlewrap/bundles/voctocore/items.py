@@ -58,7 +58,7 @@ for source in sources.keys():
     except IndexError:
         pass
 
-if len(preset_camera_sources) > 2:
+if len(preset_camera_sources) > 2 and node.metadata.get('voctocore/enable_sbs_presets_for_multi_camera'):
     # We have a (atleast) three-camera setup. We assume last camera is
     # the wide shot, give operators side-by-side shots of every other
     # camera combination.
