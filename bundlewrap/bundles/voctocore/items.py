@@ -82,7 +82,7 @@ if 'slides' in sources:
     # Regular event setup, we have slides and one or more cameras. Give
     # operators presets for lecture mode with every camera.
     for source in preset_camera_sources:
-        presets[f'lec_{source}_slides'] = {
+        presets[f'lec_slides_{source}'] = {
             'name': f'{source.upper()}|SLIDES',
             'icon': 'side-by-side-preview.svg',
         }
