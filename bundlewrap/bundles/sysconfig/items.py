@@ -12,7 +12,7 @@ if event:
 if node.has_bundle('voctocore'):
     description.append('')
     description.append(bold('voctocore source config'))
-    for name, opts in node.metadata.get('voctocore/sources', {}).items():
+    for name, opts in sorted(node.metadata.get('voctocore/sources', {}).items()):
         if opts.get('kind', 'decklink') == 'decklink':
             description.append(' {} kind=decklink - input {} @ {}'.format(
                 name,
@@ -28,7 +28,7 @@ if node.has_bundle('voctocore'):
 if node.has_bundle('samba'):
     description.append('')
     description.append(bold('samba shares:'))
-    for name, opts in node.metadata.get('samba/shares', {}).items():
+    for name, opts in sorted(node.metadata.get('samba/shares', {}).items()):
         description.append(' {} as //{}/{}{}'.format(
             opts['path'],
             node.hostname,
