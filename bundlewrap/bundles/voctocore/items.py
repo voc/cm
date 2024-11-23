@@ -43,7 +43,7 @@ presets = {}
 preset_buttons = ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p']
 preset_camera_sources = sorted([source for source in sources.keys() if source.startswith('cam')])
 # fullscreen sources
-for source in sources.keys():
+for source in sorted(sources.keys()):
     icon = None
     if source == 'slides':
         icon = 'slides.svg'
