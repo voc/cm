@@ -63,6 +63,11 @@ defaults = {
         'streaming_use_dynaudnorm': False,
         'vaapi': False,
     },
+    'voctomix2': {
+        'deploy_triggers': {
+            'svc_systemd:voctomix2-voctocore:restart',
+        },
+    },
 }
 
 if not node.has_bundle('zfs'):

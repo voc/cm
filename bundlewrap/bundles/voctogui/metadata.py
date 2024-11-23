@@ -27,4 +27,9 @@ defaults = {
         'play_audio': False,
         'video_display': 'xv',
     },
+    'voctomix2': {
+        'deploy_triggers': {
+            'svc_systemd:voctomix2-voctogui:restart',
+        },
+    },
 }

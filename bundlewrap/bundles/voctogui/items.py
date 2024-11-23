@@ -22,6 +22,7 @@ files['/usr/local/lib/systemd/system/voctomix2-voctogui.service'] = {
     },
     'triggers': {
         'action:systemd-reload',
+        'svc_systemd:voctomix2-voctogui:restart',
     },
 }
 
