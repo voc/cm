@@ -54,6 +54,9 @@ input = "cam2"
 streams = "0+1"
 input = "cam3"
 
+[metadata.voctocore.playout]
+program = "fb"
+
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
 
