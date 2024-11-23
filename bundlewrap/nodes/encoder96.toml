@@ -34,17 +34,25 @@ mode = "1080p25"
 
 [metadata.voctocore.sources.cam2]
 kind = "test"
+pattern = "smpte-rp-219"
+wave = "pink-noise"
 
 [metadata.voctocore.sources.cam3]
 kind = "test"
+pattern = "ball"
+wave = "white-noise"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 2
 mode = "1080p25"
 
-[metadata.voctocore.audio.original]
+[metadata.voctocore.audio.pink]
 streams = "0+1"
-input = "cam1"
+input = "cam2"
+
+[metadata.voctocore.audio.white]
+streams = "0+1"
+input = "cam3"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
