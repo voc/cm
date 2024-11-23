@@ -1,4 +1,5 @@
-bundles = ["pygtk-atem-switcher", "thinkfan"]
+hostname = "172.19.138.98"
+bundles = ["thinkfan"]
 groups = ["debian-bookworm"]
 
 [metadata.apt.packages.intel-media-va-driver-non-free]

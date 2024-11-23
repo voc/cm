@@ -1,4 +1,4 @@
-hostname = "10.73.96.3"
+hostname = "172.19.138.99"
 bundles = ["zfs"]
 groups = ["debian-bookworm"]
 
@@ -29,11 +29,17 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABllVCErJFQ-7e0rDPlHlvooyH9HE93c7uSP
 vaapi = true
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 0
+devicenumber = 1
 mode = "1080p25"
 
+[metadata.voctocore.sources.cam2]
+kind = "test"
+
+[metadata.voctocore.sources.cam3]
+kind = "test"
+
 [metadata.voctocore.sources.slides]
-devicenumber = 1
+devicenumber = 2
 mode = "1080p25"
 
 [metadata.voctocore.audio.original]
