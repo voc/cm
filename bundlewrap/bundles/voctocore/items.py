@@ -23,7 +23,6 @@ PLAYOUT_PORTS = {
 
 SHOULD_BE_RUNNING = node.metadata.get('voctocore/should_be_running', True)
 
-event = node.metadata.get('event/slug')
 voctomix_version = node.metadata.get('voctomix2/rev')
 sources = node.metadata.get('voctocore/sources', {})
 assert node.has_bundle('encoder-common')
@@ -98,7 +97,7 @@ files['/opt/voctomix2/voctocore-config.ini'] = {
     'context': {
         'audio': node.metadata.get('voctocore/audio', {}),
         'backgrounds': node.metadata.get('voctocore/backgrounds', {}),
-        'event': event,
+        'event': node.metadata.get('event/slug'),
         'has_schedule': node.metadata.get('event/schedule_json', ''),
         'keyboard_shortcuts': KEYBOARD_SHORTCUTS,
         'mirror_view': node.metadata.get('voctocore/mirror_view'),
