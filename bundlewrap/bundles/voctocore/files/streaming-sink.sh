@@ -37,7 +37,7 @@ ffmpeg -y -nostdin -hide_banner -re \
     -hwaccel_output_format vaapi \
 % endif
     -thread_queue_size 512 -i tcp://localhost:15000?timeout=3000000 \
-% if parallel_slide_streaming and slides_port:
+% if parallel_slide_streaming:
     -thread_queue_size 512 -i tcp://localhost:15001?timeout=3000000 \
 % endif
 % if vaapi_enabled:

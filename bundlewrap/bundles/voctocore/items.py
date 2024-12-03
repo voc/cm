@@ -156,7 +156,7 @@ files['/opt/voctomix2/scripts/recording-sink.sh'] = {
     'content_type': 'mako',
     'context': {
         'event': node.metadata.get('event'),
-        'parallel_slide_recording': node.metadata.get('voctocore/parallel_slide_recording'),
+        'parallel_slide_recording': node.metadata.get('voctocore/parallel_slide_recording') and slides_port,
         'slides_port': slides_port,
     },
     'mode': '0755',
@@ -192,8 +192,7 @@ files['/opt/voctomix2/scripts/streaming-sink.sh'] = {
         'dynaudnorm': node.metadata.get('voctocore/streaming_use_dynaudnorm'),
         'endpoint': node.metadata.get('voctocore/streaming_endpoint'),
         'event': node.metadata.get('event'),
-        'parallel_slide_streaming': node.metadata.get('voctocore/parallel_slide_streaming'),
-        'slides_port': slides_port,
+        'parallel_slide_streaming': node.metadata.get('voctocore/parallel_slide_streaming') and slides_port,
         'srt_publish': node.metadata.get('voctocore/srt_publish'),
         'vaapi_enabled': node.metadata.get('voctocore/vaapi'),
     },
