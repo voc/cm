@@ -1,4 +1,4 @@
-hostname = "172.19.138.99"
+hostname = "10.73.96.3"
 bundles = ["zfs"]
 groups = ["debian-bookworm"]
 
@@ -34,28 +34,28 @@ mode = "1080p25"
 
 [metadata.voctocore.sources.cam2]
 kind = "test"
-pattern = "smpte-rp-219"
+pattern = "ball"
 wave = "pink-noise"
 
-[metadata.voctocore.sources.cam3]
-kind = "test"
-pattern = "ball"
-wave = "white-noise"
+#[metadata.voctocore.sources.cam3]
+#kind = "test"
+#pattern = "smpte-rp-219"
+#wave = "white-noise"
 
-[metadata.voctocore.sources.slides]
-devicenumber = 2
-mode = "1080p25"
+#[metadata.voctocore.sources.slides]
+#devicenumber = 2
+#mode = "1080p25"
 
-[metadata.voctocore.audio.pink]
+[metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam2"
+input = "cam1"
 
-[metadata.voctocore.audio.white]
-streams = "0+1"
-input = "cam3"
+#[metadata.voctocore.audio.pink]
+#streams = "0+1"
+#input = "cam2"
 
-[metadata.voctocore.playout]
-program = "fb"
+#[metadata.voctocore.playout]
+#program = "fb"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
