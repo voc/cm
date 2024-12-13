@@ -60,8 +60,8 @@ ffmpeg -y -nostdin -hide_banner -re \
 % endif
     \
     [0:a]pan=stereo|c0=c0|c1=c1[s_pgm];\
-    [0:a]pan=stereo|c0=c2|c1=c2[s_trans_1];\
-    [0:a]pan=stereo|c0=c3|c1=c3[s_trans_2];\
+    [0:a]pan=stereo|c0=c2|c1=c3[s_trans_1];\
+    [0:a]pan=stereo|c0=c4|c1=c5[s_trans_2];\
     \
     [s_pgm] asplit=2 [pgm_1] [pgm_2] ;\
 % if dynaudnorm:
