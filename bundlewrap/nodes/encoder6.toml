@@ -8,7 +8,7 @@ meta.secret = "!decrypt:encrypt$gAAAAABlx3cwXRgJExYHPSONTvM4Qr2__WCSqqftfBcBk7pv
 meta.token = "!decrypt:encrypt$gAAAAABlx3cq0mWwMvUECvt8ctW_Wu1IvdbzhzMWbt7yzRUarPgFP6TY4UurHMzpIFoSjeT67zaQoYvZLLG3Vh2lAJZJo4kr_qfN6zEOe6U1RRSNXCzTb4866WgTfdIsaOX_8HBog4b0"
 
 [metadata.event]
-room_name = "Saal 6"
+room_name = "Stage HUFF"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.6.3/16"]
@@ -21,13 +21,21 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYk0lzAoL1Hf5xuaCK0E6A9xq15GeqVfs
 devicenumber = 1
 mode = "1080i50"
 
+[metadata.voctocore.sources.cam2]
+devicenumber = 0
+mode = "1080i50"
+
 [metadata.voctocore.sources.slides]
 devicenumber = 5
 mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam1"
+input = "slides"
+
+[metadata.voctocore.audio.translated]
+streams = "2+3"
+input = "slides"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
