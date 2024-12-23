@@ -1,5 +1,9 @@
 name: bw test
-on: [ push, pull_request ]
+on:
+  push:
+    paths: ['bundlewrap/**']    
+  pull_request:
+    paths: ['bundlewrap/**']
 
 jobs:
   bw_test_dummy_mode:
