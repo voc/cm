@@ -1,0 +1,35 @@
+hostname = "192.168.122.239"
+groups = ["debian-bookworm"]
+
+
+[metadata.crs-worker.secrets]
+encoding.secret = "!decrypt:encrypt$gAAAAABnZsUyCaLXbgyCT-Lj-d0HTeMhAlh2gZhKxP4lhoQORRopbxjdWzqYjaJ6Z50gkRnyFF6gt9xLAYMEWrwKw4_jYcQYSgWsvRFoRxhnF23g9OvMDuLuHgnYSIBMViYMN0ft_qhS"
+encoding.token = "!decrypt:encrypt$gAAAAABnZsT6GgAYfhVp3-acwbddkuebz21rfX-sfQ-7jVegJrfxYgMcLfGdVrS_Lhh7NgLbQkrW0cTLSmY0ALAM7gMyUSRLV8daXk3lMHr28WlDuTd_yEPAwg1-03JFCxFLXOuLv6jg"
+
+[metadata.event]
+room_name = "sophie test"
+
+[metadata.interfaces.eth0]
+ips = ["192.168.122.239/24"]
+gateway4 = "192.168.122.1"
+
+[metadata.voctomix2]
+rev = "main"
+
+[metadata.voctocore]
+streaming_auth_key = "!decrypt:encrypt$gAAAAABnZsPr-StjUYqJYR753CtqnbtD2eYlUwMs-XAy4WG5ggDpppjgpZUQKQUaJ9fw-nBz8Z3zKUpo2xMfvp-V4uYX2uG0RnznznXjZfwITaeMVykfyq4="
+
+[metadata.voctocore.sources.cam1]
+kind = "test"
+pattern = "ball"
+mode = "1080p25"
+
+[metadata.voctocore.sources.slides]
+kind = "test"
+pattern = "smpte-rp-219"
+wave = "pink-noise"
+
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"
