@@ -27,4 +27,20 @@
       proxy_set_header        X-Forwarded-Proto $scheme;
     '';
   };
+
+  services.nginx.virtualHosts."authentfix" = {
+    listen = [{
+      addr = "127.0.0.1";
+      port = 8080;
+    }];
+    locations."/" = {
+      recommendedProxySettings = false;
+      proxyPass = "https://sso.cccv.de/oauth2/userinfo";
+      extraConfig = ''
+        sub_filter '"id":' '"sub":';
+        sub_filter_types "application/json";
+        sub_filter_once on;
+      '';
+    };
+  };
 }
