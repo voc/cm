@@ -551,7 +551,7 @@ ssh_pubkeys = [
 [vale]
 enable_rz = false
 enable_event = true
-uid = 1169
+uid = 1170
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwAxgsk8G3afYZOMBy1slAX5RacSXQP9FXkGiBPqHAs vale@mb2019",
 ]
