@@ -556,3 +556,11 @@ uid = 1170
 ssh_pubkeys = [
   "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAGwj6LT0RrP656YnthHzLQdPKNr6XthQMqMlr92K1tFCXCR5WDxw+YvjnSHZQwGF+DNkDKKkcPmIWB0zxJj/hptmgC7jU8xaJZE1m7a2Hnx93YFmeZSrM6+jPz7Kjxj1Zc0IEWq+iVcajZ/SNm/bwqH9DM2CtTVC7bGEfOfeY+KElARFw==",
 ]
+
+[vale]
+enable_rz = false
+enable_event = true
+uid = 1171
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwAxgsk8G3afYZOMBy1slAX5RacSXQP9FXkGiBPqHAs vale@mb2019",
+]
