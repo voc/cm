@@ -1,14 +1,5 @@
-bundles = [
-    "encoder-common",
-    "mdadm",
-    "nginx",
-    "samba",
-    "zfs",
-]
-groups = [
-    "crs-workers",
-    "debian-bullseye",
-]
+bundles = ["encoder-common", "mdadm", "nginx", "samba", "zfs"]
+groups = ["crs-workers", "debian-bookworm"]
 
 # for the occasional repair task, so users can use a dedicated machine
 # to render the output files after preparing in kdenlive
@@ -20,11 +11,11 @@ groups = [
 
 [metadata.crs-worker]
 autostart_scripts = [
-    "recording-scheduler",
-    "mount4cut",
-    "cut-postprocessor",
-    "postencoding",
-    "postprocessing",
+  "recording-scheduler",
+  "mount4cut",
+  "cut-postprocessor",
+  "postencoding",
+  "postprocessing",
 ]
 
 [metadata.crs-worker.secrets.meta]
@@ -36,19 +27,14 @@ token = "!decrypt:encrypt$gAAAAABk35IGE_pw8FevjzPXEzYIBjoD1u7Uoqz_6hB6plLt_Fsu0i
 secret = "!decrypt:encrypt$gAAAAABk35IM38TpDZfXUb2a4MCCdgP3FKpXciy_hjFIFRBU3fXu5DuF2jT95mqxLwqpkqdQ42EMlUOVdfyanxRc2zGEAP4l52yXI0yjhHnVj-LX_5l038oQnfMe1hpTWaR5Ih7Tk9QE"
 
 [metadata.interfaces.'bond0.3504']
-ips = [
-    "10.73.200.24/16",
-]
+ips = ["10.73.200.24/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.nginx]
 # this should not be needed, since this machine is usually only reachable
 # on the internal network anyway. But this machine had a public ip address
 # temporarily in the past, so here we go ...
-restrict-to = [
-    "voc-internal",
-    "voc-vpn",
-]
+restrict-to = ["voc-internal", "voc-vpn"]
 
 [metadata.nginx.vhosts.video-encoded]
 domain = "storage.lan.c3voc.de"
@@ -58,10 +44,7 @@ webroot = "/video/encoded"
 path = "/video/c3voctv"
 
 [metadata.systemd-networkd.bonds.bond0]
-match = [
-    "enp3s0f0",
-    "enp3s0f1",
-]
+match = ["enp3s0f0", "enp3s0f1"]
 
 [metadata.zfs.module_options]
 zfs_arc_max_gb = 100
@@ -71,28 +54,28 @@ ashift = 12
 
 [[metadata.zfs.pools.video.when_creating.config]]
 devices = [
-    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130269302",
-    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130291135",
-    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130291202",
-    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130298009",
-    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130298111",
-    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WMC130231072",
-    "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B1_WD-WCC131052364",
-    "/dev/disk/by-id/ata-WDC_WD3003FZEX-00Z4SA0_WD-WMC1F0E0YDS8",
+  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130269302",
+  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130291135",
+  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130291202",
+  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130298009",
+  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130298111",
+  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WMC130231072",
+  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B1_WD-WCC131052364",
+  "/dev/disk/by-id/ata-WDC_WD3003FZEX-00Z4SA0_WD-WMC1F0E0YDS8",
 ]
 type = "raidz2"
 
 [[metadata.zfs.pools.video.when_creating.config]]
 devices = [
-    "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV3180015K240CGN-part3",
-    "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part3"
+  "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV3180015K240CGN-part3",
+  "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part3",
 ]
 type = "log"
 
 [[metadata.zfs.pools.video.when_creating.config]]
 devices = [
-    "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV3180015K240CGN-part4",
-    "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part4"
+  "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV3180015K240CGN-part4",
+  "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part4",
 ]
 type = "cache"
 
