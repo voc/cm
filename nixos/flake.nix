@@ -17,7 +17,7 @@
     inputs.utils.follows = "/flake-utils";
   };
   inputs.authentik-nix = {
-    url = "github:nix-community/authentik-nix/version/2024.10.4";
+    url = "github:nix-community/authentik-nix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nixos-generators = {
