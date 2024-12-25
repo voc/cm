@@ -3,6 +3,11 @@
 let
   OWNER_EMAIL = "postmaster@c3voc.de";  # Change this!
   MAILMAN_HOST = "lists.c3voc.de";    # Change this!
+
+  # Znuny handled addresses
+  ticketSystemAddresses = [
+    "znuny"
+  ];
 in {
   imports = [ inputs.nixos-mailserver.nixosModule ];
 
@@ -41,20 +46,18 @@ in {
       "muenchen" = "muenchen@lists.c3voc.de";
       "studios" = "studios@lists.c3voc.de";
       "voc" = "voc@lists.c3voc.de";
-    };
+    } // (lib.genAttrs ticketSystemAddresses (addr: "${addr}@tickets.c3voc.de"));
 
     # whitelist SPF checks from mng (for now)
     policydSPFExtraConfig = ''
       HELO_Whitelist = mng.c3voc.de
-      skip_addresses = 127.0.0.0/8,::ffff:127.0.0.0/104,::1,185.106.84.49,2001:67c:20a0:e::179
+      skip_addresses = 127.0.0.0/8,::ffff:127.0.0.0/104,::1,185.106.84.49,2001:67c:20a0:e::179,185.106.84.19,2001:67c:20a0:e::19
     '';
-
-    loginAccounts."znuny@c3voc.de" = {
-      hashedPassword = "$2b$05$KSWvSJXyURjzQjXfSIzPTeDTZ0lXjj2.z.t6QT8lL32q4UBwZQAQ6";
-    };
   };
 
   sops.secrets.aliases = {};
+
+  services.opendkim.domains = lib.mkAfter ",tickets.c3voc.de";
 
   services.postfix = {
     mapFiles.virtual_cm = config.sops.secrets.aliases.path;
@@ -68,6 +71,10 @@ in {
     networks = [ 
       "127.0.0.1/32"
       "[::1]/128"
+
+      # tickets.c3voc.de
+      "185.106.84.19/32"
+      "[2001:67c:20a0:e::19]/128"
     ];
   };
 

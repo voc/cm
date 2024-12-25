@@ -118,6 +118,10 @@ in
 {
   options.services.znuny = {
     enable = mkEnableOption "Enable Znuny web-based ticketing system";
+    pkg = mkOption {
+      type = types.path;
+      default = pkg;
+    };
     unixSocket = mkOption {
       type = types.str;
       default = "/run/znuny.sock";
@@ -218,12 +222,16 @@ in
     ];
 
     services.fcgiwrap.instances."znuny".socket.user = "nginx";
-    services.fcgiwrap.instances."znuny".socket.group = "nignx";
+    services.fcgiwrap.instances."znuny".socket.group = cfg.group;
     services.fcgiwrap.instances."znuny".socket.type = "unix";
     services.fcgiwrap.instances."znuny".socket.address = cfg.unixSocket;
     services.fcgiwrap.instances."znuny".process.user = cfg.user;
     services.fcgiwrap.instances."znuny".process.group = cfg.group;
     services.fcgiwrap.instances."znuny".process.prefork = cfg.prefork;
+    systemd.sockets."fcgiwrap-znuny" = {
+      requires = [ "nginx.service" ];
+      after = [ "nginx.service" ];
+    };
 
     systemd.services."znuny-daemon" = {
       path = [ pkgs.postgresql ];
