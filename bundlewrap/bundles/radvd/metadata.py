@@ -10,6 +10,7 @@ defaults = {
 
 @metadata_reactor.provides(
     'radvd/is_enabled',
+    'unit-status-on-login',
 )
 def enable_radvd_if_ipv6_available(metadata):
     radvd_interfaces = set(metadata.get('radvd/interfaces'))
@@ -35,4 +36,7 @@ def enable_radvd_if_ipv6_available(metadata):
         'radvd': {
             'is_enabled': radvd_enabled,
         },
+        'unit-status-on-login': {
+            'radvd',
+        } if radvd_enabled else set(),
     }
