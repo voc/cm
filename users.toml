@@ -547,3 +547,11 @@ ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKfpI6O7P++nqhItTq9HCJHVhLgkmIjdi/hLOVcBmUUQ eddsa-key-20241221",
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChwAFW0U75aZw/YXIRqHs13zdzi7QZM4/zcoqv/RhgYFxcNxvkDZP8FcrNdrsJFgraGtLBM7dyEVE9WNEFRGTWxJh0LRntO/mlCVFBDiLedY0TiTDgumHtiecsa6Dt0+7aoF/XuY4AzXhkfUxj+Bp4EMy/95Mx7Y76PLpvnCTeFmGrY7MB3P5RZWpGkRarcHty/44fJBi7kWmEK19/mF0A2reKEsWjKwP0CrUm8rJsG+ID66EkatCNoQkIzN44veyymgcJkKgYQhUoY+WZXl2f0QHcQO/06gnP0KWzKMsLx0zdnBI+HYyESjdF++CsR9vjT2M6krlFpwZi30oq38Bf",
 ]
+
+[vale]
+enable_rz = false
+enable_event = true
+uid = 1169
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwAxgsk8G3afYZOMBy1slAX5RacSXQP9FXkGiBPqHAs vale@mb2019",
+]
