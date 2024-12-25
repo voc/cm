@@ -43,6 +43,8 @@ in {
 
   sops.secrets.aliases = {};
 
+  services.opendkim.domains = lib.mkAfter ",tickets.c3voc.de";
+
   services.postfix = {
     mapFiles.virtual_cm = config.sops.secrets.aliases.path;
     relayDomains = ["hash:/var/lib/mailman/data/postfix_domains"];
@@ -67,6 +69,10 @@ in {
       # hub.test.c3voc.de
       "195.54.164.162/32"
       "[2001:67c:20a0:e::162]/128"
+
+      # tickets.c3voc.de
+      "185.106.84.19/32"
+      "[2001:67c:20a0:e::19]/128"
     ];
   };
 

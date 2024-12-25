@@ -17,6 +17,8 @@
     };
   };
 
+  networking.firewall.allowedTCPPorts = [ 9000 ];
+
   services.nginx.virtualHosts."sso.c3voc.de".locations."/outpost.goauthentik.io" = {
     recommendedProxySettings = false;
     extraConfig = ''
