@@ -21,15 +21,15 @@ gateway4 = "10.73.0.254"
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkMHUzBwe5QRDWbQU9ryOt4IwUdTTG-a1hNB3LU1SLLCOHnTu9hN912VbJ5dJ02Ke4utPA1nllcO6YAR3YBF2eud-iAm3nmr4sKPps3ExItoHk6xE="
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 1
-mode = "1080i50"
-
-[metadata.voctocore.sources.cam2]
 devicenumber = 0
 mode = "1080i50"
 
+[metadata.voctocore.sources.cam2]
+devicenumber = 1
+mode = "1080i50"
+
 [metadata.voctocore.sources.cam3]
-devicenumber = 2
+devicenumber = 4
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
@@ -54,6 +54,6 @@ ashift = 12
 [[metadata.zfs.pools.video.when_creating.config]]
 type = "mirror"
 devices = [
-    "/dev/disk/by-id/ata-ST3000NC002-1DY166_Z1F3VPEG",
-    "/dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T3101789",
+  "/dev/disk/by-id/ata-ST3000NC002-1DY166_Z1F3VPEG",
+  "/dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T3101789",
 ]
