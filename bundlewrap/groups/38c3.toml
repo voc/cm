@@ -5,3 +5,7 @@ members = ["releasing", "loudness-rendering"]
 schedule_json = "https://api.events.ccc.de/congress/2024/assembly/6840c453-af5c-413c-8127-adcbdcd98e9e/schedule.json"
 name = "38C3"
 slug = "38c3"
+
+[metadata.voctocore]
+translators_premixed = true
+

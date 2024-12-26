@@ -59,9 +59,14 @@ ffmpeg -y -nostdin -hide_banner -re \
     [slides];\
 % endif
     \
+% if translators_premixed:
     [0:a]pan=stereo|c0=c0|c1=c1[s_pgm];\
     [0:a]pan=stereo|c0=c2|c1=c3[s_trans_1];\
-    [0:a]pan=stereo|c0=c4|c1=c5[s_trans_2];\
+    [0:a]pan=stereo|c0=c4|c1=c5[s_trans_2] \
+% else:
+    [0:a]pan=stereo|c0=c0|c1=c1[s_pgm];\
+    [0:a]pan=stereo|c0=c2|c1=c2[s_trans_1];\
+    [0:a]pan=stereo|c0=c3|c1=c3[s_trans_2];\
     \
     [s_pgm] asplit=2 [pgm_1] [pgm_2] ;\
 % if dynaudnorm:
@@ -91,6 +96,7 @@ ffmpeg -y -nostdin -hide_banner -re \
     [mix_out_1] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [duck_out_1]; \
     [mix_out_2] dynaudnorm=$para_mix_leveler,loudnorm=$para_mix_loudnorm [duck_out_2] \
 % endif
+% endif
     " \
 % if vaapi_enabled:
     -c:v h264_vaapi \
@@ -111,6 +117,11 @@ ffmpeg -y -nostdin -hide_banner -re \
 % if parallel_slide_streaming:
     -metadata:s:v:1 title="Slides" \
 % endif
+% if translators_premixed:
+    -map "[s_pgm]" -metadata:s:a:0 title="native" \
+    -map "[s_trans_1]" -metadata:s:a:1 title="translated" \
+    -map "[s_trans_2]" -metadata:s:a:2 title="translated-2" \
+% else:
 % if dynaudnorm:
     -map "[pgm]" -metadata:s:a:0 title="native" \
     -map "[duck_out_1]" -metadata:s:a:1 title="translated" \
@@ -119,6 +130,7 @@ ffmpeg -y -nostdin -hide_banner -re \
     -map "[pgm_1]" -metadata:s:a:0 title="native" \
     -map "[mix_out_1]" -metadata:s:a:1 title="translated" \
     -map "[mix_out_2]" -metadata:s:a:2 title="translated-2" \
+% endif
 % endif
     \
 % if srt_publish:

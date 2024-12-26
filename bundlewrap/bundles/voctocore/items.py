@@ -188,6 +188,7 @@ svc_systemd['voctomix2-recording-sink'] = {
 files['/opt/voctomix2/scripts/streaming-sink.sh'] = {
     'content_type': 'mako',
     'context': {
+        'translators_premixed': node.metadata.get('voctocore/translators_premixed'),
         'dynaudnorm': node.metadata.get('voctocore/streaming_use_dynaudnorm'),
         'endpoint': node.metadata.get('voctocore/streaming_endpoint'),
         'event': node.metadata.get('event'),
