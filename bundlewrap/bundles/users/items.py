@@ -43,7 +43,10 @@ for username, attrs in node.metadata['users'].items():
 
         if 'ssh_pubkeys' in attrs:
             files[home + '/.ssh/authorized_keys'] = {
-                'content': repo.libs.faults.join_faults(sorted(attrs['ssh_pubkeys']), '\n') + '\n',
+                'content_type': 'mako',
+                'context': {
+                    'keys': attrs['ssh_pubkeys']
+                },
                 'owner': username,
                 'mode': '0600',
             }
