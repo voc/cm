@@ -3,6 +3,8 @@
 {
   imports = [
     ./users.nix
+
+    ../stream-player
   ];
 
   nix.settings = {

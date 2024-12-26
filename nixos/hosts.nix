@@ -5,6 +5,6 @@
   sso = { ... }: {};
   tel = { ... }: {};
   rt = { ... }: {};
-  loudness-player = { ... }: {
-  };
+  loudness-player = { ... }: {};
+  stream-player = { ... }: {};
 }
