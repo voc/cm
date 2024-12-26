@@ -38,7 +38,7 @@ mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "slides"
+input = "cam1"
 
 [metadata.voctocore.audio.translated]
 streams = "2+3"
