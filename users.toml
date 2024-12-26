@@ -522,3 +522,11 @@ uid = 1166
 ssh_pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH8e9WrHsknoFwBm/YaigOSz9VI8dXRRR5G9BX4kKt9"
 ]
+
+[teemee]
+enable_rz = true
+enable_event = true
+uid = 1167
+ssh_pubkeys = [
+  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAGwj6LT0RrP656YnthHzLQdPKNr6XthQMqMlr92K1tFCXCR5WDxw+YvjnSHZQwGF+DNkDKKkcPmIWB0zxJj/hptmgC7jU8xaJZE1m7a2Hnx93YFmeZSrM6+jPz7Kjxj1Zc0IEWq+iVcajZ/SNm/bwqH9DM2CtTVC7bGEfOfeY+KElARFw==",
+]
