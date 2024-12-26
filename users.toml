@@ -600,7 +600,7 @@ ssh_pubkeys = [
 [gari]
 enable_rz = false
 enable_event = true
-uid = 1175
+uid = 1176
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF8euQIEhPOHXD4v/uuDAWQYQkAPpdW+NccJA/UUuI3x gari",
 ]
