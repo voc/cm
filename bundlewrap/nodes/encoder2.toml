@@ -29,7 +29,7 @@ devicenumber = 2
 mode = "1080i50"
 
 [metadata.voctocore.sources.cam3]
-devicenumber = 4
+devicenumber = 0
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
