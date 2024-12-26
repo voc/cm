@@ -571,3 +571,19 @@ uid = 1172
 ssh_pubkeys = [
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJNErSZNw34hIu59ANxBBOJd52NjLS1w9LmHhSjo1b+tf+a4PTSq9DOsWAkOMkCjpIjeDjNxs0ONWnlZqD5i2K/TCsHR8snXslcwGoTEuVVNieWoU/R+dwqB4o7Xg62yJYHq8d3DnxOdulRgSu7D5uSZW/jXwhJf+Kz4u/OH2NWKlNVUfl2HowOTZmTJ76TEiDRdOnNW7uZ+E9NFV5Cwxrj17jtQOOqHrV/JVMMfuUSI+QOwVR1afF99jRFbfultzOlBVbI7iBAzECJy4fB1FgsKOB7K6HGxzzSBR+na4CiVTuN8HNxG5wrnBk8G0FpFo0ErWGCGnwjaJs574riZQ8HnhdxKUd69K9QPHXcWMh+byOzmDHmPyamW0OMqwUDsL4VYApil0ihxL0R4/D02u5JtXAxWclGIMDAo4K9ikt9cnpTW9LdgztDTPbEr6t3xTihxpn2noQgkdtBd1Sl6cntsoPvnaGpqfvdz/QI4QVx7AsAQFLNNL6eFb4m8gfZKCpn9aXyMNmqL8SckjGZwK8gxHdFKFAuBowv2rJ1SSjvTDNz0Fnm746rrfJvGiQN4qeo4hgcqusPnLVNpdX8uOEihOpYtuvllN4PovrK8QSxivjaUIdmQftgvldu8jtbAz4NZHtHm0rvPBVLDH4q55leOTOwb57tlx0QN4VI94zdw== hammer065@hammmer065-Pro",
 ]
+
+[isa]
+enable_rz = false
+enable_event = true
+uid = 1173
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOKJ9hnYcf20tNmF9YlVo9VseEXauGKoXR2FRjDwJSFk isabella@isabella-laptop",
+]
+
+[tixxi]
+enable_rz = false
+enable_event = true
+uid = 1174
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPFsb7FYc45uvQivenC955Qsii3T1xb0WfpX6ImOmvRC",
+]
