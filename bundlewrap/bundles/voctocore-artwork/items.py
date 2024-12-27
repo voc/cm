@@ -107,6 +107,9 @@ if node.has_bundle('voctocore'):
             files[target_file] = {
                 'source': source,
                 'content_type': 'binary',
+                "tags": {
+                    "causes-downtime",
+                },
                 'triggers': {
                     'svc_systemd:voctomix2-voctocore:restart',
                 },
