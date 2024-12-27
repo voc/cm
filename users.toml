@@ -621,3 +621,11 @@ uid = 1178
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIV5kNzCRW7ZjeB7S3w4fRM/wjGLyYT8D5fURZnbAPCF datacop@wireloss.net",
 ]
+
+[kampfhamster]
+enable_rz = false
+enable_event = true
+uid = 1179
+ssh_pubkeys = [
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLdVdBth2lD0ilLlQHvA3M+2L9QJymomFUdpo3HjGXvVjQWQHBqci/ZRW2byTVKYmAMqs9P0dgDxVsphYp/08XrxSAiZvNO9v5oZQTJhPKx7SnEUkdrNTfsnLPhUoCNgpdT9V5aFixX6jo9dq94DuNKOQ+RZBB6MVKviOg6pfGz18/9i0mFhxBL7+AEiFuH+3FZ80xjLa0pN5l8OjiEW6PksDJTV+Rz1v28CVB3/ReWY4g5te+ElZh8S5hCJGHNaR3D5YnVOfw3GQMGb0WSwC2Y6X45jJsNVzIH549B22klkeAVN2WkLeSt0vmvB4vrszxe59geOrPhb3EBCo/wNyz kampfhamster_yubikey"
+]
