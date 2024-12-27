@@ -18,6 +18,7 @@ ips = ["10.73.5.3/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
+mirror_view = true
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYkgCo1Orl_R7yyMpMUhESSGiBvMRZy6J3DXw7PWsS7XDvmYjJktYpwn-pdO_CnHzoxbB1OpBh-MfdPZnt7WTA7Vh7V55KPjGpnj73uCHn6fpu8="
 
 [metadata.voctocore.sources.cam1]
@@ -42,6 +43,6 @@ ashift = 12
 [[metadata.zfs.pools.video.when_creating.config]]
 type = "mirror"
 devices = [
-    "/dev/disk/by-id/ata-ST3000VX000-1ES166_Z500FFRY",
-    "/dev/disk/by-id/ata-ST3000NC002-1DY166_Z1F4G4AJ",
+  "/dev/disk/by-id/ata-ST3000VX000-1ES166_Z500FFRY",
+  "/dev/disk/by-id/ata-ST3000NC002-1DY166_Z1F4G4AJ",
 ]
