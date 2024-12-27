@@ -613,3 +613,11 @@ uid = 1177
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF8euQIEhPOHXD4v/uuDAWQYQkAPpdW+NccJA/UUuI3x gari",
 ]
+
+[datacop]
+enable_rz = false
+enable_event = true
+uid = 1178
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIV5kNzCRW7ZjeB7S3w4fRM/wjGLyYT8D5fURZnbAPCF datacop@wireloss.net",
+]
