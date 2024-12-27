@@ -65,7 +65,7 @@ for stream, talk in room_info.items():
 
     line2 = []
     if talk:
-        if talk['do_not_record']:
+        if talk.get('do_not_record'):
             line2.append('OPTOUT')
         line2.append(talk['__start'].strftime('%H:%M'))
         line2.append(talk['__end'].strftime('%H:%M'))
