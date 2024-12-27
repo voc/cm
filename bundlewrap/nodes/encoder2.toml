@@ -45,7 +45,7 @@ streams = "2+3"
 input = "slides"
 
 [metadata.voctocore.audio.translated2]
-streams = "5+6"
+streams = "4+5"
 input = "slides"
 
 [metadata.zfs.pools.video.when_creating]
