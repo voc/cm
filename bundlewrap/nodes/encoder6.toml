@@ -33,10 +33,6 @@ input = "slides"
 streams = "2+3"
 input = "slides"
 
-[metadata.voctocore.audio.translated2]
-streams = "0+1"
-input = "cam1"
-
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
 
