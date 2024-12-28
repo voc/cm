@@ -39,15 +39,15 @@ mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "slides"
+input = "cam1"
 
 [metadata.voctocore.audio.translated]
 streams = "2+3"
-input = "slides"
+input = "cam1"
 
 [metadata.voctocore.audio.translated2]
 streams = "4+5"
-input = "slides"
+input = "cam1"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
