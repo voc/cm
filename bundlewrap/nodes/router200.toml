@@ -22,11 +22,11 @@ privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4v
 
 [metadata.interfaces.ens18]
 ips = [
-    "178.250.162.46/29", # seibert wiesbaden
+    "188.172.114.72/28", # seibert wiesbaden
     "94.45.241.105/24", # c3noc event
     "2001:67c:20a1:2241::105/64", # c3noc event
 ]
-gateway4 = "178.250.162.41" # seibert wiesbaden
+gateway4 = "188.172.114.65" # seibert wiesbaden
 #gateway4 = "94.45.241.1" # c3noc event
 #gateway6 = "2001:67c:20a1:2241::1" # c3noc event
 dhcp = false
