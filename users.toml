@@ -550,18 +550,10 @@ ssh_pubkeys = [
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChwAFW0U75aZw/YXIRqHs13zdzi7QZM4/zcoqv/RhgYFxcNxvkDZP8FcrNdrsJFgraGtLBM7dyEVE9WNEFRGTWxJh0LRntO/mlCVFBDiLedY0TiTDgumHtiecsa6Dt0+7aoF/XuY4AzXhkfUxj+Bp4EMy/95Mx7Y76PLpvnCTeFmGrY7MB3P5RZWpGkRarcHty/44fJBi7kWmEK19/mF0A2reKEsWjKwP0CrUm8rJsG+ID66EkatCNoQkIzN44veyymgcJkKgYQhUoY+WZXl2f0QHcQO/06gnP0KWzKMsLx0zdnBI+HYyESjdF++CsR9vjT2M6krlFpwZi30oq38Bf",
 ]
 
-[teemee]
-enable_rz = true
-enable_event = true
-uid = 1170
-ssh_pubkeys = [
-  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAGwj6LT0RrP656YnthHzLQdPKNr6XthQMqMlr92K1tFCXCR5WDxw+YvjnSHZQwGF+DNkDKKkcPmIWB0zxJj/hptmgC7jU8xaJZE1m7a2Hnx93YFmeZSrM6+jPz7Kjxj1Zc0IEWq+iVcajZ/SNm/bwqH9DM2CtTVC7bGEfOfeY+KElARFw==",
-]
-
 [vale]
 enable_rz = false
 enable_event = true
-uid = 1171
+uid = 1170
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwAxgsk8G3afYZOMBy1slAX5RacSXQP9FXkGiBPqHAs vale@mb2019",
 ]
@@ -569,7 +561,7 @@ ssh_pubkeys = [
 [jack]
 enable_rz = false
 enable_event = true
-uid = 1172
+uid = 1171
 ssh_pubkeys = [
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCxvh3sveJgrVDMis5K292MahtySXSZfhcA9HNag5G9cLT0G/lK6ppF3azLuH1JU7/KtfLvvw/yJebWk8CageNIeyTcB/rT2zQVFLsNgkCKR3eNfrdoYKf2ok0By/9mL5lQundy4yIk/+yIycTzsKdxWEOiqKvupMgI4Yhd+n5LViQga0gqfEImrTO5xJdee9jcqRUqFGyRsD2+2bgz5kLTzIddnLZF83QfBZn8rWVOJuzmPZARQrpC5ZObKLjnQwZw1pv6vOqpTlXYS7Wv4wm/Glc9vwnh67Uc5vfmhMPVTROyDWZHSqkY7VYBD8O8gvBUKrmvJI59t1FfKulBdX7DRpB5UtDoBCmOLWigDWyLY3x6+CuFESapx7tSXhcQ+XIbm8Pku+2/Fo/QARX2JdeNGv9p8deb+EHU9+H1PcykElA/hOskuG/1FAR2E0NpxCOmM7PO1mqnr9P0KoxhSxh226H1ZaJMaehi8vXdyILcr006e1cA2ZzxULiIg+/Sbm7b9vpZBgtDtBkzcSOh3f//dqXDa3mJof1/0H3s4lIau++o0owJBEOQZEKPLriNB1zoKQZeO1X/h7B4vKyoTCrgxLtuizSqYgmlXFGtto09+lqcAyt5xECWOFOppmM/RAu3wCXGdA265DW2Oo7NJRd0CfExK4RpU0B2ue3BRGa5Tw== jack4voc@freenet.de",
 ]
@@ -577,7 +569,7 @@ ssh_pubkeys = [
 [hammer065]
 enable_rz = false
 enable_event = true
-uid = 1173
+uid = 1172
 ssh_pubkeys = [
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJNErSZNw34hIu59ANxBBOJd52NjLS1w9LmHhSjo1b+tf+a4PTSq9DOsWAkOMkCjpIjeDjNxs0ONWnlZqD5i2K/TCsHR8snXslcwGoTEuVVNieWoU/R+dwqB4o7Xg62yJYHq8d3DnxOdulRgSu7D5uSZW/jXwhJf+Kz4u/OH2NWKlNVUfl2HowOTZmTJ76TEiDRdOnNW7uZ+E9NFV5Cwxrj17jtQOOqHrV/JVMMfuUSI+QOwVR1afF99jRFbfultzOlBVbI7iBAzECJy4fB1FgsKOB7K6HGxzzSBR+na4CiVTuN8HNxG5wrnBk8G0FpFo0ErWGCGnwjaJs574riZQ8HnhdxKUd69K9QPHXcWMh+byOzmDHmPyamW0OMqwUDsL4VYApil0ihxL0R4/D02u5JtXAxWclGIMDAo4K9ikt9cnpTW9LdgztDTPbEr6t3xTihxpn2noQgkdtBd1Sl6cntsoPvnaGpqfvdz/QI4QVx7AsAQFLNNL6eFb4m8gfZKCpn9aXyMNmqL8SckjGZwK8gxHdFKFAuBowv2rJ1SSjvTDNz0Fnm746rrfJvGiQN4qeo4hgcqusPnLVNpdX8uOEihOpYtuvllN4PovrK8QSxivjaUIdmQftgvldu8jtbAz4NZHtHm0rvPBVLDH4q55leOTOwb57tlx0QN4VI94zdw== hammer065@hammmer065-Pro",
 ]
@@ -585,7 +577,7 @@ ssh_pubkeys = [
 [isa]
 enable_rz = false
 enable_event = true
-uid = 1174
+uid = 1173
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOKJ9hnYcf20tNmF9YlVo9VseEXauGKoXR2FRjDwJSFk isabella@isabella-laptop",
 ]
@@ -593,7 +585,7 @@ ssh_pubkeys = [
 [tixxi]
 enable_rz = false
 enable_event = true
-uid = 1175
+uid = 1174
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPFsb7FYc45uvQivenC955Qsii3T1xb0WfpX6ImOmvRC",
 ]
@@ -601,7 +593,7 @@ ssh_pubkeys = [
 [saskia137]
 enable_rz = false
 enable_event = true
-uid = 1176
+uid = 1175
 ssh_pubkeys = [
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3Bo+hvCjCCfEO3R/9b/kKpd6YcrqQDaxV/Jx4wUx8zQqd21g1Z9lvYnzB4LZ8fw73WVNhvNS/A3OxR1s0gmhdf4XYin48bA9PCQElQnXEjlON0MLiMtfuFRkCYw9PL6l6kQbW9wmLebuEoWwbUnruZElmmqrPbf/RAFo1VWKq0fSti8GH+LY4qe8xxEykCfXE43NJ0SGSzYnk7RroTvrO9URTfOO+k420dJTLhUyt9T8vDMgghq1P3jJ9ZrbT91wi2/jcT5rrTCfMV8NU/PJ1w5hzBUfuuFEsdNa6Zf0kUBXc9G3gt9fbDxxW80RK1lBcXu0xXIFgGme8uvMptJc8qyHUX5zRu3PmWOF+Thla6KceA5v39EaI3npOxU3Kxo6UvLMmYdnJmiBiVbfM2OMDtIVtR+cFIWHOOPEVgkgHI39ndTzZgtOopGzrU9DWg8rNiEFf4tF34iTdk6L/4Yb46Z11O00+sxXO0ZhqC9wC7Z2HJfgNHLM9WTNLitdEqlv36D7PUW5jDu837bvBE64pcFKu0aswrTTHnHOL+zrQb4ri0zoxPQk0ODXbtQG5dG6GsU9DSAMRxo7XurZrXEKiGGQa8jyvJn4EFknYf8d6q5IpSN8S7LhellZ/zVmeLpNHSF65/FEXAQT5NtA1xEd3kNG1ZV3wssOWhHSxv6SiWw== saskia@xps",
 ]
@@ -609,7 +601,7 @@ ssh_pubkeys = [
 [gari]
 enable_rz = false
 enable_event = true
-uid = 1177
+uid = 1176
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF8euQIEhPOHXD4v/uuDAWQYQkAPpdW+NccJA/UUuI3x gari",
 ]
@@ -617,7 +609,7 @@ ssh_pubkeys = [
 [datacop]
 enable_rz = false
 enable_event = true
-uid = 1178
+uid = 1177
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIV5kNzCRW7ZjeB7S3w4fRM/wjGLyYT8D5fURZnbAPCF datacop@wireloss.net",
 ]
@@ -625,7 +617,23 @@ ssh_pubkeys = [
 [kampfhamster]
 enable_rz = false
 enable_event = true
-uid = 1179
+uid = 1178
 ssh_pubkeys = [
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLdVdBth2lD0ilLlQHvA3M+2L9QJymomFUdpo3HjGXvVjQWQHBqci/ZRW2byTVKYmAMqs9P0dgDxVsphYp/08XrxSAiZvNO9v5oZQTJhPKx7SnEUkdrNTfsnLPhUoCNgpdT9V5aFixX6jo9dq94DuNKOQ+RZBB6MVKviOg6pfGz18/9i0mFhxBL7+AEiFuH+3FZ80xjLa0pN5l8OjiEW6PksDJTV+Rz1v28CVB3/ReWY4g5te+ElZh8S5hCJGHNaR3D5YnVOfw3GQMGb0WSwC2Y6X45jJsNVzIH549B22klkeAVN2WkLeSt0vmvB4vrszxe59geOrPhb3EBCo/wNyz kampfhamster_yubikey"
+]
+
+[ivo]
+enable_rz = false
+enable_event = true
+uid = 1179
+ssh_pubkeys = [
+  "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArY52Nxd5ifAkgAuwpe58XVsOw5E4c4qb45ys5neaQ9Yiv5tICLn0LawlLYnlny5rm7atVzVwDZDhQ2URdM1Yk5ArevYt6qQezpZLh2aySrL7bJ/K9mWOIgK+tO/UDzb0McEvWUzztb4gMsYkvsvgLNdTnH9peasDnefBb68DMDIHQ+LVF9Xsf1qED3/95NaNNWL+Yj7MnNKaJ+4MUGlPR53V1s6MpP21ZamN+yixYpqKOlS9GLiNUQkOTvtZ0/2g6Wj4p+aKFCIbzmnjELACfio6Fei4bGcHY2Hmru7Ii0q4EsS24FEMsRSHLWCSKNXdjlkH/UdTCxAFiXEH1Gb/IQ==",
+]
+
+[teemee]
+enable_rz = true
+enable_event = true
+uid = 1180
+ssh_pubkeys = [
+  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAGwj6LT0RrP656YnthHzLQdPKNr6XthQMqMlr92K1tFCXCR5WDxw+YvjnSHZQwGF+DNkDKKkcPmIWB0zxJj/hptmgC7jU8xaJZE1m7a2Hnx93YFmeZSrM6+jPz7Kjxj1Zc0IEWq+iVcajZ/SNm/bwqH9DM2CtTVC7bGEfOfeY+KElARFw==",
 ]
