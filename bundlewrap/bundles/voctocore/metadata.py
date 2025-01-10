@@ -61,6 +61,7 @@ defaults = {
         'srt_publish': True,
         'static_background_image': True,
         'streaming_use_dynaudnorm': False,
+        'translators_premixed': False,
         'vaapi': False,
     },
     'voctomix2': {
