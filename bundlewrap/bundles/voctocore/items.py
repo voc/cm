@@ -20,6 +20,11 @@ PLAYOUT_PORTS = {
     "program": 11000,
 }
 
+DEFAULT_BLINDER = {
+    'kind': 'file',
+    'location': '/opt/voc/share/pause.ts',
+}
+
 SHOULD_BE_RUNNING = node.metadata.get("voctocore/should_be_running", True)
 
 voctomix_version = node.metadata.get("voctomix2/rev")
@@ -99,6 +104,7 @@ files["/opt/voctomix2/voctocore-config.ini"] = {
     "source": f"voctocore-config-by-version/{voctomix_version}.ini",
     "context": {
         "audio": node.metadata.get("voctocore/audio", {}),
+        "blinder": node.metadata.get("voctocore/blinder", DEFAULT_BLINDER),
         "event": node.metadata.get("event/slug"),
         "has_schedule": node.metadata.get("event/schedule_json", ""),
         "keyboard_shortcuts": KEYBOARD_SHORTCUTS,

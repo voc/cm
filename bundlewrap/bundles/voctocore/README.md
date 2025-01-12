@@ -104,3 +104,18 @@ program = "fb" # playout program to framebuffer
 
 **Caution:** Playout to decklink outputs requires having a ffmpeg build
 with decklink support compiled in. C3VOC currently does not provide that.
+
+### blinder
+You can configure the blinder like any other source, overriding the default
+of using `/opt/voc/share/pause.ts`. This allows you to use a decklink source,
+for example.
+
+Options are passed verbatim to the voctocore config. There is no additional
+processing happening. **Keep in mind that this source is video only.**
+```toml
+[metadata.voctocore.blinder]
+kind = "decklink"
+devicenumber = 5
+video_connection = "SDI"
+video_mode = "1080p25"
+```
