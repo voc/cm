@@ -2,6 +2,22 @@ from bundlewrap.exceptions import BundleError
 from os.path import exists, join
 
 
+def backgrounds(event_slug, room_number, which):
+    return {
+        f'/opt/voc/share/bg_{which}.png': [
+            join(event_slug, f'saal{room_number}', f'bg_{which}.ts'),
+            join(event_slug, f'bg_{which}.ts'),
+            join(event_slug, f'saal{room_number}', f'bg_{which}.png'),
+            join(event_slug, f'bg_{which}.png'),
+            join(event_slug, f'saal{room_number}', 'bg.ts'),
+            join(event_slug, 'bg.ts'),
+            join(event_slug, f'saal{room_number}', 'bg.png'),
+            join(event_slug, 'bg.png'),
+            'default-bg.png',
+        ],
+    }
+
+
 directories['/opt/voc/share'] = {
     'purge': True,
 }
@@ -43,59 +59,19 @@ if node.has_bundle('voctocore'):
     event_slug = node.metadata.get('event/slug')
 
     for target_file, possible_sources in {
-        '/opt/voc/share/overlay_hd.png': [
-            join(event_slug, f'saal{room_number}', 'overlay_hd.png'),
-            join(event_slug, 'overlay_hd.png'),
-            'default-overlay-hd.png',
-        ],
-        '/opt/voc/share/overlay_slides.png': [
-            join(event_slug, f'saal{room_number}', 'overlay_slides.png'),
-            join(event_slug, 'overlay_slides.png'),
-            'default-overlay-slides.png',
-        ],
-        '/opt/voc/share/bgloop.ts': [
-            join(event_slug, f'saal{room_number}', 'bgloop.ts'),
-            join(event_slug, 'bgloop.ts'),
-            'default-bgloop.ts',
-        ],
-        '/opt/voc/share/bg.png': [
-            join(event_slug, f'saal{room_number}', 'bg.png'),
-            join(event_slug, 'bg.png'),
-            'default-bg.png',
-        ],
-        '/opt/voc/share/bg_lec.png': [
-            join(event_slug, f'saal{room_number}', 'bg_lec.png'),
-            join(event_slug, 'bg_lec.png'),
-            'default-bg_lec.png',
-        ],
-        '/opt/voc/share/bg_lecm.png': [
-            join(event_slug, f'saal{room_number}', 'bg_lecm.png'),
-            join(event_slug, 'bg_lecm.png'),
-            'default-bg_lecm.png',
-        ],
-        '/opt/voc/share/bg_sbs.png': [
-            join(event_slug, f'saal{room_number}', 'bg_sbs.png'),
-            join(event_slug, 'bg_sbs.png'),
-            'default-bg_sbs.png',
-        ],
         '/opt/voc/share/pause.ts': [
             join(event_slug, f'saal{room_number}', 'pause.ts'),
             join(event_slug, 'pause.ts'),
             'default-pause.ts',
-        ],
-        '/opt/voc/share/nostream.ts': [
-            join(event_slug, f'saal{room_number}', 'nostream.ts'),
-            join(event_slug, 'nostream.ts'),
-            'default-nostream.ts',
-            join(event_slug, f'saal{room_number}', 'nostream.png'),
-            join(event_slug, 'nostream.png'),
-            'default-nostream.png',
         ],
         '/opt/voc/share/pause-music.mp3': [
             join(event_slug, f'saal{room_number}', 'pause-music.mp3'),
             join(event_slug, 'pause-music.mp3'),
             'default-pause-music.mp3',
         ],
+        **backgrounds(event_slug, room_number, 'lec'),
+        **backgrounds(event_slug, room_number, 'lecm'),
+        **backgrounds(event_slug, room_number, 'sbs'),
     }.items():
         source_file = None
 
