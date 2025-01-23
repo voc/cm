@@ -1,5 +1,5 @@
 bundles = ["cifs-client", "mdadm"]
-groups = ["debian-buster"]
+groups = ["debian-bookworm"]
 
 [metadata.cifs-client.mounts.video-ext]
 create_dir = true
