@@ -29,6 +29,28 @@ defaults = {
         },
     },
     'voctocore': {
+        'backgrounds': {
+            'lec': {
+                'kind': 'img',
+                'path': '/opt/voc/share/bg_lec.png',
+                'composites': 'lec',
+            },
+            'lecm': {
+                'kind': 'img',
+                'path': '/opt/voc/share/bg_lecm.png',
+                'composites': '|lec',
+            },
+            'sbs': {
+                'kind': 'img',
+                'path': '/opt/voc/share/bg_sbs.png',
+                'composites': 'sbs',
+            },
+            'fs': {
+                'kind': 'test',
+                'pattern': 'black',
+                'composites': 'fs',
+            },
+        },
         'enable_sbs_presets_for_multi_camera': True,
         'mirror_view': False, # automatically mirrors SBS/LEC views
         'parallel_slide_recording': True,
@@ -37,6 +59,7 @@ defaults = {
         'programout_enabled': False,
         'programout_videosink': 'autovideosink',
         'srt_publish': True,
+        'static_background_image': True,
         'streaming_use_dynaudnorm': False,
         'translators_premixed': False,
         'vaapi': False,
