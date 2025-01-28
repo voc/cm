@@ -22,8 +22,6 @@ parallel_slide_recording = true
 parallel_slide_streaming = true
 ```
 
-**TODO:** `[metadata.voctocore.backgrounds]` and `static_background_image`
-
 ### sources
 #### decklink sources
 If you use an interlaced video mode (`1080i50` for example), bundlewrap

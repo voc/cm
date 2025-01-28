@@ -104,7 +104,6 @@ files["/opt/voctomix2/voctocore-config.ini"] = {
     "source": f"voctocore-config-by-version/{voctomix_version}.ini",
     "context": {
         "audio": node.metadata.get("voctocore/audio", {}),
-        "backgrounds": node.metadata.get("voctocore/backgrounds", {}),
         "blinder": node.metadata.get("voctocore/blinder", DEFAULT_BLINDER),
         "event": node.metadata.get("event/slug"),
         "has_schedule": node.metadata.get("event/schedule_json", ""),
@@ -117,9 +116,6 @@ files["/opt/voctomix2/voctocore-config.ini"] = {
         "programout_videosink": node.metadata.get("voctocore/programout_videosink"),
         "room_name": node.metadata.get("event/room_name", ""),
         "sources": sources,
-        "static_background_image": node.metadata.get(
-            "voctocore/static_background_image"
-        ),
         "vaapi_enabled": node.metadata.get("voctocore/vaapi"),
     },
     "triggers": {
