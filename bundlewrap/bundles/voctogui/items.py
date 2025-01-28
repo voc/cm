@@ -8,6 +8,7 @@ files['/opt/voctomix2/voctogui-config.ini'] = {
         'encoder_ip': encoder_ip,
         'high_dpi': node.metadata.get('voctogui/high_dpi'),
         'play_audio': node.metadata.get('voctogui/play_audio'),
+        'vaapi': node.metadata.get('voctogui/vaapi'),
         'video_display': node.metadata.get('voctogui/video_display'),
     },
     'triggers': {

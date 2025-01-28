@@ -25,6 +25,7 @@ defaults = {
     'voctogui' : {
         'high_dpi': True,
         'play_audio': False,
+        'vaapi': False,
         'video_display': 'xv',
     },
     'voctomix2': {
