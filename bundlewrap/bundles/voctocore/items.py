@@ -81,7 +81,7 @@ if len(preset_camera_sources) > 2 and node.metadata.get(
                 "icon": "side-by-side.svg",
             }
             try:
-                presets[f"fs_{source}"]["key"] = preset_buttons.pop(0)
+                presets[f"sbs_{cam1}_{cam2}"]["key"] = preset_buttons.pop(0)
             except IndexError:
                 pass
 
@@ -94,7 +94,7 @@ if "slides" in sources:
             "icon": "side-by-side-preview.svg",
         }
         try:
-            presets[f"fs_{source}"]["key"] = preset_buttons.pop(0)
+            presets[f"lec_slides_{source}"]["key"] = preset_buttons.pop(0)
         except IndexError:
             pass
 
