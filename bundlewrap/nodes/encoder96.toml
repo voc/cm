@@ -29,22 +29,12 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABllVCErJFQ-7e0rDPlHlvooyH9HE93c7uSP
 vaapi = true
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 1
+devicenumber = 2
 mode = "1080p25"
 
-[metadata.voctocore.sources.cam2]
-kind = "test"
-pattern = "ball"
-wave = "pink-noise"
-
-#[metadata.voctocore.sources.cam3]
-#kind = "test"
-#pattern = "smpte-rp-219"
-#wave = "white-noise"
-
-#[metadata.voctocore.sources.slides]
-#devicenumber = 2
-#mode = "1080p25"
+[metadata.voctocore.sources.slides]
+devicenumber = 1
+mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"

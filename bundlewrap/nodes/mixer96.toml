@@ -23,3 +23,4 @@ rev = "main"
 
 [metadata.voctogui]
 high_dpi = false
+vaapi = true
