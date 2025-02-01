@@ -39,17 +39,13 @@
         "description": "jtbx lan",
         "mac": "68:f7:28:12:e8:1c"
     },
-    "10.73.100.112": {
-        "description": "kunsi-p14s",
-        "mac": "8e:af:0a:7e:5d:46"
-    },
-    "10.73.100.113": {
+    "10.73.100.114": {
         "description": "kunsi infobeamer 1",
         "mac": "b8:27:eb:c9:16:8e"
     },
-    "10.73.100.114": {
-        "description": "kunsi infobeamer 2",
-        "mac": "b8:27:eb:37:27:98"
+    "10.73.100.115": {
+        "description": "kunsi sacn",
+        "mac": "42:4C:C0:6A:82:EA"
     },
     "10.73.100.125": {
         "description": "hexchen wifi",
@@ -278,6 +274,10 @@
     "10.73.96.3": {
         "description": "encoder96",
         "mac": "6c:4b:90:5c:e3:6d"
+    },
+    "10.73.96.7": {
+        "description": "infobeamer96",
+        "mac": "b8:27:eb:37:27:98"
     },
     "10.73.97.3": {
         "description": "encoder-c4",
