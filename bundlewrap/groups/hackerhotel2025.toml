@@ -1,0 +1,7 @@
+subgroups = ["saal3", "saal4", "saal5"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "Hacker Hotel 2025"
+slug = "hackerhotel2025"
+schedule_xml = "https://pretalx.hackerhotel.nl/2025/schedule/export/schedule.xml"
