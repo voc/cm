@@ -1,4 +1,10 @@
+bundles = ["samba"]
 groups = ["debian-buster"]
+
+[metadata.crs-worker]
+postprocessing_dummy_instead_of_upload = false # default
+number_of_encoding_workers = 1 # default
+autostart_workers = ["encoding"]
 
 [metadata.crs-worker.secrets.encoding]
 token = "!kee_user:ansible|worker-groups|minion4"
