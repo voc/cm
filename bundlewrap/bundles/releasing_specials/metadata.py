@@ -7,6 +7,14 @@ defaults = {
             'disk_space_usage',
         },
     },
+    'systemd-timers': {
+        'timers': {
+            'clean-up-video-tmp': {
+                'command': '/usr/bin/find /video/tmp -type f -mtime +30 -delete',
+                'when': 'daily',
+            },
+        },
+    },
 }
 
 
