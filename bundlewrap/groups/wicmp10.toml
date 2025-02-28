@@ -1,0 +1,7 @@
+subgroups = ["saal2"]
+members = ["releasing"]
+
+[metadata.event]
+name = "WIntergalaktische Club Mate Party 10"
+slug = "wicmp10"
+schedule_json = "https://cfp.zam.haus/wicmp-2025/schedule/export/schedule.json"
