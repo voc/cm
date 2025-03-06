@@ -10,9 +10,7 @@ for locale in sorted(node.metadata['locale']['installed']):
     }
     locale_after = {f'action:ensure_locale_{locale}_is_enabled'}
 
-actions = {
-    'locale-gen': {
-        'triggered': True,
-        'command': 'locale-gen',
-    },
+actions['locale-gen'] = {
+    'triggered': True,
+    'command': 'locale-gen',
 }
