@@ -23,6 +23,13 @@ actions = {
     },
 }
 
+locale = node.metadata.get('locale/default')
+if locale:
+    actions['systemd-locale'] = {
+        'command': 'localectl set-locale LANG={}'.format(locale),
+        'unless': 'localectl status | grep \'^System Locale:\' | cut -d\' \' -f3- | grep -i \'{}\''.format(locale),
+    }
+
 files = {
     '/etc/systemd/journald.conf': {
         'content_type': 'mako',
