@@ -23,7 +23,7 @@ actions = {
     },
 }
 
-locale = node.metadata.get('locale/default')
+locale = node.metadata.get('locale/default', None)
 if locale:
     actions['systemd-locale'] = {
         'command': 'localectl set-locale LANG={}'.format(locale),
