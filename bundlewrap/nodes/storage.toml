@@ -13,6 +13,9 @@ groups = ["crs-workers", "debian-bookworm"]
 # for intro-outro-generator
 [metadata.apt.packages.libmagickwand-dev]
 
+[metadata.bash_aliases]
+swt-colo = "sudo picocom /dev/ttyS0"
+
 [metadata.crs-worker]
 autostart_scripts = [
   "recording-scheduler",
