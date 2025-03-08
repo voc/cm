@@ -1,6 +1,10 @@
 bundles = ["encoder-common", "mdadm", "nginx", "samba", "zfs"]
 groups = ["crs-workers", "debian-bookworm"]
 
+#ipmi_hostname = "10.73.200.4"
+#ipmi_username = "root"
+#ipmi_password = "!decrypt:encrypt$gAAAAABny_xTBVp9cCPUc-acstouz8J5C6KW36QKmJyZYXs6yL4Ll39p9NxJVwJqsiXwacBOLDQMcE5NDYU1PRS1DR66XZVu8w=="
+
 # for the occasional repair task, so users can use a dedicated machine
 # to render the output files after preparing in kdenlive
 [metadata.apt.packages.frei0r-plugins]
