@@ -15,6 +15,7 @@ EnvironmentFile=/etc/crs-scripts/${secret}
 Restart=always
 RestartSec=10
 RestartPreventExitStatus=250
+SuccessExitStatus=250
 
 [Install]
 % if autostart:

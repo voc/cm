@@ -8,3 +8,4 @@ Type=oneshot
 ExecStart=/opt/crs-scripts/bin/restore-fuse-mounts.sh
 WorkingDirectory=/opt/crs-scripts
 EnvironmentFile=/etc/crs-scripts/meta
+SuccessExitStatus=250
