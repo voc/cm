@@ -106,7 +106,7 @@
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "public"
+            "untagged_vlan": "voc-intern"
         },
         "ether20": {
             "description": "",
@@ -124,7 +124,7 @@
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
+            "untagged_vlan": "public"
         },
         "ether22": {
             "description": "",
@@ -133,7 +133,7 @@
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
+            "untagged_vlan": "public"
         },
         "ether23": {
             "description": "",
@@ -142,7 +142,7 @@
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
+            "untagged_vlan": "public"
         },
         "ether24": {
             "description": "",
@@ -151,7 +151,7 @@
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
+            "untagged_vlan": "public"
         },
         "ether3": {
             "description": "",
