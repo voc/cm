@@ -5,10 +5,10 @@ dummy = true
 # Please install packages 'sudo', 'jq' and 'mosquitto-clients' manually.
 bundles = ["mqtt-monitoring", "systemd", "systemd-timers"]
 
-#ipmi_hostname = "10.73.200.1"
-#ipmi_username = "root"
-#ipmi_password = "!decrypt:encrypt$gAAAAABny_xTBVp9cCPUc-acstouz8J5C6KW36QKmJyZYXs6yL4Ll39p9NxJVwJqsiXwacBOLDQMcE5NDYU1PRS1DR66XZVu8w=="
-#ipmi_interface = "lanplus"
+ipmi_hostname = "10.73.200.1"
+ipmi_username = "root"
+ipmi_password = "!decrypt:encrypt$gAAAAABny_xTBVp9cCPUc-acstouz8J5C6KW36QKmJyZYXs6yL4Ll39p9NxJVwJqsiXwacBOLDQMcE5NDYU1PRS1DR66XZVu8w=="
+ipmi_interface = "lanplus"
 
 [metadata.mqtt-monitoring]
 plugins = ["zfs_status"]
