@@ -12,6 +12,9 @@ password = "!decrypt:encrypt$gAAAAABmk8KmZd6RTiomPYjrNyhGtd7zFFUcWVqeQNozzyhBO8c
 
 [metadata.users.upload]
 ssh_pubkeys = [
+    # clt-minion1
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDwX37FBj5HY50y8v312MRXuNQPp9wD1ntAQs8OddTjAOGWCOfMFsE6uYQ/ZntcAFN4FrGSPOTpilmcS2cVEgiz+7Bn0BbFh/jvg1l78gMWkfPrmfH/ROSW2rh7DDaFF0hyU0tAB/SCA1c7UeW3Fs4RT934xsuibKEhOf3E3G6CQOUOoJNfmMeFa9dLySkpCpS36RxM8sOrGaexp5EGlZ48uCsMaGIkBMLFHxaFJ7YgtlrSZj3bFBER0U72jFg5c+OwHzlqFJGe3JDXO7JXU7n2nfcooctkypIaT6VPZSNyHR0HHTBVxGdTRjT7df+M56tnBN/+j/dsfxSGDW+KoYAxu45BYlNRrZ/99ToR56/xgZ+Pscscm8nQJB9GMNOg/GULWSlUr8pApLM90aSEV0WImw3+xTopO2jlABDqKn+NXmVKZBDNKaiuIfJdlvAAqzXKnd9VTG5CPeodvcMsQZefgoXKF/n1jozbOk4uw+lBuK9/Wzwxum0i8KpxtnnQ++c=",
+
     # emf2024, sam_w
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDQdGzwYiallvWXIHgSAf2GOwMJKA8bxPmwyuO+vsd1HwB65hMRPCpKS+FNLIpkrADNnuhGS3xGCGSSuQ+zAu/g=",
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNLrJyUXmiFWb9vhlTWZLYr64IsKut+c9TGqq3/uwPDeF4X0Qb2jzxqXfQcDSztjR09JHbC8BOqfpYYT9LHahIo=",
