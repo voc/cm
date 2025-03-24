@@ -7,4 +7,4 @@ VNI=${vni}
 Local=${localip}
 Remote=${remoteip}
 DestinationPort=${destport}
-Independent=true
+Independent=false
