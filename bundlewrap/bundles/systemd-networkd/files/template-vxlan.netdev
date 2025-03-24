@@ -1,0 +1,9 @@
+[NetDev]
+Name=${ifname}
+Kind=vxlan
+
+[VXLAN]
+VNI=${vni}
+Local=${local}
+Remote=${remote}
+DestinationPort=${destport}

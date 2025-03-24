@@ -1,0 +1,6 @@
+[Match]
+Name=${vxlan}
+
+[Network]
+Bridge=${bridge}
+VXLAN=${vxlan}

@@ -93,6 +93,22 @@ for interface, config in node.metadata.get('interfaces').items():
             },
         }
 
+for link, config in node.metadata.get('systemd-networkd/links', {}).items():
+    files[f'/etc/systemd/network/{link}.link'] = {
+        'source': 'template-link.link',
+        'content_type': 'mako',
+        'context': {
+            'link': link,
+            'macs': config.get('macs'),
+        },
+        'needed_by': {
+            'svc_systemd:systemd-networkd',
+        },
+        'triggers': {
+            'svc_systemd:systemd-networkd:restart',
+        },
+    }
+
 for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
     files[f'/etc/systemd/network/{bond}.netdev'] = {
         'source': 'template-bond.netdev',
@@ -176,6 +192,23 @@ for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
                 'svc_systemd:systemd-networkd:restart',
             },
         }
+
+    for vxlan in config.get('vxlans', set()):
+        files[f'/etc/systemd/network/{brname}-vxlan-{vxlan}.network'] = {
+            'source': 'template-bridge-vxlan.network',
+            'content_type': 'mako',
+            'context': {
+                'bridge': brname,
+                'vxlan': vxlan,
+            },
+            'needed_by': {
+                'svc_systemd:systemd-networkd',
+            },
+            'triggers': {
+                'svc_systemd:systemd-networkd:restart',
+            },
+        }
+
 
 for tunnel, config in node.metadata.get('systemd-networkd/wireguard', {}).items():
     files[f'/etc/systemd/network/wg_{tunnel}.netdev'] = {

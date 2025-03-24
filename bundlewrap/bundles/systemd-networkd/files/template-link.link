@@ -1,0 +1,7 @@
+[Match]
+% for mac in macs:
+PermanentMACAddress=${mac}
+% endfor
+
+[Link]
+Name=${link}
