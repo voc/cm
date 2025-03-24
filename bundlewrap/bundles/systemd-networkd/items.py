@@ -172,6 +172,7 @@ for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
         'content_type': 'mako',
         'context': {
             'bridge': brname,
+            'mac': config.get('mac', None),
         },
         'needed_by': {
             'svc_systemd:systemd-networkd',

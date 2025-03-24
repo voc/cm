@@ -1,6 +1,9 @@
 [NetDev]
 Name=${bridge}
 Kind=bridge
+% if mac:
+MACAddress=${mac}
+% endif
 
 [Bridge]
 STP=off
