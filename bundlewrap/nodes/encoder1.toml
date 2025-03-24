@@ -22,6 +22,7 @@ macs = ["20:7b:d2:89:2b:5d", "20:7b:d2:b3:7a:38", "20:7b:d2:89:36:63", "20:7b:d2
 [metadata.interfaces.usb0]
 ips = ["192.168.178.10/24"]
 gateway4 = "192.168.178.1"
+vxlans = ['vxlan0']
 
 [metadata.systemd-networkd.vxlan.vxlan0]
 vni = "100"
@@ -29,8 +30,7 @@ local = "192.168.178.10"
 remote = "192.168.178.5"
 
 [metadata.systemd-networkd.bridges.br0]
-match = ['eth0']
-vxlans = ['vxlan0']
+match = ['eth0', 'vxlan0']
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkMHUzBwe5QRDWbQU9ryOt4IwUdTTG-a1hNB3LU1SLLCOHnTu9hN912VbJ5dJ02Ke4utPA1nllcO6YAR3YBF2eud-iAm3nmr4sKPps3ExItoHk6xE="

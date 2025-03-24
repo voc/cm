@@ -40,6 +40,9 @@ GatewayOnlink=yes
 %  endif
 % endif
 [Network]
+% for vxlan in sorted(config.get('vxlans', set())):
+VXLAN=${vxlan}
+% endfor
 % for vlan in sorted(config.get('vlans', set())):
 VLAN=${interface}.${vlan}
 % endfor
