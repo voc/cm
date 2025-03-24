@@ -1,9 +1,9 @@
 [NetDev]
-Name=${ifname}
+Name=${vxlan}
 Kind=vxlan
 
 [VXLAN]
 VNI=${vni}
-Local=${local}
-Remote=${remote}
+Local=${localip}
+Remote=${remoteip}
 DestinationPort=${destport}

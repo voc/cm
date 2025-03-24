@@ -142,6 +142,25 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
         },
     }
 
+for vxlan, config in node.metadata.get('systemd-networkd/vxlan', {}).items():
+    files[f'/etc/systemd/network/{vxlan}.netdev'] = {
+        'source': 'template-vxlan.netdev',
+        'content_type': 'mako',
+        'context': {
+            'vxlan': vxlan,
+            'vni': config.get('vni'),
+            'localip': config.get('local'),
+            'remoteip': config.get('remote'),
+            'destport': config.get('destport', 10100),
+        },
+        'needed_by': {
+            'svc_systemd:systemd-networkd',
+        },
+        'triggers': {
+            'svc_systemd:systemd-networkd:restart',
+        },
+    }
+
 for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
     filename = '{}-match-{}'.format(
         brname,
