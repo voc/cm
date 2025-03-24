@@ -31,6 +31,7 @@ remote = "192.168.178.5"
 
 [metadata.systemd-networkd.bridges.br0]
 match = ['eth0', 'vxlan0']
+mac = "00:20:91:E7:A7:BD"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkMHUzBwe5QRDWbQU9ryOt4IwUdTTG-a1hNB3LU1SLLCOHnTu9hN912VbJ5dJ02Ke4utPA1nllcO6YAR3YBF2eud-iAm3nmr4sKPps3ExItoHk6xE="
