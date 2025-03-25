@@ -23,12 +23,9 @@ privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4v
 [metadata.interfaces.ens18]
 ips = [
     "188.172.114.72/28", # seibert wiesbaden
-    "94.45.241.105/24", # c3noc event
-    "2001:67c:20a1:2241::105/64", # c3noc event
+    "10.9.36.5/24", # fossgis
 ]
-gateway4 = "188.172.114.65" # seibert wiesbaden
-#gateway4 = "94.45.241.1" # c3noc event
-#gateway6 = "2001:67c:20a1:2241::1" # c3noc event
+gateway4 = "10.9.36.1" # fossgis
 dhcp = false
 
 [metadata.interfaces.ens19]
