@@ -40,10 +40,11 @@ vni = "101"
 local = "10.87.2.152"
 remote = "10.87.2.149"
 
+# encoder2
 [metadata.systemd-networkd.vxlan.vxlan2]
 vni = "102"
 local = "10.87.2.152"
-remote = "10.87.2.153"
+remote = "10.87.2.148"
 
 [metadata.systemd-networkd.vxlan.vxlan3]
 vni = "103"
