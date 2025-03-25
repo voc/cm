@@ -28,15 +28,17 @@ dhcp = true
 match = ['ens19', 'vxlan0', 'vxlan1', 'vxlan2', 'vxlan3']
 mac = "52:54:00:42:23:42"
 
+# encoder4
 [metadata.systemd-networkd.vxlan.vxlan0]
 vni = "100"
 local = "10.87.2.152"
 remote = "10.87.2.150"
 
+# encoder3
 [metadata.systemd-networkd.vxlan.vxlan1]
 vni = "101"
 local = "10.87.2.152"
-remote = "10.87.2.151"
+remote = "10.87.2.149"
 
 [metadata.systemd-networkd.vxlan.vxlan2]
 vni = "102"
