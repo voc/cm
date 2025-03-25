@@ -29,6 +29,10 @@ groups['linux'] = {
                     'voc-internal',
                     'voc-vpn',
                 },
+                '873/tcp': {
+                    # TODO evaluate if that can be restricted
+                    'fossgis',
+                },
                 '10100/udp': {
                     # TODO evaluate if that can be restricted
                     'fossgis',
