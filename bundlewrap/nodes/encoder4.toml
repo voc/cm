@@ -17,11 +17,20 @@ room_name = "HS3 (S1)"
 macs = ["20:7b:d2:89:2b:5d", "20:7b:d2:b3:7a:38", "20:7b:d2:89:36:63", "20:7b:d2:92:96:d4"]
 
 [metadata.interfaces.usb0]
+vxlans = ['vxlan0']
 dhcp = true
 
-[metadata.interfaces.eth0]
+[metadata.interfaces.br0]
 ips = ["10.73.4.3/16"]
-gateway4 = "10.73.0.254"
+
+[metadata.systemd-networkd.vxlan.vxlan0]
+vni = "100"
+local = "10.87.2.150"
+remote = "10.87.2.152"
+
+[metadata.systemd-networkd.bridges.br0]
+match = ['eth0', 'vxlan0']
+mac = "a8:a1:59:63:de:28"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkOSJp-QhuKBK7z_nzRUB1PvApqUVass_DtnkWLZRnlv0hUr8p-B3UEIFQdGY0PShXDVFX8R4A9LHE5BdBef5RSw5JLtYoato3u-q-4pkdp0rollI="

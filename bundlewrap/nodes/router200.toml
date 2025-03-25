@@ -22,9 +22,6 @@ privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4v
 
 [metadata.interfaces.ens18]
 vxlans = ['vxlan0', 'vxlan1', 'vxlan2', 'vxlan3']
-ips = [
-    "188.172.114.72/28", # seibert wiesbaden
-]
 dhcp = true
 
 [metadata.systemd-networkd.bridges.br0]
@@ -33,23 +30,23 @@ mac = "52:54:00:42:23:42"
 
 [metadata.systemd-networkd.vxlan.vxlan0]
 vni = "100"
-local = "10.9.36.35"
-remote = "10.9.36.30"
+local = "10.87.2.152"
+remote = "10.87.2.150"
 
 [metadata.systemd-networkd.vxlan.vxlan1]
 vni = "101"
-local = "10.9.36.35"
-remote = "10.9.36.31"
+local = "10.87.2.152"
+remote = "10.87.2.151"
 
 [metadata.systemd-networkd.vxlan.vxlan2]
 vni = "102"
-local = "10.9.36.35"
-remote = "10.9.36.32"
+local = "10.87.2.152"
+remote = "10.87.2.153"
 
 [metadata.systemd-networkd.vxlan.vxlan3]
 vni = "103"
-local = "10.9.36.35"
-remote = "10.9.36.33"
+local = "10.87.2.152"
+remote = "10.87.2.154"
 
 [metadata.interfaces.br0]
 ips = [
