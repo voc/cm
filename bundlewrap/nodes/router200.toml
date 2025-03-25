@@ -46,10 +46,11 @@ vni = "102"
 local = "10.87.2.152"
 remote = "10.87.2.148"
 
+# encoder5
 [metadata.systemd-networkd.vxlan.vxlan3]
 vni = "103"
 local = "10.87.2.152"
-remote = "10.87.2.154"
+remote = "10.87.2.151"
 
 [metadata.interfaces.br0]
 ips = [
@@ -67,6 +68,7 @@ options.domain-name-servers = "10.73.0.254"
 options.domain-search = "lan.c3voc.de"
 options.routers = "10.73.0.254"
 options.subnet-mask = "255.255.0.0"
+options.interface-mtu = "1450"
 
 [metadata.radvd.interfaces.br0]
 # only active if ens18 has ipv6 gateway, check bundle README
