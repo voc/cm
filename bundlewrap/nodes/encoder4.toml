@@ -13,6 +13,12 @@ meta.token = "!kee_user:ansible|worker-groups|encoder4-meta"
 [metadata.event]
 room_name = "HS3 (S1)"
 
+[metadata.systemd-networkd.links.usb0]
+macs = ["20:7b:d2:89:2b:5d", "20:7b:d2:b3:7a:38", "20:7b:d2:89:36:63", "20:7b:d2:92:96:d4"]
+
+[metadata.interfaces.usb0]
+dhcp = true
+
 [metadata.interfaces.eth0]
 ips = ["10.73.4.3/16"]
 gateway4 = "10.73.0.254"

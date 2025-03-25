@@ -21,21 +21,44 @@ peer_pubkey = "!decrypt:encrypt$gAAAAABl_YOCurKJacZUVR-ZrYa_YmmMJVA2N1TRochwDiVv
 privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4vfD9ScgHyA7-CzXRkHAwM7FIS6S8ArMwovWu_eqyP0owuRfHjvICLUSGxkBHeyTlA91jZuxwpbZ02sjFoLntYeBgD-pq"
 
 [metadata.interfaces.ens18]
+vxlans = ['vxlan0', 'vxlan1', 'vxlan2', 'vxlan3']
 ips = [
     "188.172.114.72/28", # seibert wiesbaden
-    "10.9.36.5/24", # fossgis
 ]
-gateway4 = "10.9.36.1" # fossgis
-dhcp = false
+dhcp = true
 
-[metadata.interfaces.ens19]
+[metadata.systemd-networkd.bridges.br0]
+match = ['ens19', 'vxlan0', 'vxlan1', 'vxlan2', 'vxlan3']
+mac = "52:54:00:42:23:42"
+
+[metadata.systemd-networkd.vxlan.vxlan0]
+vni = "100"
+local = "10.9.36.35"
+remote = "10.9.36.30"
+
+[metadata.systemd-networkd.vxlan.vxlan1]
+vni = "101"
+local = "10.9.36.35"
+remote = "10.9.36.31"
+
+[metadata.systemd-networkd.vxlan.vxlan2]
+vni = "102"
+local = "10.9.36.35"
+remote = "10.9.36.32"
+
+[metadata.systemd-networkd.vxlan.vxlan3]
+vni = "103"
+local = "10.9.36.35"
+remote = "10.9.36.33"
+
+[metadata.interfaces.br0]
 ips = [
     "10.73.0.254/16",
     "10.73.200.201/16",
     "2001:67c:20a1:3504:10:73:200:201/64",
 ]
 
-[metadata.isc-dhcp-server.subnets.ens19]
+[metadata.isc-dhcp-server.subnets.br0]
 range_lower = "10.73.170.1"
 range_higher = "10.73.170.254"
 subnet = "10.73.0.0/16"
@@ -45,7 +68,7 @@ options.domain-search = "lan.c3voc.de"
 options.routers = "10.73.0.254"
 options.subnet-mask = "255.255.0.0"
 
-[metadata.radvd.interfaces.ens19]
+[metadata.radvd.interfaces.br0]
 # only active if ens18 has ipv6 gateway, check bundle README
 prefix = "2001:67c:20a1:3504::/64"
 rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
