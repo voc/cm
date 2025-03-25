@@ -36,11 +36,11 @@ mac = "20:7b:d2:b3:7a:38"
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYjN4gPPKKkywsLJdC9zZItzoy55F_RlJ1TfVBnUQ5uWJemWBTDfgGBbPn4FY6394SyWc805aw_IWietgxQEhhHdLkwWyWi8tWUWk5JViE2K1Cg="
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 1
+devicenumber = 0
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 5
+devicenumber = 4
 mode = "1080p25"
 
 [metadata.voctocore.audio.original]
