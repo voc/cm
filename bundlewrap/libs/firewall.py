@@ -10,6 +10,12 @@ named_networks = {
             '2001:67c:20a1:3504::/64',
         },
     },
+    'fossgis': {
+        'ipv4': {
+            '10.87.2.128/27', # fossgis
+        },
+        'ipv6': set(),
+    },
     'voc-vpn': {
         'ipv4': {
             '10.8.0.0/24', # openvpn
