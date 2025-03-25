@@ -64,3 +64,9 @@ Hostname=${node.metadata.get('hostname')}
 DHCP=no
 IPv6AcceptRA=no
 % endif
+
+% if config.get('mtu', None):
+[Link]
+MTUBytes=${config.get('mtu')}
+% endif
+

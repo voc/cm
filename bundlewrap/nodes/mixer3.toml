@@ -5,5 +5,6 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages.i965-va-driver]
 
 [metadata.interfaces.eth0]
+mtu = 1450
 ips = ["10.73.3.1/16"]
 gateway4 = "10.73.0.254"
