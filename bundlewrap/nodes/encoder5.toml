@@ -24,7 +24,7 @@ dhcp = true
 ips = ["10.73.5.3/16"]
 
 [metadata.systemd-networkd.vxlan.vxlan0]
-vni = "100"
+vni = "103"
 local = "10.87.2.151"
 remote = "10.87.2.152"
 
