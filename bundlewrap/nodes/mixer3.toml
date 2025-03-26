@@ -10,7 +10,7 @@ ips = ["10.73.3.1/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.pygtk-atem-switcher.atem]
-video_mode = "1080p60"
+video_mode = "1080p59_94"
 
 [metadata.pygtk-atem-switcher.atem.settings.inputs]
 # use "x" to hide the button in the UI
