@@ -21,6 +21,10 @@ actions = {
         'command': 'timedatectl set-ntp true',
         'unless': 'timedatectl status | grep -Fi \'ntp service\' | grep -i \'active\'',
     },
+    'systemd-tmpfiles-restart': {
+        'command': 'systemctl restart systemd-tmpfiles-setup.service',
+        'triggered': True,
+    },
 }
 
 locale = node.metadata.get('locale/default', None)
@@ -49,6 +53,12 @@ directories = {
             'action:systemd-reload',
         },
     },
+    '/usr/local/lib/tmpfiles.d': {
+        'purge': True,
+        'triggers': {
+            'action:systemd-tmpfiles-restart',
+        },
+    }
 }
 
 svc_systemd = {
