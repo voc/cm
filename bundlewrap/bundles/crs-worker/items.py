@@ -230,8 +230,8 @@ for worker, config in WORKER_SCRIPTS.items():
 
 files['/usr/local/lib/tmpfiles.d/ffmpeg-progressdir.conf'] = {
     'mode': '0755',
-    'after': {
-        'bundle:systemd',
+    'needed_by': {
+        'action:systemd-tmpfiles-create',
     },
     'triggers': {
         'action:systemd-tmpfiles-create',
