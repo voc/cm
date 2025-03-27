@@ -21,8 +21,8 @@ actions = {
         'command': 'timedatectl set-ntp true',
         'unless': 'timedatectl status | grep -Fi \'ntp service\' | grep -i \'active\'',
     },
-    'systemd-tmpfiles-restart': {
-        'command': 'systemctl restart systemd-tmpfiles-setup.service',
+    'systemd-tmpfiles-create': {
+        'command': 'systemd-tmpfiles --create',
         'triggered': True,
     },
 }
@@ -55,9 +55,6 @@ directories = {
     },
     '/usr/local/lib/tmpfiles.d': {
         'purge': True,
-        'triggers': {
-            'action:systemd-tmpfiles-restart',
-        },
     }
 }
 
