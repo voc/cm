@@ -7,3 +7,13 @@ gateway4 = "10.73.0.254"
 
 [metadata.postgresql]
 version = 13
+
+custom_rules = [
+  "host    resolve        all             10.73.0.0/16        md5"
+]
+
+[metadata.postgresql.databases.resolve]
+owner = "resolve"
+
+[metadata.postgresql.roles.resolve]
+password = "!decrypt:encrypt$gAAAAABn5Wz-Qg5pyU9-HcO_GfakoeBux-9ooNXWl_MB4JvQ48e5nIbHZEjQ1pQR5YwYEGq-FaJw2WSP-7nygMthFJC-P_XR0w=="
