@@ -23,6 +23,12 @@ dhcp = true
 [metadata.interfaces.br0]
 ips = ["10.73.2.3/16"]
 
+[metadata.interfaces.br0.routes.'10.44.0.0/16']
+via = '10.73.0.254'
+
+[metadata.interfaces.br0.routes.'10.9.0.0/16']
+via = '10.73.0.254'
+
 [metadata.systemd-networkd.vxlan.vxlan0]
 vni = "102"
 local = "10.87.2.148"
