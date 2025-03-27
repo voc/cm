@@ -228,6 +228,13 @@ for worker, config in WORKER_SCRIPTS.items():
         },
     }
 
+    files['/usr/local/lib/tmpfiles.d/ffmpeg-progressdir.conf'] = {
+        'mode': '0755',
+        'after': {
+            'bundle:systemd',
+        },
+    }
+
 # delete legacy stuff
 files['/opt/tracker-profile.sh'] = {'delete': True}
 files['/opt/tracker-profile-meta.sh'] = {'delete': True}
