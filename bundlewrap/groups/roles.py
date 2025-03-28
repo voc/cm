@@ -52,6 +52,7 @@ groups['crs-workers'] = {
     'bundles': {
         'crs-worker',
         'encoder-common',
+        'encodingmonitoring',
     },
     'metadata': {
         'crs-worker': {
