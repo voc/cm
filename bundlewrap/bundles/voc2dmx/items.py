@@ -25,6 +25,9 @@ actions['voc2dmx_install'] = {
         '/opt/voc2dmx/venv/bin/pip install --upgrade pip',
         '/opt/voc2dmx/venv/bin/pip install --upgrade -r requirements.txt',
     ]),
+    'needs': {
+        'action:voc2dmx_create_virtualenv',
+    }
 }
 
 files['/opt/voc2dmx/config.toml'] = {

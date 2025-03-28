@@ -44,7 +44,6 @@ users['ffmpeg2mqtt'] = {
 svc_systemd['ffmpeg2mqtt'] = {
     'needs': {
         'action:ffmpeg2mqtt_install',
-        'file:/opt/ffmpeg2mqtt/config.toml',
         'file:/usr/local/lib/systemd/system/ffmpeg2mqtt.service',
         'user:ffmpeg2mqtt',
     },
