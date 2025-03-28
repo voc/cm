@@ -7,6 +7,8 @@ Group=ffmpeg2mqtt
 Environment=FFMPEG2MQTT_HOST=${node.metadata.get('ffmpeg2mqtt/host')}
 Environment=FFMPEG2MQTT_USER=${node.metadata.get('ffmpeg2mqtt/user')}
 Environment=FFMPEG2MQTT_PASSWORD=${node.metadata.get('ffmpeg2mqtt/password')}
+Environment=FFMPEG2MQTT_TOPIC=${node.metadata.get('ffmpeg2mqtt/topic')}
+Environment=FFMPEG2MQTT_INTERVAL=${node.metadata.get('ffmpeg2mqtt/interval')}
 WorkingDirectory=/opt/ffmpeg2mqtt/src
 ExecStart=/opt/ffmpeg2mqtt/venv/bin/ffmpeg2mqtt
 Restart=always
