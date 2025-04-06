@@ -7,9 +7,6 @@ bundles = [
 [metadata]
 hostname = "releasing.c3voc.de"
 
-[metadata.mqtt-monitoring]
-password = "!decrypt:encrypt$gAAAAABmk8KmZd6RTiomPYjrNyhGtd7zFFUcWVqeQNozzyhBO8cfIzihu5DczdRHy8HCneXgXA2eYNIEXvp_2561HEJzv7qWB5Tdxxt-ySAA8VUuZB4liqm3CO4gwRgBXUZxMnQYpLsx"
-
 [metadata.users.upload]
 ssh_pubkeys = [
     # clt-minion1

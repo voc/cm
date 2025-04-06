@@ -6,9 +6,9 @@ defaults = {
     },
     'voc2dmx': {
         'mqtt': {
-            'host': 'mqtt.c3voc.de',
-            'user': 'bundlewrap',
-            'password': repo.vault.decrypt('encrypt$gAAAAABmk8KmZd6RTiomPYjrNyhGtd7zFFUcWVqeQNozzyhBO8cfIzihu5DczdRHy8HCneXgXA2eYNIEXvp_2561HEJzv7qWB5Tdxxt-ySAA8VUuZB4liqm3CO4gwRgBXUZxMnQYpLsx'),
+            'host': repo.libs.defaults.mqtt_hostname,
+            'user': repo.libs.defaults.mqtt_username,
+            'password': repo.vault.decrypt(repo.libs.defaults.mqtt_password),
             'topic': '/voc/alert-viri',
         },
         'sacn': {

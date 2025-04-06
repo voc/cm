@@ -31,9 +31,6 @@ groups['linux'] = {
                 },
             },
         },
-        'mqtt-monitoring': {
-            'password': vault.decrypt('encrypt$gAAAAABmk8KmZd6RTiomPYjrNyhGtd7zFFUcWVqeQNozzyhBO8cfIzihu5DczdRHy8HCneXgXA2eYNIEXvp_2561HEJzv7qWB5Tdxxt-ySAA8VUuZB4liqm3CO4gwRgBXUZxMnQYpLsx'),
-        },
         'telegraf': {
             'influxdb_url': keepass.url(['ansible', 'monitoring', 'write_htpasswd']),
             'influxdb_username': keepass.username(['ansible', 'monitoring', 'write_htpasswd']),

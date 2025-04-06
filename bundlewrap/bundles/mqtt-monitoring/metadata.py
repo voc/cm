@@ -6,8 +6,9 @@ defaults = {
         },
     },
     'mqtt-monitoring': {
-        'server': 'mqtt.c3voc.de',
-        'username': 'bundlewrap',
+        'server': repo.libs.defaults.mqtt_hostname,
+        'username': repo.libs.defaults.mqtt_username,
+        'password': repo.vault.decrypt(repo.libs.defaults.mqtt_password),
         'plugins': {
             'disk_space',
             'systemd_failed_units',
