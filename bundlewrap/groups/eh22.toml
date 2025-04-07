@@ -1,0 +1,6 @@
+subgroups = ["saal1"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Easterhegg 2025"
+slug = "eh22"
