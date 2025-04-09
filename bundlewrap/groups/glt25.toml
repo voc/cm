@@ -1,0 +1,8 @@
+subgroups = ["saal3", "saal4", "saal5", "saal28", "servercase"]
+members = ["releasing"]
+
+[metadata.event]
+timezone = "Europe/Vienna"
+name = "Grazer Linuxtage 2025"
+slug = "glt25"
+schedule_json = "https://pretalx.linuxtage.at/glt25/schedule/export/schedule.json"
