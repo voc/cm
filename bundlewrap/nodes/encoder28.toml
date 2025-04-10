@@ -6,7 +6,7 @@ encoding.secret = "!decrypt:encrypt$gAAAAABkOS_by1-OF4v0BuFqOwofXy4ka7cp5v7UQjxj
 encoding.token = "!decrypt:encrypt$gAAAAABkOS_Us1SxDDO0JZGgPQ7g-VMCw792NVYP2-k8wY5okEnlD_OWTePmEIbF6RK0h2tHZ9bRV_ReRPRLH3GPIsDA_49YaRQYoxzTQUkFOkEin9LQDiGsyAFfMtS5bP42Sfc3k8DT"
 
 [metadata.event]
-room_name = "realraum"
+room_name = "HS i13"
 
 [metadata.interfaces.eth0]
 ips = [
