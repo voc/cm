@@ -406,7 +406,7 @@ ssh_pubkeys = [
 
 [equinox] # GLT
 enable_rz = false
-enable_event = false
+enable_event = true
 uid = 1155
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPFw9I25dUMCMM66lIvt6VeBMhAX7tl4qvb7HxXQd8z",
