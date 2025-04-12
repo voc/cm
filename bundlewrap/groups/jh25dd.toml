@@ -1,0 +1,8 @@
+subgroups = ["saal1"]
+
+[metadata]
+nameservers = ["10.73.0.254"]
+
+[metadata.event]
+name = "Jugend hackt Dresden 2025"
+slug = "jh25dd"
