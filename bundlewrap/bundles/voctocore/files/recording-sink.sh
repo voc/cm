@@ -17,7 +17,7 @@ ffmpeg \
     -aspect 16:9 \
     -filter_complex \
        "[0:a]pan=stereo|c0=c0|c1=c1[s_native]; \
-        [0:a]pan=stereo|c0=c2|c1=c3[s_trans_1]; \
+        [0:a]pan=stereo|c0=c2|c1=c2[s_trans_1]; \
         [0:a]pan=stereo|c0=c4|c1=c5[s_trans_2]" \
     -map 0:v -c:v:0 mpeg2video -pix_fmt:v:0 yuv420p -qscale:v:0 4 -qmin:v:0 4 -qmax:v:0 4 -keyint_min:v:0 5 -bf:v:0 0 -g:v:0 5 -me_method:v:0 dia -metadata:s:v:0 title="HD" \
 % if parallel_slide_recording:
