@@ -33,6 +33,8 @@ defaults = {
     },
 }
 
+if node.os_version >= (11,):
+    defaults['apt']['packages']['terminus'] = {}
 
 @metadata_reactor.provides(
     'mixer-common/i3_layout',
