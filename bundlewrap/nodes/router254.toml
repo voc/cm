@@ -11,11 +11,11 @@ privatekey = "!decrypt:encrypt$gAAAAABmQRQb2TRjfHqwQ7DHu3bXB4CVftnGBUyC7_zkU2gAg
 
 [metadata.interfaces.wan]
 ips = [
-    "185.106.84.2/26",
-    "2001:67c:20a0:e::2/64",
+    "45.158.40.201/26",
+    "2a0f:5382:acab:1337:be24:11ff:fe50:2888/64",
 ]
-gateway4 = "185.106.84.1"
-gateway6 = "2001:67c:20a0:e::1"
+gateway4 = "45.158.40.193"
+gateway6 = "fe80::f690:eaff:fe00:71f9"
 
 [metadata.interfaces.lan]
 ips = [
