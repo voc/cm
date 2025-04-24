@@ -632,7 +632,7 @@ ssh_pubkeys = [
 ]
 
 [molly]
-enable_rz = false
+enable_rz = true
 enable_event = true
 uid = 1183
 ssh_pubkeys = [

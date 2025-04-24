@@ -21,11 +21,11 @@ let
     exec --no-startup-id "i3-msg 'workspace 1; append_layout ${i3layout}'"
 
     exec ${mpvWrapper} --title=s1 rtmp://ingest2.c3voc.de/relay/s1_loudness
+    exec ${mpvWrapper} --title=s2 rtmp://ingest2.c3voc.de/relay/s2_loudness
     exec ${mpvWrapper} --title=s3 rtmp://ingest2.c3voc.de/relay/s3_loudness
+    exec ${mpvWrapper} --title=s4 rtmp://ingest2.c3voc.de/relay/s4_loudness
+    exec ${mpvWrapper} --title=s5 rtmp://ingest2.c3voc.de/relay/s5_loudness
     exec ${mpvWrapper} --title=s6 rtmp://ingest2.c3voc.de/relay/s6_loudness
-    exec ${mpvWrapper} --title=emfa rtmp://ingest2.c3voc.de/relay/emf_stagea_loudness
-    exec ${mpvWrapper} --title=emfb rtmp://ingest2.c3voc.de/relay/emf_stageb_loudness
-    exec ${mpvWrapper} --title=emfc rtmp://ingest2.c3voc.de/relay/emf_stagec_loudness
   '';
 
   i3layout = pkgs.writeText "i3-layout" ''
@@ -38,17 +38,17 @@ let
           "type": "con",
           "nodes": [
             {"swallows": [{"title": "s1"}]},
-            {"swallows": [{"title": "s3"}]},
-            {"swallows": [{"title": "s6"}]}
+            {"swallows": [{"title": "s2"}]},
+            {"swallows": [{"title": "s3"}]}
           ]
         },
         {
           "layout": "splith",
           "type": "con",
           "nodes": [
-            {"swallows": [{"title": "emfa"}]},
-            {"swallows": [{"title": "emfb"}]},
-            {"swallows": [{"title": "emfc"}]}
+            {"swallows": [{"title": "s4"}]},
+            {"swallows": [{"title": "s5"}]},
+            {"swallows": [{"title": "s6"}]}
           ]
         }
       ]
