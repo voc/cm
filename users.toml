@@ -620,7 +620,7 @@ enable_rz = true
 enable_event = true
 uid = 1181
 ssh_pubkeys = [
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPvwdAx/l7x0Hh9vRgFWWkcxgRQe8slWNHw5B1tgCoH/ j@hedwig",
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPvwdAx/l7x0Hh9vRgFWWkcxgRQe8slWNHw5B1tgCoH/",
 ]
 
 [sinyria]
@@ -628,5 +628,13 @@ enable_rz = false
 enable_event = true
 uid = 1182
 ssh_pubkeys = [
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBFRnW4PsHl5Tjjmph/J3EpXcbDmazATRNhyp1YFJL5m flora@flora-thinkpad",
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBFRnW4PsHl5Tjjmph/J3EpXcbDmazATRNhyp1YFJL5m",
+]
+
+[molly]
+enable_rz = false
+enable_event = true
+uid = 1183
+ssh_pubkeys = [
+  "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLso8GLuv4arQGhIfeb3dPIW8QSdw0rsHs2ur4W2fL2C9usQMVbErcYUbMi6JrsXW8z7Xs1ojyzC29P/jRJg1ok="
 ]
