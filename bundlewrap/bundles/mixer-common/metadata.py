@@ -63,7 +63,7 @@ def kittyfontsize(metadata):
     if not metadata.get('voctogui/high_dpi', True):
         return {
             'kitty': {
-                'fontsize': "10",
+                'fontsize': "10.0",
             },
         }
     else:
