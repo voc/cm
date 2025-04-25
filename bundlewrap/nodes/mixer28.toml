@@ -1,4 +1,5 @@
-groups = ["debian-buster"]
+bundles = ["pygtk-atem-switcher"]
+groups = ["debian-bookworm"]
 
 [metadata.interfaces.eth0]
 ips = [
@@ -9,3 +10,6 @@ gateway4 = "10.73.0.254"
 
 [metadata.voctogui]
 high_dpi = false
+
+[metadata.kitty]
+fontsize = "10.0"

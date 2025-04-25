@@ -87,6 +87,7 @@ files['/usr/local/sbin/brightness'] = {
 }
 
 files['/home/mixer/.config/kitty/kitty.conf'] = {
+    'content_type': 'mako',
     'source' : 'kitty/kitty.conf',
     'owner': 'mixer',
     'group': 'mixer',

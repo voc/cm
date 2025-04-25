@@ -54,3 +54,21 @@ def i3_layout(metadata):
         },
     }
 
+
+@metadata_reactor.provides(
+    'kitty/fontsize',
+)
+def kittyfontsize(metadata):
+    #high_dpi = false makes font smaller
+    if not metadata.get('voctogui/high_dpi', True):
+        return {
+            'kitty': {
+                'fontsize': "10",
+            },
+        }
+    else:
+        return {
+            'kitty': {
+                'fontsize': "18.0",
+            },
+        }
