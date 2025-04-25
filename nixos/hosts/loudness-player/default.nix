@@ -10,12 +10,54 @@ let
     done
   '';
 
+  i3status = pkgs.writeText "i3-status" ''
+    general {
+        output_format = "i3bar"
+        colors = true
+        interval = 1
+    }
+
+    order += "ipv6"
+    order += "ethernet _first_"
+    order += "cpu_temperature 0"
+    order += "cpu_usage"
+    order += "memory"
+    order += "tztime berlin"
+
+    ethernet _first_ {
+        format_up = "ETH: %ip (%speed)"
+        format_down = "ETH: down"
+    }
+
+    cpu_temperature 0 {
+        format = "TEMP: %degrees °C"
+        path = "/sys/devices/platform/coretemp.0/temp1_input"
+    }
+
+    memory {
+        format = "MEM: %percentage_used used, %percentage_free free, %percentage_shared shared"
+        threshold_degraded = "10%"
+        format_degraded = "MEMORY: %free"
+    }
+
+    tztime berlin {
+        format = "%Y-%m-%d %H:%M:%S %Z"
+        timezone = "Europe/Berlin"
+    }
+
+    cpu_usage {
+        format = "CPU: %usage"
+    }
+  '';
+
   i3config = pkgs.writeText "i3-config" ''
     # i3 config file (v4)
     default_border none
 
     bar {
-      mode invisible
+      mode dock
+      workspace_buttons off
+      status_command i3status -c ${i3status}
     }
 
     exec --no-startup-id "i3-msg 'workspace 1; append_layout ${i3layout}'"
@@ -93,7 +135,7 @@ in
     '';
     services.xserver.windowManager.i3.enable = true;
     services.xserver.windowManager.i3.extraPackages = [
-
+      pkgs.i3status
     ];
     services.xserver.windowManager.i3.extraSessionCommands = ''
       xset -dpms
