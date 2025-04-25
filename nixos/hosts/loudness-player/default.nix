@@ -23,7 +23,7 @@ let
     exec ${mpvWrapper} --title=s3 rtmp://ingest2.c3voc.de/relay/s3_loudness
     exec ${mpvWrapper} --title=s4 rtmp://ingest2.c3voc.de/relay/s4_loudness
     exec ${mpvWrapper} --title=s5 rtmp://ingest2.c3voc.de/relay/s5_loudness
-    exec ${mpvWrapper} --title=s6 rtmp://ingest2.c3voc.de/relay/s28_loudness
+    exec ${mpvWrapper} --title=s28 rtmp://ingest2.c3voc.de/relay/s28_loudness
   '';
 
   i3layout = pkgs.writeText "i3-layout" ''
