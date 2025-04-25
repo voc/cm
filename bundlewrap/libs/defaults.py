@@ -1,7 +1,4 @@
-nameservers = [
-    '9.9.9.10',
-    '149.112.112.10',
-]
+nameservers = ['10.73.0.254']
 
 admin_email = 'voc@c3voc.de'
 
