@@ -638,3 +638,11 @@ uid = 1183
 ssh_pubkeys = [
   "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLso8GLuv4arQGhIfeb3dPIW8QSdw0rsHs2ur4W2fL2C9usQMVbErcYUbMi6JrsXW8z7Xs1ojyzC29P/jRJg1ok="
 ]
+
+[av]
+enable_rz = false
+enable_event = true
+uid = 1184
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhiv7w9bZ9pF05vDZtdcissWiVCZFoz8n9lF00UAVWo",
+]
