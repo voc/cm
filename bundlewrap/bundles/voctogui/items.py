@@ -1,9 +1,11 @@
+voctomix_version = node.metadata.get("voctomix2/rev")
 assert node.has_bundle('voctomix2')
 
 encoder_ip = node.metadata.get('voctogui/encoder-ip', '10.73.{}.3'.format(node.metadata.get('room_number', 0)))
 
 files['/opt/voctomix2/voctogui-config.ini'] = {
     'content_type': 'mako',
+    "source": f"voctogui-config-by-version/{voctomix_version}.ini",
     'context': {
         'encoder_ip': encoder_ip,
         'high_dpi': node.metadata.get('voctogui/high_dpi'),
