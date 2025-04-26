@@ -2,19 +2,26 @@ from bundlewrap.exceptions import BundleError
 from os.path import exists, join
 
 
-def backgrounds(event_slug, room_number, which):
+def backgrounds(event_slug, room_number, which, fallback=None):
+    options = [
+        join(event_slug, f'saal{room_number}', f'bg_{which}.png'),
+        join(event_slug, f'bg_{which}.png'),
+    ]
+
+    if fallback:
+        options.extend([
+            join(event_slug, f'saal{room_number}', f'bg_{fallback}.png'),
+            join(event_slug, f'bg_{fallback}.png'),
+        ])
+
+    options.extend([
+        join(event_slug, f'saal{room_number}', 'bg.png'),
+        join(event_slug, 'bg.png'),
+        'default-bg.png',
+    ])
+
     return {
-        f'/opt/voc/share/bg_{which}.png': [
-            join(event_slug, f'saal{room_number}', f'bg_{which}.ts'),
-            join(event_slug, f'bg_{which}.ts'),
-            join(event_slug, f'saal{room_number}', f'bg_{which}.png'),
-            join(event_slug, f'bg_{which}.png'),
-            join(event_slug, f'saal{room_number}', 'bg.ts'),
-            join(event_slug, 'bg.ts'),
-            join(event_slug, f'saal{room_number}', 'bg.png'),
-            join(event_slug, 'bg.png'),
-            'default-bg.png',
-        ],
+        f'/opt/voc/share/bg_{which}.png': options,
     }
 
 
@@ -71,7 +78,8 @@ if node.has_bundle('voctocore'):
         ],
         **backgrounds(event_slug, room_number, 'lec'),
         **backgrounds(event_slug, room_number, 'lecm'),
-        **backgrounds(event_slug, room_number, 'sbs'),
+        **backgrounds(event_slug, room_number, 'sbs', 'lec'),
+        **backgrounds(event_slug, room_number, 'sbsm', 'lecm'),
     }.items():
         source_file = None
 
