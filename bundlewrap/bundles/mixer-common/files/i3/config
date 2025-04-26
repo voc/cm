@@ -17,6 +17,8 @@ bar {
   status_command /opt/i3pystatus/venv/bin/python ~/.config/i3pystatus/config.py
 }
 
+bindsym Mod4+Control+Shift+r exec /usr/local/bin/i3-layout.sh
+
 exec --no-startup-id x11vnc -display :0 -loop0 -shared -nopw -scale 1/2
 
 % if node.metadata.get('mixer-common/enable-irssi'):
