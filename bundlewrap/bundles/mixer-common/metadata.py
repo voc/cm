@@ -40,6 +40,9 @@ if node.os_version >= (11,):
     'mixer-common/i3_layout',
 )
 def i3_layout(metadata):
+    if not node.has_bundle('voctogui'):
+        raise DoNotRunAgain
+
     options = ['voctogui']
 
     if node.has_bundle('pygtk-atem-switcher'):
