@@ -1,47 +1,52 @@
 from bundlewrap.exceptions import BundleError
 
-if node.has_bundle('cifs-client'):
-    user_group = None
-else:
-    user_group = 'voc'
-
 event = node.metadata.get('event/slug')
 
-directories[f'/video'] = {
-    'owner': user_group,
-    'group': user_group,
-    'after': {
-        'zfs_dataset:',
-        'zfs_pool:',
-    },
+cifs_mountpoints = {
+    v['mountpoint'].rstrip('/')
+    for v in node.metadata.get('cifs-client/mounts', {}).values()
 }
 
-for path in (
-    'capture',
-    'encoded',
-    'fuse',
-    'intros',
-    'tmp',
-):
-    directories[f'/video/{path}'] = {
-        'owner': user_group,
-        'group': user_group,
-    }
-
-    directories[f'/video/{path}/{event}'] = {
-        'before': {
-            'bundle:voctocore',
-            'bundle:crs-worker',
+if '/video' not in cifs_mountpoints:
+    directories[f'/video'] = {
+        'owner': 'voc',
+        'group': 'voc',
+        'after': {
+            'zfs_dataset:',
+            'zfs_pool:',
         },
-        'owner': user_group,
-        'group': user_group,
     }
 
-directories[f'/video/tmp/{event}/repair'] = {
-    'before': {
-        'bundle:voctocore',
-        'bundle:crs-worker',
-    },
-    'owner': user_group,
-    'group': user_group,
-}
+    for path in (
+        'capture',
+        'encoded',
+        'fuse',
+        'intros',
+        'tmp',
+    ):
+        if f'/video/{path}' in cifs_mountpoints:
+            continue
+
+        directories[f'/video/{path}'] = {
+            'owner': 'voc',
+            'group': 'voc',
+        }
+
+        directories[f'/video/{path}/{event}'] = {
+            'before': {
+                'bundle:voctocore',
+                'bundle:crs-worker',
+            },
+            'owner': 'vpc',
+            'group': 'voc',
+        }
+
+    if '/video/tmp' not in cifs_mountpoints:
+        directories[f'/video/tmp/{event}/repair'] = {
+            'before': {
+                'bundle:voctocore',
+                'bundle:crs-worker',
+            },
+            'owner': user_group,
+            'group': user_group,
+        }
