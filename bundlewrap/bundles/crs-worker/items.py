@@ -138,7 +138,7 @@ directories['/etc/crs-scripts'] = {
     'purge': True,
 }
 
-autostart_scripts = node.metadata.get('crs-worker/autostart_scripts', set())
+autostart_scripts = node.metadata.get('crs-worker/autostart_scripts')
 for worker, config in WORKER_SCRIPTS.items():
     if config['secret'] not in node.metadata.get('crs-worker/secrets', {}):
         # no secrets for this worker type available, just ignore it then,
@@ -237,6 +237,15 @@ files['/usr/local/lib/tmpfiles.d/ffmpeg-progressdir.conf'] = {
         'action:systemd-tmpfiles-create',
     },
 }
+
+if autostart_scripts:
+    files['/usr/local/sbin/check_system.d/crs-worker-status.sh'] = {
+        'content_type': 'mako',
+        'context': {
+            'scripts': autostart_scripts,
+        },
+        'mode': '0755',
+    }
 
 # delete legacy stuff
 files['/opt/tracker-profile.sh'] = {'delete': True}
