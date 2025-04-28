@@ -43,6 +43,7 @@ groups['minions-alboin'] = {
         'cifs-client': {
             'mounts': {
                 'video': {
+                    'create_dir': True,
                     'serverpath': '//10.73.254.112/video',
                     'mount_options': {
                         'ro': None,

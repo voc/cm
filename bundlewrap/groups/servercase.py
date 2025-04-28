@@ -38,6 +38,7 @@ groups['minions-servercase'] = {
         'cifs-client': {
             'mounts': {
                 'video': {
+                    'create_dir': True,
                     'serverpath': '//10.73.200.24/video',
                     'mount_options': {
                         'ro': None,

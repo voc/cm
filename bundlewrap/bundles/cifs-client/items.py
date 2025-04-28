@@ -7,12 +7,6 @@ directories = {
 
 for mount, data in node.metadata.get('cifs-client/mounts', {}).items():
     unitname = data['unitname']
-    if data.get('create_dir', False):
-        directories[data['mountpoint']] = {
-            'owner': None,
-            'group': None,
-        }
-
     mount_options = set()
     for opt, value in data.get('mount_options', {}).items():
         if value not in (None, False):
@@ -36,11 +30,18 @@ for mount, data in node.metadata.get('cifs-client/mounts', {}).items():
 
     svc_systemd[f'{unitname}.mount'] = {
         'needs': {
-            'directory:{}'.format(data['mountpoint']),
             'file:/usr/local/lib/systemd/system/{}.mount'.format(unitname),
             'pkg_apt:cifs-utils',
         },
     }
+
+    if data.get('create_dir', False):
+        svc_systemd[f'{unitname}.mount']['needs'].add('directory:{}'.format(data['mountpoint']))
+
+        directories[data['mountpoint']] = {
+            'owner': None,
+            'group': None,
+        }
 
     if data.get('credentials'):
         files[f'/etc/cifs-credentials/{mount}'] = {
