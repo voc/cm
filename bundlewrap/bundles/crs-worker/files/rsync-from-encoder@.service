@@ -1,5 +1,6 @@
 [Unit]
 Description=rsync recordings from encoder
+ConditionPathIsReadWrite=/video/capture
 
 [Service]
 User=voc

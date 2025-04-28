@@ -1,5 +1,6 @@
 [Unit]
 Description=CRS: restore fuse mounts
+ConditionPathExists=/video
 
 [Service]
 User=voc

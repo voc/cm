@@ -2,6 +2,7 @@
 Description=CRS runner for ${script}
 Requires=${' '.join(sorted(systemd_after))}
 After=${' '.join(sorted(systemd_after))}
+ConditionPathExists=/video
 
 [Service]
 User=voc

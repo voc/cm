@@ -2,6 +2,7 @@
 Description=voctomix2 recording-sink
 After=voctomix2-voctocore.service
 Requires=voctomix2-voctocore.service
+ConditionPathIsReadWrite=/video/capture
 
 [Service]
 User=voc
