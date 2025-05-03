@@ -16,7 +16,7 @@ if '/video' not in cifs_mountpoints:
             'zfs_pool:',
         },
     }
-
+    print("poop")
     for path in (
         'capture',
         'encoded',
@@ -26,7 +26,6 @@ if '/video' not in cifs_mountpoints:
     ):
         if f'/video/{path}' in cifs_mountpoints:
             continue
-
         directories[f'/video/{path}'] = {
             'owner': 'voc',
             'group': 'voc',
@@ -47,6 +46,6 @@ if '/video' not in cifs_mountpoints:
                 'bundle:voctocore',
                 'bundle:crs-worker',
             },
-            'owner': user_group,
-            'group': user_group,
+            'owner': 'voc',
+            'group': 'voc',
         }
