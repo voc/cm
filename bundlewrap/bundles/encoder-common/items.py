@@ -36,7 +36,7 @@ if '/video' not in cifs_mountpoints:
                 'bundle:voctocore',
                 'bundle:crs-worker',
             },
-            'owner': 'vpc',
+            'owner': 'voc',
             'group': 'voc',
         }
 
