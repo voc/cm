@@ -16,7 +16,7 @@ if '/video' not in cifs_mountpoints:
             'zfs_pool:',
         },
     }
-    print("poop")
+
     for path in (
         'capture',
         'encoded',
