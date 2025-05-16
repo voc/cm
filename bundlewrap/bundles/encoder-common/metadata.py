@@ -7,6 +7,9 @@ defaults = {
     'event': {
         'slug': 'XYZ',
     },
+    'encoder-common': {
+        'zfs-dataset-base': 'video',
+    },
     'rsync': {
         'shares': {
             'video': {
@@ -48,9 +51,10 @@ def zfs(metadata):
         raise DoNotRunAgain
 
     slug = metadata.get('event/slug')
+    root_ds = metadata.get('encoder-common/zfs-dataset-base')
 
     datasets = {
-        f'video/{slug}': {},
+        f'{root_ds}/{slug}': {},
     }
 
     for path in (
@@ -60,7 +64,7 @@ def zfs(metadata):
         'intros',
         'tmp',
     ):
-        datasets[f'video/{slug}/{path}'] = {
+        datasets[f'{root_ds}/{slug}/{path}'] = {
             'mountpoint': f'/video/{path}/{slug}',
             'needed_by': {
                 f'directory:/video/{path}/{slug}',
@@ -72,7 +76,7 @@ def zfs(metadata):
             'datasets': datasets,
             'snapshots': {
                 'retain_per_dataset': {
-                    f'video/{slug}/{path}': {
+                    f'{root_ds}/{slug}/{path}': {
                         'hourly': 2,
                         'daily': 0,
                         'weekly': 0,
