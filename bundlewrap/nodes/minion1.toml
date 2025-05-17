@@ -8,14 +8,6 @@ secret = "!kee_pass:ansible|worker-groups|minion1"
 ips = ["10.73.1.7/16"]
 gateway4 = "10.73.0.254"
 
-[metadata.systemd-networkd.bridges.br0]
-match = [
-  'enp87s0',
-  'enp90s0',
-  'enp2s0f0',
-  'enp2s0f1',
-]
-
 [[metadata.zfs.pools.zroot.when_creating.config]]
 type = "mirror"
 devices = [
