@@ -43,6 +43,19 @@ defaults = {
 
 
 @metadata_reactor.provides(
+        'encoder-common/zfs-dataset-base',
+)
+def dataset_Base(metadata):
+    if node.in_group('minisforuminions'):
+        return {
+            'encoder-common': {
+                'zfs-dataset-base': 'zroot',
+            },
+        }
+    else:
+        return {}
+
+@metadata_reactor.provides(
     'zfs/datasets',
     'zfs/snapshots/retain_per_dataset',
 )
