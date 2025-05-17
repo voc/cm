@@ -12,18 +12,20 @@ groups["minisforuminions"] = {
         'zfs'
     },
     'metadata': {
+        'systemd-networkd': {
+            'bridges': {
+                'br0': {
+                    'match': [
+                        'enp87s0',
+                        'enp90s0',
+                        'enp2s0f0',
+                        'enp2s0f1',
+                    ],
+                },
+            },
+        },
         'zfs': {
             "datasets": {
-                # NAME               MOUNTPOINT
-                # zroot              none
-                # zroot/ROOT         none
-                # zroot/ROOT/debian  /
-                # zroot/home         /home
-                # zroot/home/root    /root
-                # zroot/var          none
-                # zroot/var/cache    /var/cache
-                # zroot/var/lib      /var/lib
-                # zroot/var/log      /var/log
                 "zroot": {},
                 "zroot/ROOT": {},
                 "zroot/ROOT/debian": {
