@@ -25,7 +25,6 @@ defaults = {
             'lm-sensors': {},
             'manpages': {},
             'moreutils': {},
-            'moreutils': {},
             'mosh': {},
             'mtr-tiny': {},
             'ncdu': {},
