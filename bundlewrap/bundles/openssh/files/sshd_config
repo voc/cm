@@ -12,6 +12,9 @@ UseDNS no
 
 LogLevel INFO
 X11Forwarding yes
+% if node.in_group('encoders'):
+X11UseLocalhost no
+% endif
 IgnoreRhosts yes
 HostbasedAuthentication no
 PermitEmptyPasswords no
