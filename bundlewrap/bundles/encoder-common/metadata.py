@@ -7,9 +7,6 @@ defaults = {
     'event': {
         'slug': 'XYZ',
     },
-    'encoder-common': {
-        'zfs-dataset-base': 'video',
-    },
     'rsync': {
         'shares': {
             'video': {
@@ -43,17 +40,19 @@ defaults = {
 
 
 @metadata_reactor.provides(
-        'encoder-common/zfs-dataset-base',
+    'encoder-common/zfs-dataset-base',
 )
 def dataset_Base(metadata):
-    if node.in_group('minisforuminions'):
+    pools = metadata.get('zfs/pools', {}).keys()
+
+    if len(pools) == 1:
         return {
             'encoder-common': {
-                'zfs-dataset-base': 'zroot',
-            },
+                'zfs-dataset-base': list(pools)[0],
+            }
         }
-    else:
-        return {}
+    return {}
+
 
 @metadata_reactor.provides(
     'zfs/datasets',
