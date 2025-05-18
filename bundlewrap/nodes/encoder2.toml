@@ -21,10 +21,12 @@ gateway4 = "10.73.0.254"
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNAla1u8QC8xEqxSbtHs3PFLVTluTMgb7KdkPmiohsYStvBz9M7yhqKRz2rhjMHnnT_7zt3ZAVlxnseIdTCUmLb0Ov5_wiDC9rbPtci751ZUPi-I="
 
 [metadata.voctocore.sources.cam1]
+kind="test"
 devicenumber = 1
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
+kind="test"
 devicenumber = 5
 mode = "1080p25"
 
@@ -38,6 +40,6 @@ ashift = 12
 [[metadata.zfs.pools.video.when_creating.config]]
 type = "mirror"
 devices = [
-    "/dev/disk/by-id/ata-WDC_WD30EFRX-68AX9N0_WD-WMC1T3192687",
-    "/dev/disk/by-id/ata-ST3000DM001-1ER166_Z501LTC8",
+  "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_4TB_S7DPNJ0Y102535W",
+  "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_4TB_S7DPNU0Y304444M",
 ]
