@@ -3,14 +3,18 @@ Description = voctomix2 gui
 After=network.target
 
 [Service]
-Type = simple
-WorkingDirectory = /opt/voctomix2/release
-ExecStartPre = /usr/local/bin/voctogui-check-connection.sh
-ExecStart = /opt/voctomix2/release/voctogui/voctogui.py --ini-file /opt/voctomix2/voctogui-config.ini -vv
-ExecStartPost = /usr/local/bin/i3-layout.sh
-Restart = always
-RestartSec = 5s
-StartLimitInterval = 0
+WorkingDirectory=/opt/voctomix2/release
+% if node.metadata.get('voctomix2/version_tuple') >= (2,3):
+Type=notify
+% else:
+Type=simple
+ExecStartPre=/usr/local/bin/voctogui-check-connection.sh
+% endif
+ExecStart=/opt/voctomix2/release/voctogui/voctogui.py --ini-file /opt/voctomix2/voctogui-config.ini -vv
+ExecStartPost=/usr/local/bin/i3-layout.sh
+Restart=always
+RestartSec=5s
+StartLimitInterval=0
 User=mixer
 Group=mixer
 
@@ -20,4 +24,4 @@ Environment="GDK_SCALE=2"
 % endif
 
 [Install]
-WantedBy = multi-user.target
+WantedBy=multi-user.target

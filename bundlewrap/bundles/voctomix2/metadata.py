@@ -26,15 +26,28 @@ if node.has_any_bundle(['voctocore', 'voctogui']):
         },
     }
 
+
+if node.os_version[0] in DEBIAN_TO_VOCTOMIX_VERSION:
+    defaults['voctomix2'] = {
+        'rev': DEBIAN_TO_VOCTOMIX_VERSION[node.os_version[0]],
+    }
+
+
 @metadata_reactor.provides(
-    'voctomix2/rev',
+    'voctomix2/version_tuple',
 )
 def voctomix_version(metadata):
-    if node.os_version[0] not in DEBIAN_TO_VOCTOMIX_VERSION:
-        return {}
+    rev = metadata.get('voctomix2/rev')
+
+    if '.' in rev:
+        version = tuple([int(i) for i in rev.split('.')])
+    elif rev == 'voctomix2':
+        version = (2,)
+    else:
+        version = (2, 9999)
 
     return {
         'voctomix2': {
-            'rev': DEBIAN_TO_VOCTOMIX_VERSION[node.os_version[0]],
+            'version_tuple': version,
         },
     }
