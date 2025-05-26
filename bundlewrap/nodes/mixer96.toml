@@ -18,6 +18,10 @@ settings.inputs.input1 = "In1"
 settings.inputs.input2 = "In2"
 settings.inputs.input3 = "In3"
 
+[metadata.systemd]
+# power button handling is disabled for mixers by default
+ignore_power_button = false
+
 [metadata.voctomix2]
 rev = "main"
 
