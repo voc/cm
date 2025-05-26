@@ -20,7 +20,7 @@ settings.inputs.input3 = "In3"
 
 [metadata.systemd]
 # power button handling is disabled for mixers by default
-ignore_power_button = false
+ignore_power_switch = false
 
 [metadata.voctomix2]
 rev = "main"
