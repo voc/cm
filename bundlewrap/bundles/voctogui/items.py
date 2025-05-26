@@ -11,7 +11,6 @@ files['/opt/voctomix2/voctogui-config.ini'] = {
         'high_dpi': node.metadata.get('voctogui/high_dpi'),
         'play_audio': node.metadata.get('voctogui/play_audio'),
         'vaapi': node.metadata.get('voctogui/vaapi'),
-        'video_display': node.metadata.get('voctogui/video_display'),
     },
     'triggers': {
         'svc_systemd:voctomix2-voctogui:restart',
