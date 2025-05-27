@@ -1,4 +1,6 @@
-nameservers = ['10.73.0.254']
+# This is only used for the unbound resolver. All other systems default to
+# using 10.73.0.254 as their only resolver.
+nameservers = ['9.9.9.10', '149.112.112.10']
 
 admin_email = 'voc@c3voc.de'
 
