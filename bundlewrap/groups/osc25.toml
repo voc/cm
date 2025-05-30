@@ -1,0 +1,6 @@
+subgroups = ["saal41", "saal42"]
+
+[metadata.event]
+timezone = "Europe/Berlin"
+name = "openSUSE conference 2025"
+slug = "osc25"

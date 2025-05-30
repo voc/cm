@@ -1,0 +1,9 @@
+bundles = ["thinkfan"]
+groups = ["debian-bookworm"]
+
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
+
+[metadata.interfaces.eth0]
+ips = ["10.73.41.1/16"]
+gateway4 = "10.73.0.254"

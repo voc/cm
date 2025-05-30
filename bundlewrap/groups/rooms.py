@@ -5,6 +5,8 @@ ROOMS = (
     4,
     5,
     6,
+    41, # osc1
+    42, # osc2
     23, # cccb
     28, # GLT / realraum Graz
     80, # muccc

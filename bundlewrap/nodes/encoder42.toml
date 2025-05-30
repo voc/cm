@@ -1,0 +1,29 @@
+groups = ["debian-bookworm"]
+
+[metadata.crs-worker.secrets]
+encoding.secret = "!kee_pass:ansible|worker-groups|encoder-osc2"
+encoding.token = "!kee_user:ansible|worker-groups|encoder-osc2"
+#meta.secret = "!kee_pass:ansible|worker-groups|encoder-osc2-meta"
+#meta.token = "!kee_user:ansible|worker-groups|encoder-osc2-meta"
+
+[metadata.event]
+room_name = "Galerie"
+
+[metadata.interfaces.eth0]
+ips = ["10.73.42.3/16"]
+gateway4 = "10.73.0.254"
+
+[metadata.voctocore]
+streaming_auth_key = "!decrypt:encrypt$gAAAAABkZ3VNlLHwDEQAnOihKTvCImkEfasXUvVni5iT7pYtDLoqdRrBVlWrlLia7Ml7cs7qL1l-3Mi0tOgEEDt8PuXk6SrjVb32QbpCG0OO53tvbyZpY48="
+
+[metadata.voctocore.sources.cam1]
+devicenumber = 1
+mode = "1080i50"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 5
+mode = "1080p25"
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"

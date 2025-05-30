@@ -1,0 +1,6 @@
+bundles = ["thinkfan"]
+groups = ["debian-buster"]
+
+[metadata.interfaces.eth0]
+ips = ["10.73.42.1/16"]
+gateway4 = "10.73.0.254"

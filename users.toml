@@ -636,7 +636,7 @@ enable_rz = true
 enable_event = true
 uid = 1183
 ssh_pubkeys = [
-  "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLso8GLuv4arQGhIfeb3dPIW8QSdw0rsHs2ur4W2fL2C9usQMVbErcYUbMi6JrsXW8z7Xs1ojyzC29P/jRJg1ok="
+  "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLso8GLuv4arQGhIfeb3dPIW8QSdw0rsHs2ur4W2fL2C9usQMVbErcYUbMi6JrsXW8z7Xs1ojyzC29P/jRJg1ok=",
 ]
 
 [av]
@@ -645,4 +645,14 @@ enable_event = true
 uid = 1184
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhiv7w9bZ9pF05vDZtdcissWiVCZFoz8n9lF00UAVWo",
+]
+
+
+[lethliel]
+enable_rz = true
+enable_event = true
+uid = 1185
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLuuGPB43Dmxmv5dZwHLfkA6IzozGiWQ24G9EszYegn",
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMBD7odF5NWLcptCMXGx/q3iabXF7uElp9pkQdU5Tgxi",
 ]
