@@ -21,12 +21,20 @@ dhcp = true
 streaming_auth_key = "!decrypt:encrypt$gAAAAABoPzoC-efeDT21jCbAvLE3IVtCfnJob0EC2IqLEG-80ih_UtEaoDZ2E-7UqUCwrW4SwnknRmK-AgQle_bbbJpUUO-93UgdVgGhVyz7wDPqKr16ehY="
 
 [metadata.voctocore.sources.cam1]
+devicenumber = 0
+mode = "1080p50"
+
+[metadata.voctocore.sources.cam2]
 devicenumber = 1
-mode = "1080i50"
+mode = "1080p50"
+
+[metadata.voctocore.sources.cam3]
+devicenumber = 2
+mode = "1080p50"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 2
-mode = "1080p25"
+devicenumber = 3
+mode = "1080p50"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
