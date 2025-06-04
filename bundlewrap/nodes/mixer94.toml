@@ -1,0 +1,35 @@
+hostname = "172.19.164.93"
+#hostname = "10.73.94.1"
+bundles = [
+  'nodejs',
+  'git-repo',
+  'bitfocus-companion',
+]
+groups = ["debian-bookworm"]
+
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
+
+[metadata.interfaces.eno2]
+ips = ["10.73.94.1/16"]
+dhcp = true
+
+#[metadata.pygtk-atem-switcher.atem]
+#ip = "10.73.94.40"
+#settings.inputs.input1 = "In1"
+#settings.inputs.input2 = "In2"
+#settings.inputs.input3 = "In3"
+
+[metadata.systemd]
+# power button handling is disabled for mixers by default
+ignore_power_switch = false
+
+[metadata.voctomix2]
+rev = "main"
+
+[metadata.voctogui]
+high_dpi = false
+vaapi = true
+
+[metadata.bitfocus-companion]
+version = 'v3.5.4'
