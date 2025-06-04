@@ -37,8 +37,8 @@ def nodejs_from_version(metadata):
                 'repos': {
                     'nodejs': {
                         'items': {
-                            f'deb https://deb.nodesource.com/node_{version}.x {{os_release}} main',
-                            f'deb-src https://deb.nodesource.com/node_{version}.x {{os_release}} main',
+                            f'deb https://deb.nodesource.com/node_{version}.x nodistro main',
+                            f'deb-src https://deb.nodesource.com/node_{version}.x nodistro main',
                         },
                     },
                 },

@@ -10,10 +10,10 @@ except ModuleNotFoundError:
 defaults = {
     'apt': {
         'packages': {
-            'jq': {},
-            'libgusb-dev': {},
             'build-essential': {},
             'cmake': {},
+            'jq': {},
+            'libgusb-dev': {},
             'libudev-dev': {},
             'libusb-1.0-0-dev': {},
         },
@@ -48,10 +48,15 @@ defaults = {
     'git-repo': {
         '/opt/bitfocus-companion': {
             'repo': 'https://github.com/bitfocus/companion.git',
-            'submodules': True,
             'deploy_triggers': {
                 'svc_systemd:bitfocus-companion:restart',
             },
+        },
+    },
+    'nodejs': {
+        'version': 22,
+        'additional_packages': {
+            'semver',
         },
     },
     'video-encoder-passwords': {
@@ -173,7 +178,7 @@ def nodejs_version(metadata):
 
     version_to_nodejs = {
         2: 14,
-        3: 18,
+        3: 22,
     }
 
     return {

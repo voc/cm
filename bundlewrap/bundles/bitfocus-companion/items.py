@@ -11,17 +11,64 @@ assert node.has_bundle('nodejs')
 assert node.has_bundle('git-repo')
 
 companion_version = parse(node.metadata.get('bitfocus-companion/version'))
-
 startcmd_by_version = {
-    2: 'node /opt/bitfocus-companion/headless_ip.js 0.0.0.0',
-    3: ' '.join([
-        'node /opt/bitfocus-companion/main.js',
-        '--config-dir /var/opt/bitfocus-companion',
-        f'--machine-id {node.name}',
-        '--log-level info',
-        '--extra-module-path /opt/bitfocus-companion/module-local-dev',
-    ])
+    # min (incl), max (excl)
+    (None, parse('3.0.0')): 'node /opt/bitfocus-companion/headless_ip.js 0.0.0.0',
+    (parse('3.0.0'), parse('3.3.0')): ' '.join(
+        [
+            'node /opt/bitfocus-companion/main.js',
+            '--config-dir /var/opt/bitfocus-companion',
+            f'--machine-id {node.name}',
+            '--log-level info',
+            '--extra-module-path /opt/bitfocus-companion/module-local-dev',
+        ]
+    ),
+    (parse('3.3.0'), parse('3.5.0')): ' '.join(
+        [
+            'node /opt/bitfocus-companion/companion/main.js',
+            '--config-dir /var/opt/bitfocus-companion',
+            f'--machine-id {node.name}',
+            '--log-level info',
+            '--extra-module-path /opt/bitfocus-companion/module-local-dev',
+        ]
+    ),
+    (parse('3.3.0'), None): ' '.join(
+        [
+            'node /opt/bitfocus-companion/dist/main.js',
+            '--config-dir /var/opt/bitfocus-companion',
+            f'--machine-id {node.name}',
+            '--log-level info',
+            '--extra-module-path /opt/bitfocus-companion/module-local-dev',
+            '--admin-address 0.0.0.0',
+            '--admin-port 8000',
+        ]
+    ),
 }
+
+update_cmd = ['tools/upgrade.sh']
+database_enforcer_script = 'jq'
+if companion_version >= parse('3.5.0'):
+    update_cmd = ['yarn', 'ELECTRON=0 yarn dist']
+    database_enforcer_script = 'sqlite'
+
+startcmd = None
+for (minver, maxver), cmd in startcmd_by_version.items():
+    if minver is None:
+        if companion_version < maxver:
+            startcmd = cmd
+            break
+    elif maxver is None:
+        if companion_version > minver:
+            startcmd = cmd
+            break
+    else:
+        if minver <= companion_version < maxver:
+            startcmd = cmd
+            break
+
+assert isinstance(
+    startcmd, str
+), f'{node.name}: found no startcmd for bitfocus-companion version {companion_version}'
 
 directories = {
     '/var/opt/bitfocus-companion': {
@@ -46,7 +93,7 @@ files = {
     '/usr/local/lib/systemd/system/bitfocus-companion.service': {
         'content_type': 'mako',
         'context': {
-            'startcmd': startcmd_by_version[companion_version.major],
+            'startcmd': startcmd,
         },
         'triggers': {
             'action:systemd-reload',
@@ -66,15 +113,21 @@ files = {
         },
     },
     '/var/opt/bitfocus-companion/merge-passwords.py': {
-        'owner': 'companion',
-        'group': 'companion',
-        'mode': '0755',
+        'delete': True,
     },
     '/var/opt/bitfocus-companion/merge-passwords.sh': {
         'delete': True,
     },
+    '/var/opt/bitfocus-companion/merge-passwords': {
+        'source': f'merge-passwords-{database_enforcer_script}',
+        'owner': 'companion',
+        'group': 'companion',
+        'mode': '0755',
+    },
     '/var/opt/bitfocus-companion/passwords.json': {
-        'content': repo.libs.faults.dict_as_json(node.metadata.get('bitfocus-companion/enforce_config')),
+        'content': repo.libs.faults.dict_as_json(
+            node.metadata.get('bitfocus-companion/enforce_config')
+        ),
         'needs': {
             'action:bitfocus-companion_yarn',
         },
@@ -96,15 +149,18 @@ actions = {
         'triggered': True,
     },
     'bitfocus-companion_yarn': {
-        'command': ' && '.join([
-            'cd /opt/bitfocus-companion',
-            'tools/update.sh',
-        ]),
+        'command': ' && '.join(
+            [
+                'cd /opt/bitfocus-companion',
+                'corepack enable',
+                *update_cmd,
+            ]
+        ),
         'needs': {
             'action:git-repo_/opt/bitfocus-companion_checkout',
             'action:git-repo_/opt/bitfocus-companion_clone',
             'action:git-repo_/opt/bitfocus-companion_pull',
-            'action:nodejs_install_yarn',
+            'action:nodejs_install_stuff',
             'pkg_apt:nodejs',
         },
         'triggered_by': {
@@ -113,12 +169,16 @@ actions = {
         'triggered': True,
     },
     'bitfocus-companion_remove_old_node_modules': {
-        'command': ' && '.join([
-            #'rm -rf /opt/bitfocus-companion/node_modules',
-            'rm -rf /usr/local/share/.cache/yarn',
-            'rm -rf /root/.cache/*',
-            'rm -rf /root/.npm/',
-        ]),
+        'command': ' && '.join(
+            [
+                'rm -rf /opt/bitfocus-companion/node_modules',
+                'rm -rf /opt/bitfocus-companion/launcher/node_modules',
+                'rm -rf /opt/bitfocus-companion/webui/node_modules',
+                'rm -rf /usr/local/share/.cache/yarn',
+                'rm -rf /root/.cache/*',
+                'rm -rf /root/.npm/',
+            ]
+        ),
         'triggered': True,
         'triggered_by': {
             'action:git-repo_/opt/bitfocus-companion_checkout',
@@ -145,6 +205,7 @@ svc_systemd = {
 users = {
     'companion': {
         'home': '/var/opt/bitfocus-companion',
+        "uid": 2048,
         'groups': {
             'plugdev',
         },
