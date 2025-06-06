@@ -1,0 +1,6 @@
+subgroups = ["saal1"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Jugend Hackt Frankfurt am Main 2025"
+slug = "jh25_ffm"
