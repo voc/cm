@@ -7,3 +7,9 @@ groups = ["debian-bookworm"]
 [metadata.interfaces.eth0]
 ips = ["10.73.1.1/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.voctomix2]
+rev = "main"
+
+[metadata.voctogui]
+vaapi = true
