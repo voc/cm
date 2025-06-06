@@ -9,7 +9,14 @@ ips = ["10.73.1.1/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctomix2]
-rev = "main"
+rev = "2.2"
 
 [metadata.voctogui]
 vaapi = true
+
+[metadata.pygtk-atem-switcher.atem.settings.inputs]
+# use "x" to hide the button in the UI
+input1 = "LAPTOP 1"
+input2 = "HDMI 2"
+input3 = "x"
+input4 = "info-beamer"
