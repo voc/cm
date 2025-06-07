@@ -1,4 +1,4 @@
-files['/etc/slim.conf'] = {
+files['/etc/sddm.conf.d/mixerlogin'] = {
     'triggers': {
         'svc_systemd:display-manager:restart',
     },
@@ -6,11 +6,19 @@ files['/etc/slim.conf'] = {
 
 svc_systemd['display-manager'] = {
     'needs': {
-        'pkg_apt:slim',
-        'file:/etc/slim.conf',
+        'pkg_apt:sddm',
+        'file:/etc/sddm.conf.d/mixerlogin',
     },
     'tags': {
         'causes-downtime',
+    },
+}
+
+actions['set-sddm'] = {
+    'command': 'dpkg-reconfigure sddm',
+    'triggered': True,
+    'after': {
+        'pkg_apt:sddm',
     },
 }
 

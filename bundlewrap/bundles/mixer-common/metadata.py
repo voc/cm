@@ -7,7 +7,11 @@ defaults = {
             'irssi': {},
             'kitty': {},
             'netcat-openbsd': {},
-            'slim': {},
+            'sddm': {
+                'triggers': [
+                    'action:set-sddm'
+                ],
+            },
             'x11-utils': {},
             'x11-xserver-utils': {},
             'x11vnc': {},
