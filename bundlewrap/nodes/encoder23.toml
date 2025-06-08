@@ -13,7 +13,7 @@ secret = "!kee_pass:ansible|worker-groups|encoder23"
 [metadata.event]
 name = "Datengarten"
 slug = "datengarten"
-room_name = "CCCB"
+room_name = "Saal23"
 
 [metadata.grub.cmdline_linux]
 "net.ifnames" = "1"
@@ -26,10 +26,16 @@ gateway4 = "10.73.0.254"
 ssh_pubkeys = [
     # mixer23 is not managed by c3voc
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJEnvStfXkSUbWG8EV5yasIOvHtUVTy6MlhhGGJR/ILe voc@mixer23",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE+jMGu4YqNOOn7AOw6Ce2P5WOVVfXTMO9Jh+v7yy2Gg ori@shuttle",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBXRJknnzFqSZ8eqGYoWtpUeLHWCvd5ucZIwqyvIrkjj murmeldin@miracunix"
 ]
+
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYlFsu6DijyYdXA0ND56Q8IqoZ9Q3YCfqpIfcKJXvxdgD2mlKLgsQi_7Kj99leU2f1Qk-sw-gOWpYy6fob7Wj9pUJfzD60ubwLy88tLW8VJlPcM="
+streaming_use_dynaudnorm = false
+parallel_slide_streaming = false
+mirror_view = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 0
