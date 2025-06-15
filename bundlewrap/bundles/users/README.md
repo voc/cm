@@ -22,6 +22,7 @@ configs, if user-specific configuration exists.
 ## custom shell config
 Deploy your custom config to these paths:
 
-* data/users/files/tmux/username.conf
-* data/users/files/fish/username.conf
-* data/users/files/bash/username.bashrc
+* data/users/files/bashrc/username
+* data/users/files/screenrc/username
+* data/users/files/ssh_config/username
+* data/users/files/tmux-conf/username
