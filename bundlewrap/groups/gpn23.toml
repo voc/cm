@@ -1,6 +1,7 @@
-subgroups = ["saal1", "saal2", "saal3", "servercase"]
+subgroups = ["saal94", "saal2", "saal3", "servercase"]
 members = ["releasing"]
 
 [metadata.event]
 name = "23. Gulaschprogrammiernacht"
 slug = "gpn23"
+schedule_json = "https://cfp.gulas.ch/gpn23/schedule/export/schedule.json"

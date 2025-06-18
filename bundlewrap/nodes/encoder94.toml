@@ -10,7 +10,7 @@ encoding.secret = "!decrypt:encrypt$gAAAAABoPzl5EyCYLqrrAQC0RGNAPydnHSzsMTIsLdxA
 encoding.token = "!decrypt:encrypt$gAAAAABoPzlXzvkh--C05TzCH_PwKIEPgb7RWcVoQOKCrkbXtiJVpyHS51OVXF1leL5IRWg-hyEYUjfqZdLfOyGF4coRSAZYSIxgnIlzhZcmLXRR9-DBv1diNG5e6acT33cIWt5Qno-W"
 
 [metadata.event]
-room_name = "sophie"
+room_name = "ZKM Medientheater"
 
 [metadata.interfaces.eno2]
 ips = ["10.73.94.3/16"]
