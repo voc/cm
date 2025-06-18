@@ -56,8 +56,8 @@ options.subnet-mask = "255.255.0.0"
 
 [metadata.radvd.interfaces.ens19]
 # only active if ens18 has ipv6 gateway, check bundle README
-#prefix = "2a0e:c5c1:0:1000::/64" # gpn23
-#rdnss = ["2a0e:c5c1:0:1000::201"]
+prefix = "2a0e:c5c1:0:1000::/64" # gpn23
+rdnss = ["2a0e:c5c1:0:1000::201"]
 #prefix = "2001:67c:20a1:3504::/64"
 #rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
 

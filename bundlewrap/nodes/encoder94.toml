@@ -1,4 +1,4 @@
-hostname = "172.19.164.90"
+hostname = "10.73.94.3"
 bundles = ["zfs"]
 groups = ["debian-bookworm"]
 
@@ -14,8 +14,8 @@ room_name = "ZKM Medientheater"
 
 [metadata.interfaces.eno2]
 ips = ["10.73.94.3/16"]
-#gateway4 = "10.73.0.254"
-dhcp = true
+gateway4 = "10.73.0.254"
+#dhcp = true
 
 [metadata.voctomix2]
 rev = "main"
