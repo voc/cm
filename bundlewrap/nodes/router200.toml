@@ -22,20 +22,26 @@ privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4v
 
 [metadata.interfaces.ens18]
 ips = [
-    "188.172.114.72/28", # seibert wiesbaden
-    "94.45.241.105/24", # c3noc event
-    "2001:67c:20a1:2241::105/64", # c3noc event
+  "151.218.2.2/26", # gpn23
+  #"2a0e:c5c1:0:1000::2/64", # gpn23
+  #"188.172.114.72/28", # seibert wiesbaden
+  #  "94.45.241.105/24", # c3noc event
+  # "2001:67c:20a1:2241::105/64", # c3noc event
 ]
-gateway4 = "188.172.114.65" # seibert wiesbaden
+gateway4 = "151.218.2.1" # gpn23
+#gateway4 = "188.172.114.65" # seibert wiesbaden
 #gateway4 = "94.45.241.1" # c3noc event
 #gateway6 = "2001:67c:20a1:2241::1" # c3noc event
+#gateway6 = "2a0e:c5c1:0:1000::1" # gpn23
 dhcp = false
 
 [metadata.interfaces.ens19]
 ips = [
     "10.73.0.254/16",
     "10.73.200.201/16",
-    "2001:67c:20a1:3504:10:73:200:201/64",
+    # "2001:67c:20a1:3504:10:73:200:201/64", # c3noc event
+  #"2a0e:c5c1:0:1000::201/64", # gpn23
+
 ]
 
 [metadata.isc-dhcp-server.subnets.ens19]
@@ -50,8 +56,10 @@ options.subnet-mask = "255.255.0.0"
 
 [metadata.radvd.interfaces.ens19]
 # only active if ens18 has ipv6 gateway, check bundle README
-prefix = "2001:67c:20a1:3504::/64"
-rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
+#prefix = "2a0e:c5c1:0:1000::/64" # gpn23
+#rdnss = ["2a0e:c5c1:0:1000::201"]
+#prefix = "2001:67c:20a1:3504::/64"
+#rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
 
 [metadata.snmp-temperature-monitoring]
 comware5 = [
