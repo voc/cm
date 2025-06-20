@@ -5,3 +5,6 @@ members = ["releasing"]
 name = "23. Gulaschprogrammiernacht"
 slug = "gpn23"
 schedule_json = "https://cfp.gulas.ch/gpn23/schedule/export/schedule.json"
+
+[metadata.voctocore]
+enable_sbs_presets_for_multi_camera = false

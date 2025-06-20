@@ -1,5 +1,5 @@
-hostname = "172.19.164.93"
-#hostname = "10.73.94.1"
+#hostname = "172.19.164.93"
+hostname = "10.73.94.1"
 bundles = [
   'nodejs',
   'git-repo',
@@ -12,7 +12,7 @@ groups = ["debian-bookworm"]
 
 [metadata.interfaces.eno2]
 ips = ["10.73.94.1/16"]
-dhcp = true
+#dhcp = true
 
 #[metadata.pygtk-atem-switcher.atem]
 #ip = "10.73.94.40"
