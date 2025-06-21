@@ -52,6 +52,13 @@ else:
         'script': 'script-D-encoding.pl',
     }
 
+if node.metadata.get('crs-worker/separate_vaapi_worker', False):
+    WORKER_SCRIPTS['encoding-vaapi'] = {
+        'secret': 'vaapi',
+        'script': 'script-D-encoding.pl',
+    }
+
+
 directories['/opt/crs-scripts'] = {}
 git_deploy['/opt/crs-scripts'] = {
     'repo': 'https://github.com/crs-tools/crs-scripts.git',
@@ -181,6 +188,7 @@ for worker, config in WORKER_SCRIPTS.items():
         'source': 'crs-runner.service',
         'context': {
             'autostart': (worker in autostart_scripts),
+            'pin_to_performance': node.metadata.get('crs-worker/pin_to_performance'),
             'script': config['script'],
             'secret': config['secret'],
             'systemd_after': node.metadata.get('crs-worker/systemd_after', set()),

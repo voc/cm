@@ -23,6 +23,7 @@ defaults = {
         'autostart_scripts': set(),
         'number_of_encoding_workers': 1,
         'use_vaapi': False,
+        'pin_to_performance': False,
     },
 }
 

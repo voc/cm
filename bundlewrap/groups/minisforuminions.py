@@ -12,6 +12,17 @@ groups["minisforuminions"] = {
         'zfs'
     },
     'metadata': {
+        'apt': {
+            'packages': {
+                "intel-media-va-driver-non-free": {},
+                "firmware-misc-nonfree": {},
+            },
+        },
+        'crs-worker': {
+            'number_of_encoding_workers': 2,
+            'pin_to_performance': True,
+            'separate_vaapi_worker': True,
+        },
         'systemd-networkd': {
             'bridges': {
                 'br0': {
@@ -22,6 +33,11 @@ groups["minisforuminions"] = {
                         'enp2s0f1',
                     ],
                 },
+            },
+        },
+        'users': {
+            'voc': {
+                'groups': ['render', 'video'],
             },
         },
         'zfs': {
