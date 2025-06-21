@@ -5,6 +5,7 @@ supported_os = {
         10: 'buster',
         11: 'bullseye',
         12: 'bookworm',
+        13: 'trixie',
         99: 'unstable',
     },
     'raspbian': {

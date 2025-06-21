@@ -105,6 +105,10 @@ groups['debian-bookworm'] = {
     'os_version': (12,)
 }
 
+groups['debian-trixie'] = {
+    'os_version': (13,)
+}
+
 groups['debian-sid'] = {
     'os_version': (99,)
 }
