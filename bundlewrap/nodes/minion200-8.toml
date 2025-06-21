@@ -1,4 +1,4 @@
-groups = ["debian-bookworm"]
+groups = ["debian-trixie"]
 
 [metadata.interfaces.ens18]
 ips = ["10.73.200.108/16"]

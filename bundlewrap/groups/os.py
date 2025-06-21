@@ -45,6 +45,7 @@ groups['debian'] = {
         'debian-buster',
         'debian-bullseye',
         'debian-bookworm',
+        'debian-trixie',
         'debian-sid',
     },
     'bundles': {
