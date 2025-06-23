@@ -1,0 +1,7 @@
+subgroups = ["saal4", "saal5"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Fusion ConTent 2025"
+slug = "fusion25"
+schedule_json = "https://data.c3voc.de/fusion25/schedule.json"
