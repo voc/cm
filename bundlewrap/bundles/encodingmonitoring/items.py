@@ -8,6 +8,10 @@ actions['ffmpeg2mqtt_create_virtualenv'] = {
         'directory:/opt/ffmpeg2mqtt/src',
         'pkg_apt:python3-virtualenv',
     },
+    'triggers': {
+        'action:ffmpeg2mqtt_install',
+        'svc_systemd:ffmpeg2mqtt:restart',
+    },
 }
 
 git_deploy['/opt/ffmpeg2mqtt/src'] = {
