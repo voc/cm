@@ -7,3 +7,10 @@ groups = ["debian-bookworm"]
 [metadata.interfaces.eth0]
 ips = ["10.73.4.1/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.pygtk-atem-switcher.atem]
+[metadata.pygtk-atem-switcher.atem.settings.inputs] # these are defaults
+input1 = "Laptop"
+input2 = "x"
+input3 = "x"
+input4 = "x"

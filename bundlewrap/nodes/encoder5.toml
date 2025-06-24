@@ -4,6 +4,16 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages.intel-media-va-driver-non-free]
 [metadata.apt.packages.i965-va-driver]
 
+[metadata.crs-worker]
+autostart_scripts = [
+    "recording-scheduler",
+    "mount4cut",
+    "cut-postprocessor",
+    "encoding",
+    "postencoding",
+    "postprocessing",
+]
+
 [metadata.crs-worker.secrets]
 encoding.secret = "!kee_pass:ansible|worker-groups|encoder5"
 encoding.token = "!kee_user:ansible|worker-groups|encoder5"
@@ -18,6 +28,7 @@ ips = ["10.73.5.3/16"]
 gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
+should_be_running = false
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYkgCo1Orl_R7yyMpMUhESSGiBvMRZy6J3DXw7PWsS7XDvmYjJktYpwn-pdO_CnHzoxbB1OpBh-MfdPZnt7WTA7Vh7V55KPjGpnj73uCHn6fpu8="
 
 [metadata.voctocore.sources.cam1]
