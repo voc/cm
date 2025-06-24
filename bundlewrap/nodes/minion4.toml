@@ -1,4 +1,4 @@
-groups = ["debian-buster"]
+groups = ["debian-bookworm"]
 
 [metadata.crs-worker]
 autostart_scripts = [
