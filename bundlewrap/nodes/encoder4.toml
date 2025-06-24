@@ -34,10 +34,10 @@ mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam1"
+input = "cam2"
 
 [metadata.voctocore.audio.translated-1]
-input = "cam2"
+input = "cam1"
 streams = "0+0"
 
 [metadata.zfs.pools.video.when_creating]
