@@ -21,15 +21,15 @@ gateway4 = "10.73.0.254"
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkOSJp-QhuKBK7z_nzRUB1PvApqUVass_DtnkWLZRnlv0hUr8p-B3UEIFQdGY0PShXDVFX8R4A9LHE5BdBef5RSw5JLtYoato3u-q-4pkdp0rollI="
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 1
+devicenumber = 0
 mode = "1080i50"
 
 [metadata.voctocore.sources.cam2]
-devicenumber = 3
+devicenumber = 1
 mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 5
+devicenumber = 4
 mode = "1080p25"
 
 [metadata.voctocore.audio.original]
@@ -38,7 +38,7 @@ input = "cam1"
 
 [metadata.voctocore.audio.translated-1]
 input = "cam2"
-streams = "0"
+streams = "0+0"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
