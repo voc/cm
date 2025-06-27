@@ -7,3 +7,6 @@ groups = ["debian-bookworm"]
 [metadata.interfaces.eth0]
 ips = ["10.73.41.1/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.voctogui]
+high_dpi  = false
