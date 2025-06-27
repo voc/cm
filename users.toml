@@ -656,3 +656,12 @@ ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDLuuGPB43Dmxmv5dZwHLfkA6IzozGiWQ24G9EszYegn",
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMBD7odF5NWLcptCMXGx/q3iabXF7uElp9pkQdU5Tgxi",
 ]
+
+[wengel]
+enable_rz = false
+enable_event = true
+uid = 1186
+ssh_pubkeys = [
+  "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtfFatMlXdaXchbQttD9Y7mObtZPhCudgA0IEiI7EwvYaURyBJvNngy1q9h3u2FgRDj4SKb5euHyBO0wsFJnazeLmoighIIywfAivKw+CI6B6bV1cdATZqO3pONVCelINTfbI7cUNC5AOhMiCoioi7PgtJfccueiuyefSeLkD9ssuRJmDOqJyM9REgOV4mbYNuJDoluF49Iq1ryRPzH0Lt4On84TsYJfpN3lUEVCDVORIdNpF+l4S4zJXKle/GIWFNmwkaqB4WKz5R4tbKat99nK5vJhWdaTWBahvc1kWaeEB3uY+B4t4OmaF0JRNC/FKCKcUiCyP/UGKiYgb2BdeqQ==",
+]
+
