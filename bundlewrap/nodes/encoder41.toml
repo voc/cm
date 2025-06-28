@@ -17,11 +17,11 @@ gateway4 = "10.73.0.254"
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkZ3SZDZReq48XFExoLOUvnyf4PO_mY9x-dvpdkkIqcfFte2lPcohXv0e-v2BPfMezv8l7S34EgXP1DEB6IaBLThtHwbJILKVAWCWvd__hmyZwB4o="
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 1
+devicenumber = 0
 mode = "1080p25"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 0
+devicenumber = 1
 mode = "1080p25"
 hdmi = true
 
