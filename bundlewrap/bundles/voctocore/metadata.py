@@ -40,6 +40,7 @@ defaults = {
         'streaming_use_dynaudnorm': False,
         'translators_premixed': False,
         'vaapi': False,
+        'fps': 25,
     },
     'voctomix2': {
         'deploy_triggers': {

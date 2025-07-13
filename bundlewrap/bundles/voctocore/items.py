@@ -117,6 +117,7 @@ files["/opt/voctomix2/voctocore-config.ini"] = {
         "room_name": node.metadata.get("event/room_name", ""),
         "sources": sources,
         "vaapi_enabled": node.metadata.get("voctocore/vaapi"),
+        "fps": node.metadata.get("voctocore/fps"),
     },
     "triggers": {
         "svc_systemd:voctomix2-voctocore:restart",
