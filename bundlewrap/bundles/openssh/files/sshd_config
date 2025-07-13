@@ -33,11 +33,11 @@ MaxSessions 512
 MaxStartups 512:30:768
 
 Subsystem sftp internal-sftp
-% if allow_password_auth_for_voc_range:
+% for address in allow_password_auth_for_addresses:
 
-Match Address 10.73.0.0/16
+Match Address ${address}
     PasswordAuthentication yes
-% endif
+% endfor
 
 Match Group sftp
     ChrootDirectory %h

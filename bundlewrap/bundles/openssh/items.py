@@ -13,7 +13,7 @@ files = {
         'context': {
             'login_users': login_users,
             'admin_users': users_from_metadata,
-            'allow_password_auth_for_voc_range': node.metadata.get('openssh/allow_password_auth_for_voc_range', True),
+            'allow_password_auth_for_addresses': node.metadata.get('openssh/allow_password_auth_for_addresses', ['10.73.0.0/16']),
         },
         'triggers': {
             'action:sshd_check_config',
