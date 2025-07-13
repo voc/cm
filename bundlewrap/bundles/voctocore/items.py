@@ -50,10 +50,14 @@ preset_camera_sources = sorted(
 # fullscreen sources
 for source in sorted(sources.keys()):
     icon = None
+    source_kind = sources[source].get("kind")
+
     if source == "slides":
         icon = "slides.svg"
     elif source.startswith("cam"):
         icon = "speaker.svg"
+    elif source_kind == "alsa" or source_kind == "pa":
+        continue
     presets[f"fs_{source}"] = {
         "name": source.upper(),
         "icon": icon,
