@@ -1,0 +1,72 @@
+bundles = ["zfs"]
+groups = ["debian-bookworm"]
+
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
+
+[metadata]
+hostname = "encoderccchh"
+room_number = 22
+nameservers = ['172.31.200.1', '192.168.31.1']
+
+[metadata.firewall.port_rules]
+'*' = ['voc-internal', 'voc-vpn', 'rfc1918']
+
+[metadata.openssh]
+allow_password_auth_for_addresses = ['10.73.0.0/16', '172.31.200.0/23', '192.168.31.0/24']
+
+[metadata.crs-worker.secrets]
+encoding.secret = "!decrypt:encrypt$gAAAAABoRfHPfrDISiJPvGu8UDC-fc9snh-RgMe-FSKy2OzKDXddImz6Cn_Bw9cB-q6fI0_fPM9WkRv-nXKXNfc1uEAsnUHYZukD4Qj3p3T9fZyLhMmkp9_1Z2rK0LGr3PQ8nRb-uL4M"
+encoding.token = "!decrypt:encrypt$gAAAAABoRfHpVJfULOV-a7BOf0gipsmRE2bRTznxYcujd6ZJl-F2eo1IFkaEdnY0rPXd4aOl6-UdmsxacbLnfMaBWjVZniKTB1n7aBVOZ5PcLPGqreeU7ayoFMHvP0egpH5x1Kc84RyH"
+meta.secret = "!decrypt:encrypt$gAAAAABoRfJB3jDrQoUCgjFqtE_HqmTziOw_ulaa_o64P_xMd3oGlmnKzMAwnYpGYd2A2t-Vozg6pIG6drv7tcgOrlDYctFuX7gfrLHbtgsU7GWc-baG6SVfOSBreG_UpOFl0zED6Qhl"
+meta.token = "!decrypt:encrypt$gAAAAABoRfIwO1VS1mdlh-KgiYURl-pxXl8hpR7Bh8MlBP2swJjrbhYKlJ3TeC0TWC85zeNLlq0cfgiXvRWDv6J08tFZ154sJ3h06V3zqmAKvHPuPHotJCP0zueixXJ-Z1xrjisdLCXj"
+
+[metadata.event]
+room_name = "CCCHH"
+
+[metadata.interfaces.eth0]
+dhcp = false
+#ips = ["10.73.22.3/16"]
+ips = ["192.168.31.22/24"]
+gateway4 = "192.168.31.1"
+
+[metadata.voctomix2]
+rev = "2.2"
+
+[metadata.voctocore]
+streaming_auth_key = "!decrypt:encrypt$gAAAAABoRfGYh2KMO5avBCH0D27Iv0zkP733l9D5rYNEGpLbIS4HRjlVlX-hnGKPJ4yYz9c9fJD5EQWZV7bbJ2tkn8jzD4wKVddviBNK7-aH7CK2SegPl_0="
+vaapi = true
+fps = 30
+parallel_slide_recording = false
+parallel_slide_streaming = false
+
+# Manual config:
+# sudo apt install alsa-utils
+# Note: voctomix seems to work with hw, plughw; sysdefault has really bad artifacts; default and usbstream do not work at all
+# But hw also had some audio artifacts from time to time/ at mid to high audio levels.
+[metadata.voctocore.sources.audio]
+kind = "alsa"
+device = "hw:CARD=Hagibis,DEV=0"
+
+[metadata.voctocore.sources.cam1]
+kind = "v4l2"
+device = "/dev/video0"
+width = "1920"
+height = "1080"
+framerate = "30/1"
+format = "YUY2"
+
+[metadata.voctocore.sources.slides]
+kind = "test"
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "audio"
+
+[metadata.zfs.pools.video.when_creating]
+ashift = 12
+
+[[metadata.zfs.pools.video.when_creating.config]]
+devices = [
+  "/dev/disk/by-id/ata-CT500MX500SSD1_1752E108E6E5",
+]

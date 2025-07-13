@@ -1,0 +1,38 @@
+# remap prefix to Ctrl + a
+set -g prefix C-a
+unbind C-b
+bind C-a send-prefix
+
+# force a reload of the config file
+unbind r
+bind r source-file ~/.tmux.conf
+
+# shorter timing
+set -g repeat-time 200
+
+# configure mouse
+setw -g mouse on
+
+# don't rename windows automatically
+set-option -g allow-rename off
+
+# set some other options
+setw -g mode-keys vi
+set -g default-terminal "screen-256color"
+
+# use index from 1 for easier typing/ switching
+set -g base-index 1
+setw -g pane-base-index 1
+
+# status bar
+#set -g status-right '#[fg=white]#(hostname)@#(host `hostname` | cut -d " " -f 4)'
+set-window-option -g status-left " #S "
+set-window-option -g status-left-style fg=black,bg=white
+
+set-window-option -g status-right " %H:%M %Y-%m-%d | #(hostname) "
+set-window-option -g status-right-style fg=black,bg=white
+
+set-window-option -g window-status-format " #I: #W "
+
+set-window-option -g window-status-current-format " #I: #W "
+set-window-option -g window-status-current-style fg=green,bg=black
