@@ -1,16 +1,16 @@
 {
     "interfaces": {
         "ether1": {
-            "description": "",
+            "description": "Public event net",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
+            "untagged_vlan": "public"
         },
         "ether10": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -19,7 +19,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether11": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -28,7 +28,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether12": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -37,7 +37,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether13": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -46,7 +46,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether14": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -55,7 +55,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether15": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -64,7 +64,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether16": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -73,7 +73,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether17": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -82,7 +82,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether18": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -91,7 +91,7 @@
             "untagged_vlan": "voc-intern"
         },
         "ether19": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -100,16 +100,16 @@
             "untagged_vlan": "voc-intern"
         },
         "ether2": {
-            "description": "",
+            "description": "Public event net",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
+            "untagged_vlan": "public"
         },
         "ether20": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
@@ -118,117 +118,124 @@
             "untagged_vlan": "voc-intern"
         },
         "ether21": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "public"
+            "untagged_vlan": "voc-intern"
         },
         "ether22": {
-            "description": "",
+            "description": "VOC devices",
             "enabled": true,
             "ips": [],
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "public"
+            "untagged_vlan": "voc-intern"
         },
         "ether23": {
-            "description": "",
+            "description": "Module interconnection trunk",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "TAGGED_ALL",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "public"
-        },
-        "ether24": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "ACCESS",
-            "tagged_vlans": [],
-            "type": "A_1000BASE_T",
-            "untagged_vlan": "public"
-        },
-        "ether3": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "ACCESS",
-            "tagged_vlans": [],
-            "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
-        },
-        "ether4": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "ACCESS",
-            "tagged_vlans": [],
-            "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
-        },
-        "ether5": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "ACCESS",
-            "tagged_vlans": [],
-            "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
-        },
-        "ether6": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "ACCESS",
-            "tagged_vlans": [],
-            "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
-        },
-        "ether7": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "ACCESS",
-            "tagged_vlans": [],
-            "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
-        },
-        "ether8": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "ACCESS",
-            "tagged_vlans": [],
-            "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
-        },
-        "ether9": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "ACCESS",
-            "tagged_vlans": [],
-            "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
-        },
-        "sfp-sfpplus1": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": "TAGGED",
-            "tagged_vlans": [
-                "voc-intern"
-            ],
-            "type": "A_10GBASE_X_SFPP",
             "untagged_vlan": null
         },
-        "sfp-sfpplus2": {
+        "ether24": {
+            "description": "Module interconnection trunk",
+            "enabled": true,
+            "ips": [],
+            "mode": "TAGGED_ALL",
+            "tagged_vlans": [],
+            "type": "A_1000BASE_T",
+            "untagged_vlan": null
+        },
+        "ether3": {
+            "description": "Public event net",
+            "enabled": true,
+            "ips": [],
+            "mode": "ACCESS",
+            "tagged_vlans": [],
+            "type": "A_1000BASE_T",
+            "untagged_vlan": "public"
+        },
+        "ether4": {
+            "description": "Public event net",
+            "enabled": true,
+            "ips": [],
+            "mode": "ACCESS",
+            "tagged_vlans": [],
+            "type": "A_1000BASE_T",
+            "untagged_vlan": "public"
+        },
+        "ether5": {
+            "description": "LAN Ports for speaker notebooks",
+            "enabled": true,
+            "ips": [],
+            "mode": "ACCESS",
+            "tagged_vlans": [],
+            "type": "A_1000BASE_T",
+            "untagged_vlan": "speaker-lan"
+        },
+        "ether6": {
+            "description": "LAN Ports for speaker notebooks",
+            "enabled": true,
+            "ips": [],
+            "mode": "ACCESS",
+            "tagged_vlans": [],
+            "type": "A_1000BASE_T",
+            "untagged_vlan": "speaker-lan"
+        },
+        "ether7": {
+            "description": "LAN Ports for speaker notebooks",
+            "enabled": true,
+            "ips": [],
+            "mode": "ACCESS",
+            "tagged_vlans": [],
+            "type": "A_1000BASE_T",
+            "untagged_vlan": "speaker-lan"
+        },
+        "ether8": {
+            "description": "LAN Ports for speaker notebooks",
+            "enabled": true,
+            "ips": [],
+            "mode": "ACCESS",
+            "tagged_vlans": [],
+            "type": "A_1000BASE_T",
+            "untagged_vlan": "speaker-lan"
+        },
+        "ether9": {
+            "description": "VOC devices",
+            "enabled": true,
+            "ips": [],
+            "mode": "ACCESS",
+            "tagged_vlans": [],
+            "type": "A_1000BASE_T",
+            "untagged_vlan": "voc-intern"
+        },
+        "public": {
             "description": "",
+            "enabled": true,
+            "ips": [],
+            "mode": null,
+            "tagged_vlans": [],
+            "type": "VIRTUAL",
+            "untagged_vlan": null
+        },
+        "sfp-sfpplus1": {
+            "description": "VOC devices",
+            "enabled": true,
+            "ips": [],
+            "mode": "ACCESS",
+            "tagged_vlans": [],
+            "type": "A_10GBASE_X_SFPP",
+            "untagged_vlan": "voc-intern"
+        },
+        "sfp-sfpplus2": {
+            "description": "Module interconnection trunk",
             "enabled": true,
             "ips": [],
             "mode": "TAGGED_ALL",
@@ -240,7 +247,7 @@
             "description": "",
             "enabled": true,
             "ips": [
-                "10.73.96.200/16"
+                "10.73.5.203/24"
             ],
             "mode": null,
             "tagged_vlans": [],
