@@ -1,0 +1,2 @@
+groups = ["switches-mikrotik"]
+hostname = "10.73.3.204"
