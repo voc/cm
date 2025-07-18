@@ -7,7 +7,7 @@ files['/etc/radvd.conf'] = {
     },
     'triggers': {
         'svc_systemd:radvd:restart',
-    },
+    } if SHOULD_BE_RUNNING else set(),
 }
 
 svc_systemd = {
