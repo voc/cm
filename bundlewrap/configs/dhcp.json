@@ -55,6 +55,18 @@
         "description": "hexchen",
         "mac": "54:05:db:ff:be:ae"
     },
+    "10.73.100.129": {
+        "description": "sophie-usbc",
+        "mac": "20:7b:d2:98:5b:60"
+    },
+    "10.73.100.130": {
+        "description": "sophie-usb3",
+        "mac": "84:16:f9:17:f8:43"
+    },
+    "10.73.100.131": {
+        "description": "sophie-dock",
+        "mac": "f8:e4:3b:60:02:31"
+    },
     "10.73.100.17": {
         "description": "scientress / Jenny (ThinkPad)",
         "mac": "54:e1:ad:ef:2d:1e"
@@ -255,8 +267,8 @@
         "description": "minion6",
         "mac": "00:1f:c6:9d:0b:1a"
     },
-    "10.73.94.41": {
-        "description": "companion94",
+    "10.73.94.3": {
+        "description": "encoder94",
         "mac": "98:fa:9b:f4:47:6d"
     },
     "10.73.95.3": {

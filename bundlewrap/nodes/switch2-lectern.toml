@@ -1,0 +1,4 @@
+groups = ["switches-mikrotik"]
+hostname = "10.73.2.204"
+password = "!decrypt:encrypt$gAAAAABoeqieYjVTKXtEazDjYOqVWbwYSSayQfLBDhfdEzOaBYhwzgLsHzK4dZqEiyGoLcebZ89SQW60t8gC7wkIJjZFKU2D5p_lEMQy-MGNPllbZ04NDA7el9m4ukBuWrV3JpQr-nm7"
+os_version = [7]

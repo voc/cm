@@ -2,3 +2,4 @@ groups = ["switches-mikrotik"]
 hostname = "10.73.96.200"
 locking_node = "router96"
 password = "!decrypt:encrypt$gAAAAABmAAF9ndIQtZw0yzikd7U_L6e-8jhikyVn9dJ6lA41jg5U42EzjCgcQZo16bg3hcCrYVtvi-JlWQ4JsWCYU30hkSb7SZFY8JJSL_o_YOl-D1VKNY02ljtlnI3juH38whb3gMv3"
+os_version = [7]

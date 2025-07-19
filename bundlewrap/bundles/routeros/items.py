@@ -1,3 +1,5 @@
+ROUTEROS_VERSION = node.os_version[0]
+
 routeros['/ip/dns'] = {
     'servers': node.metadata.get('nameservers', repo.libs.defaults.nameservers),
 }
@@ -18,7 +20,7 @@ for service in (
     'ssh',
     'www',
 ):
-    routeros[f'/ip/service?name={service}'] = {
+    routeros[f'/ip/service?name={service}'] = { #&dynamic=false'] = {
         'disabled': False,
     }
 
@@ -46,7 +48,7 @@ routeros['/snmp'] = {
     'enabled': True,
 }
 routeros['/snmp/community?name=public'] = {
-    'addresses': '10.73.0.0/16',
+    'addresses': '::/0',
     'disabled': False,
     'read-access': True,
     'write-access': False,
@@ -57,16 +59,26 @@ routeros['/system/clock'] = {
     'time-zone-name': 'UTC',
 }
 
+routeros['/ip/neighbor/discovery-settings'] = {
+    'protocol': 'lldp',
+}
+
 routeros['/system/identity'] = {
     'name': node.name,
     # doing this first gives us some chance to notice an IP mixup
     'before': {'routeros:'},
 }
 
-routeros['/system/ntp/client'] = {
-    'enabled': True,
-    'server-dns-names': 'de.pool.ntp.org',
-}
+if ROUTEROS_VERSION < 7:
+    routeros['/system/ntp/client'] = {
+        'enabled': True,
+        'server-dns-names': 'de.pool.ntp.org',
+    }
+else:
+    routeros['/system/ntp/client'] = {
+        'enabled': True,
+        'servers': 'de.pool.ntp.org',
+    }
 
 if node.metadata.get('routeros/gateway'):
     routeros['/ip/route?dst-address=0.0.0.0/0'] = {
@@ -74,7 +86,8 @@ if node.metadata.get('routeros/gateway'):
     }
 
 routeros['/interface/bridge?name=bridge'] = {
-    'protocol-mode': 'none', # disable stp
+    'protocol-mode': 'none',
+    'igmp-snooping': False,
     'vlan-filtering': True,
 }
 
@@ -158,7 +171,13 @@ for vlan, conf in node.metadata.get('routeros/vlans').items():
         }
 
         # assign ports to vlans
-        routeros[f"/interface/bridge/vlan?vlan-ids={conf['id']}"] = {
+        #
+        # Be sure to only consider non-dynamic VLANs: When you remove a
+        # port from a VLAN (if that VLAN is the PVID of the port) while
+        # the port is UP, then a dynamic temporary VLAN object will be
+        # created in the switch. That is harmless and it will vanish as
+        # soon as the PVID of the port also changes.
+        routeros[f"/interface/bridge/vlan?vlan-ids={conf['id']}&dynamic=false"] = {
             'bridge': 'bridge',
             'untagged': sorted(conf['untagged']),
             'tagged': sorted(conf['tagged']),
@@ -169,3 +188,25 @@ for vlan, conf in node.metadata.get('routeros/vlans').items():
                 'tag:routeros-vlan',
             },
         }
+
+# purge unused vlans
+routeros['/interface/vlan'] = {
+    'purge': {
+        'id-by': 'name',
+    },
+    'needed_by': {
+        'tag:routeros-vlan',
+    }
+}
+
+routeros['/interface/bridge/vlan'] = {
+    'purge': {
+        'id-by': 'vlan-ids',
+        'keep': {
+            'dynamic': True,
+        },
+    },
+    'needed_by': {
+        'tag:routeros-vlan',
+    }
+}
