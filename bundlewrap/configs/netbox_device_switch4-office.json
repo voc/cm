@@ -238,7 +238,7 @@
             "description": "",
             "enabled": true,
             "ips": [
-                "10.73.4.205/24"
+                "10.73.4.205/16"
             ],
             "mode": null,
             "tagged_vlans": [],
