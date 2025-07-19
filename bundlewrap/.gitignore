@@ -1,4 +1,5 @@
 .secrets.cfg*
 __pycache__
 *.swp
-envrc
+.envrc
+.bw_debug_history
