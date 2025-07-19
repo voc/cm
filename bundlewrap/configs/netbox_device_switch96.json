@@ -250,10 +250,6 @@
     },
     "vlans": [
         {
-            "name": "default",
-            "vid": 1
-        },
-        {
             "name": "AES67",
             "vid": 67
         },
