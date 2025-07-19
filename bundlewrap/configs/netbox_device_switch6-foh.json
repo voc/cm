@@ -216,15 +216,6 @@
             "type": "A_1000BASE_T",
             "untagged_vlan": "voc-intern"
         },
-        "public": {
-            "description": "",
-            "enabled": true,
-            "ips": [],
-            "mode": null,
-            "tagged_vlans": [],
-            "type": "VIRTUAL",
-            "untagged_vlan": null
-        },
         "sfp-sfpplus1": {
             "description": "VOC devices",
             "enabled": true,
