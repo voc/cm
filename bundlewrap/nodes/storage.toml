@@ -1,9 +1,19 @@
-bundles = ["encoder-common", "mdadm", "nginx", "samba", "zfs"]
-groups = ["crs-workers", "debian-bookworm"]
+bundles = [
+    "encoder-common",
+    "mdadm",
+    "nginx",
+    "samba",
+    "zfs",
+]
+groups = [
+    "crs-workers",
+    "debian-bookworm",
+]
 
 ipmi_hostname = "10.73.200.4"
 ipmi_username = "root"
 ipmi_password = "!decrypt:encrypt$gAAAAABny_xTBVp9cCPUc-acstouz8J5C6KW36QKmJyZYXs6yL4Ll39p9NxJVwJqsiXwacBOLDQMcE5NDYU1PRS1DR66XZVu8w=="
+ipmi_interface = "lanplus"
 
 # for the occasional repair task, so users can use a dedicated machine
 # to render the output files after preparing in kdenlive
@@ -17,10 +27,14 @@ ipmi_password = "!decrypt:encrypt$gAAAAABny_xTBVp9cCPUc-acstouz8J5C6KW36QKmJyZYX
 swt-colo = "sudo picocom /dev/ttyS0"
 
 [metadata.crs-worker]
+number_of_encoding_workers = 3
 autostart_scripts = [
   "recording-scheduler",
   "mount4cut",
   "cut-postprocessor",
+  "encoding0",
+  "encoding1",
+  "encoding2",
   "postencoding",
   "postprocessing",
 ]
@@ -47,11 +61,12 @@ restrict-to = ["voc-internal", "voc-vpn"]
 domain = "storage.lan.c3voc.de"
 webroot = "/video/encoded"
 
-[metadata.samba.shares.c3voctv]
-path = "/video/c3voctv"
+# disabled on new storage, reenabled if needed
+#[metadata.samba.shares.c3voctv]
+#path = "/video/c3voctv"
 
 [metadata.systemd-networkd.bonds.bond0]
-match = ["enp3s0f0", "enp3s0f1"]
+match = ["ens3f0", "ens3f1"]
 
 [metadata.zfs.module_options]
 zfs_arc_max_gb = 100
@@ -61,35 +76,24 @@ ashift = 12
 
 [[metadata.zfs.pools.video.when_creating.config]]
 devices = [
-  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130269302",
-  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130291135",
-  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130291202",
-  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130298009",
-  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WCC130298111",
-  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B0_WD-WMC130231072",
-  "/dev/disk/by-id/ata-WDC_WD3000FYYZ-01UL1B1_WD-WCC131052364",
-  "/dev/disk/by-id/ata-WDC_WD3003FZEX-00Z4SA0_WD-WMC1F0E0YDS8",
+  "/dev/disk/by-id/wwn-0x500080d9110a6666",  # sdc
+  "/dev/disk/by-id/wwn-0x58ce38ee204ec039",  # sdd
+  "/dev/disk/by-id/wwn-0x58ce38ee204ebff1",  # sde
+  "/dev/disk/by-id/wwn-0x58ce38ee204ec02d",  # sdf
+  "/dev/disk/by-id/wwn-0x500080d9110a8927",  # sdg
+  "/dev/disk/by-id/wwn-0x58ce38ee204ec035",  # sdh
+  "/dev/disk/by-id/wwn-0x58ce38ee2050970d",  # sdi
+  "/dev/disk/by-id/wwn-0x58ce38ee204ec045",  # sdj
+  "/dev/disk/by-id/wwn-0x58ce38ee204ec049",  # sdk
+  "/dev/disk/by-id/wwn-0x58ce38ee204ebff5",  # sdl
 ]
 type = "raidz2"
-
-[[metadata.zfs.pools.video.when_creating.config]]
-devices = [
-  "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV3180015K240CGN-part3",
-  "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part3",
-]
-type = "log"
-
-[[metadata.zfs.pools.video.when_creating.config]]
-devices = [
-  "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV3180015K240CGN-part4",
-  "/dev/disk/by-id/ata-INTEL_SSDSC2CW240A3_CVCV305404BZ240CGN-part4",
-]
-type = "cache"
 
 [metadata.zfs.datasets.'video/giftschrank']
 # storage for stuff we cannot release right now lives here, so we can
 # remove all the other stuff from an event
 mountpoint = "/video/giftschrank"
 
-[metadata.zfs.datasets.'video/c3voctv']
-mountpoint = "/video/c3voctv"
+# disabled on new storage, reenabled if needed
+#[metadata.zfs.datasets.'video/c3voctv']
+#mountpoint = "/video/c3voctv"
