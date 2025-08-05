@@ -21,7 +21,6 @@ defaults = {
             'irqbalance': {},
             'less': {},
             'libdbd-sqlite3': {},
-            'libdbi1': {},
             'lm-sensors': {},
             'manpages': {},
             'moreutils': {},
