@@ -645,3 +645,11 @@ uid = 1184
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhiv7w9bZ9pF05vDZtdcissWiVCZFoz8n9lF00UAVWo",
 ]
+
+[alyx]
+enable_rz = false
+enable_event = true
+uid = 1185
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDOaDVd4X9VnvZNFy+dFtVXUvakNInyiH3NXDLFFhpA alyx@alyx-aspirea51557g",
+]
