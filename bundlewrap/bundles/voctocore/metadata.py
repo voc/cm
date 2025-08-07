@@ -9,6 +9,7 @@ defaults = {
             'fbset': {},
             'gstreamer1.0-libav': {},
             'xauth': {}, # for x11 forwarding
+            'mesa-va-drivers': {}, # contains amd drivers for vaapi
         },
     },
     'extra-commands-on-login': {
