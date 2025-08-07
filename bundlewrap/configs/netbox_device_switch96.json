@@ -264,6 +264,10 @@
         {
             "name": "voc-intern",
             "vid": 3504
+        },
+        {
+            "name": "POC-SIP",
+            "vid": 3510
         }
     ]
 }

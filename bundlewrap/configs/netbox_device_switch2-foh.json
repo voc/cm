@@ -124,7 +124,7 @@
             "mode": "ACCESS",
             "tagged_vlans": [],
             "type": "A_1000BASE_T",
-            "untagged_vlan": "voc-intern"
+            "untagged_vlan": "POC-SIP"
         },
         "ether22": {
             "description": "VOC devices",
@@ -262,6 +262,10 @@
         {
             "name": "voc-intern",
             "vid": 3504
+        },
+        {
+            "name": "POC-SIP",
+            "vid": 3510
         }
     ]
 }
