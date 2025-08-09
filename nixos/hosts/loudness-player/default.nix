@@ -68,6 +68,15 @@ let
     # i3 config file (v4)
     default_border none
 
+    floating_modifier Mod4
+
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+    bindsym $mod+h splith
+    bindsym $mod+v splitv
+
     bar {
       mode dock
       workspace_buttons off
@@ -83,11 +92,11 @@ let
     exec ${mpvWrapper} --title=s3 rtmp://ingest2.c3voc.de/relay/s3_loudness
     exec ${mpvWrapper} --title=s4 rtmp://ingest2.c3voc.de/relay/s4_loudness
     exec ${mpvWrapper} --title=s5 rtmp://ingest2.c3voc.de/relay/s5_loudness
-    exec ${mpvWrapper} --title=s6 rtmp://ingest2.c3voc.de/relay/s6_loudness
+    exec ${lib.getExe pkgs.chromium} --app=https://www.windy.com/52.695/4.760?radar,52.648,4.759,11 --incognito
   '';
 
   i3layout = pkgs.writeText "i3-layout" ''
-    {
+{
       "layout": "splitv",
       "type": "con",
       "nodes": [
@@ -106,8 +115,7 @@ let
           "nodes": [
             {"swallows": [{"title": "s4"}]},
             {"swallows": [{"title": "s5"}]},
-            {"swallows": [{"title": "s6"}]}
-          ]
+            {"swallows": [{"class": "Chromium"}]}
         }
       ]
     }
@@ -132,11 +140,11 @@ in
 
     isoImage.efiSplashImage = ./splash-efi.png;
     isoImage.splashImage = ./splash-legacy.png;
-    isoImage.storeContents = lib.mkForce [ config.system.build.toplevel ] ;
+    isoImage.storeContents = lib.mkForce [ config.system.build.toplevel ];
 
     system.stateVersion = "23.11"; # do not touch
 
-    users.groups.voc = {};
+    users.groups.voc = { };
     users.users.voc = {
       isNormalUser = true;
       group = "voc";
@@ -146,7 +154,7 @@ in
     services.xserver.enable = true;
     services.xserver.displayManager.autoLogin.enable = true;
     services.xserver.displayManager.autoLogin.user = "voc";
-    services.xserver.displayManager.xserverArgs = [ "-nocursor" ];
+    # services.xserver.displayManager.xserverArgs = [ "-nocursor" ];
     services.xserver.displayManager.sessionCommands = ''
     '';
     services.xserver.windowManager.i3.enable = true;
@@ -173,6 +181,10 @@ in
     };
     environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
+    programs.chromium = {
+      enable = true;
+      extensions = [ "cjpalhdlnbpafiamejdnhcphjbkeiagm" ];
+    };
   };
 }
 
