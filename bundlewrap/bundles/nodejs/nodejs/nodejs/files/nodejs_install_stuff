@@ -1,0 +1,5 @@
+npm install -g npm@latest
+npm install -g corepack@latest
+% for package in sorted(packages):
+npm install -g ${package}@latest
+% endfor
