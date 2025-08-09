@@ -100,14 +100,19 @@ ffmpeg -y -nostdin -hide_banner -re \
     " \
 % if vaapi_enabled:
     -c:v h264_vaapi \
+    -flags +cgop -aspect 16:9 \
+%   if parallel_slide_streaming:
+              -g:v:1 15 -qp:v:1 25 -maxrate:v:1 100k -bufsize:v:1 750k \
+%   endif
+    -r:v:0 25 -g:v:0 75 -qp:v:0 21 -maxrate:v:0 4M -bufsize:v:0 18M \
 % else:
     -c:v libx264 \
-% endif
     -flags +cgop -aspect 16:9 \
-% if parallel_slide_streaming:
+%   if parallel_slide_streaming:
               -g:v:1 15 -crf:v:1 25 -maxrate:v:1 100k -bufsize:v:1 750k \
-% endif
+%   endif
     -r:v:0 25 -g:v:0 75 -crf:v:0 21 -maxrate:v:0 4M -bufsize:v:0 18M \
+% endif
     -c:a aac -b:a 192k -ar 48000 \
     -map "[hd]" \
 % if parallel_slide_streaming:
