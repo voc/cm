@@ -20,6 +20,7 @@ gateway4 = "10.73.0.254"
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABoPzoC-efeDT21jCbAvLE3IVtCfnJob0EC2IqLEG-80ih_UtEaoDZ2E-7UqUCwrW4SwnknRmK-AgQle_bbbJpUUO-93UgdVgGhVyz7wDPqKr16ehY="
 vaapi = true
+parallel_slide_streaming = false
 [metadata.voctocore.sources.cam1]
 devicenumber = 0
 mode = "1080p50"

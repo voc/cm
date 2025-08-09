@@ -12,6 +12,7 @@ groups = ["debian-bookworm"]
 
 [metadata.interfaces.eno2]
 ips = ["10.73.94.1/16"]
+gateway4 = "10.73.0.254"
 #dhcp = true
 
 #[metadata.pygtk-atem-switcher.atem]
@@ -25,7 +26,7 @@ ips = ["10.73.94.1/16"]
 ignore_power_switch = false
 
 [metadata.voctomix2]
-rev = "main"
+rev = "2.2"
 
 [metadata.voctogui]
 high_dpi = false
