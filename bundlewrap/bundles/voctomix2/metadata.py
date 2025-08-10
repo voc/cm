@@ -42,7 +42,7 @@ if node.os_version[0] in DEBIAN_TO_VOCTOMIX_VERSION:
     'voctomix2/version_tuple',
 )
 def voctomix_version(metadata):
-    rev = metadata.get('voctomix2/rev')
+    rev = metadata.get('voctomix2/rev', 'main')
 
     if rev in BRANCH_TO_VERSION_TUPLE:
         version = BRANCH_TO_VERSION_TUPLE[rev]
