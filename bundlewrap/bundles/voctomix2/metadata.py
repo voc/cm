@@ -47,6 +47,7 @@ def voctomix_version(metadata):
     if rev in BRANCH_TO_VERSION_TUPLE:
         version = BRANCH_TO_VERSION_TUPLE[rev]
     elif '.' in rev:
+        rev = rev.split('-')[0]  # remove pre-release suffixes
         version = tuple([int(i) for i in rev.split('.')])
     else:
         version = (2, 9999)
