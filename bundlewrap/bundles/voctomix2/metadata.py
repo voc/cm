@@ -40,6 +40,7 @@ def voctomix_version(metadata):
     rev = metadata.get('voctomix2/rev')
 
     if '.' in rev:
+        rev = rev.split('-')[0]  # remove pre-release suffixes
         version = tuple([int(i) for i in rev.split('.')])
     elif rev == 'voctomix2':
         version = (2,)
