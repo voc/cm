@@ -5,7 +5,7 @@ ConditionPathExists=/video
 [Service]
 User=voc
 Group=voc
-Type=oneshot
+Type=forking
 ExecStart=/opt/crs-scripts/bin/restore-fuse-mounts.sh
 WorkingDirectory=/opt/crs-scripts
 EnvironmentFile=/etc/crs-scripts/meta
