@@ -18,6 +18,11 @@ RestartSec=10
 RestartPreventExitStatus=250
 SuccessExitStatus=250
 
+% if pin_to_performance:
+[Manager]
+CPUAffinity=0-11
+% endif
+
 [Install]
 % if autostart:
 WantedBy=multi-user.target

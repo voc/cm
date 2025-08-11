@@ -1,9 +1,16 @@
-groups = ["debian-buster"]
+groups = ["debian-bookworm"]
 
 [metadata.crs-worker.secrets.encoding]
 token = "!kee_user:ansible|worker-groups|minion1"
 secret = "!kee_pass:ansible|worker-groups|minion1"
 
-[metadata.interfaces.eth0]
+[metadata.interfaces.br0]
 ips = ["10.73.1.7/16"]
 gateway4 = "10.73.0.254"
+
+[[metadata.zfs.pools.zroot.when_creating.config]]
+type = "mirror"
+devices = [
+  "/dev/disk/by-id/nvme-CT4000P3PSSD8_2421E8B2584A-part4",
+  "/dev/disk/by-id/nvme-CT4000P3PSSD8_2423E8B7C365-part4",
+]
