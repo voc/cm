@@ -27,7 +27,7 @@ ips = [
     "2001:638:408:201a:ffff:ffff:ffff:ff02/120", # froscon
 ]
 gateway4 = "194.95.66.1" # froscon
-gateway6 = "2001:638:408:201a:ffff:ffff:ffff:ff01/120"
+gateway6 = "2001:638:408:201a:ffff:ffff:ffff:ff01"
 dhcp = false
 
 [metadata.interfaces.ens19]
