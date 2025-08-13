@@ -37,9 +37,10 @@ if node.os_version[0] in DEBIAN_TO_VOCTOMIX_VERSION:
     'voctomix2/version_tuple',
 )
 def voctomix_version(metadata):
-    rev = metadata.get('voctomix2/rev')
+    rev = metadata.get('voctomix2/rev', 'main')
 
     if '.' in rev:
+        rev = rev.split('-')[0]  # remove pre-release suffixes
         version = tuple([int(i) for i in rev.split('.')])
     elif rev == 'voctomix2':
         version = (2,)
