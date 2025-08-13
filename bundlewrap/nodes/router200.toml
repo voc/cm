@@ -23,19 +23,18 @@ privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4v
 [metadata.interfaces.ens18]
 ips = [
     "188.172.114.72/28", # seibert wiesbaden
-    "94.45.241.105/24", # c3noc event
-    "2001:67c:20a1:2241::105/64", # c3noc event
+    "194.95.66.38/24", # froscon
+    "2001:638:408:201a:ffff:ffff:ffff:ff02/120", # froscon
 ]
-gateway4 = "188.172.114.65" # seibert wiesbaden
-#gateway4 = "94.45.241.1" # c3noc event
-#gateway6 = "2001:67c:20a1:2241::1" # c3noc event
+gateway4 = "194.95.66.1" # froscon
+gateway6 = "2001:638:408:201a:ffff:ffff:ffff:ff01/120"
 dhcp = false
 
 [metadata.interfaces.ens19]
 ips = [
     "10.73.0.254/16",
     "10.73.200.201/16",
-    "2001:67c:20a1:3504:10:73:200:201/64",
+    "2001:638:408:201a::1/64", # froscon
 ]
 
 [metadata.isc-dhcp-server.subnets.ens19]
