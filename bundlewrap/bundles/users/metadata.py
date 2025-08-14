@@ -8,6 +8,8 @@ defaults = {
     'apt': {
         'packages': {
             'vim': {},
+            'bash': {},
+            'zsh': {},
         },
     },
     'users': {
@@ -67,6 +69,10 @@ def add_users_from_toml(metadata):
 
             if USERS_TOML[uname].get('ssh_pubkeys', set()):
                 users[uname]['ssh_pubkeys'] = set(USERS_TOML[uname]['ssh_pubkeys'])
+            if USERS_TOML[uname].get('shell', set()):
+                users[uname]['shell'] = USERS_TOML[uname]['shell']
+            if USERS_TOML[uname].get('groups', set()):
+                users[uname]['groups'] = set(USERS_TOML[uname]['groups'])
         elif uid is None:
             raise BundleError(f'{node.name}: user {uname} has no uid set, please set one manually')
         elif int(uid) < 2000:
