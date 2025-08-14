@@ -5,12 +5,13 @@
     enable = true;
     listenAddress = "[::1]";
     secretKeyFile = "/var/lib/netbox/secret";
-    package = pkgs.netbox.override { python3 = pkgs.python312; };
+    package = pkgs.netbox;
 
     extraConfig = ''
       # REMOTE_AUTH_BACKEND = 'social_core.backends.open_id_connect.OpenIdConnectAuth'
       # SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = 'https://auth.c3voc.de'
 
+      LOGIN_REQUIRED = False
       EXEMPT_VIEW_PERMISSIONS = ['*']
     '';
   };
