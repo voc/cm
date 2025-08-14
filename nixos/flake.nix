@@ -102,6 +102,7 @@
         buildInputs = with pkgs; [
           age
           colmena
+          git
           sops
 
           sops-nix.packages.${system}.sops-init-gpg-key
