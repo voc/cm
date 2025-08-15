@@ -7,6 +7,7 @@ ROOMS = (
     6,
     23, # cccb
     28, # GLT / realraum Graz
+    41,
     80, # muccc
     81, # hacc
     94, # sophie
