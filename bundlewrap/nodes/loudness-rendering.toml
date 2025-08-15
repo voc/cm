@@ -13,4 +13,5 @@ from_encoders = [
     "encoder4",
     "encoder5",
     "encoder6",
+    "encoder41",
 ]
