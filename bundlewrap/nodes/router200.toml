@@ -49,8 +49,8 @@ options.subnet-mask = "255.255.0.0"
 
 [metadata.radvd.interfaces.ens19]
 # only active if ens18 has ipv6 gateway, check bundle README
-prefix = "2001:67c:20a1:3504::/64"
-rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
+prefix = "2001:638:408:201a::/64"
+rdnss = ["2001:638:408:201a::1"]
 
 [metadata.snmp-temperature-monitoring]
 comware5 = [
