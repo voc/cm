@@ -97,18 +97,18 @@ let
           "type": "con",
           "nodes": [
             {"swallows": [{"title": "s1"}]},
-            {"swallows": [{"title": "s3"}]}
+            {"swallows": [{"title": "s3"}]},
             {"swallows": [{"title": "s4"}]},
-            {"swallows": [{"title": "s5"}]},
+            {"swallows": [{"title": "s5"}]}
           ]
         },
         {
           "layout": "splith",
           "type": "con",
           "nodes": [
-            {"swallows": [{"title": "s6"}]}
+            {"swallows": [{"title": "s6"}]},
             {"swallows": [{"title": "s2"}]},
-            {"swallows": [{"title": "s41"}]},
+            {"swallows": [{"title": "s41"}]}
           ]
         }
       ]
