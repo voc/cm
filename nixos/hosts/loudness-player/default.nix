@@ -79,11 +79,12 @@ let
     bindsym Mod4+Control+Shift+r exec ${i3layoutfixer}
 
     exec ${mpvWrapper} --title=s1 rtmp://ingest2.c3voc.de/relay/s1_loudness
-    exec ${mpvWrapper} --title=s2 rtmp://ingest2.c3voc.de/relay/s2_loudness
     exec ${mpvWrapper} --title=s3 rtmp://ingest2.c3voc.de/relay/s3_loudness
     exec ${mpvWrapper} --title=s4 rtmp://ingest2.c3voc.de/relay/s4_loudness
     exec ${mpvWrapper} --title=s5 rtmp://ingest2.c3voc.de/relay/s5_loudness
     exec ${mpvWrapper} --title=s6 rtmp://ingest2.c3voc.de/relay/s6_loudness
+    exec ${mpvWrapper} --title=s2 rtmp://ingest2.c3voc.de/relay/s2_loudness
+    exec ${mpvWrapper} --title=s41 rtmp://ingest2.c3voc.de/relay/s41_loudness
   '';
 
   i3layout = pkgs.writeText "i3-layout" ''
@@ -96,17 +97,18 @@ let
           "type": "con",
           "nodes": [
             {"swallows": [{"title": "s1"}]},
-            {"swallows": [{"title": "s2"}]},
             {"swallows": [{"title": "s3"}]}
+            {"swallows": [{"title": "s4"}]},
+            {"swallows": [{"title": "s5"}]},
           ]
         },
         {
           "layout": "splith",
           "type": "con",
           "nodes": [
-            {"swallows": [{"title": "s4"}]},
-            {"swallows": [{"title": "s5"}]},
             {"swallows": [{"title": "s6"}]}
+            {"swallows": [{"title": "s2"}]},
+            {"swallows": [{"title": "s41"}]},
           ]
         }
       ]
