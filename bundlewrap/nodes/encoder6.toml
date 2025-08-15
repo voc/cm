@@ -16,6 +16,7 @@ gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYk0lzAoL1Hf5xuaCK0E6A9xq15GeqVfsTCHDomSz0RcFz-kzlyQaS6wXWTsEPF21QhvncKBIstse1UP1Ue5fOKP1J9ruv5ScZrnfctymdDCpuc="
+parallel_slide_streaming = false
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 5
