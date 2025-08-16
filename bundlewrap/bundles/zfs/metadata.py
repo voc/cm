@@ -66,14 +66,6 @@ defaults = {
     'zfs': {
         'datasets': {},
         'pools': {},
-        'snapshots': {
-            'retain_defaults': {
-                'hourly': 24,
-                'daily': 7,
-                'weekly': 2,
-                'monthly': 1,
-            },
-        },
     },
 }
 

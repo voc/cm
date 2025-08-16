@@ -44,12 +44,7 @@ files = {
         },
     },
     '/etc/zfs-snapshot-config.json': {
-        'content': dumps(
-            node.metadata.get('zfs/snapshots', {}),
-            cls=MetadataJSONEncoder,  # turns sets into sorted lists
-            indent=4,
-            sort_keys=True,
-        ) + '\n',
+        'delete': True,
     },
     '/etc/zfs/zed.d/zed.rc': {
         'content': f'ZED_EMAIL_ADDR="{repo.libs.defaults.admin_email}"\nZED_EMAIL_PROG="mail"\nZED_NOTIFY_INTERVAL_SECS=3600\n',

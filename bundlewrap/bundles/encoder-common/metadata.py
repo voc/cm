@@ -56,7 +56,6 @@ def dataset_Base(metadata):
 
 @metadata_reactor.provides(
     'zfs/datasets',
-    'zfs/snapshots/retain_per_dataset',
 )
 def zfs(metadata):
     if not node.has_bundle('zfs'):
@@ -86,15 +85,5 @@ def zfs(metadata):
     return {
         'zfs': {
             'datasets': datasets,
-            'snapshots': {
-                'retain_per_dataset': {
-                    f'{root_ds}/{slug}/{path}': {
-                        'hourly': 2,
-                        'daily': 0,
-                        'weekly': 0,
-                        'monthly': 0,
-                    } for path in ('capture', 'tmp')
-                },
-            },
         },
     }
