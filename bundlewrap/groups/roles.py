@@ -41,6 +41,9 @@ groups['mixers'] = {
         'systemd': {
             'ignore_power_switch': True,
         },
+        "voctomix2" : {
+            'rev': 'tab-reorder-backport',
+        },
     },
 }
 

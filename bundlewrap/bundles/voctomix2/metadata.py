@@ -43,6 +43,8 @@ def voctomix_version(metadata):
         version = tuple([int(i) for i in rev.split('.')])
     elif rev == 'voctomix2':
         version = (2,)
+    elif rev == 'tab-reorder-backport':
+        version = (2,2)
     else:
         version = (2, 9999)
 
