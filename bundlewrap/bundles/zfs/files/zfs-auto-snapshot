@@ -67,7 +67,7 @@ for ds in list_datasets():
         retain = RETAIN_DEFAULT[label]
 
     if retain > 0:
-        create_snapshot(ds, label, now)
+        create_snapshot(ds, label)
 
     existing_snapshots = get_filtered_snapshots_for_dataset(ds)
 
