@@ -3,6 +3,11 @@ DEBIAN_TO_VOCTOMIX_VERSION = {
     12: '2.2',
 }
 
+BRANCH_TO_VERSION_TUPLE = {
+    'tab-reorder-backport': (2,2),
+    'voctogui': (2,),
+}
+
 if node.has_any_bundle(['voctocore', 'voctogui']):
     defaults = {
         'apt': {
@@ -39,10 +44,10 @@ if node.os_version[0] in DEBIAN_TO_VOCTOMIX_VERSION:
 def voctomix_version(metadata):
     rev = metadata.get('voctomix2/rev')
 
-    if '.' in rev:
+    if rev in BRANCH_TO_VERSION_TUPLE:
+        version = BRANCH_TO_VERSION_TUPLE[rev]
+    elif '.' in rev:
         version = tuple([int(i) for i in rev.split('.')])
-    elif rev == 'voctomix2':
-        version = (2,)
     else:
         version = (2, 9999)
 
