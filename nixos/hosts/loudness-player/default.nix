@@ -144,16 +144,9 @@ in
 
     # System configuration
 
-    users.groups.voc = {};
-    users.users.voc = {
-      isNormalUser = true;
-      group = "voc";
-      hashedPassword = "$2y$10$L4ri1ntzWk6LD4zndOB4oe5ErZfJE2h/HmfKRYw5/.FUrqKIJDxN.";
-    };
-
     services.xserver.enable = true;
-    services.xserver.displayManager.autoLogin.enable = true;
-    services.xserver.displayManager.autoLogin.user = "voc";
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "voc";
     services.xserver.displayManager.xserverArgs = [ "-nocursor" ];
     services.xserver.displayManager.sessionCommands = ''
     '';
@@ -171,7 +164,7 @@ in
     nixpkgs.config.packageOverrides = pkgs: {
       intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
     };
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver # LIBVA_DRIVER_NAME=iHD
