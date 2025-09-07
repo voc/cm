@@ -115,26 +115,9 @@ let
 in
 {
   imports = [
-    "${modulesPath}/installer/cd-dvd/iso-image.nix"
     "${modulesPath}/installer/scan/not-detected.nix"
   ];
   config = {
-
-    # EFI booting
-    isoImage.makeEfiBootable = true;
-
-    # USB booting
-    isoImage.makeUsbBootable = true;
-
-    # Much faster than xz
-    isoImage.squashfsCompression = lib.mkDefault "zstd";
-
-    isoImage.appendToMenuLabel = " Loudness Monitor";
-
-    isoImage.efiSplashImage = ./splash-efi.png;
-    isoImage.splashImage = ./splash-legacy.png;
-    isoImage.storeContents = lib.mkForce [ config.system.build.toplevel ] ;
-
     system.stateVersion = "25.05"; # do not touch
 
     # Results from hardware scan on Modula hardware
