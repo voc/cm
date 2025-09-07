@@ -49,9 +49,12 @@ Maybe there will be a better way for this is the future, mainly for the `nixos` 
 
 ### Loudness Player (WIP)
 
-In the current working state define streams and i3layout in `hosts/loudness-player/default.nix` and then build the iso
+In the current working state define streams and i3layout in `hosts/loudness-player/default.nix`. Either build and deploy the system configuration directly from a local checkout on the loudness-player machine (untested) with
 
-    nix build .#nixosConfigurations.loudness-player.config.system.build.isoImage
+	sudo nixos-rebuild --flake .#nixosConfigurations.loudness-player.config.system.build.toplevel
 
-The image is symlinked in the result folder in this directory, flah it to an USB Drive, boot it (the grub entry is called installer, don't worry, nothing will be installed) adn enjoy the loudness monitoring
+or build the configuration on another Linux machine with Nix installed
 
+	nix build .#nixosConfigurations.loudness-player.config.system.build.toplevel
+
+and then copy the closure with `nix-copy-closure` and then manually run `switch-to-configuration` and update the system profile symlink.
