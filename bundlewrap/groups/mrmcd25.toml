@@ -1,0 +1,6 @@
+subgroups = ["saal3", "saal4", "saal5"]
+members = ["releasing"]
+
+[metadata.event]
+name = "MRMCD 2025"
+slug = "mrmcd25"
