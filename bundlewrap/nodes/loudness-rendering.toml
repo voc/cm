@@ -1,7 +1,11 @@
 groups = ["debian-bookworm", "servercase"]
-bundles = ["loudness-rendering", "voctocore-artwork"]
+bundles = [
+  "loudness-rendering", 
+  "voctocore-artwork",
+  "voc2dmx",
+]
 
-[metadata.interfaces.ens18]
+[metadata.interfaces.eno1]
 ips = ["10.73.200.98/16"]
 gateway4 = "10.73.0.254"
 
@@ -14,3 +18,11 @@ from_encoders = [
     "encoder5",
     "encoder6",
 ]
+
+[metadata.voc2dmx.universes.sophie]
+target = "10.73.94.59"
+lights.TSSS_LED_PAR_RGBW = [1, 9, 17, 25, 33, 41, 49, 57]
+
+[metadata.voc2dmx.universes.kunsi]
+target = "10.73.100.115"
+lights.Sheds30WCOBRGB = [1, 8, 15, 22, 29, 36, 43, 50, 57, 64]
