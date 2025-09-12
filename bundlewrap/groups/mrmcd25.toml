@@ -4,3 +4,4 @@ members = ["releasing"]
 [metadata.event]
 name = "MRMCD 2025"
 slug = "mrmcd25"
+schedule_json = "https://talks.mrmcd.net/2025/schedule/export/schedule.json"
