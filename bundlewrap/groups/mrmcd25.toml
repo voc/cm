@@ -1,5 +1,5 @@
 subgroups = ["saal3", "saal4", "saal5"]
-members = ["releasing"]
+members = ["releasing", "loudness-rendering"]
 
 [metadata.event]
 name = "MRMCD 2025"
