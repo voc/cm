@@ -27,7 +27,6 @@ mode = "1080p25"
 
 [metadata.voctocore.sources.cam2]
 devicenumber = 4
-hdmi = true
 mode = "1080p25"
 
 #[metadata.voctocore.sources.cam3]
