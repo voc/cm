@@ -9,7 +9,8 @@ groups["minisforuminions"] = {
 
     },
     'bundles': {
-        'zfs'
+        'samba',
+        'zfs',
     },
     'metadata': {
         'apt': {
