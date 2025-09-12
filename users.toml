@@ -23,6 +23,11 @@ ssh_pubkeys = [
 ]
 
 [n0emis]
+delete = true
+enable_rz = false
+enable_event = false
+
+[ember]
 enable_rz = true
 enable_event = true
 uid = 1102
