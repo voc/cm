@@ -47,6 +47,8 @@ alias l='ls -lAh'
 alias s='sudo -i'
 alias v='vim -p'
 alias journalctl='journalctl -a -o short-full'
+alias systmectl='systemctl'
+
 </%text>
 % for k, v in sorted(node.metadata.get('bash_aliases', {}).items()):
 alias ${k}='${v}'
