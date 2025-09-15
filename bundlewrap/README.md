@@ -111,6 +111,16 @@ It is important that you never commit `yourevent.toml` to the main branch
 of this repository. Instead, please create a branch named `events/XYZ`,
 replacing `XYZ` with your event slug.
 
+If you want to have loudness rendering for your event, add `loudness-rendering`
+to the `members` of the event group and ideally also set a `schedule_json`:
+
+```toml
+members = ["releasing", "loudness-rendering"]
+
+[metadata]
+schedule_json = "https://pretalx.example.com/democon/schedule/export/schedule.json"
+```
+
 ### Overlays
 
 If you want to use overlays ("Bauchbinden" in German), you have to add
