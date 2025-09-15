@@ -3,6 +3,8 @@
   imports = [
     ./hardware.nix
     ./loudness-player.nix
+
+    ../../modules/voc2mqtt
   ];
 
   networking.useDHCP = true;
