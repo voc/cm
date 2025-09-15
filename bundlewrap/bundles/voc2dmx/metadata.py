@@ -1,5 +1,3 @@
-import bwkeepass as keepass
-
 defaults = {
     'unit-status-on-login': {
         'voc2dmx',
