@@ -7,6 +7,7 @@ keys:
   - &admin_keepass age13yl99pyktjyssdm487pa5ucm4rxcrdrt4lq8qk2vkvdwyfhcvahqs4e6cw
   - &host_tel age1glkmsh6pex9g5v95vwx78a8xksmnkvsu7ccnhxzu09yvnfnjudls3lfkru
   - &host_mail age1zcj3dt7uc3gc3kyt6l7m86qjzm9vlgq7kcsm9wh9gank6rqff4gqwrtzpa
+  - &host_loudness age18jzfuerpcgw4cz5lrl36upjfke2txf3jm5znelpy44zpd3mye3ksclfwmy
 
 creation_rules:
   - path_regex: hosts/tel/.*
