@@ -47,14 +47,11 @@ Maybe there will be a better way for this is the future, mainly for the `nixos` 
 
 ## Specials
 
-### Loudness Player (WIP)
+### Loudness Player
 
-In the current working state define streams and i3layout in `hosts/loudness-player/default.nix`. Either build and deploy the system configuration directly from a local checkout on the loudness-player machine (untested) with
+In the current working state the streams and i3layout are defined in `hosts/loudness-player/loudness-player.nix`. The loudness player machine does not have a fixed IP address or records in public DNS, so in order to deploy to this machine with `colmena` you need be on a network where the loudness player is reachable (e.g. same LAN segment) and then set up your SSH config to resolve `loudness-player.lan.c3voc.de` to the current IP address of the machine. 
 
-	sudo nixos-rebuild --flake .#nixosConfigurations.loudness-player.config.system.build.toplevel
+	Host loudness-player.lan.c3voc.de
+	Hostname 192.0.2.23
 
-or build the configuration on another Linux machine with Nix installed
-
-	nix build .#nixosConfigurations.loudness-player.config.system.build.toplevel
-
-and then copy the closure with `nix-copy-closure` and then manually run `switch-to-configuration` and update the system profile symlink.
+The machine's current IP address is shown in the i3 status bar when connected to a display.
