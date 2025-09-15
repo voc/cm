@@ -1,0 +1,1 @@
+subgroups = ["saal3", "saal4", "saal5"]members = ["releasing"][metadata.event]name = "Datenspuren 2025"slug = "ds25"schedule_json = "https://talks.datenspuren.de/ds25/schedule/export/schedule.json"
