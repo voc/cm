@@ -30,3 +30,16 @@ creation_rules:
       - *admin_ember
       - *admin_molly
       - *host_mail
+
+  - path_regex: modules/voc2mqtt/.*
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *host_mail
+      - *host_tel
+      - *host_loudness
