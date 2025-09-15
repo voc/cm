@@ -3,6 +3,7 @@ keys:
   - &admin_hexchen age1wvtkhug4q7fcs7wz03kpn77ruqkkwp2xqq30npv4287wtf3w8ukq370vre
   - &admin_jayjay age1yyxdtt7lpcm9hr0y76g559yq4uqz8e8hjc2fzqtwnhctsj99fp6sf3ksl6
   - &admin_ember age1h9tjtrffuewvhkugqc04jja65fv7havvy0xpzdyyykmga8f55drshcq4r4
+  - &admin_molly age1rup6s5s63r0tg2qrdtgu5tez9ppj74vccfw2gd2qjrkz66srpq4qj0xyyj
   - &admin_keepass age13yl99pyktjyssdm487pa5ucm4rxcrdrt4lq8qk2vkvdwyfhcvahqs4e6cw
   - &host_tel age1glkmsh6pex9g5v95vwx78a8xksmnkvsu7ccnhxzu09yvnfnjudls3lfkru
   - &host_mail age1zcj3dt7uc3gc3kyt6l7m86qjzm9vlgq7kcsm9wh9gank6rqff4gqwrtzpa
@@ -16,6 +17,7 @@ creation_rules:
       - *admin_jayjay
       - *admin_derchris
       - *admin_ember
+      - *admin_molly
       - *host_tel
   - path_regex: hosts/mail/.*
     key_groups:
@@ -25,4 +27,5 @@ creation_rules:
       - *admin_jayjay
       - *admin_derchris
       - *admin_ember
+      - *admin_molly
       - *host_mail
