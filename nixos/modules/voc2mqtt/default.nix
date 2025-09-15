@@ -57,8 +57,8 @@ in
   };
 
   systemd.services.send-mqtt-shutdown = {
-    after = [ "network.target" ];
-    requires = [ "network.target" ];
+    after = [ "network-online.target" ];
+    requires = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
     path = [ voc2mqtt ];
     preStop = lib.getExe' voc2mqtt-tools "alert_shutdown.sh";
