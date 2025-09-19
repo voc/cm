@@ -50,7 +50,7 @@ preset_camera_sources = sorted(
 # fullscreen sources
 for source in sorted(sources.keys()):
     icon = None
-    source_kind = sources[source].get("kind")
+    source_kind = sources[source]["kind"]
 
     if source == "slides":
         icon = "slides.svg"

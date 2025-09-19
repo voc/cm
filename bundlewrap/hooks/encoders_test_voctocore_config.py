@@ -87,7 +87,7 @@ def run_test(node):
     used_devices = {}
 
     for sname, sconfig in node.metadata.get('voctocore/sources', {}).items():
-        if sconfig.get('kind', 'decklink') != 'decklink':
+        if sconfig['kind'] != 'decklink':
             continue
 
         if not sname == 'slides' and not match(r'^cam[0-9]+$', sname):

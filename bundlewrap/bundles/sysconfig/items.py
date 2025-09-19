@@ -13,7 +13,7 @@ if node.has_bundle('voctocore'):
     description.append('')
     description.append(bold('voctocore source config'))
     for name, opts in sorted(node.metadata.get('voctocore/sources', {}).items()):
-        if opts.get('kind', 'decklink') == 'decklink':
+        if opts['kind'] == 'decklink':
             description.append(' {} kind=decklink - input {} @ {}'.format(
                 name,
                 opts['devicenumber'],

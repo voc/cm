@@ -72,6 +72,23 @@ def streaming_endpoint(metadata):
 @metadata_reactor.provides(
     'voctocore/sources',
 )
+def auto_kind_decklink(metadata):
+    sources = {}
+    for sname, sconfig in metadata.get('voctocore/sources', {}).items():
+        sources[sname] = {
+            'kind': sconfig.get('kind', 'decklink'),
+        }
+
+    return {
+        'voctocore': {
+            'sources': sources,
+        },
+    }
+
+
+@metadata_reactor.provides(
+    'voctocore/sources',
+)
 def auto_audio_level(metadata):
     sources = {}
     for aname, aconfig in metadata.get('voctocore/audio', {}).items():
