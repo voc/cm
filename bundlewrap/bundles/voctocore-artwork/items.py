@@ -31,6 +31,7 @@ directories['/opt/voc/share'] = {
 
 files['/opt/voc/schedule_url'] = {
     'content': node.metadata.get('event/schedule_json', '') + '\n',
+    'content_type': 'text',
     'triggers': {
         'action:voctocore-artwork_update_schedule_and_overlays',
     },
@@ -38,6 +39,7 @@ files['/opt/voc/schedule_url'] = {
 
 files['/opt/voc/overlays_url'] = {
     'content': node.metadata.get('event/overlays', '') + '\n',
+    'content_type': 'text',
     'triggers': {
         'action:voctocore-artwork_update_schedule_and_overlays',
     },
