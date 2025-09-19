@@ -11,5 +11,12 @@ Restart=always
 RestartSec=10
 StartLimitInterval=0
 
+# a process running loudness rendering usually takes anywhere between 250M and
+# 500M of RAM. If something happens to the stream, ffmpeg will sometimes not
+# notice that and just eat more and more RAM. By limiting this to 1G we ensure
+# a timely OOM-kill of the process, which then will automatically restart due
+# to Restart=always above.
+MemoryMax=1G
+
 [Install]
 WantedBy=multi-user.target
