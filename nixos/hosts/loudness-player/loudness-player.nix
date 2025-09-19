@@ -102,8 +102,20 @@ let
     }
   '';
 
+  streamMute = pkgs.writeShellScriptBin "mute" ''
+    echo '{ "command": ["set_property", "mute", true] }' | \
+        ${lib.getExe' pkgs.netcat "nc"} -N -U /run/user/1100/mpv-"$1".sock
+  '';
+
+  streamUnmute = pkgs.writeShellScriptBin "unmute" ''
+    echo '{ "command": ["set_property", "mute", false] }' | \
+        ${lib.getExe' pkgs.netcat "nc"} -N -U /run/user/1100/mpv-"$1".sock
+  '';
+
 in
 {
+  environment.systemPackages = [ streamMute streamUnmute ];
+
   services.xserver.enable = true;
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "voc";
