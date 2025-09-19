@@ -33,7 +33,9 @@ defaults = {
         'enable_sbs_presets_for_multi_camera': True,
         'mirror_view': False, # automatically mirrors SBS/LEC views
         'parallel_slide_recording': True,
-        'parallel_slide_streaming': True,
+        # XXX TODO FIXME the latest srtrelay version does not like streams
+        # which include a second video feed.
+        'parallel_slide_streaming': False,
         'programout_audiosink': 'autoaudiosink',
         'programout_enabled': False,
         'programout_videosink': 'autovideosink',
