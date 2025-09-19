@@ -2,10 +2,16 @@
 
 let
   mpvWrapper = pkgs.writeShellScript "mpv-wrapper" ''
-    while true
-    do
-      ${pkgs.mpv}/bin/mpv "$@" --no-cache --hwdec==vaapi
-      ${pkgs.coreutils}/bin/sleep 1
+    set -u
+    stream="$1"
+
+    stream_url="rtmp://ingest2.c3voc.de/relay/''${stream}_loudness"
+    uid=$(id -u)
+
+    while sleep 1; do
+      ${pkgs.mpv}/bin/mpv --title="$stream" "$stream_url" \
+        --no-cache --hwdec==vaapi --mute \
+        --input-ipc-server="/run/user/$uid/mpv-$stream.sock"
     done
   '';
 
@@ -61,12 +67,12 @@ let
 
     exec --no-startup-id "i3-msg 'workspace 1; append_layout ${i3layout}'"
 
-    exec ${mpvWrapper} --title=s1 rtmp://ingest2.c3voc.de/relay/s1_loudness
-    exec ${mpvWrapper} --title=s2 rtmp://ingest2.c3voc.de/relay/s2_loudness
-    exec ${mpvWrapper} --title=s3 rtmp://ingest2.c3voc.de/relay/s3_loudness
-    exec ${mpvWrapper} --title=s4 rtmp://ingest2.c3voc.de/relay/s4_loudness
-    exec ${mpvWrapper} --title=s5 rtmp://ingest2.c3voc.de/relay/s5_loudness
-    exec ${mpvWrapper} --title=s6 rtmp://ingest2.c3voc.de/relay/s6_loudness
+    exec ${mpvWrapper} s1
+    exec ${mpvWrapper} s2
+    exec ${mpvWrapper} s3
+    exec ${mpvWrapper} s4
+    exec ${mpvWrapper} s5
+    exec ${mpvWrapper} s6
   '';
 
   i3layout = pkgs.writeText "i3-layout" ''
