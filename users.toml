@@ -175,6 +175,8 @@ ssh_pubkeys = [
 enable_rz = true
 enable_event = true
 uid = 1122
+shell = "/bin/zsh"
+groups = ["video", "audio"]
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILfSpvbTzaZLIF1xj8h2VFNZ/tNA+1Iotu2uu6F3DUQ9",
 ]
