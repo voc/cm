@@ -9,20 +9,6 @@ let
     done
   '';
 
-  i3layoutfixer = pkgs.writeShellScript "i3-layout-fixer" ''
-    WINDOWS=$(xdotool search --all --onlyvisible --desktop $(xprop -notype -root _NET_CURRENT_DESKTOP | cut -c 24-) "" 2>/dev/null)
-
-    for window in $WINDOWS; do
-      xdotool windowunmap "$window"
-    done
-
-    i3-msg "append_layout ${i3layout}"
-
-    for window in $WINDOWS; do
-      xdotool windowmap "$window"
-    done
-  '';
-
   i3status = pkgs.writeText "i3-status" ''
     general {
         output_format = "i3bar"
@@ -74,8 +60,6 @@ let
     }
 
     exec --no-startup-id "i3-msg 'workspace 1; append_layout ${i3layout}'"
-
-    bindsym Mod4+Control+Shift+r exec ${i3layoutfixer}
 
     exec ${mpvWrapper} --title=s1 rtmp://ingest2.c3voc.de/relay/s1_loudness
     exec ${mpvWrapper} --title=s2 rtmp://ingest2.c3voc.de/relay/s2_loudness
