@@ -16,7 +16,7 @@ StartLimitInterval=0
 # notice that and just eat more and more RAM. By limiting this to 1G we ensure
 # a timely OOM-kill of the process, which then will automatically restart due
 # to Restart=always above.
-MemoryMax=1G
+MemoryMax=2G
 
 [Install]
 WantedBy=multi-user.target
