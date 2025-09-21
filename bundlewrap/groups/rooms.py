@@ -6,7 +6,7 @@ ROOMS = (
     5,
     6,
     23, # cccb
-    28, # GLT / realraum Graz
+    28, # GLT / realraum Graz (r3talks)
     41, # osc1
     80, # muccc
     81, # hacc

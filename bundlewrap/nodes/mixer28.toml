@@ -1,12 +1,15 @@
-bundles = ["pygtk-atem-switcher"]
+bundles = []
 groups = ["debian-bookworm"]
+
+[metadata]
+nameservers = ["1.1.1.1"]
 
 [metadata.interfaces.eth0]
 ips = [
     "10.73.28.1/16",
-    "192.168.28.22/24",
+    "192.168.69.201/24",
 ]
-gateway4 = "10.73.0.254"
+gateway4 = "192.168.69.254"
 
 [metadata.voctogui]
 high_dpi = false
