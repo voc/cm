@@ -223,6 +223,5 @@ here for completeness.
    is `{nodename}.lan.c3voc.de`).
 5. Ensure you have both keepass access and access to the bundlewrap
    `.secrets.cfg`
-6. Run `BW_SSH_ARGS="-l voc" bw apply -P4 {nodename}` - using `-P4`
-   will ensure you don't run into "too many startups" issues with the
-   debian default sshd config.
+6. Run `bw apply -P4 {nodename}` - using `-P4` will ensure you don't run into
+   "too many startups" issues with the debian default sshd config.
