@@ -678,3 +678,13 @@ uid = 1188
 ssh_pubkeys = [
  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmcgx0zFAs9VDVNKDNGIofsE4FTHNvj6epAKiJaJCG+ mole@mopox.de",
 ]
+
+[commanderred]
+enable_rz = false
+enable_event = true
+uid = 1189
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIkNH3n9zrgcQQ8l/FWnYGeoEPhub4d8MZOnk9KzaIM/ ccomm@framework",
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOI3PxMAMjq4/1K05f2RJVO/qXenhKgRHXrKSxXo6t59 ccomm@macbook"
+]
+
