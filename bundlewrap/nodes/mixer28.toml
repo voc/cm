@@ -13,3 +13,4 @@ gateway4 = "192.168.69.254"
 
 [metadata.voctogui]
 high_dpi = false
+vaapi = true
