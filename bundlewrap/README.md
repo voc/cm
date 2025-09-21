@@ -2,7 +2,7 @@
 
 Setting up this repository is easy:
 
-```
+```sh
 pip3 install -r requirements.txt
 ```
 
@@ -12,7 +12,7 @@ encoder setup.
 If you have access to the c3voc keepass file, you may want to set up
 keepass and the .secrets.cfg:
 
-```
+```sh
 export BW_KEEPASS_FILE=$HOME/whereever/the/voc/keepass/lives.kdbx
 export BW_KEEPASS_PASSWORD=reallysecure
 ```
@@ -25,7 +25,7 @@ The `.secrets.cfg` file should be deployed in the same directory as this
 README file.
 
 You want to set up ssh multiplexing for fast runs:
-```
+```ssh
 Host *
     ControlPath ~/.ssh/cm-%r@%h:%p
     ControlMaster auto
@@ -38,9 +38,21 @@ These are just some examples, please refer to the
 [bundlewrap documentation](https://docs.bundlewrap.org/guide/cli/)
 for more information.
 
-```
+```sh
+
+# dry-run, show all changes an apply would do, without doing any actual
+# changes on the system
+$ bw verify <system or group>
+
+# verify configuration for a system locally
+# if you don't have keepass access, you have to append -i flag
+$ bw test <system or group>
+
 # apply configuration to system(s), restarting services as needed
 $ bw apply <system or group>
+
+# apply only the users bundle
+$ bw apply -o bundle:users -- <system or group>
 
 # apply configuration to system(s), skipping all restarts that would
 # interrupt a stream or recording
@@ -50,13 +62,6 @@ $ bw apply -s tag:causes-downtime -- <system or group>
 # you can decide if you really want to do the change
 $ bw apply -i <system or group>
 
-# dry-run, show all changes an apply would do, without doing any actual
-# changes on the system
-$ bw verify <system or group>
-
-# verify configuration for a system locally
-# if you don't have keepass access, you have to append -i flag
-$ bw test <system or group>
 ```
 
 `<system or group>` can be a single system name, like `encoder1` or
@@ -111,6 +116,23 @@ It is important that you never commit `yourevent.toml` to the main branch
 of this repository. Instead, please create a branch named `events/XYZ`,
 replacing `XYZ` with your event slug.
 
+
+### Custom artwork
+
+Using this repository, you can deploy room-specific or event-specific
+(or a mixture of both) artwork to the encoders.
+
+Place your artwork into `data/voctocore-artwork/files/<event_slug>/`
+for event-specific artwork, into
+`data/voctocore-artwork/files/<event_slug>/saal<number>/` for
+room-specific artwork.
+
+Room-specific artwork will take preference over event-specific artwork.
+In case neither is found, bundlewrap will use the generic VOC artwork.
+
+
+### Loudness
+
 If you want to have loudness rendering for your event, add `loudness-rendering`
 to the `members` of the event group and ideally also set a `schedule_json`:
 
@@ -152,18 +174,6 @@ graphic2 = "Bob"
 graphic3 = "Alice and Bob"
 ```
 
-### Custom artwork
-
-Using this repository, you can deploy room-specific or event-specific
-(or a mixture of both) artwork to the encoders.
-
-Place your artwork into `data/voctocore-artwork/files/<event_slug>/`
-for event-specific artwork, into
-`data/voctocore-artwork/files/<event_slug>/saal<number>/` for
-room-specific artwork.
-
-Room-specific artwork will take preference over event-specific artwork.
-In case neither is found, bundlewrap will use the generic VOC artwork.
 
 
 ### ATEM Mini
