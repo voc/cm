@@ -1,9 +1,12 @@
-bundles = ["mdadm"]
-groups = ["debian-buster"]
+bundles = []
+groups = ["debian-bookworm"]
+
+[metadata]
+nameservers = ["1.1.1.1"]
 
 [metadata.crs-worker.secrets]
-encoding.secret = "!decrypt:encrypt$gAAAAABkOS_by1-OF4v0BuFqOwofXy4ka7cp5v7UQjxjrvQasQbmx4p4W4ZYPu0GyZwWvIzJdR0gUymexb-2QrzJAMD1fZd3p3BZQmHOlFulwegjXZIyKYo3SsgTnt9NsnSzYqNBNclY"
-encoding.token = "!decrypt:encrypt$gAAAAABkOS_Us1SxDDO0JZGgPQ7g-VMCw792NVYP2-k8wY5okEnlD_OWTePmEIbF6RK0h2tHZ9bRV_ReRPRLH3GPIsDA_49YaRQYoxzTQUkFOkEin9LQDiGsyAFfMtS5bP42Sfc3k8DT"
+encoding.secret = "!decrypt:encrypt$gAAAAABo1EdrpuI_k9idtYB86zE5vTVbImRxhTWWfRK0UxBcfcMIRG1tiD5DWpUBUqaErTa4S9xtOXGoQIctr8XHvh9u3tRLZ_FhV08Iec36jG1DzH7y8mUHF0tJzuQyfe6VkQFxwGL4"
+encoding.token = "!decrypt:encrypt$gAAAAABo1EdL2YM2rJt-_RoxVL7KjkenJxW5E8dvS9Hr0NevLA5EJZYYRGXDtczqVErPED-ptSXrTOyfOaTrLkFHjVEn4aHyDhhkDaJUrx9t2sHEQ3Tn7XVI-VY7tvvjCO26kq-skar0"
 
 [metadata.event]
 room_name = "realraum"
@@ -11,12 +14,12 @@ room_name = "realraum"
 [metadata.interfaces.eth0]
 ips = [
     "10.73.28.3/16",
-    "192.168.28.24/24",
+    "192.168.69.202/24",
 ]
-gateway4 = "10.73.0.254"
+gateway4 = "192.168.69.254"
 
 [metadata.voctocore]
-streaming_auth_key = "!decrypt:encrypt$gAAAAABmAZJ67a2kB2s4d-oDslJTFVUp8H7Zm5ePu6cJZX3OyHoV-yteKgw24aZVAusKnkh8wwEeUZoZ_rbdD6OU4DNdc08RWEZ8VLRfnJT0z-7nZ3GCKnA="
+streaming_auth_key = "!decrypt:encrypt$gAAAAABo1EeIvmj6j4KnK1sKMZglgnITlc2qvMqEjKOZa85vpnE0iSsgOKIgG0tt9HZpUBFBDY4o0zoZ8LnD16rW-xZyK6tCNRGzlwNwQ7ztZK9fpYeHtEg="
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 0
