@@ -9,7 +9,7 @@ encoding.secret = "!decrypt:encrypt$gAAAAABo1EdrpuI_k9idtYB86zE5vTVbImRxhTWWfRK0
 encoding.token = "!decrypt:encrypt$gAAAAABo1EdL2YM2rJt-_RoxVL7KjkenJxW5E8dvS9Hr0NevLA5EJZYYRGXDtczqVErPED-ptSXrTOyfOaTrLkFHjVEn4aHyDhhkDaJUrx9t2sHEQ3Tn7XVI-VY7tvvjCO26kq-skar0"
 
 [metadata.event]
-room_name = "realraum"
+room_name = "LoTHR"
 
 [metadata.interfaces.eth0]
 ips = [
@@ -20,6 +20,8 @@ gateway4 = "192.168.69.254"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABo1EeIvmj6j4KnK1sKMZglgnITlc2qvMqEjKOZa85vpnE0iSsgOKIgG0tt9HZpUBFBDY4o0zoZ8LnD16rW-xZyK6tCNRGzlwNwQ7ztZK9fpYeHtEg="
+parallel_slide_streaming = false
+mirror_view = false
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 0

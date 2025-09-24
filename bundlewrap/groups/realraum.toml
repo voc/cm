@@ -1,0 +1,7 @@
+subgroups = ["saal28"]
+members = ["releasing"]
+
+[metadata.event]
+name = "r3talks"
+slug = "realraum"
+# schedule_json = "https://talks.mrmcd.net/2025/schedule/export/schedule.json"
