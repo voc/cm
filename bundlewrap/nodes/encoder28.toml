@@ -25,6 +25,7 @@ gateway4 = "192.168.69.254"
 streaming_auth_key = "!decrypt:encrypt$gAAAAABo1EeIvmj6j4KnK1sKMZglgnITlc2qvMqEjKOZa85vpnE0iSsgOKIgG0tt9HZpUBFBDY4o0zoZ8LnD16rW-xZyK6tCNRGzlwNwQ7ztZK9fpYeHtEg="
 parallel_slide_streaming = false
 mirror_view = false
+enable_sbs_presets_for_multi_camera = false
 
 [metadata.voctocore.sources.cam1]
 kind = "test"
@@ -41,9 +42,16 @@ format = "YUY2"
 # sudo apt install alsa-utils
 # Note: voctomix seems to work with hw, plughw; sysdefault has really bad artifacts; default and usbstream do not work at all
 # But hw also had some audio artifacts from time to time/ at mid to high audio levels.
+
+# camera audio
 [metadata.voctocore.sources.audio]
 kind = "alsa"
 device = "hw:CARD=ZVE10,DEV=0"
+
+# capture card audio
+# [metadata.voctocore.sources.audio]
+# kind = "alsa"
+# device = "hw:CARD=S,DEV=0"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
