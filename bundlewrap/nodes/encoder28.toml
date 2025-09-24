@@ -1,6 +1,9 @@
 bundles = []
 groups = ["debian-bookworm"]
 
+[metadata.apt.packages.alsa-utils]
+[metadata.apt.packages."gstreamer1.0-alsa"]
+
 [metadata]
 nameservers = ["1.1.1.1"]
 
@@ -27,8 +30,21 @@ mirror_view = false
 kind = "test"
 
 [metadata.voctocore.sources.slides]
-kind = "test"
+kind = "v4l2"
+device = "/dev/v4l/by-id/usb-Elgato_Game_Capture_HD60_S+_0004EE8273000-video-index0"
+width = "1920"
+height = "1080"
+framerate = "50/1"
+format = "YUY2"
+
+# Manual config:
+# sudo apt install alsa-utils
+# Note: voctomix seems to work with hw, plughw; sysdefault has really bad artifacts; default and usbstream do not work at all
+# But hw also had some audio artifacts from time to time/ at mid to high audio levels.
+[metadata.voctocore.sources.audio]
+kind = "alsa"
+device = "hw:CARD=ZVE10,DEV=0"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam1"
+input = "audio"
