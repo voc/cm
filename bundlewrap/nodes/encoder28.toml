@@ -24,12 +24,10 @@ parallel_slide_streaming = false
 mirror_view = false
 
 [metadata.voctocore.sources.cam1]
-devicenumber = 0
-mode = "1080p25"
+kind = "test"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 2
-mode = "1080p25"
+kind = "test"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
