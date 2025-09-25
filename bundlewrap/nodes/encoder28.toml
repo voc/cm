@@ -10,8 +10,8 @@ nameservers = ["1.1.1.1"]
 [metadata.crs-worker.secrets]
 encoding.secret = "!decrypt:encrypt$gAAAAABo1XfP2klLPEbDNpKS9Fb3MA8eQn9oVNaZJzN_GhUDuP2MjLM3svQ_4l1Gg8i544EZZjeanSfAb4SsCm9p6YwgEO0QVnp5QFX59TIn8gWXizH4HzLljFQFEaUuCWpbCRNP1lnX"
 encoding.token = "!decrypt:encrypt$gAAAAABo1Xe5sFJb7wXWRqLZG3BuwauAsozX0aG4ZrysqHtlOhOZP-key3rN6JiGypxlt5sspaWHZhuW-IhgOMtAnmWzU62UC0k-891jRALLTDYbdtP6ZFFeQv3M4n2AcWtsclgZwigO"
-meta.secret = "encrypt$gAAAAABo1b-mM8ZUb3OjY8RbOG-pjJh028T-4vwW_GQeuXLDvq4FfjX8XiDsXP2xTYI9Jw-dtjaQ_XUGJmdM8quUEiC94kSdaNJBAciXCWd6OSxyoCLq35WJZAwTQODNtRtJ_6ioY-MD"
-meta.token = "encrypt$gAAAAABo1b-uODrFu7e_4BGVDyqioyPlQ4CcjxeMZAzLrYg7tHLhaYUdhwOI3c9Ho1kJ1KTEMhsLRmpc1UKc8kbZ9OShG_4TnhcRp-yqB5t3e0ifcx4e3nDLjcUy6dYd_mj90QWSkkpO"
+meta.secret = "!decrypt:encrypt$gAAAAABo1b-mM8ZUb3OjY8RbOG-pjJh028T-4vwW_GQeuXLDvq4FfjX8XiDsXP2xTYI9Jw-dtjaQ_XUGJmdM8quUEiC94kSdaNJBAciXCWd6OSxyoCLq35WJZAwTQODNtRtJ_6ioY-MD"
+meta.token = "!decrypt:encrypt$gAAAAABo1b-uODrFu7e_4BGVDyqioyPlQ4CcjxeMZAzLrYg7tHLhaYUdhwOI3c9Ho1kJ1KTEMhsLRmpc1UKc8kbZ9OShG_4TnhcRp-yqB5t3e0ifcx4e3nDLjcUy6dYd_mj90QWSkkpO"
 
 [metadata.event]
 room_name = "LoTHR"
