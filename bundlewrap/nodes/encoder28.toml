@@ -3,6 +3,8 @@ groups = ["debian-bookworm"]
 
 [metadata.apt.packages.alsa-utils]
 [metadata.apt.packages."gstreamer1.0-alsa"]
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
 
 [metadata]
 nameservers = ["1.1.1.1"]
@@ -26,6 +28,7 @@ gateway4 = "192.168.69.254"
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABo1XfkhnE3utcKFqchfqfY6YMMJAaJoL-X43HvlJQG3XC4SUJTKqKtgfa2EY6AVABaaF0oCVBMdTt9lPhOf2k1hjzTLtt0zXpjB9bvKzsa3WzYgqE="
 parallel_slide_streaming = false
+vaapi = true
 mirror_view = false
 enable_sbs_presets_for_multi_camera = false
 
