@@ -1,6 +1,9 @@
 bundles = []
 groups = ["debian-bookworm"]
 
+# required if vaapi is activated in voctocore
+[metadata.apt.packages."gstreamer1.0-libav"]
+
 [metadata]
 nameservers = ["1.1.1.1"]
 
