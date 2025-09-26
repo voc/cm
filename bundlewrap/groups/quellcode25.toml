@@ -3,6 +3,6 @@ members = ["releasing", "loudness-rendering"]
  
 [metadata.event]
 name = "QueIIcode 2.0"
-slug = "quellcode2"
+slug = "quellcode25"
 schedule_json = "https://pretalx.0x90.space/quellcode-2/schedule/export/schedule.json"
 
