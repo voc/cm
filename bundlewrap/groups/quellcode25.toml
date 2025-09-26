@@ -1,6 +1,6 @@
 subgroups = ["saal3"]
 members = ["releasing", "loudness-rendering"]
--
+ 
 [metadata.event]
 name = "QueIIcode 2.0"
 slug = "quellcode2"
