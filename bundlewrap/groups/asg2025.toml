@@ -1,0 +1,8 @@
+subgroups = ["saal4", "saal5"]
+members = ["releasing", "loudness-rendering"]
+ 
+[metadata.event]
+name = "All Systems Go! 2025"
+slug = "asg2025"
+schedule_json = "https://cfp.all-systems-go.io/all-systems-go-2025/schedule/export/schedule.json"
+
