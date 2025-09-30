@@ -5,3 +5,4 @@ members = ["releasing"]
 name = "r3talks"
 slug = "realraum"
 # schedule_json = "https://talks.mrmcd.net/2025/schedule/export/schedule.json"
+schedule_json = "https://cfp.realraum.at/realraum-october/schedule/export/schedule.json"
