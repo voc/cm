@@ -1,2 +1,2 @@
-bundlewrap~=4.0, >=4.22.0
+bundlewrap~=4.0, >=4.23.1
 bundlewrap-keepass
