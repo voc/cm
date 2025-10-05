@@ -76,3 +76,7 @@ defaults = {
         },
     },
 }
+
+if node.os_version[0] >= 13:
+    # provides a year 2038-safe replacement for the traditional Unix "last" utility.
+    defaults['apt']['packages']['wtmpdb'] = {}
