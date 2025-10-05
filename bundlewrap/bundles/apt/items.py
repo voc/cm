@@ -70,6 +70,7 @@ files = {
     '/var/lib/cloud': {
         'delete': True,
     },
+    '/etc/apt/apt.conf.d/99recommends': {},
 }
 
 directories = {
