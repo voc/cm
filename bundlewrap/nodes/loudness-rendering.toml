@@ -1,4 +1,4 @@
-groups = ["debian-bookworm"]
+groups = ["debian-trixie"]
 bundles = ["loudness-rendering", "voctocore-artwork"]
 
 [metadata]
