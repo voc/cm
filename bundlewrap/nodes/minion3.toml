@@ -14,3 +14,7 @@ devices = [
   "/dev/disk/by-id/nvme-CT4000P3PSSD8_2420E8AEBB81_1-part4",
   "/dev/disk/by-id/nvme-CT4000P3PSSD8_2423E8B7C390_1-part4",
 ]
+
+[metadata.crs-worker]
+number_of_encoding_workers = 2
+use_vaapi = true

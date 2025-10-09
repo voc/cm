@@ -1,0 +1,7 @@
+subgroups = ["saal3", "saal5", "saal6"]
+members = ["releasing", "loudness-rendering"]
+ 
+[metadata.event]
+name = "Matrix Conference 2025"
+slug = "matrix-conf-2025"
+schedule_json = "https://cfp.2025.matrix.org/matrix-conf-2025/schedule/export/schedule.xml"

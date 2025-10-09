@@ -7,7 +7,7 @@ vaapi.token = "!decrypt:encrypt$gAAAAABoVniLIDZKFKPC1lAZw4OEhxxcgrAshUaJn8ZnX0sU
 vaapi.secret = "!decrypt:encrypt$gAAAAABoVnisy4l4srjPye9c2iZXFAF4_qAZkDkKIEzKGxg00p2-0Br_H9p-GeRS9_K53yDT3d7Z8UbLZ2jfYZzvC7OIi4EKZe3PKaKFB6iZiS74oVjih9pYk1bz0h6DjVhDn8fytrYE"
 
 [metadata.interfaces.br0]
-ips = ["10.73.6.7/16"]
+ips = ["10.73.6.7/16", "10.73.200.24/16"]
 gateway4 = "10.73.0.254"
 
 [[metadata.zfs.pools.zroot.when_creating.config]]
@@ -16,3 +16,7 @@ devices = [
   "/dev/disk/by-id/nvme-CT4000P3PSSD8_2421E8B2581D_1-part4",
   "/dev/disk/by-id/nvme-CT4000P3PSSD8_2421E8B2583C_1-part4",
 ]
+
+[metadata.crs-worker]
+number_of_encoding_workers = 2
+use_vaapi = true
