@@ -1,0 +1,12 @@
+members = ["releasing", "loudness-rendering"]
+subgroups = ["saal4"]
+
+[metadata]
+schedule_json = "https://jh.sophies-kitchen.eu/schedule/jh25_hh.json"
+
+[metadata.event]
+name = "Jugend Hackt Hamburg 2025"
+slug = "jh25_hh"
+
+[metadata.event]
+schedule_json = "https://jh.sophies-kitchen.eu/schedule/jh25_hh.json"
