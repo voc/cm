@@ -39,7 +39,8 @@ ffmpeg \
         [ov] drawtext='fontcolor=white:x=45:y=36:fontsize=50:fontfile=/usr/share/fonts/freesans.ttf:textfile=/opt/loudness-rendering/data/${NAME}/line1.txt:reload=30' [ov1];
         [ov1] drawtext='fontcolor=white:x=45:y=86:fontsize=20:fontfile=/usr/share/fonts/freesans.ttf:textfile=/opt/loudness-rendering/data/${NAME}/line2.txt:reload=30' [ov2];
         [ov2] drawtext='fontcolor=white:x=45:y=111:fontsize=20:fontfile=/usr/share/fonts/freesans.ttf:text=${NAME}' [ov3];
-        [ov3] drawtext='fontcolor=white:x=45:y=303:fontsize=50:fontfile=/usr/share/fonts/freesans.ttf:textfile=/opt/loudness-rendering/data/${NAME}/line3.txt:reload=30' [out]" \
+        [ov3] drawtext='fontcolor=white:x=45:y=303:fontsize=50:fontfile=/usr/share/fonts/freesans.ttf:textfile=/opt/loudness-rendering/data/${NAME}/line3.txt:reload=30' [ov4];
+        [ov4] drawtext='fontcolor=white:x=45:y=349:fontsize=10:fontfile=/usr/share/fonts/freesans.ttf:textfile=/opt/loudness-rendering/data/${NAME}/line4.txt:reload=30' [out]" \
     -map "[out]" -c:v libx264 -threads 2 -preset veryfast -x264-params keyint=30 -tune zerolatency -crf:0 26 -profile:0 high -level:0 4.1 -strict -2 -pix_fmt yuv420p \
     -map "[audio]" -c:a aac -b:a 128k \
     -f flv \

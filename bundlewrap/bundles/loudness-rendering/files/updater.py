@@ -46,7 +46,10 @@ for day in schedule['schedule']['conference']['days']:
         for talk in room_talks:
             talk['__start'] = datetime.strptime(talk['date'][:19], '%Y-%m-%dT%H:%M:%S').replace(tzinfo=TZ)
             d_h, d_m = talk['duration'].split(':')
-            talk['__end'] = talk['__start'] + timedelta(hours=int(d_h), minutes=int(d_m))
+            duration = timedelta(hours=int(d_h), minutes=int(d_m))
+            talk['__end'] = talk['__start'] + duration
+            talk['remaining'] = talk['__end'] - NOW
+            talk['progress'] = min(1, talk['remaining'].total_seconds() / 600)
 
             if talk['__start'] <= NOW < talk['__end']:
                 for stream in [k for k,v in rooms.items() if v == room_name]:
@@ -83,7 +86,19 @@ for stream, talk in room_info.items():
     with open(os.path.join(DATA_DIR, stream, 'line3.txt.tmp'), 'w+') as f:
         f.write(config['streams'][stream]['room'])
 
-    for i in ('line1', 'line2', 'line3'):
+    with open(os.path.join(DATA_DIR, stream, 'line4.txt.tmp'), 'w+') as f:
+        if talk:
+            count = int(talk['progress'] * 50)
+            remaining_seconds = talk['remaining'].total_seconds()
+            remaining = f"~{int(remaining_seconds / 60)}min"
+            char = "█"
+            if remaining_seconds > 900:
+                char = "▒"
+            f.write("┠" + "┄" * (50 - count) + char * count + "┫ " + remaining)
+        else:
+            f.write('')
+
+    for i in ('line1', 'line2', 'line3', 'line4'):
         os.replace(
             os.path.join(DATA_DIR, stream, f'{i}.txt.tmp'),
             os.path.join(DATA_DIR, stream, f'{i}.txt'),

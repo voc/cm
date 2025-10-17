@@ -10,7 +10,7 @@ defaults = {
         'timers': {
             'loudness_info_updater': {
                 'command': '/usr/local/bin/loudness_info_updater',
-                'when': 'minutely',
+                'when': '*-*-* *:*:00,10,20,30,40,50',
             },
         },
     },
