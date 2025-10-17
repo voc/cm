@@ -44,12 +44,6 @@ in {
       "rt-comment"
       "rt-test"
     ] (addr: "${addr}@rt.c3voc.de");
-
-    # whitelist SPF checks from mng (for now)
-    policydSPFExtraConfig = ''
-      HELO_Whitelist = mng.c3voc.de
-      skip_addresses = 127.0.0.0/8,::ffff:127.0.0.0/104,::1,185.106.84.49,2001:67c:20a0:e::179
-    '';
   };
 
   sops.secrets.aliases = {};
@@ -76,8 +70,8 @@ in {
       "[2a01:a700:48d1::105]/128"
 
       # hub.test.c3voc.de
-      "195.54.164.162"
-      "2001:67c:20a0:e::162"
+      "195.54.164.162/32"
+      "2001:67c:20a0:e::162/128"
     ];
   };
 
