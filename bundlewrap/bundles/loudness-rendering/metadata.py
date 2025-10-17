@@ -32,6 +32,11 @@ def from_encoders(metadata):
             'room': rnode.metadata.get('event/room_name'),
             'output': f'rtmp://ingest2.c3voc.de/relay/{endpoint}_loudness',
         }
+        streams[f'{encoder}_fast'] = {
+            'source': f'srt://ingest.c3voc.de:1337?streamid=play/{endpoint}',
+            'room': rnode.metadata.get('event/room_name'),
+            'output': f'rtmp://ingest2.c3voc.de/relay/{endpoint}_loudness_fast',
+        }
     return {
         'loudness-rendering': {
             'streams': streams,

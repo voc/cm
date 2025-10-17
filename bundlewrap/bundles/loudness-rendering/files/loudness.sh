@@ -29,7 +29,7 @@ ffmpeg \
     -filter_complex "
         nullsrc=size=640x720 [base];
         [0:v] scale=640:360, fps=30 [scaled];
-        [0:a:0] ebur128=video=1:meter=16:target=-16:size=640x480 [ebur][a1];
+        [0:a:0] ebur128=video=1:meter=18:target=-12:size=640x480 [ebur][a1];
         [0:a:0] avectorscope=size=640x480:zoom=2:r=30[vec];
         [ebur][vec] blend=all_mode='addition':all_opacity=0.8 [scope];
         [scope] scale=640:360, fps=30 [v1];
