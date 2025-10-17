@@ -28,17 +28,17 @@ in {
     enablePop3 = false;
 
     forwards = {
-      "cm" = "cm@lists.c3voc.de";
-      "congress" = "congress@lists.c3voc.de";
-      "media" = "media@lists.c3voc.de";
-      "muenchen" = "muenchen@lists.c3voc.de";
-      "studios" = "studios@lists.c3voc.de";
-      "voc" = "voc@lists.c3voc.de";
-    } // lib.genAttrs [ # rt related addresses
-      "rt"
-      "rt-comment"
-      "rt-test"
-    ] (addr: "${addr}@rt.c3voc.de");
+      "cm@c3voc.de" = "cm@lists.c3voc.de";
+      "congress@c3voc.de" = "congress@lists.c3voc.de";
+      "media@c3voc.de" = "media@lists.c3voc.de";
+      "muenchen@c3voc.de" = "muenchen@lists.c3voc.de";
+      "studios@c3voc.de" = "studios@lists.c3voc.de";
+      "voc@c3voc.de" = [ "voc@lists.c3voc.de" "znuny@c3voc.de" ];
+    };
+
+    loginAccounts."znuny@c3voc.de" = {
+      hashedPassword = "$2b$05$pdO2nm2sAKPIc4pT/hNBeu07xctX9BIE7ycVjpgmB8a6Bqu89e0Sq";
+    };
   };
 
   sops.secrets.aliases = {};
@@ -47,10 +47,10 @@ in {
     mapFiles.virtual_cm = config.sops.secrets.aliases.path;
     relayDomains = ["hash:/var/lib/mailman/data/postfix_domains"];
     config = {
-      mydestination = lib.mkForce ["c3voc.de"];
       transport_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       local_recipient_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       virtual_alias_maps = ["hash:/etc/postfix/virtual_cm"];
+      virtual_alias_domains = "";
     };
     networks = [
       "127.0.0.1/32"
