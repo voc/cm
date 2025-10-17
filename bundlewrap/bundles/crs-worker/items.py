@@ -52,10 +52,13 @@ else:
         'script': 'script-D-encoding.pl',
     }
 
-if node.metadata.get('crs-worker/separate_vaapi_worker', False):
+if node.metadata.get('crs-worker/separate_vaapi_worker'):
     WORKER_SCRIPTS['encoding-vaapi'] = {
         'secret': 'vaapi',
         'script': 'script-D-encoding.pl',
+        'environment': {
+            'CRS_USE_VAAPI': 'yes',
+        },
     }
 
 

@@ -22,6 +22,7 @@ defaults = {
     'crs-worker': {
         'autostart_scripts': set(),
         'number_of_encoding_workers': 1,
+        'separate_vaapi_worker': False,
         'use_vaapi': False,
     },
 }
