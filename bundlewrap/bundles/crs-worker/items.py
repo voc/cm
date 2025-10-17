@@ -188,7 +188,7 @@ for worker, config in WORKER_SCRIPTS.items():
         'source': 'crs-runner.service',
         'context': {
             'autostart': (worker in autostart_scripts),
-            'pin_to_performance': node.metadata.get('crs-worker/pin_to_performance'),
+            'cpu_pin': node.metadata.get('crs-worker/CPUAffinity', None),
             'script': config['script'],
             'secret': config['secret'],
             'systemd_after': node.metadata.get('crs-worker/systemd_after', set()),

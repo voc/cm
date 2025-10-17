@@ -21,7 +21,8 @@ groups["minisforuminions"] = {
         },
         'crs-worker': {
             'number_of_encoding_workers': 2,
-            'pin_to_performance': True,
+            # ensure the worker scripts only use the performance cores
+            'CPUAffinity': '0-11',
             'separate_vaapi_worker': True,
         },
         'systemd-networkd': {

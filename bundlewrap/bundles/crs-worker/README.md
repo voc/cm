@@ -11,6 +11,7 @@ autostart_scripts = [] # list of worker scripts to start on boot
 tracker_url = "https://tracker.example.org/rpc" # url for the crs tracker XML-RPC api
 use_vaapi = false # should the workers expose the CRS_USE_VAAPI environment variable
 room_name = "Example Room" # sets CRS_ROOM environment variable for room-specific tasks
+CPUAffinity = "0-11" # pin worker scripts to CPU cores 0-11
 ```
 
 Available worker scripts are:
