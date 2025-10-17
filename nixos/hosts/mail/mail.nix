@@ -43,8 +43,6 @@ in {
 
   sops.secrets.aliases = {};
 
-  services.opendkim.domains = lib.mkAfter ",tickets.c3voc.de";
-
   services.postfix = {
     mapFiles.virtual_cm = config.sops.secrets.aliases.path;
     relayDomains = ["hash:/var/lib/mailman/data/postfix_domains"];
