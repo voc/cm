@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, pkgs, ... }:
+{ config, lib, modulesPath, pkgs, name, ... }:
 
 with lib;
 
@@ -18,6 +18,7 @@ in
     sops.secrets."ldap-bind-password".owner = "znuny";
 
     networking.useDHCP = false;
+    networking.hostName = lib.mkOverride 1 name;
     networking.interfaces.eth0.ipv4.addresses = [{
       address = "185.106.84.19";
       prefixLength = 26;
