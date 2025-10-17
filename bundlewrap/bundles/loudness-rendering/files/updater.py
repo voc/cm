@@ -28,7 +28,7 @@ except (FileNotFoundError, json.decoder.JSONDecodeError):
     LOG.exception('could not load config')
     exit(1)
 
-rooms = {v['room']: k for k,v in config['streams'].items()}
+rooms = {k: v['room'] for k,v in config['streams'].items()}
 
 TZ = ZoneInfo(schedule['schedule']['conference']['time_zone_name'])
 LOG.debug(f'{TZ=}')
@@ -39,7 +39,7 @@ room_info = {stream: None for stream in config['streams']}
 
 for day in schedule['schedule']['conference']['days']:
     for room_name, room_talks in day['rooms'].items():
-        if room_name not in rooms:
+        if room_name not in rooms.values():
             LOG.debug(f'ignoring {room_name} because not configured')
             continue
 
@@ -49,7 +49,8 @@ for day in schedule['schedule']['conference']['days']:
             talk['__end'] = talk['__start'] + timedelta(hours=int(d_h), minutes=int(d_m))
 
             if talk['__start'] <= NOW < talk['__end']:
-                room_info[rooms[room_name]] = talk
+                for stream in [k for k,v in rooms.items() if v == room_name]:
+                    room_info[stream] = talk
                 break
 
 for f in os.scandir(DATA_DIR):
