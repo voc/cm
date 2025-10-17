@@ -91,12 +91,145 @@ in {
     };
   };
 
-  services.rspamd.extraConfig = ''
-    actions {
-      greylist = 2; # Apply greylisting when reaching this score
-      add_header = 4; # Add header when reaching this score
-      reject = 6; # yeeeeeeeet from 6 on
+  services.rspamd.locals."multimap.conf".text = let
+    blocked_subjects = ''
+      /\bpsoriasis\b/i
+      /\bprostatitis\b/i
+      /\bderila\b/i
+      /\betf\b/i
+      /\bbitcoin\b/i
+      /\breich\b/i
+      /\bgeld\b/i
+      /\bki\b/i
+      /\baktien\b/i
+      /\bmakita\b/i
+      /\blotto|lottery\b/i
+      /\bmubi\b/i
+      /\bauto\b/i
+      /\bantihaftbeschichtung\b/i
+      /.*r[:.-]*?e[:.-]*?z[:.-]*?e[:.-]*?p[:.-]*?t[:.-]*?f[:.-]*?r[:.-]*?e[:.-]*?i/i
+      /\br[-_]?e[-_]?zept[-_]?frei\b/i
+      /zeptfrei/i
+      /\beinkommen\b/i
+      /\bnubuu\b/i
+      /\bnuubu\b/i
+      /\bentgiftungsprogramm\b/i
+      /\bgelenkschmerzen\b/i
+      /\bmädchen\b/i
+      /\bsprachübersetzer\b/i
+      /\bstabilisierung.+blutdrucks\b/i
+      /\bmüheloses.+reinigen\b/i
+      /\bpapillome\b/i
+      /\bküchenmesser\b/i
+      /\brendite\b/i
+      /\bgewichtsverlust\b/i
+      /\bpreissturz\b/i
+      /\bchance.+kostenlos\b/i
+      /\bhamorrhoiden\b/i
+      /\bhörvermögens\b/i
+      /\bmuama\b/i
+      /\bryoko\b/i
+      /\bbambusseide\b/i
+      /\bluxusseide\b/i
+      /\bHondrostrong\b/i
+      /\btabletten.+apotheke\b/i
+      /\bEinlegesohlen\b/i
+      /\bEinlegesohlen\b/i
+      /\btest\syour\siq\snow\b/i
+      /\bzukunft.+sauberkeit\b/i
+      /\bcbd\b/i
+      /\bharninkontinenz\b/i
+      /\bpillen\b/i
+      /\btabletten\b/i
+    '';
+    greylist_tlds = ''
+      [.]tr$
+      [.]su$
+      [.]mom$
+      [.]mg$
+      [.]com\.py$
+      [.]af$
+      [.]ng$
+      [.]ro$
+      [.]ar$
+      [.]pro$
+    '';
+    allowlist_fwd_hosts = lib.concatStringsSep "\n" config.services.postfix.networks;
+  in ''
+    BAD_SUBJECT_BL {
+      type = "header";
+      header = "subject";
+      regexp = true;
+      map = "${pkgs.writeText "bad_subj_bl.map" blocked_subjects}";
+      description = "Blocklist for common spam subjects";
+      score = 8;
     }
+    SENDER_TLD_FROM {
+      type = "from";
+      filter = 'email:domain:tld';
+      prefilter = true;
+      map = "${pkgs.writeText "bad_tld_bl.map" greylist_tlds}";
+      regexp = true;
+      description = "Local tld from blocklist";
+      action = "greylist";
+    }
+    WHITELISTED_FWD_HOST {
+      type = "ip";
+      map = "${pkgs.writeText "allowlist_fwd_hosts" allowlist_fwd_hosts}";
+      symbols_set = ["WHITELISTED_FWD_HOST"];
+    }
+  '';
+  services.rspamd.locals."fuzzy_check.conf".text = ''
+    rule "mailcow" {
+        # Fuzzy storage server list
+        servers = "fuzzy.mailcow.email:11445";
+        # Default symbol for unknown flags
+        symbol = "MAILCOW_FUZZY_UNKNOWN";
+        # Additional mime types to store/check
+        mime_types = ["application/*"];
+        # Hash weight threshold for all maps
+        max_score = 100.0;
+        # Whether we can learn this storage
+        read_only = yes;
+        # Ignore unknown flags
+        skip_unknown = yes;
+        # Hash generation algorithm
+        algorithm = "mumhash";
+        # Encrypt connection
+        encryption_key = "oa7xjgdr9u7w3hq1xbttas6brgau8qc17yi7ur5huaeq6paq8h4y";
+        # Map flags to symbols
+        fuzzy_map = {
+            MAILCOW_FUZZY_DENIED {
+                max_score = 10.0;
+                flag = 11;
+            }
+        }
+    }
+  '';
+  services.rspamd.locals."fuzzy_group.conf".text = ''
+    symbols = {
+        "MAILCOW_FUZZY_UNKNOWN" {
+            weight = 0.1;
+        }
+        "MAILCOW_FUZZY_DENIED" {
+            weight = 7.0;
+        }
+    }
+  '';
+  services.rspamd.locals."force_actions.conf".text = ''
+    rules {
+      WHITELIST_FORWARDING_HOST_NO_ACTION {
+        action = "no action";
+        expression = "WHITELISTED_FWD_HOST";
+        require_action = ["reject", "greylist", "soft reject"];
+      }
+    }
+  '';
+
+  services.rspamd.overrides."actions.conf".text = ''
+    add_header = 4;
+    greylist = 6;
+    reject = 10;
   '';
 
   users.users.uwsgi.uid = config.ids.uids.uwsgi;
