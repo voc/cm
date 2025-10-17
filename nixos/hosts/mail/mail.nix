@@ -37,6 +37,7 @@ in {
     };
 
     loginAccounts."znuny@c3voc.de" = {
+      aliases = [ "znuny@c3voc.de" ];
       hashedPassword = "$2b$05$pdO2nm2sAKPIc4pT/hNBeu07xctX9BIE7ycVjpgmB8a6Bqu89e0Sq";
     };
   };
