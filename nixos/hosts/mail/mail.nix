@@ -221,7 +221,7 @@ in {
       WHITELIST_FORWARDING_HOST_NO_ACTION {
         action = "no action";
         expression = "WHITELISTED_FWD_HOST";
-        require_action = ["reject", "greylist", "soft reject"];
+        require_action = ["reject", "greylist", "soft reject", "add header"];
       }
     }
   '';
