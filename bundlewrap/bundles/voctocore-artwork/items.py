@@ -37,14 +37,6 @@ files['/opt/voc/schedule_url'] = {
     },
 }
 
-files['/opt/voc/overlays_url'] = {
-    'content': node.metadata.get('event/overlays', '') + '\n',
-    'content_type': 'text',
-    'triggers': {
-        'action:voctocore-artwork_update_schedule_and_overlays',
-    },
-}
-
 files['/usr/local/bin/update-schedule-and-overlays'] = {
     'mode': '0755',
     'content_type': 'mako',
@@ -100,3 +92,17 @@ if node.has_bundle('voctocore'):
                     'svc_systemd:voctomix2-voctocore:restart',
                 },
             }
+
+    files['/opt/voc/overlays_url'] = {
+        'content': node.metadata.get('event/overlays', '') + '\n',
+        'content_type': 'text',
+        'triggers': {
+            'action:voctocore-artwork_update_schedule_and_overlays',
+        },
+    }
+else:
+    # required by the updater script, but we only need overlays if we have voctocore
+    files['/opt/voc/overlays_url'] = {
+        'content': '\n',
+        'content_type': 'text',
+    }
