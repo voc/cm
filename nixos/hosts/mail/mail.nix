@@ -11,11 +11,6 @@ in {
     3; # this is set to error because rspamd regularly complains about not enough learns
   systemd.services.dovecot2.serviceConfig.LogLevelMax = 5; # = notice
 
-  # stop postfix from dying if rspamd hiccups
-  systemd.services.postfix.unitConfig = {
-    Requires = lib.mkForce "dovecot2.service opendkim.service";
-  };
-
   mailserver = {
     mailDirectory = "/persist/mail";
     enable = true;
