@@ -1,6 +1,6 @@
 DEBIAN_TO_VOCTOMIX_VERSION = {
     10: 'voctomix2',
-    12: '2.2',
+    12: '2.4',
 }
 
 BRANCH_TO_VERSION_TUPLE = {
