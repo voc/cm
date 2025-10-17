@@ -85,7 +85,7 @@ in
       };
       $Self->{'AuthSyncModule::LDAP::UserSyncGroupsDefinition'} = {
           # ldap group
-          'cn=znuny-admin,ou=groups,dc=znuny,dc=c3voc,dc=de' => {
+          'cn=infra,ou=groups,dc=znuny,dc=c3voc,dc=de' => {
               # otrs group
               'admin' => {
                   rw => 1,
@@ -97,8 +97,6 @@ in
                   rw => 1,
                   ro => 1,
               },
-          },
-          'cn=znuny-test-queue,ou=groups,dc=znuny,dc=c3voc,dc=de' => {
               'znuny-queue' => {
                   rw => 1,
                   ro => 1,
