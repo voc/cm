@@ -7,6 +7,7 @@ keys:
   - &admin_keepass age13yl99pyktjyssdm487pa5ucm4rxcrdrt4lq8qk2vkvdwyfhcvahqs4e6cw
   - &host_tel age1glkmsh6pex9g5v95vwx78a8xksmnkvsu7ccnhxzu09yvnfnjudls3lfkru
   - &host_mail age1zcj3dt7uc3gc3kyt6l7m86qjzm9vlgq7kcsm9wh9gank6rqff4gqwrtzpa
+  - &host_forgejo age12xvt82l7v3pvk2lk2h4eygse490ww90xp246kutzly27k4ll0uzsy9p8j4
   - &host_loudness age18jzfuerpcgw4cz5lrl36upjfke2txf3jm5znelpy44zpd3mye3ksclfwmy
 
 creation_rules:
@@ -30,6 +31,17 @@ creation_rules:
       - *admin_ember
       - *admin_molly
       - *host_mail
+
+  - path_regex: hosts/forgejo/secrets.yaml
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *host_forgejo
 
   - path_regex: modules/voc2mqtt/.*
     key_groups:
