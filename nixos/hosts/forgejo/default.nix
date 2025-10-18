@@ -48,6 +48,9 @@ in
       service = {
         DISABLE_REGISTRATION = true;
       };
+      session = {
+        SESSION_LIFE_TIME = 86400;
+      };
       oauth2_client = {
         ENABLE_OPENID_SIGNUP = true;
         REGISTER_EMAIL_CONFIRM = false;
