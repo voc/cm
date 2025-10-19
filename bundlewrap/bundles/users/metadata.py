@@ -55,12 +55,12 @@ def add_users_from_toml(metadata):
         if uname in ('root',):
             continue
 
-        if metadata.get(f'users/{uname}/sudo_commands', None) is None:
+        if metadata.get(('users', uname, 'sudo_commands'), None) is None:
             # we explicitely check for None here, so we can set
             # sudo_commands to an empty list to restrict users.
             users[uname]['sudo_commands'] = {'ALL'}
 
-        uid = metadata.get(f'users/{uname}/uid', None)
+        uid = metadata.get(('users', uname, 'uid'), None)
         if uname in USERS_TOML:
             if uid is not None:
                 raise BundleError(f'{node.name}: user {uname} tries to overwrite deterministic uid, which is not allowed.')

@@ -59,7 +59,7 @@ directories = {
 
 
 for interface, config in node.metadata.get('interfaces').items():
-    if node.metadata.get(f'systemd-networkd/bonds/{interface}', {}):
+    if node.metadata.get(('systemd-networkd', 'bonds', interface), {}):
         continue
 
     files[f'/etc/systemd/network/{interface}.network'] = {
@@ -116,7 +116,7 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
         'context': {
             'bond': bond,
             'match': config['match'],
-            'vlans': node.metadata.get(f'interfaces/{bond}/vlans', set()),
+            'vlans': node.metadata.get(('interfaces', bond, 'vlans'), set()),
         },
         'needed_by': {
             'svc_systemd:systemd-networkd',

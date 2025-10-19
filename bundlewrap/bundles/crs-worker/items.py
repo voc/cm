@@ -159,8 +159,8 @@ for worker, config in WORKER_SCRIPTS.items():
 
     environment = {
         'CRS_TRACKER': node.metadata.get('crs-worker/tracker_url'),
-        'CRS_TOKEN': node.metadata.get(f'crs-worker/secrets/{config["secret"]}/token'),
-        'CRS_SECRET': node.metadata.get(f'crs-worker/secrets/{config["secret"]}/secret'),
+        'CRS_TOKEN': node.metadata.get(('crs-worker', 'secrets', config["secret"], 'token')),
+        'CRS_SECRET': node.metadata.get(('crs-worker', 'secrets', config["secret"], 'secret')),
         **config.get('environment', {})
     }
 

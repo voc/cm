@@ -9,8 +9,8 @@ actions = {
         },
     },
     'systemd-hostname': {
-        'command': 'hostnamectl set-hostname {}'.format(node.metadata['hostname']),
-        'unless': '[ "$(hostnamectl --static)" = "{}" ]'.format(node.metadata['hostname']),
+        'command': 'hostnamectl set-hostname {}'.format(node.metadata.get('hostname')),
+        'unless': '[ "$(hostnamectl --static)" = "{}" ]'.format(node.metadata.get('hostname')),
         'needs': {'file:/etc/hosts'} if node.has_bundle('basic') else set(),
     },
     'systemd-timezone': {
