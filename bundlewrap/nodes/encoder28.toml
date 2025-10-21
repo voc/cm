@@ -5,6 +5,7 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages."gstreamer1.0-alsa"]
 [metadata.apt.packages.intel-media-va-driver-non-free]
 [metadata.apt.packages.i965-va-driver]
+[metadata.apt.packages.v4l-utils]
 
 [metadata]
 nameservers = ["1.1.1.1"]
@@ -32,14 +33,6 @@ vaapi = true
 mirror_view = false
 enable_sbs_presets_for_multi_camera = false
 
-[metadata.voctocore.sources.cam1]
-kind = "v4l2"
-device= "/dev/v4l/by-id/usb-USB3.0_HD_Audio_Capture_USB3.0_HD_Video_Capture_HU123450-video-index0"
-width = "1920"
-height = "1080"
-framerate = "30/1"
-type = "image/jpeg"
-
 [metadata.voctocore.sources.slides]
 kind = "v4l2"
 device = "/dev/v4l/by-id/usb-Elgato_Game_Capture_HD60_S+_0004EE8273000-video-index0"
@@ -48,10 +41,35 @@ height = "1080"
 framerate = "25/1"
 format = "YUY2"
 
-[metadata.voctocore.sources.audio]
-kind = "alsa"
-device = "hw:CARD=Capture,DEV=0"
-
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "audio"
+
+### custom hardware
+
+## xro capture card
+#[metadata.voctocore.sources.audio]
+#kind = "alsa"
+#device = "hw:CARD=Capture,DEV=0"
+
+#[metadata.voctocore.sources.cam1]
+#kind = "v4l2"
+#device= "/dev/v4l/by-id/usb-USB3.0_HD_Audio_Capture_USB3.0_HD_Video_Capture_HU123450-video-index0"
+#width = "1920"
+#height = "1080"
+#framerate = "30/1"
+#type = "image/jpeg"
+
+
+## ugreen capture card
+[metadata.voctocore.sources.audio]
+kind = "alsa"
+device = "hw:CARD=U15389,DEV=0"
+
+[metadata.voctocore.sources.cam1]
+kind = "v4l2"
+device= "/dev/v4l/by-id/usb-MACROSILICON_UGREEN_15389_20230204-video-index0"
+width = "1920"
+height = "1080"
+framerate = "30,/1"
+format = "YUY2"
