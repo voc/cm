@@ -66,6 +66,9 @@ input = "audio"
 kind = "alsa"
 device = "hw:CARD=U15389,DEV=0"
 
+
+# BEFORE YOU TOUCH THIS BECAUSE VOCTOCORE DOESNT START, CHECK IF THE EXTRON OUTPUTS 1080p25!!!
+
 [metadata.voctocore.sources.cam1]
 kind = "v4l2"
 device= "/dev/v4l/by-id/usb-MACROSILICON_UGREEN_15389_20230204-video-index0"
