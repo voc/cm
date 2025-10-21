@@ -29,7 +29,8 @@ gateway4 = "192.168.69.254"
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABo1XfkhnE3utcKFqchfqfY6YMMJAaJoL-X43HvlJQG3XC4SUJTKqKtgfa2EY6AVABaaF0oCVBMdTt9lPhOf2k1hjzTLtt0zXpjB9bvKzsa3WzYgqE="
 parallel_slide_streaming = false
-vaapi = false
+parallel_slide_recording = true
+vaapi = true
 mirror_view = false
 enable_sbs_presets_for_multi_camera = false
 
