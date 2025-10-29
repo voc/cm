@@ -3,6 +3,7 @@
 {
   imports = [
     ./users.nix
+    ../../modules/voc2mqtt
   ];
 
   nix.settings = {
