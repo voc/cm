@@ -16,6 +16,7 @@ dhcp = true
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYk0lzAoL1Hf5xuaCK0E6A9xq15GeqVfsTCHDomSz0RcFz-kzlyQaS6wXWTsEPF21QhvncKBIstse1UP1Ue5fOKP1J9ruv5ScZrnfctymdDCpuc="
+enable_sbs_presets_with_slides = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 5
@@ -23,7 +24,7 @@ mode = "1080p25"
 
 [metadata.voctocore.sources.cam2]
 devicenumber = 4
-mode = "1080p25"
+mode = "1080p50"
 
 #[metadata.voctocore.sources.cam3]
 #devicenumber = 0

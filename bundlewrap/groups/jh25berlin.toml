@@ -1,6 +1,9 @@
 subgroups = ["saal6"]
 members = ["releasing"]
 
+[metadata]
+nameservers = ["8.8.8.8"]
+
 [metadata.event]
 name = "Jugend hackt Berlin 2025"
 slug = "jh25berlin"
