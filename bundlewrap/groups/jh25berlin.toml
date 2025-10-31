@@ -1,0 +1,6 @@
+subgroups = ["saal6"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Jugend hackt Berlin 2025"
+slug = "jh25berlin"

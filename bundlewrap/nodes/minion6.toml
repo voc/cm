@@ -8,7 +8,7 @@ vaapi.secret = "!decrypt:encrypt$gAAAAABoVnisy4l4srjPye9c2iZXFAF4_qAZkDkKIEzKGxg
 
 [metadata.interfaces.br0]
 ips = ["10.73.6.7/16"]
-gateway4 = "10.73.0.254"
+dhcp = true
 
 [[metadata.zfs.pools.zroot.when_creating.config]]
 type = "mirror"
