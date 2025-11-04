@@ -1,0 +1,10 @@
+subgroups = ["saal3", "saal4"]
+members = ["releasing"]
+
+[metadata]
+schedule_json = "https://pretalx.godotfest.com/godotfest-25/schedule/export/schedule.json"
+
+[metadata.event]
+name = "GodotFest 2025"
+slug = "godotfest-25"
+schedule_json = "https://pretalx.godotfest.com/godotfest-25/schedule/export/schedule.json"
