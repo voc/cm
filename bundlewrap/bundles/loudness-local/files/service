@@ -1,0 +1,22 @@
+[Unit]
+Description=Loudness monitoring for ${identifier}
+After=network.target
+
+[Service]
+Type=simple
+User=voc
+Group=voc
+ExecStart=/usr/local/bin/loudness_rendering "${identifier}" "${source_url}" "${output}"
+Restart=always
+RestartSec=10
+StartLimitInterval=0
+
+# a process running loudness rendering usually takes anywhere between 250M and
+# 500M of RAM. If something happens to the stream, ffmpeg will sometimes not
+# notice that and just eat more and more RAM. By limiting this to 1G we ensure
+# a timely OOM-kill of the process, which then will automatically restart due
+# to Restart=always above.
+MemoryMax=2G
+
+[Install]
+WantedBy=multi-user.target
