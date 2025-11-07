@@ -1,0 +1,9 @@
+subgroups = ["saal5", "saal6"]
+members = ["releasing", "loudness-rendering"]
+
+[metadata]
+schedule_json = "https://pretalx.com/denog17/schedule/export/schedule.json"
+
+[metadata.event]
+name = "DENOG17"
+slug = "denog17"

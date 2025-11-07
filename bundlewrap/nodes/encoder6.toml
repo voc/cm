@@ -8,7 +8,7 @@ meta.secret = "!decrypt:encrypt$gAAAAABlx3cwXRgJExYHPSONTvM4Qr2__WCSqqftfBcBk7pv
 meta.token = "!decrypt:encrypt$gAAAAABlx3cq0mWwMvUECvt8ctW_Wu1IvdbzhzMWbt7yzRUarPgFP6TY4UurHMzpIFoSjeT67zaQoYvZLLG3Vh2lAJZJo4kr_qfN6zEOe6U1RRSNXCzTb4866WgTfdIsaOX_8HBog4b0"
 
 [metadata.event]
-room_name = "Saal 6"
+room_name = "Saal B"
 
 [metadata.interfaces.eno1]
 ips = ["10.73.6.3/16"]
@@ -16,26 +16,27 @@ gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYk0lzAoL1Hf5xuaCK0E6A9xq15GeqVfsTCHDomSz0RcFz-kzlyQaS6wXWTsEPF21QhvncKBIstse1UP1Ue5fOKP1J9ruv5ScZrnfctymdDCpuc="
+fps = 50
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 5
-mode = "1080p25"
+mode = "1080p50"
 
-#[metadata.voctocore.sources.cam2]
-#devicenumber = 4
-#mode = "1080p25"
+[metadata.voctocore.sources.cam2]
+devicenumber = 4
+mode = "1080p50"
 
-#[metadata.voctocore.sources.cam3]
-#devicenumber = 0
-#mode = "1080p25"
+[metadata.voctocore.sources.cam3]
+devicenumber = 0
+mode = "1080p50"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 1
-mode = "1080p25"
+mode = "1080p50"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam1"
+input = "cam3"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
