@@ -25,17 +25,17 @@ groups["minisforuminions"] = {
             'CPUAffinity': '0-11',
             'separate_vaapi_worker': True,
         },
-        'systemd-networkd': {
-            'bridges': {
-                'br0': {
-                    'match': [
-                        'enp90s0',
-                        'enp2s0f0',
-                        'enp2s0f1',
-                    ],
-                },
-            },
-        },
+        #'systemd-networkd': {
+        #    'bridges': {
+        #        'br0': {
+        #            'match': [
+        #                'enp90s0',
+        #                'enp2s0f0',
+        #                'enp2s0f1',
+        #            ],
+        #        },
+        #    },
+        #},
         'users': {
             'voc': {
                 'groups': ['render', 'video'],

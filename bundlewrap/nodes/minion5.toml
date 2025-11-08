@@ -33,7 +33,7 @@ cache_slabs = 4
 primary = "!kee_user:ansible|router|knot secret"
 primary_secret = "!kee_pass:ansible|router|knot secret"
 
-[metadata.interfaces.br0]
+[metadata.interfaces.eth1]
 ips = [
     "10.73.0.254/16",
     "10.73.200.201/16",
@@ -43,7 +43,7 @@ ips = [
 [metadata.interfaces.eth0]
 dhcp = true
 
-[metadata.isc-dhcp-server.subnets.br0]
+[metadata.isc-dhcp-server.subnets.eth1]
 range_lower = "10.73.170.1"
 range_higher = "10.73.170.254"
 subnet = "10.73.0.0/16"
