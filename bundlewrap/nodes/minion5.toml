@@ -1,12 +1,58 @@
 groups = ["debian-bookworm"]
+bundles = [
+  'bird',
+  'generator-routing',
+  'generator-s2s',
+  'isc-dhcp-server',
+  'unbound-with-knot',
+]
 
 [metadata.crs-worker.secrets.encoding]
 token = "!kee_user:ansible|worker-groups|minion5"
 secret = "!kee_pass:ansible|worker-groups|minion5"
 
+
+[metadata]
+external_interface = "eth0"
+room_number = 200
+
+[metadata.bird]
+static_routes = [
+    "10.73.0.0/16",
+]
+
+[metadata.generator-s2s]
+# pubkey encrypt$gAAAAABl_YPpFCkOL-J4VetjmrCMaq5N1XYJEk4kcQZx22-45F_pW6Ppy8vsYPB88eupqfvHFgngdibJ-KOPnhF9728tgo0JB8GFiWonS_fGZR1vWBT4Zwgw1qpBUKZP4WRkzELcGdb2
+peer_pubkey = "!decrypt:encrypt$gAAAAABl_YOCurKJacZUVR-ZrYa_YmmMJVA2N1TRochwDiVv6_-Z9J63Aemdq4PI3VbgGO3Qkbx4aY-vVikvBQYedjEt9sbzCv9z87yQ0tKFhelXfQMlwrI6sLZdAnTN7U9sXPVt2k-a"
+privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4vfD9ScgHyA7-CzXRkHAwM7FIS6S8ArMwovWu_eqyP0owuRfHjvICLUSGxkBHeyTlA91jZuxwpbZ02sjFoLntYeBgD-pq"
+
+
+[metadata.unbound-with-knot]
+threads = 4
+cache_slabs = 4
+primary = "!kee_user:ansible|router|knot secret"
+primary_secret = "!kee_pass:ansible|router|knot secret"
+
 [metadata.interfaces.br0]
-ips = ["10.73.5.7/16"]
-gateway4 = "10.73.0.254"
+ips = [
+    "10.73.0.254/16",
+    "10.73.200.201/16",
+    "10.73.5.7/16",
+]
+
+[metadata.interfaces.eth0]
+dhcp = true
+
+[metadata.isc-dhcp-server.subnets.br0]
+range_lower = "10.73.170.1"
+range_higher = "10.73.170.254"
+subnet = "10.73.0.0/16"
+options.broadcast-address = "10.73.255.255"
+options.domain-name-servers = "10.73.0.254"
+options.domain-search = "lan.c3voc.de"
+options.routers = "10.73.0.254"
+options.subnet-mask = "255.255.0.0"
+
 
 [[metadata.zfs.pools.zroot.when_creating.config]]
 type = "mirror"

@@ -29,7 +29,6 @@ groups["minisforuminions"] = {
             'bridges': {
                 'br0': {
                     'match': [
-                        'enp87s0',
                         'enp90s0',
                         'enp2s0f0',
                         'enp2s0f1',
