@@ -2,7 +2,7 @@ import bwkeepass
 
 
 @magic_string
-def kee_user(arg)
+def kee_user(arg):
     return bwkeepass.username(arg)
 
 @magic_string
