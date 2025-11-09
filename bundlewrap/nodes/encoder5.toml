@@ -11,7 +11,7 @@ meta.secret = "!kee_pass:ansible|worker-groups|encoder5-meta"
 meta.token = "!kee_user:ansible|worker-groups|encoder5-meta"
 
 [metadata.event]
-room_name = "Saal A"
+room_name = "Saal B"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.5.3/16"]
@@ -30,20 +30,16 @@ devicenumber = 4
 mode = "1080p50"
 
 [metadata.voctocore.sources.cam3]
-devicenumber = 1
-mode = "1080p50"
-
-[metadata.voctocore.sources.cam4]
-devicenumber = 3
+devicenumber = 2
 mode = "1080p50"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 0
+devicenumber = 3
 mode = "1080p50"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam4"
+input = "cam3"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
