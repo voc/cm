@@ -8,7 +8,7 @@ meta.secret = "!decrypt:encrypt$gAAAAABlx3cwXRgJExYHPSONTvM4Qr2__WCSqqftfBcBk7pv
 meta.token = "!decrypt:encrypt$gAAAAABlx3cq0mWwMvUECvt8ctW_Wu1IvdbzhzMWbt7yzRUarPgFP6TY4UurHMzpIFoSjeT67zaQoYvZLLG3Vh2lAJZJo4kr_qfN6zEOe6U1RRSNXCzTb4866WgTfdIsaOX_8HBog4b0"
 
 [metadata.event]
-room_name = "Saal B"
+room_name = "Saal A"
 
 [metadata.interfaces.eno1]
 ips = ["10.73.6.3/16"]
@@ -27,11 +27,11 @@ devicenumber = 4
 mode = "1080p50"
 
 [metadata.voctocore.sources.cam3]
-devicenumber = 0
+devicenumber = 2
 mode = "1080p50"
 
 [metadata.voctocore.sources.slides]
-devicenumber = 1
+devicenumber = 3
 mode = "1080p50"
 
 [metadata.voctocore.audio.original]
