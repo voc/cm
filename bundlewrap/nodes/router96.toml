@@ -9,6 +9,12 @@ groups = ["debian-bookworm"]
 [metadata]
 room_number = 96
 
+[metadata.bird]
+static_routes = [
+    "10.73.5.0/24",
+    "10.73.6.0/24",
+]
+
 [metadata.generator-s2s]
 # pubkey encrypt$gAAAAABl_ZDMUb43-_6jS6prfS2UJ8ssbjgGe6bJ8g67kJSWolVD8vmgPiDBWXAPllDVF8q-q8PwhNm4hcbGLxo689HNQtWtnfFj1XdHXcaDs8jPvYLW_ZUxkmwoMmLIPm_wERRURpke
 peer_pubkey = "!decrypt:encrypt$gAAAAABl_ZI9l68Y30J2l5ath5NmYwz6cCfKDXn9kG8BzfA_DggGrPI0_e2pnZMVfx1u2sysu28PcODRWsy1_HgTCnjW_uikuhX331cTaZ5eNFZG4xzoDCIy2e6F4dI3B6_2BxYwSl4E"
