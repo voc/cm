@@ -1,5 +1,5 @@
 groups = ["debian-bookworm"]
-bundles = ["loudness-local", "voctocore-artwork"]
+#bundles = ["loudness-local", "voctocore-artwork"]
 
 [metadata.crs-worker.secrets.encoding]
 token = "!kee_user:ansible|worker-groups|minion3"
@@ -18,10 +18,6 @@ devices = [
 
 [metadata.loudness-rendering]
 from_encoders = [
-    "encoder1",
-    "encoder2",
     "encoder3",
     "encoder4",
-    "encoder5",
-    "encoder6",
 ]
