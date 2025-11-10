@@ -21,19 +21,19 @@ enable_sbs_presets_for_multi_camera = false
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 5
-mode = "1080p50"
+mode = "1080p25"
 
 [metadata.voctocore.sources.cam2]
 devicenumber = 4
-mode = "1080p50"
+mode = "1080p25"
 
 [metadata.voctocore.sources.cam3]
 devicenumber = 2
-mode = "1080p50"
+mode = "1080p25"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 3
-mode = "1080p50"
+mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
