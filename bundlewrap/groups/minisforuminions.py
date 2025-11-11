@@ -10,6 +10,7 @@ groups["minisforuminions"] = {
     },
     'bundles': {
         'samba',
+        'snmp-temperature-monitoring',
         'zfs',
     },
     'metadata': {
