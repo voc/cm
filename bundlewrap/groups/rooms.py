@@ -25,6 +25,7 @@ for i in ROOMS:
         'member_patterns': {
             rf'^tallycom{pattern}-[0-9+]$',
             rf'^(encoder|mixer|minion){pattern}$',
+            rf'^switch{pattern}',
         },
         'metadata': {
             'room_number': room_number,
