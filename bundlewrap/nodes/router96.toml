@@ -41,11 +41,6 @@ restrict-to = [
     "rfc1918",
 ]
 
-[metadata.snmp-temperature-monitoring]
-routeros = [
-    "switch96.lan.c3voc.de",
-]
-
 [metadata.systemd-networkd.bridges.br-lan]
 match = ["enp1s0f*"]
 
