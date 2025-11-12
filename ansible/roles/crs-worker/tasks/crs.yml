@@ -37,7 +37,7 @@
     when: tracker_svn_checkout.stat.exists == True
 
   - name: checkout tools/tracker3.0
-    git: repo=https://github.com/crs-tools/crs-scripts
+    git: repo=https://github.com/voc/crs-scripts
                 dest=/opt/crs/tools/tracker3.0
                 force=yes
     tags:

@@ -29,14 +29,14 @@ WORKER_SCRIPTS = {
 }
 
 if node.metadata.get('crs-worker/postprocessing_dummy_instead_of_upload', False):
-    WORKER_SCRIPTS['postprocessing'] = {
+    WORKER_SCRIPTS['upload'] = {
         'secret': 'meta',
         'script': 'script-F-postprocessing-dummy.pl',
     }
 else:
-    WORKER_SCRIPTS['postprocessing'] = {
+    WORKER_SCRIPTS['upload'] = {
         'secret': 'meta',
-        'script': 'script-F-postprocessing-upload.pl',
+        'script': 'script-F-upload.pl',
     }
 
 number_of_workers = node.metadata.get('crs-worker/number_of_encoding_workers')
@@ -64,7 +64,7 @@ if node.metadata.get('crs-worker/separate_vaapi_worker'):
 
 directories['/opt/crs-scripts'] = {}
 git_deploy['/opt/crs-scripts'] = {
-    'repo': 'https://github.com/crs-tools/crs-scripts.git',
+    'repo': 'https://github.com/voc/crs-scripts.git',
     'rev': 'master',
 }
 
