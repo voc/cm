@@ -1,3 +1,5 @@
+from bundlewrap.exceptions import NoSuchGroup
+
 defaults = {
     'apt': {
         'packages': {
@@ -14,13 +16,15 @@ def auto_routeros(metadata):
     room = metadata.get('room_number', None)
     if not room:
         return {}
-
-    nodes = repo.nodes_in_all_groups([
-        f'saal{room}',
-        'switches-mikrotik',
-    ])
-    if not nodes:
-        return {}
+    try:
+        nodes = repo.nodes_in_all_groups([
+            f'saal{room}',
+            'switches-mikrotik',
+        ])
+        if not nodes:
+            raise DoNotRunAgain
+    except NoSuchGroup:
+        raise DoNotRunAgain
 
     return {
         'snmp-temperature-monitoring': {
