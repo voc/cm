@@ -22,15 +22,14 @@ ips = [
     "10.73.243.201/24",
 ]
 
-[metadata.isc-dhcp-server.subnets.lan]
-range_lower = "10.73.243.100"
-range_higher = "10.73.243.199"
+[metadata.kea-dhcp-server.subnets.lan]
+id = 3504
+lower = "10.73.243.100"
+higher = "10.73.243.199"
 subnet = "10.73.243.0/24"
-options.broadcast-address = "10.73.243.255"
 options.domain-name-servers = "10.73.243.201"
 options.domain-search = "lan.c3voc.de"
 options.routers = "10.73.243.201"
-options.subnet-mask = "255.255.255.0"
 
 [metadata.unbound-with-knot]
 threads = 4
