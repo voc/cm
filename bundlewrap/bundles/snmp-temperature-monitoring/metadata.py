@@ -29,7 +29,7 @@ def auto_routeros(metadata):
     return {
         'snmp-temperature-monitoring': {
             'routeros': {
-                rnode.hostname
+                rnode.metadata.get('hostname', rnode.hostname)
                 for rnode in nodes
             },
         },
