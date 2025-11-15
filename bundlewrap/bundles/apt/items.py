@@ -146,3 +146,10 @@ for name, data in node.metadata.get('apt/repos', {}).items():
 
 for package, options in node.metadata.get('apt/packages', {}).items():
     pkg_apt[package] = options
+
+
+for pkgname, pkgconfig in pkg_apt.items():
+    pkg_apt[pkgname]['preceded_by'] = {
+        *set(pkg_apt[pkgname].get('preceded_by', set())),
+        'action:apt_update',
+    }
