@@ -8,6 +8,7 @@ defaults = {
             'libboolean-perl': {},
             'libconfig-inifiles-perl': {},
             'libdatetime-perl': {},
+            'libdatetime-format-strptime-perl': {},
             'libfile-which-perl': {},
             'libipc-run3-perl': {},
             'libjson-perl': {},
