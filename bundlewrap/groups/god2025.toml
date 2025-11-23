@@ -1,0 +1,6 @@
+subgroups = ["saal5", "saal6"]
+members = ["releasing"]
+
+[metadata.event]
+name = "German OWASP Day 2025"
+slug = "god2025"
