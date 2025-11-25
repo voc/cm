@@ -19,6 +19,7 @@ gateway4 = "10.73.0.254"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYkgCo1Orl_R7yyMpMUhESSGiBvMRZy6J3DXw7PWsS7XDvmYjJktYpwn-pdO_CnHzoxbB1OpBh-MfdPZnt7WTA7Vh7V55KPjGpnj73uCHn6fpu8="
+mirror_view = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 5
