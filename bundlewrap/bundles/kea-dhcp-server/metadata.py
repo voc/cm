@@ -34,6 +34,9 @@ defaults = {
             },
         },
     },
+    'unit-status-on-login': {
+        'kea-dhcp4-server',
+    },
 }
 
 
