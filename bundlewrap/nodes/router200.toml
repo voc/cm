@@ -4,7 +4,7 @@ bundles = [
     "radvd",
     "snmp-temperature-monitoring"
 ]
-groups = ["debian-bullseye"]
+groups = ["debian-trixie"]
 
 [metadata]
 external_interface = "ens18"
