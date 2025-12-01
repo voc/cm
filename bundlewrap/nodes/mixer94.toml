@@ -34,3 +34,5 @@ vaapi = true
 
 [metadata.bitfocus-companion]
 version = 'v3.5.4'
+
+# TODO: get this to main
