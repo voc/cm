@@ -1,9 +1,4 @@
 defaults = {
-    'apt': {
-        'packages': {
-            'grub-pc': {},
-        },
-    },
     'grub': {
         'cmdline_linux': {
             'console': 'tty0',
@@ -14,3 +9,25 @@ defaults = {
         },
     },
 }
+
+@metadata_reactor.provides(
+    'apt/packages',
+)
+def grub(metadata):
+    if metadata.get("grub/efi", False):
+        return {
+            'apt': {
+                'packages': {
+                    'grub-efi-amd64': {},
+                },
+            },
+        }
+    else:
+        return {
+            'apt': {
+                'packages': {
+                    'grub-pc': {},
+                },
+            },
+        }
+
