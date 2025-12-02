@@ -14,3 +14,6 @@ devices = [
   "/dev/disk/by-id/nvme-CT4000P3PSSD8_2421E8B2584E_1-part4",
   "/dev/disk/by-id/nvme-CT4000P3PSSD8_2421E8B25853_1-part4",
 ]
+
+[metadata.grub]
+efi = true
