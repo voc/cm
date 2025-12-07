@@ -94,6 +94,11 @@ for interface, config in node.metadata.get('interfaces').items():
         }
 
 for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
+    filename = '{}-match-{}'.format(
+        bond,
+        '-'.join(sorted(config['match'])),
+    ).replace('*', '_')
+
     files[f'/etc/systemd/network/{bond}.netdev'] = {
         'source': 'template-bond.netdev',
         'content_type': 'mako',
@@ -110,13 +115,12 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
         },
     }
 
-    files[f'/etc/systemd/network/{bond}.network'] = {
+    files[f'/etc/systemd/network/{filename}.network'] = {
         'source': 'template-bond.network',
         'content_type': 'mako',
         'context': {
             'bond': bond,
             'match': config['match'],
-            'vlans': node.metadata.get(('interfaces', bond, 'vlans'), set()),
         },
         'needed_by': {
             'svc_systemd:systemd-networkd',
@@ -125,6 +129,22 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
             'svc_systemd:systemd-networkd:restart',
         },
     }
+
+    if node.metadata.get(('interfaces', bond, 'vlans'), set()):
+        files[f'/etc/systemd/network/{bond}.network'] = {
+            'source': 'template-bond-vlan.network',
+            'content_type': 'mako',
+            'context': {
+                'bond': bond,
+                'vlans': node.metadata.get(('interfaces', bond, 'vlans')),
+            },
+            'needed_by': {
+                'svc_systemd:systemd-networkd',
+            },
+            'triggers': {
+                'svc_systemd:systemd-networkd:restart',
+            },
+        }
 
 for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
     filename = '{}-match-{}'.format(
