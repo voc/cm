@@ -94,11 +94,6 @@ for interface, config in node.metadata.get('interfaces').items():
         }
 
 for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
-    filename = '{}-match-{}'.format(
-        bond,
-        '-'.join(sorted(config['match'])),
-    ).replace('*', '_')
-
     files[f'/etc/systemd/network/{bond}.netdev'] = {
         'source': 'template-bond.netdev',
         'content_type': 'mako',
@@ -115,7 +110,7 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
         },
     }
 
-    files[f'/etc/systemd/network/{filename}.network'] = {
+    files[f'/etc/systemd/network/{bond}_interfaces.network'] = {
         'source': 'template-bond.network',
         'content_type': 'mako',
         'context': {
@@ -147,11 +142,6 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
         }
 
 for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
-    filename = '{}-match-{}'.format(
-        brname,
-        '-'.join(sorted(config['match'])),
-    ).replace('*', '_')
-
     files[f'/etc/systemd/network/{brname}.netdev'] = {
         'source': 'template-bridge.netdev',
         'content_type': 'mako',
@@ -166,7 +156,7 @@ for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
         },
     }
 
-    files[f'/etc/systemd/network/{filename}.network'] = {
+    files[f'/etc/systemd/network/{brname}_interfaces.network'] = {
         'source': 'template-bridge.network',
         'content_type': 'mako',
         'context': {
