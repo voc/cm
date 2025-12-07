@@ -7,7 +7,7 @@ bundles = [
 ]
 groups = [
     "crs-workers",
-    "debian-bookworm",
+    "debian-trixie",
 ]
 
 ipmi_hostname = "10.73.200.4"
