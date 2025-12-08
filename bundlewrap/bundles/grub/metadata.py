@@ -7,6 +7,7 @@ defaults = {
             'fbcon': 'font:Lat2-Terminus32x16,scrollback:128k',
             'net.ifnames': '0',
         },
+        'efi': False,
     },
 }
 
@@ -14,7 +15,7 @@ defaults = {
     'apt/packages',
 )
 def grub(metadata):
-    if metadata.get("grub/efi", False):
+    if metadata.get("grub/efi"):
         return {
             'apt': {
                 'packages': {
