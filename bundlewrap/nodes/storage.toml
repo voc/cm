@@ -47,6 +47,9 @@ secret = "!decrypt:encrypt$gAAAAABk35IynVb6gzhx7o51UQhlLX6BOVS1U5ZENrMlnYggMSjbL
 token = "!decrypt:encrypt$gAAAAABk35IGE_pw8FevjzPXEzYIBjoD1u7Uoqz_6hB6plLt_Fsu0imi220dm_3szThLCib_fCt4YN_xcizsY3ZrXPvr7ike0joG6tADsl_7WL0fU2nbK71r_Uz2NwNc9t8zCM6WRrin"
 secret = "!decrypt:encrypt$gAAAAABk35IM38TpDZfXUb2a4MCCdgP3FKpXciy_hjFIFRBU3fXu5DuF2jT95mqxLwqpkqdQ42EMlUOVdfyanxRc2zGEAP4l52yXI0yjhHnVj-LX_5l038oQnfMe1hpTWaR5Ih7Tk9QE"
 
+[metadata.grub]
+efi = true
+
 [metadata.interfaces.'bond0.3504']
 ips = ["10.73.200.24/16"]
 gateway4 = "10.73.0.254"
