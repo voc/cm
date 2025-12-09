@@ -56,6 +56,7 @@ groups['saalc4']['metadata'] = merge_dict(
             'florolf': {},
             'ike': {},
             'kadse': {},
+            'kerfi': {},
             'lukas2511': {},
             'qb': {},
             'snoopy': {},
