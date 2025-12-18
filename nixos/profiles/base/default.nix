@@ -81,6 +81,10 @@
     zstd
     gnupg
     pinentry-curses
+    tmux
+    ncdu
+    lsof
+    strace
   ];
 
   nix.extraOptions = ''
