@@ -57,3 +57,5 @@ creation_rules:
       - *host_mail
       - *host_tel
       - *host_loudness
+      - *host_forgejo
+
