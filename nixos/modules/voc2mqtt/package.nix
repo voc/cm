@@ -8,7 +8,8 @@
   coreutils,
   gawk,
   gnused,
-  bc
+  bc,
+  util-linux
 }:
 
 let
@@ -59,7 +60,7 @@ stdenv.mkDerivation {
   postFixup = ''
     ${lib.concatMapStringsSep "\n" (s:
       "wrapProgram $out/bin/${s} --prefix PATH : " +
-      lib.makeBinPath [ systemd jq iproute2 coreutils gawk gnused bc ]
+      lib.makeBinPath [ systemd jq iproute2 coreutils gawk gnused bc util-linux ]
     ) scripts}
   '';
 }
