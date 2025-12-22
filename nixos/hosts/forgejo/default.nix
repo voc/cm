@@ -37,7 +37,7 @@ in
 
     services.forgejo.enable = true;
     services.forgejo.package = pkgs.forgejo;
-    services.forgejo.settings = { 
+    services.forgejo.settings = {
       DEFAULT = {
         APP_NAME = "git c3voc";
         APP_SLOGAN = "Versioning your Winkekatze";
@@ -46,7 +46,9 @@ in
         ROOT_URL = "https://forgejo.c3voc.de/";
       };
       service = {
-        DISABLE_REGISTRATION = true;
+        DISABLE_REGISTRATION = false;
+        ALLOW_ONLY_EXTERNAL_REGISTRATION = true;
+        REGISTER_EMAIL_CONFIRM = true;
       };
       session = {
         SESSION_LIFE_TIME = 86400;
