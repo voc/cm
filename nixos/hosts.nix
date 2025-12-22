@@ -5,6 +5,6 @@
   sso = { ... }: {};
   forgejo = { ... }: {};
   rt = { ... }: {};
-  loudness-player = { ... }: {
-  };
+  loudness-player = { ... }: {};
+  wink = { ... }: {};
 }
