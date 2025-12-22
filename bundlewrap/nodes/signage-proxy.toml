@@ -1,0 +1,7 @@
+groups = ["debian-trixie"]
+
+[metadata.interfaces.ens18]
+ips = ["10.73.200.151/16"]
+
+[metadata.interfaces.ens19]
+ips = ["172.16.10.15/16"]
