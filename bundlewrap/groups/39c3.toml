@@ -1,6 +1,7 @@
 subgroups = ["saal1", "saal2", "saal3", "saal4", "saal5", "servercase"]
-members = ["releasing"]
+members = ["loudness-rendering", "releasing"]
 
 [metadata.event]
 name = "39C3: Power Cycles"
 slug = "39c3"
+schedule_json = "https://api.events.ccc.de/congress/2025/schedule.json?room.tags=voc"
