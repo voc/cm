@@ -2,6 +2,13 @@ groups = ["debian-trixie"]
 
 [metadata.interfaces.ens18]
 ips = ["10.73.200.151/16"]
+gateway4 = "10.73.0.254"
 
 [metadata.interfaces.ens19]
+ips = ["172.20.0.69/22"]
+
+[metadata.interfaces.ens19.routes]
+"224.0.0.0/4" = {}
+
+[metadata.interfaces.ens20]
 ips = ["172.16.10.15/16"]
