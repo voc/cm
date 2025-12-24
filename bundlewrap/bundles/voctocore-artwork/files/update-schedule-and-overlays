@@ -30,7 +30,7 @@ then
                 chmod go+r "$tmpdir/schedule.json"
                 version="$(jq -r '.schedule.version' < "$tmpdir/schedule.json")"
                 mv "$tmpdir/schedule.json" "/opt/voc/schedule.json"
-                voc2alert "info" "schedule" "Downloading schedule from $schedule succeeded, fahrplan version $version"
+                #voc2alert "info" "schedule" "Downloading schedule from $schedule succeeded, fahrplan version $version"
             fi
         fi
     fi
