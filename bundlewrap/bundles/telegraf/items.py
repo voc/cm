@@ -5,7 +5,6 @@ telegraf_config = {
     'agent': {
         'collection_jitter': '0s',
         'debug': False,
-        'flush_buffer_when_full': True,
         'flush_interval': '15s',
         'flush_jitter': '0s',
         'hostname': node.name,
