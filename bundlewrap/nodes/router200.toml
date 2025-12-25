@@ -29,7 +29,7 @@ ips = [
 #gateway4 = "188.172.114.65" # seibert wiesbaden
 gateway4 = "94.45.241.1" # c3noc event
 gateway6 = "2001:67c:20a1:2241::1" # c3noc event
-dhcp = true
+dhcp = false
 
 [metadata.interfaces.ens19]
 ips = [
