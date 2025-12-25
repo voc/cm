@@ -4,234 +4,234 @@
             "description": "Public event net",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "public"
         },
         "ether10": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether11": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether12": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether13": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether14": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether15": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether16": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether17": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether18": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether19": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether2": {
             "description": "Public event net",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "public"
         },
         "ether20": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether21": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether22": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether23": {
             "description": "Module interconnection trunk",
             "enabled": true,
             "ips": [],
-            "mode": "TAGGED_ALL",
+            "mode": "tagged-all",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": null
         },
         "ether24": {
             "description": "Module interconnection trunk",
             "enabled": true,
             "ips": [],
-            "mode": "TAGGED_ALL",
+            "mode": "tagged-all",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": null
         },
         "ether3": {
             "description": "LAN Ports for speaker notebooks",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "speaker-lan"
         },
         "ether4": {
             "description": "LAN Ports for speaker notebooks",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "speaker-lan"
         },
         "ether5": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether6": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether7": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether8": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether9": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "sfp-sfpplus1": {
             "description": "VOC devices",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "tagged-all",
             "tagged_vlans": [],
-            "type": "A_10GBASE_X_SFPP",
-            "untagged_vlan": "voc-intern"
+            "type": "10gbase-x-sfpp",
+            "untagged_vlan": null
         },
         "sfp-sfpplus2": {
             "description": "Module interconnection trunk",
             "enabled": true,
             "ips": [],
-            "mode": "TAGGED_ALL",
+            "mode": "tagged-all",
             "tagged_vlans": [],
-            "type": "A_10GBASE_X_SFPP",
+            "type": "10gbase-x-sfpp",
             "untagged_vlan": null
         },
         "voc-intern": {
@@ -242,7 +242,7 @@
             ],
             "mode": null,
             "tagged_vlans": [],
-            "type": "VIRTUAL",
+            "type": "virtual",
             "untagged_vlan": null
         }
     },
@@ -262,6 +262,10 @@
         {
             "name": "voc-intern",
             "vid": 3504
+        },
+        {
+            "name": "POC-SIP",
+            "vid": 3510
         }
     ]
 }
