@@ -22,19 +22,34 @@ devicenumber = 5
 mode = "1080p25"
 
 [metadata.voctocore.sources.cam2]
-devicenumber = 4
+devicenumber = 3
 mode = "1080p25"
 
 [metadata.voctocore.sources.cam3]
-devicenumber = 0
-mode = "1080p25"
+devicenumber = 4
+mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 1
 mode = "1080p25"
 
+[metadata.voctocore.blinder]
+kind = "decklink"
+devicenumber = 2
+video_connection = "SDI"
+video_mode = "1080p25"
+
+
 [metadata.voctocore.audio.original]
 streams = "0+1"
+input = "cam1"
+
+[metadata.voctocore.audio.trans1]
+streams = "2+3"
+input = "cam1"
+
+[metadata.voctocore.audio.trans2]
+streams = "4+5"
 input = "cam1"
 
 [metadata.zfs.pools.video.when_creating]
