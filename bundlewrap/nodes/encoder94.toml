@@ -41,6 +41,14 @@ mode = "1080p50"
 streams = "0+1"
 input = "cam1"
 
+[metadata.voctocore.audio.trans1]
+streams = "2+3"
+input = "cam1"
+
+[metadata.voctocore.audio.trans2]
+streams = "4+5"
+input = "cam1"
+
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
 
