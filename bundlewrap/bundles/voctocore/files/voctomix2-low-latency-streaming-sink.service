@@ -1,0 +1,17 @@
+[Unit]
+Description=voctomix2 low latency streaming-sink
+After=voctomix2-voctocore.service
+Requires=voctomix2-voctocore.service
+
+[Service]
+User=voc
+Group=voc
+Type=simple
+Environment=VOC_LL_STREAMING_SERVER=${low_latency_streaming_server}
+ExecStart=/opt/voctomix2/scripts/low-latency-streaming-sink.sh
+Restart=always
+RestartSec=1s
+StartLimitInterval=0
+
+[Install]
+WantedBy=voctomix2-voctocore.service

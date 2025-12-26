@@ -45,6 +45,7 @@ defaults = {
         'translators_premixed': False,
         'vaapi': False,
         'fps': 25,
+        'low_latency_streaming_server': '10.73.200.150:8890'
     },
     'voctomix2': {
         'deploy_triggers': {

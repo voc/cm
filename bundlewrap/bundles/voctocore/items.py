@@ -261,6 +261,45 @@ svc_systemd["voctomix2-streaming-sink"] = {
     "running": None,  # get's auto-started by svc_systemd:voctomix2-voctocore
 }
 
+### Low Latency Streaming Sink
+files["/opt/voctomix2/scripts/low-latency-streaming-sink.sh"] = {
+    "content_type": "mako",
+    "context": {
+        "endpoint": node.metadata.get("voctocore/streaming_endpoint"),
+        "vaapi_enabled": node.metadata.get("voctocore/vaapi"),
+    },
+    "mode": "0755",
+    "triggers": {
+        "svc_systemd:voctomix2-low-latency-streaming-sink:restart",
+    },
+}
+files["/usr/local/lib/systemd/system/voctomix2-low-latency-streaming-sink.service"] = {
+    "content_type": "mako",
+    "context": {
+        "low_latency_streaming_server": node.metadata.get("voctocore/low_latency_streaming_server"),
+    },
+    "cascade_skip": False,
+    "triggers": {
+        "action:systemd-reload",
+        "svc_systemd:voctomix2-low-latency-streaming-sink:restart",
+    },
+}
+svc_systemd["voctomix2-low-latency-streaming-sink"] = {
+    "after": {
+        "svc_systemd:voctomix2-voctocore",
+    },
+    "needs": {
+        "file:/opt/voctomix2/scripts/low-latency-streaming-sink.sh",
+        "file:/usr/local/lib/systemd/system/voctomix2-low-latency-streaming-sink.service",
+        "pkg_apt:ffmpeg",
+    },
+    "tags": {
+        "causes-downtime",
+    },
+    "running": None,  # get's auto-started by svc_systemd:voctomix2-voctocore
+}
+
+
 ## streaming-sink
 for pname, pdevice in node.metadata.get("voctocore/playout", {}).items():
     if pname not in PLAYOUT_PORTS:
