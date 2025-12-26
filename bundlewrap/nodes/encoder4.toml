@@ -30,7 +30,7 @@ mode = "1080p25"
 
 [metadata.voctocore.blinder]
 kind = "decklink"
-devicenumber = 1
+devicenumber = 4
 video_connection = "SDI"
 video_mode = "1080p25"
 
