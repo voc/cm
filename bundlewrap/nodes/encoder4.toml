@@ -18,15 +18,11 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkOSJp-QhuKBK7z_nzRUB1PvApqUVass_Dt
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 3
-mode = "1080p25"
+mode = "1080i50"
 
 [metadata.voctocore.sources.cam2]
 devicenumber = 2
-mode = "1080p25"
-
-[metadata.voctocore.sources.cam3]
-devicenumber = 4
-mode = "1080p25"
+mode = "1080i50"
 
 [metadata.voctocore.sources.slides]
 devicenumber = 5
@@ -37,7 +33,6 @@ kind = "decklink"
 devicenumber = 1
 video_connection = "SDI"
 video_mode = "1080p25"
-
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
