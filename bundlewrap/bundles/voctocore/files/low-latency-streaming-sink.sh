@@ -6,6 +6,8 @@ then
     exit 1
 fi
 
+voc2alert "info" "streaming" "Low latency stream started…"
+
 
 ffmpeg -y -nostdin -hide_banner -re \
 % if vaapi_enabled:
