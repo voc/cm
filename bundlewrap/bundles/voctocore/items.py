@@ -299,6 +299,42 @@ svc_systemd["voctomix2-low-latency-streaming-sink"] = {
     "running": None,  # get's auto-started by svc_systemd:voctomix2-voctocore
 }
 
+### Youtube Streaming Sink
+if node.metadata.get("voctocore/youtube_stream_key", False):
+    files["/opt/voctomix2/scripts/youtube-streaming-sink.sh"] = {
+        "content_type": "mako",
+        "context": {
+            "streamkey": node.metadata.get("voctocore/youtube_stream_key"),
+            "vaapi_enabled": node.metadata.get("voctocore/vaapi"),
+        },
+        "mode": "0755",
+        "triggers": {
+            "svc_systemd:voctomix2-youtube-streaming-sink:restart",
+        },
+    }
+    files["/usr/local/lib/systemd/system/voctomix2-youtube-streaming-sink.service"] = {
+        "content_type": "mako",
+        "cascade_skip": False,
+        "triggers": {
+            "action:systemd-reload",
+            "svc_systemd:voctomix2-youtube-streaming-sink:restart",
+        },
+    }
+    svc_systemd["voctomix2-youtube-streaming-sink"] = {
+        "after": {
+            "svc_systemd:voctomix2-voctocore",
+        },
+        "needs": {
+            "file:/opt/voctomix2/scripts/youtube-streaming-sink.sh",
+            "file:/usr/local/lib/systemd/system/voctomix2-youtube-streaming-sink.service",
+            "pkg_apt:ffmpeg",
+        },
+        "tags": {
+            "causes-downtime",
+        },
+        "running": None,  # get's auto-started by svc_systemd:voctomix2-voctocore
+    }
+
 
 ## streaming-sink
 for pname, pdevice in node.metadata.get("voctocore/playout", {}).items():

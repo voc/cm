@@ -1,0 +1,16 @@
+[Unit]
+Description=voctomix2 youtube streaming-sink
+After=voctomix2-voctocore.service
+Requires=voctomix2-voctocore.service
+
+[Service]
+User=voc
+Group=voc
+Type=simple
+ExecStart=/opt/voctomix2/scripts/youtube-streaming-sink.sh
+Restart=always
+RestartSec=1s
+StartLimitInterval=0
+
+[Install]
+WantedBy=voctomix2-voctocore.service
