@@ -544,7 +544,7 @@ ssh_pubkeys = [
 ]
 
 [hammer065]
-enable_rz = false
+enable_rz = true
 enable_event = true
 uid = 1172
 ssh_pubkeys = [
