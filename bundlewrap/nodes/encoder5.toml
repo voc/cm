@@ -19,7 +19,7 @@ streaming_auth_key = "!decrypt:encrypt$gAAAAABkNYkgCo1Orl_R7yyMpMUhESSGiBvMRZy6J
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 5
-mode = "1080p25"
+mode = "1080p50"
 
 [metadata.voctocore.sources.cam2]
 devicenumber = 4
@@ -35,7 +35,7 @@ mode = "1080p25"
 
 [metadata.voctocore.audio.original]
 streams = "0+1"
-input = "cam1"
+input = "cam2"
 
 [metadata.zfs.pools.video.when_creating]
 ashift = 12
