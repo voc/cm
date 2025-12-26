@@ -217,13 +217,13 @@
             "untagged_vlan": "speaker-lan"
         },
         "sfp-sfpplus1": {
-            "description": "VOC devices",
+            "description": "Module interconnect trunk",
             "enabled": true,
             "ips": [],
-            "mode": "access",
+            "mode": "tagged-all",
             "tagged_vlans": [],
             "type": "10gbase-x-sfpp",
-            "untagged_vlan": "voc-intern"
+            "untagged_vlan": null
         },
         "sfp-sfpplus2": {
             "description": "Module interconnect trunk",
