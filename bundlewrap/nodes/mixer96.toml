@@ -5,6 +5,9 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages.intel-media-va-driver-non-free]
 [metadata.apt.packages.i965-va-driver]
 
+[metadata.grub]
+efi = true
+
 [metadata.interfaces.eth0]
 ips = ["10.73.96.1/16"]
 dhcp = true
