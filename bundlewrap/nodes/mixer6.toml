@@ -1,4 +1,4 @@
-bundles = ["pygtk-atem-switcher", "thinkfan"]
+bundles = ["thinkfan"]
 groups = ["debian-bookworm"]
 
 [metadata.apt.packages.intel-media-va-driver-non-free]
