@@ -5,3 +5,6 @@ members = ["loudness-rendering", "releasing"]
 name = "39C3: Power Cycles"
 slug = "39c3"
 schedule_json = "https://api.events.ccc.de/congress/2025/schedule.json?room.tags=voc"
+
+[metadata.voctocore]
+translators_premixed = true
