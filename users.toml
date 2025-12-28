@@ -713,3 +713,11 @@ uid = 1192
 ssh_pubkeys = [
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCky2lDCn5U3AwrWXUcFQaIs4PDZzzQrTMIATWlU/ARfuKQVqi65tA8nruhgfGchNhH0XE9RxpmLBWdayCytHVxdkHLjTSitb3KAja1Zm4DYt/Rl4T3JVwiy6jaMsNZWgb4qY8S9vajvi97GOK6CQ9vhWss/zccsLuFwVomkQubzt5wWLxfguz+kRnowqItQvFAr9Ygk+bYchIWPj+Pf60j+uZTQiMlt8S8NcLiVOn5ZlXGc3PkI5X/tHfkvDxIIyET6woUXjHP5EpMCvQGYxipqPQohC2ywgCcp/Si3+4rkLEQAxOiyjRKuTEFWqeUNM/CTUOsT5ZPGdQLDe4Nxz/DORvgzKclXR6BHohY7H4IWmzR+wph0mJogiaR8mEpSMiRfJdbJgCG/QRuXNk9RHcRw8umyy0oKSG+7y0u5sVvQjUPrNaVNJSWVm+TZtlDZ4rfk6VdsWpNli3O4fnRf1TwLC4w6MUpFIANTupquFf+oNoUdkf1JlqpMZOQXmO3qQs= leiko",
 ]
+
+[m2m]
+enable_rz = false
+enable_event = true
+uid = 1193
+ssh_pubkeys = [  
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2r9Vuh6iw3bLI3NREvkkqVqyw3ZXL01P92pYK0hAzZ",
+]
