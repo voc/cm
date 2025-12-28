@@ -37,7 +37,7 @@ ffmpeg -y -nostdin -hide_banner -re \
     -flags +cgop -aspect 16:9  -preset ultrafast -tune zerolatency \
     -r:v:0 25 -g:v:0 25 -b:v:0 6M \
 % endif
-    -c:a libopus -ar 48000 -ac 2 -b:a 128k \
+    -c:a aac -b:a 192k -ar 48000 \
 % if vaapi_enabled:
     -map "[hd]" \
 % else:
