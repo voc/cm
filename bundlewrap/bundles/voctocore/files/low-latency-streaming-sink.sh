@@ -35,7 +35,7 @@ ffmpeg -y -nostdin -hide_banner -re \
 % else:
     -c:v libx264 -x264-params keyint=25:min-keyint=25 \
     -flags +cgop -aspect 16:9  -preset ultrafast -tune zerolatency \
-    -r:v:0 25 -g:v:0 25 -crf:v:0 21 -maxrate:v:0 6M -bufsize:v:0 1M \
+    -r:v:0 25 -g:v:0 25 -b:v:0 6M \
 % endif
     -c:a libopus -ar 48000 -ac 2 -b:a 128k \
 % if vaapi_enabled:
