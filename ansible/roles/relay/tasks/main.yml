@@ -12,7 +12,7 @@
   tags: [nginx, nginx-vhost]
 
 - ansible.builtin.import_tasks: consul_template.yml
-  tags: [consul-template]
+  tags: [consul-template, nginx]
 
 #  - import_tasks: sysctl.yml
 #    tags: sysctl
