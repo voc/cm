@@ -1,30 +1,33 @@
 ---
-  - import_tasks: ../../../register/bin_path.yml
+- ansible.builtin.import_tasks: ../../../register/bin_path.yml
+- ansible.builtin.import_tasks: upload.yml
+  tags: [nginx, upload, stream_master]
+  when: stream_master|bool
 
-  - import_tasks: upload.yml
-    tags: [nginx, upload, stream_master]
-    when: stream_master|bool
+- name: Configure logrotate for relay logs
+  ansible.builtin.import_tasks: logrotate.yml
+  tags: [logrotate]
 
-  - import_tasks: nginx.yml
-    tags: [nginx, nginx-vhost]
+- ansible.builtin.import_tasks: nginx.yml
+  tags: [nginx, nginx-vhost]
 
-  - import_tasks: consul_template.yml
-    tags: [consul-template]
+- ansible.builtin.import_tasks: consul_template.yml
+  tags: [consul-template]
 
 #  - import_tasks: sysctl.yml
 #    tags: sysctl
 
-  - import_tasks: telegraf.yml
-    tags: [telegraf, monitoring]
+- ansible.builtin.import_tasks: telegraf.yml
+  tags: [telegraf, monitoring]
 
-  - import_tasks: relive.yml
-    when: relive_master|bool
-    tags: relive
+- ansible.builtin.import_tasks: relive.yml
+  when: relive_master|bool
+  tags: relive
 
-  - import_tasks: upload-server.yml
-    when: stream_master|bool
-    tags: upload-server
+- ansible.builtin.import_tasks: upload-server.yml
+  when: stream_master|bool
+  tags: upload-server
 
-  - import_tasks: stats.yml
-    when: stats_relay|bool
-    tags: stats
+- ansible.builtin.import_tasks: stats.yml
+  when: stats_relay|bool
+  tags: stats
