@@ -8,11 +8,8 @@ live.ber.c3voc.de              nginx=yes icecast=yes
 live.nurluefter.de             nginx=yes icecast=yes
 
 [edge_relays]
-live.bn.c3voc.de               nginx=yes icecast=no
 live.dort.c3voc.de             nginx=yes icecast=yes dtag_relay=yes mediastatic_relay=yes
-live.dus.c3voc.de              nginx=yes icecast=no
 live.fem.c3voc.de              nginx=yes icecast=yes stats_relay=yes
-#live.self.c3voc.de             nginx=yes icecast=yes stats_relay=yes mediastatic_relay=yes # the server room where this was colocated was torn down.
 live2.alb.c3voc.de             nginx=yes icecast=no dtag_relay=yes
 relive.c3voc.de                nginx=yes icecast=no relive_relay=yes
 live.ams.c3voc.de              nginx=yes icecast=no
