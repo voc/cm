@@ -258,6 +258,12 @@ if autostart_scripts:
         'mode': '0755',
     }
 
+# fix utf8 parsing for perl xml library after trixie updates
+if node.os_version[0] >= 13:
+    files['/etc/perl/XML/SAX/ParserDetails.ini'] = {
+        'source': 'Perl-XML-SAX-ParserDetails.ini',
+    }
+
 # delete legacy stuff
 files['/opt/tracker-profile.sh'] = {'delete': True}
 files['/opt/tracker-profile-meta.sh'] = {'delete': True}
