@@ -705,3 +705,11 @@ uid = 1191
 ssh_pubkeys = [
   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCoBgQKcld8H+Oc5s3tyUeWEibb3R70wlPDNbb9RSowB9Vf9ymV2JPRRCnVzVuQH7h4Fjw9XhNc3qOW93Sej2GQD8NXGVFlvIvlNalSXZg3cJvlio362A4sL0nLmXUCgEwkZsozwWR1yfDUPZ6ZvbWIrPQ4HQZ7O+QgmEWhJ3eD7wjoOXZHf3ynzYB8r4N0m6DSLUcNMVdeSI4Tycaxzbk5eo35KtOBfHrdQiBiiebhi1eac+KT//NazC7/lOeS6DMKAtGwUBcvHL1V12nK/cXVpLQQjkIeHrzEsN2a1jFOuTbr4JUGOXPvu8KLKFpYD+ah6bTcAMMnDHVwIBXu8JocqFRDfaSveNWjVmgsEcSvuslswsxpSUC8+vRVDiWzWlRLUHpP+c8bmlhPyxo+R82Y981LDyHldFdnt3msqX23jQwy+X2mQgyplw3hUBaEOFvSrN9h3Zuh13+crlPo4mqKtVls189bVKJunanRLD7QxkKq8/ctSzB9y19MKlvQu4E= niklas@MacBook-Pro-von-Niklas.local",
 ]
+
+[m2m]
+enable_rz = false
+enable_event = true 
+uid = 1192
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2r9Vuh6iw3bLI3NREvkkqVqyw3ZXL01P92pYK0hAzZ m2m"
+]
