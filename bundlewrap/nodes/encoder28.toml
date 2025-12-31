@@ -7,6 +7,9 @@ groups = ["debian-bookworm"]
 [metadata.apt.packages.i965-va-driver]
 [metadata.apt.packages.v4l-utils]
 
+[metadata.grub]
+efi = true
+
 [metadata]
 nameservers = ["1.1.1.1"]
 
@@ -64,5 +67,5 @@ kind = "v4l2"
 device = "/dev/v4l/by-id/usb-Elgato_Game_Capture_HD60_S+_0004EE8273000-video-index0"
 width = "1920"
 height = "1080"
-framerate = "25/1" # THIS MUST MATCH THE EXTRON OUTPUT
+framerate = "60/1" # THIS MUST MATCH THE EXTRON OUTPUT
 format = "YUY2"
