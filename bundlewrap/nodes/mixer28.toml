@@ -10,9 +10,12 @@ nameservers = ["1.1.1.1"]
 [metadata.interfaces.eth0]
 ips = [
     "10.73.28.1/16",
-    "192.168.69.201/24",
+#    "192.168.69.201/24", # realraum
+    "192.168.0.208/23", # testing
 ]
-gateway4 = "192.168.69.254"
+
+#gateway4 = "192.168.69.254" # realraum
+gateway4 = "192.168.0.1" # testing
 
 [metadata.voctogui]
 high_dpi = false
