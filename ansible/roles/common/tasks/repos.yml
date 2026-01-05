@@ -13,14 +13,6 @@
    tags:
      - gpg
 
- # general
- - name: setup the VOC debian repo key
-   apt_key: data="{{ lookup('file', 'voc_repo.key') }}" state=present
-   tags:
-     - repo
-     - gpg
-   when: "system.type == 'pc' and 'proxmox' not in group_names"
-
  #
  # add repos
  #
@@ -37,17 +29,42 @@
    apt_repository: repo="deb http://security.debian.org/ bullseye-security main contrib non-free" update_cache=false
    when: system.type == 'pc' and ansible_distribution_release == 'bullseye'
 
+# Setup VOC repo
+
+ - name: undeploy old VOC repo
+   file:
+     path: /etc/apt/sources.list.d/pkg_c3voc_de.list
+     state: absent
+   tags:
+     - repo
+     - gpg
+   when: "system.type == 'pc' and 'proxmox' not in group_names"
+
+ - name: setup the VOC debian repo
+   ansible.builtin.deb822_repository:
+     name: pkg_c3voc_de
+     types: deb
+     uris : http://pkg.c3voc.de/
+     suites: "{{ ansible_distribution_release }}"
+     components: [main]
+     signed_by: "{{ lookup('file', 'voc_repo.key') }}"
+   tags:
+     - repo
+     - gpg
+   when: "system.type == 'pc' and 'proxmox' not in group_names"
+
+# keyrings
+
  - name: ensure that the debian keyrings are present
-   apt: name={{ packages|flatten(levels=1) }} state=present update_cache=yes
+   apt:
+    name: "{{ packages|flatten(levels=1) }}"
+    state: present
+    update_cache: yes
    vars:
      packages:
       - debian-keyring
       - debian-archive-keyring
    when: system.type == 'pc'
-
- - name: setup the VOC debian repo
-   apt_repository: repo="deb http://pkg.c3voc.de/ {{ ansible_distribution_release }} main" state=present
-   when: "system.type == 'pc' and 'proxmox' not in group_names"
 
 #
 # Configure pinning

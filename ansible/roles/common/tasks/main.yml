@@ -1,4 +1,10 @@
 ---
+  - name: Require Debian 12 or newer
+    fail:
+      msg: "This playbook requires Debian 12 or newer."
+    when: ansible_distribution_major_version | int < 12
+    tags: always
+
   - import_tasks: ../../../register/bin_path.yml
     tags: bin_path
 
