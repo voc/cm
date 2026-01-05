@@ -1,16 +1,14 @@
 # Hosts file
 
 [transcoders]
-speedy.lan.c3voc.de transcoder_capacity=2 ansible_host=speedy.alb.c3voc.de
-tweety.lan.c3voc.de transcoder_capacity=2 ansible_host=tweety.alb.c3voc.de
 daffy.lan.c3voc.de transcoder_capacity=4 ansible_host=daffy.alb.c3voc.de
 sylvester.lan.c3voc.de transcoder_capacity=4 ansible_host=sylvester.alb.c3voc.de
 
-myloc-transcoder1.myloc.c3voc.de transcoder_capacity=2
-myloc-transcoder2.myloc.c3voc.de transcoder_capacity=2
-myloc-transcoder3.myloc.c3voc.de transcoder_capacity=2
-fslab-transcoder1.voc.fslab.de transcoder_capacity=2 ansible_host=168.119.65.177 ansible_port=10802
-fslab-transcoder2.voc.fslab.de transcoder_capacity=4
+myloc-transcoder1.myloc.c3voc.de transcoder_capacity=2 ansible_host=myloc-transcoder1.dus.c3voc.de
+myloc-transcoder2.myloc.c3voc.de transcoder_capacity=2 ansible_host=myloc-transcoder2.dus.c3voc.de
+myloc-transcoder3.myloc.c3voc.de transcoder_capacity=2 ansible_host=myloc-transcoder3.dus.c3voc.de
+#fslab-transcoder1.voc.fslab.de transcoder_capacity=2 ansible_host=168.119.65.177 ansible_port=10802
+#fslab-transcoder2.voc.fslab.de transcoder_capacity=4
 
 [audio-pis]
 audio-pi1.lan.c3voc.de stream=a1
@@ -71,9 +69,6 @@ lb.dort.c3voc.de
 lb.wob.c3voc.de
 
 [minions]
-speedy.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/speedy.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/speedy.password') }}"
-tweety.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/tweety.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/tweety.password') }}"
-
 blade1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade1.password') }}"
 blade2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade2.password') }}"
 blade3.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade3.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade3.password') }}"
