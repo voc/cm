@@ -9,8 +9,7 @@
      name:
       - apt-transport-https
       - gpg
-     state: latest
-     update_cache: yes
+     state: present
    tags:
      - gpg
 
@@ -23,44 +22,16 @@
    when: "system.type == 'pc' and 'proxmox' not in group_names"
 
  #
- # remove old repos
- #
-
- - name: remove the VOC debian mng.ber repo before any updates are done since it is unavailable now pkg.c3voc is new
-   apt_repository: repo="deb http://mng.ber.c3voc.de/debian/ {{ item }} main" state=absent
-   when: system.type == 'pc'
-   loop:
-    - jessie
-    - stretch
-
- - name: remove yate nightly repo if present since it's key is not supported by stretch atm dsa1024 
-   apt_repository: repo="deb http://debian.ctm.ru/nightly/ stable main non-free" state=absent
-
- # stretch specific
- - name: remove /etc/apt/sources.list
-   file: dest=/etc/apt/sources.list state=absent
-
- - name: remove /etc/apt/sources.list.d/*
-   file: dest=/etc/apt/sources.list.d/{{ item }} state=absent
-   loop:
-    - ftp_debian_org_debian.list
-    - raspi.list
-
- #
  # add repos
  #
 
  - name: setup the debian backports repo
-   apt_repository: repo="deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }}-backports main contrib non-free" update_cache=false
+   apt_repository: repo="deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }}-backports main contrib non-free non-free-firmware" update_cache=false
    when: system.type == 'pc'
 
  - name: ensure that the non-free suite is enabled
-   apt_repository: repo="deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }} main contrib non-free" update_cache=false
+   apt_repository: repo="deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }} main contrib non-free non-free-firmware" update_cache=false
    when: system.type == 'pc'
-
- - name: ensure that security updates enabled for buster
-   apt_repository: repo="deb http://security.debian.org/ buster/updates main contrib non-free" update_cache=false
-   when: system.type == 'pc' and ansible_distribution_release == 'buster'
 
  - name: ensure that security updates enabled for bullseye
    apt_repository: repo="deb http://security.debian.org/ bullseye-security main contrib non-free" update_cache=false
@@ -77,22 +48,6 @@
  - name: setup the VOC debian repo
    apt_repository: repo="deb http://pkg.c3voc.de/ {{ ansible_distribution_release }} main" state=present
    when: "system.type == 'pc' and 'proxmox' not in group_names"
-
-#
-# raspberry specific
-#
-
- - name: setup the raspbian debian repo for stretch
-   apt_repository: repo="deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi" state=present
-   when: system.type == 'pi'
-
- - name: setup the raspbian debian repo for stretch
-   apt_repository: repo="deb http://archive.raspberrypi.org/debian/ stretch main ui" state=present
-   when: system.type == 'pi'
-
- - name: remove pinning for ffmpeg multimedia repo since it is now in the default repo
-   file: dest=/etc/apt/preferences.d/apt-pin-ffmpeg-multimedia.pref state=absent
-   when: system.type == 'pi'
 
 #
 # Configure pinning

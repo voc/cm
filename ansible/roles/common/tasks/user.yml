@@ -15,9 +15,15 @@
     register: zsh_bin
     changed_when: false
 
-  - name: set facts
+  - name: set user groups for bullseye and earlier
     set_fact:
       user_groups: "ssh,sudo,adm,systemd-journal,systemd-timesync,systemd-network,systemd-resolve"
+    when: ansible_distribution_major_version | int < 12
+
+  - name: set user groups for bookworm and later
+    set_fact:
+      user_groups: "_ssh,sudo,adm,systemd-journal,systemd-timesync,systemd-network,systemd-resolve"
+    when: ansible_distribution_major_version | int >= 12
 
   - name: append libvirt and kvm group to user
     set_fact:
@@ -37,21 +43,21 @@
   # install shell stuff
   - name: install zshrc
     copy:
-      src: "{{ lookup('first_found', ['user/' + item.name + '/zshrc', 'user/default/zshrc']) }}"
+      src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/zshrc', 'files/user/default/zshrc']) }}"
       dest: "/home/{{ item.name }}/.zshrc"
     loop: "{{ users + additional_users|flatten(levels=1) }}"
     when: item.state != 'absent'
 
   - name: install vimrc
     copy:
-      src: "{{ lookup('first_found', ['user/' + item.name + '/vimrc', 'user/default/vimrc']) }}"
+      src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/vimrc', 'files/user/default/vimrc']) }}"
       dest: "/home/{{ item.name }}/.vimrc"
     loop: "{{ users + additional_users|flatten(levels=1) }}"
     when: item.state != 'absent'
 
   - name: install screenrc
     copy:
-      src: "{{ lookup('first_found', ['user/' + item.name + '/screenrc', 'user/default/screenrc']) }}"
+      src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/screenrc', 'files/user/default/screenrc']) }}"
       dest: "/home/{{ item.name }}/.screenrc"
     loop: "{{ users + additional_users|flatten(levels=1) }}"
     when: item.state != 'absent'

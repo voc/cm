@@ -1,6 +1,6 @@
 ---
   - name: install a default set of packages
-    apt: name={{ packages|flatten(levels=1) }} state=latest update_cache=yes
+    apt: name={{ packages|flatten(levels=1) }} state=present
     tags: packages
     vars:
       packages:
