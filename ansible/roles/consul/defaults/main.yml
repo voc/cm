@@ -6,6 +6,6 @@ consul_server: false
 consul_ui: false
 
 consul_arch: amd64
-consul_version: 1.17.1
-consul_checksum: "sha256:388889321d6aaf389ee87acc247ea9885e684a1581c8ebfbeab7348abd7c0214"
+consul_version: 1.22.2
+consul_checksum: "sha256:e9ad339128e396238f053269bf8f76aeba1b5fada6f6cb60ab19fe70e133acde"
 consul_url: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_{{ consul_arch }}.zip"
