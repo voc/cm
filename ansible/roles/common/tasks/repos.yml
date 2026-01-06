@@ -1,88 +1,96 @@
 ---
- - name: remove pve enterprise list
-   file:
-     path: /etc/apt/sources.list.d/pve-enterprise.list
-     state: absent
+- name: Remove pve enterprise list
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+    state: absent
 
- - name: install packages needed for repos
-   apt:
-     name:
+- name: Install packages needed for repos
+  ansible.builtin.apt:
+    name:
       - apt-transport-https
       - gpg
-     state: present
-   tags:
-     - gpg
+    state: present
+  tags:
+    - gpg
 
  #
  # add repos
  #
 
- - name: setup the debian backports repo
-   apt_repository: repo="deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }}-backports main contrib non-free non-free-firmware" update_cache=false
-   when: system.type == 'pc'
+- name: Setup the debian backports repo
+  ansible.builtin.apt_repository:
+    repo: "deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }}-backports main contrib non-free non-free-firmware"
+    update_cache: "false"
+  when: system.type == 'pc'
 
- - name: ensure that the non-free suite is enabled
-   apt_repository: repo="deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }} main contrib non-free non-free-firmware" update_cache=false
-   when: system.type == 'pc'
+- name: Ensure that the non-free suite is enabled
+  ansible.builtin.apt_repository:
+    repo: "deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }} main contrib non-free non-free-firmware"
+    update_cache: "false"
+  when: system.type == 'pc'
 
- - name: ensure that security updates enabled for bullseye
-   apt_repository: repo="deb http://security.debian.org/ bullseye-security main contrib non-free" update_cache=false
-   when: system.type == 'pc' and ansible_distribution_release == 'bullseye'
+- name: Ensure that security updates enabled for bullseye
+  ansible.builtin.apt_repository:
+    repo: "deb http://security.debian.org/ bullseye-security main contrib non-free"
+    update_cache: "false"
+  when: system.type == 'pc' and ansible_distribution_release == 'bullseye'
 
 # Setup VOC repo
 
- - name: undeploy old VOC repo
-   file:
-     path: /etc/apt/sources.list.d/pkg_c3voc_de.list
-     state: absent
-   tags:
-     - repo
-     - gpg
-   when: "system.type == 'pc' and 'proxmox' not in group_names"
+- name: Undeploy old VOC repo
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/pkg_c3voc_de.list
+    state: absent
+  tags:
+    - repo
+    - gpg
+  when: "system.type == 'pc' and 'proxmox' not in group_names"
 
- - name: setup the VOC debian repo
-   ansible.builtin.deb822_repository:
-     name: pkg_c3voc_de
-     types: deb
-     uris : http://pkg.c3voc.de/
-     suites: "{{ ansible_distribution_release }}"
-     components: [main]
-     signed_by: "{{ lookup('file', 'voc_repo.key') }}"
-   tags:
-     - repo
-     - gpg
-   when: "system.type == 'pc' and 'proxmox' not in group_names"
+- name: Setup the VOC debian repo
+  ansible.builtin.deb822_repository:
+    name: pkg_c3voc_de
+    types: deb
+    uris: http://pkg.c3voc.de/
+    suites: "{{ ansible_distribution_release }}"
+    components: [main]
+    signed_by: "{{ lookup('file', 'voc_repo.key') }}"
+  tags:
+    - repo
+    - gpg
+  when: "system.type == 'pc' and 'proxmox' not in group_names"
 
 # keyrings
 
- - name: ensure that the debian keyrings are present
-   apt:
-    name: "{{ packages|flatten(levels=1) }}"
+- name: Ensure that the debian keyrings are present
+  ansible.builtin.apt:
+    name: "{{ packages | flatten(levels=1) }}"
     state: present
-    update_cache: yes
-   vars:
-     packages:
+    update_cache: true
+  vars:
+    packages:
       - debian-keyring
       - debian-archive-keyring
-   when: system.type == 'pc'
+  when: system.type == 'pc'
 
 #
 # Configure pinning
 #
 
- - name: pin the VOC repo to the highest priority
-   copy: src=voc-repo-pinning
-         dest="/etc/apt/preferences.d/voc.pref"
-         mode=0644 owner=root group=root
+- name: Pin the VOC repo to the highest priority
+  ansible.builtin.copy:
+    src: voc-repo-pinning
+    dest: "/etc/apt/preferences.d/voc.pref"
+    mode: "0644"
+    owner: root
+    group: root
+- name: Added hwraid gpg key
+  ansible.builtin.apt_key:
+    data: "{{ lookup('file', 'hwraid_repo.key') }}"
+    state: present
+  when: ansible_hostname is match('mebibyte')
 
-
-#
-# LSI RAID controller specific
-#
- - name: added hwraid gpg key
-   apt_key: data="{{ lookup('file', 'hwraid_repo.key') }}" state=present
-   when: ansible_hostname is match('mebibyte')
-
- - name: added hwraid repo for LSI raid controller
-   apt_repository: repo="deb http://hwraid.le-vert.net/debian stretch main" state=present
-   when: ansible_hostname is match('mebibyte')
+- name: Added hwraid repo for LSI raid controller
+  ansible.builtin.apt_repository:
+    repo: "deb http://hwraid.le-vert.net/debian stretch main"
+    state: present
+  when: ansible_hostname is match('mebibyte')

@@ -1,22 +1,32 @@
 ---
-  # Setting vim as default editor
-  - name: vim is our editor
-    alternatives: name=editor path=/usr/bin/vim.basic
+# Setting vim as default editor
+- name: Vim is our editor
+  community.general.alternatives:
+    name: editor
+    path: /usr/bin/vim.basic
 
-  - name: replace root vimrc
-    copy:
-      src: user/default/vimrc
-      dest: /root/.vimrc
+- name: Replace root vimrc
+  ansible.builtin.copy:
+    src: user/default/vimrc
+    dest: /root/.vimrc
+    mode: "0644"
 
-  # Adding content to files
-  - name: enable syntax highlighting in vim
-    lineinfile: dest=/etc/vim/vimrc regexp="^syntax "
-                line="syntax on"
-
-  - name: enable dark background in vim
-    lineinfile: dest=/etc/vim/vimrc state=present regexp="^set background"
-                line="set background=dark"
-
-  - name: disable mouse support in vim
-    lineinfile: dest=/etc/vim/vimrc state=present regexp="^autocmd BufEnter \* set mouse=$"
-                line="autocmd BufEnter * set mouse=" backrefs=yes
+# Adding content to files
+- name: Enable syntax highlighting in vim
+  ansible.builtin.lineinfile:
+    dest: /etc/vim/vimrc
+    regexp: "^syntax "
+    line: "syntax on"
+- name: Enable dark background in vim
+  ansible.builtin.lineinfile:
+    dest: /etc/vim/vimrc
+    state: present
+    regexp: "^set background"
+    line: "set background=dark"
+- name: Disable mouse support in vim
+  ansible.builtin.lineinfile:
+    dest: /etc/vim/vimrc
+    state: present
+    regexp: "^autocmd BufEnter \\* set mouse=$"
+    line: "autocmd BufEnter * set mouse="
+    backrefs: "yes"

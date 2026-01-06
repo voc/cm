@@ -1,84 +1,91 @@
 ---
-  - import_tasks: ../../../register/bin_path.yml
+- name: "Remove users"
+  ansible.builtin.user:
+    state: absent
+    remove: true
+    name: "{{ item.name }}"
+  loop: "{{ users + additional_users | flatten(levels=1) }}"
+  when: item.state == 'absent'
 
-  # remove user when remove variable is defined
-  - name: "remove users"
-    user:
-      state: absent
-      remove: yes
-      name: "{{ item.name }}"
-    loop: "{{ users + additional_users|flatten(levels=1) }}"
-    when: item.state == 'absent'
+# realize user
+- name: Set user groups for bullseye and earlier
+  ansible.builtin.set_fact:
+    user_groups: "ssh,sudo,adm,systemd-journal,systemd-timesync,systemd-network,systemd-resolve"
+  when: ansible_distribution_major_version | int < 12
 
-  # realize user
-  - shell: command -v zsh
-    register: zsh_bin
-    changed_when: false
+- name: Set user groups for bookworm and later
+  ansible.builtin.set_fact:
+    user_groups: "_ssh,sudo,adm,systemd-journal,systemd-timesync,systemd-network,systemd-resolve"
+  when: ansible_distribution_major_version | int >= 12
 
-  - name: set user groups for bullseye and earlier
-    set_fact:
-      user_groups: "ssh,sudo,adm,systemd-journal,systemd-timesync,systemd-network,systemd-resolve"
-    when: ansible_distribution_major_version | int < 12
+- name: Probe for libvirtd
+  ansible.builtin.command: "command -v libvirtd"
+  register: libvirtd_bin
+  changed_when: false
+  ignore_errors: true
 
-  - name: set user groups for bookworm and later
-    set_fact:
-      user_groups: "_ssh,sudo,adm,systemd-journal,systemd-timesync,systemd-network,systemd-resolve"
-    when: ansible_distribution_major_version | int >= 12
+- name: Append libvirt and kvm group to user
+  ansible.builtin.set_fact:
+    user_groups: "{{ user_groups }},libvirt,kvm"
+  when: libvirtd_bin.stdout != '' and ansible_virtualization_role == 'host'
 
-  - name: append libvirt and kvm group to user
-    set_fact:
-      user_groups: "{{ user_groups }},libvirt,kvm"
-    when: libvirtd_bin.stdout != '' and ansible_virtualization_role == 'host'
+- name: Find zsh binary
+  ansible.builtin.command: command -v zsh
+  register: zsh_bin
+  changed_when: false
 
-  - name: create users
-    user:
-      state: present
-      name: "{{ item.name }}"
-      groups: "{{ user_groups }}"
-      append: yes
-      shell: "{{ user_shell | default(zsh_bin.stdout) }}"
-    loop: "{{ users + additional_users|flatten(levels=1) }}"
-    when: not item.state == 'absent'
+- name: Create users
+  ansible.builtin.user:
+    state: present
+    name: "{{ item.name }}"
+    groups: "{{ user_groups }}"
+    append: true
+    shell: "{{ user_shell | default(zsh_bin.stdout) }}"
+  loop: "{{ users + additional_users | flatten(levels=1) }}"
+  when: not item.state == 'absent'
 
-  # install shell stuff
-  - name: install zshrc
-    copy:
-      src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/zshrc', 'files/user/default/zshrc']) }}"
-      dest: "/home/{{ item.name }}/.zshrc"
-    loop: "{{ users + additional_users|flatten(levels=1) }}"
-    when: item.state != 'absent'
+# install shell stuff
+- name: Install zshrc
+  ansible.builtin.copy:
+    src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/zshrc', 'files/user/default/zshrc']) }}"
+    dest: "/home/{{ item.name }}/.zshrc"
+    mode: "0644"
+  loop: "{{ users + additional_users | flatten(levels=1) }}"
+  when: item.state != 'absent'
 
-  - name: install vimrc
-    copy:
-      src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/vimrc', 'files/user/default/vimrc']) }}"
-      dest: "/home/{{ item.name }}/.vimrc"
-    loop: "{{ users + additional_users|flatten(levels=1) }}"
-    when: item.state != 'absent'
+- name: Install vimrc
+  ansible.builtin.copy:
+    src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/vimrc', 'files/user/default/vimrc']) }}"
+    dest: "/home/{{ item.name }}/.vimrc"
+    mode: "0644"
+  loop: "{{ users + additional_users | flatten(levels=1) }}"
+  when: item.state != 'absent'
 
-  - name: install screenrc
-    copy:
-      src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/screenrc', 'files/user/default/screenrc']) }}"
-      dest: "/home/{{ item.name }}/.screenrc"
-    loop: "{{ users + additional_users|flatten(levels=1) }}"
-    when: item.state != 'absent'
+- name: Install screenrc
+  ansible.builtin.copy:
+    src: "{{ lookup('ansible.builtin.first_found', ['files/user/' + item.name + '/screenrc', 'files/user/default/screenrc']) }}"
+    dest: "/home/{{ item.name }}/.screenrc"
+    mode: "0644"
+  loop: "{{ users + additional_users | flatten(levels=1) }}"
+  when: item.state != 'absent'
 
-  - name: add user's authorized_keys
-    authorized_key:
-      user: "{{ item.name }}"
-      manage_dir: true
-      key: "{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes', errors='warn') }}"
-      state: present
-      exclusive: yes
-    loop: "{{ users + additional_users|flatten(levels=1) }}"
-    when: item.state != 'absent' and item.name != 'voc'
-    tags: authorized_keys
+- name: Add user's authorized_keys
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    manage_dir: true
+    key: "{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes', errors='warn') }}"
+    state: present
+    exclusive: true
+  loop: "{{ users + additional_users | flatten(levels=1) }}"
+  when: item.state != 'absent' and item.name != 'voc'
+  tags: authorized_keys
 
-  - name: add user's authorized_keys to voc
-    authorized_key:
-      user: voc
-      manage_dir: true
-      key: "{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes', errors='warn') }}"
-      state: present
-    loop: "{{ users + additional_users|flatten(levels=1) }}"
-    when: item.state != 'absent' and item.name != 'voc'
-    tags: authorized_keys
+- name: Add user's authorized_keys to voc
+  ansible.posix.authorized_key:
+    user: voc
+    manage_dir: true
+    key: "{{ lookup('keepass', 'ansible/authorized_keys/' + item.name + '.notes', errors='warn') }}"
+    state: present
+  loop: "{{ users + additional_users | flatten(levels=1) }}"
+  when: item.state != 'absent' and item.name != 'voc'
+  tags: authorized_keys

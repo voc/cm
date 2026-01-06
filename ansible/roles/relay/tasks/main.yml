@@ -1,5 +1,4 @@
 ---
-- ansible.builtin.import_tasks: ../../../register/bin_path.yml
 - ansible.builtin.import_tasks: upload.yml
   tags: [nginx, upload, stream_master]
   when: stream_master|bool

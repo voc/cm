@@ -1,9 +1,9 @@
 ---
-- name: remove systemd-hostnamed service
-  file:
+- name: Remove systemd-hostnamed service
+  ansible.builtin.file:
     path: /lib/systemd/system/systemd-hostnamed.service
     state: absent
 
-- name: reload systemd
-  systemd:
-    daemon_reload: yes
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true

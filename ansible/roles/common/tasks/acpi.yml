@@ -1,38 +1,38 @@
 ---
-- name: install acpid
-  apt:
+- name: Install acpid
+  ansible.builtin.apt:
     name: acpid
-    state: latest
+    state: present
 
 # Prevent pressing power button
-- name: create script for custom power button sequence
-  copy:
+- name: Create script for custom power button sequence
+  ansible.builtin.copy:
     src: powerbtn-acpi-support_voc.sh
     dest: /etc/acpi/powerbtn-acpi-support_voc.sh
-    mode: 0755
+    mode: "0755"
 
-- name: activate custom acpi script for power button
-  lineinfile:
+- name: Activate custom acpi script for power button
+  ansible.builtin.lineinfile:
     dest: /etc/acpi/events/powerbtn-acpi-support
-    regexp: '^action=.*'
-    line: 'action=/etc/acpi/powerbtn-acpi-support_voc.sh'
+    regexp: "^action=.*"
+    line: "action=/etc/acpi/powerbtn-acpi-support_voc.sh"
   register: acpi_config
 
-- name: restart acpid
-  service:
+- name: Restart acpid
+  ansible.builtin.service:
     name: acpid
     state: restarted
   when: acpi_config.changed
 
-- name: disable logind handling of acpi events
-  replace:
+- name: Disable logind handling of acpi events
+  ansible.builtin.replace:
     path: /etc/systemd/logind.conf
-    regexp: '^#?Handle(PowerKey|SuspendKey|HibernateKey|LidSwitch).*$'
-    replace: 'Handle\1=ignore'
+    regexp: "^#?Handle(PowerKey|SuspendKey|HibernateKey|LidSwitch).*$"
+    replace: "Handle\\1=ignore"
   register: logind_conf
 
-- name: restart systemd-logind
-  service:
+- name: Restart systemd-logind
+  ansible.builtin.service:
     name: systemd-logind
     state: restarted
   when: logind_conf.changed

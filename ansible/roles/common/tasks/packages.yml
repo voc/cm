@@ -1,9 +1,11 @@
 ---
-  - name: install a default set of packages
-    apt: name={{ packages|flatten(levels=1) }} state=present
-    tags: packages
-    vars:
-      packages:
+- name: Install a default set of packages
+  ansible.builtin.apt:
+    name: "{{ packages | flatten(levels=1) }}"
+    state: present
+  tags: packages
+  vars:
+    packages:
       # YES, we are using systemd!!1!
       - systemd
       - systemd-sysv
@@ -48,47 +50,55 @@
       - bc
       - at
 
-  # packages for physical hosts
-  - name: install packages for physical hosts
-    apt:
-      name:
-        - smartmontools
-        - lldpd
-      state: latest
-    when: ansible_virtualization_role != 'guest'
+# packages for physical hosts
+- name: Install packages for physical hosts
+  ansible.builtin.apt:
+    name:
+      - smartmontools
+      - lldpd
+    state: present
+  when: ansible_virtualization_role != 'guest'
 
-  - name: add megacli
-    apt: name=megacli state=present
-    when: ansible_hostname is match('mebibyte')
+- name: Add megacli
+  ansible.builtin.apt:
+    name: megacli
+    state: present
+  when: ansible_hostname is match('mebibyte')
 
-  # packages for VMs
-  - name: install a vmware specific set of packages
-    apt: name=open-vm-tools state=present
-    when: ansible_virtualization_type is defined and ansible_virtualization_type == 'VMware' and ansible_virtualization_role == 'guest'
+# packages for VMs
+- name: Install a vmware specific set of packages
+  ansible.builtin.apt:
+    name: open-vm-tools
+    state: present
+  when: ansible_virtualization_type is defined and ansible_virtualization_type == 'VMware' and ansible_virtualization_role == 'guest'
 
-  - name: install special packages for VMs
-    apt: name=haveged state=present
-    when: ansible_virtualization_type is defined and ansible_virtualization_role == 'guest'
+- name: Install special packages for VMs
+  ansible.builtin.apt:
+    name: haveged
+    state: present
+  when: ansible_virtualization_type is defined and ansible_virtualization_role == 'guest'
 
-  - name: install qemu-aguest-agent
-    apt:
-      name: qemu-guest-agent
-      state: present
-    when: ansible_virtualization_role == 'guest' and ansible_virtualization_type == 'kvm'
+- name: Install qemu-aguest-agent
+  ansible.builtin.apt:
+    name: qemu-guest-agent
+    state: present
+  when: ansible_virtualization_role == 'guest' and ansible_virtualization_type == 'kvm'
 
-  # remove not needed packages
-  - name: remove not needed packages
-    apt: name={{ packages|flatten(levels=1) }} state=absent
-    vars:
-      packages:
-        - rpcbind
-        - openntpd
-        - rdnssd
-        - dvswitch-voc
-        - dvsource-voc
-        - dvsink-voc
-        - bmdtools
-        - check-mk-agent
-        - munin-node
-        - puppet
-    when: "'proxmox' not in group_names"
+# remove not needed packages
+- name: Remove not needed packages
+  ansible.builtin.apt:
+    name: "{{ packages | flatten(levels=1) }}"
+    state: absent
+  vars:
+    packages:
+      - rpcbind
+      - openntpd
+      - rdnssd
+      - dvswitch-voc
+      - dvsource-voc
+      - dvsink-voc
+      - bmdtools
+      - check-mk-agent
+      - munin-node
+      - puppet
+  when: "'proxmox' not in group_names"

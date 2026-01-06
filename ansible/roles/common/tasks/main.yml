@@ -1,44 +1,48 @@
 ---
-  - name: Require Debian 12 or newer
-    fail:
-      msg: "This playbook requires Debian 12 or newer."
-    when: ansible_distribution_major_version | int < 12
-    tags: always
+- name: Require Debian 12 or newer
+  ansible.builtin.fail:
+    msg: "This playbook requires Debian 12 or newer."
+  when: ansible_distribution_major_version | int < 12
+  tags: always
 
-  - import_tasks: ../../../register/bin_path.yml
-    tags: bin_path
+- name: Install locales
+  ansible.builtin.import_tasks: locale.yml
+  tags: locales
 
-  - import_tasks: locale.yml
-    tags: locales
+- name: Apply fixes for LXC containers
+  ansible.builtin.import_tasks: lxc.yml
+  tags: lxc
+  when: ansible_virtualization_type is defined and ansible_virtualization_type == 'lxc' and 'proxmox' not in group_names
 
-  - import_tasks: lxc.yml
-    tags: lxc
-    when: ansible_virtualization_type is defined and ansible_virtualization_type == 'lxc' and 'proxmox' not in group_names
+- name: Deploy systemd-resolved
+  ansible.builtin.import_tasks: resolv.yml
+  tags: [resolv, dns]
+  # work around systemd bug #10032
+  when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc' and 'nameservers' not in group_names
 
-  - import_tasks: resolv.yml
-    tags: [resolv, dns]
-    # work around systemd bug #10032
-    when:  ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc' and 'nameservers' not in group_names
+- name: Setup apt repos and keys
+  ansible.builtin.import_tasks: repos.yml
+  tags: [apt, repos]
+  when: "'proxmox' not in group_names"
 
-  - import_tasks: apt_proxy.yml
-    tags: apt
-    when: "'proxmox' not in group_names"
+- name: Install common packages
+  ansible.builtin.import_tasks: packages.yml
+  tags: packages
 
-  - import_tasks: repos.yml
-    tags: [apt, repos]
-    when: "'proxmox' not in group_names"
+- name: Deploy vim config
+  ansible.builtin.import_tasks: vim.yml
 
-  - import_tasks: packages.yml
-    tags: packages
+- name: Setup sudo
+  ansible.builtin.import_tasks: sudo.yml
 
-  - import_tasks: vim.yml
-  - import_tasks: sudo.yml
-  - import_tasks: grub.yml
-    when: "system.type == 'pc' and 'proxmox' not in group_names and ansible_virtualization_type != 'lxc'"
+- name: Configure grub for physical hosts
+  ansible.builtin.import_tasks: grub.yml
+  when: "system.type == 'pc' and 'proxmox' not in group_names and ansible_virtualization_type != 'lxc'"
 
-  - import_tasks: ntp.yml
-    tags: ntp
-    when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
+- name: Setup NTP
+  ansible.builtin.import_tasks: ntp.yml
+  tags: ntp
+  when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc'
 
 #  - import_tasks: acpi_undeploy.yml
 #    when: system.type == 'pc' and ansible_virtualization_role == 'guest'
@@ -48,29 +52,39 @@
 #    when: system.type == 'pc' and ansible_virtualization_role != 'guest'
 #    tags: acpi
 
-  - import_tasks: molly-guard.yml
-  - import_tasks: ssh_known_hosts.yml
-    when: "'proxmox' not in group_names"
-  - import_tasks: ssl.yml
-    tags: ssl
+- name: Deploy molly-guard
+  ansible.builtin.import_tasks: molly-guard.yml
 
-  # deploy users
-  - import_tasks: user.yml
-    tags: user
+- name: Add common known hosts
+  ansible.builtin.import_tasks: ssh_known_hosts.yml
+  when: "'proxmox' not in group_names"
 
-  - import_tasks: monitoring.yml
-    tags:
-      - monitoring
-      - check_system
+- name: Deploy pre-generated DH params
+  ansible.builtin.import_tasks: ssl.yml
+  tags: ssl
 
-  - name: setting voc password
-    user:
-      name: voc
-      password: "{{ user_voc_password }}"
-    tags: user
+# deploy users
+- name: Deploy users
+  ansible.builtin.import_tasks: user.yml
+  tags: user
 
-  # Modify message of the day
-  - name: adding message of the day
-    template: dest=/etc/motd
-              src=motd/motd
-              owner=root group=root mode=0644
+- name: Deploy basic monitoring
+  ansible.builtin.import_tasks: monitoring.yml
+  tags:
+    - monitoring
+    - check_system
+
+- name: Setting voc password
+  ansible.builtin.user:
+    name: voc
+    password: "{{ user_voc_password }}"
+  tags: user
+
+# Modify message of the day
+- name: Adding message of the day
+  ansible.builtin.template:
+    dest: /etc/motd
+    src: motd/motd
+    owner: root
+    group: root
+    mode: "0644"
