@@ -89,6 +89,7 @@
   ansible.builtin.apt:
     name: "{{ packages | flatten(levels=1) }}"
     state: absent
+    purge: true
   vars:
     packages:
       - rpcbind
@@ -101,4 +102,5 @@
       - check-mk-agent
       - munin-node
       - puppet
+      - rsyslog
   when: "'proxmox' not in group_names"
