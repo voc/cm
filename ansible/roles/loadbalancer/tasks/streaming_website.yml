@@ -1,124 +1,137 @@
 ---
-  - name: install streaming-website dependencies
-    apt:
-      name:
-      - "php{{ php_version }}-curl"
-      - "php{{ php_version }}-sqlite3"
-      - "php{{ php_version }}-xml"
-      - libsqlite3-dev
-      - sqlite3
-      state: latest
+- name: install streaming-website dependencies
+  apt:
+    name:
+    - "php{{ php_version }}-curl"
+    - "php{{ php_version }}-sqlite3"
+    - "php{{ php_version }}-xml"
+    - libsqlite3-dev
+    - sqlite3
+    - python3.11-venv # for mqttfeedback
+    state: present
 
-  # Repo checkout
-  - name: git checkout streaming-website
-    git: repo=http://c3voc.de/git/streaming-website.git
-         dest=/srv/nginx/streaming-website
-    tags: deploy_website
+# Repo checkout
+- name: Git checkout streaming-website
+  git:
+    repo: https://forgejo.c3voc.de/voc/streaming-website.git
+    dest: /srv/nginx/streaming-website
+  tags: deploy_website
 
-  - name: create user for schedule download
-    user: name=downloader home=/srv/nginx/streaming-website
-          system=yes
+- name: create user for schedule download
+  user: name=downloader home=/srv/nginx/streaming-website
+        system=yes
 
-  - name: create mqttfeedback group
-    group: name=mqttfeedback system=yes
+- name: create mqttfeedback group
+  group: name=mqttfeedback system=yes
 
-  - name: create mqttfeedback user
-    user: name=mqttfeedback system=yes group=mqttfeedback
+- name: create mqttfeedback user
+  user: name=mqttfeedback system=yes group=mqttfeedback
 
-  - name: change streaming-website permissions
-    file: dest=/srv/nginx/streaming-website
-          owner=root group=downloader
-          mode=g+rw recurse=yes
-    changed_when: false
-    tags: deploy_website
+- name: change streaming-website permissions
+  file: dest=/srv/nginx/streaming-website
+        owner=root group=downloader
+        mode=g+rw recurse=yes
+  changed_when: false
+  tags: deploy_website
 
-  # Create directories and symlinks
-  - name: create htdocs symlink
-    file: src=/srv/nginx/streaming-website
-          dest=/srv/nginx/htdocs
-          state=link
-    tags: install
+# Create directories and symlinks
+- name: create htdocs symlink
+  file: src=/srv/nginx/streaming-website
+        dest=/srv/nginx/htdocs
+        state=link
+  tags: install
 
-  - name: create feedback directory
-    file: state=directory
-          dest=/opt/streaming-feedback
-          owner=www-data group=mqttfeedback mode=0771
-    tags: feedback_password
+- name: create feedback directory
+  file: state=directory
+        dest=/opt/streaming-feedback
+        owner=www-data group=mqttfeedback mode=0771
+  tags: feedback_password
 
-  # Feedback db
-  - stat: path=/opt/streaming-feedback/feedback.sqlite3
-    register: feedback_db
-    tags: install
+# Feedback db
+- stat: path=/opt/streaming-feedback/feedback.sqlite3
+  register: feedback_db
+  tags: install
 
-  - name: set streaming page feedback read password
-    template: src=feedback-password.j2
-              dest=/opt/streaming-feedback/feedback-password
-              owner=www-data group=www-data mode=640
-    tags: feedback_password
+- name: set streaming page feedback read password
+  template: src=feedback-password.j2
+            dest=/opt/streaming-feedback/feedback-password
+            owner=www-data group=www-data mode=640
+  tags: feedback_password
 
-  - name: create feedback db
-    shell: "sudo -uwww-data sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/schema.sql"
-    when: feedback_db.stat.isreg is not defined or feedback_db.stat.isreg == False
-    tags: install
+- name: create feedback db
+  shell: "sudo -u www-data sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/feedback/schema.sql"
+  when: feedback_db.stat.isreg is not defined or feedback_db.stat.isreg == False
+  tags: install
 
-  - name: change feedback.sqlite3 ownership
-    file: state=file
-          dest=/opt/streaming-feedback/feedback.sqlite3
-          mode=0660 owner=www-data group=mqttfeedback
+- name: change feedback.sqlite3 ownership
+  file: state=file
+        dest=/opt/streaming-feedback/feedback.sqlite3
+        mode=0660 owner=www-data group=mqttfeedback
 
-  # Feedback client
-#  - name: clone mqtt repo
-#    git: repo=ssh://git@git.c3voc.de/mqtt
-#         dest=/usr/local/src/mqtt
-#         ssh_opts="-o StrictHostKeyChecking=no"
-#    tags: mqtt_feedback
+# Feedback client
+- name: Install mqttfeedback dependencies
+  pip:
+    requirements: /srv/nginx/streaming-website/lib/feedback/requirements.txt
+    virtualenv: /opt/streaming-feedback/venv
+    virtualenv_command: "{{ ansible_python_interpreter }} -m venv"
+  tags: mqtt_feedback
 
-  - stat: path=/usr/local/src/mqtt/provider/feedback/Gemfile.lock
-    register: mqtt_feedback_gemlock
-    tags: mqtt_feedback
+- name: Deploy mqttfeedback unit
+  template:
+    src: mqttfeedback.service.j2
+    dest: /etc/systemd/system/mqttfeedback.service
+    mode: 640
+  register: feedback_unit
+  tags: mqtt_feedback
 
-  - name: install mqttfeedback client dependencies
-    shell: "{{ item }}"
-    args:
-      chdir: /usr/local/src/mqtt/provider/feedback
-    with_items:
-      - gem install bundler
-      - bundle
-    when: mqtt_feedback_gemlock.stat.isreg is not defined or mqtt_feedback_gemlock.stat.isreg == False
-    tags: mqtt_feedback
+- name: restart/enable mqttfeedback service
+  systemd:
+    name: mqttfeedback
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  when: feedback_unit.changed
+  tags: mqtt_feedback
 
-  - name: deploy mqttfeedback unit
-    template:
-      src: mqttfeedback.service.j2
-      dest: /lib/systemd/system/mqttfeedback.service
-      mode: 640
-    register: feedback_unit
-    tags: mqtt_feedback
+- name: Deploy mqttfeedback restart unit
+  template:
+    src: mqttfeedback-restart.service.j2
+    dest: /etc/systemd/system/mqttfeedback-restart.service
+    mode: 640
+  register: feedback_restart_unit
+  tags: mqtt_feedback
 
-  - name: restart/enable mqttfeedback service
-    systemd:
-      name: mqttfeedback
-      state: restarted
-      enabled: yes
-      daemon_reload: yes
-    when: feedback_unit.changed
-    tags: mqtt_feedback
+- name: Deploy mqttfeedback restart path unit
+  template:
+    src: mqttfeedback-restart.path.j2
+    dest: /etc/systemd/system/mqttfeedback-restart.path
+    mode: 640
+  register: feedback_restart_path_unit
+  tags: mqtt_feedback
 
-  # Cron jobs
-  - name: create cronjob to pull upcoming events json every 15 minutes
-    cron: name="download upcoming events json" minute=*/15
-          job="/usr/bin/env php /srv/nginx/streaming-website/index.php download >/dev/null"
-          user=downloader
+- name: Enable mqttfeedback restart watcher
+  systemd:
+    name: mqttfeedback-restart.path
+    enabled: true
+    state: restarted
+  when: feedback_restart_unit.changed or feedback_restart_path_unit.changed
+  tags: mqtt_feedback
 
-  # Remove fcgi cache after deployment
-  - name: get fcgi-cache files
-    shell: ls -1 /srv/nginx/cache/streaming_fcgi/
-    register: streaming_fcgi_cache
-    changed_when: false
-    tags: deploy_website
+# Cron jobs
+- name: create cronjob to pull upcoming events json every 15 minutes
+  cron: name="download upcoming events json" minute=*/15
+        job="/usr/bin/env php /srv/nginx/streaming-website/index.php download >/dev/null"
+        user=downloader
 
-  - name: remove fcgi-cache
-    file: path=/srv/nginx/cache/streaming_fcgi/{{ item }} state=absent
-    with_items: streaming_fcgi_cache.stdout_lines
-    when: streaming_fcgi_cache != ''
-    tags: deploy_website
+# Remove fcgi cache after deployment
+- name: get fcgi-cache files
+  shell: ls -1 /srv/nginx/cache/streaming_fcgi/
+  register: streaming_fcgi_cache
+  changed_when: false
+  tags: deploy_website
+
+- name: remove fcgi-cache
+  file: path=/srv/nginx/cache/streaming_fcgi/{{ item }} state=absent
+  with_items: streaming_fcgi_cache.stdout_lines
+  when: streaming_fcgi_cache != ''
+  tags: deploy_website
