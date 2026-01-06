@@ -9,13 +9,40 @@
     name:
       - apt-transport-https
       - gpg
+      - python3-debian
     state: present
   tags:
     - gpg
 
  #
- # add repos
+ # Remove old repos
  #
+
+- name: Undeploy old telegraf repos
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/repos_influxdata_com_debian.list
+    - /etc/apt/sources.list.d/influxdata.list
+    - /etc/apt/sources.list.d/influxdata.list.ucf-dist
+  tags: [apt, repos]
+
+- name: Remove debian repo without non-free-firmware
+  ansible.builtin.apt_repository:
+    repo: "deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }} main contrib non-free"
+    update_cache: "false"
+    state: absent
+  when: system.type == 'pc'
+
+- name: Remove backports repo without non-free-firmware
+  ansible.builtin.apt_repository:
+    repo: "deb http://ftp-stud.hs-esslingen.de/debian {{ ansible_distribution_release }}-backports main contrib non-free"
+    update_cache: "false"
+    state: absent
+  when: system.type == 'pc'
+
+# Setup base repos
 
 - name: Setup the debian backports repo
   ansible.builtin.apt_repository:

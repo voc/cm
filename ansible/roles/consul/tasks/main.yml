@@ -1,11 +1,4 @@
 ---
-- name: remove hashicorp apt key
-  ansible.builtin.apt_key:
-    id: 798AEC654E5C15428C8E42EEAA16FCBCA621E701
-    url:  https://apt.releases.hashicorp.com/gpg
-    state: absent
-  tags: [apt, repos]
-
 - name: remove hashicorp apt repo
   file:
     dest: /etc/apt/sources.list.d/apt_releases_hashicorp_com.list
