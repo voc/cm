@@ -18,7 +18,7 @@
   ansible.builtin.import_tasks: resolv.yml
   tags: [resolv, dns]
   # work around systemd bug #10032
-  when: ansible_virtualization_type is defined and ansible_virtualization_type != 'lxc' and 'nameservers' not in group_names
+  when: ansible_virtualization_type is defined and 'nameservers' not in group_names
 
 - name: Setup apt repos and keys
   ansible.builtin.import_tasks: repos.yml
