@@ -1,18 +1,24 @@
 ---
-- import_tasks: nginx.yml
+- name: Deploy nginx config
+  ansible.builtin.import_tasks: nginx.yml
   tags: nginx
 
-- import_tasks: streaming_website.yml
+- name: Deploy streaming website
+  ansible.builtin.import_tasks: streaming_website.yml
   tags: streaming_website
 
-- import_tasks: haproxy.yml
+- name: Deploy haproxy config
+  ansible.builtin.import_tasks: haproxy.yml
   tags: haproxy
 
-- import_tasks: consul_template.yml
+- name: Deploy consul-template for writing haproxy config
+  ansible.builtin.import_tasks: consul_template.yml
   tags: consul-template
 
-- import_tasks: sysctl.yml
+- name: Tweak sysctl settings
+  ansible.builtin.import_tasks: sysctl.yml
   tags: sysctl
 
-- import_tasks: telegraf.yml
+- name: Deploy loadbalancer telegraf config
+  ansible.builtin.import_tasks: telegraf.yml
   tags: [telegraf, monitoring]

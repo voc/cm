@@ -29,15 +29,32 @@
 
 # configure haproxy
 - name: Create haproxy chroot directory
-  ansible.builtin.file: dest=/usr/share/haproxy state=directory mode=0750 owner=haproxy group=haproxy
+  ansible.builtin.file:
+    dest: /usr/share/haproxy
+    state: directory
+    mode: "0750"
+    owner: haproxy
+    group: haproxy
 - name: Copy usa ip list
-  ansible.builtin.copy: src=usa_subnetworks.txt dest=/etc/haproxy/usa_subnetworks.txt mode=0755 owner=haproxy group=haproxy
+  ansible.builtin.copy:
+    src: usa_subnetworks.txt
+    dest: /etc/haproxy/usa_subnetworks.txt
+    mode: "0755"
+    owner: haproxy
+    group: haproxy
 - name: Copy dtag ip list
-  ansible.builtin.copy: src=dtag_subnetworks.txt dest=/etc/haproxy/dtag_subnetworks.txt mode=0755 owner=haproxy group=haproxy
+  ansible.builtin.copy:
+    src: dtag_subnetworks.txt
+    dest: /etc/haproxy/dtag_subnetworks.txt
+    mode: "0755"
+    owner: haproxy
+    group: haproxy
+
 - name: Install haproxy cors script
   ansible.builtin.copy:
     src: "haproxy/cors.lua"
     dest: "/etc/haproxy/cors.lua"
+    mode: "0644"
   register: haproxy_scripts
   tags: haproxy_deploy
 
@@ -49,7 +66,7 @@
   tags: haproxy_deploy
 
 - name: Override nofiles limit for haproxy
-  copy:
+  ansible.builtin.copy:
     dest: /etc/systemd/system/haproxy.service.d/override.conf
     content: |
       [Unit]

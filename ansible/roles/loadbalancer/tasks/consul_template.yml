@@ -1,16 +1,18 @@
-- name: deploy consul-template
-  import_role:
+---
+- name: Deploy consul-template
+  ansible.builtin.import_role:
     name: consul-template
 
 - name: Deploy consul-template haproxy config
-  template:
+  ansible.builtin.template:
     src: haproxy/haproxy.ctmpl.j2
     dest: /etc/consul-template.d/haproxy.ctmpl
+    mode: "0644"
   register: haproxy_template
   tags: [haproxy]
 
-- name: reload consul-template
-  service:
+- name: Reload consul-template
+  ansible.builtin.service:
     name: consul-template
     state: reloaded
   when: haproxy_template.changed

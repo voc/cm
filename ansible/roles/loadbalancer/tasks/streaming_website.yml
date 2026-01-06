@@ -1,91 +1,81 @@
 ---
-- name: install streaming-website dependencies
-  apt:
+- name: Install streaming-website dependencies
+  ansible.builtin.apt:
     name:
-    - "php{{ php_version }}-curl"
-    - "php{{ php_version }}-sqlite3"
-    - "php{{ php_version }}-xml"
-    - libsqlite3-dev
-    - sqlite3
-    - python3.11-venv # for mqttfeedback
+      - "php{{ php_version }}-curl"
+      - "php{{ php_version }}-sqlite3"
+      - "php{{ php_version }}-xml"
+      - libsqlite3-dev
+      - sqlite3
+      - python3.11-venv # for mqttfeedback
     state: present
 
 # Repo checkout
 - name: Git checkout streaming-website
-  git:
+  ansible.builtin.git:
     repo: https://forgejo.c3voc.de/voc/streaming-website.git
     dest: /srv/nginx/streaming-website
   tags: deploy_website
 
-- name: create user for schedule download
-  user: name=downloader home=/srv/nginx/streaming-website
-        system=yes
+- name: Create user for schedule download
+  ansible.builtin.user: name=downloader home=/srv/nginx/streaming-website system=yes
 
-- name: create mqttfeedback group
-  group: name=mqttfeedback system=yes
+- name: Create mqttfeedback group
+  ansible.builtin.group: name=mqttfeedback system=yes
 
-- name: create mqttfeedback user
-  user: name=mqttfeedback system=yes group=mqttfeedback
+- name: Create mqttfeedback user
+  ansible.builtin.user: name=mqttfeedback system=yes group=mqttfeedback
 
-- name: change streaming-website permissions
-  file: dest=/srv/nginx/streaming-website
-        owner=root group=downloader
-        mode=g+rw recurse=yes
+- name: Change streaming-website permissions
+  ansible.builtin.file: dest=/srv/nginx/streaming-website owner=root group=downloader mode=g+rw recurse=yes
   changed_when: false
   tags: deploy_website
 
 # Create directories and symlinks
-- name: create htdocs symlink
-  file: src=/srv/nginx/streaming-website
-        dest=/srv/nginx/htdocs
-        state=link
+- name: Create htdocs symlink
+  ansible.builtin.file: src=/srv/nginx/streaming-website dest=/srv/nginx/htdocs state=link
   tags: install
 
-- name: create feedback directory
-  file: state=directory
-        dest=/opt/streaming-feedback
-        owner=www-data group=mqttfeedback mode=0771
+- name: Create feedback directory
+  ansible.builtin.file: state=directory dest=/opt/streaming-feedback owner=www-data group=mqttfeedback mode=0771
   tags: feedback_password
 
 # Feedback db
-- stat: path=/opt/streaming-feedback/feedback.sqlite3
+- name: Check if feedback db exists
+  ansible.builtin.stat:
+    path: /opt/streaming-feedback/feedback.sqlite3
   register: feedback_db
   tags: install
 
-- name: set streaming page feedback read password
-  template: src=feedback-password.j2
-            dest=/opt/streaming-feedback/feedback-password
-            owner=www-data group=www-data mode=640
+- name: Set streaming page feedback read password
+  ansible.builtin.template: src=feedback-password.j2 dest=/opt/streaming-feedback/feedback-password owner=www-data group=www-data mode=0640
   tags: feedback_password
 
-- name: create feedback db
-  shell: "sudo -u www-data sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/feedback/schema.sql"
-  when: feedback_db.stat.isreg is not defined or feedback_db.stat.isreg == False
+- name: Create feedback db
+  ansible.builtin.shell: "sudo -u www-data sqlite3 /opt/streaming-feedback/feedback.sqlite3 < /srv/nginx/streaming-website/lib/feedback/schema.sql"
+  when: feedback_db.stat.isreg is not defined or not feedback_db.stat.isreg
   tags: install
 
-- name: change feedback.sqlite3 ownership
-  file: state=file
-        dest=/opt/streaming-feedback/feedback.sqlite3
-        mode=0660 owner=www-data group=mqttfeedback
+- name: Change feedback.sqlite3 ownership
+  ansible.builtin.file: state=file dest=/opt/streaming-feedback/feedback.sqlite3 mode=0660 owner=www-data group=mqttfeedback
 
-# Feedback client
 - name: Install mqttfeedback dependencies
-  pip:
+  ansible.builtin.pip:
     requirements: /srv/nginx/streaming-website/lib/feedback/requirements.txt
     virtualenv: /opt/streaming-feedback/venv
     virtualenv_command: "{{ ansible_python_interpreter }} -m venv"
   tags: mqtt_feedback
 
 - name: Deploy mqttfeedback unit
-  template:
+  ansible.builtin.template:
     src: mqttfeedback.service.j2
     dest: /etc/systemd/system/mqttfeedback.service
-    mode: 640
+    mode: "0640"
   register: feedback_unit
   tags: mqtt_feedback
 
-- name: restart/enable mqttfeedback service
-  systemd:
+- name: Restart/enable mqttfeedback service
+  ansible.builtin.systemd:
     name: mqttfeedback
     state: restarted
     enabled: true
@@ -94,23 +84,23 @@
   tags: mqtt_feedback
 
 - name: Deploy mqttfeedback restart unit
-  template:
+  ansible.builtin.template:
     src: mqttfeedback-restart.service.j2
     dest: /etc/systemd/system/mqttfeedback-restart.service
-    mode: 640
+    mode: "0640"
   register: feedback_restart_unit
   tags: mqtt_feedback
 
 - name: Deploy mqttfeedback restart path unit
-  template:
+  ansible.builtin.template:
     src: mqttfeedback-restart.path.j2
     dest: /etc/systemd/system/mqttfeedback-restart.path
-    mode: 640
+    mode: "0640"
   register: feedback_restart_path_unit
   tags: mqtt_feedback
 
 - name: Enable mqttfeedback restart watcher
-  systemd:
+  ansible.builtin.systemd:
     name: mqttfeedback-restart.path
     enabled: true
     state: restarted
@@ -118,20 +108,18 @@
   tags: mqtt_feedback
 
 # Cron jobs
-- name: create cronjob to pull upcoming events json every 15 minutes
-  cron: name="download upcoming events json" minute=*/15
-        job="/usr/bin/env php /srv/nginx/streaming-website/index.php download >/dev/null"
-        user=downloader
+- name: Create cronjob to pull upcoming events json every 15 minutes
+  ansible.builtin.cron: name="download upcoming events json" minute=*/15 job="/usr/bin/env php /srv/nginx/streaming-website/index.php download >/dev/null"
+    user=downloader
 
-# Remove fcgi cache after deployment
-- name: get fcgi-cache files
-  shell: ls -1 /srv/nginx/cache/streaming_fcgi/
+- name: Get fcgi-cache files
+  ansible.builtin.command: ls -1 /srv/nginx/cache/streaming_fcgi/
   register: streaming_fcgi_cache
   changed_when: false
   tags: deploy_website
 
-- name: remove fcgi-cache
-  file: path=/srv/nginx/cache/streaming_fcgi/{{ item }} state=absent
-  with_items: streaming_fcgi_cache.stdout_lines
+- name: Remove fcgi-cache
+  ansible.builtin.file: path=/srv/nginx/cache/streaming_fcgi/{{ item }} state=absent
+  with_items: "{{ streaming_fcgi_cache.stdout_lines }}"
   when: streaming_fcgi_cache != ''
   tags: deploy_website
