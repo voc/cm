@@ -1,4 +1,7 @@
 ---
+- import_tasks: firewall.yml
+  tags: [firewall, iptables, nftables]
+
 - import_tasks: nginx.yml
   tags: nginx
   when: "'relays' not in group_names"

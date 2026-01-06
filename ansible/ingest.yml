@@ -1,6 +1,6 @@
 ---
-  - hosts: ingest
-    roles:
-      - { role: common, tags: ['common'] }
-      - { role: monitoring-client, tags: ['monitoring'] }
-      - { role: ingest, tags: ['ingest'] }
+- hosts: ingest
+  roles:
+    - { role: common, tags: ['common'] }
+    - { role: monitoring-client, tags: ['monitoring'] }
+    - { role: ingest, tags: ['ingest'] }
