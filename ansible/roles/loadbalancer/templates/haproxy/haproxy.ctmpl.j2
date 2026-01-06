@@ -1,16 +1,14 @@
 global
-    ulimit-n 200000
+    ulimit-n 1048576
     maxconn 500000
     maxconnrate 500000
     maxcomprate 0
     maxcompcpuusage 100
     maxsessrate 500000
-    nbproc 1
     nbthread {{ ansible_processor_vcpus -1 }}
     cpu-map auto:1/1-{{ ansible_processor_vcpus -1 }} 0-{{ ansible_processor_vcpus -2}}
     # TCP and Request Bufferfing
     tune.bufsize 262144
-    tune.chksize 262144
     tune.rcvbuf.client 262144
     tune.rcvbuf.server 2097152
     tune.sndbuf.client 2097152
@@ -23,8 +21,7 @@ global
     pidfile /run/haproxy.pid
     user    haproxy
     group   haproxy
-    # stats sockets
-    stats socket /var/run/haproxy/stats_1.sock level operator group telegraf mode 0770 process 1
+
     daemon
     log     /dev/log local0 notice
     # tls
@@ -58,6 +55,12 @@ defaults
     errorfile 502 /var/lib/haproxy/502.http
     errorfile 503 /var/lib/haproxy/503.http
     log     /dev/log local0 notice
+
+frontend prometheus
+    bind 127.0.0.1:9101
+    mode http
+    http-request set-log-level silent
+    http-request use-service prometheus-exporter
 
 frontend icecast_and_nginx_hls_http
     bind 0.0.0.0:80
