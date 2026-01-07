@@ -18,7 +18,6 @@ global
     lua-load /etc/haproxy/cors.lua
 
     chroot  /usr/share/haproxy
-    pidfile /run/haproxy.pid
     user    haproxy
     group   haproxy
 
@@ -143,7 +142,6 @@ frontend icecast_and_nginx_hls_https
     bind :::443 ssl crt /etc/letsencrypt/live/streaming.media.ccc.de/haproxy.pem crt /etc/letsencrypt/live/cdn.c3voc.de/haproxy.pem # <cert+privkey+intermediate+dhparam>
 
     tcp-request inspect-delay 5s
-    tcp-request content accept if { req_ssl_hello_type 1 }
 
     stick-table type ip size 200k expire 1m store conn_rate(10s)
     tcp-request content track-sc0 src

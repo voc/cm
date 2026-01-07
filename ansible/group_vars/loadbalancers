@@ -1,5 +1,5 @@
 monitoring_role: loadbalancer
 nebula_lighthouse: true
-php_version: 8.2
+php_version: 8.4 # debian trixie
 
 # DO NOT EDIT MANUALLY BELOW THAT LINE

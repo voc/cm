@@ -19,7 +19,7 @@
   when: ansible_distribution_major_version | int >= 12
 
 - name: Probe for libvirtd
-  ansible.builtin.command: "command -v libvirtd"
+  ansible.builtin.shell: "command -v libvirtd"
   register: libvirtd_bin
   changed_when: false
   ignore_errors: true
@@ -30,7 +30,7 @@
   when: libvirtd_bin.stdout != '' and ansible_virtualization_role == 'host'
 
 - name: Find zsh binary
-  ansible.builtin.command: command -v zsh
+  ansible.builtin.shell: command -v zsh
   register: zsh_bin
   changed_when: false
 

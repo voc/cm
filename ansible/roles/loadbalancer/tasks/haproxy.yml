@@ -27,6 +27,11 @@
     - 502.http
     - 503.http
 
+- name: Remove haproxy logrotate, because we only use journal
+  ansible.builtin.file:
+    path: /etc/logrotate.d/haproxy
+    state: absent
+
 # configure haproxy
 - name: Create haproxy chroot directory
   ansible.builtin.file:

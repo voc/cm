@@ -7,8 +7,16 @@
       - "php{{ php_version }}-xml"
       - libsqlite3-dev
       - sqlite3
-      - python3.11-venv # for mqttfeedback
+      - python3.13-venv # for mqttfeedback
+      - python3-packaging # for mqttfeedback
     state: present
+  register: streaming_website_deps
+
+- name: Remove old mqttfeedback venv if python version changed
+  ansible.builtin.file:
+    path: /opt/streaming-feedback/venv
+    state: absent
+  when: streaming_website_deps.changed
 
 # Repo checkout
 - name: Git checkout streaming-website
