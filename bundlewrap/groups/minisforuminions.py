@@ -26,6 +26,9 @@ groups["minisforuminions"] = {
             'CPUAffinity': '0-11',
             'separate_vaapi_worker': True,
         },
+        'grub': {
+            'efi': True,
+        },
         'systemd-networkd': {
             'bridges': {
                 'br0': {
