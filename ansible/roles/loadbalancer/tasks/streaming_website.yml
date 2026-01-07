@@ -116,9 +116,36 @@
   tags: mqtt_feedback
 
 # Cron jobs
-- name: Create cronjob to pull upcoming events json every 15 minutes
-  ansible.builtin.cron: name="download upcoming events json" minute=*/15 job="/usr/bin/env php /srv/nginx/streaming-website/index.php download >/dev/null"
-    user=downloader
+- name: Remove old cronjob
+  ansible.builtin.cron:
+    name: "download upcoming events json"
+    user: downloader
+    state: absent
+
+- name: Create download service
+  ansible.builtin.template:
+    src: schedule-download.service.j2
+    dest: /etc/systemd/system/schedule-download.service
+    mode: "0640"
+  register: download_service
+  tags: deploy_website
+
+- name: Create download timer
+  ansible.builtin.template:
+    src: schedule-download.timer.j2
+    dest: /etc/systemd/system/schedule-download.timer
+    mode: "0640"
+  register: download_timer
+  tags: deploy_website
+
+- name: Enable schedule download timer
+  ansible.builtin.systemd:
+    name: schedule-download.timer
+    enabled: true
+    state: restarted
+    daemon_reload: true
+  when: download_service.changed or download_timer.changed
+  tags: deploy_website
 
 - name: Get fcgi-cache files
   ansible.builtin.command: ls -1 /srv/nginx/cache/streaming_fcgi/

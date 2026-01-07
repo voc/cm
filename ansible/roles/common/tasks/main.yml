@@ -59,10 +59,6 @@
   ansible.builtin.import_tasks: ssh_known_hosts.yml
   when: "'proxmox' not in group_names"
 
-- name: Deploy pre-generated DH params
-  ansible.builtin.import_tasks: ssl.yml
-  tags: ssl
-
 # deploy users
 - name: Deploy users
   ansible.builtin.import_tasks: user.yml
