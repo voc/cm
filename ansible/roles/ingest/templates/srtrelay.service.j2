@@ -4,7 +4,7 @@ StartLimitIntervalSec = 0
 
 [Service]
 ExecStart = /usr/bin/srtrelay
-User = stream-api
+DynamicUser = yes
 Restart = always
 RestartSec = 3s
 

@@ -17,4 +17,3 @@
   file:
     path: /etc/systemd/system/nginx-rtmp.service
     state: absent
-

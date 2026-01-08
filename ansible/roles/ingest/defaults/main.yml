@@ -3,6 +3,3 @@ streamapi_sources:
     url: http://localhost:8000
   - type: srtrelay
     url: http://localhost:8084
-
-rtmp: yes
-rtmp_auth: yes

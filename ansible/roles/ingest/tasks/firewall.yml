@@ -1,8 +1,6 @@
 ---
-- name: Deploy ingest firewall rules
-  template:
-    dest: /etc/nftables/ingest.nft
-    src: ingest.nft
-    mode: "0644"
-    # validate: "/usr/sbin/nft -cf %s"
+- name: Remove ingest firewall rules
+  file:
+    path: /etc/nftables/ingest.nft
+    state: absent
   notify: reload firewall

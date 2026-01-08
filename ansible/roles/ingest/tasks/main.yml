@@ -12,7 +12,7 @@
 
 - import_tasks: rtmp-auth.yml
   tags: rtmp-auth
-  when: "'relays' not in group_names"
+  when: "'relays' not in group_names and rtmp_auth is defined and rtmp_auth|bool"
 
 - import_tasks: stream-api.yml
   tags: stream-api

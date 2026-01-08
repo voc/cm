@@ -1,12 +1,22 @@
 ---
-- name: create nginx vhost
+- name: Deploy stream-api htpasswd
+  htpasswd:
+    path: /etc/nginx/htpasswd
+    name: "{{ stream_api.user }}"
+    password: "{{ stream_api.password }}"
+    owner: root
+    group: www-data
+    mode: 0640
+  register: ingest_htpasswd
+
+- name: Deploy ingest nginx vhost
   template:
     src: nginx/ingest.conf.j2
     dest: "/etc/nginx/sites-enabled/{{ ansible_fqdn }}"
   register: ingest_vhost
 
-- name: reload nginx
+- name: Reload nginx
   service:
     name: nginx
     state: reloaded
-  when: ingest_vhost.changed
+  when: ingest_vhost.changed or ingest_htpasswd.changed

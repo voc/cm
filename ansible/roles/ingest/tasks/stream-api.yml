@@ -27,7 +27,7 @@
   systemd:
     name: stream-api
     state: restarted
-    enabled: yes
-    daemon_reload: yes
+    enabled: true
+    daemon_reload: true
   when: api_conf.changed
 

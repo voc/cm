@@ -1,0 +1,4 @@
+# define for direct icecast push endpoints
+icecast_additional_mounts: []
+rtmp: yes
+rtmp_auth: yes
