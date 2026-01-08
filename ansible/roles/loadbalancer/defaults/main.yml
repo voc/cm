@@ -1,5 +1,5 @@
 # serve 3rdparty-streams via extra-relays
-#haproxy_3rdparty_regex: "(s80|s89|s150)"
+# haproxy_3rdparty_regex: "(s80|s89|s150)"
 
 # serve dtag clients via extra-relays
 haproxy_dtag_extrawurst: false

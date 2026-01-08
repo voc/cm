@@ -1,6 +1,5 @@
 # default relive master
-nginx_hls_relive_masters: ['185.106.84.36']
-nginx_media_static_masters: ['212.201.68.132']
+relay_media_static_backends: ['212.201.68.132']
 
 # push mounts for icecast master
 icecast_additional_mounts: [

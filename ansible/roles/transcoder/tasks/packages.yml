@@ -9,4 +9,4 @@
       - python3-consul
       - python3-pystemd
       - python3-yaml
-    state: latest
+    state: present

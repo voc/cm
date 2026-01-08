@@ -2,12 +2,14 @@
   # Create stream_master htpasswd
   - name: install additional dependencies
     apt:
-      package: python3-passlib
-      state: latest
-    when: stream_master|bool
-    tags: stream_master
+      package:
+        - python3-passlib
+        - python3-setuptools
+      state: present
+    when: relay_origin|bool
+    tags: relay_origin
 
-  - name: create stream_master htpasswd
+  - name: create relay_origin htpasswd
     htpasswd:
       path: /etc/nginx/htpasswd
       name: "{{ stream_api.user }}"
@@ -15,8 +17,8 @@
       owner: root
       group: www-data
       mode: 0640
-    when: stream_master|bool
-    tags: stream_master
+    when: relay_origin|bool
+    tags: relay_origin
 
   # Create directories
   - name: added nginx htdocs and caching directories

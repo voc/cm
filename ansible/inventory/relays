@@ -8,14 +8,14 @@ live.ber.c3voc.de              nginx=yes icecast=yes
 live.nurluefter.de             nginx=yes icecast=yes
 
 [edge_relays]
-live.dort.c3voc.de             nginx=yes icecast=yes dtag_relay=yes mediastatic_relay=yes
-#live.fem.c3voc.de              nginx=yes icecast=yes stats_relay=yes # down for maintenance
-live2.alb.c3voc.de             nginx=yes icecast=no dtag_relay=yes
-relive.c3voc.de                nginx=yes icecast=no relive_relay=yes
+live.dort.c3voc.de             nginx=yes icecast=yes relay_dtag=yes relay_mediastatic=yes
+#live.fem.c3voc.de              nginx=yes icecast=yes relay_stats_server=yes # down for maintenance
+live2.alb.c3voc.de             nginx=yes icecast=no relay_dtag=yes
+relive.c3voc.de                nginx=yes icecast=no relay_relive=yes
 live.ams.c3voc.de              nginx=yes icecast=no
-#live.event.c3voc.de            nginx=yes icecast=yes local_relay=yes
+#live.event.c3voc.de            nginx=yes icecast=yes relay_local=yes
 live.nitk.c3voc.de             nginx=yes icecast=no
 
-ber1.wob.c3voc.de              nginx=yes icecast=yes stats_relay=yes
+ber1.wob.c3voc.de              nginx=yes icecast=yes relay_stats_server=yes
 fra1.wob.c3voc.de              nginx=yes icecast=yes
 wob1.wob.c3voc.de              nginx=yes icecast=yes

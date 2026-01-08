@@ -40,7 +40,7 @@ Basic `ansible` call to deploy new config to a set of hosts on an event.
 
 Run ad-hoc commands
 ```
-  ansible -i event/ transcoders -m shell -a "echo hello world"
+  ansible transcoders -m shell -a "echo hello world"
 ```
 
 ## Keepass Password

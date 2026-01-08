@@ -3,7 +3,7 @@
   apt:
     name:
       - stream-api
-    state: latest
+    state: present
 
 - name: Remove old upload-proxy binary
   file: path=/opt/upload-proxy state=absent

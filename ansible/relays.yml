@@ -1,5 +1,6 @@
 ---
-  - hosts: relays
+  - name: Deploy streaming CDN relays
+    hosts: relays
     roles:
       - { role: common, tags: ['common'] }
       - { role: monitoring-client, tags: ['monitoring'] }

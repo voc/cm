@@ -2,7 +2,7 @@
 - name: install nginx-rtmp module
   apt:
     name: "libnginx-{{ nginx_rtmp_mod }}"
-    state: latest
+    state: present
   register: nginx_rtmp_module
 
 - name: create nginx-rtmp config directory

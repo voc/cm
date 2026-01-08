@@ -49,9 +49,6 @@ voctomix:
 
   lossless_audio: true
 
-# only enable for congress
-#youtube: true
-
 user_voc_password: "{{ lookup('keepass', 'ansible/logins/voc.password') }}"
 
 system:

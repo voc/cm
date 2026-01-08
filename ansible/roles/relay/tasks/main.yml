@@ -1,7 +1,7 @@
 ---
 - ansible.builtin.import_tasks: upload.yml
   tags: [nginx, upload, stream_master]
-  when: stream_master|bool
+  when: relay_origin|bool
 
 - name: Configure logrotate for relay logs
   ansible.builtin.import_tasks: logrotate.yml
@@ -20,13 +20,13 @@
   tags: [telegraf, monitoring]
 
 - ansible.builtin.import_tasks: relive.yml
-  when: relive_master|bool
+  when: relay_relive_origin|bool
   tags: relive
 
 - ansible.builtin.import_tasks: upload-server.yml
-  when: stream_master|bool
+  when: relay_origin|bool
   tags: upload-server
 
 - ansible.builtin.import_tasks: stats.yml
-  when: stats_relay|bool
+  when: relay_stats_server|bool
   tags: stats

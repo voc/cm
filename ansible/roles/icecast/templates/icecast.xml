@@ -33,7 +33,7 @@
 
 {% if icecast_master_ip != "" %}
     <!-- fetch streams from master -->
-    <master-server>{{ icecast_master_ip | ipaddr }}</master-server>
+    <master-server>{{ icecast_master_ip | ansible.utils.ipaddr }}</master-server>
     <master-server-port>{{ icecast_master_port | default('8000') }}</master-server-port>
     <master-update-interval>{{ icecast_master_update_interval | default('10') }}</master-update-interval>
     <master-password>{{ icecast_master_password }}</master-password>

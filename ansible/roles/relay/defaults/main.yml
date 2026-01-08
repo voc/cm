@@ -1,23 +1,23 @@
-### Master-Relay variables
+# Enable origin relay
 # - host stream-info api
-# - do fanout
+# - run upload-server
 # - distribute local files via nginx
-# - setup icedist for accepting streams
-stream_master: no
+relay_origin: false
 
-# should be exclusive to stream_master
-stream_edge: no
+# should be exclusive to relay_origin
+# - runs proxy-cache in front of origin relays
+relay_edge: false
 
 # Generate relive snippets locally
-relive_master: no
+relay_relive_origin: false
 
 # special edge relay tags for service announcement
-local_relay: no
-relive_relay: no
-dtag_relay: no
-thirdparty_relay: no
-mediastatic_relay: no
-stats_relay: no
+relay_local: false # Serve clients at the local event
+relay_relive: false # Proxy cache relive files
+relay_dtag: false # Special relay with good DTAG peering
+relay_thirdparty: false
+relay_mediastatic: false
+relay_stats_server: false
 
 # default cache sizes
 nginx_hls_relive_cache_max_size: '30g'
@@ -25,10 +25,7 @@ nginx_live_cache_max_size: '30g'
 nginx_media_static_cache_max_size: '20g'
 
 # backends
-nginx_media_static_masters: []
-
-# fanout to youtube
-youtube: no
+relay_media_static_backends: []
 
 consul_template_templates:
   - "/etc/consul-template.d/relay.ctmpl:/etc/nginx/sites-enabled/relay.conf:/bin/bash -c '/bin/systemctl reload nginx.service || true'"

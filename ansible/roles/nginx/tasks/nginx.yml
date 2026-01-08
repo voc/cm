@@ -3,7 +3,7 @@
   - name: install nginx package
     apt:
       name: nginx
-      state: latest
+      state: present
     tags: install
 
   # Configure
