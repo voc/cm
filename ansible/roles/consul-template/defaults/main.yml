@@ -2,7 +2,8 @@ consul_template:
   version: 0.35.0
   checksum: sha256:1b1c9127e8da25b2d7322e6f2aa8e6d946336083999e0fdb321f96ffd447eebd
 
-# consul_template_templates: []
-
+## don't set default to avoid overwriting other role defaults
+# templates to define
+#  consul_template_templates: []
 # systemd that should be started after consul-template
-consul_template_before_units: []
+#  consul_template_before_units: []
