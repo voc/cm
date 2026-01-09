@@ -1,0 +1,63 @@
+bundles = ["zfs"]
+groups = ["debian-bookworm"]
+
+[metadata.apt.packages.intel-media-va-driver-non-free]
+[metadata.apt.packages.i965-va-driver]
+
+[metadata.grub]
+efi = true
+
+[metadata.firewall.port_rules]
+'*' = ['voc-internal', 'voc-vpn', 'rfc1918']
+
+
+[metadata]
+hostname = "encoder51.lan.c3voc.de" 
+room_number = 51
+nameservers = ['1.1.1.1']
+
+[metadata.event]
+room_name = "C3H"
+
+[metadata.crs-worker.secrets]
+encoding.secret = "1"
+encoding.token = "1"
+meta.secret = "2"
+meta.token = "2"
+
+[metadata.interfaces.eth1] 
+ips = [
+    "10.73.51.3/16", # voc network 
+    "10.23.42.232/23",
+]
+gateway4 = "10.23.42.1"
+
+[metadata.voctocore]
+streaming_auth_key = "0"
+vaapi = true
+fps = 60
+parallel_slide_recording = true
+parallel_slide_streaming = false
+
+
+[metadata.voctocore.sources.cam1]
+devicenumber = 0
+mode = "1080p60"
+hdmi = true
+
+[metadata.voctocore.sources.slides]
+kind = "v4l2"
+device = "/dev/video0"
+width = "1920"
+height = "1080"
+framerate = "60/1"
+format = "YUY2"
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"
+
+[[metadata.zfs.pools.video.when_creating.config]]
+devices = [
+  "/dev/disk/by-id/ata-ST1000DM003-1SB102_Z9A6Q2CJ",
+]
