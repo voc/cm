@@ -14,6 +14,7 @@ keys:
   - &host_netbox age1r49w444ua6f3wkkl4d33rxg98rk34gt9v4gqzsd68usr52c3qd9qka60tq
   - &host_sso age1p5a9k25d24u2p4pq3xr50d9fx5zjethpesv477hsqs3az2q2zvjsc7jl79
   - &host_wink age18whxlrrx3wlqfrnz5mn54sk46snrs6a5xewn9wqgmt23pvekfe6qm0rgpc
+  - &host_live3 age1tvkr0ujxh7w3pl605rj094eg2flsh9s6uuf0mlhrzs67evre2fas3c68z2
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -47,8 +48,7 @@ creation_rules:
       - *admin_ember
       - *admin_molly
       - *host_forgejo
-
-  - path_regex: modules/voc2mqtt/.*
+  - path_regex: modules/(voc2mqtt|monitoring-client)/.*
     key_groups:
     - age:
       - *admin_keepass
@@ -66,3 +66,15 @@ creation_rules:
       - *host_netbox
       - *host_sso
       - *host_wink
+      - *host_live3
+  - path_regex: modules/(voc-nebula|voc-relay)/*
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *admin_ischluff
+      - *host_live3

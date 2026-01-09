@@ -66,6 +66,7 @@
             ./modules/fieldpoc
             ./modules/nftables
             ./modules/yate
+            ./modules/voc-nebula
 
             ./profiles/base
 
