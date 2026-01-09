@@ -19,13 +19,13 @@ in {
 
   config = mkIf cfg.enable {
     services.telegraf.extraConfig = {
-      enable = true;
-      extraConfig = {
-        global_tags.role = if cfg.isOrigin then "master-relay" else "edge-relay";
-      };
+      global_tags.role = if cfg.isOrigin then "master-relay" else "edge-relay";
     };
     services.voc-nebula = {
         enable = true;
+    };
+    services.voc-consul = {
+      enable = true;
     };
   };
 }

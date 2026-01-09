@@ -1,14 +1,21 @@
 { lib, config, pkgs, ... }:
 
+# monitoring-client module
+#
+# Sets up telegraf to report system metrics to the central monitoring server.
+#
 {
   sops.secrets.monitoring_env = {
-    sopsFile = ./secret.yml;
+    sopsFile = ./secret.yaml;
     key = "env";
   };
   services.telegraf = {
     enable = true;
     environmentFiles = [ config.sops.secrets.monitoring_env.path ];
     extraConfig = {
+      agent = {
+        hostname = config.networking.hostName + "." + config.networking.domain;
+      };
       inputs = {
         cpu = {
           totalcpu = true;
@@ -27,7 +34,7 @@
           ignore_protocol_stats = true;
         };
         netstat = {};
-      }
+      };
       outputs = {
         influxdb = {
           urls = ["https://monitoring.c3voc.de"];

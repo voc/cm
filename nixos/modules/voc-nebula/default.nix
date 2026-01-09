@@ -2,6 +2,10 @@
 
 with lib;
 
+# voc-nebula module
+#
+# Creates an overlay network between rz-nodes using Nebula.
+#
 let cfg = config.services.voc-nebula;
   fqdn = config.networking.hostName + "." + config.networking.domain;
 in {

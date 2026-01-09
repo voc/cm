@@ -67,6 +67,8 @@
             ./modules/nftables
             ./modules/yate
             ./modules/voc-nebula
+            ./modules/voc-consul
+            ./modules/monitoring-client
 
             ./profiles/base
 
