@@ -12,6 +12,7 @@ in
 {
   imports = [
     "${modulesPath}/virtualisation/proxmox-image.nix"
+    ../../profiles/server
     ../../modules/voc-relay
   ];
   config = {
@@ -23,23 +24,5 @@ in
     services.voc-relay = {
       enable = true;
     };
-
-    # networking.firewall.allowedTCPPorts = [
-    #   80
-    #   443
-    # ];
-
-    # security.acme.acceptTerms = true;
-    # security.acme.defaults.email = "voc@c3voc.de";
-
-    # services.nginx.enable = true;
-    # services.nginx.virtualHosts."forgejo.c3voc.de" = {
-    #   forceSSL = true;
-    #   enableACME = true;
-    #   locations."/" = {
-    #     recommendedProxySettings = true;
-    #     proxyPass = "http://127.0.0.1:3000/";
-    #   };
-    # };
   };
 }
