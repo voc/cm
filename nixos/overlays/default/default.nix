@@ -13,4 +13,5 @@ final: prev: {
   rt = prev.rt.overrideAttrs (old: {
     patches = old.patches ++ [ ./rt/rt-server-fcgi-wrapper.patch ];
   });
+  stream-api = prev.callPackage ./stream-api.nix { };
 }

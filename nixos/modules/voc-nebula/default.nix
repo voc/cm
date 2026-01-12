@@ -84,13 +84,22 @@ in {
     };
     services.telegraf.extraConfig = {
       inputs = {
-        prometheus = {
+        prometheus = [{
           urls = [ "http://localhost:2343/metrics" ];
           metric_version = 1;
           tags = {
             job = "nebula";
           };
-        };
+        }];
+      };
+      processors = {
+        rename = [{
+          namepass = [ "viewers" ];
+          replace = [{
+            field = "gauge";
+            dest = "total";
+          }];
+        }];
       };
     };
   };

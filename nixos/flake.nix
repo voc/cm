@@ -69,6 +69,7 @@
             ./modules/voc-nebula
             ./modules/voc-consul
             ./modules/monitoring-client
+            ./modules/nginx-viewcounter
 
             ./profiles/base
 

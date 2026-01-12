@@ -357,13 +357,10 @@ in {
       global_tags.role = if cfg.isOrigin then "master-relay" else "edge-relay";
     };
     # enable nebula
-    services.voc-nebula = {
-        enable = true;
-    };
+    services.voc-nebula.enable = true;
     # enable consul
-    services.voc-consul = {
-      enable = true;
-    };
+    services.voc-consul.enable = true;
+    services.nginx-viewcounter.enable = true;
     services.nginx = {
       enable = true;
       recommendedOptimisation = true;
