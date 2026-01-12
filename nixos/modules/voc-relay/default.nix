@@ -13,6 +13,7 @@ let
       proxy_cache_path /var/cache/nginx/hls_relive
         keys_zone=hls_relive:32m
         max_size=${cfg.reliveCacheSize}
+        min_free=5g
         inactive=7d
         loader_threshold=300 loader_files=1024;
     ''}
@@ -20,12 +21,14 @@ let
       proxy_cache_path /var/cache/nginx/live
         keys_zone=live:32m
         max_size=${cfg.liveCacheSize}
+        min_free=5g
         inactive=10m
         loader_threshold=300 loader_files=1024;
 
       proxy_cache_path /var/cache/nginx/mediastatic
         keys_zone=mediastatic:32m
         max_size=${cfg.mediaStaticCacheSize}
+        min_free=5g
         inactive=6h
         loader_threshold=300 loader_files=1024;
     ''}
