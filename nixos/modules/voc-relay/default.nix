@@ -319,6 +319,14 @@ in {
   options = {
     services.voc-relay = {
       enable = mkEnableOption "voc-relay";
+      addressv4 = mkOption {
+        type = types.str;
+        description = ''Public IPv4 address of this relay.'';
+      };
+      addressv6 = mkOption {
+        type = types.str;
+        description = ''Public IPv6 address of this relay.'';
+      };
       isOrigin = mkOption {
         type = types.bool;
         default = false;
@@ -348,6 +356,11 @@ in {
         type = types.listOf types.str;
         default = [ "212.201.68.132" ];
         description = ''List of backend hosts for media static content.'';
+      };
+      tags = mkOption {
+        type = types.listOf (types.enum [ "icecast" "local" "relive" "dtag" "thirdparty" "mediastatic" "stats" ]);
+        default = [ ];
+        description = ''Tags to register this relay with in Consul.'';
       };
     };
   };
@@ -428,6 +441,7 @@ in {
     services.telegraf.extraConfig.inputs.nginx = {
       urls = ["http://localhost:8999/stats/nginx"];
     };
+
     # Generate and renew TLS certificates via ACME (Let's Encrypt)
     security.acme.certs."${fqdn}" = {
       webroot = "/var/lib/acme/.challenges";
@@ -436,5 +450,42 @@ in {
       reloadServices = ["nginx.service"];
     };
     networking.firewall.allowedTCPPorts = [80 443];
+
+    # Expose relay service via consul -> to get picked up by loadbalancer
+    services.consul.extraConfig = let 
+      makeService = name: port: {
+        name = name + "-relay";
+        port = port;
+        address = cfg.addressv4;
+        tagged_addresses = {
+          wan_ipv4 = {
+            address = cfg.addressv4;
+            port = port;
+          };
+          wan_ipv6 = {
+            address = cfg.addressv6;
+            port = port;
+          };
+        };
+        tags = [ ] ++
+          optional (cfg.isOrigin) "relay_origin" ++
+          optional (cfg.isReliveOrigin) "relive_origin" ++
+          optional (!cfg.isOrigin && !cfg.isReliveOrigin) "edge" ++
+          optionals (!cfg.isOrigin && !cfg.isReliveOrigin) cfg.tags;
+        check = {
+          id = "${name}-relay-health";
+          name = "HTTP health";
+          http = "${name}://localhost/health";
+          tls_server_name = fqdn;
+          interval = "5s";
+          timeout = "1s";
+        };
+      };
+    in {
+      services = [
+        (makeService "http" 80)
+        (makeService "https" 443)
+      ];
+    };
   };
 }
