@@ -17,6 +17,7 @@ in
   ];
   config = {
     system.stateVersion = "23.11"; # do not touch
+    deployment.tags = [ "relays" ];
 
     networking.hostName = lib.mkOverride 1 "live3";
     networking.domain = "alb.c3voc.de";

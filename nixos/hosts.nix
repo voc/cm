@@ -7,5 +7,5 @@
   rt = { ... }: {};
   loudness-player = { ... }: {};
   wink = { ... }: {};
-  live3 = { ... }: {};
+  live3-alb = { ... }: {};
 }
