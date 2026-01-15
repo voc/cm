@@ -13,14 +13,15 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "voc";
     repo = "stream-api";
-    rev = "e8f69213f20e8a29dda91cafce88c70a7efcd7c4";
-    hash = "sha256-GWptodKp7WqWn3nX87Ezp3h8SA501IGZuDB+DLOHkqQ=";
+    rev = "6f7f8a4db0e5953716fc0b0c61ea3c4e47e241c1";
+    hash = "sha256-TLoPph/kjZ8cuMse21krYKgeotY5pU8eSeXJYxO1byI=";
   };
 
   vendorHash = "sha256-H6x15uNm5+fT5lXp5iXdmLGrGsv09UGrG8VA2wWrftQ=";
 
   # we don't build monitor ui right now
   preBuild = ''
+    mkdir -p monitor/frontend/public
     touch monitor/frontend/public/hello
   '';
 
