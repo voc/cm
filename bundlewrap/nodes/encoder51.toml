@@ -10,7 +10,6 @@ efi = true
 [metadata.firewall.port_rules]
 '*' = ['voc-internal', 'voc-vpn', 'rfc1918']
 
-
 [metadata]
 hostname = "encoder51.lan.c3voc.de" 
 room_number = 51
@@ -25,24 +24,23 @@ encoding.token = "1"
 meta.secret = "2"
 meta.token = "2"
 
-[metadata.interfaces.eth1] 
+[metadata.interfaces.eth0] 
 ips = [
-    "10.73.51.3/16", # voc network 
+#    "10.73.51.3/16",
     "10.23.42.232/23",
 ]
 gateway4 = "10.23.42.1"
 
 [metadata.voctocore]
-streaming_auth_key = "0"
+streaming_auth_key = "1"
 vaapi = true
-fps = 60
-parallel_slide_recording = true
+fps = 30
+parallel_slide_recording = false
 parallel_slide_streaming = false
-
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 0
-mode = "1080p60"
+mode = "1080p30"
 hdmi = true
 
 [metadata.voctocore.sources.slides]
