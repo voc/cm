@@ -23,6 +23,15 @@ server {
     break;
   }
 
+  location ~ \.vtt$ {
+    if (-f $request_filename) {
+        break;
+    }
+
+    rewrite ^/(.*\.vtt)$ $scheme://static.media.ccc.de/media/$1 last;
+    break;
+  }
+
   location /.well-known/ {
     #autoindex on;
     alias /var/www/.well-known/;
@@ -80,6 +89,15 @@ server {
     }
 
     rewrite ^/(.*\.srt)$ $scheme://mirror.selfnet.de/c3subtitles/$1 last;
+    break;
+  }
+
+  location ~ \.vtt$ {
+    if (-f $request_filename) {
+        break;
+    }
+
+    rewrite ^/(.*\.vtt)$ $scheme://static.media.ccc.de/media/$1 last;
     break;
   }
 
