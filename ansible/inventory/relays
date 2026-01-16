@@ -12,7 +12,7 @@ live.nurluefter.de             nginx=yes icecast=yes
 #live.fem.c3voc.de              nginx=yes icecast=yes relay_stats_server=yes # down for maintenance
 live2.alb.c3voc.de             nginx=yes icecast=no relay_dtag=yes
 relive.c3voc.de                nginx=yes icecast=no relay_relive=yes
-live.ams.c3voc.de              nginx=yes icecast=no
+#live.ams.c3voc.de              nginx=yes icecast=no
 #live.event.c3voc.de            nginx=yes icecast=yes relay_local=yes
 live.nitk.c3voc.de             nginx=yes icecast=no
 
