@@ -15,6 +15,7 @@ keys:
   - &host_sso age1p5a9k25d24u2p4pq3xr50d9fx5zjethpesv477hsqs3az2q2zvjsc7jl79
   - &host_wink age18whxlrrx3wlqfrnz5mn54sk46snrs6a5xewn9wqgmt23pvekfe6qm0rgpc
   - &host_live3_alb age1tvkr0ujxh7w3pl605rj094eg2flsh9s6uuf0mlhrzs67evre2fas3c68z2
+  - &host_live_bre age1fx8dyrfu827shfu7kv8a35wdmjqt5txm30rw7sfmetaa0pvq8u0spyqyqt
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -67,6 +68,7 @@ creation_rules:
       - *host_sso
       - *host_wink
       - *host_live3_alb
+      - *host_live_bre
   - path_regex: modules/(voc-nebula|voc-relay)/*
     key_groups:
     - age:
@@ -78,3 +80,4 @@ creation_rules:
       - *admin_molly
       - *admin_ischluff
       - *host_live3_alb
+      - *host_live_bre

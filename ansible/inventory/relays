@@ -8,7 +8,7 @@ live.ber.c3voc.de              nginx=yes icecast=yes
 live.nurluefter.de             nginx=yes icecast=yes
 
 [edge_relays]
-live.dort.c3voc.de             nginx=yes icecast=yes relay_dtag=yes relay_mediastatic=yes
+#live.dort.c3voc.de             nginx=yes icecast=yes relay_dtag=yes relay_mediastatic=yes
 #live.fem.c3voc.de              nginx=yes icecast=yes relay_stats_server=yes # down for maintenance
 live2.alb.c3voc.de             nginx=yes icecast=no relay_dtag=yes
 relive.c3voc.de                nginx=yes icecast=no relay_relive=yes

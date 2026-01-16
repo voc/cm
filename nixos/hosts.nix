@@ -8,4 +8,5 @@
   loudness-player = { ... }: {};
   wink = { ... }: {};
   live3-alb = { ... }: {};
+  live-bre = { ... }: {};
 }
