@@ -81,7 +81,9 @@ let
     add_header X-Cache     "$upstream_cache_status edge";
     add_header Access-Control-Expose-Headers "X-Host";
     add_header X-Host "${fqdn}";
+  '';
 
+  viewerLog = ''
     # log for viewer counting
     access_log syslog:server=unix:/var/log/relay.sock json_logs;
   '';
@@ -106,6 +108,10 @@ let
       # TLS certificates
       ssl_certificate       /var/lib/acme/${fqdn}/fullchain.pem;
       ssl_certificate_key   /var/lib/acme/${fqdn}/key.pem;
+      # deprecated by letsencrypt
+      ssl_stapling off;
+      
+      access_log off;
 
       # don't allow access to some files or directories
       location ~* /.*\.(ht|sh|git|htaccess|php|inc|rb|py|pl|db|sqlite|sqlite3)$ {
@@ -165,6 +171,7 @@ let
           proxy_pass             http://stream/$hls/$file;
           proxy_cache_valid      200 302 1s;
           ${proxyCommon}
+          ${viewerLog}
         }
 
         # proxy cache dash manifests (live)
@@ -176,6 +183,7 @@ let
           proxy_pass             http://stream/dash/$manifest;
           proxy_cache_valid      200 302 1s;
           ${proxyCommon}
+          ${viewerLog}
         }
 
         # proxy cache segments (live)
@@ -190,6 +198,7 @@ let
           proxy_pass             http://stream/$proto/$stream;
           proxy_cache_valid      200 302 5m;
           ${proxyCommon}
+          ${viewerLog}
         }
 
         # proxy thumbnails/posters (live)
@@ -489,6 +498,15 @@ in {
         (makeService "http" 80)
         (makeService "https" 443)
       ];
+    };
+    # overwrite default logrotate to keep less logs
+    services.logrotate.settings.nginx = {
+      files = "/var/log/nginx/*.log";
+      frequency = "hourly";
+      su = "nginx nginx";
+      rotate = 8;
+      compress = true;
+      postrotate = "[ ! -f /var/run/nginx/nginx.pid ] || kill -USR1 `cat /var/run/nginx/nginx.pid";
     };
   };
 }
