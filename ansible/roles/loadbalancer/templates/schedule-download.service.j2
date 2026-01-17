@@ -3,4 +3,4 @@ Description=Download schedules for streaming-website
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/env php /srv/nginx/streaming-website/index.php download
+ExecStart=sudo -udownloader /usr/bin/env php /srv/nginx/streaming-website/index.php download
