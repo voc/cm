@@ -1,5 +1,7 @@
 bundles = ["zfs"]
 
+[metadata.apt.packages.mesa-va-drivers] # contains amd drivers for vaapi
+
 [metadata.grub]
 efi = true
 
