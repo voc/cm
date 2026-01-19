@@ -1,5 +1,4 @@
-bundles = ["zfs"]
-groups = ["debian-bookworm"]
+groups = ["debian-bookworm", "case20_encoders"]
 
 [metadata.crs-worker.secrets]
 encoding.secret = "!kee_pass:ansible|worker-groups|encoder2"
@@ -36,9 +35,6 @@ mode = "1080p25"
 [metadata.voctocore.audio.original]
 streams = "0+1"
 input = "cam1"
-
-[metadata.zfs.pools.video.when_creating]
-ashift = 12
 
 [[metadata.zfs.pools.video.when_creating.config]]
 type = "mirror"

@@ -1,4 +1,4 @@
-groups = ["debian-bookworm"]
+groups = ["debian-bookworm", "case20_encoders"]
 
 [metadata.crs-worker.secrets]
 encoding.secret = "!kee_pass:ansible|worker-groups|encoder4"

@@ -1,0 +1,7 @@
+bundles = ["zfs"]
+
+[metadata.grub]
+efi = true
+
+[metadata.zfs.pools.video.when_creating.config]
+ashift = 12
