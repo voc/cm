@@ -1,30 +1,26 @@
 bundles = ["zfs"]
 groups = ["debian-bookworm"]
 
+[metadata]
+nameservers = ['1.1.1.1']
+
 [metadata.apt.packages.intel-media-va-driver-non-free]
 [metadata.apt.packages.i965-va-driver]
 
-[metadata.grub]
-efi = true
-
-[metadata.firewall.port_rules]
-'*' = ['voc-internal', 'voc-vpn', 'rfc1918']
-
-[metadata]
-hostname = "encoder51.lan.c3voc.de" 
-room_number = 51
-nameservers = ['1.1.1.1']
+[metadata.crs-worker.secrets]
+encoding.secret = "!decrypt:encrypt$gAAAAABpbdWwS2WOAJW7wCpz9aD-9ybY8eoXWdthVB1L-6YUiQi49eTSkPoCXcz_dFwaStIPlWETmK7s_I3bxqOdsMQNhyKjsruHqg60tboUN1q3-WMDvPeGa8xOE3W-y6ehj8OU19-u"
+encoding.token = "!decrypt:encrypt$gAAAAABpbdW0oW6S1QfCm9CXM8394xbC4kMAW8uS2EahyJAdm4IyURTdm4r-DCqN1YiA1fPMINoqmyVspk3u24ckKSaFycRx9GhAFC8PAlIaoQjEIAK5dkkZ7eQ4TLUAc5UufhStR1Id"
 
 [metadata.event]
 room_name = "C3H"
 
-[metadata.crs-worker.secrets]
-encoding.secret = "1"
-encoding.token = "1"
-meta.secret = "2"
-meta.token = "2"
+[metadata.firewall.port_rules]
+'*' = ['rfc1918']
 
-[metadata.interfaces.eth0] 
+[metadata.grub]
+efi = true
+
+[metadata.interfaces.eth0]
 ips = [
 #    "10.73.51.3/16",
     "10.23.42.232/23",
@@ -32,7 +28,7 @@ ips = [
 gateway4 = "10.23.42.1"
 
 [metadata.voctocore]
-streaming_auth_key = "1"
+streaming_auth_key = "!decrypt:encrypt$gAAAAABpbdZZ8dMAp6gW-Q7htConoWQuYO25TaiK30pm1o-HTmzBSHfYbKm8EIAl-uKsirM8pGLx6GS1DO4wRWVbVqKZ6Y9OyF8D4ZARy8h45JL1CayFwRs="
 vaapi = true
 fps = 30
 parallel_slide_recording = false
