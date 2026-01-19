@@ -26,6 +26,13 @@ defaults = {
         'separate_vaapi_worker': False,
         'use_vaapi': False,
     },
+    'users': {
+        'voc': {
+            'groups': {
+                'render', # vaapi
+            },
+        },
+    },
 }
 
 if node.has_bundle('zfs'):
