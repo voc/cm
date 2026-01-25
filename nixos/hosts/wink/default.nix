@@ -1,13 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware.nix
-      ../../profiles/server
-      ./wink.nix
-    ];
+  imports = [
+    ./hardware.nix
+    ../../profiles/server
+    ../../modules/wink
+    ./wink.nix
+  ];
 
   networking.hostName = "wink";
 

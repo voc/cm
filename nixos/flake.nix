@@ -28,8 +28,12 @@
     url = "github:edolstra/flake-compat";
     flake = false;
   };
+  inputs.bundix = {
+    url = "github:inscapist/bundix/main";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
-  outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, ... }@inputs: (
+  outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, bundix, ... }@inputs: (
     let
       pkgs' = system: import nixpkgs {
         inherit system;
@@ -108,8 +112,10 @@
           colmena
           git
           sops
+          ruby_3_3
+          bundix.packages.${stdenv.hostPlatform.system}.default
 
-          sops-nix.packages.${system}.sops-init-gpg-key
+          sops-nix.packages.${stdenv.hostPlatform.system}.sops-init-gpg-key
         ];
       };
     }))

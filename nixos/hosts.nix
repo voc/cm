@@ -5,6 +5,7 @@
   sso = { ... }: {};
   forgejo = { ... }: {};
   rt = { ... }: {};
+  tickets = { ... }: {};
   loudness-player = { ... }: {};
   wink = { ... }: {};
   live3-alb = { ... }: {};
