@@ -50,7 +50,6 @@ creation_rules:
       - *admin_molly
       - *admin_ischluff
       - *host_mail
-      - *host_tel
       - *host_loudness
   - path_regex: hosts/tickets/.*
       - *host_forgejo
