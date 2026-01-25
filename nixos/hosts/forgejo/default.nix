@@ -7,8 +7,17 @@ in
 {
   imports = [
     "${modulesPath}/virtualisation/proxmox-image.nix"
+    ./runner.nix
   ];
   config = {
+    sops = {
+     secrets = {
+       forgejo_registration_token = {
+         sopsFile = ./secrets.yaml;
+       };
+     };
+    };
+
     system.stateVersion = "23.11"; # do not touch
 
 
