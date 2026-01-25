@@ -53,6 +53,8 @@ creation_rules:
       - *host_loudness
       - *host_tickets
   - path_regex: hosts/tickets/.*
+    key_groups:
+    - age:
       - *host_forgejo
       - *host_mumble
       - *host_netbox
@@ -61,6 +63,7 @@ creation_rules:
       - *host_live3_alb
       - *host_live_bre
       - *host_live_ams
+      - *host_tickets
   - path_regex: modules/(voc-nebula|voc-relay)/*
     key_groups:
     - age:
