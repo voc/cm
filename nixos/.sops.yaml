@@ -51,6 +51,7 @@ creation_rules:
       - *admin_ischluff
       - *host_mail
       - *host_loudness
+      - *host_tickets
   - path_regex: hosts/tickets/.*
       - *host_forgejo
       - *host_mumble
