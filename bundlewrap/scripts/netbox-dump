@@ -48,7 +48,7 @@ try:
 
     with io.job("getting device configs"):
         QUERY = """{
-          device_list(tag: "bundlewrap") {
+          device_list(filters: {tag: "bundlewrap"}) {
             name
             site {
               id

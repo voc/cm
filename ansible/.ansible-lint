@@ -1,0 +1,4 @@
+skip_list:
+  - no-handler # we can't retry properly with handlers
+  - var-naming # won't rename all our vars now
+  - no-changed-when # hard to avoid in some cases

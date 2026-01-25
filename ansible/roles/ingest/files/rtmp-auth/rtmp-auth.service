@@ -1,9 +1,13 @@
+# MANAGED BY ANSIBLE
 [Unit]
-Description=RTMP-Auth
+Description=RTMP-Auth Backend
+After=consul.service
 
 [Service]
 ExecStart=/opt/rtmp-auth/rtmp-auth -config /etc/rtmp-auth/config.toml
+DynamicUser=yes
 Restart=always
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target

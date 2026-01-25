@@ -16,10 +16,6 @@
     tags: rtmp
     when: not rtmp|bool
 
-  - import_tasks: rtmp_auth.yml
-    when: rtmp|bool and rtmp_auth is defined and rtmp_auth|bool
-    tags: [rtmp, rtmp-auth]
-
   - import_tasks: monitoring.yml
     tags: monitoring
     when: not no_monitoring|bool

@@ -1,0 +1,6 @@
+---
+- name: Remove ingest firewall rules
+  file:
+    path: /etc/nftables/ingest.nft
+    state: absent
+  notify: reload firewall

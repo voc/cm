@@ -1,9 +1,12 @@
+# MANAGED BY ANSIBLE
 [Unit]
 Description=Stream-API
+After=consul.service
 
 [Service]
 ExecStart=/opt/stream-api/stream-api -config /etc/stream-api/config.yml -debug
 Restart=always
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target

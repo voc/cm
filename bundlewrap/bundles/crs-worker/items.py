@@ -159,8 +159,8 @@ for worker, config in WORKER_SCRIPTS.items():
 
     environment = {
         'CRS_TRACKER': node.metadata.get('crs-worker/tracker_url'),
-        'CRS_TOKEN': node.metadata.get(f'crs-worker/secrets/{config["secret"]}/token'),
-        'CRS_SECRET': node.metadata.get(f'crs-worker/secrets/{config["secret"]}/secret'),
+        'CRS_TOKEN': node.metadata.get(('crs-worker', 'secrets', config["secret"], 'token')),
+        'CRS_SECRET': node.metadata.get(('crs-worker', 'secrets', config["secret"], 'secret')),
         **config.get('environment', {})
     }
 
@@ -256,6 +256,12 @@ if autostart_scripts:
             'scripts': autostart_scripts,
         },
         'mode': '0755',
+    }
+
+# fix utf8 parsing for perl xml library after trixie updates
+if node.os_version[0] >= 13:
+    files['/etc/perl/XML/SAX/ParserDetails.ini'] = {
+        'source': 'Perl-XML-SAX-ParserDetails.ini',
     }
 
 # delete legacy stuff

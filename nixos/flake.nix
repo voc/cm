@@ -1,7 +1,7 @@
 {
   description = "c3voc nixOS config management";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-25.05";
+  inputs.nixpkgs.url = "nixpkgs/nixos-25.11";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.sops-nix = {
     url = "github:Mic92/sops-nix";
@@ -14,7 +14,7 @@
   inputs.nixos-mailserver = {
     url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
     inputs.nixpkgs.follows = "/nixpkgs";
-    inputs.utils.follows = "/flake-utils";
+    # inputs.utils.follows = "/flake-utils";
   };
   inputs.authentik-nix = {
     url = "github:nix-community/authentik-nix";
@@ -66,6 +66,10 @@
             ./modules/fieldpoc
             ./modules/nftables
             ./modules/yate
+            ./modules/voc-nebula
+            ./modules/voc-consul
+            ./modules/monitoring-client
+            ./modules/nginx-viewcounter
 
             ./profiles/base
 
@@ -95,7 +99,7 @@
           };
         };
       };
-    } //  flake-utils.lib.eachSystem ([ "x86_64-linux" "x86_64-darwin" "aarch64-darwin"]) (system: let
+    } //  flake-utils.lib.eachSystem ([ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"]) (system: let
       pkgs = pkgs' system;
     in {
       devShells.default = pkgs.mkShell {

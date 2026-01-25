@@ -16,4 +16,3 @@ for node in Path(join(repo_path, "nodes")).rglob("*.py"):
 for name, data in nodes.items():
     data.setdefault('metadata', {}).setdefault('hostname', '.'.join(reversed(name.split('.'))) + '.lan.c3voc.de')
     data.setdefault('hostname', data['metadata']['hostname'])
-    data.update(libs.demagify.demagify(data, vault))

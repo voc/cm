@@ -9,7 +9,6 @@ defaults = {
             'fbset': {},
             'gstreamer1.0-libav': {},
             'xauth': {}, # for x11 forwarding
-            'mesa-va-drivers': {}, # contains amd drivers for vaapi
         },
     },
     'extra-commands-on-login': {
@@ -30,7 +29,8 @@ defaults = {
         },
     },
     'voctocore': {
-        'enable_sbs_presets_for_multi_camera': True,
+        'enable_sbs_presets_for_multi_camera': False,
+        'enable_sbs_presets_with_slides': False,
         'mirror_view': False, # automatically mirrors SBS/LEC views
         'parallel_slide_recording': True,
         # XXX TODO FIXME the latest srtrelay version does not like streams

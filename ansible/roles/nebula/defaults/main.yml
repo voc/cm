@@ -1,6 +1,6 @@
 ---
-nebula_version: 1.8.2
-nebula_archive_checksum: "sha256:cc50c99174b15885df9408d805c7ae832b7a0f5c289a1d4a2fc7309c7aa7bf7d"
+nebula_version: 1.10.0
+nebula_archive_checksum: "sha256:79bf98683091cceeab6333626ca6068a1f26fb34238147231c6aa5f1b73e5e23"
 nebula_lighthouse: false
 nebula_ca_cert: "{{ lookup('keepass', 'ansible/nebula/CA.attr_cert') }}"
 nebula_lighthouses: []

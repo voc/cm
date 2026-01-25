@@ -3,16 +3,16 @@ services {
   port = 80
   address = "{{ ansible_default_ipv4.address }}"
   tags = [
-    {%if stream_master|bool %}"stream_master",{%endif%}
-    {%if relive_master|bool %}"relive_master",{%endif%}
-    {%if stream_edge|bool %}"edge",{%endif%}
+    {%if relay_origin|bool %}"relay_origin",{%endif%}
+    {%if relay_relive_origin|bool %}"relive_origin",{%endif%}
+    {%if relay_edge|bool %}"edge",{%endif%}
     {%if icecast|bool %}"icecast",{%endif%}
-    {%if local_relay|bool %}"local",{%endif%}
-    {%if relive_relay|bool %}"relive",{%endif%}
-    {%if dtag_relay|bool %}"dtag",{%endif%}
-    {%if thirdparty_relay|bool %}"thirdparty",{%endif%}
-    {%if mediastatic_relay|bool %}"mediastatic",{%endif%}
-    {%if stats_relay|bool %}"stats",{%endif%}
+    {%if relay_local|bool %}"local",{%endif%}
+    {%if relay_relive|bool %}"relive",{%endif%}
+    {%if relay_dtag|bool %}"dtag",{%endif%}
+    {%if relay_thirdparty|bool %}"thirdparty",{%endif%}
+    {%if relay_mediastatic|bool %}"mediastatic",{%endif%}
+    {%if relay_stats_server|bool %}"stats",{%endif%}
   ]
   check = {
     id = "nginx-http"
@@ -28,16 +28,16 @@ services {
   port = 443
   address = "{{ ansible_default_ipv4.address }}"
   tags = [
-    {%if stream_master|bool %}"stream_master",{%endif%}
-    {%if relive_master|bool %}"relive_master",{%endif%}
-    {%if stream_edge|bool %}"edge",{%endif%}
+    {%if relay_origin|bool %}"relay_origin",{%endif%}
+    {%if relay_relive_origin|bool %}"relive_origin",{%endif%}
+    {%if relay_edge|bool %}"edge",{%endif%}
     {%if icecast|bool %}"icecast",{%endif%}
-    {%if local_relay|bool %}"local",{%endif%}
-    {%if relive_relay|bool %}"relive",{%endif%}
-    {%if dtag_relay|bool %}"dtag",{%endif%}
-    {%if thirdparty_relay|bool %}"thirdparty",{%endif%}
-    {%if mediastatic_relay|bool %}"mediastatic",{%endif%}
-    {%if stats_relay|bool %}"stats",{%endif%}
+    {%if relay_local|bool %}"local",{%endif%}
+    {%if relay_relive|bool %}"relive",{%endif%}
+    {%if relay_dtag|bool %}"dtag",{%endif%}
+    {%if relay_thirdparty|bool %}"thirdparty",{%endif%}
+    {%if relay_mediastatic|bool %}"mediastatic",{%endif%}
+    {%if relay_stats_server|bool %}"stats",{%endif%}
   ]
   check = {
     id = "nginx-https"
@@ -55,8 +55,8 @@ services {
   port = 8000
   address = "{{ ansible_default_ipv4.address }}"
   tags = [
-    {%if stream_master|bool %}"master",{%endif%}
-    {%if stream_edge|bool %}"edge",{%endif%}
+    {%if relay_origin|bool %}"origin",{%endif%}
+    {%if relay_edge|bool %}"edge",{%endif%}
   ]
   check = {
     id = "icecast"

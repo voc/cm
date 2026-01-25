@@ -4,236 +4,236 @@
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether10": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether11": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether12": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether13": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether14": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether15": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether16": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether17": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether18": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether19": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether2": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether20": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether21": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "public"
         },
         "ether22": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "public"
         },
         "ether23": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "public"
         },
         "ether24": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "public"
         },
         "ether3": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether4": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether5": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether6": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether7": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether8": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "ether9": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "ACCESS",
+            "mode": "access",
             "tagged_vlans": [],
-            "type": "A_1000BASE_T",
+            "type": "1000base-t",
             "untagged_vlan": "voc-intern"
         },
         "sfp-sfpplus1": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "TAGGED",
+            "mode": "tagged",
             "tagged_vlans": [
                 "voc-intern"
             ],
-            "type": "A_10GBASE_X_SFPP",
+            "type": "10gbase-x-sfpp",
             "untagged_vlan": null
         },
         "sfp-sfpplus2": {
             "description": "",
             "enabled": true,
             "ips": [],
-            "mode": "TAGGED_ALL",
+            "mode": "tagged-all",
             "tagged_vlans": [],
-            "type": "A_10GBASE_X_SFPP",
+            "type": "10gbase-x-sfpp",
             "untagged_vlan": null
         },
         "voc-intern": {
@@ -244,7 +244,7 @@
             ],
             "mode": null,
             "tagged_vlans": [],
-            "type": "VIRTUAL",
+            "type": "virtual",
             "untagged_vlan": null
         }
     },
@@ -264,6 +264,10 @@
         {
             "name": "voc-intern",
             "vid": 3504
+        },
+        {
+            "name": "POC-SIP",
+            "vid": 3510
         }
     ]
 }

@@ -1,33 +1,42 @@
 ---
 # rtmp-auth
 - name: Create directory for rtmp-auth binary
-  file: path=/opt/rtmp-auth state=directory mode=0755
+  file:
+    path: /opt/rtmp-auth
+    state: directory
+    mode: "0755"
 
 - name: Install rtmp-auth binary
-  copy: src="rtmp-auth/rtmp-auth" dest="/opt/rtmp-auth/rtmp-auth" mode=0755
-  tags: rtmp-auth
+  copy:
+    src: rtmp-auth/rtmp-auth
+    dest: /opt/rtmp-auth/rtmp-auth
+    mode: "0755"
 
-- name: Create config directory for rtmp-auth
-  file: path=/etc/rtmp-auth state=directory mode=0755
+- name: Create rtmp-auth config directory
+  file:
+    path: /etc/rtmp-auth/
+    state: directory
+    mode: "0755"
 
 - name: Configure rtmp-auth
-  template: src=rtmp-auth/config.toml.j2 dest=/etc/rtmp-auth/config.toml
-  tags: rtmp-auth
-  register: api_conf
+  template:
+    src: rtmp-auth.toml.j2
+    dest: /etc/rtmp-auth/config.toml
+    mode: "0644"
+  register: auth_config
 
 - name: Install systemd unit for rtmp-auth
-  copy: src=rtmp-auth/rtmp-auth.service dest=/etc/systemd/system/rtmp-auth.service mode=0644
-
-- name: Enable and start systemd unit for rtmp-auth
-  systemd: name=rtmp-auth enabled=yes state=restarted daemon_reload=yes
-  tags: rtmp-auth
-  when: not api_conf.changed
+  copy:
+    src: rtmp-auth/rtmp-auth.service
+    dest: /etc/systemd/system/rtmp-auth.service
+    mode: "0644"
+  register: auth_service
 
 - name: Restart rtmp-auth
   systemd:
     name: rtmp-auth
     state: restarted
-    enabled: yes
-    daemon_reload: yes
-  when: api_conf.changed
+    enabled: true
+    daemon_reload: true
+  when: auth_config.changed or auth_service.changed
 

@@ -1,18 +1,26 @@
 ---
-  - name: create global ssh known_hosts file
-    file: dest=/etc/ssh/ssh_known_hosts state=touch
-          mode=0644 owner=root group=root
-    changed_when: false
+- name: Create global ssh known_hosts file
+  ansible.builtin.file:
+    dest: /etc/ssh/ssh_known_hosts
+    state: touch
+    mode: "0644"
+    owner: root
+    group: root
+  changed_when: false
 
-  # TODO: create file based on inventory file
-  #
-  # mng
-  - name: add »mng.ber.c3voc.de« to global known_hosts file
-    lineinfile: dest=/etc/ssh/ssh_known_hosts state=present
-                regexp="^mng.ber.c3voc.de.*ecdsa-sha2-nistp521\ .*"
-                line="mng.ber.c3voc.de,2001:67c:20a0:e::163,195.54.164.163 ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADFt5dEapTckFu1xDMmTdELUPSrtOQiyQM18n9d/M1BkIS5mjaobRzLkcALqhenzG0OJMIdQmxRbQECBYQdomZb9gF02MMExqppESajZBHbBPno/59z1TgMRfZ9+Q353ck4yz9IXdK7cjw+6uvH+m//fom8xnaZW5xg/QlqxO46KgQ2Gw=="
+# TODO: create file based on inventory file
+#
+# mng
+- name: Add »mng.ber.c3voc.de« to global known_hosts file
+  ansible.builtin.lineinfile:
+    dest: /etc/ssh/ssh_known_hosts
+    state: present
+    regexp: "^mng.ber.c3voc.de.*ecdsa-sha2-nistp521\\ .*"
+    line: "mng.ber.c3voc.de,2001:67c:20a0:e::163,195.54.164.163 ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADFt5dEapTckFu1xDMmTdELUPSrtOQiyQM18n9d/M1BkIS5mjaobRzLkcALqhenzG0OJMIdQmxRbQECBYQdomZb9gF02MMExqppESajZBHbBPno/59z1TgMRfZ9+Q353ck4yz9IXdK7cjw+6uvH+m//fom8xnaZW5xg/QlqxO46KgQ2Gw=="
 
-  - name: add »github.com« to global known_hosts file
-    lineinfile: dest=/etc/ssh/ssh_known_hosts state=present
-                regexp="^github.com,192.30.252.131.*ssh-rsa\ .*"
-                line="github.com,192.30.252.131,192.30.252.129 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
+- name: Add »github.com« to global known_hosts file
+  ansible.builtin.lineinfile:
+    dest: /etc/ssh/ssh_known_hosts
+    state: present
+    regexp: "^github.com,192.30.252.131.*ssh-rsa\\ .*"
+    line: "github.com,192.30.252.131,192.30.252.129 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="

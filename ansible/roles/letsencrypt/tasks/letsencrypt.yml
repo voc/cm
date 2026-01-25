@@ -1,96 +1,112 @@
 ---
-  - name: Checkout dehydrated
-    git:
-      repo: "https://github.com/dehydrated-io/dehydrated.git"
-      dest: "/opt/dehydrated"
-      version: master
-      force: yes
+- name: Create ssl-cert group
+  ansible.builtin.group:
+    name: ssl-cert
+    state: present
 
-  - name: create /etc/letsencrypt hierarchy
-    file:
-      dest: /etc/letsencrypt/live
-      owner: root
-      group: ssl-cert
-      state: directory
-      mode: 0750
+- name: Copy pre generated DH parameters
+  ansible.builtin.copy:
+    dest: "/etc/ssl/{{ item }}.pem"
+    content: "{{ lookup('keepass', 'ansible/ssl/' + item + '.notes') }}"
+    mode: "0640"
+    owner: root
+    group: ssl-cert
+  with_items:
+    - dhparam2048
+    - dhparam4096
 
-  - name: generate dehydrated folders
-    file:
-      dest: /etc/{{ item }}
-      state: directory
-      mode: 0750
-    with_items:
-      - dehydrated/accounts
-      - dehydrated/hook.d
+- name: Checkout dehydrated
+  git:
+    repo: "https://github.com/dehydrated-io/dehydrated.git"
+    dest: "/opt/dehydrated"
+    version: master
+    force: yes
 
-  - name: generate dehydrated hook.sh
-    template:
-      dest: /etc/dehydrated/hook.sh
-      src: dehydrated/hook.sh
-      mode: 0775
+- name: create /etc/letsencrypt hierarchy
+  file:
+    dest: /etc/letsencrypt/live
+    owner: root
+    group: ssl-cert
+    state: directory
+    mode: 0750
 
-  - name: generate lednsapi secret file
-    copy: dest=/etc/dehydrated/lednsapi.secret
-          content={{ lookup('keepass', 'ansible/ssl/lednsapi/'+lednsapi_secret_name+'.password') }}
-          mode=0640 owner=root group=root
-    when: use_lednsapi
+- name: generate dehydrated folders
+  file:
+    dest: /etc/{{ item }}
+    state: directory
+    mode: 0750
+  with_items:
+    - dehydrated/accounts
+    - dehydrated/hook.d
 
-  - name: create well-known directory
-    file:
-      path: /var/www/dehydrated
-      state: directory
-      mode: 0775
-    when: not use_lednsapi
+- name: generate dehydrated hook.sh
+  template:
+    dest: /etc/dehydrated/hook.sh
+    src: dehydrated/hook.sh
+    mode: 0775
 
-  - name: generate dehydrated config
-    template:
-      dest: /etc/dehydrated/config
-      src: dehydrated/config
-      mode: 0664
+- name: generate lednsapi secret file
+  copy: dest=/etc/dehydrated/lednsapi.secret
+        content={{ lookup('keepass', 'ansible/ssl/lednsapi/'+lednsapi_secret_name+'.password') }}
+        mode=0640 owner=root group=root
+  when: use_lednsapi
 
-  - name: generate dehydrated account directory
-    file: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}
-          state=directory
-          owner=root group=root mode=0750
+- name: create well-known directory
+  file:
+    path: /var/www/dehydrated
+    state: directory
+    mode: 0775
+  when: not use_lednsapi
 
-  - name: generate dehydrated account_key.pem
-    copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/account_key.pem
-          content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_account_key') }}
-          owner=root group=root mode=0640
+- name: generate dehydrated config
+  template:
+    dest: /etc/dehydrated/config
+    src: dehydrated/config
+    mode: 0664
 
-  - name: generate dehydrated registration_info.json
-    copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/registration_info.json
-          content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_registration_info') }}
-          owner=root group=root mode=0640
-  
-  - name: ensure all domains are in domains.txt
-    lineinfile:
-      path: /etc/dehydrated/domains.txt
-      state: present
-      regexp: '^{{ item }}$'
-      line: '{{ item }}'
-      create: yes
-      mode: 0644
-    loop: "{{ [domain] + group_domains + host_domains }}"
+- name: generate dehydrated account directory
+  file: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}
+        state=directory
+        owner=root group=root mode=0750
 
-  - name: generate or renew certificate (takes some time)
-    shell: "/opt/dehydrated/dehydrated --cron"
-    changed_when: false
+- name: generate dehydrated account_key.pem
+  copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/account_key.pem
+        content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_account_key') }}
+        owner=root group=root mode=0640
 
-  - name: deploy dehydrated systemd units
-    copy:
-      dest: /etc/systemd/system/
-      src: "dehydrated/{{ item }}"
-      mode: 0644
-    loop:
-      - dehydrated.service
-      - dehydrated.timer
-    register: dehydrated_units
+- name: generate dehydrated registration_info.json
+  copy: dest=/etc/dehydrated/accounts/{{ lookup('keepass', 'ansible/ssl/letsencrypt-account.username') }}/registration_info.json
+        content={{ lookup('keepass', 'ansible/ssl/letsencrypt-account.attr_registration_info') }}
+        owner=root group=root mode=0640
 
-  - name: enable dehydrated systemd timer
-    systemd:
-      name: dehydrated.timer
-      daemon_reload: yes
-      enabled: yes
-      state: started
-    when: dehydrated_units.changed
+- name: ensure all domains are in domains.txt
+  lineinfile:
+    path: /etc/dehydrated/domains.txt
+    state: present
+    regexp: '^{{ item }}$'
+    line: '{{ item }}'
+    create: yes
+    mode: 0644
+  loop: "{{ [domain] + group_domains + host_domains }}"
+
+- name: generate or renew certificate (takes some time)
+  shell: "/opt/dehydrated/dehydrated --cron"
+  changed_when: false
+
+- name: deploy dehydrated systemd units
+  copy:
+    dest: /etc/systemd/system/
+    src: "dehydrated/{{ item }}"
+    mode: 0644
+  loop:
+    - dehydrated.service
+    - dehydrated.timer
+  register: dehydrated_units
+
+- name: enable dehydrated systemd timer
+  systemd:
+    name: dehydrated.timer
+    daemon_reload: yes
+    enabled: yes
+    state: started
+  when: dehydrated_units.changed

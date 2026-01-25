@@ -1,21 +1,41 @@
 ---
-  - name: deinstall ntpd
-    apt: name=ntp state=absent
+# timedatectl
+- name: Probe for timedatectl
+  ansible.builtin.shell: "command -v timedatectl"
+  register: timedatectl_bin
+  changed_when: false
+  ignore_errors: true
 
-  # Setting timezone
-  - shell: "{{ timedatectl_bin.stdout | default('timedatectl') }} status | grep 'Time zone' | cut -d ':' -f 2 | cut -d ' ' -f 2"
-    register: current_timezone
-    changed_when: false
+- name: Deinstall ntpd
+  ansible.builtin.apt:
+    name: ntp
+    state: absent
 
-  - name: setting timezone to Europe/Berlin
-    command: "{{ timedatectl_bin.stdout | default('timedatectl' )}} set-timezone Europe/Berlin"
-    when: current_timezone.stdout != "Europe/Berlin"
+- name: Check current timezone
+  ansible.builtin.shell: "set -o pipefail && {{ timedatectl_bin.stdout | default('timedatectl') }} status
+    | grep 'Time zone'
+    | cut -d ':' -f 2
+    | cut -d ' ' -f 2"
+  args:
+    executable: /bin/bash
+  register: current_timezone
+  changed_when: false
 
-  # Timesyncd
-  - shell: "{{ timedatectl_bin.stdout | default('timedatectl') }} status | grep -e 'NTP enabled\\|Network time on\\|NTP service: active' | cut -d ':' -f 2 | cut -d ' ' -f 2"
-    register: ntp_enabled
-    changed_when: false
+- name: Setting timezone to Europe/Berlin
+  ansible.builtin.command: "{{ timedatectl_bin.stdout | default('timedatectl') }} set-timezone Europe/Berlin"
+  when: current_timezone.stdout != "Europe/Berlin"
 
-  - name: enable systemd-timesyncd
-    command: "{{ timedatectl_bin.stdout | default('timedatectl') }} set-ntp true"
-    when: ntp_enabled.stdout != 'yes' and ntp_enabled.stdout != 'active'
+# Timesyncd
+- name: Check if NTP is enabled
+  ansible.builtin.shell: "set -o pipefail && {{ timedatectl_bin.stdout | default('timedatectl') }} status
+    | grep -e 'NTP enabled\\|Network time on\\|NTP service: active'
+    | cut -d ':' -f 2
+    | cut -d ' ' -f 2"
+  args:
+    executable: /bin/bash
+  register: ntp_enabled
+  changed_when: false
+
+- name: Enable systemd-timesyncd
+  ansible.builtin.command: "{{ timedatectl_bin.stdout | default('timedatectl') }} set-ntp true"
+  when: ntp_enabled.stdout != 'yes' and ntp_enabled.stdout != 'active'

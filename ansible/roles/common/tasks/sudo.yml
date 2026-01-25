@@ -1,9 +1,19 @@
 ---
- - name: ensure sudo is installed
-   apt: name=sudo state=present
+- name: Ensure sudo is installed
+  ansible.builtin.apt:
+    name: sudo
+    state: present
 
- - name: allow sudo for users in the sudo group
-   lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo   ALL=(ALL:ALL) NOPASSWD: ALL'"
- 
- - name: allow sudo to keep SSH_AUTH_SOCK env
-   lineinfile: "dest=/etc/sudoers state=present regexp='^Defaults.*env_keep.*SSH_AUTH_SOCK' line='Defaults        env_keep += \"SSH_AUTH_SOCK\"'"
+- name: Allow sudo for users in the sudo group
+  ansible.builtin.lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%sudo"
+    line: "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL"
+
+- name: Allow sudo to keep SSH_AUTH_SOCK env
+  ansible.builtin.lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^Defaults.*env_keep.*SSH_AUTH_SOCK"
+    line: 'Defaults        env_keep += "SSH_AUTH_SOCK"'

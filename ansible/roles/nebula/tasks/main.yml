@@ -20,12 +20,12 @@
 
 - name: unarchive binary
   unarchive:
-    remote_src: yes
+    remote_src: true
     src: /tmp/nebula.tar.gz
     dest: /usr/local/bin/
     include: [nebula]
     list_files: true
-    mode: 0755
+    mode: "0755"
   when: nebula_installed.changed
   register: nebula_bin
 
@@ -38,13 +38,13 @@
   file:
     path: /etc/nebula/config.d
     state: directory
-    mode: 0750
+    mode: "0750"
 
 - name: deploy nebula config
   template:
     src: config.yml
     dest: /etc/nebula/config.d/01-main.yml
-    mode: 0640
+    mode: "0640"
     validate: "/usr/local/bin/nebula -config %s -test"
   register: nebula_conf
 
@@ -52,7 +52,7 @@
   template:
     src: nebula.nft
     dest: /etc/nftables/nebula.nft
-    mode: 0640
+    mode: "0640"
     validate: "/usr/sbin/nft -cf %s"
   tags: [iptables, nftables, firewall]
   notify: reload firewall
@@ -61,14 +61,14 @@
   template:
     src: nebula.service
     dest: /etc/systemd/system/nebula.service
-    mode: 0644
+    mode: "0644"
   register: nebula_unit
 
 - name: restart nebula service
   systemd:
     name: nebula
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
     state: restarted
   when: (nebula_bin is defined and nebula_bin.changed) or nebula_unit.changed
   register: nebula_service
@@ -87,7 +87,7 @@
   template:
     src: telegraf_nebula.toml
     dest: /etc/telegraf/telegraf.d/nebula.conf
-    mode: 0640
+    mode: "0640"
     group: telegraf
   tags: [monitoring, telegraf]
   notify: reload telegraf

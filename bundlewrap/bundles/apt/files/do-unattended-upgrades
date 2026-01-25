@@ -20,6 +20,11 @@ fi
 
 current=$(uname -r | sed -r 's/-[a-zA-Z]+$//')
 latest=$(echo "$existing" | sort --version-sort -t- -k 3,4 | tail -n 1 | sed -r 's/[^0-9]+([0-9]\.[^-]+-[0-9]+).*/\1/')
+
+# escape some chars, because debian changed their version string
+current="$(echo "$current" | sed 's/\+/\\+/g')"
+latest="$(echo "$latest" | sed 's/\+/\\+/g')"
+
 todelete=$(echo "$existing" | grep -v -E "($current|$latest)" | awk '{ print $1 }' || true)
 
 if [[ -n "$todelete" ]]

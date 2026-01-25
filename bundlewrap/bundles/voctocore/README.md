@@ -20,6 +20,11 @@ vaapi = false # use vaapi for all rendering tasks
 # if no slides source has been configured.
 parallel_slide_recording = true
 parallel_slide_streaming = true
+
+# Enable side-by-side presets if sources are present. In the default
+# configuration, all side-by-side presets are disabled.
+enable_sbs_presets_for_multi_camera = false # enable multi-camera presets (e. g. cam1+cam2)
+enable_sbs_presets_with_slides = false # enable slides+camera presets (like lecture mode)
 ```
 
 ### sources

@@ -1,16 +1,16 @@
 ---
-- name: enable locales
-  lineinfile:
+- name: Enable locales
+  ansible.builtin.lineinfile:
     dest: /etc/locale.gen
     state: present
-    regexp: '.*{{ item }}.*'
-    line: '{{ item }}'
+    regexp: ".*{{ item }}.*"
+    line: "{{ item }}"
   with_items:
     - de_DE.UTF-8 UTF-8
     - en_US.UTF-8 UTF-8
     - nl_NL.UTF-8 UTF-8
   register: locales
 
-- name: generate locales
-  command: /usr/sbin/locale-gen
+- name: Generate locales
+  ansible.builtin.command: /usr/sbin/locale-gen
   when: locales.changed

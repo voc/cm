@@ -1,53 +1,60 @@
 ---
-  - name: deploy raidstatus script on system with HW raid
-    copy: src=raidstatus
-          dest=/usr/local/sbin/raidstatus
-          owner=root group=root mode=0750
-    when: ansible_hostname is match('dellinger|storage|aws|berlin-ak|mebibyte')
+- name: Deploy raidstatus script on system with HW raid
+  ansible.builtin.copy:
+    src: raidstatus
+    dest: /usr/local/sbin/raidstatus
+    owner: root
+    group: root
+    mode: "0750"
+  when: ansible_hostname is match('dellinger|storage|aws|berlin-ak|mebibyte')
 
-  - name: install required plugins for check_system
-    apt:
-      name:
-        - nagios-plugins-basic
-      state: present
-    tags: 
-      - check_system
-      - apt
+- name: Install required plugins for check_system
+  ansible.builtin.apt:
+    name:
+      - nagios-plugins-basic
+    state: present
+  tags:
+    - check_system
+    - apt
 
-  - name: create check_system script
-    template:
-      src: monitoring/check_system.sh.j2
-      dest: /usr/local/sbin/check_system.sh
-      mode: 0750
-    tags:
-      - check_recording
-      - check_system
-      - encodermode
-      - voctomix
+- name: Create check_system script
+  ansible.builtin.template:
+    src: monitoring/check_system.sh.j2
+    dest: /usr/local/sbin/check_system.sh
+    mode: "0750"
+  tags:
+    - check_recording
+    - check_system
+    - encodermode
+    - voctomix
 
-  - name: create check_system.d subdir
-    file:
-      path: /usr/local/sbin/check_system.d
-      mode: 0750
-      state: directory
-    tags:
-      - check_system
+- name: Create check_system.d subdir
+  ansible.builtin.file:
+    path: /usr/local/sbin/check_system.d
+    mode: "0750"
+    state: directory
+  tags:
+    - check_system
 
-  - cron: name="check system and send mqtt message"
-          minute="*/1" hour="*" month="*" day="*"
-          job="nice -n 19 /usr/local/sbin/check_system.sh >/dev/null"
+- name: Setup cron job for check_system
+  ansible.builtin.cron:
+    name: "check system and send mqtt message"
+    minute: "*/1"
+    hour: "*"
+    month: "*"
+    day: "*"
+    job: "nice -n 19 /usr/local/sbin/check_system.sh >/dev/null"
+- name: Deploy systemd unit for shutdown hook
+  ansible.builtin.copy:
+    src: send-mqtt-shutdown.service
+    dest: /etc/systemd/system/send-mqtt-shutdown.service
+    mode: "0644"
+  register: shutdown_hook
 
-  - name: deploy systemd unit for shutdown hook
-    copy:
-      src: send-mqtt-shutdown.service
-      dest: /etc/systemd/system/send-mqtt-shutdown.service
-      mode: 0644
-    register: shutdown_hook
-
-  - name: enable & start shutdown hook
-    systemd:
-      name: send-mqtt-shutdown
-      state: started
-      enabled: yes
-      daemon_reload: yes
-    when: shutdown_hook.changed
+- name: Enable & start shutdown hook
+  ansible.builtin.systemd:
+    name: send-mqtt-shutdown
+    state: started
+    enabled: true
+    daemon_reload: true
+  when: shutdown_hook.changed

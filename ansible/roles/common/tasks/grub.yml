@@ -1,27 +1,27 @@
 ---
-  - name: ensure grub is installed
-    apt:
-      name: grub-pc
-      state: present
+- name: Ensure grub is installed
+  ansible.builtin.apt:
+    name: grub-pc
+    state: present
 
-  # Grub config for real hardware
-  - name: copy grub config for physical machines
-    copy:
-      src: grub/grub_default
-      dest: /etc/default/grub
-      mode: 0644
-    when: ansible_virtualization_role != 'guest'
-    register: grub_config
+# Grub config for real hardware
+- name: Copy grub config for physical machines
+  ansible.builtin.copy:
+    src: grub/grub_default
+    dest: /etc/default/grub
+    mode: "0644"
+  when: ansible_virtualization_role != 'guest'
+  register: grub_config
 
-  # Grub config for virtual machines
-  - name: copy grub config for virtual machines
-    copy:
-      src: grub/grub_default.vm
-      dest: /etc/default/grub
-      mode: 0644
-    when: ansible_virtualization_role == 'guest'
-    register: grub_config
+# Grub config for virtual machines
+- name: Copy grub config for virtual machines
+  ansible.builtin.copy:
+    src: grub/grub_default.vm
+    dest: /etc/default/grub
+    mode: "0644"
+  when: ansible_virtualization_role == 'guest'
+  register: grub_config
 
-  - name: update grub
-    command: /usr/sbin/update-grub
-    when: grub_config.changed
+- name: Update grub
+  ansible.builtin.command: /usr/sbin/update-grub
+  when: grub_config.changed

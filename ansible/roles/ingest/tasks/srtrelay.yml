@@ -2,7 +2,7 @@
 - name: install srtrelay
   apt:
     name: srtrelay
-    state: latest
+    state: present
   register: srtrelay_package
 
 - name: create config directory for srtrelay

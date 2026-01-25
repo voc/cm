@@ -1,0 +1,9 @@
+[Unit]
+Description=Update schedules every 15min
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=15m
+
+[Install]
+WantedBy=timers.target

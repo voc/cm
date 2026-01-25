@@ -13,7 +13,7 @@ if node.os_version[0] < 10:
 for group, attrs in node.metadata.get('groups', {}).items():
     groups[group] = attrs
 
-for username, attrs in node.metadata['users'].items():
+for username, attrs in node.metadata.get('users').items():
     home = attrs.get('home', '/home/{}'.format(username))
 
     if attrs.get('delete', False):
@@ -66,7 +66,7 @@ for username, attrs in node.metadata['users'].items():
                     'source': f'{ftype}/{username}',
                     'content_type': 'mako',
                     'context': {
-                        'verbatim_config': node.metadata.get(f'users/{username}/{ftype}_verbatim', {}),
+                        'verbatim_config': node.metadata.get(('users', username, f'{ftype}_verbatim'), {}),
                     },
                 }
             else:

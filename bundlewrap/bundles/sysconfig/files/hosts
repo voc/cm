@@ -1,4 +1,4 @@
-127.0.0.1   localhost ${node.name} ${node.metadata['hostname']}
+127.0.0.1   localhost ${node.name} ${node.metadata.get('hostname')}
 
 ::1         ip6-localhost
 fe00::0     ip6-localnet

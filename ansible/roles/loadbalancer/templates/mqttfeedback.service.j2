@@ -1,12 +1,41 @@
+[Unit]
+Description=MQTT Feedback Service
+After=network.target
+
 [Service]
-ExecStart=/usr/bin/env ruby /usr/local/src/mqtt/provider/feedback/client.rb
-Restart=always
+WorkingDirectory=/opt/streaming-feedback
+ExecStart=/opt/streaming-feedback/venv/bin/python3 -u /srv/nginx/streaming-website/lib/feedback/feedback.py
 User=mqttfeedback
 Group=mqttfeedback
 Environment="MQTT_SERVER={{ mqtt.server }}"
 Environment="MQTT_USER={{ mqtt.username }}"
 Environment="MQTT_PASSWORD={{ mqtt.password }}"
 Environment="FEEDBACK_DATABASE=/opt/streaming-feedback/feedback.sqlite3"
+Restart=always
+RestartSec=1s
+RestartMaxDelaySec=10s
+RestartSteps=3
+
+# Security settings
+ProtectSystem=strict
+ReadWritePaths=/opt/streaming-feedback
+NoNewPrivileges=true
+RemoveIPC=yes
+ProtectClock=yes
+ProtectHostname=yes
+ProtectKernel=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectProc=invisible
+RestrictRealtime=yes
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
+RestrictNamespaces=yes
+PrivateTmp=yes
+PrivateDevices=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 
 [Install]
 WantedBy=multi-user.target

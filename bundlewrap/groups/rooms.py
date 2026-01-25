@@ -8,6 +8,7 @@ ROOMS = (
     23, # cccb
     28, # GLT / realraum Graz (r3talks)
     41, # osc1
+    51, # c3h/niklasnet
     80, # muccc
     81, # hacc
     94, # sophie
@@ -25,6 +26,7 @@ for i in ROOMS:
         'member_patterns': {
             rf'^tallycom{pattern}-[0-9+]$',
             rf'^(encoder|mixer|minion){pattern}$',
+            rf'^switch{pattern}',
         },
         'metadata': {
             'room_number': room_number,
@@ -55,6 +57,7 @@ groups['saalc4']['metadata'] = merge_dict(
             'florolf': {},
             'ike': {},
             'kadse': {},
+            'kerfi': {},
             'lukas2511': {},
             'qb': {},
             'snoopy': {},

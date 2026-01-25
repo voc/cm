@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+from csv import DictReader
+from datetime import datetime, timezone
+from os import scandir
+from os.path import join
+from json import load
+
+
+def get_database_path():
+    with open('/etc/kea/kea-dhcp4.conf') as f:
+        config = load(f)
+    return config['Dhcp4']['lease-database']['name']
+
+
+def parse():
+    NOW = datetime.now()
+    active_leases = {}
+    with open(get_database_path()) as f:
+        for row in DictReader(f):
+            expires = datetime.fromtimestamp(int(row["expire"]))
+
+            if expires >= NOW:
+                if (
+                    row["address"] not in active_leases
+                    or active_leases[row["address"]]["expires_dt"] < expires
+                ):
+                    row["expires_dt"] = expires
+                    active_leases[row["address"]] = row
+    return active_leases.values()
+
+
+def sorter(row):
+    return [row["subnet_id"], *[int(i) for i in row["address"].split(".")]]
+
+
+def print_table(leases):
+    print(
+        """ subnet | address         | MAC               | expires | hostname
+--------+-----------------+-------------------+---------+----------"""
+    )
+    for lease in sorted(leases, key=sorter):
+        print(
+            f" {lease['subnet_id']:<6} | {lease['address']:<15} | {lease['hwaddr'].lower()} |  {lease['expires_dt']:%H:%M}  | {lease['hostname']}"
+        )
+
+
+if __name__ == "__main__":
+    print_table(parse())

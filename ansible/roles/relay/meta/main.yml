@@ -16,13 +16,13 @@ dependencies:
   - role: icecast
     vars:
       # setup distribution icecast on masters
-      icedist: "{{ stream_master|bool }}"
+      icedist: "{{ relay_origin|bool }}"
 
       # burst on connect for user facing icecast
       icecast_burst_on_connect: "1"
-      icedist_public: "{{ stream_master|bool }}"
+      icedist_public: "{{ relay_origin|bool }}"
     tags: icecast
   - role: consul
     tags: consul
     vars:
-      consul_ui: "{{ stream_master|bool }}"
+      consul_ui: "{{ relay_origin|bool }}"

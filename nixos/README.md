@@ -30,7 +30,11 @@ We use `colemena` to deploy configs to our `nix`-based hosts.
 
 ### Deploy a host
 
-To deploy a specific host simple run
+To get a shell with colmena installed run in this directory:
+
+    nix develop
+
+To deploy a specific host simply run
 
     colmena apply switch --on "<name from host.nix>"
 

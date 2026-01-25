@@ -1,0 +1,10 @@
+[Match]
+Name=${bond}
+
+[Network]
+DHCP=no
+IPv6AcceptRA=no
+
+% for vlan in sorted(vlans):
+VLAN=${bond}.${vlan}
+% endfor

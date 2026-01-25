@@ -8,6 +8,7 @@ defaults = {
             'libboolean-perl': {},
             'libconfig-inifiles-perl': {},
             'libdatetime-perl': {},
+            'libdatetime-format-strptime-perl': {},
             'libfile-which-perl': {},
             'libipc-run3-perl': {},
             'libjson-perl': {},
@@ -24,6 +25,13 @@ defaults = {
         'number_of_encoding_workers': 1,
         'separate_vaapi_worker': False,
         'use_vaapi': False,
+    },
+    'users': {
+        'voc': {
+            'groups': {
+                'render', # vaapi
+            },
+        },
     },
 }
 

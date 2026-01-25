@@ -1,5 +1,9 @@
 { lib, config, pkgs, ... }:
 
+# voc2mqtt module
+#
+# Sets up voc mqtt tooling and check_system timer/service.
+#
 let
   mqttHost = "mqtt.c3voc.de";
 

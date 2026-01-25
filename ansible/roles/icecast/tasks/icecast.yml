@@ -3,7 +3,7 @@
 - name: install icecast streaming server
   apt:
     name: icecast2
-    state: latest
+    state: present
 
 # Create directories
 - name: create dump file directory for icecast

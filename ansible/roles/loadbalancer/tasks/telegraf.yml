@@ -1,20 +1,20 @@
 ---
-- name: add telegraf to mqttfeedback group
-  user:
+- name: Add telegraf to mqttfeedback group
+  ansible.builtin.user:
     name: telegraf
     groups: mqttfeedback
-    append: yes
+    append: true
 
 # Setup telegraf plugin
-- name: template haproxy telegraf config
-  template:
+- name: Template haproxy telegraf config
+  ansible.builtin.template:
     src: telegraf_loadbalancer.toml
     dest: /etc/telegraf/telegraf.d/haproxy.conf
-    mode: 0644
+    mode: "0644"
   register: telegraf_haproxy
 
-- name: reload telegraf
-  service:
+- name: Reload telegraf
+  ansible.builtin.service:
     name: telegraf
     state: reloaded
   when: telegraf_haproxy.changed

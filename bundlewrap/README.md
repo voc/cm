@@ -139,7 +139,7 @@ to the `members` of the event group and ideally also set a `schedule_json`:
 ```toml
 members = ["releasing", "loudness-rendering"]
 
-[metadata]
+[metadata.event]
 schedule_json = "https://pretalx.example.com/democon/schedule/export/schedule.json"
 ```
 

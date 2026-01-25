@@ -11,3 +11,4 @@ nixos/result
 bundlewrap/.direnv
 .vscode
 .direnv
+.ansible

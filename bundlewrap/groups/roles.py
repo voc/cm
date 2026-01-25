@@ -79,7 +79,7 @@ groups['routers'] = {
         'bird',
         'generator-routing',
         'generator-s2s',
-        'isc-dhcp-server',
+        'kea-dhcp-server',
         'unbound-with-knot',
     },
 }

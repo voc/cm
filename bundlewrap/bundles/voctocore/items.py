@@ -67,6 +67,22 @@ for source in sorted(sources.keys()):
     except IndexError:
         pass
 
+if 'slides' in sources and node.metadata.get('voctocore/enable_sbs_presets_with_slides'):
+    for source in sorted(preset_camera_sources):
+        icon = None
+        source_kind = sources[source]["kind"]
+        if source_kind == "alsa" or source_kind == "pa":
+            continue
+
+        presets[f"sbs_slides_{source}"] = {
+            "name": f"{source.upper()}|SLIDES",
+            "icon": "side-by-side.svg",
+        }
+        try:
+            presets[f"sbs_slides_{source}"]["key"] = preset_buttons.pop(0)
+        except IndexError:
+            pass
+
 if len(preset_camera_sources) > 2 and node.metadata.get(
     "voctocore/enable_sbs_presets_for_multi_camera"
 ):

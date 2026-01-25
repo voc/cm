@@ -11,6 +11,10 @@
         "description": "tallycom1-2",
         "mac": "b8:27:eb:10:79:9c"
     },
+    "10.73.1.23": {
+        "description": "x32 andromeda",
+        "mac": "00:15:64:0B:64:D2"
+    },
     "10.73.1.3": {
         "description": "encoder1",
         "mac": "70:85:c2:5b:15:60"
@@ -18,6 +22,10 @@
     "10.73.1.4": {
         "description": "infobeamer1",
         "mac": "b8:27:eb:c6:ba:0f"
+    },
+    "10.73.1.51": {
+        "description": "Jenny Web Presenter HD",
+        "mac": "7c:2e:0d:a7:19:7f"
     },
     "10.73.1.7": {
         "description": "minion1",
@@ -47,6 +55,22 @@
         "description": "kunsi sacn",
         "mac": "42:4C:C0:6A:82:EA"
     },
+    "10.73.100.121": {
+        "description": "thunfisch css326-1 switch",
+        "mac": "b8:69:f4:ce:16:0d"
+    },
+    "10.73.100.122": {
+        "description": "thunfisch css326-2 switch",
+        "mac": "b8:69:f4:cd:64:f5"
+    },
+    "10.73.100.123": {
+        "description": "thunfisch danterecorder server ipmi network interface",
+        "mac": "2C:FD:A1:C7:33:F7"
+    },
+    "10.73.100.124": {
+        "description": "thunfisch danterecorder server operating system control interface",
+        "mac": "18:31:BF:45:21:8D"
+    },
     "10.73.100.125": {
         "description": "hexchen wifi",
         "mac": "64:bc:58:52:db:e5"
@@ -67,6 +91,10 @@
         "description": "sophie-dock",
         "mac": "f8:e4:3b:60:02:31"
     },
+    "10.73.100.132": {
+        "description": "scientress printer server pi",
+        "mac": "b8:27:eb:f0:d6:eb"
+    },
     "10.73.100.17": {
         "description": "scientress / Jenny (ThinkPad)",
         "mac": "54:e1:ad:ef:2d:1e"
@@ -86,6 +114,14 @@
     "10.73.100.32": {
         "description": "sophie-wifi",
         "mac": "8c:3b:4a:56:a1:06"
+    },
+    "10.73.100.49": {
+        "description": "thunfisch transparent dock",
+        "mac": "00:00:00:00:0c:b7"
+    },
+    "10.73.100.50": {
+        "description": "thunfisch uni dock",
+        "mac": "c8:a3:62:52:93:cd"
     },
     "10.73.100.75": {
         "description": "meise wlan",
@@ -147,6 +183,10 @@
         "description": "wrt 2",
         "mac": "E8:94:F6:68:4C:1E"
     },
+    "10.73.2.23": {
+        "description": "x32 brachium",
+        "mac": "00:15:64:07:60:8B"
+    },
     "10.73.2.3": {
         "description": "encoder2",
         "mac": "70:85:c2:5b:4e:c6"
@@ -178,6 +218,10 @@
     "10.73.3.16": {
         "description": "tallycom3-2",
         "mac": "b8:27:eb:d0:6c:62"
+    },
+    "10.73.3.23": {
+        "description": "x32 cassiopeia",
+        "mac": "00:15:64:04:B8:33"
     },
     "10.73.3.3": {
         "description": "encoder3",

@@ -3,14 +3,14 @@
 # HLS slave caching directories
 proxy_temp_path /srv/nginx/cache/tmp;
 
-{% if not (relive_master is defined and relive_master|bool) %}
+{% if not (relay_relive_origin is defined and relay_relive_origin|bool) %}
 proxy_cache_path /srv/nginx/cache/hls_relive
                 keys_zone=hls_relive:32m
                 max_size={{ nginx_hls_relive_cache_max_size }}
                 inactive=7d
                 loader_threshold=300 loader_files=1024;
 {% endif %}
-{% if not stream_master %}
+{% if not relay_origin %}
 proxy_cache_path /srv/nginx/cache/live
                 keys_zone=live:32m
                 max_size={{ nginx_live_cache_max_size }}
@@ -25,7 +25,7 @@ proxy_cache_path /srv/nginx/cache/mediastatic
 # Upstreams
 upstream stream {
   # Templated by consul-template
-[[- range $index,$service := service "stream_master.http-relay" ]]
+[[- range $index,$service := service "relay_origin.http-relay" ]]
   server [[ $service.Address ]]:[[ $service.Port ]]
   [[- if gt $index 0 ]] backup[[ end ]]; # [[ $service.Node ]][[ end ]]
 
@@ -36,7 +36,7 @@ upstream stream {
 
 upstream relive {
   # Templated by consul-template
-[[- range service "relive_master.http-relay" ]]
+[[- range service "relive_origin.http-relay" ]]
   server [[ .Address ]]:[[ .Port ]]; # [[ .Node ]][[ end ]]
 
   # backup server to prevent reload fail
@@ -45,7 +45,7 @@ upstream relive {
 }
 
 upstream mediastatic {
-{% for server in nginx_media_static_masters %}
+{% for server in relay_media_static_backends %}
   server {{ server }}:443;
 {% endfor %}
 }
@@ -109,7 +109,7 @@ server {
   #
   rewrite ^/hls/(?<stream>[^/_]+)_(?<file>[^/]+\.m3u8)$ /hls/$stream/$file redirect;
 
-{% if stream_master %}
+{% if relay_origin %}
   # stream-api
   location /stream_info.json {
     auth_basic           "voc login";
@@ -366,7 +366,7 @@ server {
 {% endif %}
 
 
-{% if relive_master is defined and relive_master|bool %}
+{% if relay_relive_origin is defined and relay_relive_origin|bool %}
   # relive
   location ~ ^/crossdomain.xml {
     alias /srv/nginx/relive/crossdomain.xml;

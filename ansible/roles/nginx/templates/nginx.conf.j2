@@ -79,8 +79,6 @@ http {
   ssl_session_cache   shared:ssl_session_cache:10m;
   ssl_session_timeout 5m;
 
-  ssl_stapling on;
-  ssl_stapling_verify on;
   resolver 127.0.0.53;
 
   map $http_x_proto $use_https {

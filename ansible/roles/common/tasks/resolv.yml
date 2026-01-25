@@ -1,21 +1,21 @@
 ---
-- name: deploy systemd-resolved config
-  template:
+- name: Deploy systemd-resolved config
+  ansible.builtin.template:
     src: resolved.conf
     dest: /etc/systemd/resolved.conf
-    mode: 0644
+    mode: "0644"
   register: resolved_conf
 
-- name: enable and start resolved
-  service:
+- name: Enable and start resolved
+  ansible.builtin.service:
     name: systemd-resolved
     state: restarted
     enabled: true
   when: resolved_conf.changed
 
-- name: make resolv.conf a symlink to /lib/systemd/resolv.conf
-  file:
+- name: Make resolv.conf a symlink to /lib/systemd/resolv.conf
+  ansible.builtin.file:
     path: /etc/resolv.conf
     state: link
     src: /lib/systemd/resolv.conf
-    force: yes
+    force: true

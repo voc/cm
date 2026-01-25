@@ -3,6 +3,7 @@
 {
   imports = [
     ./users.nix
+    ../../modules/voc2mqtt
   ];
 
   nix.settings = {
@@ -80,6 +81,10 @@
     zstd
     gnupg
     pinentry-curses
+    tmux
+    ncdu
+    lsof
+    strace
   ];
 
   nix.extraOptions = ''

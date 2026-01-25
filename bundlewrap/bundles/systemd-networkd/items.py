@@ -59,7 +59,7 @@ directories = {
 
 
 for interface, config in node.metadata.get('interfaces').items():
-    if node.metadata.get(f'systemd-networkd/bonds/{interface}', {}):
+    if node.metadata.get(('systemd-networkd', 'bonds', interface), {}):
         continue
 
     files[f'/etc/systemd/network/{interface}.network'] = {
@@ -110,13 +110,12 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
         },
     }
 
-    files[f'/etc/systemd/network/{bond}.network'] = {
+    files[f'/etc/systemd/network/{bond}_interfaces.network'] = {
         'source': 'template-bond.network',
         'content_type': 'mako',
         'context': {
             'bond': bond,
             'match': config['match'],
-            'vlans': node.metadata.get(f'interfaces/{bond}/vlans', set()),
         },
         'needed_by': {
             'svc_systemd:systemd-networkd',
@@ -126,12 +125,23 @@ for bond, config in node.metadata.get('systemd-networkd/bonds', {}).items():
         },
     }
 
-for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
-    filename = '{}-match-{}'.format(
-        brname,
-        '-'.join(sorted(config['match'])),
-    ).replace('*', '_')
+    if node.metadata.get(('interfaces', bond, 'vlans'), set()):
+        files[f'/etc/systemd/network/{bond}.network'] = {
+            'source': 'template-bond-vlan.network',
+            'content_type': 'mako',
+            'context': {
+                'bond': bond,
+                'vlans': node.metadata.get(('interfaces', bond, 'vlans')),
+            },
+            'needed_by': {
+                'svc_systemd:systemd-networkd',
+            },
+            'triggers': {
+                'svc_systemd:systemd-networkd:restart',
+            },
+        }
 
+for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
     files[f'/etc/systemd/network/{brname}.netdev'] = {
         'source': 'template-bridge.netdev',
         'content_type': 'mako',
@@ -146,7 +156,7 @@ for brname, config in node.metadata.get('systemd-networkd/bridges', {}).items():
         },
     }
 
-    files[f'/etc/systemd/network/{filename}.network'] = {
+    files[f'/etc/systemd/network/{brname}_interfaces.network'] = {
         'source': 'template-bridge.network',
         'content_type': 'mako',
         'context': {

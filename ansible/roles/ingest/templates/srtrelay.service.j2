@@ -4,9 +4,28 @@ StartLimitIntervalSec = 0
 
 [Service]
 ExecStart = /usr/bin/srtrelay
-User = stream-api
+DynamicUser = yes
 Restart = always
 RestartSec = 3s
+
+# Security settings
+ProtectClock=yes
+ProtectHostname=yes
+ProtectKernel=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectProc=invisible
+RestrictRealtime=yes
+SystemCallLog=~@system-service
+CapabilityBoundingSet=
+RestrictNamespaces=yes
+PrivateTmp=yes
+PrivateDevices=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ProtectHome=yes
+LockPersonality=yes
 
 [Install]
 WantedBy = multi-user.target

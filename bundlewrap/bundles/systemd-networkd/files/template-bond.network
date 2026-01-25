@@ -3,10 +3,3 @@ Name=${' '.join(sorted(match))}
 
 [Network]
 Bond=${bond}
-
-DHCP=no
-IPv6AcceptRA=no
-
-% for vlan in sorted(vlans):
-VLAN=${bond}.${vlan}
-% endfor

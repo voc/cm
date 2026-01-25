@@ -1,4 +1,4 @@
-groups = ["debian-bookworm"]
+groups = ["debian-bookworm", "case20_minions"]
 
 [metadata.crs-worker.secrets]
 encoding.token = "!kee_user:ansible|worker-groups|minion6"

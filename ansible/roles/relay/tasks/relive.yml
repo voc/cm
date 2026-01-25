@@ -3,7 +3,11 @@
     group: name=relive
 
   - name: create relive user
-    user: name=relive groups="ssh" append=yes group=relive
+    user:
+      name: relive
+      groups: "_ssh"
+      append: yes
+      group: relive
 
   - name: create relive directory
     file: dest=/srv/nginx/relive state=directory
@@ -25,7 +29,7 @@
         - imagemagick
         - montage
         - python3-pip
-      state: latest
+      state: present
     tags: packages
 
   # Cron jobs

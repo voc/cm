@@ -1,29 +1,29 @@
 ---
 # revert to normal acpi shutdown handling for VMs
-- name: reenable logind handling of acpi events
-  replace:
+- name: Reenable logind handling of acpi events
+  ansible.builtin.replace:
     path: /etc/systemd/logind.conf
-    regexp: '^Handle(PowerKey|SuspendKey|HibernateKey|LidSwitch)(.*)$'
-    replace: '#Handle\1\2'
+    regexp: "^Handle(PowerKey|SuspendKey|HibernateKey|LidSwitch)(.*)$"
+    replace: "#Handle\\1\\2"
   register: logind_conf
 
-- name: restart systemd-logind
-  service:
+- name: Restart systemd-logind
+  ansible.builtin.service:
     name: systemd-logind
     state: restarted
   when: logind_conf.changed
 
 - name: Populate service facts
-  service_facts:
+  ansible.builtin.service_facts:
 
-- name: stop/disable acpid
-  service:
+- name: Stop/disable acpid
+  ansible.builtin.service:
     name: acpid
     state: stopped
-    enabled: no
+    enabled: false
   when: '"acpid" in ansible_facts.services and ansible_facts.services["acpid"]["state"] == "running"'
 
-- name: remove acpid
-  apt:
+- name: Remove acpid
+  ansible.builtin.apt:
     name: acpid
     state: absent

@@ -1,23 +1,19 @@
 ---
-- name: add influxdata apt key
-  apt_key:
-    id: 9D539D90D3328DC7D6C8D3B9D8FF8E1F7DF8B07E
-    url: https://repos.influxdata.com/influxdata-archive_compat.key
-    keyring: /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg
-    state: present
-  tags: [apt, repos]
-
-- name: add influxdata repository
-  apt_repository:
-    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main"
-    state: present
+- name: Setup the influxdata repo
+  ansible.builtin.deb822_repository:
+    name: influxdata
+    types: deb
+    uris: https://repos.influxdata.com/debian
+    suites: stable
+    components: [main]
+    signed_by: "{{ lookup('file', 'influxdata-archive.key') }}"
   tags: [apt, repos]
 
 - name: install telegraf
   apt:
     name:
       - telegraf
-    state: latest
+    state: present
   tags: apt
 
 - name: template telegraf config

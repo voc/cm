@@ -1,0 +1,44 @@
+---
+- name: Rotate nginx logs hourly
+  ansible.builtin.copy:
+    dest: /etc/logrotate.d/nginx
+    mode: "0644"
+    content: |
+      /var/log/nginx/*.log {
+        hourly
+        missingok
+        rotate 14
+        compress
+        notifempty
+        create 0640 www-data adm
+        sharedscripts
+        prerotate
+                if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                        run-parts /etc/logrotate.d/httpd-prerotate; \
+                fi \
+        endscript
+        postrotate
+                invoke-rc.d nginx rotate >/dev/null 2>&1
+        endscript
+      }
+
+- name: Make logrotate.timer override dir
+  ansible.builtin.file:
+    path: /etc/systemd/system/logrotate.timer.d
+    state: directory
+    mode: "0755"
+
+- name: Run logrotate hourly
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/logrotate.timer.d/override.conf
+    mode: "0644"
+    content: |
+      [Timer]
+      OnCalendar=hourly
+      AccuracySec=30m
+  register: logrotate_timer
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: logrotate_timer.changed
