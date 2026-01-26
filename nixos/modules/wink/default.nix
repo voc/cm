@@ -359,13 +359,13 @@ in
           '';
         };
 
-        locations."@goauthentik_proxy_signin" = {
-          internal = true;
-          extraConfig = ''
-            add_header Set-Cookie $auth_cookie;
-            return 302 /outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
-          '';
-        };
+        #locations."@goauthentik_proxy_signin" = {
+        #  internal = true;
+        #  extraConfig = ''
+        #    add_header Set-Cookie $auth_cookie;
+        #    return 302 /outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
+        #  '';
+        #};
 
         locations."/assets/" = {
           alias = "${cfg.package}/share/wink/public/assets/";
