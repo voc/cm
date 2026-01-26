@@ -124,6 +124,12 @@ in
       mode = "0400";
     };
 
+    sops.secrets.wink-htpasswd = {
+      owner = "nginx";
+      group = "nginx";
+      mode = "0400";
+    };
+
     users.users.${cfg.user} = {
       isSystemUser = true;
       group = cfg.group;
@@ -289,6 +295,8 @@ in
     };
 
     services.nginx = {
+      after = [ "sops-nix.service" ];
+      wants = [ "sops-nix.service" ];
       enable = true;
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
@@ -298,6 +306,8 @@ in
       virtualHosts.${cfg.domain} = {
         forceSSL = cfg.enableACME;
         enableACME = cfg.enableACME;
+
+        basicAuthFile = config.sops.secrets.wink-htpasswd.path;
 
         locations."/" = {
           proxyPass = "http://${cfg.host}:${toString cfg.port}";

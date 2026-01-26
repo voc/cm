@@ -84,3 +84,14 @@ creation_rules:
       - *host_live3_alb
       - *host_live_bre
       - *host_live_ams
+  - path_regex: hosts/wink/.*
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *admin_ischluff
+      - *host_wink
