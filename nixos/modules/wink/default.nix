@@ -283,6 +283,11 @@ in
             ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_cable -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
           '';
         };
+        
+        nginx = {
+          after = [ "sops-nix.service" ];
+          wants = [ "sops-nix.service" ];
+        };
       };
 
     systemd.timers.wink-backup = {
@@ -294,11 +299,6 @@ in
       };
     };
 
-    systemd.services.nginx = {
-      after = [ "sops-nix.service" ];
-      wants = [ "sops-nix.service" ];
-    };
-    
     services.nginx = {
       enable = true;
       recommendedGzipSettings = true;
