@@ -111,15 +111,7 @@ GEM
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
-    ffi (1.17.3-aarch64-linux-gnu)
-    ffi (1.17.3-aarch64-linux-musl)
-    ffi (1.17.3-arm-linux-gnu)
-    ffi (1.17.3-arm-linux-musl)
-    ffi (1.17.3-arm64-darwin)
-    ffi (1.17.3-x86_64-darwin)
     ffi (1.17.3-x86_64-linux-gnu)
-    ffi (1.17.3-x86_64-linux-musl)
-    ffi (1.17.3)
     fugit (1.12.1)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
@@ -176,38 +168,13 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    mini_portile2 (2.8.2)
-    nokogiri (1.19.0-aarch64-linux-gnu)
-      racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
-    nokogiri (1.19.0-aarch64-linux-musl)
-      racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
-    nokogiri (1.19.0-arm-linux-gnu)
-      racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
-    nokogiri (1.19.0-arm-linux-musl)
-      racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
-    nokogiri (1.19.0-arm64-darwin)
-      racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
-    nokogiri (1.19.0-x86_64-darwin)
-      racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
     nokogiri (1.19.0-x86_64-linux-gnu)
       racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
-    nokogiri (1.19.0-x86_64-linux-musl)
-      racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
-    nokogiri (1.19.0)
-      racc (~> 1.4)
-      mini_portile2 (~> 2.8.2)
     parallel (1.27.0)
     parser (3.3.10.1)
       ast (~> 2.4.1)
       racc
+    pg (1.6.3-x86_64-linux)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -370,29 +337,15 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (2.9.0-aarch64-linux-gnu)
-    sqlite3 (2.9.0-aarch64-linux-musl)
-    sqlite3 (2.9.0-arm-linux-gnu)
-    sqlite3 (2.9.0-arm-linux-musl)
-    sqlite3 (2.9.0-arm64-darwin)
-    sqlite3 (2.9.0-x86_64-darwin)
     sqlite3 (2.9.0-x86_64-linux-gnu)
-    sqlite3 (2.9.0-x86_64-linux-musl)
-    sqlite3 (2.9.0)
     stringio (3.2.0)
     temple (0.10.4)
     thor (1.5.0)
-    thruster (0.1.17)
-    thruster (0.1.17-aarch64-linux)
-    thruster (0.1.17-arm64-darwin)
-    thruster (0.1.17-x86_64-darwin)
     thruster (0.1.17-x86_64-linux)
     tilt (2.7.0)
     timeout (0.6.0)
     tsort (0.2.0)
-    tzinfo-data (1.2025.3)
     tzinfo (2.0.6)
-      tzinfo-data (~> 1.2025.3)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
@@ -414,15 +367,7 @@ GEM
     zeitwerk (2.7.4)
 
 PLATFORMS
-  aarch64-linux
-  aarch64-linux-gnu
-  aarch64-linux-musl
-  arm-linux-gnu
-  arm-linux-musl
-  arm64-darwin
-  x86_64-darwin
-  x86_64-linux-gnu
-  x86_64-linux-musl
+  x86_64-linux
 
 DEPENDENCIES
   active_link_to
@@ -436,6 +381,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   mqtt
+  pg
   puma (>= 5.0)
   rails (~> 8.0.3)
   rspec-rails (~> 8.0.2)
@@ -456,4 +402,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.7.2
+   2.5.22
