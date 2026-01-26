@@ -89,6 +89,32 @@ in
       default = true;
       description = "Enable ACME/Let's Encrypt for SSL";
     };
+
+    database = {
+      host = lib.mkOption {
+        type = lib.types.str;
+        default = "/run/postgresql";
+        description = "PostgreSQL host (use socket path for local)";
+      };
+      
+      name = lib.mkOption {
+        type = lib.types.str;
+        default = "wink";
+        description = "Main database name";
+      };
+      
+      user = lib.mkOption {
+        type = lib.types.str;
+        default = "wink";
+        description = "Database user";
+      };
+      
+      createLocally = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Create PostgreSQL database locally";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -126,10 +152,12 @@ in
           RAILS_ENV = cfg.environment;
           RAILS_LOG_TO_STDOUT = "1";
           RAILS_SERVE_STATIC_FILES = "1";
-          DATABASE_PATH = "${cfg.statePath}/storage/production.sqlite3";
-          SOLID_QUEUE_DB_PATH = "${cfg.statePath}/storage/production_queue.sqlite3";
-          SOLID_CACHE_DB_PATH = "${cfg.statePath}/storage/production_cache.sqlite3";
-          SOLID_CABLE_DB_PATH = "${cfg.statePath}/storage/production_cable.sqlite3";
+          DATABASE_HOST = cfg.database.host;
+          DATABASE_USER = cfg.database.user;
+          DATABASE_NAME = cfg.database.name;
+          CACHE_DATABASE_NAME = "${cfg.database.name}_cache";
+          QUEUE_DATABASE_NAME = "${cfg.database.name}_queue";
+          CABLE_DATABASE_NAME = "${cfg.database.name}_cable";
           RAILS_STORAGE_PATH = "${cfg.statePath}/storage";
           WEB_CONCURRENCY = toString cfg.workers;
           RAILS_MAX_THREADS = cfg.threads;
@@ -159,7 +187,8 @@ in
       {
         wink = {
           description = "Wink - C3VOC Inventory Management";
-          after = [ "network.target" ];
+          after = [ "network.target" ] ++ lib.optional cfg.database.createLocally "postgresql.service";
+          requires = lib.optional cfg.database.createLocally "postgresql.service";
           wantedBy = [ "multi-user.target" ];
 
           environment = commonEnv;
@@ -271,6 +300,20 @@ in
           '';
         };
       };
+    };
+
+    services.postgresql = lib.mkIf cfg.database.createLocally {
+      enable = true;
+      ensureDatabases = [ 
+        cfg.database.name 
+        "${cfg.database.name}_cache"
+        "${cfg.database.name}_queue"
+        "${cfg.database.name}_cable"
+      ];
+      ensureUsers = [{
+        name = cfg.database.user;
+        ensureDBOwnership = true;
+      }];
     };
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];

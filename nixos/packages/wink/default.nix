@@ -81,33 +81,36 @@ stdenv.mkDerivation rec {
     
     cat > config/database.yml << 'EOF'
   default: &default
-    adapter: sqlite3
+    adapter: postgresql
+    encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    timeout: 5000
+    host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+    username: <%= ENV.fetch("DATABASE_USER", "wink") %>
+    password: <%= ENV.fetch("DATABASE_PASSWORD", "") %>
 
   development:
     <<: *default
-    database: storage/development.sqlite3
+    database: wink_development
 
   test:
     <<: *default
-    database: storage/test.sqlite3
+    database: wink_test
 
   production:
     primary:
       <<: *default
-      database: <%= ENV.fetch("DATABASE_PATH", "/var/lib/wink/storage/production.sqlite3") %>
+      database: <%= ENV.fetch("DATABASE_NAME", "wink_production") %>
     cache:
       <<: *default
-      database: <%= ENV.fetch("SOLID_CACHE_DB_PATH", "/var/lib/wink/storage/production_cache.sqlite3") %>
+      database: <%= ENV.fetch("CACHE_DATABASE_NAME", "wink_cache") %>
       migrations_paths: db/cache_migrate
     queue:
       <<: *default
-      database: <%= ENV.fetch("SOLID_QUEUE_DB_PATH", "/var/lib/wink/storage/production_queue.sqlite3") %>
+      database: <%= ENV.fetch("QUEUE_DATABASE_NAME", "wink_queue") %>
       migrations_paths: db/queue_migrate
     cable:
       <<: *default
-      database: <%= ENV.fetch("SOLID_CABLE_DB_PATH", "/var/lib/wink/storage/production_cable.sqlite3") %>
+      database: <%= ENV.fetch("CABLE_DATABASE_NAME", "wink_cable") %>
       migrations_paths: db/cable_migrate
   EOF
   '';
