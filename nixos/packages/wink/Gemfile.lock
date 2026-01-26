@@ -111,7 +111,7 @@ GEM
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
-    ffi (1.17.3-x86_64-linux-gnu)
+    ffi (1.17.3)
     fugit (1.12.1)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
@@ -153,6 +153,7 @@ GEM
     marcel (1.1.0)
     matrix (0.4.3)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (6.0.1)
       prism (~> 1.5)
     mqtt (0.7.0)
@@ -168,13 +169,14 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nokogiri (1.19.0-x86_64-linux-gnu)
+    nokogiri (1.19.0)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     parallel (1.27.0)
     parser (3.3.10.1)
       ast (~> 2.4.1)
       racc
-    pg (1.6.3-x86_64-linux)
+    pg (1.6.3)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -337,11 +339,12 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (2.9.0-x86_64-linux-gnu)
+    sqlite3 (2.9.0)
+      mini_portile2 (~> 2.8.0)
     stringio (3.2.0)
     temple (0.10.4)
     thor (1.5.0)
-    thruster (0.1.17-x86_64-linux)
+    thruster (0.1.17)
     tilt (2.7.0)
     timeout (0.6.0)
     tsort (0.2.0)
@@ -367,7 +370,7 @@ GEM
     zeitwerk (2.7.4)
 
 PLATFORMS
-  x86_64-linux
+  ruby
 
 DEPENDENCIES
   active_link_to
