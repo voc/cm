@@ -1678,6 +1678,19 @@
     targets = [];
     version = "2.0.6";
   };
+  tzinfo-data = {
+    dependencies = ["tzinfo"];
+    groups = ["default"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "0qlm97fqcwhvfa7jg2gnq8la3mnk617b5bwsc460mi75wpqy4imm";
+      target = "ruby";
+      type = "gem";
+    };
+    targets = [];
+    version = "1.2025.3";
+  };
   unicode-display_width = {
     dependencies = ["unicode-emoji"];
     groups = ["default" "development" "test"];
