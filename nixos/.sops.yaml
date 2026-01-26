@@ -17,6 +17,7 @@ keys:
   - &host_live3_alb age1tvkr0ujxh7w3pl605rj094eg2flsh9s6uuf0mlhrzs67evre2fas3c68z2
   - &host_live_bre age1fx8dyrfu827shfu7kv8a35wdmjqt5txm30rw7sfmetaa0pvq8u0spyqyqt
   - &host_live_ams age1az0xu3ta86n7kwcm9nvk7fjud78lz3wrckhje5qagv7tzwpw4elsvf02rw
+  - &host_live_dus age10jujjsx6rj9mja496r9scp38uq8rdszhc07w2t2hryrkkqcfpf9qywzhx9
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -71,6 +72,7 @@ creation_rules:
       - *host_live3_alb
       - *host_live_bre
       - *host_live_ams
+      - *host_live_dus
   - path_regex: modules/(voc-nebula|voc-relay)/*
     key_groups:
     - age:
@@ -84,3 +86,4 @@ creation_rules:
       - *host_live3_alb
       - *host_live_bre
       - *host_live_ams
+      - *host_live_dus

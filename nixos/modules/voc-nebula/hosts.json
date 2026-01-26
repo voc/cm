@@ -1,0 +1,299 @@
+[
+    {
+        "name": "lb.alb.c3voc.de",
+        "ip": "172.23.0.1/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "lb.dus.c3voc.de",
+        "ip": "172.23.0.2/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "lb.dort.c3voc.de",
+        "ip": "172.23.0.3/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "wg.c3voc.de",
+        "ip": "172.23.0.6/16",
+        "groups": [
+            "mgmt"
+        ]
+    },
+    {
+        "name": "ingest.c3voc.de",
+        "ip": "172.23.0.11/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "ingest2.c3voc.de",
+        "ip": "172.23.0.12/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "monitoring.c3voc.de",
+        "ip": "172.23.0.13/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "live.ber.c3voc.de",
+        "ip": "172.23.0.21/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "live.fem.c3voc.de",
+        "ip": "172.23.0.22/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "live.bn.c3voc.de",
+        "ip": "172.23.0.23/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "live.dort.c3voc.de",
+        "ip": "172.23.0.24/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "live.dus.c3voc.de",
+        "ip": "172.23.0.25/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "live.self.c3voc.de",
+        "ip": "172.23.0.26/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "live2.alb.c3voc.de",
+        "ip": "172.23.0.27/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "relive.c3voc.de",
+        "ip": "172.23.0.28/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "live.event.c3voc.de",
+        "ip": "172.23.0.29/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "live3.alb.c3voc.de",
+        "ip": "172.23.0.30/16",
+        "groups": [
+            "consul",
+            "relay"
+        ]
+    },
+    {
+        "name": "speedy.lan.c3voc.de",
+        "ip": "172.23.0.51/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "tweety.lan.c3voc.de",
+        "ip": "172.23.0.52/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "daffy.lan.c3voc.de",
+        "ip": "172.23.0.53/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "sylvester.lan.c3voc.de",
+        "ip": "172.23.0.54/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-fsl-1.lan.c3voc.de",
+        "ip": "172.23.128.101/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-fsl-2.lan.c3voc.de",
+        "ip": "172.23.128.102/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-fsl-3.lan.c3voc.de",
+        "ip": "172.23.128.103/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-fsl-4.lan.c3voc.de",
+        "ip": "172.23.128.104/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-fsl-5.lan.c3voc.de",
+        "ip": "172.23.128.105/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-fsl-6.lan.c3voc.de",
+        "ip": "172.23.128.106/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-irun-1.lan.c3voc.de",
+        "ip": "172.23.128.107/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-irun-2.lan.c3voc.de",
+        "ip": "172.23.128.108/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-irun-3.lan.c3voc.de",
+        "ip": "172.23.128.109/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-irun-4.lan.c3voc.de",
+        "ip": "172.23.128.110/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-irun-5.lan.c3voc.de",
+        "ip": "172.23.128.111/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "encoder-lks-1.lan.c3voc.de",
+        "ip": "172.23.128.112/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "rc3-edge-1.lan.c3voc.de",
+        "ip": "172.23.128.113/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "ber1.wob.c3voc.de",
+        "ip": "172.23.128.114/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "fra1.wob.c3voc.de",
+        "ip": "172.23.128.115/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "wob1.wob.c3voc.de",
+        "ip": "172.23.128.116/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "ingest.nurluefter.de",
+        "ip": "172.23.128.117/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "lb.wob.c3voc.de",
+        "ip": "172.23.128.119/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "rc3-edge-2.lan.c3voc.de",
+        "ip": "172.23.128.120/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "live.ams.c3voc.de",
+        "ip": "172.23.0.55/16",
+        "groups": [
+            "consul"
+        ]
+    }
+]

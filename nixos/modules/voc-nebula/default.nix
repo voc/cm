@@ -28,18 +28,18 @@ in {
     ];
     sops.secrets = {
       nebula_ca_cert = {
-        sopsFile = ./secrets/ca.yaml;
-        key = "cert";
+        sopsFile = ./secrets.yaml;
+        key = "ca/cert";
         owner = "nebula-nebula";
       };
       nebula_key = {
-        sopsFile = ./secrets + "/${fqdn}.yaml";
-        key = "key";
+        sopsFile = ./secrets.yaml;
+        key = "${fqdn}/key";
         owner = "nebula-nebula";
       };
       nebula_cert = {
-        sopsFile = ./secrets + "/${fqdn}.yaml";
-        key = "cert";
+        sopsFile = ./secrets.yaml;
+        key = "${fqdn}/cert";
         owner = "nebula-nebula";
       };
     };

@@ -17,15 +17,16 @@ in
   ];
   config = {
     system.stateVersion = "23.11"; # do not touch
-    deployment.tags = [ "relays" "edge-relays" ];
+    deployment.tags = [ "relays" "origin-relays" ];
 
     networking.hostName = lib.mkOverride 1 "live";
-    networking.domain = "ams.c3voc.de";
+    networking.domain = "dus.c3voc.de";
 
     services.voc-relay = {
       enable = true;
-      addressv4 = "204.2.64.100";
-      addressv6 = "2a05:2d01:0:420::100";
+      isOrigin = true;
+      addressv4 = "46.228.205.55";
+      addressv6 = "2001:4ba0:92c1:9f:46:228:205:55";
     };
   };
 }
