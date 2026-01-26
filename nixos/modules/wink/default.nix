@@ -273,6 +273,7 @@ in
             ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_cable -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
           '';
         };
+      };
 
     systemd.timers.wink-backup = {
       description = "Daily backup of Wink databases";
@@ -330,7 +331,7 @@ in
         ensureDBOwnership = true;
       }];
     };
-};
+
     networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
 }
