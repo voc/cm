@@ -187,8 +187,8 @@ in
       {
         wink = {
           description = "Wink - C3VOC Inventory Management";
-          after = [ "network.target" ] ++ lib.optional cfg.database.createLocally "postgresql.service";
-          requires = lib.optional cfg.database.createLocally "postgresql.service";
+          after = [ "network.target" "wink-db-grants.service" ] ++ lib.optional cfg.database.createLocally "postgresql.service";
+          requires = [ "wink-db-grants.service" ] ++ lib.optional cfg.database.createLocally "postgresql.service";
           wantedBy = [ "multi-user.target" ];
 
           environment = commonEnv;
@@ -197,9 +197,7 @@ in
           preStart = ''
             mkdir -p ${cfg.statePath}/storage
 
-            # maybe not needed
-            CUR_REL=$(ls -ltd /var/lib/wink/releases/* | head -1 | awk '{print $9}')
-            cd $CUR_REL
+            cd ${cfg.package}/share/wink
 
             export SECRET_KEY_BASE="$(cat ${secretKeyBasePath})"
             ${cfg.package}/bin/wink-rails db:prepare --trace
@@ -316,6 +314,23 @@ in
       }];
     };
 
+    wink-db-grants = lib.mkIf cfg.database.createLocally {
+      description = "Grant PostgreSQL permissions for Wink";
+      after = [ "postgresql.service" ];
+      requires = [ "postgresql.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        User = "postgres";
+        RemainAfterExit = true;
+      };
+      script = ''
+        ${pkgs.postgresql}/bin/psql -d ${cfg.database.name} -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
+        ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_cache -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
+        ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_queue -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
+        ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_cable -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
+      '';
+};
     networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
 }
