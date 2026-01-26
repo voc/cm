@@ -4,6 +4,7 @@
 , ruby_3_3
 , nodejs
 , sqlite
+, postgresql
 , libxml2
 , libxslt
 , zlib
@@ -24,6 +25,10 @@ let
     gemdir = ./.;
 
     gemConfig = {
+      pg = attrs: {
+        buildInputs = [ postgresql ];
+        nativeBuildInputs = [ pkg-config ];
+      };
       sqlite3 = attrs: {
         buildInputs = [ sqlite ];
         nativeBuildInputs = [ pkg-config ];
