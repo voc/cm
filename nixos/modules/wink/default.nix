@@ -348,7 +348,7 @@ in
         };
 
         locations."/outpost.goauthentik.io" = {
-          proxyPass = "http://sso.c3voc.de:9000/outpost.goauthentik.io";
+          proxyPass = "https://sso.c3voc.de/outpost.goauthentik.io";
           extraConfig = ''
             proxy_set_header        Host $host;
             proxy_set_header        X-Original-URL $scheme://$http_host$request_uri;
