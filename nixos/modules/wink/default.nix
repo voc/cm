@@ -236,23 +236,27 @@ in
           };
         };
 
-        wink-backup = {
-          description = "Backup Wink SQLite databases";
+        wink-backup = lib.mkIf cfg.database.createLocally {
+          description = "Backup Wink PostgreSQL databases";
+          after = [ "postgresql.service" ];
+          requires = [ "postgresql.service" ];
           serviceConfig = {
             Type = "oneshot";
             User = cfg.user;
             Group = cfg.group;
           };
+          path = [ pkgs.postgresql pkgs.gzip ];
           script = ''
             backup_dir="${cfg.statePath}/backups"
             timestamp=$(date +%Y%m%d-%H%M%S)
             
-            if [ -f "${cfg.statePath}/storage/production.sqlite3" ]; then
-              ${pkgs.sqlite}/bin/sqlite3 "${cfg.statePath}/storage/production.sqlite3" \
-                ".backup '$backup_dir/production-$timestamp.sqlite3'"
-            fi
+            mkdir -p "$backup_dir"
             
-            find "$backup_dir" -name "*.sqlite3" -mtime +7 -delete
+            for db in ${cfg.database.name} ${cfg.database.name}_cache ${cfg.database.name}_queue ${cfg.database.name}_cable; do
+              pg_dump -h /run/postgresql "$db" | gzip > "$backup_dir/$db-$timestamp.sql.gz"
+            done
+            
+            find "$backup_dir" -name "*.sql.gz" -mtime +7 -delete
           '';
         };
 
