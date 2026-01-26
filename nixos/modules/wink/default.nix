@@ -255,7 +255,24 @@ in
             find "$backup_dir" -name "*.sqlite3" -mtime +7 -delete
           '';
         };
-      };
+
+        wink-db-grants = lib.mkIf cfg.database.createLocally {
+          description = "Grant PostgreSQL permissions for Wink";
+          after = [ "postgresql.service" ];
+          requires = [ "postgresql.service" ];
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            User = "postgres";
+            RemainAfterExit = true;
+          };
+          script = ''
+            ${pkgs.postgresql}/bin/psql -d ${cfg.database.name} -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
+            ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_cache -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
+            ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_queue -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
+            ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_cable -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
+          '';
+        };
 
     systemd.timers.wink-backup = {
       description = "Daily backup of Wink databases";
@@ -313,23 +330,6 @@ in
         ensureDBOwnership = true;
       }];
     };
-
-    wink-db-grants = lib.mkIf cfg.database.createLocally {
-      description = "Grant PostgreSQL permissions for Wink";
-      after = [ "postgresql.service" ];
-      requires = [ "postgresql.service" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        User = "postgres";
-        RemainAfterExit = true;
-      };
-      script = ''
-        ${pkgs.postgresql}/bin/psql -d ${cfg.database.name} -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
-        ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_cache -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
-        ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_queue -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
-        ${pkgs.postgresql}/bin/psql -d ${cfg.database.name}_cable -c "GRANT ALL ON SCHEMA public TO ${cfg.database.user};"
-      '';
 };
     networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
