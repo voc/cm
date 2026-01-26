@@ -294,9 +294,12 @@ in
       };
     };
 
-    services.nginx = {
+    systemd.services.nginx = {
       after = [ "sops-nix.service" ];
       wants = [ "sops-nix.service" ];
+    };
+    
+    services.nginx = {
       enable = true;
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
