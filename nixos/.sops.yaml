@@ -18,6 +18,9 @@ keys:
   - &host_live_bre age1fx8dyrfu827shfu7kv8a35wdmjqt5txm30rw7sfmetaa0pvq8u0spyqyqt
   - &host_live_ams age1az0xu3ta86n7kwcm9nvk7fjud78lz3wrckhje5qagv7tzwpw4elsvf02rw
   - &host_live_dus age10jujjsx6rj9mja496r9scp38uq8rdszhc07w2t2hryrkkqcfpf9qywzhx9
+  - &host_fra1_wob age1pacmetk7sz6juzswjru2tt3tppzzfme2s5gdkmwusv6tvdyq6gmsntz5sc
+  - &host_wob1_wob age1uyaqfnhv0urvya8jt8m0y244hrutkvgvq3nzmyj4fmzw6xg8sfkshac6jk
+  - &host_ber1_wob age1f0j5uh79sj7jew5vz5l8e9a4afvfu7jhu0kd3zuq9kkhjat6tsxsptqvxx
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -73,6 +76,9 @@ creation_rules:
       - *host_live_bre
       - *host_live_ams
       - *host_live_dus
+      - *host_fra1_wob
+      - *host_wob1_wob
+      - *host_ber1_wob
   - path_regex: modules/(voc-nebula|voc-relay)/*
     key_groups:
     - age:
@@ -87,3 +93,6 @@ creation_rules:
       - *host_live_bre
       - *host_live_ams
       - *host_live_dus
+      - *host_fra1_wob
+      - *host_wob1_wob
+      - *host_ber1_wob

@@ -16,6 +16,6 @@ relive.c3voc.de                nginx=yes icecast=no relay_relive=yes
 #live.event.c3voc.de            nginx=yes icecast=yes relay_local=yes
 live.nitk.c3voc.de             nginx=yes icecast=no
 
-ber1.wob.c3voc.de              nginx=yes icecast=yes relay_stats_server=yes
-fra1.wob.c3voc.de              nginx=yes icecast=yes
-wob1.wob.c3voc.de              nginx=yes icecast=yes
+#ber1.wob.c3voc.de              nginx=yes icecast=yes relay_stats_server=yes
+#fra1.wob.c3voc.de              nginx=yes icecast=yes
+#wob1.wob.c3voc.de              nginx=yes icecast=yes

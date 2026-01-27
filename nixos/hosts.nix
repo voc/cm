@@ -11,4 +11,7 @@
   live-bre = { ... }: {};
   live-ams = { ... }: {};
   live-dus = { ... }: {};
+  fra1-wob = { ... }: {};
+  wob1-wob = { ... }: {};
+  ber1-wob = { ... }: {};
 }
