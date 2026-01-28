@@ -96,3 +96,14 @@ creation_rules:
       - *host_fra1_wob
       - *host_wob1_wob
       - *host_ber1_wob
+  - path_regex: hosts/netbox/.*
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *admin_ischluff
+      - *host_netbox
