@@ -101,6 +101,7 @@
       )
 
       LOGIN_REQUIRED = False
+      LOGIN_FORM_HIDDEN = True
       EXEMPT_VIEW_PERMISSIONS = ['*']
     '';
   };
