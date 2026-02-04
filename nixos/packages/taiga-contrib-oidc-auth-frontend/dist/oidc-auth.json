@@ -1,0 +1,8 @@
+{
+    "slug": "oidc-auth",
+    "name": "OIDC Auth",
+    "type": "auth",
+    "module": "taigaContrib.oidcAuth",
+    "template": "/plugins/oidc-auth/oidc_auth.html",
+    "js": "/plugins/oidc-auth/oidc_auth.js"
+}

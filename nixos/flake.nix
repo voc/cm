@@ -109,8 +109,25 @@
           git
           sops
           nebula
-
+          node2nix
+          unzip
           sops-nix.packages.${system}.sops-init-gpg-key
+
+          # Node.js / npm
+          nodejs
+          nodePackages.npm
+          nodePackages.node-gyp
+
+          # Python
+          python312
+          python312Packages.pip
+          python312Packages.setuptools
+          python312Packages.wheel
+          python312Packages.build
+
+          # Nix package development helpers
+          nix-prefetch-git
+          prefetch-npm-deps
         ];
       };
     }))

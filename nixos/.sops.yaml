@@ -21,6 +21,7 @@ keys:
   - &host_fra1_wob age1pacmetk7sz6juzswjru2tt3tppzzfme2s5gdkmwusv6tvdyq6gmsntz5sc
   - &host_wob1_wob age1uyaqfnhv0urvya8jt8m0y244hrutkvgvq3nzmyj4fmzw6xg8sfkshac6jk
   - &host_ber1_wob age1f0j5uh79sj7jew5vz5l8e9a4afvfu7jhu0kd3zuq9kkhjat6tsxsptqvxx
+  - &host_web2 age1hyltpunwq3dfpr89yuzzsdynk780xjvrxcde9r4yyxrecg399q2sqvpnrx
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -79,6 +80,7 @@ creation_rules:
       - *host_fra1_wob
       - *host_wob1_wob
       - *host_ber1_wob
+      - *host_web2
   - path_regex: modules/(voc-nebula|voc-relay)/*
     key_groups:
     - age:
@@ -107,3 +109,14 @@ creation_rules:
       - *admin_molly
       - *admin_ischluff
       - *host_netbox
+  - path_regex: hosts/web2/.*
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *admin_ischluff
+      - *host_web2
