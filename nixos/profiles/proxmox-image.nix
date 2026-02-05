@@ -8,7 +8,7 @@
       virtio0 = "local-zfs:vm-9999-disk-0";
       agent = true;
     };
-    virtualisation.diskSize = "32G";
+    virtualisation.diskSize = 32000;
 
     boot = {
       kernelParams = [ "console=tty0" "console=ttyS0" ];
