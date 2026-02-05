@@ -92,6 +92,7 @@
           modules = [
             ./profiles/proxmox-image.nix
             ./profiles/base
+            sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
           ];
           specialArgs = {
