@@ -5,6 +5,7 @@ keys:
   - &admin_ember age1h9tjtrffuewvhkugqc04jja65fv7havvy0xpzdyyykmga8f55drshcq4r4
   - &admin_molly age1rup6s5s63r0tg2qrdtgu5tez9ppj74vccfw2gd2qjrkz66srpq4qj0xyyj
   - &admin_ischluff age19yrsc0ytf42wtmtu23dhd0waylxf890ra6mqmmyz9286t5crj9xqklxk4a
+  - &admin_lukas2511 age1l8k6xg79heqf2ptcw84f5479qpwlutd6pzfctsa3pxaxarp52a7s928yj5
   - &admin_keepass age13yl99pyktjyssdm487pa5ucm4rxcrdrt4lq8qk2vkvdwyfhcvahqs4e6cw
   - &host_tel age1glkmsh6pex9g5v95vwx78a8xksmnkvsu7ccnhxzu09yvnfnjudls3lfkru
   - &host_mail age1zcj3dt7uc3gc3kyt6l7m86qjzm9vlgq7kcsm9wh9gank6rqff4gqwrtzpa
@@ -21,6 +22,7 @@ keys:
   - &host_fra1_wob age1pacmetk7sz6juzswjru2tt3tppzzfme2s5gdkmwusv6tvdyq6gmsntz5sc
   - &host_wob1_wob age1uyaqfnhv0urvya8jt8m0y244hrutkvgvq3nzmyj4fmzw6xg8sfkshac6jk
   - &host_ber1_wob age1f0j5uh79sj7jew5vz5l8e9a4afvfu7jhu0kd3zuq9kkhjat6tsxsptqvxx
+  - &host_live_nitk age1sz0ytgt4h6g4622mgmltmkwjsgdwnk3rq59rs8xrh3fnvh8yx4vsufu40d
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -32,6 +34,7 @@ creation_rules:
       - *admin_derchris
       - *admin_ember
       - *admin_molly
+      - *admin_lukas2511
       - *host_tel
   - path_regex: hosts/mail/.*
     key_groups:
@@ -42,6 +45,7 @@ creation_rules:
       - *admin_derchris
       - *admin_ember
       - *admin_molly
+      - *admin_lukas2511
       - *host_mail
 
   - path_regex: hosts/forgejo/secrets.yaml
@@ -53,6 +57,7 @@ creation_rules:
       - *admin_derchris
       - *admin_ember
       - *admin_molly
+      - *admin_lukas2511
       - *host_forgejo
   - path_regex: modules/(voc2mqtt|monitoring-client)/.*
     key_groups:
@@ -64,6 +69,7 @@ creation_rules:
       - *admin_ember
       - *admin_molly
       - *admin_ischluff
+      - *admin_lukas2511
       - *host_mail
       - *host_tel
       - *host_loudness
@@ -79,6 +85,7 @@ creation_rules:
       - *host_fra1_wob
       - *host_wob1_wob
       - *host_ber1_wob
+      - *host_live_nitk
   - path_regex: modules/(voc-nebula|voc-relay)/*
     key_groups:
     - age:
@@ -89,6 +96,7 @@ creation_rules:
       - *admin_ember
       - *admin_molly
       - *admin_ischluff
+      - *admin_lukas2511
       - *host_live3_alb
       - *host_live_bre
       - *host_live_ams
@@ -96,6 +104,7 @@ creation_rules:
       - *host_fra1_wob
       - *host_wob1_wob
       - *host_ber1_wob
+      - *host_live_nitk
   - path_regex: hosts/netbox/.*
     key_groups:
     - age:
@@ -106,4 +115,5 @@ creation_rules:
       - *admin_ember
       - *admin_molly
       - *admin_ischluff
+      - *admin_lukas2511
       - *host_netbox
