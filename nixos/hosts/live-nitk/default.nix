@@ -26,11 +26,11 @@ in
     networking.domain = "nitk.c3voc.de";
 
     networking.useDHCP = false;
-    networking.interfaces.eth0.ipv4.addresses = [{
+    networking.interfaces.ens18.ipv4.addresses = [{
       address = "78.138.61.80";
       prefixLength = 26;
     }];
-    networking.interfaces.eth0.ipv6.addresses = [{
+    networking.interfaces.ens18.ipv6.addresses = [{
       address = "2a13:ccc3:9:1::80";
       prefixLength = 64;
     }];
