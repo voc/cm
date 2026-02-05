@@ -295,5 +295,12 @@
         "groups": [
             "consul"
         ]
+    },
+    {
+        "name": "live.nitk.c3voc.de",
+        "ip": "172.23.0.56/16",
+        "groups": [
+            "consul"
+        ]
     }
 ]
