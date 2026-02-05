@@ -128,7 +128,12 @@
           # Nix package development helpers
           nix-prefetch-git
           prefetch-npm-deps
-        ];
+
+          curl
+          wget
+          jq
+          ssh-to-age
+      ];
       };
     }))
   );
