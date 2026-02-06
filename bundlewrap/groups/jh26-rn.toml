@@ -1,0 +1,9 @@
+subgroups = ["saal5"]
+members = ["releasing"]
+
+[metadata.event]
+name = "Jugend hackt Rhein-Neckar 2026"
+slug = "jh26-rn"
+
+[metadata]
+nameservers = ["8.8.8.8", "1.1.1.1"]
