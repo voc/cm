@@ -1,0 +1,7 @@
+subgroups = ["saal5"]
+members = ["releasing", "loudness-rendering"]
+
+[metadata.event]
+name = "WICMP 11"
+slug = "wicmp11"
+schedule_json = "https://cfp.w.icmp.camp/wicmp11/schedule/export/schedule.json"
