@@ -1,7 +1,7 @@
 { lib
 , stdenv
 , bundlerEnv
-, ruby_3_3
+, ruby_3_4
 , nodejs
 , sqlite
 , postgresql
@@ -17,7 +17,7 @@
 }:
 
 let
-  ruby = ruby_3_3;
+  ruby = ruby_3_4;
 
   gems = bundlerEnv {
     name = "wink-gems";
@@ -59,7 +59,7 @@ let
     owner = "voc";
     repo = "wink";
     rev = "master";
-    hash = "sha256-lT9V+wTpNaClHbS7C9gpwKRXaYU2aKbJD0rcajRt7Bw=";
+    hash = "";
   };
 
 in

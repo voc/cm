@@ -112,10 +112,10 @@
           colmena
           git
           sops
-          ruby_3_3
+          ruby_3_4
           bundix.packages.${stdenv.hostPlatform.system}.default
-
           sops-nix.packages.${stdenv.hostPlatform.system}.sops-init-gpg-key
+          nix-prefetch-git
         ];
       };
     }))
