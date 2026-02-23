@@ -59,7 +59,7 @@ let
     owner = "voc";
     repo = "wink";
     rev = "master";
-    hash = "";
+    hash = "sha256-zssjQ1tSy1998NWFZbOBazIkP7n77nxUzHyWl5tKr78=";
   };
 
 in
