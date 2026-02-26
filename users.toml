@@ -729,3 +729,11 @@ uid = 1194
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqnMKa8BZmbRM2Oc4E8N9h9N26ABPLgPTketLNSK7l7 me@netali.de"
 ]
+
+[herk]
+enable_rz = false
+enable_event = true
+uid = 1195
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWamW3UCnpXHLtlO++foByFttuDnfBU6xHzPvEp3uFG"
+]
