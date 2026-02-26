@@ -1,5 +1,8 @@
 groups = ["debian-trixie", "case20_minions"]
 
+[metadata]
+nameservers = ["9.9.9.9", "8.8.8.8"]
+
 [metadata.crs-worker.secrets.encoding]
 token = "!kee_user:ansible|worker-groups|minion5"
 secret = "!kee_pass:ansible|worker-groups|minion5"

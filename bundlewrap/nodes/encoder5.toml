@@ -1,5 +1,8 @@
 groups = ["debian-bookworm", "case20_encoders"]
 
+[metadata]
+nameservers = ["9.9.9.9", "8.8.8.8"]
+
 [metadata.crs-worker.secrets]
 encoding.secret = "!kee_pass:ansible|worker-groups|encoder5"
 encoding.token = "!kee_user:ansible|worker-groups|encoder5"
