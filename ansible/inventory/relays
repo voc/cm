@@ -5,7 +5,7 @@ edge_relays
 
 [master_relays]
 live.ber.c3voc.de              nginx=yes icecast=yes
-live.nurluefter.de             nginx=yes icecast=yes
+#live.nurluefter.de             nginx=yes icecast=yes
 
 [edge_relays]
 #live.dort.c3voc.de             nginx=yes icecast=yes relay_dtag=yes relay_mediastatic=yes

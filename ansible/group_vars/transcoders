@@ -2,4 +2,3 @@ monitoring_role: transcoder
 
 transcoder_upload_proxy_sinks:
 - "https://live.ber.c3voc.de/upload"
-- "https://live.nurluefter.de/upload"
