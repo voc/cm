@@ -49,6 +49,14 @@ Rename `configuration.nix` to `default.nix`. ... profit!
 
 Maybe there will be a better way for this is the future, mainly for the `nixos` install part, which is kind of annoying.
 
+### Reencrypt sops secrets
+This is necessary after changing the sops key permissions. E.g. when adding a new public key.
+
+This one-liner will find and try to update all secrets.
+```
+find . -type f -name '*.yaml' -exec sops updatekeys -y {} \;
+```
+
 ## Specials
 
 ### Loudness Player
