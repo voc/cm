@@ -32,9 +32,9 @@ groups['linux'] = {
             },
         },
         'telegraf': {
-            'influxdb_url': keepass.url(['ansible', 'monitoring', 'write_htpasswd']),
-            'influxdb_username': keepass.username(['ansible', 'monitoring', 'write_htpasswd']),
-            'influxdb_password': keepass.password(['ansible', 'monitoring', 'write_htpasswd']),
+            'influxdb_url': vault.decrypt(libs.keepass.INFLUXDB_URL),
+            'influxdb_username': vault.decrypt(libs.keepass.INFLUXDB_USERNAME),
+            'influxdb_password': vault.decrypt(libs.keepass.INFLUXDB_PASSWORD),
         },
     },
     'pip_command': 'pip3',
