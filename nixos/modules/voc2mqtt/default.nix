@@ -54,7 +54,7 @@ in
   systemd.services.check_system_and_send_mqtt_message = {
     after = [ "network.target" ];
     requires = [ "network.target" ];
-    path = [ voc2mqtt ];
+    path = [ voc2mqtt voc2mqtt-tools ];
     script = lib.getExe' voc2mqtt-tools "check_system.sh";
     environment.MY_HOSTNAME = "${config.networking.hostName}.${config.networking.domain}";
     serviceConfig.Type = "oneshot";
