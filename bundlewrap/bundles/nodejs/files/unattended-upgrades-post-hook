@@ -1,0 +1,5 @@
+npm install -g npm@latest
+npm install -g yarn@latest
+% for package in sorted(packages):
+npm install -g ${package}@latest
+% endfor

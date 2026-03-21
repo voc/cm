@@ -1,9 +1,8 @@
 hostname = "172.19.164.93"
 #hostname = "10.73.94.1"
 bundles = [
-  #'nodejs',
-  #'git-repo',
-  #'bitfocus-companion',
+  'nodejs',
+  'bitfocus-companion',
 ]
 groups = ["debian-bookworm"]
 
@@ -40,6 +39,7 @@ high_dpi = false
 vaapi = true
 
 [metadata.bitfocus-companion]
-version = 'v3.5.4'
+version = 'v4.2.5'
+restrict-to = ["voc-internal", "voc-vpn", "172.19.164.0/23"]
 
 # TODO: get this to main
