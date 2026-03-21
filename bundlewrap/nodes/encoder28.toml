@@ -25,12 +25,12 @@ room_name = "LoTHR"
 [metadata.interfaces.eth0]
 ips = [
     "10.73.28.3/16",
-#    "192.168.69.202/24", # realraum
-    "192.168.0.209/23", # testing
+    "192.168.69.202/24", # realraum
+#    "192.168.0.209/23", # testing
 ]
 
-# gateway4 = "192.168.69.254" # realraum
-gateway4 = "192.168.0.1" # testing
+gateway4 = "192.168.69.254" # realraum
+# gateway4 = "192.168.0.1" # testing
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABo1XfkhnE3utcKFqchfqfY6YMMJAaJoL-X43HvlJQG3XC4SUJTKqKtgfa2EY6AVABaaF0oCVBMdTt9lPhOf2k1hjzTLtt0zXpjB9bvKzsa3WzYgqE="
