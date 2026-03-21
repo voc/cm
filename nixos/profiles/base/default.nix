@@ -4,6 +4,7 @@
   imports = [
     ./users.nix
     ../../modules/voc2mqtt
+    ../../modules/autocolmena
   ];
 
   nix.settings = {
@@ -91,13 +92,9 @@
     experimental-features = nix-command flakes
   '';
 
-  system.autoUpgrade = {
+  system.autoColmena = {
     enable = true;
-    allowReboot = lib.mkDefault false;
-    dates = "03:30";
     flake = "github:voc/cm?dir=nixos";
-    rebootWindow.lower = "03:00";
-    rebootWindow.upper = "05:00";
   };
 
   programs.fuse.userAllowOther = true;
