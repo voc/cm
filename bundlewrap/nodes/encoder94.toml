@@ -1,5 +1,5 @@
-#hostname = "172.19.164.90"
-hostname = "10.73.94.3"
+hostname = "172.19.164.90"
+#hostname = "10.73.94.3"
 bundles = ["zfs"]
 groups = ["debian-bookworm"]
 
