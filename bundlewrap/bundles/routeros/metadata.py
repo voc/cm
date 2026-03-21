@@ -2,7 +2,7 @@ import re
 from json import load
 from os.path import join
 
-with open(join(repo.path, 'configs', f'netbox_device_{node.name}.json')) as f:
+with open(join(repo.path, 'configs', 'netbox', f'{node.name}.json')) as f:
     netbox = load(f)
 
 ips = {}

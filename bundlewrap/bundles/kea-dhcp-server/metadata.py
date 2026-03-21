@@ -4,7 +4,7 @@ from os.path import join
 from re import sub as re_sub
 
 
-with open(join(repo.path, 'configs', 'dhcp.json')) as f:
+with open(join(repo.path, 'configs', 'netbox', 'dhcp.json')) as f:
     allocs = load(f)
 
 defaults = {

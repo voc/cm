@@ -123,6 +123,14 @@
         "description": "thunfisch uni dock",
         "mac": "c8:a3:62:52:93:cd"
     },
+    "10.73.100.51": {
+        "description": "thunfisch wing rack",
+        "mac": "00:15:64:0b:59:2d"
+    },
+    "10.73.100.52": {
+        "description": "thunfisch wing fullsize",
+        "mac": "00:15:64:06:d2:87"
+    },
     "10.73.100.75": {
         "description": "meise wlan",
         "mac": "00:21:5d:8b:81:30"
