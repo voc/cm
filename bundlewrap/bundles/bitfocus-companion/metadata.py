@@ -57,41 +57,6 @@ defaults = {
 
 
 @metadata_reactor.provides(
-    'bitfocus-companion/enforce_config',
-)
-def obs_config(metadata):
-    obs_node = repo.get_node(
-        node.metadata.get('bitfocus-companion/obs_node', node.name)
-    )
-    if not obs_node.has_bundle('video-encoder-obs'):
-        return {}
-
-    if obs_node.name == node.name:
-        obs_host = '127.0.0.1'
-        m = metadata
-    else:
-        obs_host = obs_node.hostname
-        m = obs_node.metadata
-
-    return {
-        'bitfocus-companion': {
-            'enforce_config': {
-                'instance': {
-                    'OBS-Studi': {
-                        'instance_type': 'obs-studio',
-                        'config': {
-                            'host': obs_host,
-                            'pass': m.get('video-encoder-obs/websockets/password'),
-                            'port': 4444,
-                        },
-                    },
-                },
-            },
-        },
-    }
-
-
-@metadata_reactor.provides(
     'firewall/port_rules',
 )
 def firewall(metadata):
