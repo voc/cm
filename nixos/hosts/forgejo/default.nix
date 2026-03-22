@@ -1,4 +1,4 @@
-{ lib, modulesPath, pkgs, ... }:
+{ lib, modulesPath, pkgs, config, ... }:
 
 with lib;
 
@@ -81,13 +81,29 @@ in
       }
     ];
 
+    services.anubis.instances.forgejo = {
+      user = "nginx";
+      group = "nginx";
+
+      settings = {
+        TARGET = "http://127.0.0.1:3000";
+        SERVE_ROBOTS_TXT = true;
+      };
+
+      botPolicy = {
+        bots = [
+          { import = "(data)/meta/default-config.yaml"; }
+        ];
+      };
+    };
+
     services.nginx.enable = true;
     services.nginx.virtualHosts."forgejo.c3voc.de" = {
       forceSSL = true;
       enableACME = true;
       locations."/" = {
         recommendedProxySettings = true;
-        proxyPass = "http://127.0.0.1:3000/";
+        proxyPass = "http://unix:/run/anubis/anubis-forgejo.sock";
       };
     };
   };
