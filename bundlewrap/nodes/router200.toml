@@ -7,7 +7,7 @@ bundles = [
 groups = ["debian-trixie"]
 
 [metadata]
-external_interface = "ens18"
+external_interface = "ens19"
 room_number = 200
 
 [metadata.bird]
@@ -38,7 +38,7 @@ ips = [
     "2001:67c:20a1:3504:10:73:200:201/64",
 ]
 
-[metadata.kea-dhcp-server.subnets.ens19]
+[metadata.kea-dhcp-server.subnets.ens18]
 id = 3504
 lower = "10.73.170.1"
 higher = "10.73.170.254"
@@ -47,7 +47,7 @@ options.domain-name-servers = "10.73.0.254"
 options.domain-search = "lan.c3voc.de"
 options.routers = "10.73.0.254"
 
-[metadata.radvd.interfaces.ens19]
+[metadata.radvd.interfaces.ens18]
 # only active if ens18 has ipv6 gateway, check bundle README
 prefix = "2001:67c:20a1:3504::/64"
 rdnss = ["2001:67c:20a1:3504:10:73:200:201"]
