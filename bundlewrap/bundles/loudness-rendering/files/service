@@ -7,6 +7,7 @@ Type=simple
 User=voc
 Group=voc
 ExecStart=/usr/local/bin/loudness_rendering "${identifier}" "${source_url}" "${output}"
+Environment=PATH=/opt/ffmpeg-master-latest-linux64-gpl/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 Restart=always
 RestartSec=10
 StartLimitInterval=0
