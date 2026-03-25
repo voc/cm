@@ -4,6 +4,28 @@ let
   cfg = config.services.wink;
   
   winkPkg = pkgs.callPackage ../../packages/wink { };
+
+  commonEnv = {
+    RAILS_DISABLE_LOCAL_LOGGING = "1";
+    RAILS_ENV = cfg.environment;
+    RAILS_LOG_TO_STDOUT = "1";
+    RAILS_SERVE_STATIC_FILES = "1";
+    DATABASE_HOST = cfg.database.host;
+    DATABASE_USER = cfg.database.user;
+    DATABASE_NAME = cfg.database.name;
+    CACHE_DATABASE_NAME = "${cfg.database.name}_cache";
+    QUEUE_DATABASE_NAME = "${cfg.database.name}_queue";
+    CABLE_DATABASE_NAME = "${cfg.database.name}_cable";
+    RAILS_STORAGE_PATH = "${cfg.statePath}/storage";
+    WEB_CONCURRENCY = toString cfg.workers;
+    RAILS_MAX_THREADS = cfg.threads;
+    PORT = toString cfg.port;
+    RuntimeDirectoryMode = "0750";
+  } // cfg.extraEnvironment;
+
+  wink-rails = pkgs.writeScriptBin "wink-rails" ''
+    runuser -u ${cfg.user} -- ${winkPkg}/bin/wink-rails $@
+  '';
 in
 {
   options.services.wink = {
@@ -118,6 +140,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    environment.systemPackages = [
+      wink-rails
+    ];
+
     sops.secrets.wink-secret-key-base = {
       owner = cfg.user;
       group = cfg.group;
@@ -152,24 +178,6 @@ in
     systemd.services =
       let
         secretKeyBasePath = config.sops.secrets.wink-secret-key-base.path;
-        
-        commonEnv = {
-          RAILS_DISABLE_LOCAL_LOGGING = "1";
-          RAILS_ENV = cfg.environment;
-          RAILS_LOG_TO_STDOUT = "1";
-          RAILS_SERVE_STATIC_FILES = "1";
-          DATABASE_HOST = cfg.database.host;
-          DATABASE_USER = cfg.database.user;
-          DATABASE_NAME = cfg.database.name;
-          CACHE_DATABASE_NAME = "${cfg.database.name}_cache";
-          QUEUE_DATABASE_NAME = "${cfg.database.name}_queue";
-          CABLE_DATABASE_NAME = "${cfg.database.name}_cable";
-          RAILS_STORAGE_PATH = "${cfg.statePath}/storage";
-          WEB_CONCURRENCY = toString cfg.workers;
-          RAILS_MAX_THREADS = cfg.threads;
-          PORT = toString cfg.port;
-          RuntimeDirectoryMode = "0750";
-        } // cfg.extraEnvironment;
 
         commonServiceConfig = {
           User = cfg.user;
