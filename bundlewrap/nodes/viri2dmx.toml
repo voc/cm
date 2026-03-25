@@ -10,7 +10,8 @@ gateway4 = "10.73.0.254"
 
 [metadata.voc2dmx.universes.sophie]
 target = "10.73.94.59"
-lights.TSSS_LED_PAR_RGBW = [1, 9, 17, 25, 33, 41, 49, 57]
+lights.EUROLITE_PARTY_PANEL_RGBUV = [1]
+#lights.TSSS_LED_PAR_RGBW = [1, 9, 17, 25, 33, 41, 49, 57]
 
 [metadata.voc2dmx.universes.kunsi]
 target = "10.73.100.115"
