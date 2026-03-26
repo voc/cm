@@ -67,7 +67,7 @@ for source in sorted(sources.keys()):
     except IndexError:
         pass
 
-if 'slides' in sources and node.metadata.get('voctocore/enable_sbs_presets_with_slides'):
+if node.metadata.get("voctocore/enable_sbs") and 'slides' in sources and node.metadata.get('voctocore/enable_sbs_presets_with_slides'):
     for source in sorted(preset_camera_sources):
         icon = None
         source_kind = sources[source]["kind"]
@@ -83,7 +83,7 @@ if 'slides' in sources and node.metadata.get('voctocore/enable_sbs_presets_with_
         except IndexError:
             pass
 
-if len(preset_camera_sources) > 2 and node.metadata.get(
+if node.metadata.get("voctocore/enable_sbs") and len(preset_camera_sources) > 2 and node.metadata.get(
     "voctocore/enable_sbs_presets_for_multi_camera"
 ):
     # We have a (atleast) three-camera setup. We assume last camera is
