@@ -1,10 +1,10 @@
 from json import dumps, loads
 
+import bcrypt
 from bundlewrap.metadata import metadata_to_json
 from bundlewrap.utils import Fault
-
-from tomlkit import dumps as toml_dumps
 from bundlewrap.utils.text import toml_clean
+from tomlkit import dumps as toml_dumps
 
 
 def resolve_faults(dictionary: dict) -> dict:
@@ -56,3 +56,14 @@ def dict_as_toml(json):
         lambda o: toml_clean(toml_dumps(resolve_faults(o), sort_keys=True)) + '\n',
         o=json
     )
+
+def as_passwd_entry(fault, username):
+    def callback():
+        return "{username}:{hashed}".format(
+            username=username,
+            hashed=bcrypt.hashpw(fault.value.encode("utf-8"), bcrypt.gensalt()).decode(
+                "utf-8"
+            ),
+        )
+
+    return Fault(fault.id_list + ["as_passwd_entry " + username], callback)

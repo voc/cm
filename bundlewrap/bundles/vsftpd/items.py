@@ -5,6 +5,12 @@ files['/etc/vsftpd.conf'] = {
     },
 }
 
+files['/etc/pam.d/vsftpd_virtual'] = {
+    'triggers': {
+        'svc_systemd:vsftpd:restart',
+    },
+}
+
 files['/etc/vsftpd/ftpd.passwd'] = {
     'content_type': 'mako',
     'context': {
@@ -17,13 +23,13 @@ files['/etc/vsftpd/ftpd.passwd'] = {
 
 svc_systemd['vsftpd'] = {
     'needs': {
-        'files:/etc/vsftpd.conf',
         'pkg_apt:vsftpd',
     },
 }
 
 for user in node.metadata.get('vsftpd/users'):
     localroot = node.metadata.get(f'vsftpd/users/{user}/localroot')
+    password =  node.metadata.get(f'vsftpd/users/{user}/password')
     needs = {}
     if not node.has_bundle('zfs'):
         needs = {'zfs_dataset:'}
