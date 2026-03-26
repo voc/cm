@@ -24,6 +24,8 @@ let
   } // cfg.extraEnvironment;
 
   wink-rails = pkgs.writeScriptBin "wink-rails" ''
+    ${lib.concatLines (lib.mapAttrsToList (k: v: ''export ${k}="${v}"'') commonEnv)}
+
     runuser -u ${cfg.user} -- ${winkPkg}/bin/wink-rails $@
   '';
 in
