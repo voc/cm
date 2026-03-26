@@ -55,19 +55,17 @@ let
     };
   };
 
-  src = fetchFromGitHub {
-    owner = "voc";
-    repo = "wink";
-    rev = "master";
-    hash = "sha256-zssjQ1tSy1998NWFZbOBazIkP7n77nxUzHyWl5tKr78=";
-  };
-
 in
 stdenv.mkDerivation rec {
   pname = "wink";
-  version = "unstable-2025";
+  version = "20260326100500";
 
-  inherit src;
+  src = fetchFromGitHub {
+    owner = "voc";
+    repo = "wink";
+    rev = version;
+    hash = "sha256-zssjQ1tSy1998NWFZbOBazIkP7n77nxUzHyWl5tKr78=";
+  };
 
   nativeBuildInputs = [ pkg-config nodejs ];
   buildInputs = [ gems gems.wrappedRuby sqlite ];
@@ -99,7 +97,8 @@ stdenv.mkDerivation rec {
   production:
     primary:
       <<: *default
-      database: <%= ENV.fetch("DATABASE_NAME", "wink_production") %>
+      database: <%= ENV.fetch("DATABASE_NAME", "wink") %>
+      migrations_paths: db/migrate
     cache:
       <<: *default
       database: <%= ENV.fetch("CACHE_DATABASE_NAME", "wink_cache") %>
