@@ -29,6 +29,7 @@ defaults = {
         },
     },
     'voctocore': {
+        'enable_sbs': False,
         'enable_sbs_presets_for_multi_camera': False,
         'enable_sbs_presets_with_slides': False,
         'mirror_view': False, # automatically mirrors SBS/LEC views
