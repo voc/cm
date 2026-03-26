@@ -1,0 +1,3 @@
+%for user, config in users.items():
+${user}:${config['password']}
+%endfor

@@ -4,6 +4,7 @@ bundles = [
     "nginx",
     "samba",
     "zfs",
+    "vsftpd",
 ]
 groups = [
     "crs-workers",
