@@ -86,7 +86,7 @@ creation_rules:
       - *host_wob1_wob
       - *host_ber1_wob
       - *host_live_nitk
-  - path_regex: modules/(voc-nebula|voc-relay)/*
+  - path_regex: modules/(voc-nebula|voc-relay|upload-server)/*
     key_groups:
     - age:
       - *admin_keepass
