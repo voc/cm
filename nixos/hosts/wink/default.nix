@@ -23,5 +23,7 @@
   networking.defaultGateway6 = "2001:67c:20a0:e::1";
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
+  system.autoColmena.enable = lib.mkForce false;
+
   system.stateVersion = "25.05";
 }
