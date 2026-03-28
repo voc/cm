@@ -28,5 +28,7 @@ in
   nix.settings.trusted-users = [ "voc" "root" ];
   nix.settings.require-sigs = false;
 
+  system.autoColmena.enable = lib.mkForce false;
+
   services.locate.enable = true;
 }
