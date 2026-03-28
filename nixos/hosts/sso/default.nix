@@ -30,5 +30,7 @@
   };
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
+  system.autoColmena.enable = lib.mkForce false;
+
   system.stateVersion = "23.05";
 }
