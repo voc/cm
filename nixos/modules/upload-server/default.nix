@@ -30,6 +30,8 @@ in {
         ExecStart = "${pkgs.stream-api}/bin/upload-server -config ${config.sops.secrets.upload_server_config.path}";
       };
       wantedBy = [ "multi-user.target" ];
+      restartIfChanged = true;
+      restartTriggers = [ config.sops.secrets.upload_server_config.path ];
     };
   };
 }
