@@ -1,20 +1,20 @@
 # not managed by register2ansible.pl anymore!
 [relays:children]
-master_relays
+#master_relays
 edge_relays
 
 [master_relays]
-live.ber.c3voc.de              nginx=yes icecast=yes
+#live.ber.c3voc.de              nginx=yes icecast=yes
 #live.nurluefter.de             nginx=yes icecast=yes
 
 [edge_relays]
 #live.dort.c3voc.de             nginx=yes icecast=yes relay_dtag=yes relay_mediastatic=yes
 #live.fem.c3voc.de              nginx=yes icecast=yes relay_stats_server=yes # down for maintenance
-live2.alb.c3voc.de             nginx=yes icecast=no relay_dtag=yes
+#live2.alb.c3voc.de             nginx=yes icecast=no relay_dtag=yes
 relive.c3voc.de                nginx=yes icecast=no relay_relive=yes
 #live.ams.c3voc.de              nginx=yes icecast=no
 #live.event.c3voc.de            nginx=yes icecast=yes relay_local=yes
-live.nitk.c3voc.de             nginx=yes icecast=no
+#live.nitk.c3voc.de             nginx=yes icecast=no
 
 #ber1.wob.c3voc.de              nginx=yes icecast=yes relay_stats_server=yes
 #fra1.wob.c3voc.de              nginx=yes icecast=yes
