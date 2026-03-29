@@ -14,4 +14,6 @@ final: prev: {
     patches = old.patches ++ [ ./rt/rt-server-fcgi-wrapper.patch ];
   });
   stream-api = prev.callPackage ./stream-api.nix { };
+  voc-telemetry = prev.callPackage ./voc-telemetry.nix { };
+  ripe-mmdb = prev.callPackage ./ripe-mmdb.nix { };
 }

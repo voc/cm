@@ -28,7 +28,6 @@
     url = "github:edolstra/flake-compat";
     flake = false;
   };
-
   outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, ... }@inputs: (
     let
       pkgs' = system: import nixpkgs {
@@ -56,6 +55,8 @@
             ./modules/voc-consul
             ./modules/monitoring-client
             ./modules/nginx-viewcounter
+            ./modules/voc-telemetry
+            ./modules/upload-server
 
             ./profiles/base
 
