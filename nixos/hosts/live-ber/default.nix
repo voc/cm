@@ -17,15 +17,17 @@ in
   ];
   config = {
     system.stateVersion = "23.11"; # do not touch
-    deployment.tags = [ "relays" "edge-relays" ];
+    deployment.tags = [ "relays" "origin-relays" ];
 
-    networking.hostName = lib.mkOverride 1 "live3";
-    networking.domain = "alb.c3voc.de";
+    networking.hostName = lib.mkOverride 1 "live";
+    networking.domain = "ber.c3voc.de";
 
     services.voc-relay = {
       enable = true;
-      addressv4 = "185.106.84.17";
-      addressv6 = "2001:67c:20a0:e::17";
+      isOrigin = true;
+      addressv4 = "185.106.84.40";
+      addressv6 = "2001:67c:20a0:e::164";
     };
+    system.autoColmena.enable = lib.mkForce false;
   };
 }

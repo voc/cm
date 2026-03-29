@@ -97,14 +97,6 @@
         ]
     },
     {
-        "name": "live2.alb.c3voc.de",
-        "ip": "172.23.0.27/16",
-        "groups": [
-            "consul",
-            "relay"
-        ]
-    },
-    {
         "name": "relive.c3voc.de",
         "ip": "172.23.0.28/16",
         "groups": [
@@ -121,7 +113,7 @@
         ]
     },
     {
-        "name": "live3.alb.c3voc.de",
+        "name": "live.alb.c3voc.de",
         "ip": "172.23.0.30/16",
         "groups": [
             "consul",
