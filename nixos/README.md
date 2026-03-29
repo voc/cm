@@ -2,11 +2,11 @@
 
 ## General Information about NixOS
 
-First you have to understand that Nix is and means multiple thing. There is:
-- Nix the language
-- Nix the package-manager
-- NixOS the distribution
-- Nix the german word "nichts"
+First you have to understand that Nix is and means multiple things – there is:
+- `Nix` the language
+- `Nix` the package-manager
+- `NixOS` the distribution
+- `Nix` the German slang word "nichts"
 
 There are some offical guides to NixOS that you can find on [nixos.org](https://nixos.org/learn.html), an other source of information is the unoffical user [wiki](https://nixos.wiki/) and for a general introduction you can look at [zero-to-nix](https://zero-to-nix.com/).
 
