@@ -78,5 +78,5 @@ node_name = "akamai"
 [metadata.unbound-with-knot]
 threads = 4
 cache_slabs = 4
-primary = "!kee_user:ansible|router|knot secret"
-primary_secret = "!kee_pass:ansible|router|knot secret"
+primary = "!decrypt:encrypt$gAAAAABmBGxVDiZLLQAXtkHpNgy3Eaqs5NM9ArfFMHhjL3OKOdQHnyPpcMkKz_G6vGykgizdjX_SiKUfDRt9to_pkPc09zEi1g=="
+primary_secret = "!decrypt:encrypt$gAAAAABpyi4lg5FTtA90uert3SFssO1xVC_7JaBmSpEPN_ty9D0uqaIKm3aHFxaB37lUAeFy9Ks6_uUD0hBJ0bZE5HIB_EQd92KLxdt7f8_X5yHiE8JVlJ1_D_my3mcxCw30dzkY2oWHTBsQOphfhHHgpmTTYgL6vQ=="
