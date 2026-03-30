@@ -1,2 +1,4 @@
 bundlewrap~=4.0, >=4.24.0
-bundlewrap-keepass
+
+# for scripts/update-secrets-from-keepass
+pykeepass

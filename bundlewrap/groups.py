@@ -1,8 +1,6 @@
 from os.path import join
 from pathlib import Path
 
-import bwkeepass as keepass
-
 from bundlewrap.utils import error_context
 from bundlewrap.utils.dicts import merge_dict
 

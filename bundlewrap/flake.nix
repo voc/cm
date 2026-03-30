@@ -19,7 +19,6 @@
           rsync
           (python3.withPackages (py: [
             py.bundlewrap
-            py.bundlewrap-keepass
 
             py.virtualenv
           ]))

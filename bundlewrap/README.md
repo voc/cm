@@ -9,16 +9,8 @@ pip3 install -r requirements.txt
 You do not need to set up Keepass or a bundlewrap .secrets.cfg for basic
 encoder setup.
 
-If you have access to the c3voc keepass file, you may want to set up
-keepass and the .secrets.cfg:
-
-```sh
-export BW_KEEPASS_FILE=$HOME/whereever/the/voc/keepass/lives.kdbx
-export BW_KEEPASS_PASSWORD=reallysecure
-```
-
-The contents of the `.secrets.cfg` file can be found in the keepass file,
-too. If you need access to the `.secrets.cfg` file, but don't have keepass
+The contents of the `.secrets.cfg` file can be found in the c3voc keepass
+file. If you need access to the `.secrets.cfg` file, but don't have keepass
 access, please let us know.
 
 The `.secrets.cfg` file should be deployed in the same directory as this
@@ -45,7 +37,6 @@ for more information.
 $ bw verify <system or group>
 
 # verify configuration for a system locally
-# if you don't have keepass access, you have to append -i flag
 $ bw test <system or group>
 
 # apply configuration to system(s), restarting services as needed
@@ -221,7 +212,6 @@ here for completeness.
 4. Ensure you can run `ssh yoursystem.lan.c3voc.de 'sudo date'` without
    issues. Use the hostname set in the node file to verify (the default
    is `{nodename}.lan.c3voc.de`).
-5. Ensure you have both keepass access and access to the bundlewrap
-   `.secrets.cfg`
+5. Ensure you have access to the bundlewrap `.secrets.cfg`
 6. Run `bw apply -P4 {nodename}` - using `-P4` will ensure you don't run into
    "too many startups" issues with the debian default sshd config.
