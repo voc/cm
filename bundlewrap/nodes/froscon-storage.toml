@@ -28,5 +28,5 @@ autostart_scripts = [
 ]
 
 [metadata.crs-worker.secrets.encoding]
-token = "!kee_user:ansible|worker-groups|storage"
-secret = "!kee_pass:ansible|worker-groups|storage"
+token = "!decrypt:encrypt$gAAAAABpyi2TUqs8REuwTWisacSLiNSy66NMSu-y5qGbxTRR_YJxWVXM6k4dmJ2J1jgu-RU5YQVf4kjqvBCTi_8Mr11UtIDL6jT0ozaZRxC_66vSINty19sxzh1HItvP1cdsmVNlf_cz"
+secret = "!decrypt:encrypt$gAAAAABpyi197HWnN3rDezaNO1l9IRS7ieBUwa6jkowuB4SLsQVtJt8AVxziqL_RCCYdhBryd0RL9Ks5rbum1V9ooGPvL1WJmoDUqJmUGb40_RtmMoeM0Ckd6CPp_u3ScoXjjzO4ZzRQ"
