@@ -1,10 +1,10 @@
 groups = ["debian-bookworm", "case20_encoders"]
 
 [metadata.crs-worker.secrets]
-encoding.secret = "!kee_pass:ansible|worker-groups|encoder5"
-encoding.token = "!kee_user:ansible|worker-groups|encoder5"
-meta.secret = "!kee_pass:ansible|worker-groups|encoder5-meta"
-meta.token = "!kee_user:ansible|worker-groups|encoder5-meta"
+encoding.secret = "!decrypt:encrypt$gAAAAABpyiqTodmiccHymcmfqKcdjQFV6DP1wIntCK24zjCly_3X-ZT3t27QXVlyPBlynkq2gECNdIZaQ3Cj_vxQ2FI1CEMoX28_P-KytmQ6wr8OvkzGjlmpg9oHIjQCX-SEFEt_BdX3"
+encoding.token = "!decrypt:encrypt$gAAAAABpyiqnPSWn8FFFoa_KJXuoQX1JqTWXqnK-XBYmKYMOysN2Woa0FmDcBsZ06z9XizNvWvg4YWrGxo12pT4uYHp8WCHC-IYpb3yegYlYxebQIuQp4s_tkzx68UTfP5iMnUI2EV0c"
+meta.secret = "!decrypt:encrypt$gAAAAABpyiq0i7Thqq2qkV-b9v7mJ2we7uCGXWWT3UlrR6yRqHreLT0fwbvEcjeBNnvqrtGGMYTNXvrbx4SRAn_ekOPBgtY9UVbm3xvfoaR0L_gwp5W9wVtobLy7IWyTkbTVl8VXHsP9"
+meta.token = "!decrypt:encrypt$gAAAAABpyirAiDBEO88wMTqKz4h--hUVLUIJDDPkAaomxAz9O7Sp1Qse54QQDJ8LS2z6cyI_7ZCihPg13KF9685JVK_VkaNQl3LJ70IGOT1odILos26gEMbcmVbSJgZn8IdpKKN8iSVh"
 
 [metadata.event]
 room_name = "Saal 5"

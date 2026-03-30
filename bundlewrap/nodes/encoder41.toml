@@ -1,10 +1,8 @@
 groups = ["debian-bookworm"]
 
 [metadata.crs-worker.secrets]
-encoding.secret = "!kee_pass:ansible|worker-groups|encoder-osc1"
-encoding.token = "!kee_user:ansible|worker-groups|encoder-osc1"
-#meta.secret = "!kee_pass:ansible|worker-groups|encoder-osc1-meta"
-#meta.token = "!kee_user:ansible|worker-groups|encoder-osc1-meta"
+encoding.secret = "!decrypt:encrypt$gAAAAABpyistZMZyIKKfdk0HuvebByBiwZyyhDmZ8Y1vAJhZxsbqz3f2jq2hH0UUHlavWYE1iBwDpveXq8lIbZLdRyS7aldL2tYPTGiQO6jD79DPJ3ns2Wl8ZKlMD2IQ7Hs6HIKZssZG"
+encoding.token = "!decrypt:encrypt$gAAAAABpyitiHzngZE5AA1BftAOuH0HbUBIDSB3-l1lgj_kD6QuAU2FMa68IRe4EVg07xXaYH9h_J4WBEuGoxXfpVPlzkBPXuu_YazFq3gAQqUB97lJ1MLMtt-0s3cLIalcCsO_0_k8c"
 
 [metadata.event]
 room_name = "HS 8"

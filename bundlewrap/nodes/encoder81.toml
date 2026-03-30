@@ -2,10 +2,10 @@ bundles = ["mdadm", "mixer-common", "voctogui"]
 groups = ["debian-buster"]
 
 [metadata.crs-worker.secrets]
-encoding.secret = "!kee_pass:ansible|worker-groups|encoder-hacc"
-encoding.token = "!kee_user:ansible|worker-groups|encoder-hacc"
-meta.secret = "!kee_pass:ansible|worker-groups|encoder-hacc-meta"
-meta.token = "!kee_user:ansible|worker-groups|encoder-hacc-meta"
+encoding.secret = "!decrypt:encrypt$gAAAAABpyiuup63bIZBwfJ2iF8I6HIUhxyF-5iIm_DESCt_YASPK7v-3cTFDHWBLmmNXPdvbLyibVTmoUdbQVZU9IlLjF2t56Jto5VDnMKo6JHGTDqsAEjeh9tIVs2S4qxRcpGql0m7e"
+encoding.token = "!decrypt:encrypt$gAAAAABpyiu_f-ANU7tVGTw_laH7G4kVbwtTqiXlCgoZ7C7US9uEbZ2wqZErrgcEQKk4j5GlFbmRFKbXlGeMkwDT_Z1Gjvw5Ucz03dqFJ5whpSFx-NaUVoJjtK-pY1nOhuiAMyPau0xe"
+meta.secret = "!decrypt:encrypt$gAAAAABpyivLySCxlPUTj5wyt4kjWQQU5tDepES_7kJrSd1UKjRf-4Q13S6z7IxQNMCvo2g_jpslWtk5GjAv9EZNduzgKBOBMCbljhvSLQChDOWnHcoJmuNvnAIi7IMCpmso_jm1qy7v"
+meta.token = "!decrypt:encrypt$gAAAAABpyivd6fioDcYwE_z4oJUhYJhR7cCAfZTI5E6RqJODAinl3ku-V4DUiCAdSoNnEwUJGRNknhrO9uIpC2vk79Zo9WFqKFe-rRv4hlPW3_Kr0CL6acyAMxbMPKhw79q-ilcFImOT"
 
 [metadata.event]
 room_name = "Audimax 1"

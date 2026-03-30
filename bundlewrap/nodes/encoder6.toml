@@ -1,8 +1,8 @@
 groups = ["debian-bookworm", "case20_encoders"]
 
 [metadata.crs-worker.secrets]
-encoding.secret = "!kee_pass:ansible|worker-groups|encoder6"
-encoding.token = "!kee_user:ansible|worker-groups|encoder6"
+encoding.secret = "!decrypt:encrypt$gAAAAABpyirXMuCdecLGb_qofq9WsOqSv6reOeOOsdSWRpHO_c14IT6Dpy9zFccVP76pKooAXoEu4oLMVuzR-Yyrx_pQzH99oHKASVX27WHNK31L0OrQnM1TzrynN-CyWizQqt-qZ6QE"
+encoding.token = "!decrypt:encrypt$gAAAAABpyirv6hIPI-HUfYMcRWJ6FXTM-Y5CVgKhemhp_GOcXZ3RRPvidPGO_rIe858PTGbAnlTTk9Nnehkc5z9IbdtC5ULwcjm_PcmoNKz6jDvz48l1Enyhg3An4vtHcgtWiDQOzuOw"
 meta.secret = "!decrypt:encrypt$gAAAAABlx3cwXRgJExYHPSONTvM4Qr2__WCSqqftfBcBk7pvAFovd-7DltiXdPYNB_3Hz0Sa20IqZjphNAztZ6bJxV2woF5EAJX74uQNY09ACSlJSLh7wJEdCv6LnHGpFlFulO44e19g"
 meta.token = "!decrypt:encrypt$gAAAAABlx3cq0mWwMvUECvt8ctW_Wu1IvdbzhzMWbt7yzRUarPgFP6TY4UurHMzpIFoSjeT67zaQoYvZLLG3Vh2lAJZJo4kr_qfN6zEOe6U1RRSNXCzTb4866WgTfdIsaOX_8HBog4b0"
 

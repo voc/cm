@@ -6,8 +6,8 @@ hostname = "10.79.128.38"
 [metadata.apt.packages.i965-va-driver]
 
 [metadata.crs-worker.secrets.encoding]
-token = "!kee_user:ansible|worker-groups|encoder98"
-secret = "!kee_pass:ansible|worker-groups|encoder98"
+token = "!decrypt:encrypt$gAAAAABpyiwGKVabI8kW6nLi3O_kKAFGGLyxqlcZNtgCej0upc6Rt1zWbBsvUqNkIYzTetkZLIEQSoFG9CyWWO_lzFoWU_hS-LF_tsOuiJw0Y2hC23Vgebi_X2twEJo3KLc59fVbsgSx"
+secret = "!decrypt:encrypt$gAAAAABpyiv0PEj8waqANduXyMcmlpozlWVov60mhksgM5Md7fm0i5TDbPSSEC6fWGOcGOav-k7sM1tK4yz8mmAIJE2OJ6UsoyPP98-r0vs90vsOaV9qlQP4-HVhqqyPxW81zrEJZDdp"
 
 [metadata.event]
 room_name = "osmodevcon"
