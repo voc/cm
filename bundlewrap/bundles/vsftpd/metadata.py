@@ -7,12 +7,14 @@ defaults = {
         },
     },
     'vsftpd': {
-        'users': {
+        'users': {},
+    },
+    'zfs': {
+        'datasets': {
+            'video/vsftpd': {
+                'mountpoint': '/srv/vsftpd',
+            },
         },
-        'restrict-to': {
-            "voc-internal",
-            "voc-vpn",
-        }
     },
 }
 
@@ -20,17 +22,36 @@ defaults = {
 @metadata_reactor.provides(
     'vsftpd/users',
 )
-def autogenerate_sony_camera_config(metadata):
+def autogenerate_some_user_config(metadata):
     users = {}
-    for cam in [1,2,3,4,5,6]:
-        users[f'saal{cam}-sony'] = {
-                'password': repo.vault.human_password_for(f'{node.name} sony {cam}', words=1),
-                'localroot': f'/video/tmp/fossgis2026/sony/saal{cam}',
+    datasets = {}
+    for user in metadata.get('vsftpd/users', {}):
+        users[user] = {
+            'password': repo.vault.human_password_for(f'{node.name} vsftpd user {user}', words=1),
+            'localroot': f'/srv/vsftpd/{user}',
         }
 
     return {
         'vsftpd': {
             'users': users
+        }
+    }
+
+
+@metadata_reactor.provides(
+    'zfs/datasets',
+)
+def zfs(metadata):
+    users = {}
+    datasets = {}
+    for user in metadata.get('vsftpd/users', {}):
+        datasets[f'video/vsftpd/{user}'] = {
+            'mountpoint': metdata.get(('vsftpd', 'users', user, 'localroot')),
+        }
+
+    return {
+        'zfs': {
+            'datasets': datasets
         }
     }
 
