@@ -46,7 +46,7 @@ def zfs(metadata):
     datasets = {}
     for user in metadata.get('vsftpd/users', {}):
         datasets[f'video/vsftpd/{user}'] = {
-            'mountpoint': metdata.get(('vsftpd', 'users', user, 'localroot')),
+            'mountpoint': metadata.get(('vsftpd', 'users', user, 'localroot')),
         }
 
     return {
