@@ -1,8 +1,8 @@
 groups = ["debian-bookworm", "case20_minions"]
 
 [metadata.crs-worker.secrets.encoding]
-token = "!kee_user:ansible|worker-groups|minion3"
-secret = "!kee_pass:ansible|worker-groups|minion3"
+token = "!decrypt:encrypt$gAAAAABpyiy3o1mcWYx8AhjpBBDnFOqPHgLpybqcjtqEwAHAHhDhmjixO2kEUQDWZxG6mJ2uSA-KykfjFZYiBL8mOWpFAxIdRdmEfg6fi0I_T98zI-3X2kzpe7e2vzZC0tO_oIGJYNO5"
+secret = "!decrypt:encrypt$gAAAAABpyizEMPAetBN2gWjM6hctPvMTNrfj118ICoUBL_uxD6EY-ORoGrA9i-Jpeh51Q2e5JpsmTIsWZtKY4DFDMzZbm_pzo5NTdgKuRGDJJ3mtMma7GByKvNYW9G6eZf0EtdbWc1kr"
 
 [metadata.interfaces.br0]
 ips = ["10.73.3.7/16"]

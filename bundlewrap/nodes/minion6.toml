@@ -1,8 +1,8 @@
 groups = ["debian-bookworm", "case20_minions"]
 
 [metadata.crs-worker.secrets]
-encoding.token = "!kee_user:ansible|worker-groups|minion6"
-encoding.secret = "!kee_pass:ansible|worker-groups|minion6"
+encoding.token = "!decrypt:encrypt$gAAAAABpyi1AaepBVga7Ul9o-TmxsZTsdZ64gswY4uwwdreaVpmzHsNkNkWSNdHkFes5I0oaKZgFHTTNWec9niJ5OALlaoqR4iOgSO5h7-AKl4s5EgltpQe49dMKNoGtkGAEo4Y3qdvn"
+encoding.secret = "!decrypt:encrypt$gAAAAABpyi0wPfwI6A3eFA6RkRUdDAc_SAKC6zMCWgCZW5Yo4GSlJB_p_oAIsvTUzf6buhqX2Ahw0rGGt2Eg7xofLulmNFnryrIPcfS2-4TGXsiNxB-RnRmKEvdib7qXUAlMo0HNuAv9"
 vaapi.token = "!decrypt:encrypt$gAAAAABoVniLIDZKFKPC1lAZw4OEhxxcgrAshUaJn8ZnX0sU1HE8AuCpNsZxBxUfUsuCPscFTXp6CsFrPz3xtCc4xtF7JRnLm5DHP0gbl_5ldIvb-K5uZWNvKk1w2vqPkYNe-z4FqMUh"
 vaapi.secret = "!decrypt:encrypt$gAAAAABoVnisy4l4srjPye9c2iZXFAF4_qAZkDkKIEzKGxg00p2-0Br_H9p-GeRS9_K53yDT3d7Z8UbLZ2jfYZzvC7OIi4EKZe3PKaKFB6iZiS74oVjih9pYk1bz0h6DjVhDn8fytrYE"
 
