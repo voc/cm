@@ -20,7 +20,7 @@ buildGoModule {
   };
   tags = [ ];
 
-  vendorHash = "sha256-/cxpaZRQy77T5iilEaXsgXji1MMdk8503OpYvPmrVZc=";
+  vendorHash = "sha256-qxR6Knlr71sjZCbj2whrlY4JwuM4Lq1zoFZVXr71BCQ=";
 
   meta = {
     description = "Server for collecting stream event telemetry";
