@@ -27,6 +27,5 @@ in
       addressv4 = "62.176.246.133";
       addressv6 = "2a01:581:a::11";
     };
-    system.autoColmena.enable = lib.mkForce false;
   };
 }
