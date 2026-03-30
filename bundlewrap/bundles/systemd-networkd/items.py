@@ -1,5 +1,3 @@
-from bundlewrap.exceptions import BundleError
-
 assert node.has_bundle('systemd')
 
 files = {

@@ -1,8 +1,6 @@
 from ipaddress import IPv4Address, IPv4Network, ip_address, ip_network
 
 from bundlewrap.exceptions import BundleError, NoSuchGroup, NoSuchNode
-from bundlewrap.utils.text import bold, red
-from bundlewrap.utils.ui import io
 
 
 def resolve_identifier(repo, identifier):
@@ -68,7 +66,7 @@ def remove_more_specific_subnets(input_subnets) -> list:
     for subnet in sorted(input_subnets):
         source = ip_network(subnet)
 
-        if not source in final_subnets:
+        if source not in final_subnets:
             subnet_found = False
 
             for dest_subnet in final_subnets:

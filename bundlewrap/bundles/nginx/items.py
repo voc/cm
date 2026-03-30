@@ -60,7 +60,7 @@ svc_systemd['nginx'] = {
 }
 
 for vhost, config in node.metadata.get('nginx/vhosts', {}).items():
-    if not 'domain' in config:
+    if 'domain' not in config:
         config['domain'] = vhost
 
 
@@ -91,5 +91,5 @@ for vhost, config in node.metadata.get('nginx/vhosts', {}).items():
         },
     }
 
-    if not 'webroot' in config:
+    if 'webroot' not in config:
         directories[f'/var/www/{vhost}'] = config.get('webroot_config', {})

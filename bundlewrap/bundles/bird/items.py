@@ -7,7 +7,7 @@ files['/etc/bird/bird.conf'] = {
 
 svc_systemd['bird'] = {
     'needs': {
-        f'file:/etc/bird/bird.conf',
+        'file:/etc/bird/bird.conf',
         'pkg_apt:bird2',
     },
 }

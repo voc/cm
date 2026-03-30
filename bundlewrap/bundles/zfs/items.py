@@ -1,7 +1,3 @@
-from json import dumps
-
-from bundlewrap.metadata import MetadataJSONEncoder
-
 if node.os == 'debian':
     actions = {
         # For some reason, this module doesn't get auto-loaded on debian,

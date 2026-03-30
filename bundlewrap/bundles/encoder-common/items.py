@@ -1,4 +1,3 @@
-from bundlewrap.exceptions import BundleError
 
 event = node.metadata.get('event/slug')
 
@@ -8,7 +7,7 @@ cifs_mountpoints = {
 }
 
 if '/video' not in cifs_mountpoints:
-    directories[f'/video'] = {
+    directories['/video'] = {
         'owner': 'voc',
         'group': 'voc',
         'after': {

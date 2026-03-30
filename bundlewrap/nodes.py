@@ -1,8 +1,6 @@
-from json import dumps as json_dumps
 from os.path import join
 from pathlib import Path
 
-from bundlewrap.metadata import atomic
 from bundlewrap.utils import error_context
 
 

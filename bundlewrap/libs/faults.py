@@ -1,4 +1,4 @@
-from json import dumps, loads
+from json import loads
 
 import bcrypt
 from bundlewrap.metadata import metadata_to_json

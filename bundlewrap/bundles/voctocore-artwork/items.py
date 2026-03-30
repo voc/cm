@@ -1,4 +1,3 @@
-from bundlewrap.exceptions import BundleError
 from os.path import exists, join
 
 

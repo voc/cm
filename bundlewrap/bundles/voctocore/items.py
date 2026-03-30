@@ -1,5 +1,4 @@
 from bundlewrap.exceptions import BundleError
-from os.path import join, isfile
 
 KEYBOARD_SHORTCUTS = {
     # maps inputs to buttons, first for Channel A, second Channel B
