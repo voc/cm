@@ -61,7 +61,7 @@ def create_snapshot(ds, label):
 label = argv[1]
 
 for ds in list_datasets():
-    if ds.endswith("/capture") or ds.endswith("/tmp"):
+    if ds.endswith("/capture") or ds.endswith("/tmp") or ds.startswith('video/vsftpd/'):
         retain = RETAIN_CAPTURE_TMP[label]
     else:
         retain = RETAIN_DEFAULT[label]
