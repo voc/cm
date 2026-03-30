@@ -93,7 +93,7 @@
   '';
 
   system.autoColmena = {
-    enable = true;
+    enable = false;
     flake = "github:voc/cm?dir=nixos";
   };
 

@@ -28,6 +28,5 @@ in
       addressv4 = "185.106.84.40";
       addressv6 = "2001:67c:20a0:e::164";
     };
-    system.autoColmena.enable = lib.mkForce false;
   };
 }
