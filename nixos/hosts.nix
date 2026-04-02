@@ -16,6 +16,8 @@
   wob1-wob = { ... }: {};
   ber1-wob = { ... }: {};
   live-ber = { ... }: {};
-  transcoder3-dus = { ... }: {};
   live-fem = { ... }: {};
+  transcoder1-dus = { ... }: {};
+  transcoder2-dus = { ... }: {};
+  transcoder3-dus = { ... }: {};
 }

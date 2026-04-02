@@ -18,6 +18,10 @@ in
         type = types.str;
         description = "Name to use for stream transcoding.";
       };
+      capacity = mkOption {
+        type = types.int;
+        description = "Max number of concurrent transcodes to run.";
+      };
     };
   };
 
@@ -30,6 +34,7 @@ in
     services.stream-transcode = {
       enable = true;
       hostname = cfg.name;
+      capacity = cfg.capacity;
     };
     services.upload-proxy.enable = true;
 

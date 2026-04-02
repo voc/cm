@@ -148,6 +148,18 @@
             "consul"
         ]
     },{
+        "name": "transcoder1.dus.c3voc.de",
+        "ip": "172.23.0.55/16",
+        "groups": [
+            "consul"
+        ]
+    },{
+        "name": "transcoder2.dus.c3voc.de",
+        "ip": "172.23.0.56/16",
+        "groups": [
+            "consul"
+        ]
+    },{
         "name": "transcoder3.dus.c3voc.de",
         "ip": "172.23.0.57/16",
         "groups": [

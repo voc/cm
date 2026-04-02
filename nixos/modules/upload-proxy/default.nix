@@ -38,6 +38,7 @@ in {
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
       };
       wantedBy = [ "multi-user.target" ];
+      after = [ "consul-template-upload-proxy.service" ];
       reloadTriggers = [ config.sops.secrets.upload_proxy_auth.path ];
     };
     services.consul-template.instances.upload-proxy = {
