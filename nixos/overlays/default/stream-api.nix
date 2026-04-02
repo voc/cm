@@ -13,11 +13,13 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "voc";
     repo = "stream-api";
-    rev = "6f7f8a4db0e5953716fc0b0c61ea3c4e47e241c1";
-    hash = "sha256-TLoPph/kjZ8cuMse21krYKgeotY5pU8eSeXJYxO1byI=";
+    rev = "ef03cd6e29c26b32c2aaf65079148acfd282b426";
+    hash = "sha256-sRetTyXyXRY5UueGOldlu1GNounu2RtCv1araFF9nXw=";
+    #hash = lib.fakeHash;
   };
 
-  vendorHash = "sha256-H6x15uNm5+fT5lXp5iXdmLGrGsv09UGrG8VA2wWrftQ=";
+  vendorHash = "sha256-zs80HyLJ20VppqOCgyEZL7TvugV6Xbp6FdtE7m5pSpk=";
+  #vendorHash = lib.fakeHash;
 
   # we don't build monitor ui right now
   preBuild = ''

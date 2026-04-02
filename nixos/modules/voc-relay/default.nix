@@ -152,6 +152,7 @@ let
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
+          proxy_http_version 1.1;
           client_max_body_size 100M;
           keepalive_requests 200;
           #access_log /var/log/nginx/upload.log;
@@ -504,7 +505,20 @@ in {
       services = [
         (makeService "http" 80)
         (makeService "https" 443)
-      ];
+      ] ++ optional (cfg.isOrigin) {
+        name = "upload-server";
+        address = cfg.addressv4;
+        tagged_addresses = {
+          wan_ipv4 = {
+            address = cfg.addressv4;
+            port = 443;
+          };
+          wan_ipv6 = {
+            address = cfg.addressv6;
+            port = 443;
+          };
+        };
+      };
     };
     # overwrite default logrotate to keep less logs
     services.logrotate.settings.nginx = {

@@ -57,6 +57,8 @@
             ./modules/nginx-viewcounter
             ./modules/voc-telemetry
             ./modules/upload-server
+            ./modules/upload-proxy
+            ./modules/stream-transcode
 
             ./profiles/base
 

@@ -24,6 +24,7 @@ keys:
   - &host_ber1_wob age1f0j5uh79sj7jew5vz5l8e9a4afvfu7jhu0kd3zuq9kkhjat6tsxsptqvxx
   - &host_live_nitk age1sz0ytgt4h6g4622mgmltmkwjsgdwnk3rq59rs8xrh3fnvh8yx4vsufu40d
   - &host_live_ber age1fppus6a4myd6aej5hcddc53v4p4uvfg305ezk8692f77lpnan98srwtu82
+  - &host_transcoder3_dus age193n8sxh7g9awlqlw6txupus5p9q4tdvvv7nnmzz47lcvw4l0t58sgtm72n
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -88,7 +89,8 @@ creation_rules:
       - *host_ber1_wob
       - *host_live_nitk
       - *host_live_ber
-  - path_regex: modules/(voc-nebula|voc-relay|upload-server)/*
+      - *host_transcoder3_dus
+  - path_regex: modules/(voc-nebula|voc-relay|upload-server|upload-proxy|stream-transcode)/*
     key_groups:
     - age:
       - *admin_keepass
@@ -108,6 +110,7 @@ creation_rules:
       - *host_ber1_wob
       - *host_live_nitk
       - *host_live_ber
+      - *host_transcoder3_dus
   - path_regex: hosts/netbox/.*
     key_groups:
     - age:

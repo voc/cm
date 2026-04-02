@@ -8,4 +8,5 @@ nixpkgs: self: super: {
   django-verify-email = self.callPackage ./django-verify-email { };
   nerd = self.callPackage ./nerd { };
   aiopg = self.callPackage ./aiopg { };
+  voc-transcode = self.callPackage ./voc-transcode { };
 }

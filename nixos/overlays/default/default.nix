@@ -5,6 +5,10 @@ final: prev: {
   in prev.python310.override { inherit packageOverrides; };
   python311 = let packageOverrides = pfinal: pprev: import ./python final pfinal pprev;
   in prev.python311.override { inherit packageOverrides; };
+  python312 = let packageOverrides = pfinal: pprev: import ./python final pfinal pprev;
+  in prev.python312.override { inherit packageOverrides; };
+  python313 = let packageOverrides = pfinal: pprev: import ./python final pfinal pprev;
+  in prev.python313.override { inherit packageOverrides; };
 
   yate = prev.yate.overrideAttrs (old: {
     configureFlags =
