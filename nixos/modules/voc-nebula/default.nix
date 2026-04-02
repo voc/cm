@@ -62,6 +62,11 @@ in {
         port="any";
         proto="any";
       }];
+      firewall.inbound = [{
+        host="any";
+        port="any";
+        proto="icmp";
+      }];
       settings = {
         tun = {
           dev = "nebula";
