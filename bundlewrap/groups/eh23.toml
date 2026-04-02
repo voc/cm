@@ -1,0 +1,7 @@
+subgroups = ["saal1", "saal2", "servercase"]
+members = ["releasing", "loudness-rendering"]
+
+[metadata.event]
+name = "Easterhegg 23"
+slug = "eh23"
+schedule_json = "https://pretalx.eh23.easterhegg.eu/eh23/schedule/export/schedule.json"

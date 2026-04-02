@@ -7,7 +7,7 @@ meta.secret = "!decrypt:encrypt$gAAAAABpyilCqCklsTLPzawYp7k9ZUTOelTuYo3nz6M1q6lp
 meta.token = "!decrypt:encrypt$gAAAAABpyilTwd-ZLPpaa2YtOCElh3AING5rUyXI9epJeaIDbFjO087s2XRkB5eyM5pDqhGQQ8TkPe4u0moY73n3jjCqqkIfKXoCF3xboc71ObGxb38IBfey72D-sWeavOHkO3XU-t5K"
 
 [metadata.event]
-room_name = "Saal 1"
+room_name = "The Rabbit Hole"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.1.3/16"]
