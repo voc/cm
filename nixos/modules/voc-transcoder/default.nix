@@ -37,19 +37,5 @@ in
       capacity = cfg.capacity;
     };
     services.upload-proxy.enable = true;
-
-    # services.consul-template.instances.nginx = {
-    #   settings = {
-    #     template = [
-    #       {
-    #         source = configFile;
-    #         destination = "/etc/nginx/voc-relay.conf";
-    #         command = "systemctl reload nginx";
-    #         left_delimiter = "[[";
-    #         right_delimiter = "]]";
-    #       }
-    #     ];
-    #   };
-    # };
   };
 }

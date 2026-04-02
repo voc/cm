@@ -49,8 +49,11 @@ in
       python313.pkgs.voc-transcode
       libva-utils
       ffmpeg-headless
+      stream-api
     ];
+    # transcoding config dir
     systemd.tmpfiles.rules = [ "d /var/lib/transcode 0755 root root" ];
+    # actual transcoding service, one per stream
     systemd.services."transcode@" = {
       description = "Transcode Stream %I";
       requires = [ "transcode@%i.target" ];
@@ -67,7 +70,7 @@ in
           ];
         in
         {
-          ExecStart = "${pkgs.python313.pkgs.voc-transcode}/bin/transcode --config ${transcodeConfig} --streamconf /var/lib/transcode/%i --restart";
+          ExecStart = "${pkgs.python313.pkgs.voc-transcode}/bin/transcode --config ${transcodeConfig} --streamconf /var/lib/transcode/%i -progress http://localhost:9274/progress/%i --restart";
           Restart = "always";
           RestartSec = "5s";
           Environment = "PATH=${extraPath}:$PATH";
@@ -78,6 +81,7 @@ in
       description = "Transcode Stream %I";
       wants = [ "transcode@%i.service" ];
     };
+    # starts/stops transcode@ units
     systemd.services."transcode-control" = {
       description = "Transcode Control";
       environment = {
@@ -92,6 +96,29 @@ in
         Restart = "always";
         RestartSec = "5s";
         EnvironmentFile = [ config.sops.secrets.mqtt_env.path ];
+      };
+    };
+    # exports prometheus metrics about running transcodes
+    systemd.services."transcode-exporter" = {
+      description = "Transcode Exporter";
+      startLimitIntervalSec = 0;
+      wantedBy = [ "multi-user.target" ];
+      restartIfChanged = true;
+      serviceConfig = {
+        ExecStart = "${pkgs.stream-api}/bin/transcoding-exporter -listen localhost:9274";
+        Restart = "always";
+        RestartSec = "5s";
+      };
+    };
+    services.telegraf.extraConfig = {
+      inputs = {
+        prometheus = [{
+          urls = [ "http://localhost:9274/metrics" ];
+          metric_version = 1;
+          tags = {
+            job = "transcode-exporter";
+          };
+        }];
       };
     };
   };
