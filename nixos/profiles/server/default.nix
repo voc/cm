@@ -5,7 +5,6 @@
   security.acme.acceptTerms = true;
 
   services.nginx = {
-    enable = lib.mkDefault true;
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;
@@ -23,6 +22,4 @@
       monthly = 0;
     };
   };
-
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

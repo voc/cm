@@ -106,6 +106,7 @@
     '';
   };
 
+  services.nginx.enable = true;
   services.nginx.group = "netbox";
   security.acme.certs."netbox.c3voc.de".group = "netbox";
   services.nginx.virtualHosts."netbox.c3voc.de" = {
@@ -114,4 +115,5 @@
     locations."/".proxyPass = "http://localhost:8001";
     locations."/static".root = "${config.services.netbox.dataDir}";
   };
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

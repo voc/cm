@@ -81,6 +81,7 @@ in {
   };
 
   services.nginx = {
+    enable = true;
     virtualHosts.${MAILMAN_HOST} = {
       enableACME = true;
       forceSSL = true;
@@ -90,6 +91,7 @@ in {
       locations."/create".return = "301 https://${MAILMAN_HOST}/postorius/lists/new";
     };
   };
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   services.rspamd.locals."multimap.conf".text = let
     blocked_subjects = ''
