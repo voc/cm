@@ -14,6 +14,14 @@ from_encoders = [
     "encoder2",
     "encoder3",
     "encoder4",
-    "encoder5",
-    "encoder6",
 ]
+
+[metadata.loudness-rendering.streams.revision]
+output = "rtmp://ingest2.c3voc.de/relay/s6_loudness"
+room = "Revision"
+source = "https://cdn.c3voc.de/hls/revision/native_hd.m3u8"
+
+[metadata.loudness-rendering.streams.revisionextras]
+output = "rtmp://ingest2.c3voc.de/relay/s5_loudness"
+room = "Revision Extras"
+source = "https://cdn.c3voc.de/hls/revisionextras/native_hd.m3u8"
