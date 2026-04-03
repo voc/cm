@@ -13,8 +13,8 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "voc";
     repo = "stream-api";
-    rev = "85d2c9588791f0adb5b00cc111bbce92d4d2720b";
-    hash = "sha256-yqEEdZm7wix4XbXbMIFP2+Z0EhNHhzKya/xHpdaf/uI=";
+    rev = "8508dd7a288d46636a7cf32e00ae6e47c2844603";
+    hash = "sha256-MYKz4QA8U4jflC9DofFntHS9yjzVUqpvAVqrgnuWb7w=";
     #hash = lib.fakeHash;
   };
 
