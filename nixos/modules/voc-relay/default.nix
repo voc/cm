@@ -131,50 +131,6 @@ let
       }
 
       ${if cfg.isOrigin then ''
-        location ~* ^/hls/([^./]+)/translated_hd.m3u8$ {
-          alias /srv/nginx/hls/$1/native_hd.m3u8;
-          sub_filter 'DEFAULT=YES,LANGUAGE="Native"' 'DEFAULT=NO,LANGUAGE="Native"';
-          sub_filter 'DEFAULT=NO,LANGUAGE="Translated"' 'DEFAULT=YES,LANGUAGE="Translated"';
-          sub_filter_types application/vnd.apple.mpegurl;
-          sub_filter_once on;
-        }
-
-        location ~* ^/hls/([^./]+)/translated-2_hd.m3u8$ {
-          alias /srv/nginx/hls/$1/native_hd.m3u8;
-          sub_filter 'DEFAULT=YES,LANGUAGE="Native"' 'DEFAULT=NO,LANGUAGE="Native"';
-          sub_filter 'DEFAULT=NO,LANGUAGE="Translated-2"' 'DEFAULT=YES,LANGUAGE="Translated-2"';
-          sub_filter_types application/vnd.apple.mpegurl;
-          sub_filter_once on;
-        }
-
-        location ~* ^/hls/([^./]+)/native_sd.m3u8$ {
-          alias /srv/nginx/hls/$1/native_hd.m3u8;
-          sub_filter 'HD.m3u8' 'SD.m3u8';
-          sub_filter 'Source.m3u8' 'SD.m3u8';
-          sub_filter_types application/vnd.apple.mpegurl;
-          sub_filter_once on;
-        }
-
-        location ~* ^/hls/([^./]+)/translated_sd.m3u8$ {
-          alias /srv/nginx/hls/$1/native_hd.m3u8;
-          sub_filter 'DEFAULT=YES,LANGUAGE="Native"' 'DEFAULT=NO,LANGUAGE="Native"';
-          sub_filter 'DEFAULT=NO,LANGUAGE="Translated"' 'DEFAULT=YES,LANGUAGE="Translated"';
-          sub_filter 'HD.m3u8' 'SD.m3u8';
-          sub_filter 'Source.m3u8' 'SD.m3u8';
-          sub_filter_types application/vnd.apple.mpegurl;
-          sub_filter_once on;
-        }
-
-        location ~* ^/hls/([^./]+)/translated-2_sd.m3u8$ {
-          alias /srv/nginx/hls/$1/native_hd.m3u8;
-          sub_filter 'DEFAULT=YES,LANGUAGE="Native"' 'DEFAULT=NO,LANGUAGE="Native"';
-          sub_filter 'DEFAULT=NO,LANGUAGE="Translated-2"' 'DEFAULT=YES,LANGUAGE="Translated-2"';
-          sub_filter 'HD.m3u8' 'SD.m3u8';
-          sub_filter 'Source.m3u8' 'SD.m3u8';
-          sub_filter_types application/vnd.apple.mpegurl;
-          sub_filter_once on;
-        }
-
         # stream-api
         location /stream_info.json {
           auth_basic           "voc login";
