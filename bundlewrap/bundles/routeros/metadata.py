@@ -80,22 +80,14 @@ for port, conf in netbox['interfaces'].items():
         if conf['ips']:
             vlans[vlan]['tagged'].add('bridge')
 
+ip_pattern = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.)\d{1,3}')
+gateway = ip_pattern.match(node.hostname).group(1) + '1'
+
 defaults = {
     'routeros': {
+        'gateway': gateway,
         'ips': ips,
         'ports': ports,
         'vlans': vlans,
     },
 }
-
-
-@metadata_reactor.provides('routeros/gateway')
-def gateway(metadata):
-    ip_pattern = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.)\d{1,3}')
-    gateway = ip_pattern.match(node.hostname).group(1) + '1'
-
-    return {
-        'routeros': {
-            'gateway': gateway,
-        },
-    }
