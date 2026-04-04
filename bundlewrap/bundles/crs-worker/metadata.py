@@ -68,8 +68,8 @@ def mount_deps_from_cifs_client(metadata):
     return {
         'crs-worker': {
             'systemd_after': {
-                f"{config['unitname']}.mount"
-                for config in metadata.get('cifs-client/mounts', {}).values()
+                "{}.mount".format(metadata.get(('cifs-client', 'mounts', mount, 'unitname')))
+                for mount in metadata.get('cifs-client/mounts', {})
             },
         },
     }
