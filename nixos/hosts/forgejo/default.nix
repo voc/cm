@@ -45,6 +45,7 @@ in
     security.acme.defaults.email = "voc@c3voc.de";
 
     services.forgejo.enable = true;
+    services.forgejo.lfs.enable = true;
     services.forgejo.package = pkgs.forgejo;
     services.forgejo.settings = {
       DEFAULT = {
