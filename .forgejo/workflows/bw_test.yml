@@ -21,7 +21,7 @@ jobs:
       - name: Bootstrap CI Tools
         run: |
           apt update
-          apt -y install nodejs git rsync openssh-client
+          apt -y install nodejs
           pip install --upgrade pip
       - uses: actions/checkout@v6
       - name: Install Dependencies
@@ -42,7 +42,7 @@ jobs:
       - name: Bootstrap CI Tools
         run: |
           apt update
-          apt -y install nodejs git rsync openssh-client
+          apt -y install nodejs
           pip install --upgrade pip
       - uses: actions/checkout@v6
       - name: Install Dependencies
