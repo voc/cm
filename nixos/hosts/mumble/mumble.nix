@@ -13,6 +13,7 @@
   networking.firewall.allowedTCPPorts = [ config.services.murmur.port 80 443 ];
   networking.firewall.allowedUDPPorts = [ config.services.murmur.port ];
 
+  services.nginx.enable = true;
   services.nginx.virtualHosts."mumble.c3voc.de" = {
     forceSSL = true;
     enableACME = true;
