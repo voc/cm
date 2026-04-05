@@ -11,6 +11,12 @@ on:
       - 'common/**'
       - '.forgejo/workflows/**'
 
+concurrency:
+  group: deploy-${{ forgejo.ref }}
+  cancel-in-progress: true
+
+enable-email-notifications: true
+
 jobs:
   bw_test_dummy_mode:
     name: 'bw test (with dummy mode)'
