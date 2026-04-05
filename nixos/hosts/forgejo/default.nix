@@ -107,6 +107,7 @@ in
         proxyPass = "http://unix:/run/anubis/anubis-forgejo.sock";
         extraConfig = ''
           client_max_body_size 2G;
+        '';
       };
     };
   };
