@@ -201,24 +201,40 @@ lib.mkMerge [
 
     services.gitea-actions-runner = {
       package = pkgs.forgejo-runner;
-      instances = lib.genAttrs (builtins.genList (n: "nix${builtins.toString n}") numInstances) (_name: {
-        enable = true;
-        name = "nix-runner";
-        url = nodes.forgejo.config.services.forgejo.settings.server.ROOT_URL;
-        tokenFile = config.sops.secrets.forgejo_registration_token.path;
-        labels = [ "nix:docker://gitea-runner-nix" ];
-        settings = {
-          container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /nix:/nix -v ${storeDeps}/bin:/bin -v ${storeDeps}/etc/ssl:/etc/ssl --user nixuser";
-          # the default network that also respects our dns server settings
-          container.network = "host";
-          container.valid_volumes = [
-            "/nix"
-            "${storeDeps}/bin"
-            "${storeDeps}/etc/ssl"
-          ];
+      instances = {
+        nix0 = {
+          enable = true;
+          name = "nix-runner";
+          url = nodes.forgejo.config.services.forgejo.settings.server.ROOT_URL;
+          tokenFile = config.sops.secrets.forgejo_registration_token.path;
+          labels = [ "nix:docker://gitea-runner-nix" ];
+          settings = {
+            # Nix-specific runner setup (intentionally tied to the nixuser in the custom image).
+            container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /nix:/nix -v ${storeDeps}/bin:/bin -v ${storeDeps}/etc/ssl:/etc/ssl --user nixuser";
+            # the default network that also respects our dns server settings
+            container.network = "host";
+            container.valid_volumes = [
+              "/nix"
+              "${storeDeps}/bin"
+              "${storeDeps}/etc/ssl"
+            ];
+          };
         };
-      });
+        docker0 = {
+          enable = true;
+          name = "docker-runner";
+          url = nodes.forgejo.config.services.forgejo.settings.server.ROOT_URL;
+          tokenFile = config.sops.secrets.forgejo_registration_token.path;
+          labels = [
+            "docker:docker://node:22-trixie"
+            "ubuntu-latest:docker://node:22-trixie"
+          ];
+          settings = {
+            # Keep generic jobs image-agnostic and let workflow containers use their native users/PATH.
+            container.network = "host";
+          };
+        };
+      };
     };
   }
 ]
-

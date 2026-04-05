@@ -98,8 +98,8 @@
           git
           sops
           nebula
-
           sops-nix.packages.${system}.sops-init-gpg-key
+          nurl
         ];
       };
     }))
