@@ -12,6 +12,7 @@ in {
   systemd.services.dovecot2.serviceConfig.LogLevelMax = 5; # = notice
 
   mailserver = {
+    stateVersion = 3;
     mailDirectory = "/persist/mail";
     enable = true;
     fqdn = "mail.c3voc.de";
