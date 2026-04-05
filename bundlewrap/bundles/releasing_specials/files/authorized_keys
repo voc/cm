@@ -1,0 +1,3 @@
+% for key in sorted(node.metadata.get('users/upload/ssh_pubkeys')):
+${key}
+% endfor
