@@ -9,7 +9,7 @@ in {
   # reduce log spam
   systemd.services.rspamd.serviceConfig.LogLevelMax =
     3; # this is set to error because rspamd regularly complains about not enough learns
-  systemd.services.dovecot2.serviceConfig.LogLevelMax = 5; # = notice
+  systemd.services.dovecot.serviceConfig.LogLevelMax = 5; # = notice
 
   mailserver = {
     stateVersion = 3;
