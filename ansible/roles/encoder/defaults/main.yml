@@ -1,5 +1,0 @@
----
-
-streaming_endpoint: s{{ room_number }}
-streaming_endpoint_pulling: "{{ not streaming_endpoint.startswith('q') }}"
-streaming_service_enabled: "{{ not streaming_endpoint.startswith('q') }}"

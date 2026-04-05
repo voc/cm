@@ -1,3 +1,0 @@
----
-  - name: reload rc.local
-    command: /etc/rc.local
