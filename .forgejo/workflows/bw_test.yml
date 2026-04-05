@@ -4,23 +4,26 @@ on:
     paths:
       - 'bundlewrap/**'
       - 'common/**'
-      - '.github/workflows/**'
+      - '.forgejo/workflows/**'
   pull_request:
     paths:
       - 'bundlewrap/**'
       - 'common/**'
-      - '.github/workflows/**'
+      - '.forgejo/workflows/**'
 
 jobs:
   bw_test_dummy_mode:
     name: 'bw test (with dummy mode)'
     runs-on: ubuntu-latest
+    container:
+      image: python:3
     steps:
+      - name: Bootstrap CI Tools
+        run: |
+          apt update
+          apt -y install nodejs git rsync openssh-client
+          pip install --upgrade pip
       - uses: actions/checkout@v6
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: 3.14.3
       - name: Install Dependencies
         run: pip3 install -r requirements.txt
         working-directory: bundlewrap
@@ -33,17 +36,18 @@ jobs:
   bw_test_ignore:
     name: 'bw test -i'
     runs-on: ubuntu-latest
+    container:
+      image: python:3
     steps:
+      - name: Bootstrap CI Tools
+        run: |
+          apt update
+          apt -y install nodejs git rsync openssh-client
+          pip install --upgrade pip
       - uses: actions/checkout@v6
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: 3.14.3
       - name: Install Dependencies
         run: pip3 install -r requirements.txt
         working-directory: bundlewrap
       - name: Run bw test
         run: bw test -i
         working-directory: bundlewrap
-    env:
-      BW_VAULT_DUMMY_MODE: '1'
