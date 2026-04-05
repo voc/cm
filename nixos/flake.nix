@@ -8,11 +8,11 @@
     inputs.nixpkgs.follows = "/nixpkgs";
   };
   inputs.home-manager = {
-    url = "github:nix-community/home-manager/release-25.05";
+    url = "github:nix-community/home-manager/release-25.11";
     inputs.nixpkgs.follows = "/nixpkgs";
   };
   inputs.nixos-mailserver = {
-    url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
+    url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
     inputs.nixpkgs.follows = "/nixpkgs";
     # inputs.utils.follows = "/flake-utils";
   };
