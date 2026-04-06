@@ -275,6 +275,8 @@ in
       stream-api
     ];
     systemd.services."stream-api" = {
+      after = [ "consul.service" ];
+      requires = [ "consul.service" ];
       serviceConfig = {
         ExecStart = "${pkgs.stream-api}/bin/stream-api -config ${streamApiConfigFile}";
       };
