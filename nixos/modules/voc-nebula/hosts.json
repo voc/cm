@@ -142,7 +142,7 @@
         ]
     },
     {
-        "name": "sylvester.lan.c3voc.de",
+        "name": "sylvester.alb.c3voc.de",
         "ip": "172.23.0.54/16",
         "groups": [
             "consul"

@@ -23,4 +23,5 @@
   transcoder2-dus = { ... }: {};
   transcoder3-dus = { ... }: {};
   daffy-alb = { ... }: {};
+  sylvester-alb = { ... }: {};
 }
