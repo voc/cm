@@ -34,6 +34,7 @@ in
       htpasswd = {
         sopsFile = ./secrets.yaml;
         key = "htpasswd";
+        owner = "nginx";
       };
     };
 
