@@ -21,8 +21,8 @@ in
     system.stateVersion = "25.11"; # do not touch
     deployment.tags = [ ];
 
-    services.srtrelay.enable = true;
-    services.rtmp-auth.enable = true;
+    #services.srtrelay.enable = true;
+    #services.rtmp-auth.enable = true;
 
     sops.secrets = {
       htpasswd = {
