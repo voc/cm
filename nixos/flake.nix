@@ -28,7 +28,10 @@
     url = "github:edolstra/flake-compat";
     flake = false;
   };
-  inputs.disko.url = "github:nix-community/disko";
+  inputs.disko = {
+    url = "github:nix-community/disko";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, disko, ... }@inputs: (
     let
       pkgs' = system: import nixpkgs {
