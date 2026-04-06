@@ -20,6 +20,13 @@
     name = "daffy.alb";
     capacity = 4;
   };
+  # add iHD intel media driver for hardware acceleration
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD (for HD Graphics starting Broadwell (2014) and newer)
+    ];
+  };
 
   networking = {
     hostName = lib.mkOverride 1 "daffy";
