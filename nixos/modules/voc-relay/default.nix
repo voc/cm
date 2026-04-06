@@ -72,9 +72,10 @@ let
     proxy_intercept_errors on;
     proxy_cache_methods    HEAD GET;
     proxy_cache_revalidate on;
-    proxy_cache_key        "$uri";
+    proxy_cache_key        "$uri$myae";
     proxy_cache_lock       on; # prevent thundering herd on cache miss
     proxy_ignore_headers   Cache-Control;
+    proxy_set_header Accept-Encoding $myae; # allow gzip compression from upstream
 
     # client caching
     add_header Cache-Control no-cache;
@@ -112,6 +113,12 @@ let
       ssl_stapling off;
       
       access_log off;
+
+      # Normalize all accept-encoding headers to just gzip
+      set $myae "";
+      if ($http_accept_encoding ~* gzip) {
+        set $myae "gzip";
+      }
 
       # don't allow access to some files or directories
       location ~* /.*\.(ht|sh|git|htaccess|php|inc|rb|py|pl|db|sqlite|sqlite3)$ {
@@ -160,6 +167,7 @@ let
 
         location ~* ^/(hls|dash|thumbnail|artwork)/(.+)?$ {
           alias /srv/nginx/$1/$2;
+          gzip_types application/vnd.apple.mpegurl;
           autoindex off;
         }
       '' else ''
@@ -251,6 +259,7 @@ let
 
         location ~* ^/relive/(.*) {
           alias /srv/nginx/relive/$1;
+          gzip_types application/vnd.apple.mpegurl application/json text/html;
           autoindex on;
         }
       '' else ''
