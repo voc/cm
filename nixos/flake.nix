@@ -59,6 +59,8 @@
             ./modules/upload-server
             ./modules/upload-proxy
             ./modules/stream-transcode
+            ./modules/srtrelay
+            ./modules/rtmp-auth
 
             ./profiles/base
 

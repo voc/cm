@@ -84,7 +84,7 @@ in {
       };
       wantedBy = [ "multi-user.target" ];
       restartIfChanged = true;
-      restartTriggers = [ config.sops.secrets.upload_server_config.path ];
+      restartTriggers = [ configFile ];
     };
   };
 }
