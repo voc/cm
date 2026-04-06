@@ -12,7 +12,7 @@ let
 in
 {
   imports = [
-    ./hardware.nix
+    "${modulesPath}/virtualisation/proxmox-image.nix"
     ../../profiles/server
     ../../modules/srtrelay
     ../../modules/rtmp-auth
