@@ -1,3 +1,0 @@
----
-- name: restart upload-proxy
-  systemd: name=upload-proxy state=restarted

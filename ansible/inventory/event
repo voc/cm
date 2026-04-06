@@ -1,15 +1,5 @@
 # Hosts file
 
-[transcoders]
-daffy.lan.c3voc.de transcoder_capacity=4 ansible_host=daffy.alb.c3voc.de
-sylvester.lan.c3voc.de transcoder_capacity=4 ansible_host=sylvester.alb.c3voc.de
-
-myloc-transcoder1.myloc.c3voc.de transcoder_capacity=2 ansible_host=myloc-transcoder1.dus.c3voc.de
-myloc-transcoder2.myloc.c3voc.de transcoder_capacity=2 ansible_host=myloc-transcoder2.dus.c3voc.de
-myloc-transcoder3.myloc.c3voc.de transcoder_capacity=2 ansible_host=myloc-transcoder3.dus.c3voc.de
-#fslab-transcoder1.voc.fslab.de transcoder_capacity=2 ansible_host=168.119.65.177 ansible_port=10802
-#fslab-transcoder2.voc.fslab.de transcoder_capacity=4
-
 [audio-pis]
 audio-pi1.lan.c3voc.de stream=a1
 audio-pi2.lan.c3voc.de stream=a2

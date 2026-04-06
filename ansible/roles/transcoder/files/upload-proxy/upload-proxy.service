@@ -1,9 +1,0 @@
-[Unit]
-Description=Transcoder HTTP-Upload-Proxy
-
-[Service]
-ExecStart=/usr/local/bin/upload-proxy -config /etc/upload-proxy/config.toml
-Restart=always
-
-[Install]
-WantedBy=multi-user.target

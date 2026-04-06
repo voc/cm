@@ -1,8 +1,0 @@
-transcode:
-    enable: yes
-    capacity: {{ transcoder_capacity }}
-    configPath: /opt/transcoder2/config
-    sink: {{ transcoder_sink }}
-{% if streamapi_hostname is defined %}
-    hostname: {{ streamapi_hostname }}
-{% endif %}
