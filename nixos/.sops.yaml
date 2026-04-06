@@ -29,7 +29,7 @@ keys:
   - &host_transcoder2_dus age1z9p44yg8gsdfrd0dp7skw2f5n4hdggux07ppquurpwmhdh2lug7qeqfkau
   - &host_transcoder3_dus age193n8sxh7g9awlqlw6txupus5p9q4tdvvv7nnmzz47lcvw4l0t58sgtm72n
   - &host_ingest_alb age1390efny9938c55mxdstsyfleu7r5xee0e800cgrg4cjdk0y6ys9qen0692
-  - &host_ingest_dus age1kkuxtltryv8nqqsrgn7pkxjhkleapsdv5w5cpjvk0vyw8vf2wurqtny999
+  - &host_ingest_dus age1qqg757urfh0rs8649t29c8lgl8d2r5h94h2sa28nylsz7ytzvqjs3ggk98
   - &host_daffy_alb age1gtf3cp88rtleptc3xdr2tt02gtg7rld8q32ylr7m3h4j89nv65yqpsh0rd
 
 creation_rules:
