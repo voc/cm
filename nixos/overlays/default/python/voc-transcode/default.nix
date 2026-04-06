@@ -17,7 +17,7 @@ buildPythonPackage rec {
   src = fetchGit {
     url = "https://forgejo.c3voc.de/voc/transcode.git";
     ref = "feature/package";
-    rev = "88f9328234b215590d51313ef8aa2f8d86df338e";
+    rev = "f7939503d8e18d4ac4d9000e15e9c0ee22f45725";
   };
 
   format = "pyproject";

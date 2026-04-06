@@ -8,14 +8,14 @@
 
 buildGoModule rec {
   pname = "stream-api";
-  version = "0.2.1";
+  version = "0.2.2";
 
   src = fetchFromGitea {
     domain = "forgejo.c3voc.de";
     owner = "voc";
     repo = "stream-api";
     rev = "v${version}";
-    hash = "sha256-1Zt1moRiK2yU9B1jXEW3iGQqb/DKV+csPeSWj2oCaKM=";
+    hash = "sha256-UFJ4hNT+jcKauiw6W39RCDpTGjiUJqZCqZHzhn+lxXY=";
     #hash = lib.fakeHash; # Use after updating version
   };
 
