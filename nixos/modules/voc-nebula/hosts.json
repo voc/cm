@@ -135,7 +135,7 @@
         ]
     },
     {
-        "name": "daffy.lan.c3voc.de",
+        "name": "daffy.alb.c3voc.de",
         "ip": "172.23.0.53/16",
         "groups": [
             "consul"

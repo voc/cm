@@ -28,7 +28,8 @@
     url = "github:edolstra/flake-compat";
     flake = false;
   };
-  outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, ... }@inputs: (
+  inputs.disko.url = "github:nix-community/disko";
+  outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, disko, ... }@inputs: (
     let
       pkgs' = system: import nixpkgs {
         inherit system;
@@ -67,6 +68,7 @@
 
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
+            disko.nixosModules.disko
           ];
 
           deployment = {
