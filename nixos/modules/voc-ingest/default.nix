@@ -208,6 +208,8 @@ in
         Type = "simple";
         ExecStart = "${pkgs.icecast}/bin/icecast -c ${config.sops.templates."icecast.xml".path}";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+        Restart = "always";
+        RestartSec = 5;
       };
     };
 
@@ -279,6 +281,8 @@ in
       requires = [ "consul.service" ];
       serviceConfig = {
         ExecStart = "${pkgs.stream-api}/bin/stream-api -config ${streamApiConfigFile}";
+        Restart = "always";
+        RestartSec = 5;
       };
       wantedBy = [ "multi-user.target" ];
       restartIfChanged = true;

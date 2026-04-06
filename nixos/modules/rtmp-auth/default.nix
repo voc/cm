@@ -42,6 +42,8 @@ in {
       requires = [ "consul.service" ];
       serviceConfig = {
         ExecStart = "${pkgs.rtmp-auth}/bin/rtmp-auth -config ${configFile}";
+        Restart = "always";
+        RestartSec = 5;
       };
       wantedBy = [ "multi-user.target" ];
       restartIfChanged = true;
