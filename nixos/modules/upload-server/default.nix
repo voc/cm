@@ -33,6 +33,17 @@ in {
       restartIfChanged = true;
       restartTriggers = [ config.sops.secrets.upload_server_config.path ];
     };
+    services.telegraf.extraConfig = {
+      inputs = {
+        prometheus = [{
+          urls = [ "http://localhost:9275/metrics" ];
+          metric_version = 1;
+          tags = {
+            job = "upload-server";
+          };
+        }];
+      };
+    };
   };
 }
 
