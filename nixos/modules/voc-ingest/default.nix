@@ -9,6 +9,16 @@ with lib;
 
 let
   cfg = config.services.voc-ingest;
+  streamApiConfigFile = pkgs.writeText "config.yml" ''
+    publisher:
+      enable: yes
+      sources:
+        - type: icecast
+          url: http://localhost:8000
+        - type: srtrelay
+          url: http://localhost:8084
+  '';
+  
 in
 {
   options = {
@@ -66,6 +76,18 @@ in
     };
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+    environment.systemPackages = with pkgs; [
+      stream-api
+    ];
+    systemd.services."stream-api" = {
+      serviceConfig = {
+        ExecStart = "${pkgs.stream-api}/bin/stream-api -config ${streamApiConfigFile}";
+      };
+      wantedBy = [ "multi-user.target" ];
+      restartIfChanged = true;
+      restartTriggers = [ streamApiConfigFile ];
+    };
   };
 }
 
