@@ -74,6 +74,7 @@ qm set $nextid \
     --ipconfig0 ip=185.106.84.X/26,gw=185.106.84.1,ip6=2001:67c:20a0:e::X/64,gw6=2001:67c:20a0:e::1 \
     --net0 virtio,bridge=vmbr0,firewall=0,tag=67 \
     --sshkeys /home/voc/.ssh/authorized_keys
+qm resize $nextid virtio0 16G # disk will be automatically grown inside of VM
 qm cloudinit update $nextid
 qm start $nextid
 qm terminal $nextid # use Ctrl+O to exit
