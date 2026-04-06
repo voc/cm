@@ -4,7 +4,6 @@
   fetchFromGitHub,
   nixosTests,
   nix-update-script,
-  srt,
   ffmpeg,
 }:
 
@@ -12,20 +11,19 @@ buildGoModule rec {
   pname = "srtrelay";
   version = "1.4.0";
 
+  env.CGO_ENABLED = 0;
+  doCheck = false; # skip tests
+
   src = fetchFromGitHub {
     owner = "voc";
     repo = "srtrelay";
-    rev = "ba6bcfb023fc75b30ffab084a88841e1bd8e32b2";
-    hash = "sha256-JjASUeKIrOlCcpd7cxU4DMA7ghmtWmJtb8EXxUtDYwI=";
+    rev = "1e19ebf3b31f0196ccf7ceaa6f1c56551d4592c0";
+    hash = "sha256-GqDucrG/nBmJK9SGZX1dWNoFm/9LVXfq6mBI9PWTQVQ=";
     #hash = lib.fakeHash;
   };
 
-  vendorHash = "sha256-72WkgeSQNTHQbfcYkFbHBON6yzSr8/VgHzE8FRaMcm8=";
+  vendorHash = "sha256-8zEyM9bZI3j5oOYjGhHmiQOmaXeEekDHVuqGwDULhGc=";
   #vendorHash = lib.fakeHash;
-
-  buildInputs = [
-    srt
-  ];
 
   nativeBuildInputs = [
     ffmpeg
