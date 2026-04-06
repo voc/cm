@@ -150,3 +150,23 @@ In the current working state the streams and i3layout are defined in `hosts/loud
 	Hostname 192.0.2.23
 
 The machine's current IP address is shown in the i3 status bar when connected to a display.
+
+### Recover from broken configuration
+In case you need to recover a broken nixos config. (e.g. you screwed up the hardware config and the machine doesn't boot).
+Boot from a live image (e.g. nixos installer CD) and configure networking by hand.
+
+Then build the system closure on your machine:
+```sh
+colmena build --on "<host>"
+# note the result closure path
+```
+
+Then copy to target (note remote-store=/mnt)
+```
+nix copy --no-check-sigs --to 'ssh-ng://root@daffy.alb.c3voc.de?remote-store=/mnt' /nix/store/<hash>-nixos-system-<host>
+```
+
+Now from the installer CD prompt you can do:
+```
+nixos-install --root /mnt --no-channel-copy --system /nix/store/<hash>-nixos-system-<host>
+```
