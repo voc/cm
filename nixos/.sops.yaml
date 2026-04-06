@@ -28,7 +28,7 @@ keys:
   - &host_transcoder1_dus age10ztmyetwq9ptvps7gaf4ngvnu2s9gy8rduaxux09q30hz05qaypsn9w0uu
   - &host_transcoder2_dus age1z9p44yg8gsdfrd0dp7skw2f5n4hdggux07ppquurpwmhdh2lug7qeqfkau
   - &host_transcoder3_dus age193n8sxh7g9awlqlw6txupus5p9q4tdvvv7nnmzz47lcvw4l0t58sgtm72n
-  - &host_ingest_alb age145taxz880m4uvqx9kxvg3ml3h5h0vfn2hzc0sa69lqlxpv2ypekswstken
+  - &host_ingest_alb age1390efny9938c55mxdstsyfleu7r5xee0e800cgrg4cjdk0y6ys9qen0692
 
 creation_rules:
   - path_regex: hosts/tel/.*
