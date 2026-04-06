@@ -319,5 +319,12 @@
         "groups": [
             "consul"
         ]
+    },
+    {
+        "name": "ingest.dus.c3voc.de",
+        "ip": "172.23.0.59/16",
+        "groups": [
+            "consul"
+        ]
     }
 ]

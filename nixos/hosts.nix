@@ -18,6 +18,7 @@
   live-ber = { ... }: {};
   live-fem = { ... }: {};
   ingest-alb = { ... }: {};
+  ingest-dus = { ... }: {};
   transcoder1-dus = { ... }: {};
   transcoder2-dus = { ... }: {};
   transcoder3-dus = { ... }: {};
