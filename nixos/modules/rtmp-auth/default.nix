@@ -38,6 +38,8 @@ in {
       rtmp-auth
     ];
     systemd.services.rtmp-auth = {
+      after = [ "consul.service" ];
+      requires = [ "consul.service" ];
       serviceConfig = {
         ExecStart = "${pkgs.rtmp-auth}/bin/rtmp-auth -config ${configFile}";
       };

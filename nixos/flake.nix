@@ -61,6 +61,7 @@
             ./modules/stream-transcode
             ./modules/srtrelay
             ./modules/rtmp-auth
+            ./modules/voc-ingest
 
             ./profiles/base
 

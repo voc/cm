@@ -72,6 +72,8 @@ in {
       srtrelay
     ];
     systemd.services.srtrelay = {
+      after = [ "consul.service" ];
+      requires = [ "consul.service" ];
       serviceConfig = {
         ExecStart = "${pkgs.srtrelay}/bin/srtrelay --config ${configFile}";
       };
