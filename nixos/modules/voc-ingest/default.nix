@@ -9,6 +9,7 @@ with lib;
 
 let
   cfg = config.services.voc-ingest;
+  statsXsl = pkgs.writeTextFile {name = "stat.xsl"; text = (builtins.readFile ./stat.xsl); destination = "/public/stat.xsl"; };
   streamApiConfigFile = pkgs.writeText "config.yml" ''
     publisher:
       enable: yes
@@ -106,6 +107,77 @@ in
           </security>
       </icecast>
     '';
+    sops.templates."nginx-rtmp.conf".owner = "nginx";
+    sops.templates."nginx-rtmp.conf".content = ''
+      rtmp_auto_push off;
+      rtmp {
+        log_format rtmp '"$remote_addr [$time_local] $command "$app" "$name" "$args" - $bytes_received $bytes_sent ($session_readable_time)"';
+        access_log /var/log/nginx/rtmp_access.log rtmp;
+
+        server {
+          listen [::]:1935 ipv6only=off;
+
+          ping 30s;
+
+          # Disable audio until first video frame is sent.
+          wait_video on;
+          # Send NetStream.Publish.Start and NetStream.Publish.Stop to subscribers.
+          publish_notify on;
+
+          # Synchronize audio and video streams. If subscriber bandwidth is not
+          # enough to receive data at publisher rate some frames are dropped by
+          # the server. This leads to synchronization problem. When timestamp
+          # difference exceeds the value specified as sync argument an absolute
+          # frame is sent fixing that. Default is 300ms.
+          sync 10ms;
+
+          # stream with forward to icecast
+          application stream {
+            # enable live streaming
+            live on;
+
+            # copy breaks relaying, on pollutes downstream
+            meta off;
+
+            allow publish all;
+            allow play all;
+
+            # authenticate stream publish against backend
+            on_publish http://127.0.0.1:8080/publish;
+            on_publish_done http://127.0.0.1:8080/unpublish;
+
+            # drop idle streams
+            drop_idle_publisher 10s;
+            idle_streams off;
+
+            # forward streams to local icecast
+            exec ${pkgs.ffmpeg}/bin/ffmpeg -v warning -nostats -nostdin -y -analyzeduration 1000000
+              -f live_flv -i rtmp://127.0.0.1/$app/$name
+              -c copy -map 0:v:0 -map 0:a:0
+              -f matroska -content_type video/webm -password ${config.sops.placeholder.icecastSourcePassword}
+              icecast://127.0.0.1:8000/$name;
+          }
+
+          # relay only
+          application relay {
+            live on;
+            meta off;
+
+            allow publish all;
+            allow play all;
+
+            # authenticate stream publish against backend
+            on_publish http://127.0.0.1:8080/publish;
+            on_publish_done http://127.0.0.1:8080/unpublish;
+
+            # drop idle streams
+            drop_idle_publisher 10s;
+            idle_streams off;
+          }
+        }
+      }
+    '';
+
     sops.secrets = {
       htpasswd = {
         sopsFile = ./secrets.yaml;
@@ -143,6 +215,9 @@ in
     services.nginx.virtualHosts."${config.networking.hostName}.${config.networking.domain}" = {
       forceSSL = true;
       enableACME = true;
+      locations."/" = {
+        extraConfig = "root ${statsXsl}/public/;";
+      };
       locations."/backend/" = {
         proxyPass = "http://127.0.0.1:8082";
         extraConfig = ''
@@ -165,6 +240,34 @@ in
         '';
       };
     };
+
+    services.nginx.appendConfig = ''
+      include "${config.sops.templates."nginx-rtmp.conf".path}";
+    '';
+    services.nginx.appendHttpConfig = ''
+      # vhost for stats
+      server {
+        server_name _;
+
+        listen 127.0.0.1:9999;
+        allow ::1;
+        allow 127.0.0.1;
+
+        # stats
+        location ~* ^/stats/nginx {
+          stub_status on;
+        }
+
+        location ~* ^/stats/rtmp {
+          rtmp_stat all;
+          rtmp_stat_stylesheet /stat.xsl;
+        }
+
+        location /control {
+          rtmp_control all;
+        }
+      }
+    '';
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];
 
