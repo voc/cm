@@ -1,7 +1,7 @@
 directories['/opt/pygtk-atem-switcher/src'] = {}
 
 git_deploy['/opt/pygtk-atem-switcher/src'] = {
-    'repo': 'https://github.com/Kunsi/pygtk-atem-switcher.git',
+    'repo': 'https://github.com/herkulessi/pgtk-atem-switcher.git',
     'rev': 'development', # TODO use releases
     'triggers': {
         'action:pygtk-atem-switcher_install_deps',

@@ -5,3 +5,6 @@ members = ["releasing", "loudness-rendering"]
 name = "Easterhegg 23"
 slug = "eh23"
 schedule_json = "https://pretalx.eh23.easterhegg.eu/eh23/schedule/export/schedule.json"
+
+[metadata.atem]
+enable_logo = true
