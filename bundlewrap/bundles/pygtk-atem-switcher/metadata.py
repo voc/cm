@@ -8,6 +8,9 @@ defaults = {
                     'input2': 'x',
                     'input3': 'x',
                     'input4': 'info-beamer',
+                    'color1': '-',
+                    'color2': '-',
+                    'colorBars': '-',
                 },
             },
         },
@@ -35,4 +38,23 @@ def atem_ip(metadata):
                 'ip': '10.73.{}.40'.format(metadata.get('room_number', 0)),
             },
         },
+    }
+
+@metadata_reactor.provides(
+    'pygtk-atem-switcher/atem/settings/inputs/settings/inputs/mediaPlayer1',
+)
+def atem_enable_logo(metadata):
+    name = '-'
+    if metadata.get('atem/enable_logo', False):
+        name = 'Event Logo'
+    return {
+        'pygtk-atem-switcher': {
+            'atem': {
+                'settings': {
+                    'inputs': {
+                        'mediaPlayer1': 'Event Logo' if metadata.get('atem/enable_logo') else '-'
+                    }
+                }
+            }
+        }
     }
