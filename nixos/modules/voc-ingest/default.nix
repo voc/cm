@@ -269,7 +269,7 @@ in
       }
     '';
 
-    networking.firewall.allowedTCPPorts = [ 80 443 1935 ];
+    networking.firewall.allowedTCPPorts = [ 80 443 1935 8000 ];
 
     environment.systemPackages = with pkgs; [
       stream-api
