@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, options, pkgs, ... }:
 
 # like system.autoUpgrade but using colmena
 
@@ -30,16 +30,13 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable ({
     assertions = [
       {
         assertion = cfg.flake != null;
         message = "The option 'system.autoColmena.flake' option must not be null.";
       }
     ];
-
-    # colmena requires explicit option to enable self-deployment.
-    deployment.allowLocalDeployment = true;
 
     systemd.timers.colmena-upgrade = {
       wantedBy = [ "timers.target" ];
@@ -57,5 +54,7 @@ in
       ];
       script = "${lib.getExe' cfg.package "colmena"} -f '${cfg.flake}' apply-local -v switch";
     };
-  };
+  } // lib.optionalAttrs (options ? deployment) {
+    deployment.allowLocalDeployment = true;
+  });
 }

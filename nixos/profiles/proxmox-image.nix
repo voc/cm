@@ -2,10 +2,13 @@
 
 {
   config = {
+    virtualisation.diskSize = 65536;
+
     proxmox.qemuConf = {
       name = "nixos-${name}-${config.system.nixos.label}";
       net0 = "virtio=00:00:00:00:00:00,bridge=vmbr2,firewall=0";
-      virtio0 = "local-zfs:vm-9999-disk-0,size=32000M";
+      virtio0 = "local-zfs:vm-9999-disk-0,size=65536M";
+      memory = 2048;
       agent = true;
     };
 
