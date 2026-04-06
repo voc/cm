@@ -4,6 +4,8 @@
   fetchFromGitHub,
   nixosTests,
   nix-update-script,
+  srt,
+  ffmpeg,
 }:
 
 buildGoModule rec {
@@ -13,13 +15,21 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "voc";
     repo = "srtrelay";
-    rev = "8508dd7a288d46636a7cf32e00ae6e47c2844603";
-    #hash = "sha256-MYKz4QA8U4jflC9DofFntHS9yjzVUqpvAVqrgnuWb7w=";
-    hash = lib.fakeHash;
+    rev = "ba6bcfb023fc75b30ffab084a88841e1bd8e32b2";
+    hash = "sha256-JjASUeKIrOlCcpd7cxU4DMA7ghmtWmJtb8EXxUtDYwI=";
+    #hash = lib.fakeHash;
   };
 
-  #vendorHash = "sha256-zs80HyLJ20VppqOCgyEZL7TvugV6Xbp6FdtE7m5pSpk=";
-  vendorHash = lib.fakeHash;
+  vendorHash = "sha256-72WkgeSQNTHQbfcYkFbHBON6yzSr8/VgHzE8FRaMcm8=";
+  #vendorHash = lib.fakeHash;
+
+  buildInputs = [
+    srt
+  ];
+
+  nativeBuildInputs = [
+    ffmpeg
+  ];
 
   meta = {
     description = "SRT relay server for distributing media streams to multiple clients";

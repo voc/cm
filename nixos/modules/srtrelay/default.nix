@@ -7,12 +7,11 @@ with lib;
 # SRT relay server for distributing media streams to multiple clients
 #
 let cfg = config.services.srtrelay;
-  fqdn = config.networking.hostName + "." + config.networking.domain;
   configFile = pkgs.writeText "config.toml" ''
     [app]
     # Relay listen address
     addresses = ["[::]:1337"]
-    publicAddress = "${cfg.fqdn}:1337"
+    publicAddress = "${config.networking.hostName}.${config.networking.domain}:1337"
 
     # SRT protocol latency in ms
     # This should be a multiple of your expected RTT because SRT needs some time
@@ -72,12 +71,6 @@ in {
     environment.systemPackages = with pkgs; [
       srtrelay
     ];
-    sops.secrets = {
-      upload_server_config = {
-        sopsFile = ./secrets.yaml;
-        key = "config";
-      };
-    };
     systemd.services.srtrelay = {
       serviceConfig = {
         ExecStart = "${pkgs.srtrelay}/bin/srtrelay --config ${configFile}";

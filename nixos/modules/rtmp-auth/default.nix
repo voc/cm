@@ -37,12 +37,6 @@ in {
     environment.systemPackages = with pkgs; [
       rtmp-auth
     ];
-    sops.secrets = {
-      upload_server_config = {
-        sopsFile = ./secrets.yaml;
-        key = "config";
-      };
-    };
     systemd.services.rtmp-auth = {
       serviceConfig = {
         ExecStart = "${pkgs.rtmp-auth}/bin/rtmp-auth -config ${configFile}";
