@@ -168,6 +168,15 @@ let
         location ~* ^/(hls|dash|thumbnail|artwork)/(.+)?$ {
           alias /srv/nginx/$1/$2;
           gzip_types application/vnd.apple.mpegurl;
+          types {
+            application/vnd.apple.mpegurl m3u8;
+            application/dash+xml mpd;
+            video/mp2t ts;
+            video/webm webm;
+            video/webm hdr;
+            video/mp4 m4s;
+            image/jpeg jpeg;
+          }
           autoindex off;
         }
       '' else ''
