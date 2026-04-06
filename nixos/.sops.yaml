@@ -54,7 +54,7 @@ creation_rules:
       - *admin_lukas2511
       - *host_mail
 
-  - path_regex: hosts/ingest/secrets.yaml
+  - path_regex: hosts/ingest-alb/secrets.yaml
     key_groups:
     - age:
       - *admin_keepass

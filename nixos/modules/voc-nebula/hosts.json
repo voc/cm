@@ -312,5 +312,12 @@
         "groups": [
             "consul"
         ]
+    },
+    {
+        "name": "ingest.alb.c3voc.de",
+        "ip": "172.23.0.58/16",
+        "groups": [
+            "consul"
+        ]
     }
 ]
