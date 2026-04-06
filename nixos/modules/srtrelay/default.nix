@@ -68,6 +68,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    networking.firewall.allowedUDPPorts = [ 1337 ];
     environment.systemPackages = with pkgs; [
       srtrelay
     ];
