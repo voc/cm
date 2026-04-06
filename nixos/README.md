@@ -42,7 +42,89 @@ When you are on a non `x86_64-linux` platform you want to use a nix remote build
 In case you don't have a remote-builder available you can do `--build-on-target` to use the target machine as builder.
 
 
-### Add new host to this repo
+### Set up a new Proxmox VM
+
+For installation on proxmox generate a cloud-init capable VMA for import.
+
+```
+nix run github:nix-community/nixos-generators \
+    --extra-experimental-features nix-command \
+    --extra-experimental-features flakes \
+    -- \
+    --format proxmox \
+    -I nixpkgs=channel:nixos-25.11
+```
+
+The command will return the path to a `.vma.zst` file. Copy this file to the desired proxmox host, and import it, e.g. like following:
+
+```
+# read carefully and change parameters where necessary
+nextid=$(pvesh get /cluster/options --output-format json | jq '."next-id".lower | tonumber')
+qmrestore \
+    vzdump-qemu-nixos-25.11.8801.36a601196c4e.vma.zst \
+    $nextid \
+    --unique \
+    --storage local-zfs
+qm set $nextid \
+    --name X.alb.c3voc.de \
+    --cores 4 \
+    --memory 4096 \
+    --ciuser voc \
+    --cipassword voc \
+    --ipconfig0 ip=185.106.84.X/26,gw=185.106.84.1,ip6=2001:67c:20a0:e::X/64,gw6=2001:67c:20a0:e::1 \
+    --net0 virtio,bridge=vmbr0,firewall=0,tag=67 \
+    --sshkeys /home/voc/.ssh/authorized_keys
+qm cloudinit update $nextid
+qm start $nextid
+qm terminal $nextid # use Ctrl+O to exit
+```
+
+Now create a new host directory, and add a `default.nix`. Change stateVersion/hostName/domain as needed.
+
+```
+mkdir hosts/X
+cat > hosts/X/default.nix << EOF
+{
+  config,
+  lib,
+  modulesPath,
+  pkgs,
+  ...
+}:
+
+with lib;
+
+let
+in
+{
+  imports = [
+    "\${modulesPath}/virtualisation/proxmox-image.nix"
+    ../../profiles/server
+  ];
+
+  config = {
+    system.stateVersion = "25.11"; # use version from image name and do not modify (even after updates)
+    deployment.tags = [ ];
+
+    networking.hostName = lib.mkOverride 1 "X";
+    networking.domain = "alb.c3voc.de";
+  };
+}
+EOF
+```
+
+Add the new host to hosts.nix and to .sops.yaml. You might want to use ssh-to-age to generate a key:
+
+```
+# ssh-keyscan 185.106.84.36 | ssh-to-age
+age1nlnj3ny7rzc3xfp6n7fyjjypg9dm7lv9pt0t4hefcsh7gz9ejejsrafj2k
+```
+
+The command will print a warning about the ssh-rsa key type, just ignore that.
+
+After adding the new host everywhere make sure to re-encrypt the sops secrets as documented below, commit your changes and deploy using colmena as described above.
+
+### Add new (non-proxmox-vm) host to this repo
 
 Install `nixos` on a host, copy `configuration.nix` and `hardware-configuration.nix` to the host folder in this repo.
 Rename `configuration.nix` to `default.nix`. ... profit!
