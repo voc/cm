@@ -32,7 +32,7 @@ in
     };
 
     services.nginx.enable = true;
-    services.nginx.virtualHosts."ingest.c3voc.de" = {
+    services.nginx.virtualHosts."ingest.alb.c3voc.de" = {
       forceSSL = true;
       enableACME = true;
       locations."/backend/" = {
@@ -59,6 +59,6 @@ in
     };
 
     networking.hostName = lib.mkOverride 1 "ingest";
-    networking.domain = "c3voc.de";
+    networking.domain = "alb.c3voc.de";
   };
 }

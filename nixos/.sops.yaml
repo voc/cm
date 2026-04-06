@@ -28,7 +28,7 @@ keys:
   - &host_transcoder1_dus age10ztmyetwq9ptvps7gaf4ngvnu2s9gy8rduaxux09q30hz05qaypsn9w0uu
   - &host_transcoder2_dus age1z9p44yg8gsdfrd0dp7skw2f5n4hdggux07ppquurpwmhdh2lug7qeqfkau
   - &host_transcoder3_dus age193n8sxh7g9awlqlw6txupus5p9q4tdvvv7nnmzz47lcvw4l0t58sgtm72n
-  - &host_ingest age1ec8y7euket7y9zncpqpsp95qt8kn5ccsjhultz4nmdmjuy0nvfkq4mt79d
+  - &host_ingest_alb age145taxz880m4uvqx9kxvg3ml3h5h0vfn2hzc0sa69lqlxpv2ypekswstken
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -64,7 +64,7 @@ creation_rules:
       - *admin_ember
       - *admin_molly
       - *admin_lukas2511
-      - *host_ingest
+      - *host_ingest_alb
   - path_regex: hosts/forgejo/secrets.yaml
     key_groups:
     - age:
@@ -108,7 +108,7 @@ creation_rules:
       - *host_transcoder1_dus
       - *host_transcoder2_dus
       - *host_transcoder3_dus
-      - *host_ingest
+      - *host_ingest_alb
   - path_regex: modules/(voc-nebula|voc-relay|upload-server|upload-proxy|stream-transcode)/*
     key_groups:
     - age:
@@ -133,7 +133,7 @@ creation_rules:
       - *host_transcoder1_dus
       - *host_transcoder2_dus
       - *host_transcoder3_dus
-      - *host_ingest
+      - *host_ingest_alb
   - path_regex: hosts/netbox/.*
     key_groups:
     - age:
