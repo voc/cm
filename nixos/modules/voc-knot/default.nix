@@ -9,6 +9,11 @@ with lib;
 
 let cfg = config.services.voc-knot;
   isPrimary = ((config.services.voc-knot.primary or "${config.networking.hostName}.${config.networking.domain}") == "${config.networking.hostName}.${config.networking.domain}");
+  pythonPackages = self: with self; [
+    pyyaml
+    flask
+    cryptography
+  ];
 in
 {
   options = {
@@ -45,16 +50,42 @@ in
 
       environment.systemPackages = with pkgs; [
         git
-        (python3.withPackages (ps: with ps; [
-          pyyaml
-        ]))
+        (pkgs.python3.withPackages pythonPackages)
         knot-dns
       ];
 
+      services.uwsgi.enable = true;
+      services.uwsgi.plugins = ["python3"];
+      services.uwsgi.user = "root";
+      services.uwsgi.group = "root";
+      services.uwsgi.instance = {
+        type = "emperor";
+        vassals = {
+          lednsapi = {
+            type = "normal";
+            pythonPackages = pythonPackages;
+            cap = "setgid,setuid";
+            socket = "/run/knot/lednsapi.sock";
+            immediate-uid = "knot";
+            immediate-gid = "nginx";
+            chmod-socket = "660";
+            module = "app:app";
+            chdir = "/opt/lednsapi";
+          };
+        };
+      };
+
       services.nginx.enable = true;
+      services.nginx.virtualHosts."lednsapi.c3voc.de" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          extraConfig = "uwsgi_pass unix:///run/knot/lednsapi.sock;";
+        };
+      };
       services.nginx.virtualHosts."${config.networking.hostName}.${config.networking.domain}" = {
-        #forceSSL = true;
-        #enableACME = true;
+        forceSSL = true;
+        enableACME = true;
         locations."/" = {
           extraConfig = "root /var/www/html/;";
         };
