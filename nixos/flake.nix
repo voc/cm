@@ -66,6 +66,7 @@
             ./modules/srtrelay
             ./modules/rtmp-auth
             ./modules/voc-ingest
+            ./modules/voc-knot
 
             ./profiles/base
 
