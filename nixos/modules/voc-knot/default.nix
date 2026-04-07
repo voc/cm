@@ -95,6 +95,7 @@ in
         fi
         sudo -u knot mkdir -p /var/lib/knot/zones
 
+        sudo rm -f /tmp/secondary_*
         sudo chown -R knot:knot /etc/knot
         sudo chmod 770 /etc/knot
 
