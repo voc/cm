@@ -33,7 +33,7 @@ keys:
   - &host_daffy_alb age1gtf3cp88rtleptc3xdr2tt02gtg7rld8q32ylr7m3h4j89nv65yqpsh0rd
   - &host_sylvester_alb age1lng3ppzvdjprkvquznxnv5txgdrta7rkngs459ef762pl3t2t99s3v80u8
   - &host_ns_dus age1fpajflutgl6z2m587f8sru64aqtfeyzkhv30ajufhu562jkxfeussrxugp
-  - &host_ns_bre age1z7mq0yu0kytjw6xw9jymez2tg8yuvqt20483r5rcs6djk2gl89gqxhm42r
+  - &host_ns_bre age1zgrguwp0sr2cfd2ve0fepx2l9wavr2jedep92duhv9faa0k8xeqs60gdw7
 
 creation_rules:
   - path_regex: hosts/tel/.*
