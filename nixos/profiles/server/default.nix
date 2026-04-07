@@ -11,6 +11,8 @@
     recommendedTlsSettings = true;
   };
 
+  services.cloud-init.settings.ssh_deletekeys = false;
+
   services.zfs = lib.mkIf (lib.hasAttrByPath ["zfs"] config.boot.supportedFilesystems) {
     autoScrub.enable = true;
     autoSnapshot = {
