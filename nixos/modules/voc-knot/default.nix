@@ -93,14 +93,14 @@ in
           sudo mkdir -p /var/www/html/config
           sudo chown knot: /var/www/html/config
         fi
-        sudo -u knot mkdir -p /var/lib/knot/zones
+        sudo -u knot mkdir -p /var/lib/knot/zones /var/lib/knot/home
 
         sudo rm -f /tmp/secondary_*
         sudo chown -R knot:knot /etc/knot
         sudo chmod 770 /etc/knot
 
-        cd /etc/knot/repo && sudo -u knot ./update.py
-        cd /etc/knot/repo && sudo -u knot ./update.py
+        cd /etc/knot/repo && sudo -u knot env HOME=/var/lib/knot/home ./update.py
+        cd /etc/knot/repo && sudo -u knot env HOME=/var/lib/knot/home ./update.py
       '';
 
       security.sudo.extraConfig = ''
