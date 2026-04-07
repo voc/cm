@@ -24,6 +24,6 @@ in
     services.voc-knot.primary = "ns.bre.c3voc.de";
 
     networking.hostName = lib.mkOverride 1 "ns";
-    networking.domain = "dus.c3voc.de";
+    networking.domain = "bre.c3voc.de";
   };
 }

@@ -33,6 +33,7 @@ keys:
   - &host_daffy_alb age1gtf3cp88rtleptc3xdr2tt02gtg7rld8q32ylr7m3h4j89nv65yqpsh0rd
   - &host_sylvester_alb age1lng3ppzvdjprkvquznxnv5txgdrta7rkngs459ef762pl3t2t99s3v80u8
   - &host_ns_dus age137c0a2997mt6yjxp9k5vkwk30025acav4sa4fzaz5ymkzx0twsqsde8exk
+  - &host_ns_bre age1z7mq0yu0kytjw6xw9jymez2tg8yuvqt20483r5rcs6djk2gl89gqxhm42r
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -121,6 +122,7 @@ creation_rules:
       - *host_daffy_alb
       - *host_sylvester_alb
       - *host_ns_dus
+      - *host_ns_bre
 
   - path_regex: modules/(voc-nebula|voc-relay|upload-server|upload-proxy|stream-transcode)/*
     key_groups:
@@ -163,6 +165,7 @@ creation_rules:
       - *admin_ischluff
       - *admin_lukas2511
       - *host_ns_dus
+      - *host_ns_bre
 
   - path_regex: hosts/netbox/.*
     key_groups:

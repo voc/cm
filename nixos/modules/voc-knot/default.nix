@@ -40,6 +40,74 @@ in
       networking.firewall.allowedTCPPorts = [ 53 ];
     }
 
+    (mkIf isPrimary {
+      users.users.voc.extraGroups = ["knot"];
+
+      environment.systemPackages = with pkgs; [
+        git
+        (python3.withPackages (ps: with ps; [
+          pyyaml
+        ]))
+        knot-dns
+      ];
+
+      services.nginx.enable = true;
+      services.nginx.virtualHosts."${config.networking.hostName}.${config.networking.domain}" = {
+        #forceSSL = true;
+        #enableACME = true;
+        locations."/" = {
+          extraConfig = "root /var/www/html/;";
+        };
+      };
+
+      environment.etc."telegraf/dns-stats.py".mode = "0755";
+      environment.etc."telegraf/dns-stats.py".text = ''
+        #!/usr/bin/env python3
+
+        import subprocess
+        import json
+
+        statout = subprocess.check_output(["knotc", "stats"]).decode()
+
+        stats = {}
+        for line in statout.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            key, value = line.replace(".", "_").replace("-", "_").replace("[", "_").replace("]", "").split(" = ", 1)
+            stats[key] = int(value)
+
+        print(json.dumps(stats))
+      '';
+
+      environment.etc."knot/update.sh".mode = "0755";
+      environment.etc."knot/update.sh".text = ''
+        #!/usr/bin/env bash
+
+        set -e
+        set -o pipefail
+
+        if [ ! -d /var/www/html/config ]; then
+          sudo mkdir -p /var/www/html/config
+          sudo chown knot: /var/www/html/config
+        fi
+        sudo -u knot mkdir -p /var/lib/knot/zones
+
+        sudo chown -R knot:knot /etc/knot
+        sudo chmod 770 /etc/knot
+
+        cd /etc/knot/repo && sudo -u knot ./update.py
+        cd /etc/knot/repo && sudo -u knot ./update.py
+      '';
+
+      security.sudo.extraConfig = ''
+        knot ALL=NOPASSWD: /run/current-system/sw/bin/systemctl is-active knot
+        knot ALL=NOPASSWD: /run/current-system/sw/bin/systemctl reload knot
+        knot ALL=NOPASSWD: /run/current-system/sw/bin/systemctl reset-failed knot
+        knot ALL=NOPASSWD: /run/current-system/sw/bin/systemctl start knot
+      '';
+    })
+
     (mkIf (! isPrimary) {
       sops.templates."update.sh".content = ''
         #!/usr/bin/env bash

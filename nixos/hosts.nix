@@ -25,4 +25,5 @@
   daffy-alb = { ... }: {};
   sylvester-alb = { ... }: {};
   ns-dus = { ... }: {};
+  ns-bre = { ... }: {};
 }
