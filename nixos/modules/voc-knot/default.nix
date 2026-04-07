@@ -60,6 +60,8 @@ in
         };
       };
 
+      networking.firewall.allowedTCPPorts = [ 80 443 ];
+
       environment.etc."telegraf/dns-stats.py".mode = "0755";
       environment.etc."telegraf/dns-stats.py".text = ''
         #!/usr/bin/env python3
