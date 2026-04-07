@@ -4,7 +4,6 @@
   netbox = { ... }: {};
   sso = { ... }: {};
   forgejo = { ... }: {};
-  rt = { ... }: {};
   loudness-player = { ... }: {};
   wink = { ... }: {};
   live-alb = { ... }: {};
