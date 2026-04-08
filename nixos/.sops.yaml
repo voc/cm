@@ -34,6 +34,7 @@ keys:
   - &host_sylvester_alb age1lng3ppzvdjprkvquznxnv5txgdrta7rkngs459ef762pl3t2t99s3v80u8
   - &host_ns_dus age1fpajflutgl6z2m587f8sru64aqtfeyzkhv30ajufhu562jkxfeussrxugp
   - &host_ns_bre age1zgrguwp0sr2cfd2ve0fepx2l9wavr2jedep92duhv9faa0k8xeqs60gdw7
+  - &host_ns_alb age19j84n4780svqh8hy9zkdqtanf6f449kue0h3zfreve87t4nlvetq5ncsv6
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -123,6 +124,7 @@ creation_rules:
       - *host_sylvester_alb
       - *host_ns_dus
       - *host_ns_bre
+      - *host_ns_alb
 
   - path_regex: modules/(voc-nebula|voc-relay|upload-server|upload-proxy|stream-transcode)/*
     key_groups:
@@ -166,6 +168,7 @@ creation_rules:
       - *admin_lukas2511
       - *host_ns_dus
       - *host_ns_bre
+      - *host_ns_alb
 
   - path_regex: hosts/netbox/.*
     key_groups:

@@ -25,4 +25,5 @@
   sylvester-alb = { ... }: {};
   ns-dus = { ... }: {};
   ns-bre = { ... }: {};
+  ns-alb = { ... }: {};
 }
