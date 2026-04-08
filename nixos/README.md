@@ -114,7 +114,8 @@ in
 EOF
 ```
 
-Add the new host to hosts.nix and to .sops.yaml. You might want to use ssh-to-age to generate a key:
+Add the new host to hosts.nix and to .sops.yaml. You might want to use ssh-to-age to generate a key.
+Ideally try to restart sshd inside of the VM before running the command below. Due to some cloud-init weirdness there is a possibility that an outdated host key is still in use.
 
 ```
 # ssh-keyscan 185.106.84.36 | ssh-to-age
