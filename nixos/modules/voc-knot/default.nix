@@ -37,9 +37,18 @@ in
       services.knot.settingsFile = "/etc/knot/voc-knot.conf";
       systemd.services.knot.unitConfig.ConditionPathExists = "/etc/knot/voc-knot.conf";
 
+      environment.systemPackages = with pkgs; [
+        knot-dns
+      ];
+
       services.telegraf.extraConfig = {
         global_tags.role = "knot";
+        inputs.exec = {
+          commands = ["/etc/telegraf/dns-stats.py"];
+          data_format = "json";
+        };
       };
+      users.users.telegraf.extraGroups = ["knot"];
 
       networking.firewall.allowedUDPPorts = [ 53 ];
       networking.firewall.allowedTCPPorts = [ 53 ];
@@ -51,7 +60,6 @@ in
       environment.systemPackages = with pkgs; [
         git
         (pkgs.python3.withPackages pythonPackages)
-        knot-dns
       ];
 
       services.uwsgi.enable = true;
@@ -96,12 +104,12 @@ in
 
       environment.etc."telegraf/dns-stats.py".mode = "0755";
       environment.etc."telegraf/dns-stats.py".text = ''
-        #!/usr/bin/env python3
+        #!/run/current-system/sw/bin/python3
 
         import subprocess
         import json
 
-        statout = subprocess.check_output(["knotc", "stats"]).decode()
+        statout = subprocess.check_output(["/run/current-system/sw/bin/knotc", "stats"]).decode()
 
         stats = {}
         for line in statout.splitlines():
