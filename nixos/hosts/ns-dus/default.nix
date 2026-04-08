@@ -18,7 +18,7 @@ in
   ];
   config = {
     system.stateVersion = "25.11"; # do not touch
-    deployment.tags = [ ];
+    deployment.tags = [ "dns" ];
 
     services.voc-knot.enable = true;
     services.voc-knot.primary = "ns.bre.c3voc.de";
