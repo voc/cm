@@ -38,6 +38,8 @@ in
       systemd.services.knot.unitConfig.ConditionPathExists = "/etc/knot/voc-knot.conf";
 
       environment.systemPackages = with pkgs; [
+        git
+        (pkgs.python3.withPackages pythonPackages)
         knot-dns
       ];
 
@@ -49,6 +51,25 @@ in
         };
       };
       users.users.telegraf.extraGroups = ["knot"];
+      environment.etc."telegraf/dns-stats.py".mode = "0755";
+      environment.etc."telegraf/dns-stats.py".text = ''
+        #!/run/current-system/sw/bin/python3
+
+        import subprocess
+        import json
+
+        statout = subprocess.check_output(["/run/current-system/sw/bin/knotc", "stats"]).decode()
+
+        stats = {}
+        for line in statout.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            key, value = line.replace(".", "_").replace("-", "_").replace("[", "_").replace("]", "").split(" = ", 1)
+            stats[key] = int(value)
+
+        print(json.dumps(stats))
+      '';
 
       networking.firewall.allowedUDPPorts = [ 53 ];
       networking.firewall.allowedTCPPorts = [ 53 ];
@@ -56,11 +77,6 @@ in
 
     (mkIf isPrimary {
       users.users.voc.extraGroups = ["knot"];
-
-      environment.systemPackages = with pkgs; [
-        git
-        (pkgs.python3.withPackages pythonPackages)
-      ];
 
       services.uwsgi.enable = true;
       services.uwsgi.plugins = ["python3"];
@@ -101,26 +117,6 @@ in
       };
 
       networking.firewall.allowedTCPPorts = [ 80 443 ];
-
-      environment.etc."telegraf/dns-stats.py".mode = "0755";
-      environment.etc."telegraf/dns-stats.py".text = ''
-        #!/run/current-system/sw/bin/python3
-
-        import subprocess
-        import json
-
-        statout = subprocess.check_output(["/run/current-system/sw/bin/knotc", "stats"]).decode()
-
-        stats = {}
-        for line in statout.splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            key, value = line.replace(".", "_").replace("-", "_").replace("[", "_").replace("]", "").split(" = ", 1)
-            stats[key] = int(value)
-
-        print(json.dumps(stats))
-      '';
 
       environment.etc."knot/update.sh".mode = "0755";
       environment.etc."knot/update.sh".text = ''
