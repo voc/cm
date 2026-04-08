@@ -84,7 +84,7 @@ in
         };
       };
       services.nginx.virtualHosts."${config.networking.hostName}.${config.networking.domain}" = {
-        forceSSL = true;
+        forceSSL = false;
         enableACME = true;
         serverAliases = ["ns0.c3voc.de" "ns100.c3voc.de"];
         locations."/" = {
