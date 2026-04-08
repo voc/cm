@@ -86,6 +86,7 @@ in
       services.nginx.virtualHosts."${config.networking.hostName}.${config.networking.domain}" = {
         forceSSL = true;
         enableACME = true;
+        serverAliases = ["ns0.c3voc.de" "ns100.c3voc.de"];
         locations."/" = {
           extraConfig = "root /var/www/html/;";
         };
