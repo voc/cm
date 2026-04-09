@@ -9,6 +9,9 @@ groups = ["debian-trixie"]
 [metadata]
 external_interface = "ens18"
 room_number = 200
+nameservers = [
+    "8.8.8.8",  # TU Graz only allows this DNS server
+]
 
 [metadata.bird]
 static_routes = [
@@ -22,11 +25,13 @@ privatekey = "!decrypt:encrypt$gAAAAABl_YN2PGo642Q5LfZkrw5yJU4gKoKA5Kkk_xxjzxp4v
 
 [metadata.interfaces.ens18]
 ips = [
+    "129.27.206.34/28", # glt25
     "188.172.114.72/28", # seibert wiesbaden
     "94.45.241.105/24", # c3noc event
     "2001:67c:20a1:2241::105/64", # c3noc event
 ]
-gateway4 = "188.172.114.65" # seibert wiesbaden
+gateway4 = "129.27.206.33" # glt25
+#gateway4 = "188.172.114.65" # seibert wiesbaden
 #gateway4 = "94.45.241.1" # c3noc event
 #gateway6 = "2001:67c:20a1:2241::1" # c3noc event
 dhcp = false
