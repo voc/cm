@@ -6,3 +6,6 @@ timezone = "Europe/Vienna"
 name = "Grazer Linuxtage 2026"
 slug = "glt26"
 schedule_json = "https://pretalx.linuxtage.at/glt26/schedule/export/schedule.json"
+
+[metadata.voctocore]
+mirror_view = true

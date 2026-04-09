@@ -7,7 +7,7 @@ meta.secret = "!decrypt:encrypt$gAAAAABpyimT5mF_45OBNFguOgxmNvwcmoDXqq9GqfZAW8sX
 meta.token = "!decrypt:encrypt$gAAAAABpyimu2fwa3KrJXUiTEFMpi0HQgqhYhNg69ou-0ApLzHP9fOgevhcpmfq31V-4Ynh7uXIKXj-f-XWpOD4oQNDNpl-uU0JuxqptzwGaGuySFJkGbwINz0xNB_4eTrjHXDe9wU8b"
 
 [metadata.event]
-room_name = "Saal 2"
+room_name = "Hs i2"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.2.3/16"]
