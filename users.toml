@@ -754,3 +754,19 @@ uid = 1197
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINry+AHxNt65vvRpzvs8y55XRkXKSCB5ivNjc3NNEpuv shy@voc"
 ]
+
+[gwen]
+enable_rz = false
+enable_event = false
+uid = 1198
+ssh_pubkeys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB1DcFRiz4Z5fFiMfry6qcbe98GmpP4+Haj4KadbwCPz"
+]
+
+[ruby]
+enable_rz = false
+enable_event = true
+uid = 1199
+ssh_pubkeys = [
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1UwS7BsEjXllccd0nmikkX2rcrU2SUdvSgV5GR/nc4CKLWgAgOWHbWx+QgozbRKINFE/NbfoiqxWWVOKk7WlCohii74qL0aw8yt7fGSa2rsk1X1hiRz8zzUssf202QCqFsYNJEG4+xvRguz/x8MkZPPu4N3i2qP3OCAP4h0Q+GVMKLgEQqa4w+RNTkYtZMSxbv1wC4qh8WTznYjX29yMQyqRByQ0Ge3xog5ZfSO2sKsONki4G+XHfWqWKVw/BMYfIUNbTJrXB9sWDvoFFYCillFXq6Spb0L9pGHYPgDroQQUZN0eRu7WDEF61Lx62zOZ3RwGtIXltjn6uATMPVP9UaFoySxhxYs368qHsUy9dhy30UZT4ONSy9bk0peDXrxmemLXjT0FqgTOleQzWMq7PnJSygLJLHscT4yDwULi7NZiG0/tUhYN2LVykc6ngS5HHL2EUYRlfgZHPCXcbspaqgt4ZICAl+TxI1KRQttHp/t6HOWCfFo8GION9Lahe8d8= ruby@hoellenmaschine"
+]
