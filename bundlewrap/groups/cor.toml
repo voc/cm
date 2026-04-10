@@ -1,0 +1,8 @@
+subgroups = ["saal5", "saal6"]
+members = ["releasing", "loudness-rendering"]
+
+
+[metadata.event]
+schedule_json = "https://programm.infraunited.org/cableresist26/schedule.xml"
+name = "Cables of Resistance"
+slug = "cor"
