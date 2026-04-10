@@ -22,6 +22,9 @@ in
 
     services.voc-ingest.enable = true;
     services.voc-ingest.relayAuth = false;
+    services.voc-ingest.acmeExtraSANs = [
+      "ingest2.c3voc.de"
+    ];
 
     networking.hostName = lib.mkOverride 1 "ingest";
     networking.domain = "dus.c3voc.de";

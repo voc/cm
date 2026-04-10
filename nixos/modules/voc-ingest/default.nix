@@ -9,6 +9,7 @@ with lib;
 
 let
   cfg = config.services.voc-ingest;
+  hostFqdn = "${config.networking.hostName}.${config.networking.domain}";
   statsXsl = pkgs.writeTextFile {name = "stat.xsl"; text = (builtins.readFile ./stat.xsl); destination = "/public/stat.xsl"; };
   streamApiConfigFile = pkgs.writeText "config.yml" ''
     publisher:
@@ -28,7 +29,13 @@ in
       relayAuth = mkOption {
         type = types.bool;
         default = true;
-        description = "Require RTMP auth for publishes to the relay application.";
+        description = "Require RTMP auth via /backend to publish to /relay";
+      };
+      acmeExtraSANs = mkOption {
+        type = with types; listOf str;
+        default = [ ];
+        example = [ "ingest2.c3voc.de" "relay.c3voc.de" ];
+        description = "Additional SAN for the certificate for the NGINX config";
       };
     };
   };
@@ -221,9 +228,10 @@ in
     };
 
     services.nginx.enable = true;
-    services.nginx.virtualHosts."${config.networking.hostName}.${config.networking.domain}" = {
+    services.nginx.virtualHosts."${hostFqdn}" = {
       forceSSL = true;
       enableACME = true;
+      serverAliases = cfg.acmeExtraSANs;
       locations."/" = {
         extraConfig = "root ${statsXsl}/public/;";
       };
@@ -249,6 +257,8 @@ in
         '';
       };
     };
+
+    security.acme.certs."${hostFqdn}".extraDomainNames = cfg.acmeExtraSANs;
 
     services.nginx.appendConfig = ''
       include "${config.sops.templates."nginx-rtmp.conf".path}";
