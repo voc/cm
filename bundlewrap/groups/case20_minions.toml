@@ -14,28 +14,31 @@ efi = true
 [metadata.systemd-networkd.bridges.br0]
 match = ["enp87s0", "enp90s0", "enp2s0f0", "enp2s0f1"]
 
-[metadata.zfs.datasets.zroot]
-
-[metadata.zfs.datasets."zroot/ROOT"]
-
-[metadata.zfs.datasets."zroot/ROOT/debian"]
-mountpoint = "/"
-
-[metadata.zfs.datasets."zroot/home"]
-mountpoint = "/home"
-
-[metadata.zfs.datasets."zroot/home/root"]
-mountpoint = "/root"
-
-[metadata.zfs.datasets."zroot/var"]
-
-[metadata.zfs.datasets."zroot/var/cache"]
-mountpoint = "/var/cache"
-
-[metadata.zfs.datasets."zroot/var/lib"]
-mountpoint = "/var/lib"
-
-[metadata.zfs.datasets."zroot/var/log"]
-mountpoint = "/var/log"
+# bundlewrap cannot create these datasets, and as of bw 5.0.3 trying to manage
+# them results in circular dependencies
+# <https://github.com/bundlewrap/bundlewrap/issues/974>
+#[metadata.zfs.datasets.zroot]
+#
+#[metadata.zfs.datasets."zroot/ROOT"]
+#
+#[metadata.zfs.datasets."zroot/ROOT/debian"]
+#mountpoint = "/"
+#
+#[metadata.zfs.datasets."zroot/home"]
+#mountpoint = "/home"
+#
+#[metadata.zfs.datasets."zroot/home/root"]
+#mountpoint = "/root"
+#
+#[metadata.zfs.datasets."zroot/var"]
+#
+#[metadata.zfs.datasets."zroot/var/cache"]
+#mountpoint = "/var/cache"
+#
+#[metadata.zfs.datasets."zroot/var/lib"]
+#mountpoint = "/var/lib"
+#
+#[metadata.zfs.datasets."zroot/var/log"]
+#mountpoint = "/var/log"
 
 [metadata.zfs.pools.zroot]
