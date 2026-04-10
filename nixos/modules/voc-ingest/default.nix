@@ -25,6 +25,11 @@ in
   options = {
     services.voc-ingest = {
       enable = mkEnableOption "voc-ingest";
+      relayAuth = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Require RTMP auth for publishes to the relay application.";
+      };
     };
   };
 
@@ -166,9 +171,11 @@ in
             allow publish all;
             allow play all;
 
+            ${optionalString cfg.relayAuth ''
             # authenticate stream publish against backend
             on_publish http://127.0.0.1:8080/publish;
             on_publish_done http://127.0.0.1:8080/unpublish;
+            ''}
 
             # drop idle streams
             drop_idle_publisher 10s;

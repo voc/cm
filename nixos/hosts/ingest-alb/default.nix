@@ -21,6 +21,7 @@ in
     deployment.tags = [ ];
 
     services.voc-ingest.enable = true;
+    services.voc-ingest.relayAuth = true;
 
     networking.hostName = lib.mkOverride 1 "ingest";
     networking.domain = "alb.c3voc.de";
