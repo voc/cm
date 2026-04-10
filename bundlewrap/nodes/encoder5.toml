@@ -7,7 +7,7 @@ meta.secret = "!decrypt:encrypt$gAAAAABpyiq0i7Thqq2qkV-b9v7mJ2we7uCGXWWT3UlrR6yR
 meta.token = "!decrypt:encrypt$gAAAAABpyirAiDBEO88wMTqKz4h--hUVLUIJDDPkAaomxAz9O7Sp1Qse54QQDJ8LS2z6cyI_7ZCihPg13KF9685JVK_VkaNQl3LJ70IGOT1odILos26gEMbcmVbSJgZn8IdpKKN8iSVh"
 
 [metadata.event]
-room_name = "Münzenbergsaal"
+room_name = "Muenzenbergsaal"
 
 [metadata.interfaces.eth0]
 ips = ["10.73.5.3/16"]
