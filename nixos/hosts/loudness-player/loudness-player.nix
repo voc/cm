@@ -132,6 +132,10 @@ in
 {
   environment.systemPackages = [ streamMute streamUnmute ];
 
+  environment.shellAliases = {
+    fix_layout = "sudo -Hu voc DISPLAY=:0 ${i3layoutfixer}";
+  };
+
   services.xserver.enable = true;
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "voc";
