@@ -29,7 +29,7 @@
     },
     "10.73.1.7": {
         "description": "minion1",
-        "mac": "00:1f:c6:9c:47:7e"
+        "mac": "86:b1:17:b9:33:00"
     },
     "10.73.100.105": {
         "description": "teemee",
@@ -209,7 +209,7 @@
     },
     "10.73.2.7": {
         "description": "minion2",
-        "mac": "74:d4:35:cc:88:46"
+        "mac": "76:78:01:33:55:9f"
     },
     "10.73.23.15": {
         "description": "tallycom CCCB",
@@ -245,7 +245,7 @@
     },
     "10.73.3.7": {
         "description": "minion3",
-        "mac": "fc:aa:14:6b:c0:60"
+        "mac": "fe:74:35:bb:c8:c6"
     },
     "10.73.4.1": {
         "description": "mixer4",
@@ -301,7 +301,7 @@
     },
     "10.73.5.7": {
         "description": "minion5",
-        "mac": "00:1f:c6:9b:ce:e4"
+        "mac": "f6:fc:ed:cd:cc:32"
     },
     "10.73.6.1": {
         "description": "mixer6",
