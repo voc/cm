@@ -20,5 +20,6 @@ actions = {
 }
 
 files['/home/upload/.ssh/authorized_keys'] = {
+    'content_type': 'mako',
     'owner': 'upload',
 }
