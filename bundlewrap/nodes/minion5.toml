@@ -1,3 +1,4 @@
+bundles = ["vsftpd"]
 groups = ["debian-trixie", "case20_minions"]
 
 [metadata.crs-worker.secrets.encoding]
@@ -8,12 +9,11 @@ secret = "!decrypt:encrypt$gAAAAABpyi0aN2Z89X4bk2ST3iZyXtSIXM2IwfGulFhqbkkw2EYVp
 ips = ["10.73.5.7/16"]
 gateway4 = "10.73.0.254"
 
+[metadata.vsftpd.users.saal5-sony]
+
 [[metadata.zfs.pools.zroot.when_creating.config]]
 type = "mirror"
 devices = [
   "/dev/disk/by-id/nvme-CT4000P3PSSD8_2421E8B2584E_1-part4",
   "/dev/disk/by-id/nvme-CT4000P3PSSD8_2421E8B25853_1-part4",
 ]
-
-[metadata.grub]
-efi = true

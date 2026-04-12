@@ -1,3 +1,4 @@
+bundles = ["vsftpd"]
 groups = ["debian-bookworm", "case20_minions"]
 
 [metadata.crs-worker.secrets.encoding]
@@ -7,6 +8,8 @@ secret = "!decrypt:encrypt$gAAAAABpyizEMPAetBN2gWjM6hctPvMTNrfj118ICoUBL_uxD6EY-
 [metadata.interfaces.br0]
 ips = ["10.73.3.7/16"]
 gateway4 = "10.73.0.254"
+
+[metadata.vsftpd.users.saal3-sony]
 
 [[metadata.zfs.pools.zroot.when_creating.config]]
 type = "mirror"
