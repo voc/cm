@@ -29,6 +29,7 @@ gateway4 = "10.23.42.1"
 
 [metadata.voctocore]
 streaming_auth_key = "!decrypt:encrypt$gAAAAABpbdZZ8dMAp6gW-Q7htConoWQuYO25TaiK30pm1o-HTmzBSHfYbKm8EIAl-uKsirM8pGLx6GS1DO4wRWVbVqKZ6Y9OyF8D4ZARy8h45JL1CayFwRs="
+vaapi = true
 
 [metadata.voctocore.sources.cam1]
 devicenumber = 0
