@@ -41,7 +41,7 @@ def atem_ip(metadata):
     }
 
 @metadata_reactor.provides(
-    'pygtk-atem-switcher/atem/settings/inputs/settings/inputs/mediaPlayer1',
+    'pygtk-atem-switcher/atem/settings/inputs/mediaPlayer1',
 )
 def atem_enable_logo(metadata):
     return {
