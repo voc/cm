@@ -49,7 +49,7 @@ def atem_enable_logo(metadata):
             'atem': {
                 'settings': {
                     'inputs': {
-                        'mediaPlayer1': 'Event Logo' if metadata.get('atem/enable_logo') else 'x'
+                        'mediaPlayer1': 'Event Logo' if metadata.get('atem/enable_logo', False) else 'x'
                     }
                 }
             }
