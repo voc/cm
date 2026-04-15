@@ -1,0 +1,22 @@
+bundles = []
+groups = ["debian-bookworm"]
+
+[metadata.apt.packages.mesa-va-drivers]
+
+[metadata]
+nameservers = ["1.1.1.1"]
+
+[metadata.grub]
+efi = true
+
+[metadata.interfaces.eno1]
+ips = [
+ #   "10.73.51.1/16",
+    "10.23.43.158/23",
+]
+gateway4 = "10.23.42.1"
+
+[metadata.voctogui]
+encoder-ip = "10.23.42.232"
+high_dpi = false
+vaapi = true
