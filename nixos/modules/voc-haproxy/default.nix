@@ -85,7 +85,16 @@ in
         ProtectKernelTunables = true;
         ProtectKernelModules = true;
         ProtectControlGroups = true;
-        SystemCallFilter = "~@cpu-emulation @keyring @module @obsolete @raw-io @reboot @swap @sync";
+        PrivateDevices = true;
+        PrivateTmp = true;
+        ProtectClock = true;
+        RestrictRealtime = true;
+        ProtectHostname = true;
+        RestrictNamespaces = true;
+        ProtectProc = "invisible";
+        RestrictAddressFamilies = "AF_INET AF_INET6 AF_UNIX";
+        SystemCallFilter = "~@cpu-emulation @keyring @module @obsolete @raw-io @reboot @swap @sync @debug @clock";
+        CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
         # needed in case we bind to port < 1024
         AmbientCapabilities = "CAP_NET_BIND_SERVICE";
       };
@@ -98,8 +107,6 @@ in
       };
     };
 
-    users.groups = lib.optionalAttrs (cfg.group == "haproxy") {
-      haproxy = { };
-    };
+    users.groups = lib.optionalAttrs (cfg.group == "haproxy") { haproxy = { }; };
   };
 }

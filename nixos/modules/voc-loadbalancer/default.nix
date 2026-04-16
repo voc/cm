@@ -103,13 +103,6 @@ let
 
         ${frontendAcls "https"}
 
-    frontend stats
-        bind *:8404
-        http-request use-service prometheus-exporter if { path /metrics }
-        stats enable
-        stats uri /stats
-        stats refresh 10s
-
     # ######## #
     # BACKENDs #
     # ######## #
@@ -280,7 +273,7 @@ let
   '';
 in
 {
-  imports = [ ../voc-haproxy ];
+  imports = [ ../voc-haproxy ../streaming-website ];
   options = {
     services.voc-loadbalancer = {
       enable = mkEnableOption "voc-loadbalancer";
@@ -344,7 +337,7 @@ in
     # };
 
     # TODO: nginx for streaming-website...
-    services.nginx = {
+    services.streaming-website = {
       enable = true;
     };
 
