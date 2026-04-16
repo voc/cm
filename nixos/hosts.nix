@@ -32,4 +32,5 @@
   transcoder3-dus = { ... }: { deployment.tags = [ "transcoders" ]; };
   wink = { ... }: {};
   wob1-wob = { ... }: { deployment.tags = [ "relays" "edge-relays" ]; };
+  media-dus = { ... }: {};
 }

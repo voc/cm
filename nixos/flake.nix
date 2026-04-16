@@ -81,6 +81,7 @@
             ./modules/rtmp-auth
             ./modules/voc-ingest
             ./modules/voc-knot
+            ./modules/voc-mirrorbits
 
             ./profiles/base
 

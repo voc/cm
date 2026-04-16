@@ -29,4 +29,7 @@ final: prev: {
   AnyEventMQTT = prev.callPackage ./AnyEventMQTT.nix { };
   NetMQTT = prev.callPackage ./NetMQTT.nix { };
   mqtt-watchdog = prev.callPackage ./mqtt-watchdog { };
+
+  mirrorbits-voc = prev.callPackage ./mirrorbits.nix { };
+  mirrorbits-serverlist-api = prev.callPackage ./mirrorbits-serverlist-api.nix { };
 }
