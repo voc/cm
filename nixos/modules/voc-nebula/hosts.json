@@ -56,6 +56,20 @@
         ]
     },
     {
+        "name": "ingest.alb.c3voc.de",
+        "ip": "172.23.0.14/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "ingest.dus.c3voc.de",
+        "ip": "172.23.0.15/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
         "name": "live.ber.c3voc.de",
         "ip": "172.23.0.21/16",
         "groups": [
@@ -125,6 +139,20 @@
         "groups": [
             "consul",
             "relay"
+        ]
+    },
+    {
+        "name": "live.ams.c3voc.de",
+        "ip": "172.23.0.31/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
+        "name": "live.nitk.c3voc.de",
+        "ip": "172.23.0.32/16",
+        "groups": [
+            "consul"
         ]
     },
     {
@@ -302,34 +330,6 @@
     {
         "name": "rc3-edge-2.lan.c3voc.de",
         "ip": "172.23.128.120/16",
-        "groups": [
-            "consul"
-        ]
-    },
-    {
-        "name": "live.ams.c3voc.de",
-        "ip": "172.23.0.55/16",
-        "groups": [
-            "consul"
-        ]
-    },
-    {
-        "name": "live.nitk.c3voc.de",
-        "ip": "172.23.0.56/16",
-        "groups": [
-            "consul"
-        ]
-    },
-    {
-        "name": "ingest.alb.c3voc.de",
-        "ip": "172.23.0.58/16",
-        "groups": [
-            "consul"
-        ]
-    },
-    {
-        "name": "ingest.dus.c3voc.de",
-        "ip": "172.23.0.59/16",
         "groups": [
             "consul"
         ]

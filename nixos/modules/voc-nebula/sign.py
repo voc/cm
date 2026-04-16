@@ -32,6 +32,7 @@ def main():
     ca_cert = secrets["ca"]["cert"]
     ca_key = secrets["ca"]["key"]
     changed = False
+    ips = set()
     for host in hosts:
         if "name" not in host:
             print("Skipping host without name")
@@ -39,6 +40,12 @@ def main():
         if "ip" not in host:
             print(f"Skipping {host['name']}, no ip defined")
             continue
+        if host["ip"] in ips:
+            print(
+                f"Duplicated IP {host['ip']} found for {host['name']}, refusing to continue"
+            )
+            sys.exit(1)
+        ips.add(host["ip"])
         if "groups" not in host:
             host["groups"] = []
         if args.name and host["name"] != args.name:
