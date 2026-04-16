@@ -54,6 +54,7 @@ in
         ProtectControlGroups = true;
         ProtectKernelLogs = true;
         RestrictNamespaces = true;
+        PrivateTmp = mkForce false; # php-fpm needs access to /tmp for streaming-website
         SystemCallFilter = "@system-service";
       };
     };
