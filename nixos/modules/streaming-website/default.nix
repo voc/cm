@@ -246,6 +246,7 @@ in
 
           python ${./mqttfeedback.py} -f feedback.sqlite3
         '';
+        after = [ "update-streaming-website.service" ];
         wantedBy = [ "multi-user.target" ];
       };
   };
