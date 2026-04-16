@@ -21,6 +21,13 @@
         ]
     },
     {
+        "name": "lb2.alb.c3voc.de",
+        "ip": "172.23.0.4/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
         "name": "wg.c3voc.de",
         "ip": "172.23.0.6/16",
         "groups": [

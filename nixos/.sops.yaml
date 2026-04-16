@@ -35,6 +35,7 @@ keys:
   - &host_ns_dus age1fpajflutgl6z2m587f8sru64aqtfeyzkhv30ajufhu562jkxfeussrxugp
   - &host_ns_bre age1zgrguwp0sr2cfd2ve0fepx2l9wavr2jedep92duhv9faa0k8xeqs60gdw7
   - &host_ns_alb age19j84n4780svqh8hy9zkdqtanf6f449kue0h3zfreve87t4nlvetq5ncsv6
+  - &host_lb2_alb age1n060mae4lg7g3pucy6l273s2c5vpceve2nf63xv0yud6ncqa7fzqlmr0t0
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -125,8 +126,9 @@ creation_rules:
       - *host_ns_dus
       - *host_ns_bre
       - *host_ns_alb
+      - *host_lb2_alb
 
-  - path_regex: modules/(voc-nebula|voc-relay|upload-server|upload-proxy|stream-transcode)/*
+  - path_regex: modules/(voc-relay|upload-server|upload-proxy|stream-transcode)/*
     key_groups:
     - age:
       - *admin_keepass
@@ -154,6 +156,36 @@ creation_rules:
       - *host_ingest_dus
       - *host_daffy_alb
       - *host_sylvester_alb
+  
+  - path_regex: modules/voc-nebula/*
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *admin_ischluff
+      - *admin_lukas2511
+      - *host_live_alb
+      - *host_live_bre
+      - *host_live_ams
+      - *host_live_dus
+      - *host_fra1_wob
+      - *host_wob1_wob
+      - *host_ber1_wob
+      - *host_live_nitk
+      - *host_live_ber
+      - *host_live_fem
+      - *host_transcoder1_dus
+      - *host_transcoder2_dus
+      - *host_transcoder3_dus
+      - *host_ingest_alb
+      - *host_ingest_dus
+      - *host_daffy_alb
+      - *host_sylvester_alb
+      - *host_lb2_alb
 
   - path_regex: modules/voc-knot/*
     key_groups:
@@ -169,6 +201,19 @@ creation_rules:
       - *host_ns_dus
       - *host_ns_bre
       - *host_ns_alb
+
+  - path_regex: modules/voc-loadbalancer/*
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *admin_ischluff
+      - *admin_lukas2511
+      - *host_lb2_alb
 
   - path_regex: hosts/netbox/.*
     key_groups:
