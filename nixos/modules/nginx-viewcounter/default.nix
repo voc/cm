@@ -36,6 +36,15 @@ in {
           };
         }];
       };
+      processors = {
+        rename = [{
+          namepass = [ "viewers" ];
+          replace = [{
+            field = "gauge";
+            dest = "total";
+          }];
+        }];
+      };
     };
   };
 }

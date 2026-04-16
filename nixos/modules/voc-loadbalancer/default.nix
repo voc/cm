@@ -296,17 +296,23 @@ in
     services.telegraf.extraConfig = {
       global_tags.role = "loadbalancer";
     };
-    # enable nebula
-    services.voc-nebula.enable = true;
-    # enable consul
-    services.voc-consul.enable = true;
-
+    # run as nebula lighthouse
+    services.voc-nebula = {
+      enable = true;
+      isLighthouse = true;
+    };
+    # run as consul server
+    services.voc-consul = {
+      enable = true;
+      server = true;
+      webUi = true;
+    };
     services.voc-haproxy = {
       enable = true;
       configPath = "/etc/haproxy.cfg";
       limitNoFile = 1048576;
     };
-
+    # template haproxy config
     services.consul-template.instances.haproxy = {
       settings = {
         template = [
@@ -320,11 +326,24 @@ in
         ];
       };
     };
+    # read haproxy metrics
+    services.telegraf.extraConfig = {
+      inputs = {
+        prometheus = [{
+          urls = [ "http://localhost:9101/metrics" ];
+          metric_version = 1;
+          tags = {
+            job = "haproxy";
+          };
+        }];
+      };
+    };
     # Read Nginx's basic status information (ngx_http_stub_status_module)
     #   services.telegraf.extraConfig.inputs.nginx = {
     #     urls = ["http://localhost:8999/stats/nginx"];
     # };
 
+    # TODO: nginx for streaming-website...
     services.nginx = {
       enable = true;
     };
@@ -332,7 +351,6 @@ in
     sops.secrets.lednsapi = {
       sopsFile = ./secrets.yaml;
       key = "lednsapi/${fqdn}";
-      # path = "%r/lednsapi.secret";
       owner = config.users.users.acme.name;
     };
 
@@ -372,6 +390,7 @@ in
       '';
     };
 
+    # open the gates
     networking.firewall.allowedTCPPorts = [
       80
       443

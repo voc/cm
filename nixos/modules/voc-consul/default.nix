@@ -63,5 +63,40 @@ in {
         disable_update_check = true;
       } // serverOptions;
     };
+    # Allow relevant connections over nebula
+    services.voc-nebula.firewall.inbound = if cfg.server then [{
+      port = "8300-8302";
+      proto = "tcp";
+      groups = [ "consul" ];
+    } {
+      port = "8301-8302";
+      proto = "udp";
+      groups = [ "consul" ];
+    }] else [{
+      port = "8301";
+      proto = "tcp";
+      groups = [ "consul" ];
+    } {
+      port = "8301";
+      proto = "udp";
+      groups = [ "consul" ];
+    }];
+    networking.firewall.interfaces."nebula".allowedTCPPorts = if cfg.server then [ 8300 8301 8302 ] else [ 8301 ];
+    networking.firewall.interfaces."nebula".allowedUDPPorts = if cfg.server then [ 8301 8302 ] else [ 8301 ];
+    services.telegraf.extraConfig = if cfg.server then {
+      inputs = {
+        prometheus = [{
+          urls = ["http://localhost:8500/v1/agent/metrics?format=prometheus"];
+          metric_version = 1;
+          tags = { job = "consul"; };
+        }];
+        consul = [{
+          address = "localhost:8500";
+          scheme = "http";
+          metric_version = 2;
+          tags = { job = "consul"; };
+        }];
+      };
+    } else {};
   };
 }

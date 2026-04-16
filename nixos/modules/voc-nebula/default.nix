@@ -19,6 +19,18 @@ in {
           Whether this node should act as a lighthouse.
         '';
       };
+      firewall.inbound = lib.mkOption {
+        type = lib.types.listOf lib.types.attrs;
+        default = [ ];
+        description = "Firewall rules for inbound traffic.";
+        example = [
+          {
+            port = "any";
+            proto = "any";
+            host = "any";
+          }
+        ];
+      };
     };
   };
 
@@ -51,7 +63,7 @@ in {
       ca = config.sops.secrets.nebula_ca_cert.path;
       listen.host = "[::]"; # listen on both v4 and v6
       # todo: derive from lighthouses
-      lighthouses = [ "172.23.0.1" "172.23.0.3" "172.23.128.119" ];
+      lighthouses = if !cfg.isLighthouse then [ "172.23.0.1" "172.23.0.3" "172.23.128.119" ] else [];
       staticHostMap = {
         "172.23.0.1" = ["185.106.84.35:4242" "[2001:67c:20a0:e::169]:4242"];
         "172.23.0.3" = ["193.203.16.35:4242" "[2a00:c380:c101:2800::35]:4242"];
@@ -65,8 +77,12 @@ in {
       firewall.inbound = [{
         host="any";
         port="any";
-        proto="icmp";
-      }];
+        proto="icmp"; # allow icmp
+      } {
+        host="any";
+        port="22"; # allow ssh
+        proto="tcp";
+      }] ++ cfg.firewall.inbound;
       settings = {
         tun = {
           dev = "nebula";
@@ -87,6 +103,10 @@ in {
         punchy.punch = true;
       };
     };
+    systemd.services."nebula@nebula" = {
+      restartTriggers = [ config.sops.secrets.nebula_cert.path config.sops.secrets.nebula_key.path config.sops.secrets.nebula_ca_cert.path ];
+    };
+    networking.firewall.allowedUDPPorts = if cfg.isLighthouse then [ 4242 ] else [];
     services.telegraf.extraConfig = {
       inputs = {
         prometheus = [{
@@ -95,15 +115,6 @@ in {
           tags = {
             job = "nebula";
           };
-        }];
-      };
-      processors = {
-        rename = [{
-          namepass = [ "viewers" ];
-          replace = [{
-            field = "gauge";
-            dest = "total";
-          }];
         }];
       };
     };
