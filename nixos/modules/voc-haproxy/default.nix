@@ -43,14 +43,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
     assertions = [
       {
         assertion = cfg.configPath != null;
         message = "You must provide services.voc-haproxy.configPath.";
       }
     ];
-
+    # aws-lc performs better than openssl
+    nixpkgs.config.packageOverrides = pkgs: {
+      haproxy = pkgs.haproxy.override { sslLibrary = "aws-lc"; };
+    };
     systemd.services.haproxy = {
       description = "HAProxy";
       after = [ "network.target" ];

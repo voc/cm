@@ -1,0 +1,24 @@
+diff --git a/src/http_ana.c b/src/http_ana.c
+index 1f7e3aa3e..fde8f2c35 100644
+--- a/src/http_ana.c
++++ b/src/http_ana.c
+@@ -2540,7 +2540,8 @@ int http_apply_redirect_rule(struct redirect_rule *rule, struct stream *s, struc
+ 		goto fail;
+ 
+ 	if (rule->code == 302 || rule->code == 303 || rule->code == 307) {
+-		if (!htx_add_header(htx, ist("Cache-Control"), ist("no-cache")))
++		if (!htx_add_header(htx, ist("Cache-Control"), ist("no-cache")) ||
++			!htx_add_header(htx, ist("Access-Control-Allow-Origin"), ist("*")))
+ 			goto fail;
+ 	}
+ 
+@@ -4347,7 +4348,8 @@ void http_perform_server_redirect(struct stream *s, struct stconn *sc)
+ 
+         if (!htx_add_header(htx, ist("Cache-Control"), ist("no-cache")) ||
+ 	    !htx_add_header(htx, ist("Content-length"), ist("0")) ||
+-	    !htx_add_header(htx, ist("Location"), location))
++	    !htx_add_header(htx, ist("Location"), location) ||
++	    !htx_add_header(htx, ist("Access-Control-Allow-Origin"), ist("*")))
+ 		goto fail;
+ 
+ 	if (!htx_add_endof(htx, HTX_BLK_EOH))
