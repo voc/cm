@@ -24,4 +24,7 @@
       monthly = 0;
     };
   };
+
+  # we don't need LLMNR on a server
+  services.resolved.llmnr = "false";
 }
