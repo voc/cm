@@ -33,9 +33,6 @@ let
         tune.lua.bool-sample-conversion normal
         lua-load ${./cors.lua}
 
-        user    haproxy
-        group   haproxy
-
         daemon
         log     /dev/log local0 notice
         # tls
@@ -92,9 +89,8 @@ let
         tcp-request inspect-delay 5s
 
         stick-table type ip size 200k expire 1m store conn_rate(10s)
-        tcp-request content track-sc0 src
-        acl conn_rate_abuse sc0_conn_rate gt 50
-        tcp-request content reject if conn_rate_abuse
+        tcp-request session track-sc0 src
+        tcp-request session reject if { sc0_sess_rate gt 50 }
 
         # add special header for protocol version
         http-request add-header X-Proto https if  { ssl_fc }
