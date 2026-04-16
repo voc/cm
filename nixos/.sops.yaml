@@ -202,7 +202,7 @@ creation_rules:
       - *host_ns_bre
       - *host_ns_alb
 
-  - path_regex: modules/voc-loadbalancer/*
+  - path_regex: modules/(voc-loadbalancer|streaming-website)/*
     key_groups:
     - age:
       - *admin_keepass

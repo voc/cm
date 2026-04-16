@@ -10,6 +10,7 @@ let
   app = "streaming-website";
   domain = "streaming.media.ccc.de";
   dataDir = "/srv/http/${domain}";
+  feedbackDir = "/var/lib/streaming-feedback";
   repo = "https://forgejo.c3voc.de/voc/streaming-website.git";
   branch = "master";
 in
@@ -56,8 +57,10 @@ in
         SystemCallFilter = "@system-service";
       };
     };
-    # nginx cache dir
-    systemd.tmpfiles.rules = [ "d /var/cache/nginx/streaming_fcgi 0750 nginx nginx" ];
+    systemd.tmpfiles.rules = [
+      "d /var/cache/nginx/streaming_fcgi 0750 nginx nginx" # nginx cache dir
+      "d ${feedbackDir} 0750 ${app} ${app}" # feedback data dir
+    ];
     services.nginx = {
       enable = true;
       appendHttpConfig = ''
@@ -154,6 +157,12 @@ in
       group = app;
     };
     users.groups.${app} = { };
+    sops.secrets = {
+      feedback_password = {
+        sopsFile = ./secrets.yaml;
+        key = "feedback/password";
+      };
+    };
     systemd.services.update-streaming-website = {
       serviceConfig.Type = "oneshot";
       path = with pkgs; [
@@ -163,6 +172,11 @@ in
         php
       ];
       script = ''
+        # setup streaming-feedback password
+        cp ${config.sops.secrets.feedback_password.path} ${feedbackDir}/password
+        chown root:${app} ${feedbackDir}/password
+        chmod 640 ${feedbackDir}/password
+
         # initial clone
         if [ ! -d ${dataDir} ]; then
           git clone ${repo} ${dataDir};
@@ -199,14 +213,39 @@ in
         php index.php download
       '';
     };
-    systemd.timers.update-schedule= {
+    systemd.timers.update-schedule = {
       wantedBy = [ "timers.target" ];
       partOf = [ "update-schedule.service" ];
       description = "Download event schedules every 15 minutes";
       timerConfig = {
-        OnBootSec="1min";
-        OnUnitActiveSec="15m";
+        OnBootSec = "1min";
+        OnUnitActiveSec = "15m";
       };
     };
+    systemd.services.mqttfeedback =
+      let
+        pythonEnv = pkgs.python3.withPackages (ps: with ps; [ aiomqtt ]);
+      in
+      {
+        serviceConfig.WorkingDirectory = feedbackDir;
+        serviceConfig.User = app;
+        serviceConfig.ExecStartPre = pkgs.writeShellScript "init-db.sh" ''
+          # initialize feedback db if necessary
+          if [ ! -f ${feedbackDir}/feedback.sqlite3 ]; then
+            echo "initializing feedback database"
+            ${pkgs.sqlite}/bin/sqlite3 ${feedbackDir}/feedback.sqlite3 < ${dataDir}/lib/feedback/schema.sql
+          fi'';
+        path = [ pythonEnv ];
+        script = ''
+          set -euo pipefail
+          # reuse voc2mqtt credentials
+          export MQTT_USER=$(< ${config.sops.secrets.mqtt_username.path})
+          export MQTT_PASSWORD=$(< ${config.sops.secrets.mqtt_password.path})
+          export MQTT_SERVER=mqtt.c3voc.de
+
+          python ${./mqttfeedback.py} -f feedback.sqlite3
+        '';
+        wantedBy = [ "multi-user.target" ];
+      };
   };
 }
