@@ -43,6 +43,10 @@ svc_systemd['send-mqtt-shutdown'] = {
     },
 }
 
+files[f'/usr/local/sbin/check_system_daily.d/bundlewrap-apply-notifier.sh'] = {
+    'mode': '0755',
+}
+
 for plugin in node.metadata.get('mqtt-monitoring/plugins', set()):
     files[f'/usr/local/sbin/check_system.d/{plugin}.sh'] = {
         'source': f'plugins/{plugin}.sh',
