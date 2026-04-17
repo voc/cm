@@ -3,7 +3,7 @@ kea_config = {
         **node.metadata.get('kea-dhcp-server/config'),
         'control-socket': {
             'socket-type': 'unix',
-            'socket-name': 'kea4-ctrl-socket'
+            'socket-name': '/run/kea/kea4-ctrl-socket'
         },
         'interfaces-config': {
             'interfaces': sorted(node.metadata.get('kea-dhcp-server/subnets', {}).keys()),
