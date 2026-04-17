@@ -757,7 +757,7 @@ ssh_pubkeys = [
 
 [gwen]
 enable_rz = false
-enable_event = false
+enable_event = true
 uid = 1198
 ssh_pubkeys = [
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB1DcFRiz4Z5fFiMfry6qcbe98GmpP4+Haj4KadbwCPz"
