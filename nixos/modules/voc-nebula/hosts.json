@@ -14,7 +14,7 @@
         ]
     },
     {
-        "name": "lb.dort.c3voc.de",
+        "name": "lb.bre.c3voc.de",
         "ip": "172.23.0.3/16",
         "groups": [
             "consul"

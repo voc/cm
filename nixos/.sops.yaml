@@ -37,6 +37,7 @@ keys:
   - &host_ns_alb age19j84n4780svqh8hy9zkdqtanf6f449kue0h3zfreve87t4nlvetq5ncsv6
   - &host_lb_alb age1q937ydvd40sszx8g4f36fnqjv7y5kuskyg3ssl2r7q99ur0lqqqswtgrk6
   - &host_lb2_alb age1n060mae4lg7g3pucy6l273s2c5vpceve2nf63xv0yud6ncqa7fzqlmr0t0
+  - &host_lb_bre age1y03kvs7vqje2gm0hwww34v92z3wwx87k2g505zsrut4q6cfh95esqn3yyd
   - &host_media_dus age19nk6kf9raqt4hu03qhqhsg5gt2hfwe7vet49en66d6d0ss7y49rshukdsh
 
 creation_rules:
@@ -130,6 +131,7 @@ creation_rules:
       - *host_ns_alb
       - *host_lb_alb
       - *host_lb2_alb
+      - *host_lb_bre
       - *host_media_dus
 
   - path_regex: modules/(voc-relay|upload-server|upload-proxy|stream-transcode)/*
@@ -191,6 +193,7 @@ creation_rules:
       - *host_sylvester_alb
       - *host_lb_alb
       - *host_lb2_alb
+      - *host_lb_bre
 
   - path_regex: modules/voc-knot/*
     key_groups:
@@ -220,6 +223,7 @@ creation_rules:
       - *admin_lukas2511
       - *host_lb_alb
       - *host_lb2_alb
+      - *host_lb_bre
 
   - path_regex: hosts/netbox/.*
     key_groups:
