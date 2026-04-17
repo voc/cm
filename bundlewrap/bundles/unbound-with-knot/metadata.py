@@ -26,8 +26,10 @@ defaults = {
             # list of zones that should get redirected to knot
             'c3voc.de',
         },
-        'max_ttl': 3600,
         'cache_size': '512M',
+        'cache_slabs': 4,
+        'max_ttl': 3600,
+        'threads': 4,
     },
     'unit-status-on-login': {
         'unbound',

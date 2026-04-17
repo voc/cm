@@ -82,4 +82,9 @@ groups['routers'] = {
         'kea-dhcp-server',
         'unbound-with-knot',
     },
+    'metadata': {
+        'unbound-with-knot': {
+            'primary': 'ns.bre.c3voc.de',
+        },
+    },
 }

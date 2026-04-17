@@ -32,7 +32,4 @@ options.domain-search = "lan.c3voc.de"
 options.routers = "10.73.243.201"
 
 [metadata.unbound-with-knot]
-threads = 4
-cache_slabs = 4
-primary = "!decrypt:encrypt$gAAAAABmBGxVDiZLLQAXtkHpNgy3Eaqs5NM9ArfFMHhjL3OKOdQHnyPpcMkKz_G6vGykgizdjX_SiKUfDRt9to_pkPc09zEi1g=="
 primary_secret = "!decrypt:encrypt$gAAAAABoCrQfFtx-SvH1d5ZNBlhiO18k3QGII9IxgfpFEQdADwMTvUh-gJJNfm9-OIR2pVKmSA8M-CSjaeFFq4DN4fQ_irB7Z3MT6twUs7SlSvHM1ElYUVMLW_P04Hw5lbjI0ShgB0jYsaLVuH_fnLtxb_XHMU9Tag=="
