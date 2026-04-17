@@ -71,6 +71,7 @@ files = {
         'delete': True,
     },
     '/etc/apt/apt.conf.d/99recommends': {},
+    '/etc/apt/apt.conf.d/99updateerror': {},
 }
 
 directories = {
