@@ -154,3 +154,8 @@ for pkgname, pkgconfig in pkg_apt.items():
         *set(pkg_apt[pkgname].get('preceded_by', set())),
         'action:apt_update',
     }
+
+if node.has_bundle('mqtt-monitoring'):
+    files[f'/usr/local/sbin/check_system_daily.d/update-notifier.sh'] = {
+        'mode': '0755',
+    }
