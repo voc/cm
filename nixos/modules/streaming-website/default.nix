@@ -11,7 +11,7 @@ let
   domain = "streaming.media.ccc.de";
   dataDir = "/srv/http/${domain}";
   feedbackDir = "/var/lib/streaming-feedback";
-  repo = "https://forgejo.c3voc.de/voc/streaming-website.git";
+  repo = "https://github.com/voc/streaming-website.git";
   branch = "master";
 in
 {
@@ -187,6 +187,7 @@ in
           cd ${dataDir}
           sudo -u ${app} ${pkgs.writeShellScript "update.sh" ''
             echo "updating to latest version on ${branch}"
+            git remote set-url origin ${repo}
             git fetch origin
             git reset --hard HEAD
             git checkout ${branch}

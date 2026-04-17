@@ -15,7 +15,7 @@ async def main():
     db.row_factory = sqlite3.Row
     try:
         async with aiomqtt.Client(
-            args.destination, username=args.user, password=args.password
+            hostname=args.destination, username=args.user, password=args.password
         ) as client:
             print("Service started, waiting for feedback")
             while True:
@@ -39,7 +39,7 @@ async def main():
 # Read new feedback entries from the database.
 def read_feedbacks(db: sqlite3.Connection) -> list[dict]:
     feedbacks = []
-    for row in db.execute("SELECT rowid, * FROM feedback WHERE sent=0 LIMIT 20"):
+    for row in db.execute("SELECT rowid, * FROM feedback WHERE sent IS NULL LIMIT 20"):
         feedbacks.append({key: row[key] for key in row.keys()})
     return feedbacks
 
@@ -54,12 +54,13 @@ def confirm_write(db: sqlite3.Connection, rowid: int):
 async def publish(client: aiomqtt.Client, path: str, feedback: dict, noop: bool):
     if noop:
         return
-    await asyncio.gather(
-        # for humanes
-        client.publish("/voc/alert", json.dumps(for_humans(feedback))),
-        # for machines
-        client.publish(path, json.dumps(feedback)),
-    )
+    async with asyncio.timeout(5):
+        await asyncio.gather(
+            # for humanes
+            client.publish("/voc/alert", json.dumps(for_humans(feedback))),
+            # for machines
+            client.publish(path, json.dumps(feedback)),
+        )
 
 
 # Convert event to human readable message.
