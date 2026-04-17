@@ -67,6 +67,7 @@ qmrestore \
     --storage local-zfs
 qm set $nextid \
     --name X.alb.c3voc.de \
+    --cpu x86-64-v3 \
     --cores 4 \
     --memory 4096 \
     --ciuser voc \
