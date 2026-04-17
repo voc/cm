@@ -4,6 +4,9 @@ groups = ["debian-bookworm"]
 [metadata]
 room_number = 23
 
+[metadata.grub]
+efi = true
+
 [metadata.generator-s2s]
 # pubkey encrypt$gAAAAABmBGuy7yXUYspEOIgxUe3jb7Hx_k-FCZqI3i97dRD9B9OgfVYvBSdohi47-aLM8iGYePSEJOS8dA2Kqzr9wnyvGKwBeoDa7qSwRnNcuReJRsxrsagc-J6v7KshrRLWoUf49Rnv
 peer_pubkey = "!decrypt:encrypt$gAAAAABmBHBebMFGxM-McyWWBZVFl7IdR5mqrnJqlskrlDnyPw7TrUcn3p4tEy2qO8a8dAvl4XwBpWTtTq_QW40c0mPcjWaGy7ll9_Vg6npoYJ_30dyXgUngBIv7J8IpZQFle6tE_pUC"
