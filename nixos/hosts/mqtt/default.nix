@@ -14,6 +14,7 @@ with lib;
     ./hardware.nix
     ../../profiles/server
     ./mqtt-server.nix
+    ./mqtt-watchdog.nix
   ];
 
   system.stateVersion = "25.11"; # do not touch
