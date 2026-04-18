@@ -23,7 +23,6 @@ blade3.myloc.c3voc.de
 ber.c3voc.de
 dus.c3voc.de
 node.lan.c3voc.de
-storage.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/storage.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/storage.password') }}"
 usa.lan.c3voc.de
 deskjet.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/deskjet.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/deskjet.password') }}"
 aws.lan.c3voc.de # ansible_ssh_port=8000 ansible_ssh_host=127.0.0.1
@@ -47,30 +46,12 @@ testi.ber.c3voc.de ansible_ssh_port=16722 ansible_ssh_host=195.54.164.162
 maps.c3voc.de letsencrypt=true
 librenms.lan.c3voc.de
 
-[nameservers]
-ns100.c3voc.de monitoring_role=dns
-ns1.c3voc.de monitoring_role=dns
-ns2.c3voc.de monitoring_role=dns
-
 [loadbalancers]
 #lb.dus.c3voc.de
-lb.alb.c3voc.de
 lb.dort.c3voc.de
-lb.wob.c3voc.de
-
-[minions]
-blade1.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade1.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade1.password') }}"
-blade2.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade2.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade2.password') }}"
-blade3.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade3.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade3.password') }}"
-blade4.lan.c3voc.de crs_token="{{ lookup('keepass', 'ansible/worker-groups/blade4.username') }}" crs_secret="{{ lookup('keepass', 'ansible/worker-groups/blade4.password') }}"
 
 [tracker]
 tracker.c3voc.de
 
 [monitoring]
 monitoring.c3voc.de
-
-[ingest]
-ingest.c3voc.de rtmp_auth_relay=yes
-ingest2.c3voc.de
-ingest.nurluefter.de
