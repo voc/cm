@@ -1,0 +1,42 @@
+{ lib, pkgs, config, ... }:
+
+let
+  cfg = config.services.mosquitto;
+
+  # services.mosquitto hardcodes "per_listener_settings true", so we
+  # override the entire config file.
+  mosquittoConfig = pkgs.writeText "mosquitto.conf" ''
+    persistence true
+    persistence_location ${cfg.dataDir}
+    per_listener_settings false
+    
+    log_dest stderr
+    log_timestamp false
+    log_type warning
+    
+    allow_anonymous false
+    password_file /run/secrets/mqtt_encrypted_passwords
+    
+    # Plaintext (needed for viri?)
+    listener 1883
+
+    # TODO: TLS
+    #listener 8883
+    #cafile ...
+    #certfile ...
+    #keyfile ...
+  '';
+in
+{
+  environment.systemPackages = [ cfg.package ];
+
+  sops.secrets.mqtt_encrypted_passwords = {
+    sopsFile = ./secrets.yaml;
+    mode = "0600";
+    owner = config.users.users.mosquitto.name;
+    group = config.users.users.mosquitto.group;
+  };
+
+  services.mosquitto.enable = true;
+  systemd.services.mosquitto.serviceConfig.ExecStart = lib.mkForce "${cfg.package}/bin/mosquitto -c ${mosquittoConfig}";
+}

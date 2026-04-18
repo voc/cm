@@ -254,3 +254,17 @@ creation_rules:
       - *admin_lukas2511
       - *admin_scientress
       - *host_netbox
+
+  - path_regex: hosts/mqtt/.*
+    key_groups:
+    - age:
+      - *admin_keepass
+      - *admin_hexchen
+      - *admin_jayjay
+      - *admin_derchris
+      - *admin_ember
+      - *admin_molly
+      - *admin_ischluff
+      - *admin_lukas2511
+      - *admin_scientress
+      - *host_mqtt
