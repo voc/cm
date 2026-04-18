@@ -18,6 +18,7 @@
   live-nitk = { ... }: {};
   loudness-player = { ... }: {};
   mail = { ... }: {};
+  mqtt = { ... }: {};
   mumble = { ... }: {};
   netbox = { ... }: {};
   ns-alb = { ... }: {};
