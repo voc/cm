@@ -27,9 +27,9 @@ let
 
     # TLS
     listener 8883
-    cafile /srv/mqttcerts/fullchain.pem
-    certfile /srv/mqttcerts/cert.pem
-    keyfile /srv/mqttcerts/privkey.pem
+    cafile /var/lib/acme/mqtt.c3voc.de/fullchain.pem
+    certfile /var/lib/acme/mqtt.c3voc.de/cert.pem
+    keyfile /var/lib/acme/mqtt.c3voc.de/key.pem
   '';
 in
 {
@@ -50,7 +50,10 @@ in
   networking.firewall.allowedTCPPorts = [ 80 443 1883 8883 ];
 
   users.groups.mqtt-certs.members = [ "mosquitto" "nginx" ];
-  security.acme.certs."mqtt.c3voc.de".group = "mqtt-certs";
+  security.acme.certs."mqtt.c3voc.de" = {
+    group = "mqtt-certs";
+    reloadServices = [ "mosquitto.service" ];
+  };
   services.nginx = {
     enable = true;
     virtualHosts."mqtt.c3voc.de" = {
