@@ -26,4 +26,8 @@ final: prev: {
   ripe-mmdb = prev.callPackage ./ripe-mmdb.nix { };
   srtrelay = prev.callPackage ./srtrelay.nix { };
   rtmp-auth = prev.callPackage ./rtmp-auth.nix { };
+
+  AnyEventMQTT = prev.callPackage ./AnyEventMQTT.nix { };
+  NetMQTT = prev.callPackage ./NetMQTT.nix { };
+  mqtt-watchdog = prev.callPackage ./mqtt-watchdog { };
 }
