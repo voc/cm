@@ -18,3 +18,7 @@ for i in 1 2 3 ; do
         -t "/voc/shutdown" \
         -m "$MESSAGE" && break
 done
+
+# we must 'exit 0' here, otherwise the exit status of voc2alert is used to
+# determine the exit status of this script
+exit 0
