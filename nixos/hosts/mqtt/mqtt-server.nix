@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 let
   cfg = config.services.mosquitto;
@@ -9,14 +14,14 @@ let
     persistence true
     persistence_location ${cfg.dataDir}
     per_listener_settings false
-    
+
     log_dest syslog
     log_timestamp false
     log_type information
-    
+
     allow_anonymous false
     password_file /run/secrets/mqtt_encrypted_passwords
-    
+
     # Plaintext (needed for viri?)
     listener 1883
 
@@ -38,6 +43,7 @@ in
   };
 
   services.mosquitto.enable = true;
-  systemd.services.mosquitto.serviceConfig.ExecStart = lib.mkForce "${cfg.package}/bin/mosquitto -c ${mosquittoConfig}";
+  systemd.services.mosquitto.serviceConfig.ExecStart =
+    lib.mkForce "${cfg.package}/bin/mosquitto -c ${mosquittoConfig}";
   systemd.services.mosquitto.serviceConfig.ReadOnlyPaths = "/srv/mqttcerts";
 }
