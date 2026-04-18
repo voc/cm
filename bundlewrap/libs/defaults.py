@@ -1,6 +1,11 @@
 # This is only used for the unbound resolver. All other systems default to
 # using 10.73.0.254 as their only resolver.
-nameservers = ['5.1.66.255', '185.150.99.255']
+nameservers = [
+    '5.1.66.255',
+    '185.150.99.255',
+    '2001:678:e68:f000::',
+    '2001:678:ed0:f000::',
+]
 
 admin_email = 'voc@c3voc.de'
 
