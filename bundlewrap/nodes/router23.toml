@@ -1,4 +1,6 @@
-hostname = "195.160.172.39"
+# IPv4 is flakey at CCCB. Use IPv6, because that's ... not.
+hostname = "2001:678:560:42::73"
+#hostname = "195.160.172.39"
 groups = ["debian-bookworm"]
 
 [metadata]
