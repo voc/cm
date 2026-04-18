@@ -7,8 +7,6 @@
 let
   mqttHost = "mqtt.c3voc.de";
 
-  voc2mqtt-tools = pkgs.callPackage ./package.nix {};
-
   voc2mqtt = pkgs.writeShellScriptBin "voc2mqtt" ''
     [[ -n "$DEBUG" ]] && set -x
     set -euo pipefail
@@ -40,7 +38,7 @@ in
 
   environment.systemPackages = [
     voc2mqtt
-    voc2mqtt-tools  # ensure voc2alert is in the system PATH.
+    pkgs.voc2mqtt-tools  # ensure voc2alert is in the system PATH.
   ];
 
   systemd.timers.check_system_and_send_mqtt_message = {
@@ -54,8 +52,8 @@ in
   systemd.services.check_system_and_send_mqtt_message = {
     after = [ "network.target" ];
     requires = [ "network.target" ];
-    path = [ voc2mqtt voc2mqtt-tools ];
-    script = lib.getExe' voc2mqtt-tools "check_system.sh";
+    path = [ voc2mqtt pkgs.voc2mqtt-tools ];
+    script = lib.getExe' pkgs.voc2mqtt-tools "check_system.sh";
     environment.MY_HOSTNAME = "${config.networking.hostName}.${config.networking.domain}";
     serviceConfig.Type = "oneshot";
   };
@@ -65,7 +63,7 @@ in
     requires = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
     path = [ voc2mqtt ];
-    preStop = lib.getExe' voc2mqtt-tools "alert_shutdown.sh";
+    preStop = lib.getExe' pkgs.voc2mqtt-tools "alert_shutdown.sh";
     environment.MY_HOSTNAME = "${config.networking.hostName}.${config.networking.domain}";
 
     serviceConfig = {

@@ -22,6 +22,7 @@ final: prev: {
   });
   stream-api = prev.callPackage ./stream-api.nix { };
   voc-telemetry = prev.callPackage ./voc-telemetry.nix { };
+  voc2mqtt-tools = prev.callPackage ./voc2mqtt-tools.nix { };
   ripe-mmdb = prev.callPackage ./ripe-mmdb.nix { };
   srtrelay = prev.callPackage ./srtrelay.nix { };
   rtmp-auth = prev.callPackage ./rtmp-auth.nix { };
