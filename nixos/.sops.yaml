@@ -41,6 +41,7 @@ keys:
   - &host_lb_bre age1y03kvs7vqje2gm0hwww34v92z3wwx87k2g505zsrut4q6cfh95esqn3yyd
   - &host_lb_wob age1e8uv5xdsmpqt74w5q5llmfu49xfahgqgcnwg8yvcwt3avjrzvpksxl830u
   - &host_media_dus age19nk6kf9raqt4hu03qhqhsg5gt2hfwe7vet49en66d6d0ss7y49rshukdsh
+  - &host_mqtt age1qczjncwewf4prezpyt7aagdwtwa6cwu4ckdkuy0gwemyyjsm7arqzsxs6h
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -141,6 +142,7 @@ creation_rules:
       - *host_lb_bre
       - *host_lb_wob
       - *host_media_dus
+      - *host_mqtt
 
   - path_regex: modules/(voc-relay|upload-server|upload-proxy|stream-transcode)/*
     key_groups:
