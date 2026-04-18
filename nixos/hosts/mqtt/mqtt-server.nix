@@ -47,5 +47,16 @@ in
     lib.mkForce "${cfg.package}/bin/mosquitto -c ${mosquittoConfig}";
   systemd.services.mosquitto.serviceConfig.ReadOnlyPaths = "/srv/mqttcerts";
 
-  networking.firewall.allowedTCPPorts = [ 1883 8883 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 1883 8883 ];
+
+  users.groups.mqtt-certs.members = [ "mosquitto" "nginx" ];
+  security.acme.certs."mqtt.c3voc.de".group = "mqtt-certs";
+  services.nginx = {
+    enable = true;
+    virtualHosts."mqtt.c3voc.de" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/".return = "307 https://c3voc.de";
+    };
+  };
 }
