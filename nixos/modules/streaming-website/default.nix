@@ -77,6 +77,29 @@ in
             default off;
             https on;
         }
+
+        # vhost for stats
+        server {
+          server_name _;
+          listen 127.0.0.1:8999;
+          location = /stats/nginx {
+            stub_status on;
+            access_log off;
+            allow ::1;
+            allow 127.0.0.1;
+            deny all;
+          }
+          location = /stats/php {
+              include ${pkgs.nginx}/conf/fastcgi.conf;
+              fastcgi_pass unix:${config.services.phpfpm.pools.${app}.socket};
+              fastcgi_keep_conn on;
+              fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+              access_log off;
+              allow ::1;
+              allow 127.0.0.1;
+              deny all;
+            }
+        }
       '';
       virtualHosts.${domain} = {
         listen = [
@@ -163,6 +186,37 @@ in
         sopsFile = ./secrets.yaml;
         key = "feedback/password";
       };
+    };
+    services.telegraf.extraConfig.inputs = {
+      # Collect nginx status
+      nginx = [ { urls = [ "http://localhost:8999/stats/nginx" ]; } ];
+      # Collect php-fpm pool status
+      http = [
+        {
+          name_override = "php_fpm";
+          urls = [ "http://localhost:8999/stats/php?json" ];
+          data_format = "json";
+          tag_keys = [ "pool" ];
+          tagexclude = [ "url" ];
+          fieldinclude = [
+            "accepted conn"
+            "listen queue len"
+            "active processes"
+            "total processes"
+          ];
+        }
+      ];
+      # Collect total number of feedbacks
+      # exec = [
+      #   {
+      #     name_override = "feedback_total";
+      #     commands = [
+      #       "${pkgs.sqlite}/bin/sqlite3 ${feedbackDir}/feedback.sqlite3 'SELECT COUNT(*) AS total FROM feedback;'"
+      #     ];
+      #     data_format = "value";
+      #     data_type = "integer";
+      #   }
+      # ];
     };
     systemd.services.update-streaming-website = {
       serviceConfig.Type = "oneshot";
