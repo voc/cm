@@ -535,11 +535,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776581753,
-        "narHash": "sha256-rAViZ7iV49GNkmSL1SHPy6zsnEThFjUfyRyVThw4QB4=",
+        "lastModified": 1776592180,
+        "narHash": "sha256-FqIOyiWOmnC3UIyskehuG8z/J7yDAiy96m3eoh21Jps=",
         "ref": "refs/heads/main",
-        "rev": "1384ba57c5f81ac48eefda39ee9bf765631fc353",
-        "revCount": 7,
+        "rev": "da6944d6fdf143e9485e7f8f60ca08bfdb74ff9c",
+        "revCount": 11,
         "type": "git",
         "url": "https://forgejo.c3voc.de/voc/viri-matrix"
       },
