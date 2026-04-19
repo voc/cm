@@ -13,6 +13,7 @@ with lib;
     "${modulesPath}/profiles/qemu-guest.nix"
     ./hardware.nix
     ../../profiles/server
+    ./matrix-synapse.nix
   ];
 
   system.stateVersion = "25.11"; # do not touch
