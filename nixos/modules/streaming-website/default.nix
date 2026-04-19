@@ -289,7 +289,7 @@ in
           # initialize feedback db if necessary
           if [ ! -f ${feedbackDir}/feedback.sqlite3 ]; then
             echo "initializing feedback database"
-            ${pkgs.sqlite}/bin/sqlite3 ${feedbackDir}/feedback.sqlite3 < ${dataDir}/lib/feedback/schema.sql
+            ${pkgs.sqlite}/bin/sqlite3 ${feedbackDir}/feedback.sqlite3 < ${./mqttfeedback.sql}
           fi'';
         path = [ pythonEnv ];
         script = ''
