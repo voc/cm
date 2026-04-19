@@ -37,7 +37,6 @@ keys:
   - &host_ns_bre age1zgrguwp0sr2cfd2ve0fepx2l9wavr2jedep92duhv9faa0k8xeqs60gdw7
   - &host_ns_alb age19j84n4780svqh8hy9zkdqtanf6f449kue0h3zfreve87t4nlvetq5ncsv6
   - &host_lb_alb age1q937ydvd40sszx8g4f36fnqjv7y5kuskyg3ssl2r7q99ur0lqqqswtgrk6
-  - &host_lb2_alb age1n060mae4lg7g3pucy6l273s2c5vpceve2nf63xv0yud6ncqa7fzqlmr0t0
   - &host_lb_bre age1y03kvs7vqje2gm0hwww34v92z3wwx87k2g505zsrut4q6cfh95esqn3yyd
   - &host_lb_wob age1rp7k6y5r30muuh4aaz7mwnrfpelga4vn79m006ek7t90at2p99tsgv4weu
   - &host_media_dus age19nk6kf9raqt4hu03qhqhsg5gt2hfwe7vet49en66d6d0ss7y49rshukdsh
@@ -139,7 +138,6 @@ creation_rules:
       - *host_ns_bre
       - *host_ns_alb
       - *host_lb_alb
-      - *host_lb2_alb
       - *host_lb_bre
       - *host_lb_wob
       - *host_media_dus
@@ -206,7 +204,6 @@ creation_rules:
       - *host_daffy_alb
       - *host_sylvester_alb
       - *host_lb_alb
-      - *host_lb2_alb
       - *host_lb_bre
       - *host_lb_wob
 
@@ -239,7 +236,6 @@ creation_rules:
       - *admin_lukas2511
       - *admin_scientress
       - *host_lb_alb
-      - *host_lb2_alb
       - *host_lb_bre
       - *host_lb_wob
 

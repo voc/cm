@@ -8,7 +8,6 @@
   lb-alb = { ... }: {};
   lb-bre = { ... }: {};
   lb-wob = { ... }: {};
-  lb2-alb = { ... }: {};
   live-alb = { ... }: {};
   live-ams = { ... }: {};
   live-ber = { ... }: {};
