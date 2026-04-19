@@ -1,9 +1,0 @@
----
-  - import_tasks: ../../../handlers/nginx.yml
-  - import_tasks: ../../../handlers/systemd.yml
-  - import_tasks: ../../../handlers/rc_local.yml
-  - import_tasks: ../../../handlers/sysctl.yml
-  - name: reload consul-template
-    service:
-      name: consul-template
-      state: reloaded
