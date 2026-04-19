@@ -14,6 +14,7 @@ with lib;
     ./hardware.nix
     ../../profiles/server
     ./matrix-synapse.nix
+    ./viri-matrix.nix
   ];
 
   system.stateVersion = "25.11"; # do not touch
