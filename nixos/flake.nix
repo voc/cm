@@ -32,6 +32,10 @@
     url = "github:nix-community/disko";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.viri-matrix = {
+    url = "git+https://forgejo.c3voc.de/voc/viri-matrix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, disko, ... }@inputs: (
     let
       pkgs' = system: import nixpkgs {
