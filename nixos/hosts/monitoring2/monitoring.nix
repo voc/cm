@@ -7,6 +7,7 @@
 
 let
   fqdn = config.networking.hostName + "." + config.networking.domain;
+  basicAuthFile = "/var/lib/nginx_basic_auth";
   scrapeConfigs = [
     {
       job_name = "blackbox-hls";
@@ -45,17 +46,15 @@ in
   };
   services.voc-consul.enable = true;
   services.telegraf.extraConfig = {
-    inputs.influxdb_listener = [
-      {
-        ## Address and port to host InfluxDB listener on
-        service_address = "localhost:8186";
-        ## maximum duration before timing out read of the request
-        read_timeout = "10s";
-        ## maximum duration before timing out write of the response
-        write_timeout = "10s";
-        parser_type = "upstream";
-      }
-    ];
+    inputs.influxdb_listener = {
+      ## Address and port to host InfluxDB listener on
+      service_address = "127.0.0.1:8186";
+      ## maximum duration before timing out read of the request
+      read_timeout = "10s";
+      ## maximum duration before timing out write of the response
+      write_timeout = "10s";
+      parser_type = "upstream";
+    };
     outputs.influxdb = [
       {
         urls = [ "http://localhost:8428" ];
@@ -131,6 +130,13 @@ in
   '';
   services.grafana = {
     enable = true;
+    provision.datasources.settings.datasources = [
+      {
+        name = "VictoriaMetrics";
+        type = "prometheus";
+        url = "http://localhost:8428";
+      }
+    ];
     settings = {
       server = {
         protocol = "socket";
@@ -163,14 +169,35 @@ in
       };
     };
   };
-
+  systemd.services.writeAuth = {
+    serviceConfig.Type = "oneshot";
+    script = ''
+      set -a
+      . ${config.sops.secrets.monitoring_env.path}
+      umask 127
+      echo "$MONITORING_PASSWORD" | ${pkgs.apacheHttpd}/bin/htpasswd -iBc ${basicAuthFile} "$MONITORING_USER"
+      chown root:nginx ${basicAuthFile}
+    '';
+    requiredBy = [ "nginx.service" ];
+    restartIfChanged = true;
+  };
   services.nginx = {
     enable = true;
     upstreams.grafana.servers."unix:/${config.services.grafana.settings.server.socket}" = { };
+    upstreams.telegraf.servers."${config.services.telegraf.extraConfig.inputs.influxdb_listener.service_address
+    }" = { };
     virtualHosts.${fqdn} = {
       enableACME = true;
       forceSSL = true;
+      locations."/write" = {
+        proxyPass = "http://telegraf";
+        extraConfig = ''
+          auth_basic "Restricted";
+          auth_basic_user_file ${basicAuthFile};
+        '';
+      };
       locations."~ ^/grafana(.*)$" = {
+        # serve static files directly
         root = "${pkgs.grafana}/share/";
         tryFiles = "$uri @grafana";
         extraConfig = ''
@@ -180,9 +207,6 @@ in
         '';
       };
       locations."@grafana" = {
-        extraConfig = ''
-          add_header X-Server grafana;
-        '';
         proxyPass = "http://grafana";
       };
     };
