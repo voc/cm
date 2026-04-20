@@ -70,6 +70,13 @@
         ]
     },
     {
+        "name": "monitoring2.c3voc.de",
+        "ip": "172.23.0.16/16",
+        "groups": [
+            "consul"
+        ]
+    },
+    {
         "name": "live.ber.c3voc.de",
         "ip": "172.23.0.21/16",
         "groups": [

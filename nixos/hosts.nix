@@ -18,6 +18,7 @@
   loudness-player = { ... }: {};
   mail = { ... }: {};
   matrix = { ... }: {};
+  monitoring2 = { ... }: {};
   mqtt = { ... }: {};
   mumble = { ... }: {};
   netbox = { ... }: {};

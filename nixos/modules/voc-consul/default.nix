@@ -63,6 +63,7 @@ in {
         disable_update_check = true;
       } // serverOptions;
     };
+    services.voc-nebula.enable = true; # needs nebula for connectivity
     # Allow relevant connections over nebula
     services.voc-nebula.firewall.inbound = if cfg.server then [{
       port = "8300-8302";
