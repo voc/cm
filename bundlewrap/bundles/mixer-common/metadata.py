@@ -20,6 +20,9 @@ defaults = {
     },
     'mixer-common': {
         'enable-irssi': True,
+        'i3': {
+            'font': 'pango:monospace 16',
+        },
     },
     'users': {
         'mixer': {

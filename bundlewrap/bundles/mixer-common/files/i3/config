@@ -9,7 +9,7 @@
 # layout, use the i3-config-wizard
 #
 
-font pango:monospace 16
+font ${node.metadata.get('mixer-common/i3/font')}
 default_border none
 
 bar {
