@@ -4,6 +4,9 @@ bundles = ["loudness-rendering", "voctocore-artwork"]
 [metadata]
 nameservers = ["10.73.254.201"]
 
+[metadata.apt.unattended-upgrades]
+enabled = true
+
 [metadata.interfaces.ens18]
 ips = ["10.73.254.64/24"]
 gateway4 = "10.73.254.201"
