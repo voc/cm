@@ -7,7 +7,7 @@ IFS=$'\n'
 if [[ -z "$(findmnt /video/fuse)" ]]
 then
     free="$(df -h --output=avail /video | tail -n1 | sed 's/ //g')"
-    voc2alert "info" "disk" "Free space in /video: ${free}"
+    MESSAGE="$(printf 'Free space in /video: %s|' "$free")"
 
     for line in $(du -bSd2 /video | sort -nr)
     do
@@ -17,9 +17,14 @@ then
         # only alert if there is more than 1GB used
         if [[ "$diskspace" -gt 1073741824 ]]
         then
-            voc2alert "info" "disk" "$(printf '%7s %s' "$(echo "$diskspace / 1073741824" | bc)G" "$path")" && sleep 1
+            MESSAGE="$MESSAGE$(printf '%7s %s' "$(echo "$diskspace / 1073741824" | bc)G" "$path")|"
         fi
     done
+
+    if [[ -n "$MESSAGE" ]]
+    then
+        voc2alert "info" "disk" "$(echo "$MESSAGE" | tr '|' '\n')"
+    fi
 fi
 
 IFS=$OLDIFS
