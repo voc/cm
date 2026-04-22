@@ -74,9 +74,33 @@ defaults = {
                 },
             },
         },
+        'unattended-upgrades': {
+            'enabled': False,
+            'schedule': 'Wed *-*-* 03:{}:00 Europe/Berlin'.format(node.magic_number % 60),
+            'reboot_enabled': False,
+        },
     },
 }
 
 if node.os_version[0] >= 13:
     # provides a year 2038-safe replacement for the traditional Unix "last" utility.
     defaults['apt']['packages']['wtmpdb'] = {}
+
+
+@metadata_reactor.provides(
+    'systemd-timers/timers/unattended-upgrades',
+)
+def unattended_upgrades(metadata):
+    if not metadata.get('apt/unattended-upgrades/enabled'):
+        return {}
+
+    return {
+        'systemd-timers': {
+            'timers': {
+                'unattended-upgrades': {
+                    'command': '/usr/local/sbin/upgrade-and-reboot',
+                    'when': metadata.get('apt/unattended-upgrades/schedule'),
+                },
+            },
+        },
+    }

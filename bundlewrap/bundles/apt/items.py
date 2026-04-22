@@ -67,6 +67,12 @@ files = {
     '/usr/local/sbin/do-unattended-upgrades': {
         'mode': '0700',
     },
+    '/usr/local/sbin/upgrade-and-reboot': {
+        'mode': '0700',
+    },
+    '/etc/upgrade-and-reboot.conf': {
+        'content_type': 'mako',
+    },
     '/var/lib/cloud': {
         'delete': True,
     },
@@ -156,6 +162,11 @@ for pkgname, pkgconfig in pkg_apt.items():
     }
 
 if node.has_bundle('mqtt-monitoring'):
-    files[f'/usr/local/sbin/check_system_daily.d/update-notifier.sh'] = {
-        'mode': '0755',
-    }
+    if node.metadata.get('apt/unattended-upgrades/enabled'):
+        files[f'/usr/local/sbin/check_system_daily.d/unattended-ugrades-status.sh'] = {
+            'mode': '0755',
+        }
+    else:
+        files[f'/usr/local/sbin/check_system_daily.d/update-notifier.sh'] = {
+            'mode': '0755',
+        }

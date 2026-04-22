@@ -1,0 +1,38 @@
+#!/bin/bash
+
+. /etc/upgrade-and-reboot.conf
+
+echo "Starting upgrade-and-reboot for node $nodename ..."
+statusfile="/var/lib/unattended_upgrades.status"
+
+logins=$(ps h -C sshd -o euser | awk '$1 != "root" && $1 != "sshd"  && $1 != "nobody"')
+if [[ -n "$logins" ]]
+then
+    voc2alert "warn" "apt" "unattended-upgrades were aborted because there are active SSH logins: $logins"
+    exit 0
+fi
+
+softlockdir=/var/lib/bundlewrap/soft-$nodename
+mkdir -p "$softlockdir"
+printf '{"comment": "UPDATE", "date": %s, "expiry": %s, "id": "UNATTENDED", "items": ["*"], "user": "root@localhost"}\n' \
+    $(date +%s) \
+    $(date -d 'now + 30 mins' +%s) \
+    >"$softlockdir"/UNATTENDED
+trap 'rm -f "$softlockdir"/UNATTENDED' EXIT
+
+do-unattended-upgrades
+ret=$?
+
+echo "$ret" > "$statusfile"
+if (( $ret != 0 ))
+then
+    voc2alert "error" "apt" "unattended-upgrades failed with exit code $ret"
+    exit 0
+fi
+
+if [[ -f /var/run/reboot-required ]] && [[ "$auto_reboot_enabled" == "True" ]]
+then
+    systemctl reboot
+fi
+
+echo "upgrade-and-reboot for node $nodename is DONE"
