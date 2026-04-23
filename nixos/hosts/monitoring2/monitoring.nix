@@ -269,6 +269,7 @@ in
     requiredBy = [ "nginx.service" ];
     restartIfChanged = true;
   };
+  environment.etc."nginx/index.html".source = ./index.html;
   services.nginx = {
     enable = true;
     upstreams.grafana.servers."unix:/${config.services.grafana.settings.server.socket}" = { };
@@ -281,6 +282,11 @@ in
     virtualHosts.${fqdn} = {
       enableACME = true;
       forceSSL = true;
+      locations."/" = {
+        extraConfig = ''
+          root /etc/nginx;
+        '';
+      };
       locations."/write" = {
         proxyPass = "http://telegraf";
         extraConfig = ''
@@ -301,7 +307,6 @@ in
       locations."@grafana" = {
         proxyPass = "http://grafana";
       };
-
       locations."/oauth2/" = {
         proxyPass = "http://oauth-proxy";
         extraConfig = ''
