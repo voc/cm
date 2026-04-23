@@ -17,7 +17,6 @@ in
   ];
   config = {
     system.stateVersion = "25.11"; # do not touch
-    deployment.tags = [ "loadbalancers" ];
 
     networking.hostName = lib.mkOverride 1 "lb";
     networking.domain = "wob.c3voc.de";

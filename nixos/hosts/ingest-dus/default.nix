@@ -18,7 +18,6 @@ in
   ];
   config = {
     system.stateVersion = "25.11"; # do not touch
-    deployment.tags = [ ];
 
     services.voc-ingest.enable = true;
     services.voc-ingest.relayAuth = false;

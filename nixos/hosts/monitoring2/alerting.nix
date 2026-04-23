@@ -1,4 +1,4 @@
-{
+args@{
   lib,
   pkgs,
   config,
@@ -36,13 +36,15 @@ in
   };
   services.vmalert.instances.main = {
     enable = true;
-    settings."datasource.url" = "http://localhost:8428";
-    settings."notifier.url" = ["http://127.0.0.1:${builtins.toString (config.services.prometheus.alertmanager.port)}/alertmanager"];
+    settings."datasource.url" = "http://localhost:8428/victoriametrics";
+    settings."notifier.url" = [
+      "http://127.0.0.1:${builtins.toString (config.services.prometheus.alertmanager.port)}/alertmanager"
+    ];
     settings."http.pathPrefix" = "/vmalert";
     settings."external.url" = "https://${fqdn}";
-    settings."external.alert.source"= alertSource;
+    settings."external.alert.source" = alertSource;
     rules = {
-      groups = import ./alert-rules.nix;
+      groups = (import ./alert-rules.nix) { };
     };
   };
   sops.secrets.oauth-proxy = {
@@ -61,10 +63,11 @@ in
     setXauthrequest = true;
     email.domains = [ "*" ];
     extraConfig = {
-        whitelist-domain = ["monitoring2.c3voc.de"];
-        insecure-oidc-allow-unverified-email = true;
-        banner = "Sign in with VOC SSO";
-        # custom-sign-in-logo = ./voctocat-black.svg;
-        footer = "-";
+      whitelist-domain = [ "monitoring2.c3voc.de" ];
+      insecure-oidc-allow-unverified-email = true;
+      banner = "Sign in with VOC SSO";
+      # custom-sign-in-logo = ./voctocat-black.svg;
+      footer = "-";
+    };
   };
 }

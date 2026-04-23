@@ -19,8 +19,6 @@ in
   ];
   config = {
     system.stateVersion = "25.11"; # do not touch
-    deployment.tags = [ ];
-
     networking.hostName = lib.mkOverride 1 "monitoring2";
   };
 }

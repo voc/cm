@@ -106,7 +106,6 @@ in
 
   config = {
     system.stateVersion = "25.11"; # use version from image name and do not modify (even after updates)
-    deployment.tags = [ ];
 
     networking.hostName = lib.mkOverride 1 "X";
     networking.domain = "alb.c3voc.de";

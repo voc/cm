@@ -8,31 +8,99 @@
 let
   fqdn = config.networking.hostName + "." + config.networking.domain;
   basicAuthFile = "/var/lib/nginx_basic_auth";
-  scrapeConfigs = [
-    {
-      job_name = "blackbox-hls";
-      file_sd_configs = [ { files = [ "/var/lib/victoriametrics/blackbox.yml" ]; } ];
-      metrics_path = "/probe";
-      params = {
-        module = [ "http" ];
-      };
-      relabel_configs = [
-        {
-          source_labels = [ "__address__" ];
-          replacement = "http://live.ber.c3voc.de/hls/$1/native_hd.m3u8";
-          target_label = "__param_target";
-        }
-        {
-          source_labels = [ "__address__" ];
-          target_label = "stream";
-        }
-        {
-          target_label = "__address__";
-          replacement = "localhost:${builtins.toString (config.services.prometheus.exporters.blackbox.port)}";
-        }
-      ];
-    }
-  ];
+  allHosts = map (name: nameToHost name) (lib.attrNames (import ./../../hosts.nix));
+  hostsByTag =
+    tag:
+    map (name: nameToHost name) (
+      lib.attrNames (
+        lib.filterAttrs (host: deriv: lib.elem tag (getTags host (deriv { }))) (import ./../../hosts.nix)
+      )
+    );
+  getTags =
+    name: conf:
+    if
+      lib.hasAttrByPath [
+        "deployment"
+        "tags"
+      ] conf
+    then
+      conf.deployment.tags
+    else
+      [ ];
+  nameToHost = name: (builtins.replaceStrings [ "-" ] [ "." ] name) + ".c3voc.de";
+  scrapeConfigs =
+    let
+      blackboxAddr = "localhost:${builtins.toString (config.services.prometheus.exporters.blackbox.port)}";
+    in
+    [
+      {
+        job_name = "blackbox-hls";
+        file_sd_configs = [ { files = [ "/var/lib/victoriametrics/streams.yml" ]; } ];
+        metrics_path = "/probe";
+        params = {
+          module = [ "http" ];
+        };
+        relabel_configs = [
+          {
+            source_labels = [ "__address__" ];
+            replacement = "http://live.ber.c3voc.de/hls/$1/native_hd.m3u8";
+            target_label = "__param_target";
+          }
+          {
+            source_labels = [ "__address__" ];
+            target_label = "stream";
+          }
+          {
+            target_label = "__address__";
+            replacement = blackboxAddr;
+          }
+        ];
+      }
+      {
+        job_name = "blackbox-ipv4";
+        static_configs = [ { targets = allHosts; } ];
+        metrics_path = "/probe";
+        params = {
+          module = [ "icmpv4" ];
+        };
+        relabel_configs = [
+          {
+            source_labels = [ "__address__" ];
+            target_label = "__param_target";
+          }
+          {
+            source_labels = [ "__param_target" ];
+            target_label = "instance";
+          }
+          {
+            target_label = "__address__";
+            replacement = blackboxAddr;
+          }
+        ];
+      }
+      {
+        job_name = "blackbox-ipv6";
+        static_configs = [ { targets = allHosts; } ];
+        metrics_path = "/probe";
+        params = {
+          module = [ "icmpv6" ];
+        };
+        relabel_configs = [
+          {
+            source_labels = [ "__address__" ];
+            target_label = "__param_target";
+          }
+          {
+            source_labels = [ "__param_target" ];
+            target_label = "instance";
+          }
+          {
+            target_label = "__address__";
+            replacement = blackboxAddr;
+          }
+        ];
+      }
+    ];
   consulTemplate = pkgs.writeText "consul-template-streams.tpl" ''
       # templated at runtime by consul-template
     - targets: [ [[- range ls "stream/" -]]
@@ -59,7 +127,7 @@ in
     };
     outputs.influxdb = [
       {
-        urls = [ "http://localhost:8428" ];
+        urls = [ "http://localhost:8428/victoriametrics" ];
         skip_database_creation = true;
         name_prefix = "telegraf_";
       }
@@ -82,6 +150,20 @@ in
               method = "GET";
             };
           };
+          icmpv4 = {
+            prober = "icmp";
+            icmp = {
+              preferred_ip_protocol = "ip4";
+              ip_protocol_fallback = false;
+            };
+          };
+          icmpv6 = {
+            prober = "icmp";
+            icmp = {
+              preferred_ip_protocol = "ip6";
+              ip_protocol_fallback = false;
+            };
+          };
         };
       }
     );
@@ -97,6 +179,9 @@ in
       };
       scrape_configs = scrapeConfigs;
     };
+    extraOptions = [
+      "-http.pathPrefix=/victoriametrics"
+    ];
   };
   # template stream scrape targets
   services.consul-template.instances.streams = {
@@ -104,7 +189,7 @@ in
       template = [
         {
           source = consulTemplate;
-          destination = "/var/lib/victoriametrics/blackbox.yml";
+          destination = "/var/lib/victoriametrics/streams .yml";
           command = "systemctl reload prometheus-blackbox-exporter.service";
           left_delimiter = "[[";
           right_delimiter = "]]";
@@ -117,26 +202,27 @@ in
     key = "grafana";
   };
   systemd.services.grafana.serviceConfig.EnvironmentFile = [ config.sops.secrets.grafana.path ];
-  systemd.services.grafana.serviceConfig.ExecStartPost = pkgs.writeShellScript "fix-socket-perms.sh" ''
-    timeout=10
-    # Wait for the Grafana socket to be available before starting
-    while [ ! -S /run/grafana/grafana.sock ]; do
-      sleep 1;
-      timeout=$((timeout - 1));
-      if [ $timeout -le 0 ]; then
-        echo "Timeout waiting for Grafana socket";
-        exit 1;
-      fi;
-    done
-    chmod a+rw /run/grafana/grafana.sock;
-  '';
+  systemd.services.grafana.serviceConfig.ExecStartPost =
+    pkgs.writeShellScript "fix-socket-perms.sh" ''
+      timeout=10
+      # Wait for the Grafana socket to be available before starting
+      while [ ! -S /run/grafana/grafana.sock ]; do
+        sleep 1;
+        timeout=$((timeout - 1));
+        if [ $timeout -le 0 ]; then
+          echo "Timeout waiting for Grafana socket";
+          exit 1;
+        fi;
+      done
+      chmod a+rw /run/grafana/grafana.sock;
+    '';
   services.grafana = {
     enable = true;
     provision.datasources.settings.datasources = [
       {
         name = "VictoriaMetrics";
         type = "prometheus";
-        url = "http://localhost:8428";
+        url = "http://localhost:8428/victoriametrics";
       }
     ];
     settings = {
@@ -187,7 +273,8 @@ in
     enable = true;
     upstreams.grafana.servers."unix:/${config.services.grafana.settings.server.socket}" = { };
     upstreams.telegraf.servers."${config.services.telegraf.extraConfig.inputs.influxdb_listener.service_address
-    }" = { };
+    }" =
+      { };
     upstreams.oauth-proxy.servers."127.0.0.1:4180" = { };
     upstreams.alertmanager.servers."127.0.0.1:${builtins.toString (config.services.prometheus.alertmanager.port)}" =
       { };
@@ -241,6 +328,15 @@ in
       };
       locations."/vmalert" = {
         proxyPass = "http://127.0.0.1:8880";
+        extraConfig = ''
+          auth_request /oauth2/auth;
+          error_page 401 = @oauth2_signin; #if auth_request returns 401, redirect to sign-in
+          auth_request_set $auth_cookie $upstream_http_set_cookie;
+          add_header Set-Cookie $auth_cookie;
+        '';
+      };
+      locations."/victoriametrics" = {
+        proxyPass = "http://127.0.0.1:8428";
         extraConfig = ''
           auth_request /oauth2/auth;
           error_page 401 = @oauth2_signin; #if auth_request returns 401, redirect to sign-in

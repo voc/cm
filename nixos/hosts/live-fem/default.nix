@@ -17,7 +17,6 @@ in
   ];
   config = {
     system.stateVersion = "25.11"; # do not touch
-    deployment.tags = [ "relays" "edge-relays" ];
 
     boot.loader.grub = {
       enable = true;

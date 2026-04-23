@@ -14,7 +14,6 @@
     ../../modules/voc-transcoder
   ];
 
-  deployment.tags = [ "transcoders" ];
   services.voc-transcoder = {
     enable = true;
     name = "daffy.alb";
