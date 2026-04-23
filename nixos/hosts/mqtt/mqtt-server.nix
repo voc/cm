@@ -46,6 +46,7 @@ in
   systemd.services.mosquitto.serviceConfig.ExecStart =
     lib.mkForce "${cfg.package}/bin/mosquitto -c ${mosquittoConfig}";
   systemd.services.mosquitto.serviceConfig.ReadOnlyPaths = "/srv/mqttcerts";
+  systemd.services.mosquitto.reloadTriggers = [ mosquittoConfig config.sops.secrets.mqtt_encrypted_passwords.path ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 1883 8883 ];
 
