@@ -14,6 +14,8 @@ in
     "${modulesPath}/virtualisation/proxmox-image.nix"
     ../../profiles/server
     ./monitoring.nix
+    ./alerting.nix
+    ./alertmanager-mqtt.nix
   ];
   config = {
     system.stateVersion = "25.11"; # do not touch

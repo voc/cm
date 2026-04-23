@@ -36,6 +36,10 @@
     url = "git+https://forgejo.c3voc.de/voc/viri-matrix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.alertmanager-mqtt = {
+    url = "git+https://forgejo.c3voc.de/voc/alertmanager-mqtt";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, disko, ... }@inputs: (
     let
       pkgs' = system: import nixpkgs {

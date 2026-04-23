@@ -46,6 +46,8 @@ in
   };
   services.voc-consul.enable = true;
   services.telegraf.extraConfig = {
+    agent.metric_batch_size = 20000;
+    agent.metric_buffer_limit = 200000;
     inputs.influxdb_listener = {
       ## Address and port to host InfluxDB listener on
       service_address = "127.0.0.1:8186";
@@ -186,6 +188,9 @@ in
     upstreams.grafana.servers."unix:/${config.services.grafana.settings.server.socket}" = { };
     upstreams.telegraf.servers."${config.services.telegraf.extraConfig.inputs.influxdb_listener.service_address
     }" = { };
+    upstreams.oauth-proxy.servers."127.0.0.1:4180" = { };
+    upstreams.alertmanager.servers."127.0.0.1:${builtins.toString (config.services.prometheus.alertmanager.port)}" =
+      { };
     virtualHosts.${fqdn} = {
       enableACME = true;
       forceSSL = true;
@@ -208,6 +213,47 @@ in
       };
       locations."@grafana" = {
         proxyPass = "http://grafana";
+      };
+
+      locations."/oauth2/" = {
+        proxyPass = "http://oauth-proxy";
+        extraConfig = ''
+          proxy_set_header X-Auth-Request-Redirect $request_uri;
+        '';
+      };
+      locations."= /oauth2/auth" = {
+        proxyPass = "http://oauth-proxy";
+        extraConfig = ''
+          proxy_set_header X-Auth-Request-Redirect $request_uri;
+          # nginx auth_request includes headers but not body
+          proxy_set_header Content-Length   "";
+          proxy_pass_request_body           off;
+        '';
+      };
+      locations."/alertmanager" = {
+        proxyPass = "http://alertmanager";
+        extraConfig = ''
+          auth_request /oauth2/auth;
+          error_page 401 = @oauth2_signin; #if auth_request returns 401, redirect to sign-in
+          auth_request_set $auth_cookie $upstream_http_set_cookie;
+          add_header Set-Cookie $auth_cookie;
+        '';
+      };
+      locations."/vmalert" = {
+        proxyPass = "http://127.0.0.1:8880";
+        extraConfig = ''
+          auth_request /oauth2/auth;
+          error_page 401 = @oauth2_signin; #if auth_request returns 401, redirect to sign-in
+          auth_request_set $auth_cookie $upstream_http_set_cookie;
+          add_header Set-Cookie $auth_cookie;
+        '';
+      };
+      # Named location for handling OAuth2 sign-in redirects
+      # This ensures the browser receives a proper 302 redirect that it will follow
+      locations."@oauth2_signin" = {
+        extraConfig = ''
+          return 302 /oauth2/sign_in?rd=$scheme://$host$request_uri;
+        '';
       };
     };
   };
