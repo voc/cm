@@ -23,7 +23,7 @@ then
 
     if [[ -n "$MESSAGE" ]]
     then
-        voc2alert "info" "disk" "$(echo "$MESSAGE" | tr '|' '\n')"
+        voc2alert "notice" "disk" "$(echo "$MESSAGE" | tr '|' '\n')"
     fi
 fi
 

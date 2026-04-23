@@ -25,7 +25,7 @@ done
 
 if [[ -n "$MESSAGE" ]]
 then
-    voc2alert "info" "zfs" "$(echo "$MESSAGE" | tr '|' '\n')"
+    voc2alert "notice" "zfs" "$(echo "$MESSAGE" | tr '|' '\n')"
 fi
 
 IFS=$OLDIFS
