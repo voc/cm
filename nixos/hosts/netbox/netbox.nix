@@ -32,6 +32,8 @@
       REMOTE_AUTH_ENABLED = True
       REMOTE_AUTH_BACKEND = 'social_core.backends.open_id_connect.OpenIdConnectAuth'
 
+      BANNER_TOP = 'This netbox instance is public as part of our documentation in the wiki.'
+
       # python-social-auth configuration
       SOCIAL_AUTH_OIDC_SCOPE = ['openid', 'profile', 'email', 'groups', 'netbox']
       SOCIAL_AUTH_OIDC_JWT_ALGORITHMS = ['RS256', 'HS256']
