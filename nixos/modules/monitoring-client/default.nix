@@ -36,6 +36,8 @@ in
       extraConfig = {
         agent = {
           hostname = config.networking.hostName + "." + config.networking.domain;
+          metric_batch_size = lib.mkDefault 1000;
+          metric_buffer_limit = lib.mkDefault 10000;
         };
         inputs = {
           cpu = {
