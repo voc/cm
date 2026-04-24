@@ -14,6 +14,7 @@
       {
         alert = "Pingv4Down";
         expr = ''probe_success{job="blackbox-ipv4"} == 0'';
+        for = "5m";
         annotations = {
           summary = "Host {{ $labels.instance }} is unreachable via ICMPv4";
         };
@@ -21,6 +22,7 @@
       {
         alert = "Pingv6Down";
         expr = ''probe_success{job="blackbox-ipv6"} == 0'';
+        for = "5m";
         annotations = {
           summary = "Host {{ $labels.instance }} is unreachable via ICMPv6";
         };
@@ -33,6 +35,7 @@
       {
         alert = "TranscodeStalling";
         expr = "telegraf_transcoding_speed_factor_gauge < 0.95";
+        for = "3m";
         annotations = {
           summary = "Stream {{ $labels.stream_id }} transcoding is stalling on {{ $labels.host }}";
         };
@@ -52,6 +55,7 @@
       {
         alert = "SrtIngestPacketLoss";
         expr = ''max by(stream_id)(label_replace((rate(telegraf_srtrelay_srt_receive_dropped_packets_total_counter{stream_id=~"publish/.*"})+ rate(telegraf_srtrelay_srt_receive_lost_packets_total_counter)) / rate(telegraf_srtrelay_srt_receive_packets_total_counter)*100, "stream_id", "$1", "stream_id", "publish/([^/]+).*")) > 5'';
+        for = "3m";
         annotations = {
           summary = "Stream {{ $labels.stream_id }} SRT ingest has high packet loss";
         };
