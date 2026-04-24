@@ -137,6 +137,9 @@ in
         name = "VictoriaMetrics";
         type = "prometheus";
         url = "http://localhost:${victoriametricsPort}/victoriametrics";
+        jsonData = {
+          timeInterval = "10s";
+        };
       }
       {
         name = "Alertmanager";
