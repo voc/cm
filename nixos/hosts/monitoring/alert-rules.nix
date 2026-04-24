@@ -13,14 +13,14 @@
       }
       {
         alert = "Pingv4Down";
-        expr = ''up{job="blackbox-ipv4"} == 0'';
+        expr = ''probe_success{job="blackbox-ipv4"} == 0'';
         annotations = {
           summary = "Host {{ $labels.instance }} is unreachable via ICMPv4";
         };
       }
       {
         alert = "Pingv6Down";
-        expr = ''up{job="blackbox-ipv6"} == 0'';
+        expr = ''probe_success{job="blackbox-ipv6"} == 0'';
         annotations = {
           summary = "Host {{ $labels.instance }} is unreachable via ICMPv6";
         };

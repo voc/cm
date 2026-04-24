@@ -10,7 +10,12 @@ let
   basicAuthFile = "/var/lib/nginx_basic_auth";
   vmalertPort = "8880";
   victoriametricsPort = "8428";
-  allHosts = map (name: nameToHost name) (lib.attrNames (import ./../../hosts.nix));
+  allHosts =
+    map (name: nameToHost name) (
+      lib.attrNames (
+        lib.filterAttrs (host: deriv: host != config.networking.hostName && !lib.elem "lan" (getTags host (deriv { }))) (import ./../../hosts.nix)
+      )
+    );
   hostsByTag =
     tag:
     map (name: nameToHost name) (

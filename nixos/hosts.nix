@@ -15,7 +15,7 @@
   live-dus = { ... }: { deployment.tags = [ "relays" "origin-relays" ]; };
   live-fem = { ... }: { deployment.tags = [ "relays" "edge-relays" ]; };
   live-nitk = { ... }: { deployment.tags = [ "relays" "edge-relays" ]; };
-  loudness-player = { ... }: {};
+  loudness-player = { ... }: { deployment.tags = [ "lan" ]; };
   mail = { ... }: {};
   matrix = { ... }: {};
   monitoring = { ... }: { deployment.tags = [ "monitoring" ]; };
