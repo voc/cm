@@ -8,6 +8,8 @@
 let
   fqdn = config.networking.hostName + "." + config.networking.domain;
   basicAuthFile = "/var/lib/nginx_basic_auth";
+  vmalertPort = "8880";
+  victoriametricsPort = "8428";
   allHosts = map (name: nameToHost name) (lib.attrNames (import ./../../hosts.nix));
   hostsByTag =
     tag:
@@ -100,6 +102,16 @@ let
           }
         ];
       }
+      {
+        job_name = "alertmanager";
+        static_configs = [ { targets = [ "localhost:${builtins.toString config.services.prometheus.alertmanager.port}" ]; } ];
+        metrics_path = "/alertmanager/metrics";
+      }
+      {
+        job_name = "vmalert";
+        static_configs = [ { targets = [ "localhost:${vmalertPort}" ]; } ];
+        metrics_path = "/vmalert/metrics";
+      }
     ];
   consulTemplate = pkgs.writeText "consul-template-streams.tpl" ''
       # templated at runtime by consul-template
@@ -117,17 +129,22 @@ in
     agent.metric_batch_size = 20000;
     agent.metric_buffer_limit = 200000;
     inputs.influxdb_listener = {
-      ## Address and port to host InfluxDB listener on
+      # Address and port to host InfluxDB listener on
       service_address = "127.0.0.1:8186";
-      ## maximum duration before timing out read of the request
+      # maximum duration before timing out read of the request
       read_timeout = "10s";
-      ## maximum duration before timing out write of the response
+      # maximum duration before timing out write of the response
       write_timeout = "10s";
       parser_type = "upstream";
     };
+    # Internal telegraf stats
+    inputs.internal = {};
+    # Collect nginx status
+    inputs.nginx = [ { urls = [ "http://localhost:8999/stats/nginx" ]; } ];
+    # Forward to local VictoriaMetrics
     outputs.influxdb = [
       {
-        urls = [ "http://localhost:8428/victoriametrics" ];
+        urls = [ "http://localhost:${victoriametricsPort}/victoriametrics" ];
         skip_database_creation = true;
         name_prefix = "telegraf_";
       }
@@ -170,7 +187,7 @@ in
   };
   services.victoriametrics = {
     enable = true;
-    listenAddress = "localhost:8428";
+    listenAddress = "localhost:${victoriametricsPort}";
     retentionPeriod = "1y";
     prometheusConfig = {
       global = {
@@ -181,6 +198,8 @@ in
     };
     extraOptions = [
       "-http.pathPrefix=/victoriametrics"
+      "-selfScrapeInterval=10s"
+      "-vmalert.proxyURL=http://localhost:${vmalertPort}/vmalert"
     ];
   };
   # template stream scrape targets
@@ -189,7 +208,7 @@ in
       template = [
         {
           source = consulTemplate;
-          destination = "/var/lib/victoriametrics/streams .yml";
+          destination = "/var/lib/victoriametrics/streams.yml";
           command = "systemctl reload prometheus-blackbox-exporter.service";
           left_delimiter = "[[";
           right_delimiter = "]]";
@@ -222,7 +241,12 @@ in
       {
         name = "VictoriaMetrics";
         type = "prometheus";
-        url = "http://localhost:8428/victoriametrics";
+        url = "http://localhost:${victoriametricsPort}/victoriametrics";
+      }
+      {
+        name = "Alertmanager";
+        type = "alertmanager";
+        url = "http://localhost:${builtins.toString config.services.prometheus.alertmanager.port}/alertmanager";
       }
     ];
     settings = {
@@ -300,12 +324,16 @@ in
         tryFiles = "$uri @grafana";
         extraConfig = ''
           location ~ ^/grafana/public/.*$ {
+            try_files $uri @grafana;
             expires 365d;
           }
         '';
       };
       locations."@grafana" = {
         proxyPass = "http://grafana";
+        extraConfig = ''
+          add_header X-Server "grafana";
+        '';
       };
       locations."/oauth2/" = {
         proxyPass = "http://oauth-proxy";
@@ -332,7 +360,7 @@ in
         '';
       };
       locations."/vmalert" = {
-        proxyPass = "http://127.0.0.1:8880";
+        proxyPass = "http://127.0.0.1:${vmalertPort}";
         extraConfig = ''
           auth_request /oauth2/auth;
           error_page 401 = @oauth2_signin; #if auth_request returns 401, redirect to sign-in
@@ -341,7 +369,7 @@ in
         '';
       };
       locations."/victoriametrics" = {
-        proxyPass = "http://127.0.0.1:8428";
+        proxyPass = "http://127.0.0.1:${victoriametricsPort}";
         extraConfig = ''
           auth_request /oauth2/auth;
           error_page 401 = @oauth2_signin; #if auth_request returns 401, redirect to sign-in
@@ -357,6 +385,21 @@ in
         '';
       };
     };
+    # vhost for stats
+      appendHttpConfig = ''
+        server {
+          server_name _;
+          listen 127.0.0.1:8999;
+          # stats
+          location = /stats/nginx {
+            stub_status on;
+            access_log  off;
+            allow ::1;
+            allow 127.0.0.1;
+            deny all;
+          }
+        }
+      '';
   };
   networking.firewall.allowedTCPPorts = [
     80

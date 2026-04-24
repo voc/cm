@@ -327,12 +327,7 @@ in
         }];
       };
     };
-    # Read Nginx's basic status information (ngx_http_stub_status_module)
-    #   services.telegraf.extraConfig.inputs.nginx = {
-    #     urls = ["http://localhost:8999/stats/nginx"];
-    # };
 
-    # TODO: nginx for streaming-website...
     services.streaming-website = {
       enable = true;
     };
