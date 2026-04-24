@@ -58,12 +58,12 @@ in
     provider = "oidc";
     oidcIssuerUrl = "https://sso.c3voc.de/application/o/monitoring/";
     loginURL = "https://sso.c3voc.de/application/o/authorize/";
-    redirectURL = "https://monitoring2.c3voc.de/oauth2/callback";
+    redirectURL = "https://monitoring.c3voc.de/oauth2/callback";
     reverseProxy = true;
     setXauthrequest = true;
     email.domains = [ "*" ];
     extraConfig = {
-      whitelist-domain = [ "monitoring2.c3voc.de" ];
+      whitelist-domain = [ "monitoring.c3voc.de" ];
       insecure-oidc-allow-unverified-email = true;
       banner = "Sign in with VOC SSO";
       # custom-sign-in-logo = ./voctocat-black.svg;

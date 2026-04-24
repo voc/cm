@@ -242,7 +242,7 @@ in
       snapshots.external_enabled = false;
       users.allow_sign_up = false;
       users.allow_org_create = false;
-      auth.signout_redirect_url = "https://sso.c3voc.de/application/o/grafana2/end-session/";
+      auth.signout_redirect_url = "https://sso.c3voc.de/application/o/grafana/end-session/";
       "auth.generic_oauth" = {
         name = "C3VOC SSO";
         enabled = true;

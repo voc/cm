@@ -42,7 +42,7 @@ keys:
   - &host_media_dus age19nk6kf9raqt4hu03qhqhsg5gt2hfwe7vet49en66d6d0ss7y49rshukdsh
   - &host_mqtt age1qczjncwewf4prezpyt7aagdwtwa6cwu4ckdkuy0gwemyyjsm7arqzsxs6h
   - &host_matrix age1x7wd0uyvqsdke0zna3zg7m2aj50l7mzllpt3d0g7eqan3clgvduqmq65ca
-  - &host_monitoring2 age1zqw9f4nt8dep4zaypql4yyqr9l209hyyzd5dhr6glyqe3c3kgv2s962vte
+  - &host_monitoring age1zqw9f4nt8dep4zaypql4yyqr9l209hyyzd5dhr6glyqe3c3kgv2s962vte
 
 creation_rules:
   - path_regex: hosts/tel/.*
@@ -144,7 +144,7 @@ creation_rules:
       - *host_media_dus
       - *host_mqtt
       - *host_matrix
-      - *host_monitoring2
+      - *host_monitoring
 
   - path_regex: modules/(voc-relay|upload-server|upload-proxy|stream-transcode)/*
     key_groups:
@@ -208,7 +208,7 @@ creation_rules:
       - *host_lb_alb
       - *host_lb_bre
       - *host_lb_wob
-      - *host_monitoring2
+      - *host_monitoring
 
   - path_regex: modules/voc-knot/*
     key_groups:
@@ -284,7 +284,7 @@ creation_rules:
       - *admin_scientress
       - *host_matrix
 
-  - path_regex: hosts/monitoring2/.*
+  - path_regex: hosts/monitoring/.*
     key_groups:
     - age:
       - *admin_keepass
@@ -296,5 +296,5 @@ creation_rules:
       - *admin_ischluff
       - *admin_lukas2511
       - *admin_scientress
-      - *host_monitoring2
+      - *host_monitoring
 

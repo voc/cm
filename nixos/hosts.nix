@@ -18,7 +18,7 @@
   loudness-player = { ... }: {};
   mail = { ... }: {};
   matrix = { ... }: {};
-  monitoring2 = { ... }: { deployment.tags = [ "monitoring" ]; };
+  monitoring = { ... }: { deployment.tags = [ "monitoring" ]; };
   mqtt = { ... }: {};
   mumble = { ... }: {};
   netbox = { ... }: {};

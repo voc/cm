@@ -19,6 +19,6 @@ in
   ];
   config = {
     system.stateVersion = "25.11"; # do not touch
-    networking.hostName = lib.mkOverride 1 "monitoring2";
+    networking.hostName = lib.mkOverride 1 "monitoring";
   };
 }
