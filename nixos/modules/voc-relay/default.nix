@@ -334,16 +334,6 @@ let
           ${proxyCommon}
         }
       ''}
-
-      location = /stats/ {
-        add_header Access-Control-Allow-Origin  "*";
-        add_header Access-Control-Allow-Headers "Content-Type";
-        add_header Access-Control-Allow-Methods "POST";
-        proxy_pass http://localhost:7890/;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-      }
     }
   '';
 in {
@@ -407,7 +397,6 @@ in {
 
     # edge-only services
     services.nginx-viewcounter.enable = !cfg.isOrigin;
-    services.voc-telemetry.enable = !cfg.isOrigin;
 
     # # origin-only services
     services.upload-server.enable = cfg.isOrigin;
@@ -508,7 +497,7 @@ in {
         tags = [ ] ++
           optional (cfg.isOrigin) "relay_origin" ++
           optional (cfg.isReliveOrigin) "relive_origin" ++
-          optionals (!cfg.isOrigin && !cfg.isReliveOrigin) ["edge" "stats"] ++
+          optionals (!cfg.isOrigin && !cfg.isReliveOrigin) ["edge"] ++
           optionals (!cfg.isOrigin && !cfg.isReliveOrigin) cfg.tags;
         check = {
           id = "${name}-relay-health";

@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  fetchurl,
+  inputs,
   ...
 }:
 
@@ -15,6 +15,7 @@ with lib;
 #
 let
   cfg = config.services.voc-telemetry;
+  package = inputs.voc-telemetry.defaultPackage.x86_64-linux;
 in
 {
   options = {
@@ -24,10 +25,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ voc-telemetry ];
     systemd.services.voc-telemetry = {
       serviceConfig = {
-        ExecStart = "${pkgs.voc-telemetry}/bin/voc-telemetry -listen 127.0.0.1:7890 -mmdb ${pkgs.ripe-mmdb}/db.mmdb";
+        ExecStart = "${package}/bin/voc-telemetry -listen 127.0.0.1:7890 -mmdb ${pkgs.ripe-mmdb}/db.mmdb";
       };
       wantedBy = [ "multi-user.target" ];
     };

@@ -14,11 +14,12 @@
   inputs.nixos-mailserver = {
     url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
     inputs.nixpkgs.follows = "/nixpkgs";
-    # inputs.utils.follows = "/flake-utils";
+    inputs.flake-compat.follows = "flake-compat";
   };
   inputs.authentik-nix = {
     url = "github:nix-community/authentik-nix";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-utils.follows = "flake-utils";
   };
   inputs.nixos-generators = {
     url = "github:nix-community/nixos-generators";
@@ -39,6 +40,11 @@
   inputs.alertmanager-mqtt = {
     url = "git+https://forgejo.c3voc.de/voc/alertmanager-mqtt";
     inputs.nixpkgs.follows = "nixpkgs";
+  };
+  inputs.voc-telemetry = {
+    url = "git+https://forgejo.c3voc.de/voc/voc-telemetry";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-utils.follows = "flake-utils";
   };
   outputs = { self, nixpkgs, flake-utils, sops-nix, home-manager, flake-compat, disko, ... }@inputs: (
     let

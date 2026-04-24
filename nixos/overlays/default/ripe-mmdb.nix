@@ -1,4 +1,4 @@
-{ lib, stdenv, voc-telemetry, fetchurl, gzip }:
+{ stdenv, fetchurl }:
 
 stdenv.mkDerivation {
   name = "ripe-mmdb";

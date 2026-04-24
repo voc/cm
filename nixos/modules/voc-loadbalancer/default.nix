@@ -18,7 +18,6 @@ let
         ulimit-n 1048576
         maxconn 500000
         maxconnrate 500000
-        maxcomprate 0
         maxcompcpuusage 100
         maxsessrate 500000
 
@@ -69,25 +68,30 @@ let
 
     frontend prometheus
         bind 127.0.0.1:9101
-        mode http
         http-request set-log-level silent
         http-request use-service prometheus-exporter
 
-    frontend icecast_and_nginx_hls_http
+    frontend http
         bind 0.0.0.0:80
         bind :::80
 
+        # limit request rate
+        stick-table type ip size 200k expire 1m store conn_rate(10s)
+        tcp-request session track-sc0 src
+        tcp-request session reject if { sc0_sess_rate gt 50 }
+
         # add special header for protocol version
-        http-request add-header X-Proto http  if !{ ssl_fc }
+        http-request add-header X-Proto http if !{ ssl_fc }
 
         ${frontendAcls "http"}
 
-    frontend icecast_and_nginx_hls_https
+    frontend https
         bind 0.0.0.0:443 ssl crt /var/lib/acme/${fqdn}/full.pem # <cert+privkey+intermediate+dhparam>
         bind :::443 ssl crt /var/lib/acme/${fqdn}/full.pem # <cert+privkey+intermediate+dhparam>
 
         tcp-request inspect-delay 5s
 
+        # limit request rate
         stick-table type ip size 200k expire 1m store conn_rate(10s)
         tcp-request session track-sc0 src
         tcp-request session reject if { sc0_sess_rate gt 50 }
@@ -104,12 +108,16 @@ let
     # ######## #
 
     # Streaming Website
-    backend streaming_website_https
-        balance source
+    backend streaming_website
         option forwardfor
         http-request set-header X-Custom-Header %[url]
         http-request set-header X-Real-IP %[src]
-        server localhost 127.0.0.1:8080 maxconn 500000
+        server localhost 127.0.0.1:8080 maxconn 500
+    
+    backend stats
+        option forwardfor
+        http-request set-path /
+        server localhost 127.0.0.1:7890 maxconn 500
 
     ## Templated by consul-template ##
     ${backends "http"}
@@ -123,7 +131,7 @@ let
     in
     ''
           # header and path matching
-        # tag request for the right destination server
+          # tag request for the right destination server
           acl stream_file          path_end   -i .m3u8 .mpd .webm .m4s .ts .jpeg
           acl stream_path          path_dir   -i dash hls thumbnail
           acl is_relive            path_sub   -i index.json thumb.jpg sprites.jpg crossdomain.xml .mp4 relive
@@ -159,7 +167,7 @@ let
         else
           ''
                 http-request use-service lua.cors-response if METH_OPTIONS { req.hdr(origin) -m found } { ssl_fc }
-                use_backend streaming_website_https if is_streaming_website ${ssl}
+                use_backend streaming_website if is_streaming_website ${ssl}
                 use_backend relive_https            if is_relive ${ssl}
           ''
       }
@@ -183,7 +191,9 @@ let
           # use remote relays
           use_backend nginx_${proto}       if stream_path stream_file ${ssl}
           use_backend icecast_${proto}     if icecast ${ssl}
-          use_backend stats_${proto}       if is_stats ${ssl}
+
+          # local stats backend
+          use_backend stats                if is_stats ${ssl}
     '';
   backends = proto: ''
 
@@ -252,20 +262,6 @@ let
           [[- $weight := keyOrDefault $key "100" ]]
           server [[ $name ]] [[ $name ]]:[[ .Port ]] redir ${proto}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
     ''}
-
-    # stats
-    backend stats_${proto}
-        balance source
-        option forwardfor
-    [[- range $services${proto} ]]
-        [[- if in .Tags "stats" | not ]]
-            [[- continue ]]
-        [[- end ]]
-        [[- $name := .Node | replaceAll "-" "." ]]
-        [[- $key := printf "services/haproxy/backends/%s/weight" $name ]]
-        [[- $weight := keyOrDefault $key "100" ]]
-        server [[ $name ]] [[ $name ]]:[[ .Port ]] redir ${proto}://[[ $name ]]:[[ .Port ]]  weight [[ $weight ]] check port [[ .Port ]][[ end ]]
-
   '';
 in
 {
@@ -328,9 +324,10 @@ in
       };
     };
 
-    services.streaming-website = {
-      enable = true;
-    };
+    # telemetry service
+    services.voc-telemetry.enable = true;
+    # streaming-website
+    services.streaming-website.enable = true;
 
     sops.secrets.lednsapi = {
       sopsFile = ./secrets.yaml;
