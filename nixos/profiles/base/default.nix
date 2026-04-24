@@ -4,6 +4,7 @@
   imports = [
     ./users.nix
     ../../modules/voc2mqtt
+    ../../modules/mdadm-mqtt
     ../../modules/autocolmena
   ];
 
@@ -86,6 +87,7 @@
     ncdu
     lsof
     strace
+    screen
   ];
 
   nix.extraOptions = ''
