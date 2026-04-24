@@ -1,9 +1,0 @@
----
- - hosts: transcoders
-   roles:
-     - { role: common, tags: ['common'] }
-     - { role: consul, tags: ['consul'] }
-     - { role: monitoring-client, tags: ['monitoring'] }
-     - { role: transcoder, tags: ['transcoder'] }
-   vars:
-     ssh_allow_voc_password_login: 'yes'

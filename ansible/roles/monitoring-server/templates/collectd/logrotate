@@ -1,8 +1,0 @@
-/var/log/collectd.log {
-  daily
-  missingok
-  copytruncate
-  rotate 7
-  notifempty
-  compress
-}
