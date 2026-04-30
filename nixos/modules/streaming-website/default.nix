@@ -254,6 +254,8 @@ in
         echo "clearing caches"
         rm -rf /var/cache/nginx/streaming_fcgi/*
       '';
+      requires = [ "network.target" ];
+      after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
     };
     systemd.services.update-schedule = {
@@ -291,6 +293,8 @@ in
             echo "initializing feedback database"
             ${pkgs.sqlite}/bin/sqlite3 ${feedbackDir}/feedback.sqlite3 < ${./mqttfeedback.sql}
           fi'';
+        serviceConfig.Restart = "on-failure";
+        serviceConfig.RestartSec = "3s";
         path = [ pythonEnv ];
         script = ''
           set -euo pipefail
@@ -301,7 +305,8 @@ in
 
           python ${./mqttfeedback.py} -f feedback.sqlite3
         '';
-        after = [ "update-streaming-website.service" ];
+        requires = [ "network.target" ];
+        after = [ "update-streaming-website.service" "network.target" ];
         wantedBy = [ "multi-user.target" ];
       };
   };
