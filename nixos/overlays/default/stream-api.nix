@@ -8,18 +8,18 @@
 
 buildGoModule rec {
   pname = "stream-api";
-  version = "0.2.2";
+  version = "0.2.3";
 
   src = fetchFromGitea {
     domain = "forgejo.c3voc.de";
     owner = "voc";
     repo = "stream-api";
     rev = "v${version}";
-    hash = "sha256-UFJ4hNT+jcKauiw6W39RCDpTGjiUJqZCqZHzhn+lxXY=";
+    hash = "sha256-DNmkY0MG8keanPUj2AvJqcUOBJv4Bs01d3dq1q/bmFc=";
     #hash = lib.fakeHash; # Use after updating version
   };
 
-  vendorHash = "sha256-zs80HyLJ20VppqOCgyEZL7TvugV6Xbp6FdtE7m5pSpk=";
+  vendorHash = "sha256-dhlFZrw3R6euEpSuZ2CbdyxAfCAppj1c0tkAPu3907U=";
   #vendorHash = lib.fakeHash;
 
   # we don't build monitor ui right now
