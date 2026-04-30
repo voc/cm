@@ -9,7 +9,7 @@
   gawk,
   gnused,
   bc,
-  util-linux
+  util-linux,
 }:
 
 let
@@ -60,7 +60,9 @@ stdenv.mkDerivation {
   postFixup = ''
     ${lib.concatMapStringsSep "\n" (s:
       "wrapProgram $out/bin/${s} --prefix PATH : " +
-      lib.makeBinPath [ systemd jq iproute2 coreutils gawk gnused bc util-linux ]
+      # referencing /run/current-system/sw is a hack, but voc2mqtt is only added from the nixos module,
+      # because it depends on secrets.
+      lib.makeBinPath [ systemd jq iproute2 coreutils gawk gnused bc util-linux "/run/current-system/sw" ]
     ) scripts}
   '';
 }

@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 # voc2mqtt module
 #
@@ -32,13 +37,13 @@ in
     };
     mqtt_password = {
       sopsFile = ./secrets.yaml;
-      mode = "0444";  # consistency with debian bundlewrap
+      mode = "0444"; # consistency with debian bundlewrap
     };
   };
 
   environment.systemPackages = [
     voc2mqtt
-    pkgs.voc2mqtt-tools  # ensure voc2alert is in the system PATH.
+    pkgs.voc2mqtt-tools # ensure voc2alert is in the system PATH.
   ];
 
   systemd.timers.check_system_and_send_mqtt_message = {
@@ -52,7 +57,10 @@ in
   systemd.services.check_system_and_send_mqtt_message = {
     after = [ "network.target" ];
     requires = [ "network.target" ];
-    path = [ voc2mqtt pkgs.voc2mqtt-tools ];
+    path = [
+      voc2mqtt
+      pkgs.voc2mqtt-tools
+    ];
     script = lib.getExe' pkgs.voc2mqtt-tools "check_system.sh";
     environment.MY_HOSTNAME = "${config.networking.hostName}.${config.networking.domain}";
     serviceConfig.Type = "oneshot";
@@ -62,12 +70,11 @@ in
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-    path = [ voc2mqtt ];
-    preStop = lib.getExe' pkgs.voc2mqtt-tools "alert_shutdown.sh";
     environment.MY_HOSTNAME = "${config.networking.hostName}.${config.networking.domain}";
-
+    restartIfChanged = false;
     serviceConfig = {
       Type = "oneshot";
+      ExecStop = "/run/current-system/sw/bin/alert_shutdown.sh";
       RemainAfterExit = true;
       TimeoutStopSec = 5;
     };
