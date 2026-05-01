@@ -1,0 +1,53 @@
+groups = ["debian-bookworm", "case20_encoders"]
+
+[metadata]
+room_number = 76
+
+[metadata.grub]
+efi = true
+
+[metadata.crs-worker.secrets]
+encoding.secret = ""
+encoding.token = ""
+meta.secret = ""
+meta.token = ""
+#encoding.secret = "!decrypt:encrypt$gAAAAABpyirXMuCdecLGb_qofq9WsOqSv6reOeOOsdSWRpHO_c14IT6Dpy9zFccVP76pKooAXoEu4oLMVuzR-Yyrx_pQzH99oHKASVX27WHNK31L0OrQnM1TzrynN-CyWizQqt-qZ6QE"
+#encoding.token = "!decrypt:encrypt$gAAAAABpyirv6hIPI-HUfYMcRWJ6FXTM-Y5CVgKhemhp_GOcXZ3RRPvidPGO_rIe858PTGbAnlTTk9Nnehkc5z9IbdtC5ULwcjm_PcmoNKz6jDvz48l1Enyhg3An4vtHcgtWiDQOzuOw"
+#meta.secret = "!decrypt:encrypt$gAAAAABlx3cwXRgJExYHPSONTvM4Qr2__WCSqqftfBcBk7pvAFovd-7DltiXdPYNB_3Hz0Sa20IqZjphNAztZ6bJxV2woF5EAJX74uQNY09ACSlJSLh7wJEdCv6LnHGpFlFulO44e19g"
+#meta.token = "!decrypt:encrypt$gAAAAABlx3cq0mWwMvUECvt8ctW_Wu1IvdbzhzMWbt7yzRUarPgFP6TY4UurHMzpIFoSjeT67zaQoYvZLLG3Vh2lAJZJo4kr_qfN6zEOe6U1RRSNXCzTb4866WgTfdIsaOX_8HBog4b0"
+
+[metadata.event]
+room_name = "Entropia"
+slug = "entropia"
+
+[metadata.interfaces.eth0]
+ips = ["10.73.76.3/16"]
+gateway4 = "10.73.0.254"
+
+[metadata.voctocore]
+streaming_auth_key = "!decrypt:encrypt$gAAAAABp9P7WxiYiwEhhCUWCn-w1ephs-6oa2DiEimKDx11kNRF-P405cNPTfHFzgdi83X3irDwD4zy47hRjqa_YPTlkxpmQOyCogahKUwanpnrNMapYbyg="
+streaming_endpoint = "entropia"
+
+[metadata.voctocore.sources.cam1]
+devicenumber = 2
+mode = "1080i50"
+
+[metadata.voctocore.sources.cam2]
+devicenumber = 1
+mode = "1080p25"
+
+[metadata.voctocore.sources.slides]
+devicenumber = 0
+mode = "1080p50"
+hdmi = true
+
+[metadata.voctocore.audio.original]
+streams = "0+1"
+input = "cam1"
+
+[[metadata.zfs.pools.video.when_creating.config]]
+type = "mirror"
+devices = [
+    "/dev/disk/by-id/ata-ST3000DM001-1ER166_Z501LTS4",
+    "/dev/disk/by-id/ata-ST3000NM0033-9ZM178_Z1Z9F5RG",
+]
