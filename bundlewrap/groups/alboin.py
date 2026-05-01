@@ -32,6 +32,11 @@ groups['minions-alboin'] = {
         'cifs-client',
     },
     'metadata': {
+        'apt': {
+            'unattended-upgrades': {
+                'enabled': True,
+            },
+        },
         'interfaces': {
             'ens18': {
                 'gateway4': '10.73.254.201',
