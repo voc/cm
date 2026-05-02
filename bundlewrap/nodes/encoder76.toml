@@ -1,8 +1,5 @@
 groups = ["debian-bookworm", "case20_encoders"]
 
-[metadata]
-room_number = 76
-
 [metadata.grub]
 efi = true
 
