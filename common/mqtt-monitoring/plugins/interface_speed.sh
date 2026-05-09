@@ -2,7 +2,7 @@
 
 for interface in $(ls /sys/class/net/)
 do
-    if ! [[ "$interface" =~ "^(lo|br|bond)" ]]
+    if ! [[ "$interface" =~ ^(lo|br|bond) ]]
     then
         if [ ! -d "/sys/class/net/$interface" ]
         then
