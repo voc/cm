@@ -5,7 +5,6 @@
 set -euo pipefail
 
 BRANCH="nix-flake-auto-update"
-TOKEN="$VOC_CI__CM_NIXOS_AUTO_UPDATE__ACCESS_TOKEN"
 
 export PAGER=cat
 
@@ -74,7 +73,7 @@ then
           -H 'accept: application/json' \
           -H "Authorization: token ${TOKEN}" \
           -H 'Content-Type: application/json' \
-          -d "{ \"base\": \"main\", \"head\": \"${BRANCH}\", \"title\": \"nix-flake-auto-update\"}"
+          -d "{ \"base\": \"master\", \"head\": \"${BRANCH}\", \"title\": \"nix-flake-auto-update\"}"
 
         echo ">> created pull request"
     fi
