@@ -82,7 +82,7 @@ lib.mkMerge [
 
         # list the content as it will be imported into the container
         tar -cv . | tar -tvf -
-        tar -cv . | podman import - forgejo-runner-nix
+        tar -cv . | podman import - gitea-runner-nix
       '';
       serviceConfig = {
         RuntimeDirectory = "gitea-runner-nix-image";
@@ -208,6 +208,24 @@ lib.mkMerge [
           url = nodes.forgejo.config.services.forgejo.settings.server.ROOT_URL;
           tokenFile = config.sops.secrets.forgejo_registration_token.path;
           labels = [ "nix:docker://gitea-runner-nix" ];
+          settings = {
+            # Nix-specific runner setup (intentionally tied to the nixuser in the custom image).
+            container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /nix:/nix -v ${storeDeps}/bin:/bin -v ${storeDeps}/etc/ssl:/etc/ssl --user nixuser";
+            # the default network that also respects our dns server settings
+            container.network = "host";
+            container.valid_volumes = [
+              "/nix"
+              "${storeDeps}/bin"
+              "${storeDeps}/etc/ssl"
+            ];
+          };
+        };
+        nix1 = {
+          enable = true;
+          name = "nix-runner-native";
+          url = nodes.forgejo.config.services.forgejo.settings.server.ROOT_URL;
+          tokenFile = config.sops.secrets.forgejo_registration_token.path;
+          labels = [ "native:host" ];
           settings = {
             # Nix-specific runner setup (intentionally tied to the nixuser in the custom image).
             container.options = "-e NIX_BUILD_SHELL=/bin/bash -e PAGER=cat -e PATH=/bin -e SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt -v /nix:/nix -v ${storeDeps}/bin:/bin -v ${storeDeps}/etc/ssl:/etc/ssl --user nixuser";
