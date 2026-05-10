@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "cm"
+version = "0.1.0"
+description = "Configuration management for all VOC systems"
+authors = ["c3voc"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+bundlewrap = "~4.13.6"
+bundlewrap-keepass = "^0.1.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
