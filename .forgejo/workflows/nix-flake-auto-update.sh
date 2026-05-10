@@ -5,6 +5,7 @@
 set -euo pipefail
 
 BRANCH="nix-flake-auto-update"
+TOKEN="$VOC_CI__CM_NIXOS_AUTO_UPDATE__ACCESS_TOKEN"
 
 export PAGER=cat
 
@@ -17,7 +18,7 @@ cd "${tmpdir}"
 
 echo ">> creating and fetching remote"
 
-git clone "ssh://forgejo@forgejo.c3voc.de/voc/cm.git" "."
+git clone "https://voc_ci:${TOKEN}@forgejo.c3voc.de/voc/cm.git" "."
 git config user.name "Winkekatze Updater"
 git config user.email "noreply@forgejo.c3voc.de"
 
@@ -60,6 +61,23 @@ then
 
     git push --set-upstream --force origin HEAD
 
+    OPEN_PRS="$(curl -X 'GET' 'https://forgejo.c3voc.de/api/v1/repos/voc/cm/pulls?state=open&poster=voc_ci&page=1' -H 'accept: application/json' | jq length)"
+
+    if (( $OPEN_PRS > 0 ))
+    then
+        echo ">> there's already an open pull request which we probably just updated."
+    else
+        echo ">> creating pull request"
+
+        curl -X 'POST' \
+          "https://forgejo.c3voc.de/api/v1/repos/voc/cm/pulls" \
+          -H 'accept: application/json' \
+          -H "Authorization: token ${TOKEN}" \
+          -H 'Content-Type: application/json' \
+          -d "{ \"base\": \"main\", \"head\": \"${BRANCH}\", \"title\": \"nix-flake-auto-update\"}"
+
+        echo ">> created pull request"
+    fi
 else
     echo ">> no changes, exiting"
 fi
