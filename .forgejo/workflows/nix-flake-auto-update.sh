@@ -17,7 +17,7 @@ cd "${tmpdir}"
 
 echo ">> creating and fetching remote"
 
-git clone "https://voc_ci:${TOKEN}@forgejo.c3voc.de/voc/cm.git" "."
+git clone "https://voc_ci:${FORGEJO_TOKEN}@forgejo.c3voc.de/voc/cm.git" "."
 git config user.name "Winkekatze Updater"
 git config user.email "noreply@forgejo.c3voc.de"
 
@@ -71,7 +71,7 @@ then
         curl -X 'POST' \
           "https://forgejo.c3voc.de/api/v1/repos/voc/cm/pulls" \
           -H 'accept: application/json' \
-          -H "Authorization: token ${TOKEN}" \
+          -H "Authorization: token ${FORGEJO_TOKEN}" \
           -H 'Content-Type: application/json' \
           -d "{ \"base\": \"master\", \"head\": \"${BRANCH}\", \"title\": \"nix-flake-auto-update\"}"
 

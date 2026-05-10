@@ -1,0 +1,19 @@
+name: nix-flake-auto-update
+on:
+  schedule:
+    - cron: "23 3 * * *"
+  push:
+    paths:
+      - '.forgejo/workflows/nix-flake-auto-update.*'
+
+concurrency:
+  group: nix-flake-auto-update
+  cancel-in-progress: true
+
+jobs:
+  nix-flake-auto-update:
+    name: "Nix Flake Auto-Update"
+    runs-on: nix
+    steps:
+      - name: Run updater
+        run: .forgejo/workflows/nix-flake-auto-update.sh
