@@ -19,6 +19,7 @@
 
   services.nginx.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+  services.nginx.virtualHosts."sso.c3voc.de".serverAliases = ["sso.erisvisionservices.com"];
   services.nginx.virtualHosts."sso.c3voc.de".locations."/outpost.goauthentik.io" = {
     recommendedProxySettings = false;
     extraConfig = ''
