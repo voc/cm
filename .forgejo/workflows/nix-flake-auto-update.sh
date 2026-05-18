@@ -27,6 +27,8 @@ fi
 
 echo ">> starting flake update"
 
+had_changes=0
+
 for flake in alertmanager-mqtt viri-matrix voc-telemetry
 do
     echo ">>>> trying to update flake input: $flake"
@@ -39,13 +41,14 @@ do
     else
         git add .
         git commit -m "Auto-Update flake input $flake on $(date '+%F %T')"
+        had_changes=1
     fi
 done
 
 echo ">> flake updates done"
 echo ">> checking if pull request needs to get created"
 
-if [[ -n "$(git diff master...)" ]]
+if (( $had_changes > 0 ))
 then
     echo ">> have diff against master, need to create a pull request"
 
