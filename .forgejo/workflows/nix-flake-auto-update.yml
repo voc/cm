@@ -15,5 +15,7 @@ jobs:
     name: "Nix Flake Auto-Update"
     runs-on: nix
     steps:
+      - name: Get repo
+        run: git clone "https://voc_ci:${{ env.FORGEJO_TOKEN }}@forgejo.c3voc.de/voc/cm.git" "."
       - name: Run updater
         run: .forgejo/workflows/nix-flake-auto-update.sh

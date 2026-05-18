@@ -8,16 +8,6 @@ BRANCH="nix-flake-auto-update"
 
 export PAGER=cat
 
-tmpdir=$(mktemp -d)
-trap 'cd /; rm -Rf "$tmpdir"' EXIT
-
-echo "Using temporary directory $tmpdir"
-
-cd "${tmpdir}"
-
-echo ">> creating and fetching remote"
-
-git clone "https://voc_ci:${FORGEJO_TOKEN}@forgejo.c3voc.de/voc/cm.git" "."
 git config user.name "Winkekatze Updater"
 git config user.email "noreply@forgejo.c3voc.de"
 
