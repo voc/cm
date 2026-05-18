@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 [[ -n "$DEBUG" ]] && set -x
 
@@ -8,10 +8,11 @@ BRANCH="nix-flake-auto-update"
 
 export PAGER=cat
 
+git fetch --all
 git config user.name "Winkekatze Updater"
 git config user.email "noreply@forgejo.c3voc.de"
 
-cd "${tmpdir}/nixos/"
+cd "nixos/"
 
 if ! git ls-remote --exit-code origin "$BRANCH"
 then
