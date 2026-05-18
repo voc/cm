@@ -46,29 +46,29 @@ in {
 
   services.postfix = {
     mapFiles.virtual_cm = config.sops.secrets.aliases.path;
-    relayDomains = ["hash:/var/lib/mailman/data/postfix_domains"];
-    config = {
+    settings.main = {
+      relay_domains = ["hash:/var/lib/mailman/data/postfix_domains"];
       transport_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       local_recipient_maps = ["hash:/var/lib/mailman/data/postfix_lmtp"];
       virtual_alias_maps = ["hash:/etc/postfix/virtual_cm"];
       virtual_alias_domains = "";
+      mynetworks = [
+        "127.0.0.1/32"
+        "[::1]/128"
+
+        # rt.c3voc.de
+        "185.106.84.19/32"
+        "[2001:67c:20a0:e::19]/128"
+
+        # pretalx.c3voc.de
+        "193.203.16.41/32"
+        "[2a00:c380:c101:2800::41]/128"
+
+        # hub.test.c3voc.de
+        "195.54.164.162/32"
+        "[2001:67c:20a0:e::162]/128"
+      ];
     };
-    networks = [
-      "127.0.0.1/32"
-      "[::1]/128"
-
-      # rt.c3voc.de
-      "185.106.84.19/32"
-      "[2001:67c:20a0:e::19]/128"
-
-      # pretalx.c3voc.de
-      "193.203.16.41/32"
-      "[2a00:c380:c101:2800::41]/128"
-
-      # hub.test.c3voc.de
-      "195.54.164.162/32"
-      "[2001:67c:20a0:e::162]/128"
-    ];
   };
 
   services.mailman = {
@@ -157,7 +157,7 @@ in {
       [.]ar$
       [.]pro$
     '';
-    allowlist_fwd_hosts = lib.concatStringsSep "\n" config.services.postfix.networks;
+    allowlist_fwd_hosts = lib.concatStringsSep "\n" config.services.postfix.settings.main.mynetworks;
   in ''
     BAD_SUBJECT_BL {
       type = "header";
