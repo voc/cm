@@ -11,13 +11,14 @@ let
     mkdir -p $out/bin
     for dir in ${
       toString [
-        pkgs.coreutils
-        pkgs.findutils
-        pkgs.gnugrep
-        pkgs.gawk
-        pkgs.git
         config.nix.package
         pkgs.bash
+        pkgs.coreutils
+        pkgs.curl
+        pkgs.findutils
+        pkgs.gawk
+        pkgs.git
+        pkgs.gnugrep
         pkgs.jq
         pkgs.nodejs
         pkgs.openssh
