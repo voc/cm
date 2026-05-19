@@ -54,7 +54,7 @@ then
 
     git push --set-upstream --force origin HEAD
 
-    OPEN_PRS="$(curl -X 'GET' 'https://forgejo.c3voc.de/api/v1/repos/voc/cm/pulls?state=open&poster=voc_ci&page=1' -H 'accept: application/json' | jq length)"
+    OPEN_PRS="$(curl -X 'GET' -s 'https://forgejo.c3voc.de/api/v1/repos/voc/cm/pulls?state=open&page=1' -H 'accept: application/json' | jq 'map(select(.head.label == "nix-flake-auto-update")) | length')"
 
     if (( $OPEN_PRS > 0 ))
     then
